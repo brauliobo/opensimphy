@@ -8,9 +8,9 @@ describe('responsive navigation state', () => {
       history: createMemoryHistory(),
       routes: [
         { path: '/', component: { template: '<div />' } },
+        { path: '/topics/:id', component: { template: '<div />' } },
         { path: '/atlas', component: { template: '<div />' } },
-        { path: '/core', component: { template: '<div />' } },
-        { path: '/walls', component: { template: '<div />' } },
+        { path: '/labs', component: { template: '<div />' } },
         { path: '/sources', component: { template: '<div />' } },
       ],
     })

@@ -4,6 +4,7 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'overview', component: () => import('../views/OverviewView.vue') },
+    { path: '/topics/:id', name: 'topic', component: () => import('../views/TopicView.vue'), props: true },
     { path: '/atlas', name: 'atlas', component: () => import('../views/FormulaAtlasView.vue') },
     {
       path: '/atlas/:id',
@@ -11,8 +12,9 @@ export const router = createRouter({
       component: () => import('../views/FormulaDetailView.vue'),
       props: true,
     },
-    { path: '/core', name: 'core', component: () => import('../views/CoreLabView.vue') },
-    { path: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue') },
+    { path: '/labs', name: 'labs', component: () => import('../views/LabsView.vue') },
+    { path: '/labs/core', alias: '/core', name: 'core', component: () => import('../views/CoreLabView.vue') },
+    { path: '/labs/walls', alias: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue') },
     { path: '/sources', name: 'sources', component: () => import('../views/SourcesView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],

@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAtlasEngine } from '../composables/atlasEngine'
 
 const atlas = useAtlasEngine()
+const route = useRoute()
 const query = ref('')
+const topic = ref(typeof route.query.topic === 'string' ? route.query.topic : 'all')
+const category = ref(typeof route.query.category === 'string' ? route.query.category : 'all')
 const column = ref('all')
 const island = ref('all')
 const classification = ref('all')
@@ -11,6 +15,8 @@ const status = ref('all')
 const page = ref(1)
 const pageSize = 24
 
+const topics = computed(() => atlas.taxonomy.value?.topics ?? [])
+const categories = computed(() => topic.value === 'all' ? [] : topics.value.find((item) => item.id === topic.value)?.categories ?? [])
 const columns = computed(() => [...new Set(atlas.formulas.value.map((item) => item.column))].sort())
 const islands = computed(() => [...new Set(atlas.formulas.value.map((item) => item.island))].sort())
 const filtered = computed(() => {
@@ -20,6 +26,8 @@ const filtered = computed(() => {
     return matchesSearch
       && (column.value === 'all' || item.column === column.value)
       && (island.value === 'all' || item.island === island.value)
+      && (topic.value === 'all' || item.topic === topic.value)
+      && (category.value === 'all' || item.category === category.value)
       && (classification.value === 'all' || item.classification === classification.value)
       && (status.value === 'all' || item.status === status.value)
   })
@@ -27,7 +35,22 @@ const filtered = computed(() => {
 const pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / pageSize)))
 const visible = computed(() => filtered.value.slice((page.value - 1) * pageSize, page.value * pageSize))
 
-watch([query, column, island, classification, status], () => { page.value = 1 })
+watch(topic, () => {
+  if (!categories.value.some((item) => item.id === category.value)) category.value = 'all'
+})
+watch(() => [route.query.topic, route.query.category], ([nextTopic, nextCategory]) => {
+  topic.value = typeof nextTopic === 'string' ? nextTopic : 'all'
+  category.value = typeof nextCategory === 'string' ? nextCategory : 'all'
+})
+watch([query, topic, category, column, island, classification, status], () => { page.value = 1 })
+
+function topicTitle(id: string): string {
+  return topics.value.find((item) => item.id === id)?.shortTitle ?? id
+}
+
+function categoryTitle(topicId: string, categoryId: string): string {
+  return topics.value.find((item) => item.id === topicId)?.categories.find((item) => item.id === categoryId)?.title ?? categoryId
+}
 </script>
 
 <template lang="pug">
@@ -44,6 +67,16 @@ watch([query, column, island, classification, status], () => { page.value = 1 })
     label.field.field-search
       span Search registry
       input(v-model="query" data-testid="formula-search" type="search" placeholder="symbol, equation, dependency…")
+    label.field
+      span Topic
+      select(v-model="topic" data-testid="formula-topic")
+        option(value="all") all topics
+        option(v-for="item in topics" :key="item.id" :value="item.id") {{ item.shortTitle }} ({{ item.count }})
+    label.field
+      span Category
+      select(v-model="category" data-testid="formula-category" :disabled="topic === 'all'")
+        option(value="all") all categories
+        option(v-for="item in categories" :key="item.id" :value="item.id") {{ item.title }} ({{ item.count }})
     label.field
       span Column
       select(v-model="column" data-testid="formula-column")
@@ -71,7 +104,7 @@ watch([query, column, island, classification, status], () => { page.value = 1 })
   .atlas-key(aria-label="Table key")
     span # / symbol
     span equation / name
-    span column / island
+    span topic / category
     span expected → computed
     span audit
 
@@ -79,7 +112,7 @@ watch([query, column, island, classification, status], () => { page.value = 1 })
     RouterLink.formula-row(
       v-for="formula in visible"
       :key="formula.id"
-      :to="`/atlas/${formula.id}`"
+      :to="`/atlas/${formula.ordinal}`"
       :data-testid="`formula-row-${formula.ordinal}`"
     )
       .formula-identity
@@ -89,8 +122,9 @@ watch([query, column, island, classification, status], () => { page.value = 1 })
         code {{ formula.equation }}
         small {{ formula.name }}
       .formula-location
-        span {{ formula.column }}
-        small {{ formula.island }}
+        span {{ topicTitle(formula.topic) }}
+        small {{ categoryTitle(formula.topic, formula.category) }}
+        small col {{ formula.column }} / island {{ formula.island }}
       .formula-values
         span {{ formula.expected }}
         small → {{ formula.computed }} {{ formula.units }}

@@ -26,7 +26,7 @@ src/engine              typed numerical registries and evaluation functions
 src/workers             browser workers for cancellable computation
 src/composables         strict UI adapter and completion state
 src/components          navigation, coverage, Plotly, and canvas instruments
-src/views               six lazy-routed laboratory views
+src/views               eight lazy-routed tour, atlas, lab, and provenance views
 tests/ui                Vitest and Vue Test Utils contracts
 tests/e2e               Playwright browser audit
 ```
@@ -79,7 +79,7 @@ npm run verify
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; it is intentionally excluded from routine verification so a source-site change cannot silently rewrite the corpus.
 
-UI tests cover fail-closed completion, asynchronous graph readiness, formula filtering/detail, canvas drawing and exact cell selection, responsive navigation state, and one real generated-data/engine integration. Playwright checks exact coverage, atlas search, all 288 formula readiness records with sampled routes, all core cases, all 351 wall completion records with a UI simulation, mobile navigation, provenance caveats, and PWA evidence. It records only three representative screenshots rather than one screenshot per formula.
+UI tests cover fail-closed completion, topic isolation, asynchronous graph readiness, formula filtering/detail, canvas drawing and exact cell selection, responsive navigation state, and one real generated-data/engine integration. Playwright checks the topic-to-atlas journey, exact coverage, atlas search, all 288 formula readiness records with sampled routes, all core cases, all 351 wall completion records with a UI simulation, mobile navigation, provenance caveats, and PWA evidence. It records only three representative screenshots rather than one screenshot per formula.
 
 ## Static Deployment
 

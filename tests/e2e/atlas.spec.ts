@@ -11,10 +11,34 @@ test('reports exact complete coverage and captures overview evidence', async ({ 
   expect(audit).toBeTruthy()
   expect(audit?.formulas).toHaveLength(288)
   expect(audit?.walls).toHaveLength(351)
+  expect(audit?.topics).toHaveLength(8)
+  expect(audit?.topics.reduce((sum, topic) => sum + topic.count, 0)).toBe(288)
+  await expect(page.locator('.topic-door')).toHaveCount(8)
+  await expect(page.locator('.topic-category-card')).toHaveCount(0)
+  await page.screenshot({ path: testInfo.outputPath('overview.png'), fullPage: true })
+
+  await page.goto('/sources')
   await expect(page.getByTestId('coverage-status')).toHaveAttribute('data-status', 'complete')
   await expect(page.getByTestId('coverage-recipes')).toContainText('288')
   await expect(page.getByTestId('coverage-walls')).toContainText('351')
-  await page.screenshot({ path: testInfo.outputPath('overview.png'), fullPage: true })
+})
+
+test('uses the homepage tour to open a classified atlas slice', async ({ page }) => {
+  await waitForAudit(page)
+  const topicDoor = page.getByTestId('topic-magnetism')
+  await expect(topicDoor).toContainText('81 constants / 5 families')
+  await topicDoor.click()
+
+  await expect(page).toHaveURL(/\/topics\/magnetism$/)
+  await expect(page.getByRole('heading', { name: 'Spin, moments & magnetic response' })).toBeVisible()
+  await expect(page.locator('.topic-category-card')).toHaveCount(5)
+  await expect(page.locator('.topic-featured-grid a')).toHaveCount(4)
+  await page.getByRole('link', { name: /View all 81/ }).click()
+
+  await expect(page).toHaveURL(/\/atlas\?topic=magnetism$/)
+  await expect(page.getByTestId('formula-topic')).toHaveValue('magnetism')
+  await expect(page.locator('.formula-row')).toHaveCount(24)
+  await expect(page.locator('.header-stat')).toContainText('81 / 288')
 })
 
 test('browses and searches the formula atlas', async ({ page }) => {

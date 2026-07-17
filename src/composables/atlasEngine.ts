@@ -4,7 +4,7 @@ import { parseCompletionReport } from '../engine/completion'
 import type { CoreEvaluation } from '../engine/core'
 import { loadWallPayload } from '../engine/numberWall'
 import { loadRecipeSources } from '../engine/recipes'
-import type { CompletionReport, PrimitiveSymbolSource, RecipeBatchResult, RecipeEvaluation, RecipeSource } from '../types/engine'
+import type { CompletionReport, PrimitiveSymbolSource, RecipeBatchResult, RecipeEvaluation, RecipeSource, RecipeTaxonomy, TaxonomyArtifact } from '../types/engine'
 import type { SimulationWorkerResponse, WallWorkerResponse } from '../types/workers'
 import NumberWallWorker from '../workers/numberWall.worker?worker'
 import SimulationWorker from '../workers/simulation.worker?worker'
@@ -28,6 +28,9 @@ export interface FormulaRecord {
   column: string
   island: string
   classification: 'exact' | 'measured'
+  topic: string
+  category: string
+  facets: RecipeTaxonomy['facets']
   status: 'pass' | 'fail' | 'pending'
   sourceUrl: string
   decomposition: { EG: string; EB: string; IG: string; R: string; IB: string }
@@ -94,6 +97,7 @@ export interface AtlasSnapshot {
   coreCases: CoreCase[]
   walls: WallInput[]
   coverage: CoverageRow[]
+  taxonomy?: TaxonomyArtifact
   generatedAt?: string
 }
 
@@ -102,6 +106,7 @@ const formulas = ref<FormulaRecord[]>([])
 const coreCases = ref<CoreCase[]>([])
 const walls = ref<WallInput[]>([])
 const coverage = ref<CoverageRow[]>(closedCoverage())
+const taxonomy = ref<TaxonomyArtifact | null>(null)
 const ready = ref(false)
 const error = ref<Error | null>(null)
 const completionVerified = ref(false)
@@ -190,6 +195,9 @@ function formulaFromEvaluation(recipe: RecipeSource, evaluation: RecipeEvaluatio
     column: recipe.column,
     island: recipe.island,
     classification: recipe.expected_kind,
+    topic: recipe.taxonomy.topic,
+    category: recipe.taxonomy.category,
+    facets: recipe.taxonomy.facets,
     status: SOURCE_AUDIT_FAILURE_IDS.has(recipe.constant_id) ? 'fail' : 'pass',
     sourceUrl: 'https://www.physicsmonastery.earth/288',
     decomposition: {
@@ -340,6 +348,16 @@ async function readCompletion(): Promise<CompletionReport> {
   return parseCompletionReport(await response.json())
 }
 
+async function readTaxonomy(): Promise<TaxonomyArtifact> {
+  const response = await fetch(`${import.meta.env.BASE_URL}data/generated/taxonomy.json`)
+  if (!response.ok) throw new Error(`Constant taxonomy failed to load (${response.status})`)
+  const value = await response.json() as TaxonomyArtifact
+  if (value.schemaVersion !== 1 || !Array.isArray(value.topics) || value.topics.length === 0) throw new Error('Constant taxonomy has an invalid shape')
+  const topicTotal = value.topics.reduce((sum, topic) => sum + topic.count, 0)
+  if (topicTotal !== value.total) throw new Error(`Constant taxonomy topic coverage is ${topicTotal}/${value.total}`)
+  return value
+}
+
 function evaluateRecipesInWorker(recipes: RecipeSource[], symbols: PrimitiveSymbolSource[]): Promise<RecipeBatchResult> {
   const worker = new SimulationWorker()
   const requestId = `recipes-${Date.now()}`
@@ -389,11 +407,15 @@ async function initialize(): Promise<void> {
     error.value = null
     completionVerified.value = false
     try {
-      const [sources, wallItems, completion] = await Promise.all([
+      const [sources, wallItems, completion, taxonomyArtifact] = await Promise.all([
         loadRecipeSources(`${import.meta.env.BASE_URL}data/generated`),
         readWallIndex(),
         readCompletion(),
+        readTaxonomy(),
       ])
+      const topicIds = new Set(taxonomyArtifact.topics.map((topic) => topic.id))
+      if (taxonomyArtifact.total !== sources.recipes.length) throw new Error(`Constant taxonomy covers ${taxonomyArtifact.total}/${sources.recipes.length} recipes`)
+      if (sources.recipes.some((recipe) => !topicIds.has(recipe.taxonomy.topic))) throw new Error('Recipe registry contains a topic outside the generated taxonomy')
       const [batch, coreEvaluations] = await Promise.all([
         evaluateRecipesInWorker(sources.recipes, sources.symbols),
         evaluateCoreInWorker(),
@@ -405,6 +427,7 @@ async function initialize(): Promise<void> {
       }).sort((a, b) => a.ordinal - b.ordinal)
       coreCases.value = coreEvaluations.map(coreFromEvaluation)
       walls.value = wallItems
+      taxonomy.value = taxonomyArtifact
       coverage.value = normalizeCoverage(completion as unknown as UnknownRecord, formulas.value, coreCases.value, walls.value)
       completionVerified.value = completion.complete && completion.errors.length === 0 && completion.unresolved.length === 0
       window.__OPENSIMPHY_AUDIT__ = {
@@ -412,12 +435,14 @@ async function initialize(): Promise<void> {
         formulas: formulas.value.map(({ id, ordinal, graphReady }) => ({ id, ordinal, graphReady })),
         core: coreCases.value.map(({ id, graphReady }) => ({ id, graphReady })),
         walls: walls.value.map(({ id }) => id),
+        topics: taxonomy.value.topics.map(({ id, count }) => ({ id, count })),
       }
     } catch (reason) {
       error.value = reason instanceof Error ? reason : new Error(String(reason))
       formulas.value = []
       coreCases.value = []
       walls.value = []
+      taxonomy.value = null
       coverage.value = closedCoverage()
     } finally {
       ready.value = true
@@ -529,6 +554,8 @@ const complete = computed(() => coverage.value.every((row) => {
 })
   && completionVerified.value
   && formulas.value.length === EXPECTED_RECIPES
+  && taxonomy.value !== null
+  && taxonomy.value.total === formulas.value.length
   && formulas.value.every((item) => item.graphReady)
   && walls.value.length === EXPECTED_WALLS
   && coreCases.value.length > 0
@@ -540,6 +567,7 @@ export function useAtlasEngine() {
     coreCases: readonly(coreCases),
     walls: readonly(walls),
     coverage: readonly(coverage),
+    taxonomy: readonly(taxonomy),
     ready: readonly(ready),
     error: readonly(error),
     complete,
@@ -555,6 +583,7 @@ export function setAtlasSnapshotForTests(snapshot: AtlasSnapshot | null): void {
   coreCases.value = snapshot?.coreCases ?? []
   walls.value = snapshot?.walls ?? []
   coverage.value = snapshot?.coverage ?? closedCoverage()
+  taxonomy.value = snapshot?.taxonomy ?? null
   ready.value = true
   error.value = null
   completionVerified.value = snapshot !== null
@@ -566,6 +595,7 @@ export function resetAtlasForTests(): void {
   coreCases.value = []
   walls.value = []
   coverage.value = closedCoverage()
+  taxonomy.value = null
   ready.value = false
   error.value = null
   completionVerified.value = false

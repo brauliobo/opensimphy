@@ -8,11 +8,10 @@ const route = useRoute()
 watch(() => route.fullPath, () => { open.value = false })
 
 const links = [
-  { to: '/', label: 'Overview', code: '00' },
-  { to: '/atlas', label: 'Formula atlas', code: '01' },
-  { to: '/core', label: 'Core lab', code: '02' },
-  { to: '/walls', label: 'Number walls', code: '03' },
-  { to: '/sources', label: 'Sources', code: '04' },
+  { to: '/', label: 'Tour', code: '00', routes: ['overview', 'topic'] },
+  { to: '/atlas', label: 'Formula atlas', code: '01', routes: ['atlas', 'formula'] },
+  { to: '/labs', label: 'Labs', code: '02', routes: ['labs', 'core', 'walls'] },
+  { to: '/sources', label: 'Sources', code: '03', routes: ['sources'] },
 ]
 </script>
 
@@ -22,7 +21,7 @@ header.app-header
     span.brand-mark(aria-hidden="true") O/SP
     span.brand-copy
       strong OpenSimPhy Atlas
-      small Static scientific instrument
+      small Constants, one context at a time
   button.nav-toggle(
     type="button"
     data-testid="nav-toggle"
@@ -33,7 +32,13 @@ header.app-header
     span.sr-only Toggle navigation
     span.nav-toggle-lines(aria-hidden="true")
   nav#primary-navigation.primary-nav(:class="{ 'is-open': open }" aria-label="Primary navigation")
-    RouterLink.nav-link(v-for="link in links" :key="link.to" :to="link.to" @click="open = false")
+    RouterLink.nav-link(
+      v-for="link in links"
+      :key="link.to"
+      :to="link.to"
+      :class="{ 'router-link-active': link.routes.includes(String(route.name)) }"
+      @click="open = false"
+    )
       span.nav-code {{ link.code }}
       span {{ link.label }}
 </template>

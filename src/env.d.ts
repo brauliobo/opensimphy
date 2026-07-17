@@ -12,5 +12,6 @@ interface Window {
     formulas: Array<{ id: string; ordinal: number; graphReady: boolean }>
     core: Array<{ id: string; graphReady: boolean }>
     walls: string[]
+    topics: Array<{ id: string; count: number }>
   }
 }

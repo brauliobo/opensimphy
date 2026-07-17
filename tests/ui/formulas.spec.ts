@@ -38,6 +38,16 @@ describe('formula views', () => {
     expect(wrapper.get('[data-testid="formula-row-2"]')).toBeTruthy()
   })
 
+  it('opens topic and category filters from shareable route queries', async () => {
+    await router.push('/atlas?topic=magnetism&category=moments-field-standards')
+    const wrapper = mount(FormulaAtlasView, { global: { plugins: [router] } })
+
+    expect(wrapper.get<HTMLSelectElement>('[data-testid="formula-topic"]').element.value).toBe('magnetism')
+    expect(wrapper.get<HTMLSelectElement>('[data-testid="formula-category"]').element.value).toBe('moments-field-standards')
+    expect(wrapper.findAll('.formula-row')).toHaveLength(1)
+    expect(wrapper.get('[data-testid="formula-row-2"]').text()).toContain('Spin & magnetism')
+  })
+
   it('renders decomposition, audit, and a real async graph panel on detail', async () => {
     const wrapper = mount(FormulaDetailView, {
       props: { id: 'formula-1' },
