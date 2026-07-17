@@ -1,0 +1,43 @@
+{
+  "name": "opensimphy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "data:acquire": "node scripts/acquire-sources.mjs",
+    "data:generate": "node scripts/generate-data.mjs",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:pages": "npm run build && node scripts/create-pages-fallback.mjs",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:engine": "vitest run tests/engine",
+    "test:ui": "vitest run tests/ui",
+    "e2e": "playwright test",
+    "verify": "npm run data:generate && npm run typecheck && npm run test && npm run build"
+  },
+  "dependencies": {
+    "plotly.js-dist-min": "2.35.3",
+    "vue": "3.5.13",
+    "vue-router": "4.5.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "22.10.7",
+    "@types/plotly.js": "2.35.1",
+    "@vitejs/plugin-vue": "5.2.1",
+    "@vue/test-utils": "2.4.6",
+    "jsdom": "25.0.1",
+    "pug": "3.0.3",
+    "typescript": "5.7.3",
+    "vite": "6.4.3",
+    "vite-node": "3.2.4",
+    "vite-plugin-pwa": "0.21.1",
+    "vitest": "3.2.7",
+    "vue-tsc": "2.2.0"
+  }
+}

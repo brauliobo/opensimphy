@@ -1,0 +1,985 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-17",
+  "policy": {
+    "publicSourceRecordsCopied": true,
+    "sourcePdfsPublished": false,
+    "licenseClaim": "No source license is asserted by this metadata registry.",
+    "contextRule": "Only Physics Monastery recovered site material is direct simulation provenance; all other corpus and EARTH entries are context only."
+  },
+  "physicsMonastery": {
+    "siteUrl": "https://www.physicsmonastery.earth/",
+    "sourceArtifacts": [
+      {
+        "id": "constants-yaml",
+        "originalPath": "/home/braulio/.local/share/opencode/tool-output/tool_f70257ac8001812KX98v3Yixbl",
+        "preservedPath": "sources/constants.yaml",
+        "sha256": "835a383b36bb21d9cd2dff6bb44cec9f2515a01e0fb5740f31f7053735c2bcf9",
+        "bytes": 164459
+      },
+      {
+        "id": "symbols-csv",
+        "originalPath": "/tmp/opencode/physics-monastery/symbols.csv",
+        "preservedPath": "sources/symbols.csv",
+        "sha256": "3ee17b931be8c76b33d2e9e5aacb5b6ccee82ff438d14200fadb68ad52c7d02f",
+        "bytes": 8696
+      },
+      {
+        "id": "published-output",
+        "originalPath": "/tmp/opencode/physics-monastery/latest-output.txt",
+        "preservedPath": "sources/latest-output.txt",
+        "sha256": "eb0308a1a8687d9e01c98be5142da1abef3310ccc618c30e293689def428c210",
+        "bytes": 82761
+      },
+      {
+        "id": "number-walls-index",
+        "originalPath": "/tmp/opencode/physics-monastery/number-walls-index.json",
+        "preservedPath": "sources/number-walls-index.json",
+        "sha256": "201763c4903eeb3d77e09742cae889e1516ac06093210e231dcb39ff2db456ea",
+        "bytes": 232012
+      }
+    ],
+    "recoveredSitePdfs": [
+      {
+        "id": "physics-monastery-288",
+        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/288.pdf",
+        "title": "288",
+        "pages": 1,
+        "bytes": 4867557,
+        "sha256": "d2177e0ac071972142d5157d38222272533f59ccbc300da32d33057c1ba10bd3",
+        "sourceUrl": null,
+        "family": "physics-monastery-site-recovery",
+        "contextOnly": false,
+        "licenseClaim": null,
+        "accessNote": "Recovered site PDF retained outside public/data; metadata only is published here.",
+        "conceptLinks": []
+      },
+      {
+        "id": "physics-monastery-combinatorics",
+        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/combinatorics.pdf",
+        "title": "combinatorics",
+        "pages": 1,
+        "bytes": 6899660,
+        "sha256": "ceba57f411db27e830cf05c3ddae2dc6d4e54e80733552762b6fef6aa76ef1ed",
+        "sourceUrl": null,
+        "family": "physics-monastery-site-recovery",
+        "contextOnly": false,
+        "licenseClaim": null,
+        "accessNote": "Recovered site PDF retained outside public/data; metadata only is published here.",
+        "conceptLinks": [
+          "binomial-constructor",
+          "transform-families"
+        ]
+      },
+      {
+        "id": "physics-monastery-transform_dictionary",
+        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/transform_dictionary.pdf",
+        "title": "transform dictionary",
+        "pages": 169,
+        "bytes": 1904320,
+        "sha256": "4fae738b311737029d99341b80152c964e10b2c8c4f89fb224cbd4c9167b833e",
+        "sourceUrl": null,
+        "family": "physics-monastery-site-recovery",
+        "contextOnly": false,
+        "licenseClaim": null,
+        "accessNote": "Recovered site PDF retained outside public/data; metadata only is published here.",
+        "conceptLinks": [
+          "binomial-constructor",
+          "transform-families"
+        ]
+      }
+    ]
+  },
+  "contextualPdfs": [
+    {
+      "id": "corpus-1",
+      "localPath": "papers/curtis-r-horn-jr/horn-2025-uqft-arxiv-v1.pdf",
+      "title": "Unified Quaternionic Field Theory: A Covariant Mechanism for Inertia and Solitonic Matter",
+      "pages": 75,
+      "bytes": 955860,
+      "sha256": "0250286093d09e7c1371dc620df57c5c9f9bed86ee3159f79395e34d818770a8",
+      "sourceUrl": "https://zenodo.org/api/records/18081394/files/UQFT_arXiv_v1.pdf/content",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "corpus-2",
+      "localPath": "papers/curtis-r-horn-jr/horn-2025-uqft-ssi-article.pdf",
+      "title": "UQFT SSI article",
+      "pages": 14,
+      "bytes": 258841,
+      "sha256": "efade785c9f60a55a0783e8268dc49d8fcffcf5292fd31976001a480812f79fc",
+      "sourceUrl": "https://zenodo.org/api/records/18081394/files/UQFT_SSI_Article.pdf/content",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "corpus-3",
+      "localPath": "papers/curtis-r-horn-jr/horn-2025-uqft-wvdm-dirac-table.pdf",
+      "title": "UQFT WvdM Dirac table",
+      "pages": 2,
+      "bytes": 157273,
+      "sha256": "d8eb9e5c74fa2791b312581ef9191096cd392b889f53c14ff2aba839b7340046",
+      "sourceUrl": "https://zenodo.org/api/records/18081394/files/UQFT_WvdM_Dirac_table.pdf/content",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces",
+        "constructive-twisted-zeros",
+        "companion-matrix-flow"
+      ]
+    },
+    {
+      "id": "corpus-4",
+      "localPath": "UQFT_arXiv_v1.pdf",
+      "title": "Existing file present before download pass. It is smaller than the current Zenodo copy and was left in place.",
+      "pages": 75,
+      "bytes": 619966,
+      "sha256": "e87c51f81bb0904f3d3ddcd6c9e097ffa39c3fd11bef63bf1d0813bcc48d7c92",
+      "sourceUrl": null,
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "corpus-5",
+      "localPath": "papers/nassim-haramein/haramein-2023-origin-of-mass-and-nature-of-gravity.pdf",
+      "title": "The Origin of Mass and the Nature of Gravity",
+      "pages": 52,
+      "bytes": 9780408,
+      "sha256": "8cbdddad8b2a28a13307850ee67f3489674b147858910bbd67ed8d0a850ae9b1",
+      "sourceUrl": "https://zenodo.org/api/records/10125315/files/Origin_of_mass_publication-Zenodo-20231114.pdf/content",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-6",
+      "localPath": "papers/nassim-haramein/haramein-2020-scale-invariant-unification-quantum-vacuum-plasma.pdf",
+      "title": "Scale invariant unification of forces, fields and particles in a Quantum Vacuum plasma",
+      "pages": 1,
+      "bytes": 185450,
+      "sha256": "d6967bdaa4a50002248971aa59f57c0e36c5322a29bbddcc15e6ae479b79bb9b",
+      "sourceUrl": "https://zenodo.org/api/records/4270619/files/Scale%20invariant%20unification%20of%20forces%20-%20Abstract%20-%20v3%20-%2020201112.pdf/content",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "corpus-7",
+      "localPath": "papers/nassim-haramein/haramein-2019-resolving-vacuum-catastrophe.pdf",
+      "title": "Resolving the Vacuum Catastrophe: A Generalized Holographic Approach",
+      "pages": 13,
+      "bytes": 377755,
+      "sha256": "416fb89d264da49b4134184d86802972e05e3cbb26d502bdc51da03820e30411",
+      "sourceUrl": "https://file.scirp.org/pdf/JHEPGC_2019031214090069.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-8",
+      "localPath": "papers/nassim-haramein/haramein-2019-electron-and-holographic-mass-solution.pdf",
+      "title": "The Electron and the Holographic Mass Solution",
+      "pages": 8,
+      "bytes": 217813,
+      "sha256": "58e503608b2da78d9fab85306df1144de2e1e8c7dfdde65ffa3a70b0d2094092",
+      "sourceUrl": "https://spacefed.com/wp-content/uploads/2024/04/Haramein2019b_TheElectronandtheHolographicMass.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-9",
+      "localPath": "papers/nassim-haramein/haramein-2016-unified-spacememory-network.pdf",
+      "title": "The Unified Spacememory Network: from Cosmogenesis to Consciousness",
+      "pages": 15,
+      "bytes": 689574,
+      "sha256": "5923617b1430b6f654e2dde4b86942378358c2e2ddee38e21cd20132c911d541",
+      "sourceUrl": "https://www.neuroquantology.com/open-access/The%2BUnified%2BSpacememory%2BNetwork%253A%2Bfrom%2BCosmogenesis%2Bto%2BConsciousness_6850/?download=true",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-10",
+      "localPath": "papers/nassim-haramein/haramein-2013-addendum-quantum-gravity-holographic-mass.pdf",
+      "title": "Addendum to Quantum Gravity and the Holographic Mass",
+      "pages": 2,
+      "bytes": 376512,
+      "sha256": "8f251f2dbe720c55eda14f7a7ee00eb1dae9f1793aa3fee17ce390b0c745dfc5",
+      "sourceUrl": "https://osf.io/4uhwp/download",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "corpus-11",
+      "localPath": "papers/nassim-haramein/haramein-2010-schwarzschild-proton.pdf",
+      "title": "The Schwarzschild Proton",
+      "pages": 7,
+      "bytes": 699374,
+      "sha256": "365c68f7a34eab9457c3a5eb122f2f019dc1b5365c8d79b987f2861dc62a8281",
+      "sourceUrl": "https://spacefed.com/wp-content/uploads/2024/04/haramein2010_schwarzschild_proton.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-12",
+      "localPath": "papers/nassim-haramein/haramein-2008-scale-unification-universal-scaling-law.pdf",
+      "title": "Scale Unification: A Universal Scaling Law for Organized Matter",
+      "pages": 21,
+      "bytes": 785625,
+      "sha256": "f0e72af0e1076f7b97188c8f3af1ed29e501b48382e0617907bece8bd0fcc00d",
+      "sourceUrl": "https://spacefed.com/wp-content/uploads/2025/12/Scale-Unification-%E2%80%93-A-Universal-Scaling-Law-for-Organized-Matter.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-13",
+      "localPath": "papers/nassim-haramein/haramein-2007-spinors-twistors-quaternions-spacetime-torus-topology.pdf",
+      "title": "Spinors, Twistors, Quaternions, and the Spacetime Torus Topology",
+      "pages": 18,
+      "bytes": 217457,
+      "sha256": "7d70426c786e674dac288010e5249cb23e2a2153b5ce9009f054059d7ae1ea75",
+      "sourceUrl": "https://spacefed.com/wp-content/uploads/2025/12/SPINORS-TWISTORS-QUATERNIONS-AND-THE-SPACETIME-TORUS-TOPOLOGY.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-14",
+      "localPath": "papers/nassim-haramein/haramein-2005-origin-of-spin.pdf",
+      "title": "The Origin of Spin: A Consideration of Torque and Coriolis Forces in Einstein's Field Equations and Grand Unification Theory",
+      "pages": 16,
+      "bytes": 204312,
+      "sha256": "7f7070d5726aa3ca85eb9067156382b9f4f7d500867782c4db4d971bc942ec7f",
+      "sourceUrl": "http://www.noeticadvancedstudies.us/Rauscher-02.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "corpus-15",
+      "localPath": "papers/nassim-haramein/haramein-2005-collective-coherent-oscillation-plasma-modes.pdf",
+      "title": "Collective Coherent Oscillation Plasma Modes in Surrounding Media of Black Holes and Vacuum Structure",
+      "pages": 53,
+      "bytes": 679717,
+      "sha256": "70fa24a3ec74b13f17634f78dd5b098f857bd2307dc24fa68b94fdd99325782c",
+      "sourceUrl": "https://spacefed.com/wp-content/uploads/2025/12/Collective-Coherent-Oscillation-Plasma-Modes-in-Surrounding-Media-of-Black-Holes-and-Vacuum-Structure-%E2%80%93-Quantum-Processes-with-Considerations-of-Spacetime-Torque-and-Coriolis-Forces.pdf",
+      "family": "context-corpus",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    }
+  ],
+  "earthMarkdown": [
+    {
+      "id": "earth-001",
+      "localPath": "EARTH/A Full Publication/Safe Paper/For Your Understanding.md",
+      "title": "For Your Understanding",
+      "bytes": 3428,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-002",
+      "localPath": "EARTH/A Full Publication/Safe Paper/Lexicon.md",
+      "title": "Lexicon",
+      "bytes": 16100,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-003",
+      "localPath": "EARTH/A Full Publication/Safe Paper/New Maths.md",
+      "title": "New Maths",
+      "bytes": 6388,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-004",
+      "localPath": "EARTH/A Full Publication/Safe Paper/Theory Paper.md",
+      "title": "Theory Paper",
+      "bytes": 4403,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-005",
+      "localPath": "EARTH/A Full Publication/Theorem/Boson Isomorphism.md",
+      "title": "Boson Isomorphism",
+      "bytes": 3635,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-006",
+      "localPath": "EARTH/A Full Publication/Theorem/Coupling Theorem.md",
+      "title": "Coupling Theorem",
+      "bytes": 3859,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-007",
+      "localPath": "EARTH/A Full Publication/Theorem/Curvature Theorem.md",
+      "title": "Curvature Theorem",
+      "bytes": 3664,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-008",
+      "localPath": "EARTH/A Full Publication/Theorem/Fermion Theorem.md",
+      "title": "Fermion Theorem",
+      "bytes": 7580,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-009",
+      "localPath": "EARTH/A Full Publication/Theorem/Fixed Point Uniqueness.md",
+      "title": "Fixed Point Uniqueness",
+      "bytes": 3327,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-010",
+      "localPath": "EARTH/A Full Publication/Theorem/Growth.md",
+      "title": "Growth",
+      "bytes": 3610,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-011",
+      "localPath": "EARTH/A Full Publication/Theorem/Master List – Cosmological Scale.md",
+      "title": "Master List – Cosmological Scale",
+      "bytes": 18145,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-012",
+      "localPath": "EARTH/A Full Publication/Theorem/Metric Theorem.md",
+      "title": "Metric Theorem",
+      "bytes": 2814,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-013",
+      "localPath": "EARTH/A Full Publication/Theorem/Neuroscience Non-emergence.md",
+      "title": "Neuroscience Non-emergence",
+      "bytes": 2216,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-014",
+      "localPath": "EARTH/A Full Publication/Theorem/Phase Theorem.md",
+      "title": "Phase Theorem",
+      "bytes": 3520,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-015",
+      "localPath": "EARTH/A Full Publication/Theorem/Phi.md",
+      "title": "Phi",
+      "bytes": 2964,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-016",
+      "localPath": "EARTH/A Full Publication/Theorem/Pi.md",
+      "title": "Pi",
+      "bytes": 3459,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-017",
+      "localPath": "EARTH/A Full Publication/Theorem/Planck Constant from G-R Twist Counting.md",
+      "title": "Planck Constant from G-R Twist Counting",
+      "bytes": 3724,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "earth-018",
+      "localPath": "EARTH/A Full Publication/Theorem/Quantum Superposition.md",
+      "title": "Quantum Superposition",
+      "bytes": 5662,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "earth-019",
+      "localPath": "EARTH/A Full Publication/Theorem/QuantumGravity.md",
+      "title": "QuantumGravity",
+      "bytes": 11526,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "planck-five-forms",
+        "complex-planck-surfaces"
+      ]
+    },
+    {
+      "id": "earth-020",
+      "localPath": "EARTH/A Full Publication/Theorem/Quasicrystal Projection.md",
+      "title": "Quasicrystal Projection",
+      "bytes": 3935,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-021",
+      "localPath": "EARTH/A Full Publication/Theorem/R(3) Theorem.md",
+      "title": "R(3) Theorem",
+      "bytes": 3008,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-022",
+      "localPath": "EARTH/A Full Publication/Theorem/Response to GOOLSBY777.md",
+      "title": "Response to GOOLSBY777",
+      "bytes": 42164,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-023",
+      "localPath": "EARTH/A Full Publication/Theorem/Strand-Sharing.md",
+      "title": "Strand-Sharing",
+      "bytes": 5636,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-024",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers.md",
+      "title": "Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+      "bytes": 9532,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots",
+        "constructive-twisted-zeros",
+        "companion-matrix-flow"
+      ]
+    },
+    {
+      "id": "earth-025",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density.md",
+      "title": "Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+      "bytes": 7848,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-026",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist.md",
+      "title": "Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+      "bytes": 8490,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-027",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem BIO-4 – The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table.md",
+      "title": "Theorem BIO-4 – The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table",
+      "bytes": 9582,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-028",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate.md",
+      "title": "Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+      "bytes": 10691,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-029",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-1 – Atomic Nuclei Are Prime Torus Knots (p,q).md",
+      "title": "Theorem CHEM-1 – Atomic Nuclei Are Prime Torus Knots (p,q)",
+      "bytes": 5150,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots",
+        "constructive-twisted-zeros",
+        "companion-matrix-flow"
+      ]
+    },
+    {
+      "id": "earth-030",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil.md",
+      "title": "Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+      "bytes": 8954,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots"
+      ]
+    },
+    {
+      "id": "earth-031",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-3 – Covalent Bond = Trefoil–Trefoil Golden-Ratio Braid.md",
+      "title": "Theorem CHEM-3 – Covalent Bond = Trefoil–Trefoil Golden-Ratio Braid",
+      "bytes": 8355,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots"
+      ]
+    },
+    {
+      "id": "earth-032",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-4 – Periodic Table = Layered Pinning of Dislocation Loops in Successive Golden Shells.md",
+      "title": "Theorem CHEM-4 – Periodic Table = Layered Pinning of Dislocation Loops in Successive Golden Shells",
+      "bytes": 7448,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-033",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy.md",
+      "title": "Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+      "bytes": 5516,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-034",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands.md",
+      "title": "Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+      "bytes": 5694,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-035",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points.md",
+      "title": "Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+      "bytes": 5764,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-036",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization.md",
+      "title": "Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+      "bytes": 8762,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-037",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate.md",
+      "title": "Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+      "bytes": 16802,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-038",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid.md",
+      "title": "Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+      "bytes": 23802,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-039",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice.md",
+      "title": "Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+      "bytes": 25169,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "hypersphere-24d-leech"
+      ]
+    },
+    {
+      "id": "earth-040",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem GALAXY-4 – Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate.md",
+      "title": "Theorem GALAXY-4 – Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate",
+      "bytes": 25429,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-041",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology.md",
+      "title": "Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+      "bytes": 28554,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-042",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density.md",
+      "title": "Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+      "bytes": 12091,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-043",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand.md",
+      "title": "Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+      "bytes": 13868,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-044",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate.md",
+      "title": "Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+      "bytes": 13463,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-045",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning.md",
+      "title": "Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+      "bytes": 16314,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-046",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate.md",
+      "title": "Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate",
+      "bytes": 7640,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots"
+      ]
+    },
+    {
+      "id": "earth-047",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop.md",
+      "title": "Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+      "bytes": 8664,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "coherent-five-axis-units",
+        "typed-six-axis-boundary"
+      ]
+    },
+    {
+      "id": "earth-048",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice.md",
+      "title": "Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+      "bytes": 10089,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "hypersphere-24d-leech"
+      ]
+    },
+    {
+      "id": "earth-049",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-4 – Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate.md",
+      "title": "Theorem PLANET-4 – Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate",
+      "bytes": 9432,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-050",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-5 – Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs.md",
+      "title": "Theorem PLANET-5 – Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs",
+      "bytes": 10386,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-051",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density.md",
+      "title": "Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+      "bytes": 10569,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "hypersphere-24d-leech"
+      ]
+    },
+    {
+      "id": "earth-052",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer.md",
+      "title": "Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+      "bytes": 10878,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-053",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-1 – Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation.md",
+      "title": "Theorem STAR-1 – Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation",
+      "bytes": 13185,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-054",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate.md",
+      "title": "Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate",
+      "bytes": 11972,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-055",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral.md",
+      "title": "Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+      "bytes": 14128,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-056",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid.md",
+      "title": "Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+      "bytes": 13514,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-057",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-5 – Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate.md",
+      "title": "Theorem STAR-5 – Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate",
+      "bytes": 15544,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-058",
+      "localPath": "EARTH/A Full Publication/Theorem/Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot.md",
+      "title": "Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+      "bytes": 15498,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "figure-eight-gieseking-identities",
+        "hyperbolic-quartic-roots"
+      ]
+    },
+    {
+      "id": "earth-059",
+      "localPath": "EARTH/A Full Publication/Theorem/Theory-Zero.md",
+      "title": "Theory-Zero",
+      "bytes": 3017,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": [
+        "constructive-twisted-zeros",
+        "companion-matrix-flow"
+      ]
+    },
+    {
+      "id": "earth-060",
+      "localPath": "EARTH/A Full Publication/Theorem/Topological Surgery Barrier.md",
+      "title": "Topological Surgery Barrier",
+      "bytes": 4689,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-061",
+      "localPath": "EARTH/A Full Publication/Theorem/Tube Theorem.md",
+      "title": "Tube Theorem",
+      "bytes": 3342,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-062",
+      "localPath": "EARTH/A Full Publication/Theorem/Unification Theorem.md",
+      "title": "Unification Theorem",
+      "bytes": 3607,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    },
+    {
+      "id": "earth-063",
+      "localPath": "EARTH/README.md",
+      "title": "README",
+      "bytes": 3817,
+      "family": "earth-local-markdown",
+      "contextOnly": true,
+      "licenseClaim": null,
+      "conceptLinks": []
+    }
+  ]
+}

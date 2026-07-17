@@ -1,0 +1,3549 @@
+{
+  "schemaVersion": 1,
+  "acquisitionDate": "2026-07-17",
+  "sourcePolicy": "Original source bytes are preserved; generated artifacts are stored separately.",
+  "recipeCount": 288,
+  "wallCount": 351,
+  "preserved": [
+    {
+      "id": "constants-yaml",
+      "originalPath": "/home/braulio/.local/share/opencode/tool-output/tool_f70257ac8001812KX98v3Yixbl",
+      "preservedPath": "sources/constants.yaml",
+      "sha256": "835a383b36bb21d9cd2dff6bb44cec9f2515a01e0fb5740f31f7053735c2bcf9",
+      "bytes": 164459
+    },
+    {
+      "id": "symbols-csv",
+      "originalPath": "/tmp/opencode/physics-monastery/symbols.csv",
+      "preservedPath": "sources/symbols.csv",
+      "sha256": "3ee17b931be8c76b33d2e9e5aacb5b6ccee82ff438d14200fadb68ad52c7d02f",
+      "bytes": 8696
+    },
+    {
+      "id": "published-output",
+      "originalPath": "/tmp/opencode/physics-monastery/latest-output.txt",
+      "preservedPath": "sources/latest-output.txt",
+      "sha256": "eb0308a1a8687d9e01c98be5142da1abef3310ccc618c30e293689def428c210",
+      "bytes": 82761
+    },
+    {
+      "id": "number-walls-index",
+      "originalPath": "/tmp/opencode/physics-monastery/number-walls-index.json",
+      "preservedPath": "sources/number-walls-index.json",
+      "sha256": "201763c4903eeb3d77e09742cae889e1516ac06093210e231dcb39ff2db456ea",
+      "bytes": 232012
+    }
+  ],
+  "walls": [
+    {
+      "id": "catalan",
+      "filename": "catalan.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/catalan.json",
+      "status": 200,
+      "sha256": "5589260ff8ef8c6c394c6c31c8d7af7d199d408248e09d2248a32f849569474b",
+      "bytes": 390330,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "fibonacci",
+      "filename": "fibonacci.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/fibonacci.json",
+      "status": 200,
+      "sha256": "e0d85ef28d9f1a50477070a38f2f50391a9e120a9166c109dc663c264356ecca",
+      "bytes": 32013,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "lucas",
+      "filename": "lucas.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/lucas.json",
+      "status": 200,
+      "sha256": "db52937413db2857e30a1cb08d047cb1492ca4e5f8869a83cef3c190017ef859",
+      "bytes": 32078,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "thue-morse",
+      "filename": "thue-morse.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/thue-morse.json",
+      "status": 200,
+      "sha256": "eb02e47caf014146cb6f855bd6c59ad8166d596102b2ba24fc2a2fe243ef69cf",
+      "bytes": 32388,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "triangular",
+      "filename": "triangular.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/triangular.json",
+      "status": 200,
+      "sha256": "996907839b33b9c474edfce002970b631bd70a0ee44877f9fc8ba10ba28b8992",
+      "bytes": 30737,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "squares",
+      "filename": "squares.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/squares.json",
+      "status": 200,
+      "sha256": "4caea5af4526a8dd3789ec9f25118e56931397c8234280f62d1fcf5435a94e05",
+      "bytes": 30820,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "pentagonal",
+      "filename": "pentagonal.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/pentagonal.json",
+      "status": 200,
+      "sha256": "5785ebcb00482c85df1e19c4e5c148876f90b8e968a1d20c9dc2d8ba0cbfd892",
+      "bytes": 31016,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "cubes",
+      "filename": "cubes.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/cubes.json",
+      "status": 200,
+      "sha256": "7c8017e12db2144ba3bfca1c7c14db761269ccb3aeb629b168e1aa3908efc568",
+      "bytes": 32300,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "partition",
+      "filename": "partition.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/partition.json",
+      "status": 200,
+      "sha256": "de11c8310e024619173517616065d9bb5ab0245f63a487b097a411f67801e544",
+      "bytes": 62737,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "kolakoski",
+      "filename": "kolakoski.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/kolakoski.json",
+      "status": 200,
+      "sha256": "0e5bd3e51a74e969d62f838f03ce805bf85aa8e2c4826b2de6ba5f45107b5103",
+      "bytes": 37081,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "powers-of-two",
+      "filename": "powers-of-two.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/powers-of-two.json",
+      "status": 200,
+      "sha256": "15baf51338ee0f812d7ce4afa82d326a5783f0c1e03d511d8fd35413b57d79a9",
+      "bytes": 32896,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "powers-of-three",
+      "filename": "powers-of-three.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/powers-of-three.json",
+      "status": 200,
+      "sha256": "847d9cc4e7b65712088c2607248ac72ef28ebbcd36070c49772937dd8ae37ec6",
+      "bytes": 34641,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "motzkin",
+      "filename": "motzkin.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/motzkin.json",
+      "status": 200,
+      "sha256": "44d081e363d0111ce6f53248975b8b62bbab60a82965dd0e9dc374580e08dbbc",
+      "bytes": 259738,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "central-binomial",
+      "filename": "central-binomial.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/central-binomial.json",
+      "status": 200,
+      "sha256": "bdf4e8f83e29e0a02d2a685ba43d8a89b3ce2e8bdbab9585040cfac78c8d2956",
+      "bytes": 414875,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "apery",
+      "filename": "apery.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/apery.json",
+      "status": 200,
+      "sha256": "a571d3f5f5ec12d5ac0337961793942e1b8df5551ea262b0ed2cd3565b24d1d0",
+      "bytes": 2414571,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "bell",
+      "filename": "bell.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/bell.json",
+      "status": 200,
+      "sha256": "9f2c888ea41c9e555c8a7196183a6e8ea89817923626065b673c9ca3b905b30a",
+      "bytes": 1647044,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "padovan",
+      "filename": "padovan.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/padovan.json",
+      "status": 200,
+      "sha256": "f0e8a0b8e2e968553217f52adf96304c83cf53da61dc3b03b30b775f22d54e3d",
+      "bytes": 31427,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "recaman",
+      "filename": "recaman.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/recaman.json",
+      "status": 200,
+      "sha256": "83b5147ad2fcc7908f3d17bafc9d49cbee5301c5c50cc47485323751d027c816",
+      "bytes": 97092,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "phi_0-digits",
+      "filename": "phi_0-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/phi_0-digits.json",
+      "status": 200,
+      "sha256": "9b0e9d93fd3826e46be10f0c47cc442b1c97f88b4fac9af4fc29ce7e7c9e7b48",
+      "bytes": 71395,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "phi_1-digits",
+      "filename": "phi_1-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/phi_1-digits.json",
+      "status": 200,
+      "sha256": "710151efcc65988a5b4009a274f9ee7400259bb7d05cf850fe5a5ea42605a21c",
+      "bytes": 75244,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "phi_2-digits",
+      "filename": "phi_2-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/phi_2-digits.json",
+      "status": 200,
+      "sha256": "7c3f0426d34e4c9436e3e61315cbda06597b5957b89b4058cdc5ea341402e353",
+      "bytes": 74523,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "phi_3-digits",
+      "filename": "phi_3-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/phi_3-digits.json",
+      "status": 200,
+      "sha256": "d761f41bfa03601802d317c7e6a29103f0f16cd736f502f18402955b699a5950",
+      "bytes": 73858,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "phi_4-digits",
+      "filename": "phi_4-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/phi_4-digits.json",
+      "status": 200,
+      "sha256": "b6360539bef26925a8dddf3e0f7f9a84049f05872e9c8c70d047f35e5d23dccb",
+      "bytes": 73302,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "hyperbolic-inversion-boundary-digits",
+      "filename": "hyperbolic-inversion-boundary-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/hyperbolic-inversion-boundary-digits.json",
+      "status": 200,
+      "sha256": "415855ab48159ac95f911a06afeac475622935eeb2703bbb3175362fb66c288d",
+      "bytes": 77893,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "zhe_1-digits",
+      "filename": "zhe_1-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/zhe_1-digits.json",
+      "status": 200,
+      "sha256": "3a6fdc2bf039eb5c5539848c57157061cb930181098f255063e151a2fb8b7677",
+      "bytes": 72123,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "zhe_2-digits",
+      "filename": "zhe_2-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/zhe_2-digits.json",
+      "status": 200,
+      "sha256": "b0c4dc1b4abbbe1dac7f5d70ea312728adb62049bc9814034e39aacfa40914f0",
+      "bytes": 73100,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "zhe_r-digits",
+      "filename": "zhe_r-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/zhe_r-digits.json",
+      "status": 200,
+      "sha256": "48a042bf2c7102b50a090870405c106b239965169545ea26823143ac5095a257",
+      "bytes": 71093,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "zhe_theta-digits",
+      "filename": "zhe_theta-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/zhe_theta-digits.json",
+      "status": 200,
+      "sha256": "0d91ce60aa96d099a08c881dd37a9b9bf1ad79d2d928356c04c20346f45dfac6",
+      "bytes": 74896,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "gieseking-constant-digits",
+      "filename": "gieseking-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/gieseking-constant-digits.json",
+      "status": 200,
+      "sha256": "7db4bd94c3813e1b4f08d216e0666e571ce07e92913d4ecbc82f38fca38fb519",
+      "bytes": 73705,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "v-fe-digits",
+      "filename": "v-fe-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/v-fe-digits.json",
+      "status": 200,
+      "sha256": "cb24148704591aeab9339e7e8733d1a994f333fae2f10f654e9a01d008aa255c",
+      "bytes": 74531,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "catalan-constant-digits",
+      "filename": "catalan-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/catalan-constant-digits.json",
+      "status": 200,
+      "sha256": "cd7c5f15dcfb335b92c20b920e25469af81f7a06fc77aad563ed64e5befae128",
+      "bytes": 72875,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "domino-tiling-constant-digits",
+      "filename": "domino-tiling-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/domino-tiling-constant-digits.json",
+      "status": 200,
+      "sha256": "d9780f3fa0b5b656eedffea50450c8cd50001f59044f9a6a28cfbc2415ae5c14",
+      "bytes": 74649,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "dimer-constant-digits",
+      "filename": "dimer-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/dimer-constant-digits.json",
+      "status": 200,
+      "sha256": "a6063da05fe9289f6a1dd14fed95d70f7ffe65ed8fe1dff513ae9329bc60608d",
+      "bytes": 71534,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "omega-2-constant-digits",
+      "filename": "omega-2-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/omega-2-constant-digits.json",
+      "status": 200,
+      "sha256": "3dec5ebaede72f6334c9181661454e956c88a5aba1e1c801eef8594bee61be96",
+      "bytes": 74488,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "golden-ratio-digits",
+      "filename": "golden-ratio-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/golden-ratio-digits.json",
+      "status": 200,
+      "sha256": "3461d01e921cc3758d65c7527cb9eddf21ccc1eca8a3134f17d54d4e24a533b2",
+      "bytes": 74400,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "archimedes-constant-digits",
+      "filename": "archimedes-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/archimedes-constant-digits.json",
+      "status": 200,
+      "sha256": "1a4c6870e3567ac2b34bc485f0c24b4cbcb7d5870b6c689436ab5b471662cd8e",
+      "bytes": 75256,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "universal-parabolic-constant-digits",
+      "filename": "universal-parabolic-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/universal-parabolic-constant-digits.json",
+      "status": 200,
+      "sha256": "51310c1e52ae107d2e55777046fd2cf9edd711c1e4b3d51ecaec25ebfbd0872e",
+      "bytes": 75251,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "arc-length-of-unit-lemniscate-digits",
+      "filename": "arc-length-of-unit-lemniscate-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/arc-length-of-unit-lemniscate-digits.json",
+      "status": 200,
+      "sha256": "dcf137ebc8c6e423d24b756124e6eceec4a5d6a084eb9cd95f8b56826afe931c",
+      "bytes": 71349,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "lemniscate-constant-digits",
+      "filename": "lemniscate-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/lemniscate-constant-digits.json",
+      "status": 200,
+      "sha256": "b154aa5baf1282e777c4f4c8f7739da5ac2b6a3ae5a0747c1b176033bff27257",
+      "bytes": 74352,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "first-lemniscate-constant-digits",
+      "filename": "first-lemniscate-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/first-lemniscate-constant-digits.json",
+      "status": 200,
+      "sha256": "83a327051ed1cb069fbb015cc37bc25fd836bd9beb51041c045f5e6f5e2ddbde",
+      "bytes": 73683,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "second-lemniscate-constant-digits",
+      "filename": "second-lemniscate-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/second-lemniscate-constant-digits.json",
+      "status": 200,
+      "sha256": "bcf03a7769a17e3008b949aa8b139e15c1a57856712cc31b5c1241535f8b088d",
+      "bytes": 75499,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "ubiquitous-constant-digits",
+      "filename": "ubiquitous-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/ubiquitous-constant-digits.json",
+      "status": 200,
+      "sha256": "d6c7d28e0a1579e422dd7068c8f7e4885a49dfd02ac6b5293a4bc137455312d8",
+      "bytes": 74801,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "gauss-constant-digits",
+      "filename": "gauss-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/gauss-constant-digits.json",
+      "status": 200,
+      "sha256": "2dffe8e27de6d708556c95ff3dc8977efc83da34ac1a24b052b99e901a2656fd",
+      "bytes": 74995,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "weierstrass-constant-digits",
+      "filename": "weierstrass-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/weierstrass-constant-digits.json",
+      "status": 200,
+      "sha256": "a042651eeff5690806815daa38a516cf3e2211bdf37fadb04b22757cf475516b",
+      "bytes": 73966,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "continued-fraction-constant-digits",
+      "filename": "continued-fraction-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/continued-fraction-constant-digits.json",
+      "status": 200,
+      "sha256": "e822a96502a3d76de423a3d39a6b2d0fe7a0f56cab812dd9a736f19587a66a41",
+      "bytes": 75216,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "ramanujan-first-continued-fraction-constant-digits",
+      "filename": "ramanujan-first-continued-fraction-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/ramanujan-first-continued-fraction-constant-digits.json",
+      "status": 200,
+      "sha256": "ea2f7ae6e59c00b57137a4ef694dd9824d71386c9f04b52de7f9e6c3d6650798",
+      "bytes": 73986,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "liouville-constant-digits",
+      "filename": "liouville-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/liouville-constant-digits.json",
+      "status": 200,
+      "sha256": "1ed14b8c7ac0e855f935d000bbdeb3bcc8a229cbbe88b75bda9926c43ca3333d",
+      "bytes": 30134,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "madelung-constant-digits",
+      "filename": "madelung-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/madelung-constant-digits.json",
+      "status": 200,
+      "sha256": "918126559c23ae4aed88eff2cd90ce8610fce070fee3c3c2e0ad71236d685dbe",
+      "bytes": 71688,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "prime-constant-digits",
+      "filename": "prime-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/prime-constant-digits.json",
+      "status": 200,
+      "sha256": "0941f7ef4c0ad703e6102e9e7e312be8e1d27ba44b2075a529d8adcbc09ae7c5",
+      "bytes": 74014,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "e-digits",
+      "filename": "e-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/e-digits.json",
+      "status": 200,
+      "sha256": "3a7582a0389f68e27cee290d3029efc377a221d574c62d505bb4f5a0fbea469f",
+      "bytes": 71404,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "euler-mascheroni-constant-digits",
+      "filename": "euler-mascheroni-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/euler-mascheroni-constant-digits.json",
+      "status": 200,
+      "sha256": "96387c0c0fad90b15679120b0de3b0ca340620139c6de49e1137cfd7dc5ad363",
+      "bytes": 72278,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "sierpinski-constant-digits",
+      "filename": "sierpinski-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/sierpinski-constant-digits.json",
+      "status": 200,
+      "sha256": "69beee6892443e6b73740a9e6b3473daa44df6ab62b8d6c7034ffd6e97de46cf",
+      "bytes": 72838,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "dottie-number-digits",
+      "filename": "dottie-number-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/dottie-number-digits.json",
+      "status": 200,
+      "sha256": "d34563c1e9d29eb8312623d2601dbf350ea3dac990bbf6299c5d97437e787bb8",
+      "bytes": 72663,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "laplace-limit-digits",
+      "filename": "laplace-limit-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/laplace-limit-digits.json",
+      "status": 200,
+      "sha256": "d3512e5bb7a409f5d4288ea036a102f7e576259f41fbaa6cbfbe96b8668fb76d",
+      "bytes": 75160,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "hyperbolic-cotangent-fixed-point-digits",
+      "filename": "hyperbolic-cotangent-fixed-point-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/hyperbolic-cotangent-fixed-point-digits.json",
+      "status": 200,
+      "sha256": "f9ca508fb72822a452279ba7cefadb6444ee440c454c312e416e66d3dea17ac6",
+      "bytes": 74626,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "bessel-root-j01-digits",
+      "filename": "bessel-root-j01-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/bessel-root-j01-digits.json",
+      "status": 200,
+      "sha256": "bab0fe81b01d1e2678d158832dd3fcfb95176968eb8bfec10bdba928d918b6aa",
+      "bytes": 74407,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "feigenbaum-alpha-digits",
+      "filename": "feigenbaum-alpha-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/feigenbaum-alpha-digits.json",
+      "status": 200,
+      "sha256": "da0ee14cb2f552531f0b49c885da0d58d78c478ebc60884a226e31e8b9ff652a",
+      "bytes": 74895,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "feigenbaum-delta-digits",
+      "filename": "feigenbaum-delta-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/feigenbaum-delta-digits.json",
+      "status": 200,
+      "sha256": "91d9b24618073c6b4078ad0aac77d2f66ec2a2e97a407c46da0ec95adf1a0405",
+      "bytes": 70401,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "silver-constant-digits",
+      "filename": "silver-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/silver-constant-digits.json",
+      "status": 200,
+      "sha256": "17c734b1636a9f7b5ff29d6de0dc808b91e8bed9c97c918a525ddf9c7da30935",
+      "bytes": 76725,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "plastic-constant-digits",
+      "filename": "plastic-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/plastic-constant-digits.json",
+      "status": 200,
+      "sha256": "68c1eae21c4ae4f5906de1cfe143c033a02b1d7710f0853be3d735da1294aa84",
+      "bytes": 73090,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "qrs-constant-digits",
+      "filename": "qrs-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/qrs-constant-digits.json",
+      "status": 200,
+      "sha256": "95f9e0fed9902906822a4e5e35f7cd91e462c33763982f45ce2e175d65a055c3",
+      "bytes": 73849,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "foias-constant-digits",
+      "filename": "foias-constant-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/foias-constant-digits.json",
+      "status": 200,
+      "sha256": "114b2e6b98f0cd63d3d6bd1185fb24ed1a892683a4d260242984911502ae02f1",
+      "bytes": 74872,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "khinchin-mean-minus-six-digits",
+      "filename": "khinchin-mean-minus-six-digits.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/khinchin-mean-minus-six-digits.json",
+      "status": 200,
+      "sha256": "2118edb960e1f76aaedc2cfac8be679bfa77c188c67907a0ef8b36e8c58a5809",
+      "bytes": 72330,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-001-hyperfine-transition-frequency-of-Cesium-133",
+      "filename": "nature-001-hyperfine-transition-frequency-of-Cesium-133.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-001-hyperfine-transition-frequency-of-Cesium-133.json",
+      "status": 200,
+      "sha256": "f40dcc492cfb0fe2d2457f16c49110262c760ff94f498c152d4281566581b8d3",
+      "bytes": 73905,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-002-electron-volt-hertz-relationship",
+      "filename": "nature-002-electron-volt-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-002-electron-volt-hertz-relationship.json",
+      "status": 200,
+      "sha256": "98bd65ac931a4d903f0fa643029fa9d4335df253d85defc35213b9f60ae3405a",
+      "bytes": 73765,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-003-joule-hertz-relationship",
+      "filename": "nature-003-joule-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-003-joule-hertz-relationship.json",
+      "status": 200,
+      "sha256": "d9661e54e1cbab6bebe48fbdccf50594c20813fb8feda4089cbc6766c28be459",
+      "bytes": 74236,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-004-hertz-joule-relationship",
+      "filename": "nature-004-hertz-joule-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-004-hertz-joule-relationship.json",
+      "status": 200,
+      "sha256": "0bd05b99c6f416dff0c70d78ba23d32c2921b77c42e1a00a1aa9d7cd6136219a",
+      "bytes": 74899,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-005-hertz-electron-volt-relationship",
+      "filename": "nature-005-hertz-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-005-hertz-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "db497a8ad61c4b8962ca75cd59832671867cc9e2f863853d7ef7c756cb9df90a",
+      "bytes": 73531,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-006-natural-unit-of-action-in-ev-s",
+      "filename": "nature-006-natural-unit-of-action-in-ev-s.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-006-natural-unit-of-action-in-ev-s.json",
+      "status": 200,
+      "sha256": "2a2d8ed5d1ad9e52a2c0ba639821dc972cec345224552ee94c36380a09920745",
+      "bytes": 77505,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-007-reduced-planck-constant",
+      "filename": "nature-007-reduced-planck-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-007-reduced-planck-constant.json",
+      "status": 200,
+      "sha256": "3fc9daf3c7fd94d9f1a253da420005d2e21a3e93252622c5f767a35c820bc664",
+      "bytes": 72662,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-008-planck-constant",
+      "filename": "nature-008-planck-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-008-planck-constant.json",
+      "status": 200,
+      "sha256": "13797ab90f957ddceb06ce95374bf95bc9d03d422c52b1bf40e7ae76d0ac24b5",
+      "bytes": 74795,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-009-quantum-of-circulation",
+      "filename": "nature-009-quantum-of-circulation.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-009-quantum-of-circulation.json",
+      "status": 200,
+      "sha256": "f0a06a9f7f29943d4817fe9ff084d30779ab00c896681c10da157cb5d4015e7f",
+      "bytes": 74857,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-010-quantum-of-circulation-times-2",
+      "filename": "nature-010-quantum-of-circulation-times-2.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-010-quantum-of-circulation-times-2.json",
+      "status": 200,
+      "sha256": "9d3a18f0cf6ee6ff4d07c1b0d53e890cfa9bfb715605c8f13e29bb3483d8bb88",
+      "bytes": 75937,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-011-bohr-magneton-in-ev-per-t",
+      "filename": "nature-011-bohr-magneton-in-ev-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-011-bohr-magneton-in-ev-per-t.json",
+      "status": 200,
+      "sha256": "3f642929df242f8b4332b350f0c82eed84c3b5d00ff9b59ab3dd4cfac4fafff9",
+      "bytes": 73590,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-012-nuclear-magneton-in-ev-per-t",
+      "filename": "nature-012-nuclear-magneton-in-ev-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-012-nuclear-magneton-in-ev-per-t.json",
+      "status": 200,
+      "sha256": "90e9325c7d13dade4cf4c69cdcf3e66a71c1359a2b90859ca34d9001864cfeb8",
+      "bytes": 73195,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-013-inverse-of-conductance-quantum",
+      "filename": "nature-013-inverse-of-conductance-quantum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-013-inverse-of-conductance-quantum.json",
+      "status": 200,
+      "sha256": "dbfa6213cdc650f5cd680761aa2c94cfe943b060c1f1bf4aeee644fd05e43afe",
+      "bytes": 74191,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-014-conductance-quantum",
+      "filename": "nature-014-conductance-quantum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-014-conductance-quantum.json",
+      "status": 200,
+      "sha256": "30c7fe3639448adaba64eb56664ce170988c9e3af510613ae0662a7af73f77f0",
+      "bytes": 75709,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-015-electron-volt",
+      "filename": "nature-015-electron-volt.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-015-electron-volt.json",
+      "status": 200,
+      "sha256": "5f39386886d2d74d77324bc5e0e33e28ebeb65ceae3bee906ce6f2de778f5793",
+      "bytes": 74525,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-016-joule-electron-volt-relationship",
+      "filename": "nature-016-joule-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-016-joule-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "9d152fd20f76113f500ebb25cdef4237a280472b04432b8de45f60c3e5e577e6",
+      "bytes": 74436,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-017-electron-charge-to-mass-quotient",
+      "filename": "nature-017-electron-charge-to-mass-quotient.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-017-electron-charge-to-mass-quotient.json",
+      "status": 200,
+      "sha256": "1779325ddd777a7ada57c4a038a8166117f3713dc370d63b756918e77e9be3c6",
+      "bytes": 74125,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-018-proton-charge-to-mass-quotient",
+      "filename": "nature-018-proton-charge-to-mass-quotient.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-018-proton-charge-to-mass-quotient.json",
+      "status": 200,
+      "sha256": "6375c52d7492d5a3c804988e8cc3f27850134df3a1493c6a5a20aa75a4cef226",
+      "bytes": 73392,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-019-bohr-magneton-in-hz-per-t",
+      "filename": "nature-019-bohr-magneton-in-hz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-019-bohr-magneton-in-hz-per-t.json",
+      "status": 200,
+      "sha256": "17805b3aecc12293374fe5bf4c5a2fec48e70e6a00ec0f9b650885a417a840da",
+      "bytes": 75022,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-020-nuclear-magneton-in-mhz-per-t",
+      "filename": "nature-020-nuclear-magneton-in-mhz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-020-nuclear-magneton-in-mhz-per-t.json",
+      "status": 200,
+      "sha256": "853f096ab3d58ebf95c47d7a7214ceb19fac66d7b7d0e46e0a437758b51c7713",
+      "bytes": 72506,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-021-lattice-parameter-of-silicon",
+      "filename": "nature-021-lattice-parameter-of-silicon.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-021-lattice-parameter-of-silicon.json",
+      "status": 200,
+      "sha256": "e2964e82fed06bf1ef7e06c1402a54f073265aa7e3011137d1f345c07db04f03",
+      "bytes": 72680,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-022-lattice-spacing-of-ideal-si-220",
+      "filename": "nature-022-lattice-spacing-of-ideal-si-220.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-022-lattice-spacing-of-ideal-si-220.json",
+      "status": 200,
+      "sha256": "1ab9e30946213cc24c93aab35d4310ae81e9b64674c44cd6fa2a2533f794a3c7",
+      "bytes": 74803,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-023-rydberg-constant",
+      "filename": "nature-023-rydberg-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-023-rydberg-constant.json",
+      "status": 200,
+      "sha256": "99fe8f3d9ab17c5285986b8798c346f9b394dad3e3c3c8d0a9137f63f1d6b865",
+      "bytes": 75843,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-024-hartree-inverse-meter-relationship",
+      "filename": "nature-024-hartree-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-024-hartree-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "1804555c1fd4bbf1d2984a8507d7144874f8e66bf9a20f82fe68c85ab8c7e568",
+      "bytes": 74678,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-025-inverse-meter-hartree-relationship",
+      "filename": "nature-025-inverse-meter-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-025-inverse-meter-hartree-relationship.json",
+      "status": 200,
+      "sha256": "4aa0ae478632b75c65d7cb991ca2a6ba5e0f5a5fe42d43856454953439a08e56",
+      "bytes": 72747,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-026-conventional-value-of-ampere-90",
+      "filename": "nature-026-conventional-value-of-ampere-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-026-conventional-value-of-ampere-90.json",
+      "status": 200,
+      "sha256": "84bd28033dae04db2164d03a3a14eea4edb54a7da55fbc6ab217433b7880e48a",
+      "bytes": 74204,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-027-conventional-value-of-coulomb-90",
+      "filename": "nature-027-conventional-value-of-coulomb-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-027-conventional-value-of-coulomb-90.json",
+      "status": 200,
+      "sha256": "28a3172fc6ac670b619ce1622a87247435bb51a60977f2f0e22c67633d7b8d91",
+      "bytes": 74207,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-028-bohr-magneton-in-inverse-meter-per-tesla",
+      "filename": "nature-028-bohr-magneton-in-inverse-meter-per-tesla.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-028-bohr-magneton-in-inverse-meter-per-tesla.json",
+      "status": 200,
+      "sha256": "444eb869040e76ed26e9b6bda2f851bb846e4c6ee4aa1a65a1ff5762e9e4dfe5",
+      "bytes": 70649,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-029-nuclear-magneton-in-inverse-meter-per-tesla",
+      "filename": "nature-029-nuclear-magneton-in-inverse-meter-per-tesla.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-029-nuclear-magneton-in-inverse-meter-per-tesla.json",
+      "status": 200,
+      "sha256": "93d26763a128542eba73c3d8b6ec806c7561ec75ca3ba5cd45bd3075c93c6473",
+      "bytes": 74230,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-030-coulombs-constant",
+      "filename": "nature-030-coulombs-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-030-coulombs-constant.json",
+      "status": 200,
+      "sha256": "4c5f81f33fde3f0c3df31e228ca3660ac427d507f19b06fbe761f8ff02c46a4f",
+      "bytes": 72472,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-031-atomic-unit-of-permittivity",
+      "filename": "nature-031-atomic-unit-of-permittivity.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-031-atomic-unit-of-permittivity.json",
+      "status": 200,
+      "sha256": "06389172006cc5118379d6e15ee1f06e6fb3d635e01ce46d8360a587eb0869b6",
+      "bytes": 74863,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-032-vacuum-electric-permittivity",
+      "filename": "nature-032-vacuum-electric-permittivity.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-032-vacuum-electric-permittivity.json",
+      "status": 200,
+      "sha256": "a69f3c3d20424433a8711b5b5ec74eaab5961547806fcbc2471a53438287106a",
+      "bytes": 77164,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-033-atomic-unit-of-time",
+      "filename": "nature-033-atomic-unit-of-time.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-033-atomic-unit-of-time.json",
+      "status": 200,
+      "sha256": "4f060bc9f3065e0df988aeb420e89b321b00471e1878e82aa710778fe40830b0",
+      "bytes": 74661,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-034-hertz-hartree-relationship",
+      "filename": "nature-034-hertz-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-034-hertz-hartree-relationship.json",
+      "status": 200,
+      "sha256": "1d9a1d2ddf1a606a3af1fbde8f93d6137d950889f1ccecd737c69e4e0b73d680",
+      "bytes": 75336,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-035-hartree-hertz-relationship",
+      "filename": "nature-035-hartree-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-035-hartree-hertz-relationship.json",
+      "status": 200,
+      "sha256": "08fad57524071d5ca19c858cbafc0d4a914e228a7deacf24ad41e6fb826a89f2",
+      "bytes": 73616,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-036-rydberg-constant-times-c-in-hz",
+      "filename": "nature-036-rydberg-constant-times-c-in-hz.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-036-rydberg-constant-times-c-in-hz.json",
+      "status": 200,
+      "sha256": "ce310185dedd66c26d117a60bf455701e523abf8f4ec7a44115abe8742898974",
+      "bytes": 72501,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-037-neutron-proton-magnetic-moment-ratio",
+      "filename": "nature-037-neutron-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-037-neutron-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "99ad1df07f51d8b9162bf4e08aef8324de0fc2026cc490c9a4745037b7e981c5",
+      "bytes": 74074,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-038-proton-neutron-magnetic-moment-ratio",
+      "filename": "nature-038-proton-neutron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-038-proton-neutron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "f62d9a11bba179a4b4957b5588ab3f45f211a874dd5ba71fc3dfaa795e2d744d",
+      "bytes": 75699,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-039-electron-neutron-magnetic-moment-ratio",
+      "filename": "nature-039-electron-neutron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-039-electron-neutron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "91d1105fc2dad22c187dcbd1c9ad84cc80dc61b0eff39033cc2a723738ee12aa",
+      "bytes": 72097,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-040-neutron-electron-magnetic-moment-ratio",
+      "filename": "nature-040-neutron-electron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-040-neutron-electron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "5ecf58129fd77cd468f9013c2a1a2731e2c9652e22d90d0942e35be19a706f00",
+      "bytes": 73816,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-041-atomic-unit-of-magnetic-dipole-moment",
+      "filename": "nature-041-atomic-unit-of-magnetic-dipole-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-041-atomic-unit-of-magnetic-dipole-moment.json",
+      "status": 200,
+      "sha256": "cf5c9e2fac1c6504e09e5cebaa722988172ef327c7dd1eba68c09869fd3193be",
+      "bytes": 73842,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-042-bohr-magneton",
+      "filename": "nature-042-bohr-magneton.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-042-bohr-magneton.json",
+      "status": 200,
+      "sha256": "a94b4ff77a40e19e799e8e6d4628ad4945e2b7e80074b0504bf616bd82e619cb",
+      "bytes": 73011,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-043-nuclear-magneton",
+      "filename": "nature-043-nuclear-magneton.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-043-nuclear-magneton.json",
+      "status": 200,
+      "sha256": "4b79fff91d7dc8980f9a2dd0e89ae0383b99ed27de80d2ad38d63d6efdb38c90",
+      "bytes": 72538,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-044-triton-magnetic-moment",
+      "filename": "nature-044-triton-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-044-triton-magnetic-moment.json",
+      "status": 200,
+      "sha256": "26dea06c1e68db5a777c64d86e0c11cef021b5273bfd817e1ad7459530a354d7",
+      "bytes": 73469,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-045-triton-to-proton-magnetic-moment-ratio",
+      "filename": "nature-045-triton-to-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-045-triton-to-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "10fb6149f6004f029c62d2ab420c74b68a002c240f78198d084f153fa406a69b",
+      "bytes": 74239,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-046-triton-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-046-triton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-046-triton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "2454cfe63c0f0cf97ef34278ebf4832730d9d224698e6895a9212a19996d8e50",
+      "bytes": 74831,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-047-triton-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-047-triton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-047-triton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "62cda4aa388f64cc5d9d955215243c24fd81afbfc6a2493cbbf031961609b80f",
+      "bytes": 73274,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-048-triton-g-factor",
+      "filename": "nature-048-triton-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-048-triton-g-factor.json",
+      "status": 200,
+      "sha256": "63eb2f07d0798fd57ec1d84d448b96f238273662f6926343cc086a7a6ed52fdb",
+      "bytes": 75967,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-049-electron-muon-magnetic-moment-ratio",
+      "filename": "nature-049-electron-muon-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-049-electron-muon-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "5ad32ae48957cee624038dba2ce7eaf98b8beaec5851e9610b7da1cf6f0c3fc3",
+      "bytes": 74487,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-050-newtonian-constant-of-gravitation",
+      "filename": "nature-050-newtonian-constant-of-gravitation.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-050-newtonian-constant-of-gravitation.json",
+      "status": 200,
+      "sha256": "a1630eb82d401bc934f2def670fe782be6c2bea95bb33c2565bd674f47f2be7d",
+      "bytes": 75071,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-051-newtonian-constant-of-gravitation-over-h-bar-c",
+      "filename": "nature-051-newtonian-constant-of-gravitation-over-h-bar-c.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-051-newtonian-constant-of-gravitation-over-h-bar-c.json",
+      "status": 200,
+      "sha256": "4b173bf4f222b251039583d0f55ff4556b73363704929c8651bc6203e40554e0",
+      "bytes": 73169,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-052-neutron-mass",
+      "filename": "nature-052-neutron-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-052-neutron-mass.json",
+      "status": 200,
+      "sha256": "ad5dc4bc5c63c665027d7bbe883c36273230ce46de2370fc968eb624a2be6f0e",
+      "bytes": 76408,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-053-proton-mass",
+      "filename": "nature-053-proton-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-053-proton-mass.json",
+      "status": 200,
+      "sha256": "6c3f3346ebd6390bd00eb8c2d1b9ab2f0586de9a746b619417297c12c939c29f",
+      "bytes": 76925,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-054-deuteron-mass",
+      "filename": "nature-054-deuteron-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-054-deuteron-mass.json",
+      "status": 200,
+      "sha256": "351da111b6ab6d5d8329084a279d00fa2e0e17d4ab2b52fe564452c68ed8ef19",
+      "bytes": 73541,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-055-muon-mass",
+      "filename": "nature-055-muon-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-055-muon-mass.json",
+      "status": 200,
+      "sha256": "1f412630854ffd9f34ede6cee8d87992ae65cda53c0ac84c80a121a456ed8483",
+      "bytes": 76187,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-056-deuteron-electron-magnetic-moment-ratio",
+      "filename": "nature-056-deuteron-electron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-056-deuteron-electron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "6f878779edda75fabbc334f94c33fa35374f4285ba41c512cb59cecb7de6c41f",
+      "bytes": 76525,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-057-electron-deuteron-magnetic-moment-ratio",
+      "filename": "nature-057-electron-deuteron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-057-electron-deuteron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "8528c5250e7849549d6286747de3612274cd41c69d9f9b99d02114460aa13a75",
+      "bytes": 75572,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-058-deuteron-proton-magnetic-moment-ratio",
+      "filename": "nature-058-deuteron-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-058-deuteron-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "b1afe76b5b22131c593282bad0c6ebe7cc20ecc1ef0a4eb2fd4d5233df7a8e24",
+      "bytes": 74087,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-059-deuteron-neutron-magnetic-moment-ratio",
+      "filename": "nature-059-deuteron-neutron-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-059-deuteron-neutron-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "df0eedbef2983aa2c72bec0be9cc02207c91b85e97075225aa1c1b65f4f2cae0",
+      "bytes": 74344,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-060-deuteron-magnetic-moment",
+      "filename": "nature-060-deuteron-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-060-deuteron-magnetic-moment.json",
+      "status": 200,
+      "sha256": "080eff03d916c0a8b4422033f27bb754db390033d15439c27ea83410fd4772e6",
+      "bytes": 74805,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-061-shielded-helion-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-061-shielded-helion-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-061-shielded-helion-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "738bb48a24d90c0d7f9854ab21ea77e622b71db770d918c73550879f254053c4",
+      "bytes": 75715,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-062-shielded-helion-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-062-shielded-helion-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-062-shielded-helion-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "3115a96f41849dadc8743a31ded6ff030b32d1baecac78e86caed82caf275495",
+      "bytes": 73426,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-063-helion-g-factor",
+      "filename": "nature-063-helion-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-063-helion-g-factor.json",
+      "status": 200,
+      "sha256": "5c0b98a1d9712574898959a5852323180b8528b7e00a3b21eda9678e16cb17d8",
+      "bytes": 74624,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-064-helion-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-064-helion-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-064-helion-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "4c3adece59cc01e065e9ee915203a5483a55e84621d0ae9671213c98db39a905",
+      "bytes": 74017,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-065-helion-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-065-helion-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-065-helion-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "71dae7a9c9968f6664a200312c5e04ef69f6e5e3677f3312c66896975a9a60bd",
+      "bytes": 76086,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-066-vacuum-magnetic-permeability",
+      "filename": "nature-066-vacuum-magnetic-permeability.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-066-vacuum-magnetic-permeability.json",
+      "status": 200,
+      "sha256": "38aff508c2f3748911a36a7d20efe47781960c7944e603a1357fcec1163c2773",
+      "bytes": 74183,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-067-electron-mass",
+      "filename": "nature-067-electron-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-067-electron-mass.json",
+      "status": 200,
+      "sha256": "b758a6c7d746eec61efefe18d79108756b059d586023eaa4faaa65858e36adb8",
+      "bytes": 74026,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-068-tau-mass",
+      "filename": "nature-068-tau-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-068-tau-mass.json",
+      "status": 200,
+      "sha256": "3294936069c4b0f314cb3d577d266d6cf78ceedf2209bef65715715554ce47a5",
+      "bytes": 74124,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-069-triton-mass",
+      "filename": "nature-069-triton-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-069-triton-mass.json",
+      "status": 200,
+      "sha256": "86681297955554dc75083de90104d495793c5ea615e61d2396d69d2981fd964b",
+      "bytes": 73892,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-070-luminous-efficacy",
+      "filename": "nature-070-luminous-efficacy.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-070-luminous-efficacy.json",
+      "status": 200,
+      "sha256": "0b8fa02974c717c979641183f51089e6e700a4508b35ef24826c2c5e7214eb02",
+      "bytes": 72608,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-071-helion-mass",
+      "filename": "nature-071-helion-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-071-helion-mass.json",
+      "status": 200,
+      "sha256": "46dd3b3927dce57d7b127c60d354fd54a87b0bb800925054c73d4603c3ae548b",
+      "bytes": 73999,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-072-alpha-particle-mass",
+      "filename": "nature-072-alpha-particle-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-072-alpha-particle-mass.json",
+      "status": 200,
+      "sha256": "61639f9513265cce5b50de35e951af40392ccc2a23e9fed02b713ef71082f08e",
+      "bytes": 74583,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-073-planck-mass-energy-equivalent-in-gev",
+      "filename": "nature-073-planck-mass-energy-equivalent-in-gev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-073-planck-mass-energy-equivalent-in-gev.json",
+      "status": 200,
+      "sha256": "82feb5f8952475ff4d2bd335f23e2a85bd0ab3865c48bc5ccd810726dde3af92",
+      "bytes": 76692,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-074-von-klitzing-constant",
+      "filename": "nature-074-von-klitzing-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-074-von-klitzing-constant.json",
+      "status": 200,
+      "sha256": "8a0b5614099c586a299875f132aec3f749f80d7c4dcd45d362fcdcdff427743c",
+      "bytes": 72759,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-075-characteristic-impedance-of-vacuum",
+      "filename": "nature-075-characteristic-impedance-of-vacuum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-075-characteristic-impedance-of-vacuum.json",
+      "status": 200,
+      "sha256": "1ffc5de97cb4c037894c15864d0f16b48fd24666a00448d80ba8d5d9ef052c36",
+      "bytes": 73950,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-076-planck-electric-impedance",
+      "filename": "nature-076-planck-electric-impedance.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-076-planck-electric-impedance.json",
+      "status": 200,
+      "sha256": "98bf859a48c0ce2b1a407ad9525e948fa5cbde3fb6b6d8836f40358ead4b2edd",
+      "bytes": 74609,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-077-hertz-inverse-meter-relationship",
+      "filename": "nature-077-hertz-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-077-hertz-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "f14433ba223be43566d20a17734a057b1e36c39e113bea86081ab1ee51376eb8",
+      "bytes": 72812,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-078-atomic-unit-of-velocity",
+      "filename": "nature-078-atomic-unit-of-velocity.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-078-atomic-unit-of-velocity.json",
+      "status": 200,
+      "sha256": "7732d1e205da4cc0c8079e4831d3a4bfb7f200af0feaed2c7ba93c8b8ef26dc9",
+      "bytes": 72783,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-079-atomic-unit-of-momentum",
+      "filename": "nature-079-atomic-unit-of-momentum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-079-atomic-unit-of-momentum.json",
+      "status": 200,
+      "sha256": "f15fee40577db71ec3f4e23cda12abfda59cef79b0f56dc9cbf82eaa01ca0516",
+      "bytes": 75741,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-080-natural-unit-of-momentum",
+      "filename": "nature-080-natural-unit-of-momentum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-080-natural-unit-of-momentum.json",
+      "status": 200,
+      "sha256": "45668cb48ab9e16cab3c56a054d32e85bca886a9f35689f52c6963bd3f3e93d3",
+      "bytes": 74397,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-081-electron-volt-kilogram-relationship",
+      "filename": "nature-081-electron-volt-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-081-electron-volt-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "551c9487da6483854fae3d5c47972edfa4dd4e4225e84bf8f0e6ced8c6c6fa58",
+      "bytes": 73322,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-082-joule-kilogram-relationship",
+      "filename": "nature-082-joule-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-082-joule-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "4d64e446c83f55329d619e3365ac6c9228abde9b952b22d7f12fd32d0ca549e9",
+      "bytes": 73587,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-083-joule-atomic-mass-unit-relationship",
+      "filename": "nature-083-joule-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-083-joule-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "bc7fa21631f2242eda9cff1345c10255fbdcc0fb6d90aca7e3f499933de23e9a",
+      "bytes": 74191,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-084-atomic-mass-unit-joule-relationship",
+      "filename": "nature-084-atomic-mass-unit-joule-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-084-atomic-mass-unit-joule-relationship.json",
+      "status": 200,
+      "sha256": "73f20e454fbfb0b8b11462abdb9ecf71ce70c1c52df92f50f8cfb3d97a0285b6",
+      "bytes": 74998,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-085-natural-unit-of-momentum-in-mev-per-c",
+      "filename": "nature-085-natural-unit-of-momentum-in-mev-per-c.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-085-natural-unit-of-momentum-in-mev-per-c.json",
+      "status": 200,
+      "sha256": "3d1d7f7a0938c3f6a1cb647462de593370036a857b9339ee76a229c32b136c6b",
+      "bytes": 74793,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-086-atomic-mass-constant-energy-equivalent-in-mev",
+      "filename": "nature-086-atomic-mass-constant-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-086-atomic-mass-constant-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "fd92d0e5163671c0b9512d151b3555d44316cdb4d36ee1fa1111e428df8fa926",
+      "bytes": 74606,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-087-kilogram-joule-relationship",
+      "filename": "nature-087-kilogram-joule-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-087-kilogram-joule-relationship.json",
+      "status": 200,
+      "sha256": "4c81cc1123f90cc650f41b6b8305029ef3d7e255cc7f685adf8f7327fa2231f0",
+      "bytes": 73285,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-088-kilogram-electron-volt-relationship",
+      "filename": "nature-088-kilogram-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-088-kilogram-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "ae40c8fc36340ef602233a664e8c83e00937069c6da72d33ec77a7a8bf7c5021",
+      "bytes": 75639,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-089-neutron-proton-mass-difference-energy-equivalent",
+      "filename": "nature-089-neutron-proton-mass-difference-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-089-neutron-proton-mass-difference-energy-equivalent.json",
+      "status": 200,
+      "sha256": "fa8b01eb0ed23a001c9ff04aaf1df8090800096f53f4ac539b7ef841d9d27acb",
+      "bytes": 76404,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-090-neutron-proton-mass-energy-equivalent-in-mev",
+      "filename": "nature-090-neutron-proton-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-090-neutron-proton-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "33fce01d946c022f4e9a55369a298819a8595ba8a8674f446c5271adf215d91e",
+      "bytes": 72917,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-091-natural-unit-of-energy-in-mev",
+      "filename": "nature-091-natural-unit-of-energy-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-091-natural-unit-of-energy-in-mev.json",
+      "status": 200,
+      "sha256": "8d9155658bff1dd2e5a3d53a27a723edb6d063576be86f527adf8d017e59f44f",
+      "bytes": 74746,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-092-muon-mass-energy-equivalent-in-mev",
+      "filename": "nature-092-muon-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-092-muon-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "4ff83ac528022a6e3211c8967191c5c69541c6460c1420e8d7479fba5d586c6e",
+      "bytes": 74128,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-093-proton-mass-energy-equivalent-in-mev",
+      "filename": "nature-093-proton-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-093-proton-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "812bbc8bc892931f3b197f3f7573fe9d3ebe301d933f40b1598c8704fc04f66b",
+      "bytes": 73049,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-094-neutron-mass-energy-equivalent-in-mev",
+      "filename": "nature-094-neutron-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-094-neutron-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "efc1e3a3cb48021736e8ce55d6e2b48d85eab1741fcdb8161d23ae117f5063d6",
+      "bytes": 75167,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-095-tau-energy-equivalent",
+      "filename": "nature-095-tau-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-095-tau-energy-equivalent.json",
+      "status": 200,
+      "sha256": "84ec181d35cda91b418567012bfe2ca5f019116ab723547f54b6da32646dbf05",
+      "bytes": 73070,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-096-deuteron-mass-energy-equivalent-in-mev",
+      "filename": "nature-096-deuteron-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-096-deuteron-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "e05b13a2f6212630de263f5602d687c2af81264b4011709f91d470ce4d9bb4b3",
+      "bytes": 74500,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-097-helion-mass-energy-equivalent-in-mev",
+      "filename": "nature-097-helion-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-097-helion-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "8d929856e5f2c35c6842f96ebc1b6340f41261010626d19b221725bdf86aa028",
+      "bytes": 73548,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-098-triton-mass-energy-equivalent-in-mev",
+      "filename": "nature-098-triton-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-098-triton-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "682cc59e50f888b69970a0fbe3a9c1b626df564c11f5dcdfcf877dc18e3d7969",
+      "bytes": 73511,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-099-alpha-particle-mass-energy-equivalent-in-mev",
+      "filename": "nature-099-alpha-particle-mass-energy-equivalent-in-mev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-099-alpha-particle-mass-energy-equivalent-in-mev.json",
+      "status": 200,
+      "sha256": "ee2b1cd32b2bc233b7a09498c96b3cd5f00f6b670d967765dbbca84e2efab4df",
+      "bytes": 73091,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-100-electron-mass-energy-equivalent",
+      "filename": "nature-100-electron-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-100-electron-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "ed15dfbca9073091a8bbe3835063864fdaf60ec345e28ce5ebc5eb5fa0cdd1ba",
+      "bytes": 75949,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-101-muon-mass-energy-equivalent",
+      "filename": "nature-101-muon-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-101-muon-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "4f7f15ccd739ac492edf4458d86077fe622d0e5a90c71fee9c07e5bfc5c401e2",
+      "bytes": 74205,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-102-proton-mass-energy-equivalent",
+      "filename": "nature-102-proton-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-102-proton-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "a6bb14914f4c39470cde6f1c3b4ab3e7f1a40a45cee3bc4093312c22c0c10571",
+      "bytes": 75810,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-103-neutron-mass-energy-equivalent",
+      "filename": "nature-103-neutron-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-103-neutron-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "268ca47995d2858b12b6de4c48fb352a23ee9ba063a65d4789c8216ef90452d6",
+      "bytes": 74725,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-104-tau-mass-energy-equivalent",
+      "filename": "nature-104-tau-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-104-tau-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "9a849df8310377cf2ee26eab30ede2ef44ecac3ab642f5ba0a6ab26bd6b0eab7",
+      "bytes": 74368,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-105-deuteron-mass-energy-equivalent",
+      "filename": "nature-105-deuteron-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-105-deuteron-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "711e9b4b04ae519cd9cecb3577aeb90d61a0b67c03add1dc67ebb4458b8aa857",
+      "bytes": 73445,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-106-helion-mass-energy-equivalent",
+      "filename": "nature-106-helion-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-106-helion-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "6811efc461fca9a273e37fc443a6dbab35536efa07c55bccec1cd0a75e4ce630",
+      "bytes": 73631,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-107-triton-mass-energy-equivalent",
+      "filename": "nature-107-triton-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-107-triton-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "2774d93126ad19cceef8140f41d7e6709d46ff291a2f06cf98a5518ec1949d5d",
+      "bytes": 73959,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-108-alpha-particle-mass-energy-equivalent",
+      "filename": "nature-108-alpha-particle-mass-energy-equivalent.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-108-alpha-particle-mass-energy-equivalent.json",
+      "status": 200,
+      "sha256": "637ff60f6273cb1509a6d81b40fa321ad60445e864d78eb4196efc8e9b276453",
+      "bytes": 74340,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-109-deuteron-g-factor",
+      "filename": "nature-109-deuteron-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-109-deuteron-g-factor.json",
+      "status": 200,
+      "sha256": "d3fa2847570dc171a8d11900a107fbefaba3d5971b5cdbf2b296f5f07cdd83e5",
+      "bytes": 76040,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-110-deuteron-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-110-deuteron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-110-deuteron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "b84c598a05db1a58a710794fe55be475bf9a8511614db42d3173052d19eed92b",
+      "bytes": 76175,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-111-deuteron-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-111-deuteron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-111-deuteron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "2f6aec93cadb3f324b2d1bd6c2514d49394ed03a49a76d47a3bc9f997dcadd40",
+      "bytes": 73812,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-112-muon-magnetic-moment",
+      "filename": "nature-112-muon-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-112-muon-magnetic-moment.json",
+      "status": 200,
+      "sha256": "b17dc308dd9b4b6de08bca0dc46d85bbec5f1a0569f8fba3c9536fdf088af1f8",
+      "bytes": 73782,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-113-electron-magnetic-moment-anomaly",
+      "filename": "nature-113-electron-magnetic-moment-anomaly.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-113-electron-magnetic-moment-anomaly.json",
+      "status": 200,
+      "sha256": "4b2260f75b7240c511fa7aa8e5deaf00db349e6b7e33749af7e6f8911d1f3391",
+      "bytes": 75389,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-114-muon-magnetic-moment-anomaly",
+      "filename": "nature-114-muon-magnetic-moment-anomaly.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-114-muon-magnetic-moment-anomaly.json",
+      "status": 200,
+      "sha256": "d823a7faf483906b2cf0a0462e35f372cf71c5711db3d4fdaacbeffad3cbc9c0",
+      "bytes": 74030,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-115-muon-g-factor",
+      "filename": "nature-115-muon-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-115-muon-g-factor.json",
+      "status": 200,
+      "sha256": "cebd5143116645ad1aaa02fb8781dde92aa2125803331672daf1896ec2fd9806",
+      "bytes": 75905,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-116-muon-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-116-muon-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-116-muon-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "9f0f5060ba2ef895a522f11129a5f4f36ae181d9929df82312c052e4ef3d0ce1",
+      "bytes": 72821,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-117-muon-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-117-muon-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-117-muon-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "c5d45793ebdc06fc49bff9ba466d0ae3364da7e7122f1e2cb37e3b65a3eca0c2",
+      "bytes": 75568,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-118-molar-gas-constant",
+      "filename": "nature-118-molar-gas-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-118-molar-gas-constant.json",
+      "status": 200,
+      "sha256": "f97b13f0460c42a6fbb8f8ffddfe16678a6e0530c116d99d355191d15af76d5f",
+      "bytes": 72827,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-119-molar-volume-of-ideal-gas-0",
+      "filename": "nature-119-molar-volume-of-ideal-gas-0.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-119-molar-volume-of-ideal-gas-0.json",
+      "status": 200,
+      "sha256": "25eb957a0ce548a9f86716520668f0e18f84c988a3e0208224101cc3c77bfcb6",
+      "bytes": 74728,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-120-molar-volume-of-ideal-gas-1",
+      "filename": "nature-120-molar-volume-of-ideal-gas-1.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-120-molar-volume-of-ideal-gas-1.json",
+      "status": 200,
+      "sha256": "61b74128749b478ab683046d6b9c0a9721e7838f03ade3f43535ac901017afc7",
+      "bytes": 72627,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-121-electron-g-factor",
+      "filename": "nature-121-electron-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-121-electron-g-factor.json",
+      "status": 200,
+      "sha256": "786f0cbd30faefdec5d61aa0df54bf1527394379680b815b6d2a862f51af2df0",
+      "bytes": 74435,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-122-electron-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-122-electron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-122-electron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "431d2901dc37aea194e0163b7103d73127a7c386bd251fe2e9c16834ff4f9d2b",
+      "bytes": 73891,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-123-electron-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-123-electron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-123-electron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "c3a8a6d077dbfaf8d1a94c88e63ae367b02f9944c8581f008bd9d844ac59e20b",
+      "bytes": 74401,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-124-electron-magnetic-moment",
+      "filename": "nature-124-electron-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-124-electron-magnetic-moment.json",
+      "status": 200,
+      "sha256": "5097a4e61de709cf36d6fc5c00b8e74526101bfa32a8524d2f24c85008663bcd",
+      "bytes": 72117,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-125-electron-gyromagnetic-ratio",
+      "filename": "nature-125-electron-gyromagnetic-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-125-electron-gyromagnetic-ratio.json",
+      "status": 200,
+      "sha256": "a19b6574dce191083ddaaf7467f86d2135d70878938fd19310da9c974d555cf5",
+      "bytes": 73633,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-126-electron-gyromagnetic-ratio-in-mhz-per-t",
+      "filename": "nature-126-electron-gyromagnetic-ratio-in-mhz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-126-electron-gyromagnetic-ratio-in-mhz-per-t.json",
+      "status": 200,
+      "sha256": "85255c12b91d4298c8741e410f3848c3aef36439cc24d7c1169f15566f376120",
+      "bytes": 73450,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-127-shielded-proton-gyromagnetic-ratio-in-mhz-per-t",
+      "filename": "nature-127-shielded-proton-gyromagnetic-ratio-in-mhz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-127-shielded-proton-gyromagnetic-ratio-in-mhz-per-t.json",
+      "status": 200,
+      "sha256": "50d4279fc491a3b41477a1ae71a74616559c2165429841d33035dd965ea2f48a",
+      "bytes": 73369,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-128-shielded-proton-gyromagnetic-ratio",
+      "filename": "nature-128-shielded-proton-gyromagnetic-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-128-shielded-proton-gyromagnetic-ratio.json",
+      "status": 200,
+      "sha256": "574e2d2de82c0e221e4e900e0034e4f1a06f17f4d2b2eed8360131c4c723fd2c",
+      "bytes": 74838,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-129-shielded-proton-magnetic-moment",
+      "filename": "nature-129-shielded-proton-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-129-shielded-proton-magnetic-moment.json",
+      "status": 200,
+      "sha256": "a840bd7d4ec4d3dd3b091574604df6697169811d56ac52d5f3a59fda958bb2a7",
+      "bytes": 73696,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-130-proton-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-130-proton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-130-proton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "4a62f5656dcc7fcd9338c6805f80f233279bd6da933baf2f0bbbb7d7ae75b0e8",
+      "bytes": 73528,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-131-proton-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-131-proton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-131-proton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "5faeb9f65a57da30536ac5b64de27e05b4bade51dbfb6cc358aa08abf72244d6",
+      "bytes": 73668,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-132-proton-g-factor",
+      "filename": "nature-132-proton-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-132-proton-g-factor.json",
+      "status": 200,
+      "sha256": "509b0d160404503c8886111c889fc181649d9f7882df5e2f9d31a6cdd5b61910",
+      "bytes": 73878,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-133-neutron-to-shielded-proton-magnetic-moment-ratio",
+      "filename": "nature-133-neutron-to-shielded-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-133-neutron-to-shielded-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "7a7df00e76e83d340d1cf900a2d597f89a31cf061941b08ea961064b88b6d26a",
+      "bytes": 74981,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-134-electron-proton-magnetic-moment-ratio",
+      "filename": "nature-134-electron-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-134-electron-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "74fc64f900688afcadcde48a619f71d63c6543be99a7cd96bacd7a654c78d2d9",
+      "bytes": 77037,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-135-electron-to-shielded-proton-magnetic-moment-ratio",
+      "filename": "nature-135-electron-to-shielded-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-135-electron-to-shielded-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "74e017d112c5bf79f8faaa7eeaf9d65671b5ec93730e9b487729f7a349db0ef0",
+      "bytes": 74909,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-136-muon-proton-magnetic-moment-ratio",
+      "filename": "nature-136-muon-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-136-muon-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "a74a2489e786472b26bd37d3f2131840ea8cb398d6fdd74dd7fe502ee627c64d",
+      "bytes": 74105,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-137-shielded-proton-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-137-shielded-proton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-137-shielded-proton-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "c3835f9fce31301e70f7fd7efff0b3fe742609f03bcbea7ad4a22ebd534c682b",
+      "bytes": 74603,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-138-shielded-proton-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-138-shielded-proton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-138-shielded-proton-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "4a9e3499eed2933519c2ab9e5ef852eb4ee1a1a57cc13c38ed6db2d28a3de32c",
+      "bytes": 73215,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-139-proton-gyromagnetic-ratio",
+      "filename": "nature-139-proton-gyromagnetic-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-139-proton-gyromagnetic-ratio.json",
+      "status": 200,
+      "sha256": "38405bdbba3fe818de54a7073f538a038da4c29fe74f343a7c3289b44ca1e37a",
+      "bytes": 74139,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-140-proton-gyromagnetic-ratio-in-mhz-per-t",
+      "filename": "nature-140-proton-gyromagnetic-ratio-in-mhz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-140-proton-gyromagnetic-ratio-in-mhz-per-t.json",
+      "status": 200,
+      "sha256": "154e9f62d5d20f4d24e9cf6ab1ae4229cfd5cdeeb9abcdcb2591162a2bc51a7a",
+      "bytes": 73859,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-141-proton-magnetic-moment",
+      "filename": "nature-141-proton-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-141-proton-magnetic-moment.json",
+      "status": 200,
+      "sha256": "efba303ab69e9e237cb526bc0d630e3214fcc972a7b4cdb4b5d07513a047a35f",
+      "bytes": 74624,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-142-faraday-constant",
+      "filename": "nature-142-faraday-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-142-faraday-constant.json",
+      "status": 200,
+      "sha256": "6ca3d68f52652b243a1062b22cff6be214ded0efe1f9523cb85aea80a7348a80",
+      "bytes": 75272,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-143-molar-planck-constant",
+      "filename": "nature-143-molar-planck-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-143-molar-planck-constant.json",
+      "status": 200,
+      "sha256": "5a7da1b6c5484bc4162e41f8d239cadb83f41e8006b18031323a490aee451ec8",
+      "bytes": 75888,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-144-molar-volume-of-silicon",
+      "filename": "nature-144-molar-volume-of-silicon.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-144-molar-volume-of-silicon.json",
+      "status": 200,
+      "sha256": "d7dea7eacf8e1bd33d3b17d9bb6b9ee804ccb0932c795d8c304d39edf2fa3b2c",
+      "bytes": 75874,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-145-speed-of-light-in-vacuum",
+      "filename": "nature-145-speed-of-light-in-vacuum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-145-speed-of-light-in-vacuum.json",
+      "status": 200,
+      "sha256": "bd9446aff9fea5dbaa2566540eaa11c080f213a4a631fa033046b910272de726",
+      "bytes": 74595,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-146-inverse-meter-hertz-relationship",
+      "filename": "nature-146-inverse-meter-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-146-inverse-meter-hertz-relationship.json",
+      "status": 200,
+      "sha256": "e6c5714058acd199cc202ebe2a0b66818f6c8570991b89d813a6a7d5ade57273",
+      "bytes": 74732,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-147-classical-electron-radius",
+      "filename": "nature-147-classical-electron-radius.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-147-classical-electron-radius.json",
+      "status": 200,
+      "sha256": "946c32f71d6d66f38a85e84f3dbca0b169351e01523744bee47685cf0bea4c50",
+      "bytes": 73485,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-148-atomic-unit-of-length",
+      "filename": "nature-148-atomic-unit-of-length.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-148-atomic-unit-of-length.json",
+      "status": 200,
+      "sha256": "0fc7e30282c7065fe5a6b56677e46f0936114a50dc905ec2cfa8b56332968d02",
+      "bytes": 73642,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-149-thomson-cross-section",
+      "filename": "nature-149-thomson-cross-section.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-149-thomson-cross-section.json",
+      "status": 200,
+      "sha256": "27ae581fe2b5b3c0c774134e56fe7d90c4d61df5f684dcd8cbe7b2777b7f0b25",
+      "bytes": 74554,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-150-fermi-coupling-constant",
+      "filename": "nature-150-fermi-coupling-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-150-fermi-coupling-constant.json",
+      "status": 200,
+      "sha256": "7ef9802f8b84daa98f51f44a2beb6646b4e233463937eebad30177ad4ff22204",
+      "bytes": 77168,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-151-atomic-mass-constant",
+      "filename": "nature-151-atomic-mass-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-151-atomic-mass-constant.json",
+      "status": 200,
+      "sha256": "f2491fa14687a7e239994596faf8939bb2707d231db019a05791edb5aafeb741",
+      "bytes": 75729,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-152-kilogram-atomic-mass-unit-relationship",
+      "filename": "nature-152-kilogram-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-152-kilogram-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "08b204e2407d8d6916b607828b7527f69e23e3a7b5bd58e973b47eab980dc96e",
+      "bytes": 74663,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-153-electron-relative-atomic-mass",
+      "filename": "nature-153-electron-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-153-electron-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "f5bb798c00cd2e53840e86cce14c0268db62ecc3df50d307eaea702457f21fa0",
+      "bytes": 70920,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-154-proton-relative-atomic-mass",
+      "filename": "nature-154-proton-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-154-proton-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "9c235f1753978a3c19b643a863f959b4406d46f5435aba310f22986de7775e00",
+      "bytes": 73840,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-155-neutron-relative-atomic-mass",
+      "filename": "nature-155-neutron-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-155-neutron-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "cacc89211a9f929e56cc1ca562a56c7a1fdaef122bfeb2703439c9122f7427de",
+      "bytes": 72860,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-156-deuteron-relative-atomic-mass",
+      "filename": "nature-156-deuteron-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-156-deuteron-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "a4e2f52ab7062133420b15ff31eec7261b8fd9d4d3376fbd5c030847df65d0ba",
+      "bytes": 75869,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-157-helion-relative-atomic-mass",
+      "filename": "nature-157-helion-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-157-helion-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "ea1e6e04c5e975af5c7197ae8b7ad111a88e9574d723c254c2a5d4991332c60f",
+      "bytes": 72298,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-158-triton-relative-atomic-mass",
+      "filename": "nature-158-triton-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-158-triton-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "b2beeac9c1efbffd6bfe1a0b36debc3757d42d1cc176972a569dd815a06ee682",
+      "bytes": 75416,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-159-alpha-particle-relative-atomic-mass",
+      "filename": "nature-159-alpha-particle-relative-atomic-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-159-alpha-particle-relative-atomic-mass.json",
+      "status": 200,
+      "sha256": "60615739ef8346990d453e438aadd905e8d8472ae79ac3fbfcf98d39b63b17c7",
+      "bytes": 75611,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-160-electron-mass-in-u",
+      "filename": "nature-160-electron-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-160-electron-mass-in-u.json",
+      "status": 200,
+      "sha256": "d38fd28d125722996260c8877c8eadf55ea96765ccdfffa481b430bd8ebb2654",
+      "bytes": 70856,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-161-neutron-proton-mass-difference-in-u",
+      "filename": "nature-161-neutron-proton-mass-difference-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-161-neutron-proton-mass-difference-in-u.json",
+      "status": 200,
+      "sha256": "11f5c5c16a0ea33c6975484e22e1882a64a794d172e3ed48c3a7ac3d502f88f1",
+      "bytes": 74952,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-162-muon-mass-in-u",
+      "filename": "nature-162-muon-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-162-muon-mass-in-u.json",
+      "status": 200,
+      "sha256": "5fabc8c28813a8471bc00afae90e2def493c6ab057ceed26fd9bbf3fb729b781",
+      "bytes": 73898,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-163-proton-mass-in-u",
+      "filename": "nature-163-proton-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-163-proton-mass-in-u.json",
+      "status": 200,
+      "sha256": "e779d9f6c340dd516aa7a2a6293aa68ff722c1b4b48fcb67f75e8021fa4050d5",
+      "bytes": 73778,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-164-neutron-mass-in-u",
+      "filename": "nature-164-neutron-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-164-neutron-mass-in-u.json",
+      "status": 200,
+      "sha256": "d8b5230991384fcfdfd95a5c1f50000962d839ddbad3a995e9f78b9e27dafad7",
+      "bytes": 72797,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-165-tau-mass-in-u",
+      "filename": "nature-165-tau-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-165-tau-mass-in-u.json",
+      "status": 200,
+      "sha256": "250a85ca77f9fa62730a1de3cbffa3ea436b835fa34c52be7dd31d8712b7439e",
+      "bytes": 72572,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-166-deuteron-mass-in-u",
+      "filename": "nature-166-deuteron-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-166-deuteron-mass-in-u.json",
+      "status": 200,
+      "sha256": "1dec44957e65bb55d658ed5c87c5461263b3a8c1021a32a72004d9d95f4f986c",
+      "bytes": 75807,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-167-helion-mass-in-u",
+      "filename": "nature-167-helion-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-167-helion-mass-in-u.json",
+      "status": 200,
+      "sha256": "f5447901252f5adfccc320cd7e3d837137ad9af74509271da78d34b7dcf32a4a",
+      "bytes": 72238,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-168-triton-mass-in-u",
+      "filename": "nature-168-triton-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-168-triton-mass-in-u.json",
+      "status": 200,
+      "sha256": "ed0c31832a73ba6ed62bfae6d14f2224cd54835d09081ed583a4e092e2e49de0",
+      "bytes": 75356,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-169-alpha-particle-mass-in-u",
+      "filename": "nature-169-alpha-particle-mass-in-u.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-169-alpha-particle-mass-in-u.json",
+      "status": 200,
+      "sha256": "063831cb05bda5f0b45805c0733c5b7f040c7d4b1bba44ef461ba94ba796f25e",
+      "bytes": 75593,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-170-electron-volt-atomic-mass-unit-relationship",
+      "filename": "nature-170-electron-volt-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-170-electron-volt-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "c441c0c58029ee0c2f03ee02fc0b4d6c2b88cbb50d4e24632c1027c5ce3f8eaf",
+      "bytes": 73824,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-171-atomic-mass-unit-electron-volt-relationship",
+      "filename": "nature-171-atomic-mass-unit-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-171-atomic-mass-unit-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "e5c335c2d579f23f5b4c7a50f84d36511219025f1c14147d5007bd767535124f",
+      "bytes": 72860,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-172-joule-inverse-meter-relationship",
+      "filename": "nature-172-joule-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-172-joule-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "60113dafc8e375479a118c4535bf86815735ecf536170558548c829f17b78d0d",
+      "bytes": 75954,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-173-electron-volt-inverse-meter-relationship",
+      "filename": "nature-173-electron-volt-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-173-electron-volt-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "9eded6518d4f42947012eaaa5f0bb911f96583b259a7a6860786ecc1064dd82a",
+      "bytes": 75875,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-174-inverse-meter-electron-volt-relationship",
+      "filename": "nature-174-inverse-meter-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-174-inverse-meter-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "858be9afdf375b0b2c4122f559f290934e0dbc64dae979bd97369bc2aed1d41d",
+      "bytes": 75100,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-175-inverse-meter-joule-relationship",
+      "filename": "nature-175-inverse-meter-joule-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-175-inverse-meter-joule-relationship.json",
+      "status": 200,
+      "sha256": "db768f8d899ed7468411f5c096ae11d6fc65d5857d8a4ca95fdce6ec7b52dacf",
+      "bytes": 74228,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-176-reduced-planck-constant-times-c-in-mev-fm",
+      "filename": "nature-176-reduced-planck-constant-times-c-in-mev-fm.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-176-reduced-planck-constant-times-c-in-mev-fm.json",
+      "status": 200,
+      "sha256": "59ca8a0e1f07ee61a0ae8270bae1f04205022fa64b49edb58252decf50ae4c93",
+      "bytes": 75203,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-177-atomic-unit-of-electric-potential",
+      "filename": "nature-177-atomic-unit-of-electric-potential.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-177-atomic-unit-of-electric-potential.json",
+      "status": 200,
+      "sha256": "4e7b6af3289d1ecccc2162a6e9cee8407d2408cfbf7f3fe14991e13ea206df72",
+      "bytes": 74847,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-178-rydberg-constant-times-hc-in-ev",
+      "filename": "nature-178-rydberg-constant-times-hc-in-ev.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-178-rydberg-constant-times-hc-in-ev.json",
+      "status": 200,
+      "sha256": "6dbec71a7262f62c027815f8738e299586b91d7de67f6a8ee4e191aae10d0b1f",
+      "bytes": 75322,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-179-hartree-electron-volt-relationship",
+      "filename": "nature-179-hartree-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-179-hartree-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "fef32fcd5441c47493880415deff8f9abfed97fb80fcffc4b252ddadffd2194c",
+      "bytes": 74960,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-180-electron-volt-hartree-relationship",
+      "filename": "nature-180-electron-volt-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-180-electron-volt-hartree-relationship.json",
+      "status": 200,
+      "sha256": "8606fb5b65b9db3af7d94dc14469aae7d73b882896b52e46d09291fe51286c61",
+      "bytes": 75745,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-181-conventional-value-of-farad-90",
+      "filename": "nature-181-conventional-value-of-farad-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-181-conventional-value-of-farad-90.json",
+      "status": 200,
+      "sha256": "41d46ff30677aa9a79d0ff62161370146702e3c1fd0a4b0b6e9722780f1d8003",
+      "bytes": 73777,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-182-conventional-value-of-henry-90",
+      "filename": "nature-182-conventional-value-of-henry-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-182-conventional-value-of-henry-90.json",
+      "status": 200,
+      "sha256": "ec4e4906cfdab7d951af79a873154b39a21b4f5de8484d24357279cc9bf3efbd",
+      "bytes": 73653,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-183-conventional-value-of-ohm-90",
+      "filename": "nature-183-conventional-value-of-ohm-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-183-conventional-value-of-ohm-90.json",
+      "status": 200,
+      "sha256": "58e889e7a22d10c09ed474dd5599f9894fc4eed1e33856ba5eef0a1e265946f4",
+      "bytes": 73651,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-184-neutron-proton-mass-difference",
+      "filename": "nature-184-neutron-proton-mass-difference.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-184-neutron-proton-mass-difference.json",
+      "status": 200,
+      "sha256": "12463d91f458407dc8c3f9cfcdfd46d0e80cb09da5664c10b6330056098ef18c",
+      "bytes": 75408,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-185-helion-shielding-shift",
+      "filename": "nature-185-helion-shielding-shift.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-185-helion-shielding-shift.json",
+      "status": 200,
+      "sha256": "781a80603e8ebae6fec71efc63d6a77bb3be6c626270a05e3e25064eff9ae1da",
+      "bytes": 73552,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-186-shielding-difference-of-t-and-p-in-ht",
+      "filename": "nature-186-shielding-difference-of-t-and-p-in-ht.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-186-shielding-difference-of-t-and-p-in-ht.json",
+      "status": 200,
+      "sha256": "30235a705526950d9f496862256769524dbe58a10d857e0d6ca9424ca03756c3",
+      "bytes": 75697,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-187-shielding-difference-of-d-and-p-in-hd",
+      "filename": "nature-187-shielding-difference-of-d-and-p-in-hd.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-187-shielding-difference-of-d-and-p-in-hd.json",
+      "status": 200,
+      "sha256": "56f07c02b92ff1cc0c5603e7650a6d33ab909ba3c0403cd7c1f9f183f5a0bc58",
+      "bytes": 75921,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-188-proton-magnetic-shielding-correction",
+      "filename": "nature-188-proton-magnetic-shielding-correction.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-188-proton-magnetic-shielding-correction.json",
+      "status": 200,
+      "sha256": "7322da0d8358f5567d77405285daef6986efb2ac69d02fef55f70dc3e00075ee",
+      "bytes": 75625,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-189-atomic-unit-of-electric-polarizability",
+      "filename": "nature-189-atomic-unit-of-electric-polarizability.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-189-atomic-unit-of-electric-polarizability.json",
+      "status": 200,
+      "sha256": "ed97fe93e6697842cd1d6f6b3cb140ed1cd475ee0926c69105c75a67fc8e7b26",
+      "bytes": 75126,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-190-atomic-unit-of-electric-field",
+      "filename": "nature-190-atomic-unit-of-electric-field.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-190-atomic-unit-of-electric-field.json",
+      "status": 200,
+      "sha256": "989ba3cbfc12b1857afabc6b30ea6d56dd3382011938b9bed2c573c50cf4a00f",
+      "bytes": 75154,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-191-atomic-unit-of-force",
+      "filename": "nature-191-atomic-unit-of-force.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-191-atomic-unit-of-force.json",
+      "status": 200,
+      "sha256": "8ab7145ec5766cb86c7b8a83130083fce6f9c7eb200dd2cc99c1be60a4e49002",
+      "bytes": 73055,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-192-atomic-unit-of-charge-density",
+      "filename": "nature-192-atomic-unit-of-charge-density.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-192-atomic-unit-of-charge-density.json",
+      "status": 200,
+      "sha256": "d8334a4dc2020be21b0ae27475974333b27b8eadb3594beb18426d111a17824b",
+      "bytes": 73885,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-193-neutron-magnetic-moment",
+      "filename": "nature-193-neutron-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-193-neutron-magnetic-moment.json",
+      "status": 200,
+      "sha256": "78e461af147e00cbd04d11bf8a479faee03481fd218dd444f9edb022c7b64d62",
+      "bytes": 75607,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-194-neutron-gyromagnetic-ratio-in-mhz-per-t",
+      "filename": "nature-194-neutron-gyromagnetic-ratio-in-mhz-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-194-neutron-gyromagnetic-ratio-in-mhz-per-t.json",
+      "status": 200,
+      "sha256": "cc79fbc342f0bb80d5a799dd013a3f4067e335e5c54dae54b79b65845570a74b",
+      "bytes": 74311,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-195-neutron-gyromagnetic-ratio",
+      "filename": "nature-195-neutron-gyromagnetic-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-195-neutron-gyromagnetic-ratio.json",
+      "status": 200,
+      "sha256": "6f1434347c96c30a3e8a3753661417a5e79454083dffb95dbda5cce122159c9f",
+      "bytes": 74069,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-196-neutron-magnetic-moment-to-bohr-magneton-ratio",
+      "filename": "nature-196-neutron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-196-neutron-magnetic-moment-to-bohr-magneton-ratio.json",
+      "status": 200,
+      "sha256": "e80552658f63dd690a962c362acaed46890d776a40485b7a61177185f486b049",
+      "bytes": 74981,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-197-neutron-magnetic-moment-to-nuclear-magneton-ratio",
+      "filename": "nature-197-neutron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-197-neutron-magnetic-moment-to-nuclear-magneton-ratio.json",
+      "status": 200,
+      "sha256": "8a801342ef555faca57fe0ed4def6aeb51b2d6eef5ea78c02873fdf9cdf02706",
+      "bytes": 73056,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-198-neutron-g-factor",
+      "filename": "nature-198-neutron-g-factor.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-198-neutron-g-factor.json",
+      "status": 200,
+      "sha256": "3db2c37074e11172b994af3515958904df68ff597e5d51f373b92e953be1c12c",
+      "bytes": 70146,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-199-hertz-kilogram-relationship",
+      "filename": "nature-199-hertz-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-199-hertz-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "96ca32bd23ef2cdb750c619f88be352343e3a5eb7f05c26c39f19257cebcff45",
+      "bytes": 74588,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-200-hertz-atomic-mass-unit-relationship",
+      "filename": "nature-200-hertz-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-200-hertz-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "5e63228737d422224e9fbd3c42eeb5b37669ea177f5f2573d8100fc49520f0b6",
+      "bytes": 75865,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-201-natural-unit-of-time",
+      "filename": "nature-201-natural-unit-of-time.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-201-natural-unit-of-time.json",
+      "status": 200,
+      "sha256": "1f1102f0ab0e3f5fb5e3b18e63011bd61bafeefcca322c92b833526ea90066f7",
+      "bytes": 73854,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-202-atomic-mass-unit-hertz-relationship",
+      "filename": "nature-202-atomic-mass-unit-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-202-atomic-mass-unit-hertz-relationship.json",
+      "status": 200,
+      "sha256": "8f7a8162603d5abfd0529058a4f3347a88da7582e05e509f48af328126e56031",
+      "bytes": 73682,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-203-kilogram-hertz-relationship",
+      "filename": "nature-203-kilogram-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-203-kilogram-hertz-relationship.json",
+      "status": 200,
+      "sha256": "e6f9702c69c8c6f81feddc8b337e49aae2b7a3406353e55df8b98502f6d1933d",
+      "bytes": 74602,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-204-boltzmann-constant",
+      "filename": "nature-204-boltzmann-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-204-boltzmann-constant.json",
+      "status": 200,
+      "sha256": "030c18856eae69e0311c6fb3f5f6c3aaeda70a554fa763eee61d1ce3050e9b0c",
+      "bytes": 76517,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-205-boltzmann-constant-in-ev-per-k",
+      "filename": "nature-205-boltzmann-constant-in-ev-per-k.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-205-boltzmann-constant-in-ev-per-k.json",
+      "status": 200,
+      "sha256": "6f1b47fdd460a8f90b2dfad2614b3509dc9b34ddd10b06aae22aa16139495b5e",
+      "bytes": 73828,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-206-kelvin-joule-relationship",
+      "filename": "nature-206-kelvin-joule-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-206-kelvin-joule-relationship.json",
+      "status": 200,
+      "sha256": "b7aafb561deedfe8e87cabac46115b01dd896d14dc56520e21105d84f1aa6eec",
+      "bytes": 76627,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-207-kelvin-electron-volt-relationship",
+      "filename": "nature-207-kelvin-electron-volt-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-207-kelvin-electron-volt-relationship.json",
+      "status": 200,
+      "sha256": "df781f1bc903378e57781ca14b413087d7f6fd6253d16a561b6873b429e54a8b",
+      "bytes": 73957,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-208-electron-volt-kelvin-relationship",
+      "filename": "nature-208-electron-volt-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-208-electron-volt-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "77643fa2c7753b4f600c9b93492ba43b275bf83e6dbcfb42dd39f76ce6837501",
+      "bytes": 74623,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-209-joule-kelvin-relationship",
+      "filename": "nature-209-joule-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-209-joule-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "5a9dbb21b1b27afbe728cf62a0d029e1ad6333925555ca128b16f717a04d5725",
+      "bytes": 74472,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-210-loschmidt-constant-273-15-k-100-kpa",
+      "filename": "nature-210-loschmidt-constant-273-15-k-100-kpa.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-210-loschmidt-constant-273-15-k-100-kpa.json",
+      "status": 200,
+      "sha256": "cf6c72d6ae13eb3f3884a00c4784ccf9cd5bee5599fa2bb140f9d4bf62bc3383",
+      "bytes": 75469,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-211-loschmidt-constant-273-15-k-101-325-kpa",
+      "filename": "nature-211-loschmidt-constant-273-15-k-101-325-kpa.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-211-loschmidt-constant-273-15-k-101-325-kpa.json",
+      "status": 200,
+      "sha256": "f676333b3f984d4e772ef6a5f08520772089627bdb90bf8e1570222708107eac",
+      "bytes": 76113,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-212-bohr-magneton-in-k-per-t",
+      "filename": "nature-212-bohr-magneton-in-k-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-212-bohr-magneton-in-k-per-t.json",
+      "status": 200,
+      "sha256": "401baee05952f954deef1e1091d6d5977f840bc75a3e3055e7513b8980395d21",
+      "bytes": 74352,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-213-nuclear-magneton-in-k-per-t",
+      "filename": "nature-213-nuclear-magneton-in-k-per-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-213-nuclear-magneton-in-k-per-t.json",
+      "status": 200,
+      "sha256": "4429a68e5c1351487e702f2cefb50ef9f8488eaab960ec2ce9a8fa9c5438c699",
+      "bytes": 73810,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-214-rydberg-constant-times-hc-in-j",
+      "filename": "nature-214-rydberg-constant-times-hc-in-j.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-214-rydberg-constant-times-hc-in-j.json",
+      "status": 200,
+      "sha256": "3269ed393baabf35ea94add973935fb893ea43eff64622fbdf78b8b824747f40",
+      "bytes": 74157,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-215-hartree-energy",
+      "filename": "nature-215-hartree-energy.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-215-hartree-energy.json",
+      "status": 200,
+      "sha256": "b662261bcc8faf34d7e3b9c1838d335aa52be913c4cad7d7a9e80f37de5586aa",
+      "bytes": 74241,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-216-joule-hartree-relationship",
+      "filename": "nature-216-joule-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-216-joule-hartree-relationship.json",
+      "status": 200,
+      "sha256": "5557c6ea51cab57e420d8d716fcc314b06c94073ee77d6587c717afdabcad573",
+      "bytes": 74364,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-217-josephson-constant",
+      "filename": "nature-217-josephson-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-217-josephson-constant.json",
+      "status": 200,
+      "sha256": "949d0707e46ee340bb252b53fc76ac648cc83a87bc31a2bf1bc5cb966cb5bf5b",
+      "bytes": 71637,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-218-elementary-charge-over-h-bar",
+      "filename": "nature-218-elementary-charge-over-h-bar.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-218-elementary-charge-over-h-bar.json",
+      "status": 200,
+      "sha256": "4e5b04d38f5252168e2ff620be547cee3462423b32c51d90c99f06d724dcc06c",
+      "bytes": 73853,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-219-magnetic-flux-quantum",
+      "filename": "nature-219-magnetic-flux-quantum.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-219-magnetic-flux-quantum.json",
+      "status": 200,
+      "sha256": "d26fe4f81020704f1eac3dd327fee717e4095ad71d3d06805de9164df789cead",
+      "bytes": 74458,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-220-reduced-planck-constant-in-ev-s",
+      "filename": "nature-220-reduced-planck-constant-in-ev-s.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-220-reduced-planck-constant-in-ev-s.json",
+      "status": 200,
+      "sha256": "74acd6f5cfd3f6dc43aa4bb54def2b72199a5752b5d4a907597bf6c01b958526",
+      "bytes": 74862,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-221-planck-constant-in-ev-hz",
+      "filename": "nature-221-planck-constant-in-ev-hz.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-221-planck-constant-in-ev-hz.json",
+      "status": 200,
+      "sha256": "e0e405f2b9dfb23c73300efc1acea1125aec97d52996f503e82350a6e4ca942a",
+      "bytes": 74347,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-222-first-radiation-constant",
+      "filename": "nature-222-first-radiation-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-222-first-radiation-constant.json",
+      "status": 200,
+      "sha256": "b5595cdd73e6e93f73383debf047b5637cf1e4a84f09b06e638d55a286edd801",
+      "bytes": 75435,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-223-first-radiation-constant-for-spectral-radiance",
+      "filename": "nature-223-first-radiation-constant-for-spectral-radiance.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-223-first-radiation-constant-for-spectral-radiance.json",
+      "status": 200,
+      "sha256": "80b6645de18e8df9ca044c528baf40834b8109ffc6769a30373f7a28c616859b",
+      "bytes": 73858,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-224-shielded-helion-gyromagnetic-ratio",
+      "filename": "nature-224-shielded-helion-gyromagnetic-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-224-shielded-helion-gyromagnetic-ratio.json",
+      "status": 200,
+      "sha256": "141758d21211eb7836da3b36fe420b685bc34027cd9d55d0d4c1f9f01ddea926",
+      "bytes": 73678,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-225-shielded-helion-gyromagnetic-ratio-in-mhz-t",
+      "filename": "nature-225-shielded-helion-gyromagnetic-ratio-in-mhz-t.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-225-shielded-helion-gyromagnetic-ratio-in-mhz-t.json",
+      "status": 200,
+      "sha256": "2a2d8a58e8059423f6edc69823d18d7b1bb7cf62d8bab787fb327b3883a44bc6",
+      "bytes": 75319,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-226-helion-magnetic-moment",
+      "filename": "nature-226-helion-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-226-helion-magnetic-moment.json",
+      "status": 200,
+      "sha256": "0718dd9fcf16cc3f09fdbf87b528e03efd1b66f553cb175f53e66fcfc29094ac",
+      "bytes": 76429,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-227-shielded-helion-magnetic-moment",
+      "filename": "nature-227-shielded-helion-magnetic-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-227-shielded-helion-magnetic-moment.json",
+      "status": 200,
+      "sha256": "86e9164144862ff975d4798b337e4cec10fe6fc17a091ea95d5908de160f76e9",
+      "bytes": 75895,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-228-shielded-helion-to-proton-magnetic-moment-ratio",
+      "filename": "nature-228-shielded-helion-to-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-228-shielded-helion-to-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "f9f937616a92c2a5be95c5634be552e3ed9925a5b768b59681b06d9dcdee0614",
+      "bytes": 71824,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-229-shielded-helion-to-shielded-proton-magnetic-moment-ratio",
+      "filename": "nature-229-shielded-helion-to-shielded-proton-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-229-shielded-helion-to-shielded-proton-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "3408697b5af910287e19a4edae9c4462ecad7216f540ed5266e3333f4c11238e",
+      "bytes": 74579,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-230-electron-to-shielded-helion-magnetic-moment-ratio",
+      "filename": "nature-230-electron-to-shielded-helion-magnetic-moment-ratio.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-230-electron-to-shielded-helion-magnetic-moment-ratio.json",
+      "status": 200,
+      "sha256": "4c289defc62a2edc8eb235dc878059181feb83b4c5d1c62f3045aa387dee99c3",
+      "bytes": 75469,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-231-atomic-mass-unit-hartree-relationship",
+      "filename": "nature-231-atomic-mass-unit-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-231-atomic-mass-unit-hartree-relationship.json",
+      "status": 200,
+      "sha256": "37aa4e7837f20421e9a4f14b8b300ccca2bd31096a0dcbf950c057ba349fdb10",
+      "bytes": 75761,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-232-hartree-atomic-mass-unit-relationship",
+      "filename": "nature-232-hartree-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-232-hartree-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "911301688c941fa7f2b9e7816ff8930984b5ee7a34ef8a8750be2d8ad4e50280",
+      "bytes": 75432,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-233-kilogram-hartree-relationship",
+      "filename": "nature-233-kilogram-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-233-kilogram-hartree-relationship.json",
+      "status": 200,
+      "sha256": "f6876741d54d68db923bd9fee86d6078cc88639eed7a58898fb40b0a6db4c705",
+      "bytes": 73835,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-234-hartree-kilogram-relationship",
+      "filename": "nature-234-hartree-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-234-hartree-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "a3be951dfca9f4edf65f16814ae86770bf8bb21c1d17be87daf2b0253add17fc",
+      "bytes": 74801,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-235-kelvin-kilogram-relationship",
+      "filename": "nature-235-kelvin-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-235-kelvin-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "97f59313ee52760868290fb05c9a25673cb984414fc6e6648c9567a68f3a8bf7",
+      "bytes": 74537,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-236-kilogram-kelvin-relationship",
+      "filename": "nature-236-kilogram-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-236-kilogram-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "3e9fbfb3a9252b30f0e3efa423514c1c4e18357f351f699cd68b244e644f3b66",
+      "bytes": 71466,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-237-kelvin-atomic-mass-unit-relationship",
+      "filename": "nature-237-kelvin-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-237-kelvin-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "312f0b42ab0f92df56b9a17d7901b599c6e0855a2c69c7adfc43316d7f8047be",
+      "bytes": 74690,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-238-atomic-mass-unit-kelvin-relationship",
+      "filename": "nature-238-atomic-mass-unit-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-238-atomic-mass-unit-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "b1307ff725c027b8ca6f5f37aa0f796f4b96d0e37b5b59daf89109b84f8893d8",
+      "bytes": 74877,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-239-kilogram-inverse-meter-relationship",
+      "filename": "nature-239-kilogram-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-239-kilogram-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "45e9467e67de099591458ebef8df61eb696bc7f29ee06afddfb47a9fbe6eb477",
+      "bytes": 75374,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-240-atomic-mass-unit-inverse-meter-relationship",
+      "filename": "nature-240-atomic-mass-unit-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-240-atomic-mass-unit-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "ca777b2420380a7bd981987a70f090ae757218bec656c8439c4bc7d5ba6d3804",
+      "bytes": 74382,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-241-inverse-meter-kilogram-relationship",
+      "filename": "nature-241-inverse-meter-kilogram-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-241-inverse-meter-kilogram-relationship.json",
+      "status": 200,
+      "sha256": "da6dc42a675bbd6a8ac2f0fba6f3847e08a5fce8dc94468f0fa206c8e4539d64",
+      "bytes": 73882,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-242-inverse-meter-atomic-mass-unit-relationship",
+      "filename": "nature-242-inverse-meter-atomic-mass-unit-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-242-inverse-meter-atomic-mass-unit-relationship.json",
+      "status": 200,
+      "sha256": "35c9dcb9ddd085f18d9f42160f8d16fbb9a42ed17f25ad9a7f1c864d199b0b37",
+      "bytes": 73479,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-243-compton-wavelength",
+      "filename": "nature-243-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-243-compton-wavelength.json",
+      "status": 200,
+      "sha256": "3942f5d95bd4a62f1254d537b6237438970cd7e22f341e3d90347a5605dcb5db",
+      "bytes": 73788,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-244-muon-compton-wavelength",
+      "filename": "nature-244-muon-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-244-muon-compton-wavelength.json",
+      "status": 200,
+      "sha256": "6b7bf3dbfb432192a3ea59e686f45f90188fc92bc0f3c6229eb92ac10bed14c7",
+      "bytes": 75371,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-245-proton-compton-wavelength",
+      "filename": "nature-245-proton-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-245-proton-compton-wavelength.json",
+      "status": 200,
+      "sha256": "c206b80930653c06fbe2e2b955d5912bd11254cf0effbfed88edebf93fa76dc3",
+      "bytes": 74361,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-246-neutron-compton-wavelength",
+      "filename": "nature-246-neutron-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-246-neutron-compton-wavelength.json",
+      "status": 200,
+      "sha256": "6fe9f7e219dcf7a2cad27efa0a2cb4cf8ff150734ab5924aad0f99b0213f7b2d",
+      "bytes": 76514,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-247-tau-compton-wavelength",
+      "filename": "nature-247-tau-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-247-tau-compton-wavelength.json",
+      "status": 200,
+      "sha256": "fc35697be82ed4dda735ad2fbfb7aeabeea0baaef13882a15f9c3b6bb8e7e959",
+      "bytes": 75193,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-248-reduced-compton-wavelength",
+      "filename": "nature-248-reduced-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-248-reduced-compton-wavelength.json",
+      "status": 200,
+      "sha256": "3091ffcaef54ebbaa1803065988b870e4237903cbd12f216ef4a111a4135b26c",
+      "bytes": 74531,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-249-reduced-muon-compton-wavelength",
+      "filename": "nature-249-reduced-muon-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-249-reduced-muon-compton-wavelength.json",
+      "status": 200,
+      "sha256": "52bce4e75687daaab919e20b5c38b4fcf839a9d7a3a7599f71c1af451774d6e8",
+      "bytes": 75261,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-250-reduced-proton-compton-wavelength",
+      "filename": "nature-250-reduced-proton-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-250-reduced-proton-compton-wavelength.json",
+      "status": 200,
+      "sha256": "a6195da58588db13cfb0e01a664f39f26c2c33c7671c56f1703841042843427b",
+      "bytes": 73617,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-251-reduced-neutron-compton-wavelength",
+      "filename": "nature-251-reduced-neutron-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-251-reduced-neutron-compton-wavelength.json",
+      "status": 200,
+      "sha256": "5693874cd0133ad23203f49daa9b73f5ef8622e8e6bdf6bac4a656a6695ac9cc",
+      "bytes": 73859,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-252-reduced-tau-compton-wavelength",
+      "filename": "nature-252-reduced-tau-compton-wavelength.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-252-reduced-tau-compton-wavelength.json",
+      "status": 200,
+      "sha256": "66b100558c5b3098a307a11ea096c6ce711d6edc9a8ba52d7d4e6f9ed7dced97",
+      "bytes": 75231,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-253-wien-frequency-displacement-law-constant",
+      "filename": "nature-253-wien-frequency-displacement-law-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-253-wien-frequency-displacement-law-constant.json",
+      "status": 200,
+      "sha256": "52e20d4d8f8127d9ad4048de98c75c2cf96311170e65bcee5ad89560db6a9a20",
+      "bytes": 72869,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-254-boltzmann-constant-in-hz-per-k",
+      "filename": "nature-254-boltzmann-constant-in-hz-per-k.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-254-boltzmann-constant-in-hz-per-k.json",
+      "status": 200,
+      "sha256": "1832cb0f075984b19f233ff6b2b851b67f48d60d06f4d5ee04761555d6e02d2c",
+      "bytes": 73987,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-255-kelvin-hertz-relationship",
+      "filename": "nature-255-kelvin-hertz-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-255-kelvin-hertz-relationship.json",
+      "status": 200,
+      "sha256": "ef15bdfce7de6624c2e84866bb9cd1aa8b34974a35279f3f77e6a9ce6d7707ce",
+      "bytes": 74050,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-256-hertz-kelvin-relationship",
+      "filename": "nature-256-hertz-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-256-hertz-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "f0962804cf3b67f0d14a0a73085a417dd25625f1f3df3d3b055e98dd31fbc1b3",
+      "bytes": 76987,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-257-wien-wavelength-displacement-law-constant",
+      "filename": "nature-257-wien-wavelength-displacement-law-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-257-wien-wavelength-displacement-law-constant.json",
+      "status": 200,
+      "sha256": "250de9218748c4096d3450603a6597cc44418e74a89ac83e94cb3dc6d9671a06",
+      "bytes": 76264,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-258-second-radiation-constant",
+      "filename": "nature-258-second-radiation-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-258-second-radiation-constant.json",
+      "status": 200,
+      "sha256": "b7e8871090c5925cc359566a2f22f747492755ce5c2ba5c8b59b09073b2f4c6c",
+      "bytes": 76190,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-259-inverse-meter-kelvin-relationship",
+      "filename": "nature-259-inverse-meter-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-259-inverse-meter-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "5a4d223544cbb68af150039cf14806f699306280951cf53ab1103a3480aac6f1",
+      "bytes": 76319,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-260-kelvin-inverse-meter-relationship",
+      "filename": "nature-260-kelvin-inverse-meter-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-260-kelvin-inverse-meter-relationship.json",
+      "status": 200,
+      "sha256": "4ea7b8d3b5de4628449395fcaefe07e8cc7454f0410f1996a7303d38594e6311",
+      "bytes": 73749,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-261-boltzmann-constant-in-inverse-meter-per-kelvin",
+      "filename": "nature-261-boltzmann-constant-in-inverse-meter-per-kelvin.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-261-boltzmann-constant-in-inverse-meter-per-kelvin.json",
+      "status": 200,
+      "sha256": "eb02a98f45e789548d8009228d406dd83ad230ba16381314869a39949e1d8276",
+      "bytes": 73715,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-262-hartree-kelvin-relationship",
+      "filename": "nature-262-hartree-kelvin-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-262-hartree-kelvin-relationship.json",
+      "status": 200,
+      "sha256": "367055608cd49a6ad55e3e65396e32209f9a16aaba475969bb75a1a1d2ca06ff",
+      "bytes": 74448,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-263-kelvin-hartree-relationship",
+      "filename": "nature-263-kelvin-hartree-relationship.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-263-kelvin-hartree-relationship.json",
+      "status": 200,
+      "sha256": "a85b557566d47cef13527b0aaf75b8f7beea43f5a2fa439061b3a1597fc723a9",
+      "bytes": 75312,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-264-electron-molar-mass",
+      "filename": "nature-264-electron-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-264-electron-molar-mass.json",
+      "status": 200,
+      "sha256": "04341c9a120d124807389dd3a3ca0d17f978107d1e83239f96197c3d37667086",
+      "bytes": 73176,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-265-muon-molar-mass",
+      "filename": "nature-265-muon-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-265-muon-molar-mass.json",
+      "status": 200,
+      "sha256": "1afe25b8b93d8d5879185649f63f68916263e6ea10b9602076b2d53b2a67bcad",
+      "bytes": 76608,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-266-molar-mass-constant",
+      "filename": "nature-266-molar-mass-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-266-molar-mass-constant.json",
+      "status": 200,
+      "sha256": "47080e7e23c7c48874d8621ffa2ae92a375b910f5becf3465abbda9ebe2769ff",
+      "bytes": 73869,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-267-proton-molar-mass",
+      "filename": "nature-267-proton-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-267-proton-molar-mass.json",
+      "status": 200,
+      "sha256": "71f48e8d41564df115c635fe2a7feed18b750a6b0bfe03c7901ac099298be0e9",
+      "bytes": 73870,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-268-neutron-molar-mass",
+      "filename": "nature-268-neutron-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-268-neutron-molar-mass.json",
+      "status": 200,
+      "sha256": "414c80f94118413dbe67fe1850f1a827af0a90701c6f2c2c102b27ee6a458b13",
+      "bytes": 73406,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-269-tau-molar-mass",
+      "filename": "nature-269-tau-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-269-tau-molar-mass.json",
+      "status": 200,
+      "sha256": "1b8186cd4caa0438cc38fafa959efada1be62ee185aa7c1344d1ade03d422b4f",
+      "bytes": 74400,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-270-deuteron-molar-mass",
+      "filename": "nature-270-deuteron-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-270-deuteron-molar-mass.json",
+      "status": 200,
+      "sha256": "16a03ab0a77c45a18de25e052f3b87c09a68840a6638f2598e56ec499c09716c",
+      "bytes": 75608,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-271-helion-molar-mass",
+      "filename": "nature-271-helion-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-271-helion-molar-mass.json",
+      "status": 200,
+      "sha256": "b73e7eda572cef3f83eeb37580a3f9afe7afdea164e23a99b171bbebcf955841",
+      "bytes": 74987,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-272-triton-molar-mass",
+      "filename": "nature-272-triton-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-272-triton-molar-mass.json",
+      "status": 200,
+      "sha256": "b5d2d905b82ba3ee123d8d28f9d83fdf390504c8add28cadfe3ccb0cd622ae51",
+      "bytes": 74929,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-273-alpha-particle-molar-mass",
+      "filename": "nature-273-alpha-particle-molar-mass.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-273-alpha-particle-molar-mass.json",
+      "status": 200,
+      "sha256": "f1e88314197be7b9d3f80e8c67182536846f1c0712c7ad226a6960d0b230b8da",
+      "bytes": 73001,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-274-molar-mass-of-carbon-12",
+      "filename": "nature-274-molar-mass-of-carbon-12.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-274-molar-mass-of-carbon-12.json",
+      "status": 200,
+      "sha256": "8d6f3a41f87d66e3c2027333f722402e12b76dfa27ea1da6504498b9333b2c06",
+      "bytes": 74066,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-275-avogadro-constant",
+      "filename": "nature-275-avogadro-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-275-avogadro-constant.json",
+      "status": 200,
+      "sha256": "24c676fbb6feb405cdd4122ac25f701f54d618820d20f85b124bb5f052ac101c",
+      "bytes": 74502,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-276-sackur-tetrode-constant-1k-100-kpa",
+      "filename": "nature-276-sackur-tetrode-constant-1k-100-kpa.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-276-sackur-tetrode-constant-1k-100-kpa.json",
+      "status": 200,
+      "sha256": "883c1af75bcb46a6426e44603d6a936eb7fb8803fe7e8930a60eac5c16036290",
+      "bytes": 74200,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-277-sackur-tetrode-constant-1k-101-325-kpa",
+      "filename": "nature-277-sackur-tetrode-constant-1k-101-325-kpa.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-277-sackur-tetrode-constant-1k-101-325-kpa.json",
+      "status": 200,
+      "sha256": "15c0e1cc6cf179fe75990c31296c57ca2c84f6d1d2b4f1aee145fd2a0564ef6e",
+      "bytes": 74849,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-278-stefan-boltzmann-constant",
+      "filename": "nature-278-stefan-boltzmann-constant.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-278-stefan-boltzmann-constant.json",
+      "status": 200,
+      "sha256": "d741981702ecd3ccd0c08ac230b1594fc80e5cb8a9bae1ebe5ea28595156f0e1",
+      "bytes": 73569,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-279-conventional-value-of-volt-90",
+      "filename": "nature-279-conventional-value-of-volt-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-279-conventional-value-of-volt-90.json",
+      "status": 200,
+      "sha256": "a85ad2fc7130e3d27c2a8bb015184eb13e048530ca08ab7460988998160a34ff",
+      "bytes": 73233,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-280-conventional-value-of-watt-90",
+      "filename": "nature-280-conventional-value-of-watt-90.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-280-conventional-value-of-watt-90.json",
+      "status": 200,
+      "sha256": "194ae55375614a41c8ccbc589040c1c1e6a30eddbb55943d513a9f42be0f917f",
+      "bytes": 74038,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-281-atomic-unit-of-electric-field-gradient",
+      "filename": "nature-281-atomic-unit-of-electric-field-gradient.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-281-atomic-unit-of-electric-field-gradient.json",
+      "status": 200,
+      "sha256": "cfcfbed9a943448a3505c6483e33c875b5ee55c8033fdfd33b8576cfc86908bf",
+      "bytes": 74565,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-282-atomic-unit-of-current",
+      "filename": "nature-282-atomic-unit-of-current.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-282-atomic-unit-of-current.json",
+      "status": 200,
+      "sha256": "93380386a814e655fb518558f86ed37f821cd761078c190d1ae117c7250bc31b",
+      "bytes": 72883,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-283-atomic-unit-of-magnetic-flux-density",
+      "filename": "nature-283-atomic-unit-of-magnetic-flux-density.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-283-atomic-unit-of-magnetic-flux-density.json",
+      "status": 200,
+      "sha256": "7b8c419878f715a7af278210da789438d770c98cee695fcb14a45774e8c97d10",
+      "bytes": 76299,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-284-atomic-unit-of-electric-dipole-moment",
+      "filename": "nature-284-atomic-unit-of-electric-dipole-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-284-atomic-unit-of-electric-dipole-moment.json",
+      "status": 200,
+      "sha256": "d1489ec74af7647bda11ee80c0b9fe2fcd6b170d52b9a0574dacf6f12dd6ff40",
+      "bytes": 74972,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-285-atomic-unit-of-magnetizability",
+      "filename": "nature-285-atomic-unit-of-magnetizability.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-285-atomic-unit-of-magnetizability.json",
+      "status": 200,
+      "sha256": "8db30f2c60f18463c239eadc3573adcb6f7d9d676e2fc356d8d086868f9dc449",
+      "bytes": 75210,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-286-atomic-unit-of-electric-quadrupole-moment",
+      "filename": "nature-286-atomic-unit-of-electric-quadrupole-moment.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-286-atomic-unit-of-electric-quadrupole-moment.json",
+      "status": 200,
+      "sha256": "43f64bda4bb8162feb5e4195b39864599ae653c69603788228f9e7c92211ee55",
+      "bytes": 75620,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-287-atomic-unit-of-1st-hyperpolarizibility",
+      "filename": "nature-287-atomic-unit-of-1st-hyperpolarizibility.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-287-atomic-unit-of-1st-hyperpolarizibility.json",
+      "status": 200,
+      "sha256": "e53842605416efd531fbc5b215af2da1773b91c3b11608ec673f406bb6198358",
+      "bytes": 75958,
+      "date": "2026-07-17",
+      "terms": 100
+    },
+    {
+      "id": "nature-288-atomic-unit-of-2nd-hyperpolarizibility",
+      "filename": "nature-288-atomic-unit-of-2nd-hyperpolarizibility.json",
+      "url": "https://www.physicsmonastery.earth/number-walls/data/nature-288-atomic-unit-of-2nd-hyperpolarizibility.json",
+      "status": 200,
+      "sha256": "3f711ee4a55e02d8d83819f3f0e057062447165e08496ea87a96b2c9afa4bb16",
+      "bytes": 75177,
+      "date": "2026-07-17",
+      "terms": 100
+    }
+  ]
+}

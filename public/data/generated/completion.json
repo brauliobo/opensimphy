@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-17",
+  "audit": {
+    "precision": "float64-reproduction",
+    "wallTerms": 8,
+    "wallDepth": 3,
+    "wallMode": "signed_log"
+  },
+  "complete": true,
+  "recipes": {
+    "source": 288,
+    "implemented": 288,
+    "evaluated": 288,
+    "graphed": 288,
+    "parseable": 288
+  },
+  "walls": {
+    "source": 351,
+    "implemented": 351,
+    "graphed": 0,
+    "parseable": 351,
+    "simulatable": 351
+  },
+  "core": {
+    "source": 37,
+    "implemented": 37,
+    "evaluated": 37,
+    "graphed": 37,
+    "simulatable": 37
+  },
+  "unresolved": [],
+  "errors": [],
+  "inputs": {
+    "recipesSha256": "90d350d60f15831a548fbb0736ac6670c0a7c03560cefa68d827021c17064ac2",
+    "symbolsSha256": "fbdbce921c993df9ccd726eade309b8735d5d84446f74c8b649571fa6e3fa9b6",
+    "wallsSha256": "1349c24fe0fda3d0c347a45363c208e611d56ca0216296b88258e70a3c358551",
+    "sourceManifestSha256": "502ec3c7ddc0ef1b5d83b8a9964110c9946fb5a3605e097d04565e56326876a6"
+  }
+}
