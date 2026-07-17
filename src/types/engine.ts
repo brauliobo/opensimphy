@@ -41,6 +41,61 @@ export interface RecipeSource {
   model_value: string;
   wall_id: string;
   published_result?: PublishedRecipeResult;
+  taxonomy: RecipeTaxonomy;
+}
+
+export interface RecipeTaxonomy {
+  topic: string;
+  category: string;
+  facets: {
+    basis: "exact" | "measured";
+    constructor: "multiplication" | "inversion" | "addition" | "subtraction";
+    buildPass: string;
+    sourceUnitFamily: string;
+    representation: string;
+    entities: string[];
+    sourceColumn: string;
+    sourceIsland: string;
+  };
+}
+
+export interface TaxonomyCount {
+  id: string;
+  count: number;
+}
+
+export interface TaxonomyCategory extends TaxonomyCount {
+  title: string;
+  description: string;
+}
+
+export interface TaxonomyTopic extends TaxonomyCount {
+  order: number;
+  title: string;
+  shortTitle: string;
+  eyebrow: string;
+  description: string;
+  narrative: string;
+  exactCount: number;
+  measuredCount: number;
+  categories: TaxonomyCategory[];
+  featured: Array<{ recipeNumber: number; id: string; name: string }>;
+}
+
+export interface TaxonomyArtifact {
+  schemaVersion: 1;
+  generatedAt: string;
+  total: number;
+  narrativeOrder: string[];
+  topics: TaxonomyTopic[];
+  facets: {
+    basis: TaxonomyCount[];
+    constructor: TaxonomyCount[];
+    buildPass: TaxonomyCount[];
+    sourceUnitFamily: TaxonomyCount[];
+    representation: TaxonomyCount[];
+    entities: TaxonomyCount[];
+  };
 }
 
 export interface PrimitiveSymbolSource {
@@ -196,6 +251,10 @@ export interface RegistryArtifact {
     count: number;
     dataUrl: string;
     items: Array<{ recipeNumber: number; id: string; name: string; wallId: string }>;
+  };
+  taxonomy: {
+    count: number;
+    dataUrl: string;
   };
   walls: {
     count: number;

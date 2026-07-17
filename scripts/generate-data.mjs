@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildConstantTaxonomy } from "./lib/constant-taxonomy.mjs";
 import { parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -120,7 +121,7 @@ assert(wallIndex.length === 351, `Expected 351 wall entries, found ${wallIndex.l
 const natureWalls = wallIndex.filter((entry) => entry.category === "constants-of-nature");
 assert(natureWalls.length === 288, `Expected 288 nature walls, found ${natureWalls.length}`);
 
-const recipeRegistry = recipes.map((recipe, index) => {
+const recipeRegistryBase = recipes.map((recipe, index) => {
   const result = published[index];
   const wall = natureWalls[index];
   assert(recipe.recipe_number === index + 1, `Recipe order mismatch at ${index + 1}`);
@@ -133,6 +134,7 @@ const recipeRegistry = recipes.map((recipe, index) => {
     published_result: result,
   };
 });
+const { recipes: recipeRegistry, artifact: taxonomy } = buildConstantTaxonomy(recipeRegistryBase, generatedAt);
 
 const wallRegistry = wallIndex.map((entry) => ({
   ...entry,
@@ -181,6 +183,7 @@ const provenance = {
 
 await Promise.all([
   writeFile(join(generatedDirectory, "recipes.json"), stableJson(recipeRegistry)),
+  writeFile(join(generatedDirectory, "taxonomy.json"), stableJson(taxonomy)),
   writeFile(join(generatedDirectory, "symbols.json"), stableJson(symbols)),
   writeFile(join(generatedDirectory, "walls.json"), stableJson(wallRegistry)),
   writeFile(join(generatedDirectory, "provenance.json"), stableJson(provenance)),

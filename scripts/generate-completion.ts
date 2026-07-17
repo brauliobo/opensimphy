@@ -36,9 +36,10 @@ const paths = {
   recipes: join(generatedDirectory, "recipes.json"),
   symbols: join(generatedDirectory, "symbols.json"),
   walls: join(generatedDirectory, "walls.json"),
+  taxonomy: join(generatedDirectory, "taxonomy.json"),
   sourceManifest: join(sourceDirectory, "manifest.json"),
 };
-const [recipeText, symbolText, wallText, sourceManifestText] = await Promise.all(Object.values(paths).map((path) => readFile(path, "utf8")));
+const [recipeText, symbolText, wallText, taxonomyText, sourceManifestText] = await Promise.all(Object.values(paths).map((path) => readFile(path, "utf8")));
 const recipes = JSON.parse(recipeText) as RecipeSource[];
 const symbols = JSON.parse(symbolText) as PrimitiveSymbolSource[];
 const walls = JSON.parse(wallText) as WallRegistryEntry[];
@@ -52,6 +53,7 @@ const inputs = {
   recipesSha256: sha256(recipeText),
   symbolsSha256: sha256(symbolText),
   wallsSha256: sha256(wallText),
+  taxonomySha256: sha256(taxonomyText),
   sourceManifestSha256: sha256(sourceManifestText),
 };
 const report = buildCompletionReport(
@@ -72,6 +74,10 @@ const registry: RegistryArtifact = {
       name: recipe.display_name,
       wallId: recipe.wall_id,
     })),
+  },
+  taxonomy: {
+    count: recipes.length,
+    dataUrl: "/data/generated/taxonomy.json",
   },
   walls: {
     count: walls.length,

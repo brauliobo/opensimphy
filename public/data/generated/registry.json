@@ -2,9 +2,10 @@
   "schemaVersion": 1,
   "generatedAt": "2026-07-17",
   "inputs": {
-    "recipesSha256": "90d350d60f15831a548fbb0736ac6670c0a7c03560cefa68d827021c17064ac2",
+    "recipesSha256": "73b60ded1430f5723b36f14c634f1acff6eb31d8377e86ff51a5c573d88c474b",
     "symbolsSha256": "fbdbce921c993df9ccd726eade309b8735d5d84446f74c8b649571fa6e3fa9b6",
     "wallsSha256": "1349c24fe0fda3d0c347a45363c208e611d56ca0216296b88258e70a3c358551",
+    "taxonomySha256": "ebbf764d60a61be1c94555f79eb55b3bfd133533e1c906b0987bc9b144336652",
     "sourceManifestSha256": "502ec3c7ddc0ef1b5d83b8a9964110c9946fb5a3605e097d04565e56326876a6"
   },
   "recipes": {
@@ -1740,6 +1741,10 @@
         "wallId": "nature-288-atomic-unit-of-2nd-hyperpolarizibility"
       }
     ]
+  },
+  "taxonomy": {
+    "count": 288,
+    "dataUrl": "/data/generated/taxonomy.json"
   },
   "walls": {
     "count": 351,

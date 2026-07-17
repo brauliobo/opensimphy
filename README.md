@@ -18,7 +18,7 @@ The atlas covers:
 The application has no API URL and requires no application server:
 
 ```text
-public/data/generated   source-derived recipe, wall, symbol, completion, provenance registries
+public/data/generated   source-derived recipe, taxonomy, wall, symbol, completion, provenance registries
 public/data/number-walls
                          preserved per-input static JSON
 data/physics_monastery  non-public recovered PDF/text source artifacts used by generation
@@ -32,6 +32,8 @@ tests/e2e               Playwright browser audit
 ```
 
 `src/composables/atlasEngine.ts` is the UI boundary. Formula figures are converted from engine-produced inversion-sweep points and markers. Core plots must come from the core registry. Wall canvases must come from worker results. Missing graph or worker output has no placeholder fallback: coverage and the corresponding panel remain incomplete.
+
+The generated taxonomy classifies every formula into one of eight scientific topics and a subordinate category, then records cross-cutting basis, constructor, dependency-pass, source-unit, representation, entity, and source-topology facets. Generation fails closed if a topic count, category count, or curated tour example drifts from the 288-recipe source snapshot.
 
 Plotly is dynamically imported into its own lazy chunk. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows while preserving deterministic recipe test IDs.
 
