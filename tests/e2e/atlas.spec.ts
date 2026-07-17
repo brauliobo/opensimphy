@@ -39,6 +39,7 @@ test('uses the homepage tour to open a classified atlas slice', async ({ page })
   await expect(page.getByTestId('formula-topic')).toHaveValue('magnetism')
   await expect(page.locator('.formula-row')).toHaveCount(24)
   await expect(page.locator('.header-stat')).toContainText('81 / 288')
+  await expect(page.getByTestId('advanced-filters')).not.toHaveAttribute('open', '')
 })
 
 test('browses and searches the formula atlas', async ({ page }) => {
@@ -52,6 +53,7 @@ test('browses and searches the formula atlas', async ({ page }) => {
   await expect(page.locator('.formula-row').first()).toBeVisible()
   await page.getByTestId('formula-search').fill('')
   await page.getByTestId('formula-classification').selectOption('all')
+  await page.getByTestId('advanced-filters').locator('summary').click()
   await page.getByTestId('formula-status').selectOption('fail')
   await expect(page.locator('.formula-row')).toHaveCount(3)
   await expect(page.getByTestId('formula-row-120')).toBeVisible()
@@ -66,7 +68,8 @@ test('all recipe graphs are engine-ready and first, middle, last routes render',
   for (const ordinal of [1, 144, 288]) {
     const formula = audit?.formulas.find((item) => item.ordinal === ordinal)
     expect(formula, `missing recipe ${ordinal}`).toBeTruthy()
-    await page.goto(`/atlas/${formula?.id}`)
+    await page.goto(`/atlas/${ordinal}`)
+    await page.getByTestId('graph-disclosure').locator('summary').click()
     await expect(page.getByTestId('formula-graph-ready')).toBeVisible()
     await expect(page.locator('.equation-plate')).toContainText('(EG * EB)')
   }
@@ -77,7 +80,7 @@ test('every core registry case is graph-ready and tabs render', async ({ page })
   const audit = await waitForAudit(page)
   expect(audit?.core.length).toBeGreaterThan(0)
   expect(audit?.core.every((item) => item.graphReady)).toBe(true)
-  await page.goto('/core')
+  await page.goto('/labs/core')
   for (const item of audit?.core ?? []) {
     await page.getByTestId(`core-case-${item.id}`).click()
     await expect(page.getByTestId('plot-ready')).toBeVisible()
@@ -124,7 +127,7 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   expect(smallSimulationAudit.tested).toBe(351)
   expect(smallSimulationAudit.failures).toEqual([])
 
-  await page.goto('/walls')
+  await page.goto('/labs/walls')
   await page.getByTestId('wall-search').fill('Catalan')
   for (const mode of ['mod', 'valuation', 'signed_log', 'row_signed_log', 'zero_windows', 'small_values']) {
     await page.getByTestId('wall-mode').selectOption(mode)

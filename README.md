@@ -35,7 +35,7 @@ tests/e2e               Playwright browser audit
 
 The generated taxonomy classifies every formula into one of eight scientific topics and a subordinate category, then records cross-cutting basis, constructor, dependency-pass, source-unit, representation, entity, and source-topology facets. Generation fails closed if a topic count, category count, or curated tour example drifts from the 288-recipe source snapshot.
 
-Plotly is dynamically imported into its own lazy chunk. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows while preserving deterministic recipe test IDs.
+Plotly is dynamically imported into its own lazy chunk and formula sweeps are mounted only when their detail disclosure is opened. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows; topic, category, search, and basis stay primary while source topology, audit state, constructor, and representation remain in an advanced disclosure.
 
 ## Definition of Done
 

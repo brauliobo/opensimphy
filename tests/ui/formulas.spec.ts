@@ -8,6 +8,7 @@ import { snapshot } from './fixtures'
 const router = createRouter({
   history: createMemoryHistory(),
   routes: [
+    { path: '/topics/:id', component: { template: '<div />' } },
     { path: '/atlas', component: FormulaAtlasView },
     { path: '/atlas/:id', component: FormulaDetailView, props: true },
   ],
@@ -23,6 +24,8 @@ describe('formula views', () => {
   it('filters the registry by search and audit dimensions', async () => {
     const wrapper = mount(FormulaAtlasView, { global: { plugins: [router] } })
     expect(wrapper.findAll('.formula-row')).toHaveLength(3)
+    expect(wrapper.findAll('.filter-console-primary .field')).toHaveLength(4)
+    expect(wrapper.get('[data-testid="advanced-filters"]').attributes('open')).toBeUndefined()
 
     await wrapper.get('[data-testid="formula-search"]').setValue('Formula 2')
     expect(wrapper.findAll('.formula-row')).toHaveLength(1)
@@ -46,6 +49,7 @@ describe('formula views', () => {
     expect(wrapper.get<HTMLSelectElement>('[data-testid="formula-category"]').element.value).toBe('moments-field-standards')
     expect(wrapper.findAll('.formula-row')).toHaveLength(1)
     expect(wrapper.get('[data-testid="formula-row-2"]').text()).toContain('Spin & magnetism')
+    expect(wrapper.get('[data-testid="formula-row-2"]').attributes('href')).toBe('/atlas/2?topic=magnetism&category=moments-field-standards')
   })
 
   it('renders decomposition, audit, and a real async graph panel on detail', async () => {
@@ -57,6 +61,11 @@ describe('formula views', () => {
 
     expect(wrapper.text()).toContain('Expected / computed')
     expect(wrapper.text()).toContain('EG')
+    expect(wrapper.find('[data-testid="formula-graph-ready"]').exists()).toBe(false)
+    const disclosure = wrapper.get('[data-testid="graph-disclosure"]')
+    ;(disclosure.element as HTMLDetailsElement).open = true
+    await disclosure.trigger('toggle')
+    await flushPromises()
     expect(wrapper.get('[data-testid="formula-graph-ready"]')).toBeTruthy()
   })
 })
