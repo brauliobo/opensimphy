@@ -1,0 +1,1211 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-GAL-003",
+  "counts": {
+    "total": 70,
+    "bySourceType": {
+      "formula": 54,
+      "code-block": 8,
+      "simulation-candidate": 8
+    },
+    "byConfidence": {
+      "high": 31,
+      "medium": 39,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+    "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+    "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+    "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+    "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-sparc-rotation-curve-database"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-10",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:82-82"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-11",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-12",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-13",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-14",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:128-128"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-15",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:135-135"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-16",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:155-155"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-17",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-18",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-22",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-23",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:16-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-24",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-25",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:80-80"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-26",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-27",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:98-98"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-28",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:103-103"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-29",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:113-113"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-3",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-30",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:119-119"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-31",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:121-121"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-32",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:130-130"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-33",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:132-132"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-34",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:137-137"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-35",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:140-140"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-36",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-37",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:142-142"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-38",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:143-143"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-39",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:144-144"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-4",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-40",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-41",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-42",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:157-157"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-43",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:162-162"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-44",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-45",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:176-176"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-46",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:178-178"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-47",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:180-180"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-48",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:182-182"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-49",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:194-194"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-49"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-5",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-50",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:199-199"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-50"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-51",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:205-205"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-51"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-52",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:209-209"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-52"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-53",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:223-223"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-53"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-54",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:401-401",
+        "near-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8",
+        "section:Verification Notes",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-54"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-55",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:408-408"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-55"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-56",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:409-409"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-56"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-57",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:410-410"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-57"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-58",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:411-411"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-58"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-59",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:plain-line-candidate",
+        "line-span:413-413"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-59"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-6",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-7",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-8",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-9",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "formula-kind:display-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "formulaId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-1",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:235-250",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-1",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-2",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:253-269",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-2",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-3",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:272-280",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-3",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-4",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:283-311",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-4",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-5",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:314-333",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-5",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-6",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:336-360",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-6",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-7",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:363-382",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-7",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-7"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "section:Verification Notes",
+        "line-span:385-399",
+        "simulation-candidate:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8",
+        "simulationCandidateIds": [
+          "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-8"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-1",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-1",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:235:235-250"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-1",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-2",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-2",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:253:253-269"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-2",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-3",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-3",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:272:272-280"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-3",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-4",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-4",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:283:283-311"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-4",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-5",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-5",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:314:314-333"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-5",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-6",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-6",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:336:336-360"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-6",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-6"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-7",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-7",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:363:363-382"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-7",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-7"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-8",
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-3",
+        "document-title:Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+        "linked-code-block:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8",
+        "source-document:earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "section:Verification Notes",
+        "line-in-code-span:385:385-399"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+        "simulationCandidateId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-8",
+        "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8"
+      }
+    }
+  ]
+}

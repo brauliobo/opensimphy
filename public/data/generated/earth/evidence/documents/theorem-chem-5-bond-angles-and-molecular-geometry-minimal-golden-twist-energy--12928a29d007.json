@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+    "slug": "theorem-chem-5-bond-angles-and-molecular-geometry-minimal-golden-twist-energy--12928a29d007",
+    "title": "Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy"
+  },
+  "summary": {
+    "coverageAssignments": 43,
+    "canonicalProgramAssignments": 27,
+    "classifiedAssignments": 16,
+    "relatedCanonicalPrograms": 8,
+    "classificationCounts": {
+      "duplicate": 16,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-CHEM-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-004",
+      "counts": {
+        "total": 27,
+        "bySourceType": {
+          "formula": 27,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 15,
+          "medium": 12,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-008",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-CHEM-009",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-1",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-74"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-11",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-11"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-8"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-12",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-12"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-7"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-13",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-13"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-10"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-14",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-14"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-7"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-15",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-15"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-36"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-16",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-16"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-71"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-17",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-17"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-31"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-19",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:59-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-19"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-74"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-2",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:14-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-2"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-35b692d7eb67286e33b489b238618da711f5839a9a686c188d812fb3b9706b78-formula-5"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-20",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:60-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-20"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-35b692d7eb67286e33b489b238618da711f5839a9a686c188d812fb3b9706b78-formula-5"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-21",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:64-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-21"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-25",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:85-85"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-25"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-7"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-26",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:86-86"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-26"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-8"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-3",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:18-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-3"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-31",
+      "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-5",
+        "document-title:Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+        "formulaId": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-31"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e-formula-18"
+    }
+  ]
+}

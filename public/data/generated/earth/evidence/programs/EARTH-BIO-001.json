@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-BIO-001",
+  "counts": {
+    "total": 32,
+    "bySourceType": {
+      "formula": 26,
+      "code-block": 3,
+      "simulation-candidate": 3
+    },
+    "byConfidence": {
+      "high": 9,
+      "medium": 23,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+    "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+    "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+    "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+    "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-knotinfo"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-10",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-11",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-12",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:29-29"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-13",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-14",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-15",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-16",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:55-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-17",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-18",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-19",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:61-61"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-2",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:display-math",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-20",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-21",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:69-69"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-22",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-23",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-24",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-25",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-26",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-27",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-28",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:228-228"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-3",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:display-math",
+        "line-span:81-81"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-4",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:display-math",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-7",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-8",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-9",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "formulaId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-1",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "section:Verification Notes",
+        "line-span:196-199",
+        "simulation-candidate:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-1",
+        "simulationCandidateIds": [
+          "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-2",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "section:Verification Notes",
+        "line-span:202-204",
+        "simulation-candidate:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-2",
+        "simulationCandidateIds": [
+          "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-3",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "section:Verification Notes",
+        "line-span:207-210",
+        "simulation-candidate:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-3",
+        "simulationCandidateIds": [
+          "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-1",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "linked-code-block:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-1",
+        "source-document:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "section:Verification Notes",
+        "line-in-code-span:196:196-199"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "simulationCandidateId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-1",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-2",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "linked-code-block:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-2",
+        "source-document:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "section:Verification Notes",
+        "line-in-code-span:202:202-204"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "simulationCandidateId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-2",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-3",
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-1",
+        "document-title:Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+        "linked-code-block:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-3",
+        "source-document:earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "section:Verification Notes",
+        "line-in-code-span:207:207-210"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+        "simulationCandidateId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-3",
+        "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-3"
+      }
+    }
+  ]
+}

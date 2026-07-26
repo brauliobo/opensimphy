@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-PLAN-004",
+  "counts": {
+    "total": 0,
+    "bySourceType": {
+      "formula": 0,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+    "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+    "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+    "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+    "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+    "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+    "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-preliminary-reference-earth-model-prem"
+  ],
+  "disputedClaimIds": [],
+  "assignments": []
+}

@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-FLD-005",
+  "counts": {
+    "total": 24,
+    "bySourceType": {
+      "formula": 22,
+      "code-block": 1,
+      "simulation-candidate": 1
+    },
+    "byConfidence": {
+      "high": 8,
+      "medium": 16,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+    "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+    "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+    "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+    "earth-p-f1aaa91760368859d4cc215b6419ee7daefb199c945f7d9cf3686a06ef43e6fe"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-1",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:24-24"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-10",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:26-26"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-11",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-12",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-13",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-14",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-15",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52",
+        "near-code-block:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-16",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:90-90",
+        "near-code-block:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-17",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-18",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-19",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-2",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:30-30"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-20",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:104-104"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-21",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:105-105"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-22",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:106-106"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-3",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-4",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:47-47",
+        "near-code-block:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-gap:7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-5",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:92-94",
+        "near-code-block:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-6",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:display-math",
+        "line-span:111-120"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-7",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:10-10"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-8",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:17-17"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-9",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "formula-kind:plain-line-candidate",
+        "line-span:19-19"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "formulaId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-span:54-88",
+        "simulation-candidate:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "codeBlockId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "simulationCandidateIds": [
+          "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-simulation-1",
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Quantum Superposition",
+        "linked-code-block:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+        "source-document:earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "section:4. Lattice Verification of Variance Growth",
+        "line-in-code-span:54:54-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+        "simulationCandidateId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-simulation-1",
+        "codeBlockId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+    "slug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+    "title": "Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice"
+  },
+  "summary": {
+    "coverageAssignments": 47,
+    "canonicalProgramAssignments": 38,
+    "classifiedAssignments": 9,
+    "relatedCanonicalPrograms": 12,
+    "classificationCounts": {
+      "duplicate": 9,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-PLAN-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-008",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-009",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-010",
+      "counts": {
+        "total": 38,
+        "bySourceType": {
+          "formula": 30,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 19,
+          "medium": 19,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-011",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-012",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-1",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-12",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:220-220"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-12"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-9"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-15",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-15"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-16",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-16"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-7"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-17",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-17"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-19"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-18",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-18"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-19",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-19"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-formula-22"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-31",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:103-103"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-31"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-43"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-39",
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-3",
+        "document-title:Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:227-227"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+        "formulaId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-formula-39"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-26"
+    }
+  ]
+}

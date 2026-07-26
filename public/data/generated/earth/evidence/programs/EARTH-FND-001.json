@@ -1,0 +1,2638 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-FND-001",
+  "counts": {
+    "total": 161,
+    "bySourceType": {
+      "formula": 161,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 161
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+    "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+    "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120",
+    "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+    "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e",
+    "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+    "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+    "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+    "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+    "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+    "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+    "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+    "earth-p-ef268d42871b57688bced91de235b9ebd13b10d4412ac1578f29b1d8bc1bf6b2"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-1",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-10",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-12",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:84-84"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-14",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-15",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-16",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-17",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-18",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-19",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-2",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:24-24"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-20",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:90-90"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-21",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:90-90"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-22",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-23",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-24",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-25",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-26",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:100-100"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-27",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:100-100"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-28",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:100-100"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-29",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-3",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:26-26"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-30",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-31",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:102-102"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-32",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:102-102"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-33",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:116-116"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-34",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:120-120"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-35",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:120-120"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-36",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-39",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-4",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:28-28"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-40",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-41",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-43",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-44",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-45",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-47",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-48",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-49",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-49"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-5",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-50",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:148-148"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-50"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-51",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:148-148"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-51"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-52",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-52"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-53",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-53"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-54",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-54"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-55",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:159-159"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-55"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-56",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:159-159"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-56"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-58",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-58"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-59",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-59"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-6",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-60",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-60"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-62",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:161-161"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-62"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-64",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:167-167"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-64"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-68",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:171-171"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-68"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-69",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:171-171"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-69"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-7",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-70",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:171-171"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-70"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-72",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-72"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-73",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-73"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-74",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-74"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-76",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:173-173"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-76"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-77",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:173-173"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-77"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-78",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-78"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-79",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-79"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-80",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-80"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-81",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:184-184"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-81"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-82",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:184-184"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-82"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-84",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:185-185"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-84"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-86",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:185-185"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-86"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-87",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:185-185"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-87"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-88",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:186-186"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-88"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-89",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:186-186"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-89"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-9",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-9"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-90",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:186-186"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-90"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-92",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:inline-math",
+        "line-span:187-187"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-92"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-93",
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Lexicon",
+        "document-title:Lexicon",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+        "formulaId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-93"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-1",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:11-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-10",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:plain-line-candidate",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-11",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:plain-line-candidate",
+        "line-span:38-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-12",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:plain-line-candidate",
+        "line-span:45-45"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-13",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:plain-line-candidate",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-2",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:17-19"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-3",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:23-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-4",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:34-36"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-5",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:41-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-6",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:51-53"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-7",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:70-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-8",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:81-83"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-9",
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "confidence": "low",
+      "assignmentBasis": [
+        "safe-paper-leftover:Theory Paper",
+        "document-title:Theory Paper",
+        "formula-kind:display-math",
+        "line-span:87-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+        "formulaId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-formula-9"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-1",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:20-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-10",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-11",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:45-45"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-12",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-13",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-14",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-15",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-16",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:51-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-17",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-18",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-19",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:61-61"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-2",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:30-30"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-3",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:31-31"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-4",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-5",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:34-34"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-6",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:37-37"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-7",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:38-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-8",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-9",
+      "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:For Your Understanding",
+        "document-title:For Your Understanding",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+        "formulaId": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17-formula-9"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-1",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:20-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-10",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-11",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:51-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-12",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-13",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-14",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-15",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-16",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-17",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:65-65"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-18",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-19",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-2",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:21-21"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-20",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-21",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:71-71"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-22",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:72-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-23",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-24",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-3",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-4",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:31-31"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-5",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-6",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-7",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-8",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-9",
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:README",
+        "document-title:README",
+        "formula-kind:plain-line-candidate",
+        "line-span:49-49"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+        "formulaId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-formula-9"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-1",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:22-22",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-1",
+        "section:Preliminary Observation: A Unified Foundational Error",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-10",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:122-122"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-11",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:133-133"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-12",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:139-139"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-13",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-14",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-15",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:155-155"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-16",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:159-159"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-17",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:161-161"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-18",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:167-167"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-19",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:198-198",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-6",
+        "section:Part III: Response to *15 Mathematical Breaks and Their Corresponding Inference and Mechanical Breaks*",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-2",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-2",
+        "section:Preliminary Observation: A Unified Foundational Error",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-20",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:204-204",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-6",
+        "section:Part III: Response to *15 Mathematical Breaks and Their Corresponding Inference and Mechanical Breaks*",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-21",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:232-232",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-7",
+        "section:IV.1 Summary of the Argument",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-22",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:237-237"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-23",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:242-242"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-24",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:307-307"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-25",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:316-316"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-26",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:333-333"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-27",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:364-364"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-28",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:366-366"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-3",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-4",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-5",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-6",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:79-79"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-7",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:92-92",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-3",
+        "section:II.2 The Formula Itself",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-8",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:102-102",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-3",
+        "section:II.2 The Formula Itself",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-9",
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "confidence": "low",
+      "assignmentBasis": [
+        "foundational-leftover:Response to GOOLSBY777",
+        "document-title:Response to GOOLSBY777",
+        "formula-kind:plain-line-candidate",
+        "line-span:118-118",
+        "near-code-block:earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-code-5",
+        "section:II.2 The Formula Itself",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+        "formulaId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-formula-9"
+      }
+    }
+  ]
+}

@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 
 import { createHash } from "node:crypto";
-import { spawn } from "node:child_process";
-import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
-import { dirname, join, relative, resolve } from "node:path";
+import { execFile, spawn } from "node:child_process";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { dirname, join, resolve } from "node:path";
+import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import { buildConstantTaxonomy } from "./lib/constant-taxonomy.mjs";
+import { buildEarthArtifacts, createEarthSourceLock, readEarthCorpus, verifyEarthSourceLock } from "./lib/earth-corpus.mjs";
+import { buildEarthDatasetRegistry } from "./lib/earth-dataset-registry.mjs";
+import { buildEarthEvidenceArtifacts } from "./lib/earth-evidence.mjs";
+import { buildEarthSimulationCoverage } from "./lib/earth-simulation-coverage.mjs";
+import { buildEarthSimulationRegistry } from "./lib/earth-simulation-registry.mjs";
 import { parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -13,6 +19,7 @@ const corpusRoot = resolve(root, "..");
 const sourceDirectory = join(root, "public", "data", "sources");
 const generatedDirectory = join(root, "public", "data", "generated");
 const sitePdfDirectory = join(root, "data", "physics_monastery", "site");
+const run = promisify(execFile);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -36,6 +43,15 @@ function generateCompletion() {
       else reject(new Error(`Completion generator exited with status ${code ?? "unknown"}`));
     });
   });
+}
+
+async function earthRevision(earthRoot) {
+  const [{ stdout: status }, { stdout: revision }] = await Promise.all([
+    run("git", ["-C", earthRoot, "status", "--porcelain"]),
+    run("git", ["-C", earthRoot, "rev-parse", "HEAD"]),
+  ]);
+  assert(status.trim() === "", "Refusing to update the EARTH source lock from a dirty worktree");
+  return revision.trim();
 }
 
 async function filesBelow(directory, extension) {
@@ -147,20 +163,52 @@ const corpusPdfs = parseIndexPdfs(indexText);
 const sitePdfPaths = (await filesBelow(sitePdfDirectory, ".pdf")).filter((path) => ["288.pdf", "combinatorics.pdf", "transform_dictionary.pdf"].includes(path.slice(path.lastIndexOf("/") + 1)));
 const sitePdfs = await Promise.all(sitePdfPaths.map(sitePdfMetadata));
 const earthRoot = join(corpusRoot, "EARTH");
-const earthFiles = await filesBelow(earthRoot, ".md");
-const earthInventory = await Promise.all(earthFiles.map(async (path, index) => {
-  const info = await stat(path);
-  const name = path.slice(path.lastIndexOf("/") + 1).replace(/\.md$/i, "");
-  return {
-    id: `earth-${String(index + 1).padStart(3, "0")}`,
-    localPath: relative(corpusRoot, path),
-    title: name,
-    bytes: info.size,
-    family: "earth-local-markdown",
-    contextOnly: true,
-    licenseClaim: null,
-    conceptLinks: conceptLinks(name),
-  };
+const earthLockPath = join(sourceDirectory, "earth-source-lock.json");
+const earthDocuments = await readEarthCorpus(earthRoot);
+let earthLock;
+if (process.argv.includes("--update-earth-lock")) {
+  earthLock = createEarthSourceLock(earthDocuments, {
+    lockedAt: generatedAt,
+    sourceRevision: await earthRevision(earthRoot),
+  });
+  await writeFile(earthLockPath, stableJson(earthLock));
+} else {
+  earthLock = await readJson(earthLockPath);
+}
+verifyEarthSourceLock(earthDocuments, earthLock);
+assert(earthDocuments.length === 63, `Expected 63 locked EARTH documents, found ${earthDocuments.length}`);
+const earthArtifacts = buildEarthArtifacts(earthDocuments, earthLock);
+const earthPlanPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_SIMULATION_PLAN.md");
+const earthPlanText = await readFile(earthPlanPath, "utf8");
+const earthSimulationArtifacts = buildEarthSimulationRegistry(earthPlanText, earthArtifacts.manifest);
+const earthSimulationCoverage = buildEarthSimulationCoverage({
+  manifest: earthArtifacts.manifest,
+  formulas: earthArtifacts.formulas,
+  code: earthArtifacts.code,
+  simulations: earthArtifacts.simulations,
+  registry: earthSimulationArtifacts.registry,
+});
+const earthDatasetRegistryPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_DATASET_REGISTRY.md");
+const earthDatasetRegistryText = await readFile(earthDatasetRegistryPath, "utf8");
+const earthDatasetRegistry = buildEarthDatasetRegistry(earthDatasetRegistryText, {
+  sourcePlan: earthSimulationArtifacts.registry.sourcePlan,
+});
+const earthEvidenceArtifacts = buildEarthEvidenceArtifacts({
+  manifest: earthArtifacts.manifest,
+  coverage: earthSimulationCoverage,
+  registry: earthSimulationArtifacts.registry,
+  datasets: earthDatasetRegistry,
+});
+const earthInventory = earthArtifacts.manifest.documents.map((document) => ({
+  id: document.id,
+  localPath: `EARTH/${document.source.path}`,
+  title: document.title,
+  bytes: document.source.bytes,
+  sha256: document.source.sha256,
+  family: "earth-local-markdown",
+  contextOnly: true,
+  licenseClaim: earthLock.license.identifier,
+  conceptLinks: conceptLinks(document.title),
 }));
 
 const provenance = {
@@ -181,13 +229,37 @@ const provenance = {
   earthMarkdown: earthInventory,
 };
 
+const earthGeneratedDirectory = join(generatedDirectory, "earth");
+const earthDocumentDirectory = join(earthGeneratedDirectory, "documents");
+const earthEvidenceDirectory = join(earthGeneratedDirectory, "evidence");
+const earthEvidenceProgramDirectory = join(earthEvidenceDirectory, "programs");
+const earthEvidenceDocumentDirectory = join(earthEvidenceDirectory, "documents");
+await rm(earthDocumentDirectory, { recursive: true, force: true });
+await rm(earthEvidenceDirectory, { recursive: true, force: true });
+await mkdir(earthDocumentDirectory, { recursive: true });
+await mkdir(earthEvidenceProgramDirectory, { recursive: true });
+await mkdir(earthEvidenceDocumentDirectory, { recursive: true });
+
 await Promise.all([
   writeFile(join(generatedDirectory, "recipes.json"), stableJson(recipeRegistry)),
   writeFile(join(generatedDirectory, "taxonomy.json"), stableJson(taxonomy)),
   writeFile(join(generatedDirectory, "symbols.json"), stableJson(symbols)),
   writeFile(join(generatedDirectory, "walls.json"), stableJson(wallRegistry)),
   writeFile(join(generatedDirectory, "provenance.json"), stableJson(provenance)),
+  writeFile(join(earthGeneratedDirectory, "manifest.json"), stableJson(earthArtifacts.manifest)),
+  writeFile(join(earthGeneratedDirectory, "formulas.json"), stableJson(earthArtifacts.formulas)),
+  writeFile(join(earthGeneratedDirectory, "claims.json"), stableJson(earthArtifacts.claims)),
+  writeFile(join(earthGeneratedDirectory, "code.json"), stableJson(earthArtifacts.code)),
+  writeFile(join(earthGeneratedDirectory, "simulations.json"), stableJson(earthArtifacts.simulations)),
+  writeFile(join(earthGeneratedDirectory, "scientific-simulations.json"), stableJson(earthSimulationArtifacts.registry)),
+  writeFile(join(earthGeneratedDirectory, "scientific-coverage.json"), stableJson(earthSimulationCoverage)),
+  writeFile(join(earthGeneratedDirectory, "datasets.json"), stableJson(earthDatasetRegistry)),
+  writeFile(join(earthGeneratedDirectory, "completion.json"), stableJson(earthSimulationArtifacts.completion)),
+  writeFile(join(earthEvidenceDirectory, "manifest.json"), stableJson(earthEvidenceArtifacts.manifest)),
+  ...earthArtifacts.shards.map(({ slug, artifact }) => writeFile(join(earthDocumentDirectory, `${slug}.json`), stableJson(artifact))),
+  ...earthEvidenceArtifacts.programShards.map(({ id, artifact }) => writeFile(join(earthEvidenceProgramDirectory, `${id}.json`), stableJson(artifact))),
+  ...earthEvidenceArtifacts.documentShards.map(({ slug, artifact }) => writeFile(join(earthEvidenceDocumentDirectory, `${slug}.json`), stableJson(artifact))),
 ]);
 await generateCompletion();
 
-console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, earthMarkdown: earthInventory.length }));
+console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary }));

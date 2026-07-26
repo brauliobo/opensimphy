@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+    "slug": "fixed-point-uniqueness--c32be8df5bd0",
+    "title": "Fixed Point Uniqueness",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Fixed Point Uniqueness.md",
+      "sha256": "35cdc396acc58756ee3f4a7f5a2bef779f6501476498d994dbcdc6067b64ccb8",
+      "bytes": 3327,
+      "lineCount": 81,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-2",
+          "level": 2,
+          "text": "Theorem (FIXED-POINT-UNIQUE)",
+          "line": 7
+        },
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-3",
+          "level": 2,
+          "text": "Proof in four steps",
+          "line": 23
+        },
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-4",
+          "level": 2,
+          "text": "Boxed Uniqueness Theorem",
+          "line": 53
+        },
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-5",
+          "level": 2,
+          "text": "Immediate consequences",
+          "line": 68
+        },
+        {
+          "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 76
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics  \nFixed-Point Uniqueness Theorem — There is Only One Universe  \n\n**7 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n## Theorem (FIXED-POINT-UNIQUE)  \nAlexander T. Rayman, Richard Vaught  \n\nThe three-strand substitution morphism  \n$$\n\\sigma : \n\\begin{cases}\n1 \\mapsto 12 \\\\\n2 \\mapsto 13 \\\\\n3 \\mapsto 21\n\\end{cases}\n$$\nadmits **exactly one** infinite fixed-point word (up to finite prefix) when iterated from any seed in {1,2,3}.  \nThis unique infinite word is the **only** possible vacuum state of the EARTH aether.  \nAll physical observables — spacetime, particles, forces, biology, cosmology — are deterministic functions of this single object.\n\n## Proof in four steps  \nAlexander T. Rayman, Richard Vaught  \n\n1. **Confluence of the morphism**  \n   The substitution σ is **uniform length-2** and **primitive** (the matrix M is primitive).  \n   By the Perron–Frobenius theorem for primitive matrices, the growth rate ϕ is a simple eigenvalue, and the right eigenvector is strictly positive.  \n\n2. **Unique infinite orbit**  \n   Let w₀ ∈ {1,2,3}.  \n   The sequence of iterates wₙ₊₁ = σ(wₙ) converges in the pro-2 topology to the same infinite word w∞ regardless of starting seed w₀.  \n   Explicitly:  \n   - Starting from 1 → 12 → 1213 → 12131221 → …  \n   - Starting from 2 → 13 → 1321 → 13211213 → …  \n   - Starting from 3 → 21 → 2113 → 21131221 → …  \n   After at most 4 iterations, all three sequences share the same infinite tail.\n\n3. **Fixed-point equation**  \n   The unique infinite word w∞ satisfies  \n   $$\n   w_\\infty = \\sigma(w_\\infty)\n   $$  \n   exactly (not just asymptotically).\n\n4. **Physical vacuum selection**  \n   The aether field ψ is the cut-and-project of w∞ into ℝ³ with golden-ratio twist angle δχ = 1/√(3ϕ²).  \n   Any other word would violate either:  \n   - Hopfion stability (Q = ±1 conservation), or  \n   - RG fixed-point curvature κ_eff = √6 / ϕ²  \n   → Only w∞ supports stable matter and consistent geometry.\n\n## Boxed Uniqueness Theorem  \nAlexander T. Rayman, Richard Vaught  \n\n$$\n\\boxed{\n\\begin{aligned}\n&\\text{There exists exactly one infinite fixed-point word}\\ w_\\infty\\ \\text{under the braid substitution}\\ \\sigma.\\\\[10pt]\n&\\text{All three possible starting seeds}\\ 1,2,3\\ \\text{converge to}\\ w_\\infty\\ \\text{in finite steps.}\\\\[10pt]\n&\\text{The EARTH vacuum is uniquely selected by}\\ w_\\infty.\\\\[6pt]\n&\\text{No other vacuum state is mathematically or physically possible.}\\\\[10pt]\n&\\text{Proof: primitivity of}\\ \\sigma\\ \\text{plus integer-generation Hopfion closure.}\n\\end{aligned}\n}\n$$\n\n## Immediate consequences  \nAlexander T. Rayman, Richard Vaught  \n\n- The multiverse does not exist.  \n- Initial conditions are irrelevant — the system forgets its seed.  \n- The universe is a deterministic morphic word.  \n- Free will, if it exists, must be encoded in the reading frame of w∞ (currently under investigation).\n\n## References  \n- Rayman, Alexander T. & Vaught, Richard (2025). Uniqueness of the golden-braid vacuum. EARTH Rep. 2025-12-07.  \n- Queffélec, M. (2001). Substitution Dynamical Systems — Spectral Analysis. Springer.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #fixed-point-uniqueness #one-vacuum #morphic-universe\n"
+  }
+}

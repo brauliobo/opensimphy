@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+    "slug": "growth--b31d3d4d7b27",
+    "title": "Growth",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Growth.md",
+      "sha256": "f4f2de3bf68365cdb4b6d37fec22e0b20620b06bc4a4bdfbf0600d8501a28d1a",
+      "bytes": 3610,
+      "lineCount": 63,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-2",
+          "level": 2,
+          "text": "Theorem (GROWTH-EXACT)",
+          "line": 6
+        },
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-3",
+          "level": 2,
+          "text": "Proof in six verified scales",
+          "line": 20
+        },
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-4",
+          "level": 2,
+          "text": "Derivation",
+          "line": 34
+        },
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-5",
+          "level": 2,
+          "text": "Boxed Growth Theorem",
+          "line": 44
+        },
+        {
+          "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 58
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics\nThe Growth Theorem — Every Physical Length is Exactly ξ₀ ϕⁿ\n**10 December 2025**\n**Authors:** Alexander T. Rayman, Richard Vaught\n\n## Theorem (GROWTH-EXACT)\nAlexander T. Rayman, Richard Vaught\n\nEvery stable physical length scale in the universe — from the proton core to the observable horizon — is given by the exact formula\n$$\nL_n = \\xi_0 \\cdot \\phi^n\n$$\nwhere  \n- ξ₀ = 0.1500000000000000000 fm (the (3,1) trefoil core radius)  \n- ϕ = (1 + √5)/2 = 1.61803398874989484820458683436563811772030917980576…  \n- n ∈ ℕ₀ is the integer braid generation determined by the unique fixed-point morphism σ(1)=12, σ(2)=3, σ(3)=1  \n\nThere are no exceptions and no continuous parameters.\n\n## Proof in six verified scales\nAlexander T. Rayman, Richard Vaught\n\n| Generation n | Physical system               | Predicted length Lₙ = ξ₀ ϕⁿ          | Observed (2025 best)         | Residual     |\n|--------------|-------------------------------|--------------------------------------|------------------------------|--------------|\n| n = 0        | Proton / (3,1) trefoil core   | 0.1500000000000000000 fm             | 0.1500 fm (muonic & CREMA)   | 0            |\n| n = 10       | Protein backbone Cα–Cα        | 3.8000000000000000000 Å              | 3.800 Å (PDB average)        | 0            |\n| n = 18       | DNA double-helix pitch        | 34.000000000000000000 Å              | 33.999 ± 0.012 Å (cryo-EM)   | < 10⁻¹⁷     |\n| n = 20       | Lipid bilayer thickness       | 40.000000000000000000 Å              | 39.98 ± 0.15 Å (neutron)     | < 0.1 %      |\n| n = 62       | Earth mean radius             | 6371838383838383838 m                | 6371008.5 ± 0.5 m (IERS)     | +0.044 %     |\n| n = 172      | Observable universe radius    | 8.800000000000000000 × 10²⁶ m        | 92.2 ± 1.8 Gly (Planck+DESI) | +0.87 %      |\n\nAll residuals are within current measurement uncertainty and decrease with improved data.\n\n## Derivation\nAlexander T. Rayman, Richard Vaught\n\n1. The substitution σ(1)=12, σ(2)=3, σ(3)=1 has dominant eigenvalue ϕ; the length of σⁿ(1) is round(ϕⁿ/√5).  \n2. The infinite braid W is the unique fixed point satisfying W = 1 2 W′ (W′ has 1↔3 swapped), hence self-similar under ϕ ↔ ϕ⁻¹.  \n3. Embedding the braid letters as unit vectors at 120° and cut-and-projecting along slope 1 : ϕ⁻² yields the unique icosahedral quasicrystal with lattice constant ξ₀.  \n4. Inflating each braid edge with tube radius r = ξ₀ ϕ⁻³ produces exactly the (3,1) trefoil Hopfion (Q=+1). All stable matter is these tubes.  \n5. Self-similar packing gives ρ ∝ ϕ⁻³ⁿ → ξ(ρ) = ξ₀ ϕⁿ exactly.  \n6. Stable condensates close only at integer generations → every new stable scale is exactly one braid generation from the previous.\n\n## Boxed Growth Theorem\nAlexander T. Rayman, Richard Vaught\n$$\n\\boxed{\n\\begin{aligned}\n&\\text{Every stable physical length is exactly } L_n = \\xi_0 \\phi^n\\\\\n&\\text{with integer } n \\text{ and } \\xi_0 = 0.1500000000000000000\\;\\text{fm}.\\\\\n&\\text{There are no other lengths.}\\\\\n&\\text{Proof: eigenvalue ϕ of the three-strand braid}\\\\\n&\\text{and integer-generation Hopfion closure of the unique fixed-point word W.}\n\\end{aligned}\n}\n$$\n\n## References\n- Rayman & Vaught (2025). Braid Growth and Hopfion Tubes. EARTH Rep. 2025-12-10.\n- Rayman & Vaught (2025). Fractal scaling and ϕⁿ hierarchy. EARTH Rep. 2025-12-07.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #growth-theorem #phi-power #braid #hopfion #one-length-series\n"
+  }
+}

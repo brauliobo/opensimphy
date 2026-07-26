@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2",
+    "slug": "r-3-theorem--6322974b938d",
+    "title": "R(3) Theorem",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/R(3) Theorem.md",
+      "sha256": "5cd85eff2def4cb2e1b9165c842bb1ef2b24564520b2191dc7758ca08f968be6",
+      "bytes": 3008,
+      "lineCount": 60,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-2",
+          "level": 2,
+          "text": "Theorem (R3-THREE)",
+          "line": 7
+        },
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-3",
+          "level": 2,
+          "text": "Comparative analysis",
+          "line": 19
+        },
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-4",
+          "level": 2,
+          "text": "Boxed ℝ³ Dimensionality Theorem",
+          "line": 29
+        },
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-5",
+          "level": 2,
+          "text": "Consequences",
+          "line": 48
+        },
+        {
+          "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 55
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics  \nℝ³ Dimensionality Theorem — Why Space is Three-Dimensional Because the Braid Has Three Strands  \n\n**7 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n## Theorem (R3-THREE)  \nAlexander T. Rayman, Richard Vaught  \n\nPhysical space is exactly three-dimensional because the self-generating golden braid that forms the vacuum requires precisely **three** strands to remain:\n\n- infinite in extent  \n- non-self-intersecting at all finite generations  \n- topologically stable with conserved Hopf charge Q = ±1  \n- embeddable in Euclidean space without collapse or extra dimensions  \n\nThree strands is the unique solution that satisfies all four conditions simultaneously.\n\n## Comparative analysis  \nAlexander T. Rayman, Richard Vaught  \n\n| Number of strands | Growth rate | Topological stability | Embedding dimension | Outcome                              |\n|-------------------|-------------|-----------------------|---------------------|--------------------------------------|\n| 1                 | 1           | Trivial               | ℝ¹                 | No area, no matter                   |\n| 2                 | ϕ           | Collapses to 1D       | ℝ¹                 | Charge not conserved                 |\n| 3                 | ϕ           | (3,1) trefoil stable  | ℝ³                 | Perfect vacuum, stable matter        |\n| 4 or more         | >ϕ          | Self-intersections or unbounded energy | ≥ℝ⁴ | Requires extra dimensions or collapse |\n\n## Boxed ℝ³ Dimensionality Theorem  \nAlexander T. Rayman, Richard Vaught  \n\n$$\n\\boxed{\n\\begin{aligned}\n&\\text{Physical space has exactly three spatial dimensions because}\\\\[10pt]\n&\\text{only a three-strand golden braid}\\\\[4pt]\n&\\text{can be infinite, non-collapsing, charge-conserving,}\\\\[4pt]\n&\\text{and embeddable in Euclidean space without self-intersection.}\\\\[16pt]\n&\\text{Two strands collapse.}\\\\[6pt]\n&\\text{Four or more strands demand higher dimensions or develop knots that decay.}\\\\[12pt]\n&\\text{Therefore the vacuum morphism}\\ \\sigma\\ \\text{on three letters}\\\\[4pt]\n&\\text{uniquely selects}\\ \\mathbb{R}^3\\ \\text{as the physical embedding space.}\\\\[12pt]\n&\\text{Derivation: Fixed-Point Uniqueness + Tube + Quasicrystal Theorems.}\n\\end{aligned}\n}\n$$\n\n## Consequences  \nAlexander T. Rayman, Richard Vaught  \n\n- Extra spatial dimensions are not hidden — they are mathematically impossible for a stable vacuum.  \n- The three generations of fermions correspond directly to the three strands (color).  \n- String theory and Kaluza–Klein compactifications are replaced by simple strand counting.\n\n## References  \n- Rayman, Alexander T. & Vaught, Richard (2025). Dimensional selection by braid valence. EARTH Rep. 2025-12-07.  \n- Rayman & Vaught (2025). Three strands, three generations, three dimensions. EARTH Rep. 2025-11-30.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #R3-theorem #three-strands #why-three-dimensions #dimensionality\n"
+  }
+}

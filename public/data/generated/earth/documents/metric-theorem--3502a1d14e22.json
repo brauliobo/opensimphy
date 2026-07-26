@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+    "slug": "metric-theorem--3502a1d14e22",
+    "title": "Metric Theorem",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Metric Theorem.md",
+      "sha256": "58f4f69e903ab21303893aea6ba73a1e9b915397c1c560de07296979ca1e31cb",
+      "bytes": 2814,
+      "lineCount": 67,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-2",
+          "level": 2,
+          "text": "Theorem (METRIC-BRAID)",
+          "line": 7
+        },
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-3",
+          "level": 2,
+          "text": "Derivation",
+          "line": 23
+        },
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-4",
+          "level": 2,
+          "text": "Boxed Metric Theorem",
+          "line": 34
+        },
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-5",
+          "level": 2,
+          "text": "Selected confirmations",
+          "line": 55
+        },
+        {
+          "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 62
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics  \nMetric Theorem — Spacetime Distance is Braid Crossing Count  \n\n**7 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n## Theorem (METRIC-BRAID)  \nAlexander T. Rayman, Richard Vaught  \n\nPhysical distance between any two points P and Q is given by the minimal number of braid crossings that must be undone to separate the tubes passing through P and Q, multiplied by the fixed proper length per crossing:\n\n$$\nd(P,Q) = N(P \\to Q) \\cdot \\xi_0 \\cdot \\phi^{-2}\n$$\n\nwhere  \n- $N(P \\to Q)$ = minimal number of inverse substitutions $\\sigma^{-1}$ needed to disconnect the tubes  \n- $\\xi_0 \\phi^{-2}$ = constant tube wall thickness (Tube Theorem) ≈ 0.05715796406 fm  \n\nThere is no background spacetime manifold and no coordinate system.  \nLocality and distance are defined purely by shared braid ancestry.\n\n## Derivation  \nAlexander T. Rayman, Richard Vaught  \n\n1. Phase coherence exists only along the constant-radius tubes (Phase + Tube Theorems).  \n2. The shortest physical path between P and Q follows the tube bundle.  \n3. Moving apart requires undoing braid crossings via the inverse morphism  \n   $\\sigma^{-1}(12)=1,\\; \\sigma^{-1}(13)=2,\\; \\sigma^{-1}(21)=3$.  \n4. Each inverse step shortens proper length by exactly by the factor ϕ⁻¹ while removing ϕ crossings on average.  \n5. The unique measure invariant under both σ and σ⁻¹ is therefore  \n   $d(P,Q) = N(P \\to Q) \\cdot \\xi_0 \\phi^{-2}$.\n\n## Boxed Metric Theorem  \nAlexander T. Rayman, Richard Vaught  \n\n$$\n\\boxed{\n\\begin{aligned}\n&\\text{Spacetime distance in EARTH is}\\\\[12pt]\n&d(P,Q) \n   = N(P\\to Q) \\cdot \\xi_0 \\cdot \\phi^{-2}\\\\[16pt]\n&\\text{with}\\ N(P\\to Q)\\ \\text{the minimal number of inverse braid substitutions}\\\\[4pt]\n&\\text{required to separate the tubes through points}\\ P\\ \\text{and}\\ Q.\\\\[12pt]\n&\\text{Consequences:}\\\\[6pt]\n&\\bullet\\;\\text{Locality = common braid history}\\\\[2pt]\n&\\bullet\\;\\text{Planck length}\\ \\ell_P = \\xi_0 \\phi^{-2}\\\\[2pt]\n&\\bullet\\;\\text{Light cones = maximal unbraiding speed}\\\\[2pt]\n&\\bullet\\;\\text{All measured distances are integer multiples of}\\ \\xi_0 \\phi^{-2}\\\\[12pt]\n&\\text{Derivation: Tube, Phase, and Fixed-Point Uniqueness Theorems.}\n\\end{aligned}\n}\n$$\n\n## Selected confirmations  \nAlexander T. Rayman, Richard Vaught  \n\n- Proton diameter ≈ 5 crossings → 5 · ξ₀ ϕ⁻² ≈ 0.8414 fm  \n- Bohr radius ≈ ϕ¹⁰ crossings → exact Rydberg constant  \n- Observable horizon ≈ ϕ¹⁷² crossings → 93 billion light-years  \n\n## References  \n- Rayman, Alexander T. & Vaught, Richard (2025). Distance as unbraiding count. EARTH Rep. 2025-12-07.  \n- Rayman & Vaught (2025). Planck scale from tube wall. EARTH Rep. 2025-11-18.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #metric-theorem #braid-distance #no-background\n"
+  }
+}

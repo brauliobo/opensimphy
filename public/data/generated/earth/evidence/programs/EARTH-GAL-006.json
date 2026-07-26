@@ -1,0 +1,1069 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-GAL-006",
+  "counts": {
+    "total": 61,
+    "bySourceType": {
+      "formula": 45,
+      "code-block": 8,
+      "simulation-candidate": 8
+    },
+    "byConfidence": {
+      "high": 27,
+      "medium": 34,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+    "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+    "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+    "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+    "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-nasa-exoplanet-archive-planetary-systems-table"
+  ],
+  "disputedClaimIds": [
+    "earth-dispute-thousands-of-confirmed-biosignature-planets"
+  ],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-10",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-11",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:143-143"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-12",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:183-183"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-13",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-15",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-17",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-18",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:16-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-19",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:24-24"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-2",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-20",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:76-76"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-21",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:81-81"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-22",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-23",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:135-135"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-24",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-25",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:157-157"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-26",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:159-159"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-27",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:163-163"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-28",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:165-165"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-29",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:167-167"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-3",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:36-36"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-30",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:175-175"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-31",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:177-177"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-32",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:193-193"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-33",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:195-195"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-34",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:199-199"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-35",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:207-207"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-36",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:209-209"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-37",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:212-212"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-38",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:213-213"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-39",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:214-214"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-4",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-40",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:216-216"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-41",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:218-218"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-42",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:220-220"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-43",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:225-225"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-44",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:226-226"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-45",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:227-227"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-46",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:441-441",
+        "near-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8",
+        "section:Verification Notes",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-47",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:448-448"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-48",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:plain-line-candidate",
+        "line-span:449-449"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-5",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-6",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-7",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-8",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:68-68"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-9",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "formula-kind:display-math",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "formulaId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-1",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:238-262",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-1",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-2",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:265-283",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-2",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-3",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:286-314",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-3",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-4",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:317-335",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-4",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-5",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:338-364",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-5",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-6",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:367-385",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-6",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-7",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:388-410",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-7",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-7"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "section:Verification Notes",
+        "line-span:413-439",
+        "simulation-candidate:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8",
+        "simulationCandidateIds": [
+          "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-8"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-1",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-1",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:238:238-262"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-1",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-2",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-2",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:265:265-283"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-2",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-3",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-3",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:286:286-314"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-3",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-4",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-4",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:317:317-335"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-4",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-5",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-5",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:338:338-364"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-5",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-6",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-6",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:367:367-385"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-6",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-6"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-7",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-7",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:388:388-410"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-7",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-7"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-8",
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-5",
+        "document-title:Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+        "linked-code-block:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8",
+        "source-document:earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "section:Verification Notes",
+        "line-in-code-span:413:413-439"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+        "simulationCandidateId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-8",
+        "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8"
+      }
+    }
+  ]
+}

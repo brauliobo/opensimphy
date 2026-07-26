@@ -57,6 +57,7 @@ const RESISTANCE = subtractDimensions(VOLTAGE, CURRENT);
 export const UNIT_SYMBOLS: Record<string, EvaluationSymbol> = {
   "-": unit(DIMENSIONLESS),
   dimensionless: unit(DIMENSIONLESS),
+  cycle: unit(DIMENSIONLESS),
   cycles: unit(DIMENSIONLESS),
   mol: unit(DIMENSIONLESS),
   sr: unit(DIMENSIONLESS),

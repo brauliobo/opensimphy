@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlan": {
+    "path": "research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md",
+    "revision": "2026-07-17",
+    "sha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9"
+  },
+  "source": 130,
+  "registered": 130,
+  "sourceLinked": 130,
+  "implemented": 130,
+  "runnable": 130,
+  "blocked": 0,
+  "methods": 220,
+  "runnableMethods": 134,
+  "prefixes": 17,
+  "structuralCoverageExact": true,
+  "executableCoverageExact": true,
+  "scientificallyValidated": false,
+  "complete": true
+}

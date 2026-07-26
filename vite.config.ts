@@ -32,9 +32,38 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,json,txt}'],
-        globIgnores: ['data/number-walls/**/*.json', 'assets/plotly-*.js'],
+        globIgnores: [
+          'data/generated/earth/documents/**/*.json',
+          'data/generated/earth/evidence/programs/**/*.json',
+          'data/generated/earth/evidence/documents/**/*.json',
+          'data/generated/earth/scientific-coverage.json',
+          'data/generated/earth/results/**/*',
+          'data/generated/earth/datasets/**/*',
+          'data/number-walls/**/*.json',
+          'assets/plotly-*.js',
+        ],
         navigateFallback: 'index.html',
         runtimeCaching: [
+          {
+            urlPattern: /\/data\/generated\/earth\/documents\/.*\.json$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'opensimphy-earth-documents',
+              expiration: { maxEntries: 63, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/earth\/evidence\/(?:programs|documents)\/.*\.json$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'opensimphy-earth-evidence-shards',
+              expiration: { maxEntries: 48, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/earth\/(?:results|datasets)\/.*$/,
+            handler: 'NetworkOnly',
+          },
           {
             urlPattern: /\/data\/number-walls\/.*\.json$/,
             handler: 'CacheFirst',

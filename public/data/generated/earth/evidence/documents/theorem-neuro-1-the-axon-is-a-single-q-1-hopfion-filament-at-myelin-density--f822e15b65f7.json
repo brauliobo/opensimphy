@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+    "slug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+    "title": "Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density"
+  },
+  "summary": {
+    "coverageAssignments": 41,
+    "canonicalProgramAssignments": 36,
+    "classifiedAssignments": 5,
+    "relatedCanonicalPrograms": 6,
+    "classificationCounts": {
+      "duplicate": 5,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-NEURO-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-NEURO-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-NEURO-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-NEURO-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-NEURO-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-NEURO-006",
+      "counts": {
+        "total": 36,
+        "bySourceType": {
+          "formula": 24,
+          "code-block": 6,
+          "simulation-candidate": 6
+        },
+        "byConfidence": {
+          "high": 21,
+          "medium": 15,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-1",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:23-23"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-12",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-12"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-13",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-13"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-7"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-14",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-14"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-8"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-15",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-15"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-10"
+    }
+  ]
+}

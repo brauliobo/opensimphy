@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-BIO-009",
+  "counts": {
+    "total": 38,
+    "bySourceType": {
+      "formula": 30,
+      "code-block": 4,
+      "simulation-candidate": 4
+    },
+    "byConfidence": {
+      "high": 20,
+      "medium": 18,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+    "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+    "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+    "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+    "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-10",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-11",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:102-102"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-12",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:111-111"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-13",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:115-115"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-14",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-2",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:33-33"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-20",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-21",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:49-49"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-22",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-23",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:51-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-24",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:61-61"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-25",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:68-68"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-26",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-27",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-28",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-29",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:98-98"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-3",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:38-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-30",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:135-135"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-31",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:137-137"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-32",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:138-138"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-33",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:148-148"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-34",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:202-202",
+        "near-code-block:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4",
+        "section:Verification Notes",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-35",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:208-208"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-36",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:215-215"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-4",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-5",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:59-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-6",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-7",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-8",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-9",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:85-85"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "formulaId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-1",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:161-166",
+        "simulation-candidate:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-1",
+        "simulationCandidateIds": [
+          "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-2",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:169-175",
+        "simulation-candidate:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-2",
+        "simulationCandidateIds": [
+          "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-3",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:178-188",
+        "simulation-candidate:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-3",
+        "simulationCandidateIds": [
+          "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:191-198",
+        "simulation-candidate:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4",
+        "simulationCandidateIds": [
+          "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-1",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "linked-code-block:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-1",
+        "source-document:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "section:Verification Notes",
+        "line-in-code-span:161:161-166"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "simulationCandidateId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-1",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-2",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "linked-code-block:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-2",
+        "source-document:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "section:Verification Notes",
+        "line-in-code-span:169:169-175"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "simulationCandidateId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-2",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-3",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "linked-code-block:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-3",
+        "source-document:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "section:Verification Notes",
+        "line-in-code-span:178:178-188"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "simulationCandidateId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-3",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-4",
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-5",
+        "document-title:Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+        "linked-code-block:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4",
+        "source-document:earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "section:Verification Notes",
+        "line-in-code-span:191:191-198"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+        "simulationCandidateId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-4",
+        "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4"
+      }
+    }
+  ]
+}

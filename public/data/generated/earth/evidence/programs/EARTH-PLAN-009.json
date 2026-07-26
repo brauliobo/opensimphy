@@ -1,0 +1,903 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-PLAN-009",
+  "counts": {
+    "total": 52,
+    "bySourceType": {
+      "formula": 44,
+      "code-block": 4,
+      "simulation-candidate": 4
+    },
+    "byConfidence": {
+      "high": 11,
+      "medium": 41,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+    "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+    "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+    "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+    "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+    "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+    "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-iapws-95-water-formulation"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-10",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-11",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-12",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:33-33"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-13",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-14",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:51-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-15",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-16",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:55-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-17",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-18",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-19",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:59-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-20",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:65-65"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-21",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-22",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-23",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:68-68"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-24",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-25",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:72-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-26",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-27",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-28",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-29",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:77-77"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-3",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:display-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-30",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:81-81"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-31",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:86-86"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-32",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:87-87"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-33",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:92-92"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-34",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-35",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:112-112"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-36",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:117-117"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-37",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:122-122"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-38",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-39",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:138-138"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-4",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:display-math",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-40",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:144-144"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-41",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:150-150"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-42",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:152-152"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-43",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-44",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-45",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:164-164"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-46",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:165-165",
+        "near-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-47",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:214-214",
+        "near-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+        "section:Verification Notes",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-48",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:218-218",
+        "near-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+        "section:Verification Notes",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-5",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:display-math",
+        "line-span:224-224"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-6",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-7",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "formula-kind:plain-line-candidate",
+        "line-span:5-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "formulaId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-formula-7"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "section:Verification Notes",
+        "line-span:173-184",
+        "simulation-candidate:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1",
+        "simulationCandidateIds": [
+          "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-2",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "section:Verification Notes",
+        "line-span:187-193",
+        "simulation-candidate:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-2",
+        "simulationCandidateIds": [
+          "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-3",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "section:Verification Notes",
+        "line-span:196-199",
+        "simulation-candidate:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-3",
+        "simulationCandidateIds": [
+          "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "section:Verification Notes",
+        "line-span:202-212",
+        "simulation-candidate:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+        "simulationCandidateIds": [
+          "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-1",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "linked-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1",
+        "source-document:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "section:Verification Notes",
+        "line-in-code-span:173:173-184"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "simulationCandidateId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-1",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-2",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "linked-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-2",
+        "source-document:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "section:Verification Notes",
+        "line-in-code-span:187:187-193"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "simulationCandidateId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-2",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-3",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "linked-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-3",
+        "source-document:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "section:Verification Notes",
+        "line-in-code-span:196:196-199"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "simulationCandidateId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-3",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-4",
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-7",
+        "document-title:Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+        "linked-code-block:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+        "source-document:earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "section:Verification Notes",
+        "line-in-code-span:202:202-212"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+        "simulationCandidateId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-4",
+        "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4"
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+    "slug": "coupling-theorem--bb530ae74b4c",
+    "title": "Coupling Theorem",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Coupling Theorem.md",
+      "sha256": "a77d03910af9f84d4f0e638cb80a94a8959399d5faffcdb13440c42c069876b5",
+      "bytes": 3859,
+      "lineCount": 75,
+      "encoding": "utf-8",
+      "finalNewline": false
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-2",
+          "level": 2,
+          "text": "Theorem (COUPLING-UNIFIED)",
+          "line": 7
+        },
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-3",
+          "level": 2,
+          "text": "Unified coupling formula",
+          "line": 23
+        },
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-4",
+          "level": 2,
+          "text": "Boxed Coupling Theorem",
+          "line": 39
+        },
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-5",
+          "level": 2,
+          "text": "Observational confirmation",
+          "line": 62
+        },
+        {
+          "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 70
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics  \nCoupling Theorem — All Four Forces Are the Same Elastic Response at Different Distances  \n\n**7 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n## Theorem (COUPLING-UNIFIED)  \nAlexander T. Rayman, Richard Vaught  \n\nThere is only one interaction in the universe: the elastic response of the constant-radius tube (Tube Theorem) to deformations of its phase gradient (Phase Theorem) on the manifold of constant curvature (Curvature Theorem).  \n\nThis single interaction manifests as four apparently distinct forces depending only on the distance scale r at which the tube is probed:\n\n| Force                | Distance scale r         | Elastic mode                     | Coupling strength (exact)                  |\n|----------------------|--------------------------|----------------------------------|--------------------------------------------|\n| Strong (colour)      | r ≤ ξ₀                   | Tube overlap / compression       | gₛ² ≈ ϕ⁶ ≈ 14.778                  |\n| Electromagnetic      | ξ₀ < r ≤ ξ₀ ϕ¹⁰          | Phase gradient drag            | α⁻¹ = 120π · 3 · ϕ² = 137.035999084… |\n| Weak                 | r ≈ ξ₀ ϕ¹⁸               | Tube chiral flip (δχ twist)      | G_F ≈ ϕ⁻³⁶ · ξ₀² / ħc               |\n| Gravity              | r ≳ ξ₀ ϕ⁶²               | Long-range phase curvature       | G ≈ ϕ⁻⁷² · ξ₀⁴ c⁴ / ħ                  |\n\nAll four are the same formula evaluated at different powers of ϕ.\n\n## Unified coupling formula  \nAlexander T. Rayman, Richard Vaught  \n\nThe interaction strength between two Q = 1 tubes separated by distance r is  \n\n$$\n\\Gamma(r) = \\frac{\\phi^{6}}{\\left( \\phi^{\\log_\\phi (r/\\xi_0)} \\right)^6} \n          = \\phi^{6 \\left( 2 - 2 \\log_\\phi (r/\\xi_0) \\right)}\n          = \\phi^{12} \\cdot \\left( \\frac{\\xi_0}{r} \\right)^6\n$$\n\n- r = ξ₀ → Γ = ϕ¹² ≈ 322 — strong force at nuclear core  \n- r = ξ₀ ϕ⁸ → Γ = ϕ⁻³⁶ ≈ 10⁻¹⁸ — weak scale  \n- r = ξ₀ ϕ²⁰ → Γ = 1/137… — electromagnetic  \n- r = ξ₀ ϕ⁶² → Γ ≈ 10⁻⁷² — gravitational\n\n## Boxed Coupling Theorem  \nAlexander T. Rayman, Richard Vaught  \n\n$$\n\\boxed{\n\\begin{aligned}\n&\\text{There is only one force in EARTH:}\\\\[12pt]\n&\\text{the elastic deformation of the constant-radius,}\\\\[4pt]\n&\\text{constant-phase-gradient tube on the constant-curvature manifold.}\\\\[12pt]\n&\\text{Its strength at distance } r \\text{ is exactly}\\\\[12pt]\n&\\Gamma(r) = \\phi^{12} \\left( \\dfrac{\\xi_0}{r} \\right)^6 \n   = \\phi^{12 - 6 \\log_\\phi (r/\\xi_0)}\\\\[16pt]\n&\\text{This single expression reproduces:}\\\\[6pt]\n&\\bullet\\;\\text{Strong coupling } \\sim \\phi^6\\;\\text{at}\\;r=\\xi_0\\\\[2pt]\n&\\bullet\\;\\text{EM coupling }   \\alpha^{-1}=120\\pi\\cdot3\\cdot\\phi^2\\;\\text{at}\\;r=\\xi_0\\phi^{10}\\\\[2pt]\n&\\bullet\\;\\text{Weak coupling } \\sim \\phi^{-36}\\;\\text{at}\\;r=\\xi_0\\phi^{18}\\\\[2pt]\n&\\bullet\\;\\text{Gravity }       \\sim \\phi^{-72}\\;\\text{at}\\;r=\\xi_0\\phi^{62}\\\\[12pt]\n&\\text{No additional forces or fields exist.}\\\\[6pt]\n&\\text{Proof: Tube + Phase + Curvature Theorems combined with ϕ-power spacing.}\n\\end{aligned}\n}\n$$\n\n## Observational confirmation  \nAlexander T. Rayman, Richard Vaught  \n\n- α from ϕ² known to 10⁻¹⁰ (CODATA 2022)  \n- G from ϕ⁻⁷² matches to 10⁻⁵ (current limit)  \n- Weak scale ϕ⁻³⁶ predicts sin²θ_W = 0.23122 (observed 0.23121 ± 0.00004)  \n- Strong coupling at μ = 1 GeV ≈ ϕ⁶ (lattice QCD agreement)\n\n## References  \n- Rayman, Alexander T. & Vaught, Richard (2025). Unified coupling from ϕ-power hierarchy. EARTH Rep. 2025-12-07.  \n- Rayman & Vaught (2025). Gravity as ϕ⁻⁷² tube curvature. EARTH Rep. 2025-11-23.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #coupling-theorem #four-forces-one #phi-power-unification"
+  }
+}

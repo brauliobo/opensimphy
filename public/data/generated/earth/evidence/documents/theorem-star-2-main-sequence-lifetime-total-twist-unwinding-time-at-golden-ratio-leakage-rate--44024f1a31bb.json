@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+    "slug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+    "title": "Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate"
+  },
+  "summary": {
+    "coverageAssignments": 46,
+    "canonicalProgramAssignments": 44,
+    "classifiedAssignments": 2,
+    "relatedCanonicalPrograms": 9,
+    "classificationCounts": {
+      "duplicate": 2,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-STAR-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-003",
+      "counts": {
+        "total": 44,
+        "bySourceType": {
+          "formula": 34,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 22,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-008",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-009",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-13",
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-2",
+        "document-title:Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:213-213"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+        "formulaId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-13"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-8",
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-2",
+        "document-title:Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+        "formulaId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-8"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-1"
+    }
+  ]
+}

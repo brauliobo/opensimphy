@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+    "slug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+    "title": "Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid"
+  },
+  "summary": {
+    "coverageAssignments": 58,
+    "canonicalProgramAssignments": 54,
+    "classifiedAssignments": 4,
+    "relatedCanonicalPrograms": 7,
+    "classificationCounts": {
+      "duplicate": 4,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-GAL-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-002",
+      "counts": {
+        "total": 54,
+        "bySourceType": {
+          "formula": 38,
+          "code-block": 8,
+          "simulation-candidate": 8
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 32,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GAL-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-1",
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-2",
+        "document-title:Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+        "formulaId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-11",
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-2",
+        "document-title:Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+        "formulaId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-11"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-12",
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-2",
+        "document-title:Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+        "formulaId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-12"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-19"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-7",
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-2",
+        "document-title:Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+        "formulaId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-7"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-6"
+    }
+  ]
+}

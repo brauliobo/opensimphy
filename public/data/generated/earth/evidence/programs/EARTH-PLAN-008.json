@@ -1,0 +1,666 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-PLAN-008",
+  "counts": {
+    "total": 38,
+    "bySourceType": {
+      "formula": 32,
+      "code-block": 3,
+      "simulation-candidate": 3
+    },
+    "byConfidence": {
+      "high": 11,
+      "medium": 27,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+    "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+    "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+    "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+    "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+    "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+    "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-nasa-exoplanet-archive-planetary-systems-table"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-11",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-12",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-13",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-14",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-15",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-16",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-17",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-18",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-19",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-20",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-21",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:76-76"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-22",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:77-77"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-23",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:79-79"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-24",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:84-84"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-25",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:85-85"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-26",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-27",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-28",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:92-92"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-29",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-3",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:display-math",
+        "line-span:34-34"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-30",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-31",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-32",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:105-105"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-33",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:137-137"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-34",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-35",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:195-195",
+        "near-code-block:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3",
+        "section:Verification Notes",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-36",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:209-209"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-4",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:display-math",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-5",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:display-math",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-6",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:display-math",
+        "line-span:108-108"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-7",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:display-math",
+        "line-span:201-201"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-8",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-8"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-1",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "section:Verification Notes",
+        "line-span:158-169",
+        "simulation-candidate:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-1",
+        "simulationCandidateIds": [
+          "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-2",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "section:Verification Notes",
+        "line-span:172-179",
+        "simulation-candidate:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-2",
+        "simulationCandidateIds": [
+          "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "section:Verification Notes",
+        "line-span:182-189",
+        "simulation-candidate:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3",
+        "simulationCandidateIds": [
+          "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-1",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "linked-code-block:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-1",
+        "source-document:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "section:Verification Notes",
+        "line-in-code-span:158:158-169"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "simulationCandidateId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-1",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-2",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "linked-code-block:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-2",
+        "source-document:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "section:Verification Notes",
+        "line-in-code-span:172:172-179"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "simulationCandidateId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-2",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-3",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "linked-code-block:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3",
+        "source-document:earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "section:Verification Notes",
+        "line-in-code-span:182:182-189"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "simulationCandidateId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-3",
+        "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3"
+      }
+    }
+  ]
+}

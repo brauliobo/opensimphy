@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-NEURO-005",
+  "counts": {
+    "total": 30,
+    "bySourceType": {
+      "formula": 20,
+      "code-block": 5,
+      "simulation-candidate": 5
+    },
+    "byConfidence": {
+      "high": 20,
+      "medium": 10,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+    "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+    "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+    "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+    "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-10",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:136-136"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-11",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:148-148"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-12",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-13",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:5-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-17",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-18",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-19",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:64-64"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-2",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:36-36"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-20",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:128-128"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-21",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:154-154"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-22",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:166-166"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-23",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:274-274"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-24",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:plain-line-candidate",
+        "line-span:287-287"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-3",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-4",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-5",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-6",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:82-82"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-7",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:98-98"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-8",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:102-102"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-9",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "formula-kind:display-math",
+        "line-span:122-122"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "formulaId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-1",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "section:Verification Notes",
+        "line-span:215-221",
+        "simulation-candidate:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-1",
+        "simulationCandidateIds": [
+          "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-2",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "section:Verification Notes",
+        "line-span:224-230",
+        "simulation-candidate:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-2",
+        "simulationCandidateIds": [
+          "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-3",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "section:Verification Notes",
+        "line-span:233-240",
+        "simulation-candidate:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-3",
+        "simulationCandidateIds": [
+          "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-4",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "section:Verification Notes",
+        "line-span:243-253",
+        "simulation-candidate:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-4",
+        "simulationCandidateIds": [
+          "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-5",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "section:Verification Notes",
+        "line-span:256-261",
+        "simulation-candidate:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-5",
+        "simulationCandidateIds": [
+          "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-1",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "linked-code-block:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-1",
+        "source-document:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "section:Verification Notes",
+        "line-in-code-span:215:215-221"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "simulationCandidateId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-1",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-2",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "linked-code-block:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-2",
+        "source-document:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "section:Verification Notes",
+        "line-in-code-span:224:224-230"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "simulationCandidateId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-2",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-3",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "linked-code-block:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-3",
+        "source-document:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "section:Verification Notes",
+        "line-in-code-span:233:233-240"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "simulationCandidateId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-3",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-4",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "linked-code-block:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-4",
+        "source-document:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "section:Verification Notes",
+        "line-in-code-span:243:243-253"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "simulationCandidateId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-4",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-5",
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-4",
+        "document-title:Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+        "linked-code-block:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-5",
+        "source-document:earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "section:Verification Notes",
+        "line-in-code-span:256:256-261"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+        "simulationCandidateId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-5",
+        "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-PLAN-002",
+  "counts": {
+    "total": 28,
+    "bySourceType": {
+      "formula": 20,
+      "code-block": 4,
+      "simulation-candidate": 4
+    },
+    "byConfidence": {
+      "high": 16,
+      "medium": 12,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+    "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+    "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+    "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+    "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+    "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+    "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-preliminary-reference-earth-model-prem"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-10",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-11",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:5-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-17",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:17-17"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-18",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:29-29"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-19",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-2",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-20",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:53-53"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-21",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:69-69"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-22",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-23",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-24",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:76-76"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-25",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:134-134"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-26",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:plain-line-candidate",
+        "line-span:189-189"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-3",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-4",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:49-49"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-5",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:55-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-6",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:59-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-7",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-8",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:71-71"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-9",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "formula-kind:display-math",
+        "line-span:183-183"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "formulaId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "section:Verification Notes",
+        "line-span:145-149",
+        "simulation-candidate:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1",
+        "simulationCandidateIds": [
+          "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-2",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "section:Verification Notes",
+        "line-span:152-158",
+        "simulation-candidate:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-2",
+        "simulationCandidateIds": [
+          "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-3",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "section:Verification Notes",
+        "line-span:161-167",
+        "simulation-candidate:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-3",
+        "simulationCandidateIds": [
+          "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-4",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "section:Verification Notes",
+        "line-span:170-173",
+        "simulation-candidate:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-4",
+        "simulationCandidateIds": [
+          "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-1",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "linked-code-block:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1",
+        "source-document:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "section:Verification Notes",
+        "line-in-code-span:145:145-149"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "simulationCandidateId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-1",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-2",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "linked-code-block:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-2",
+        "source-document:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "section:Verification Notes",
+        "line-in-code-span:152:152-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "simulationCandidateId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-2",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-3",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "linked-code-block:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-3",
+        "source-document:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "section:Verification Notes",
+        "line-in-code-span:161:161-167"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "simulationCandidateId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-3",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-4",
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-2",
+        "document-title:Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+        "linked-code-block:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-4",
+        "source-document:earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "section:Verification Notes",
+        "line-in-code-span:170:170-173"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+        "simulationCandidateId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-4",
+        "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-4"
+      }
+    }
+  ]
+}

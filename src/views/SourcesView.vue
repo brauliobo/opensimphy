@@ -130,7 +130,7 @@ onMounted(async () => {
       p Some related papers remain inaccessible due to Akamai, Cloudflare, 403/429 responses, or timeout. No placeholder PDFs are represented as sources.
     article
       h3 License
-      p Source availability does not imply an open redistribution license. Website and paper rights remain with their respective authors and publishers; this audit records citations and technical access status.
+      p The EARTH README declares CC BY-NC-SA 4.0, which the source lock records with attribution and without independently verifying rights ownership. Availability of the other websites and papers does not imply permission to redistribute them.
     article
       h3 Statistical scope
       p Formula choice, fitted constants, shared dependencies, significant-digit matching, and many simultaneous comparisons can inflate apparent agreement. Independent preregistered tests are outside this reproduction.

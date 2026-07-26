@@ -1,0 +1,1134 @@
+{
+  "schemaVersion": 1,
+  "sourcePlan": {
+    "path": "research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md",
+    "revision": "2026-07-17",
+    "sha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9"
+  },
+  "sourceRegistry": {
+    "path": "research/earth-thad-nassim/EARTH_DATASET_REGISTRY.md",
+    "reviewDate": "2026-07-17",
+    "sha256": "5e875e1f8c142facf2f56ca93be75003902e5f953dee546627e41855dc139801"
+  },
+  "policy": {
+    "metadataAuthenticationDoesNotImplyAcquisition": true,
+    "datasetBytesAcquired": false,
+    "g0bPassed": false
+  },
+  "summary": {
+    "sourceRows": 19,
+    "registered": 19,
+    "disputedClaims": 4,
+    "metadataAuthenticated": 19,
+    "dataAcquired": 0,
+    "dataFrozen": 0,
+    "g0bPending": 10,
+    "g0bBlocked": 9,
+    "personalData": 1,
+    "controlledAccess": 0,
+    "controlledHandling": 1,
+    "byPriority": {
+      "P0": 10,
+      "P1": 8,
+      "P2": 1
+    },
+    "byRedistributionMode": {
+      "raw": 8,
+      "derived-only": 5,
+      "metadata-only": 4,
+      "prohibited": 0,
+      "unknown": 2
+    }
+  },
+  "datasets": [
+    {
+      "datasetId": "earth-dataset-codata-recommended-values",
+      "name": "CODATA recommended values",
+      "category": "Constants and particle properties",
+      "sourceLine": 36,
+      "canonicalSourceEvidence": "[NIST constants portal](https://physics.nist.gov/cuu/Constants/); [version history](https://physics.nist.gov/cuu/Reference/versioncon.shtml); DOI [`10.1103/RevModPhys.97.025002`](https://doi.org/10.1103/RevModPhys.97.025002)",
+      "sourceUrl": "https://physics.nist.gov/cuu/Constants/",
+      "sourceUrls": [
+        "https://physics.nist.gov/cuu/Constants/",
+        "https://physics.nist.gov/cuu/Reference/versioncon.shtml",
+        "https://doi.org/10.1103/RevModPhys.97.025002"
+      ],
+      "sourceDoi": "10.1103/RevModPhys.97.025002",
+      "sourceDois": [
+        "10.1103/RevModPhys.97.025002"
+      ],
+      "ownerReleaseEvidence": "CODATA Task Group / NIST; 2022 adjustment, NIST Web Version 9.0 published 2024-05-09",
+      "responsibleOrganization": "CODATA Task Group / NIST",
+      "releaseEvidence": "2022 adjustment, NIST Web Version 9.0 published 2024-05-09",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.nist.gov/disclaimer",
+      "redistributionMode": "derived-only",
+      "redistributionEvidence": "derived-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-PRT-001",
+        "EARTH-NUC-004",
+        "EARTH-GRV-001"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P0. Freeze the exact machine-readable table and retain uncertainty/correlation metadata; obtain terms clearance before shipping copied tables.",
+      "priority": "P0",
+      "blockerEvidence": "Freeze the exact machine-readable table and retain uncertainty/correlation metadata; obtain terms clearance before shipping copied tables.",
+      "blockers": [
+        "Freeze the exact machine-readable table and retain uncertainty/correlation metadata; obtain terms clearance before shipping copied tables."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-review-of-particle-physics-pdg-api",
+      "name": "Review of Particle Physics / PDG API",
+      "category": "Constants and particle properties",
+      "sourceLine": 37,
+      "canonicalSourceEvidence": "[PDG API](https://pdgapi.lbl.gov/); [API release record](https://pdgapi.lbl.gov/info); DOI [`10.1142/S0217751X26300115`](https://doi.org/10.1142/S0217751X26300115)",
+      "sourceUrl": "https://pdgapi.lbl.gov/",
+      "sourceUrls": [
+        "https://pdgapi.lbl.gov/",
+        "https://pdgapi.lbl.gov/info",
+        "https://doi.org/10.1142/S0217751X26300115"
+      ],
+      "sourceDoi": "10.1142/S0217751X26300115",
+      "sourceDois": [
+        "10.1142/S0217751X26300115"
+      ],
+      "ownerReleaseEvidence": "Particle Data Group, Lawrence Berkeley National Laboratory; edition 2026, API release timestamp 2026-05-30 13:41:24 PDT",
+      "responsibleOrganization": "Particle Data Group, Lawrence Berkeley National Laboratory",
+      "releaseEvidence": "edition 2026, API release timestamp 2026-05-30 13:41:24 PDT",
+      "accessClass": "open-api",
+      "accessClasses": [
+        "open-api"
+      ],
+      "termsUrl": "https://pdgapi.lbl.gov/about",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY 4.0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-PRT-005",
+        "EARTH-NUC-004",
+        "EARTH-NUC-005"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P0. Freeze endpoint, parameters, response bytes, schema, and API edition.",
+      "priority": "P0",
+      "blockerEvidence": "Freeze endpoint, parameters, response bytes, schema, and API edition.",
+      "blockers": [
+        "Freeze endpoint, parameters, response bytes, schema, and API edition."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-ame2020-and-nubase2020",
+      "name": "AME2020 and NUBASE2020",
+      "category": "Nuclear properties",
+      "sourceLine": 43,
+      "canonicalSourceEvidence": "[Atomic Mass Data Center](https://www-nds.iaea.org/amdc/); AME DOI [`10.1088/1674-1137/abddaf`](https://doi.org/10.1088/1674-1137/abddaf); NUBASE DOI [`10.1088/1674-1137/abddae`](https://doi.org/10.1088/1674-1137/abddae)",
+      "sourceUrl": "https://www-nds.iaea.org/amdc/",
+      "sourceUrls": [
+        "https://www-nds.iaea.org/amdc/",
+        "https://doi.org/10.1088/1674-1137/abddaf",
+        "https://doi.org/10.1088/1674-1137/abddae"
+      ],
+      "sourceDoi": "10.1088/1674-1137/abddaf",
+      "sourceDois": [
+        "10.1088/1674-1137/abddaf",
+        "10.1088/1674-1137/abddae"
+      ],
+      "ownerReleaseEvidence": "AMDC / IAEA Nuclear Data Section; AME2020 and NUBASE2020",
+      "responsibleOrganization": "AMDC / IAEA Nuclear Data Section",
+      "releaseEvidence": "AME2020 and NUBASE2020",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.iaea.org/about/copyright",
+      "redistributionMode": "metadata-only",
+      "redistributionEvidence": "metadata-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-NUC-002",
+        "EARTH-NUC-003"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P0. Official ASCII files exist, but no dataset-specific redistribution grant was located; preserve citations and request clearance before raw redistribution.",
+      "priority": "P0",
+      "blockerEvidence": "Official ASCII files exist, but no dataset-specific redistribution grant was located; preserve citations and request clearance before raw redistribution.",
+      "blockers": [
+        "Official ASCII files exist, but no dataset-specific redistribution grant was located; preserve citations and request clearance before raw redistribution."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-evaluated-nuclear-structure-data-file-ensdf",
+      "name": "Evaluated Nuclear Structure Data File (ENSDF)",
+      "category": "Nuclear properties",
+      "sourceLine": 44,
+      "canonicalSourceEvidence": "[NNDC ENSDF](https://www.nndc.bnl.gov/ensdf/); [archival releases](https://www.nndc.bnl.gov/ensdfarchivals/); DOI [`10.18139/nndc.ensdf/1845010`](https://doi.org/10.18139/nndc.ensdf/1845010)",
+      "sourceUrl": "https://www.nndc.bnl.gov/ensdf/",
+      "sourceUrls": [
+        "https://www.nndc.bnl.gov/ensdf/",
+        "https://www.nndc.bnl.gov/ensdfarchivals/",
+        "https://doi.org/10.18139/nndc.ensdf/1845010"
+      ],
+      "sourceDoi": "10.18139/nndc.ensdf/1845010",
+      "sourceDois": [
+        "10.18139/nndc.ensdf/1845010"
+      ],
+      "ownerReleaseEvidence": "National Nuclear Data Center, Brookhaven National Laboratory; archive marked last modified 2026-06-01",
+      "responsibleOrganization": "National Nuclear Data Center, Brookhaven National Laboratory",
+      "releaseEvidence": "archive marked last modified 2026-06-01",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.nndc.bnl.gov/privacy.jsp",
+      "redistributionMode": "metadata-only",
+      "redistributionEvidence": "metadata-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-NUC-003"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P1. Freeze an archival bundle, not the mutable current view; a dataset-specific redistribution license was not located.",
+      "priority": "P1",
+      "blockerEvidence": "Freeze an archival bundle, not the mutable current view; a dataset-specific redistribution license was not located.",
+      "blockers": [
+        "Freeze an archival bundle, not the mutable current view; a dataset-specific redistribution license was not located."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-knotinfo",
+      "name": "KnotInfo",
+      "category": "Knot invariants",
+      "sourceLine": 50,
+      "canonicalSourceEvidence": "[KnotInfo](https://knotinfo.org/); [downloads](https://knotinfo.org/downloads); DOI for database description [`10.1142/S021821652250014X`](https://doi.org/10.1142/S021821652250014X)",
+      "sourceUrl": "https://knotinfo.org/",
+      "sourceUrls": [
+        "https://knotinfo.org/",
+        "https://knotinfo.org/downloads",
+        "https://doi.org/10.1142/S021821652250014X"
+      ],
+      "sourceDoi": "10.1142/S021821652250014X",
+      "sourceDois": [
+        "10.1142/S021821652250014X"
+      ],
+      "ownerReleaseEvidence": "KnotInfo maintainers / Indiana University; live database observed 2026-07-17, with no global immutable release identifier found",
+      "responsibleOrganization": "KnotInfo maintainers / Indiana University",
+      "releaseEvidence": "live database observed 2026-07-17, with no global immutable release identifier found",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://knotinfo.org/about",
+      "redistributionMode": "metadata-only",
+      "redistributionEvidence": "metadata-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-FND-007",
+        "EARTH-NUC-001",
+        "EARTH-BIO-001"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/live-unfrozen",
+      "authenticationStatuses": [
+        "authenticated/live-unfrozen",
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/live-unfrozen and terms-blocked; P1. Freeze the downloaded export and query date, independently recompute simple invariants, and obtain permission before redistributing the table.",
+      "priority": "P1",
+      "blockerEvidence": "Freeze the downloaded export and query date, independently recompute simple invariants, and obtain permission before redistributing the table.",
+      "blockers": [
+        "Freeze the downloaded export and query date, independently recompute simple invariants, and obtain permission before redistributing the table."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-crystallography-open-database-cod",
+      "name": "Crystallography Open Database (COD)",
+      "category": "Molecular structures",
+      "sourceLine": 56,
+      "canonicalSourceEvidence": "[COD](https://www.crystallography.net/cod/); [download/API documentation](https://wiki.crystallography.net/howtoquerycod/)",
+      "sourceUrl": "https://www.crystallography.net/cod/",
+      "sourceUrls": [
+        "https://www.crystallography.net/cod/",
+        "https://wiki.crystallography.net/howtoquerycod/"
+      ],
+      "sourceDoi": null,
+      "sourceDois": [],
+      "ownerReleaseEvidence": "Crystallography Open Database; live database observed 2026-07-17, no immutable whole-database release selected",
+      "responsibleOrganization": "Crystallography Open Database",
+      "releaseEvidence": "live database observed 2026-07-17, no immutable whole-database release selected",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web",
+        "open-api"
+      ],
+      "termsUrl": "https://www.crystallography.net/cod/index.php#doc",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-CHEM-003",
+        "EARTH-CHEM-005",
+        "EARTH-MAT-001",
+        "EARTH-MAT-002"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/live-unfrozen",
+      "authenticationStatuses": [
+        "authenticated/live-unfrozen"
+      ],
+      "authenticationEvidence": "authenticated/live-unfrozen; P0. Select records and freeze COD identifiers, revision dates, query, bytes, and parser schema. Do not substitute proprietary CSD records.",
+      "priority": "P0",
+      "blockerEvidence": "Select records and freeze COD identifiers, revision dates, query, bytes, and parser schema. Do not substitute proprietary CSD records.",
+      "blockers": [
+        "Select records and freeze COD identifiers, revision dates, query, bytes, and parser schema.",
+        "Do not substitute proprietary CSD records."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-nist-atomic-spectra-database-asd",
+      "name": "NIST Atomic Spectra Database (ASD)",
+      "category": "Spectroscopy",
+      "sourceLine": 62,
+      "canonicalSourceEvidence": "[ASD](https://physics.nist.gov/asd); DOI [`10.18434/T4W30F`](https://doi.org/10.18434/T4W30F)",
+      "sourceUrl": "https://physics.nist.gov/asd",
+      "sourceUrls": [
+        "https://physics.nist.gov/asd",
+        "https://doi.org/10.18434/T4W30F"
+      ],
+      "sourceDoi": "10.18434/T4W30F",
+      "sourceDois": [
+        "10.18434/T4W30F"
+      ],
+      "ownerReleaseEvidence": "National Institute of Standards and Technology; version 5.12, 2024-11-07",
+      "responsibleOrganization": "National Institute of Standards and Technology",
+      "releaseEvidence": "version 5.12, 2024-11-07",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.nist.gov/srd/public-law",
+      "redistributionMode": "derived-only",
+      "redistributionEvidence": "derived-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-SPEC-001",
+        "EARTH-SPEC-004",
+        "EARTH-SPEC-006",
+        "EARTH-SPEC-007"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P0. Use frozen query exports for validation and publish citation-backed residuals unless copied-table redistribution is cleared.",
+      "priority": "P0",
+      "blockerEvidence": "Use frozen query exports for validation and publish citation-backed residuals unless copied-table redistribution is cleared.",
+      "blockers": [
+        "Use frozen query exports for validation and publish citation-backed residuals unless copied-table redistribution is cleared."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-nist-chemistry-webbook-srd-69",
+      "name": "NIST Chemistry WebBook, SRD 69",
+      "category": "Spectroscopy",
+      "sourceLine": 63,
+      "canonicalSourceEvidence": "[WebBook](https://webbook.nist.gov/chemistry/); DOI [`10.18434/T4D303`](https://doi.org/10.18434/T4D303)",
+      "sourceUrl": "https://webbook.nist.gov/chemistry/",
+      "sourceUrls": [
+        "https://webbook.nist.gov/chemistry/",
+        "https://doi.org/10.18434/T4D303"
+      ],
+      "sourceDoi": "10.18434/T4D303",
+      "sourceDois": [
+        "10.18434/T4D303"
+      ],
+      "ownerReleaseEvidence": "National Institute of Standards and Technology; site reports data last updated 2025",
+      "responsibleOrganization": "National Institute of Standards and Technology",
+      "releaseEvidence": "site reports data last updated 2025",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://webbook.nist.gov/chemistry/#Notes",
+      "redistributionMode": "derived-only",
+      "redistributionEvidence": "derived-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-CHEM-003",
+        "EARTH-SPEC-002",
+        "EARTH-SPEC-003",
+        "EARTH-SPEC-004",
+        "EARTH-SPEC-005",
+        "EARTH-SPEC-007"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P1. Freeze CAS/InChI identifiers, query pages, units, and source citations; do not ship copied spectra without permission.",
+      "priority": "P1",
+      "blockerEvidence": "Freeze CAS/InChI identifiers, query pages, units, and source citations; do not ship copied spectra without permission.",
+      "blockers": [
+        "Freeze CAS/InChI identifiers, query pages, units, and source citations; do not ship copied spectra without permission."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-jarvis-dft-3d",
+      "name": "JARVIS-DFT 3D",
+      "category": "Materials",
+      "sourceLine": 69,
+      "canonicalSourceEvidence": "[Figshare collection](https://figshare.com/articles/dataset/JARVIS-DFT_3D/6815699); concept DOI [`10.6084/m9.figshare.6815699`](https://doi.org/10.6084/m9.figshare.6815699)",
+      "sourceUrl": "https://figshare.com/articles/dataset/JARVIS-DFT_3D/6815699",
+      "sourceUrls": [
+        "https://figshare.com/articles/dataset/JARVIS-DFT_3D/6815699",
+        "https://doi.org/10.6084/m9.figshare.6815699"
+      ],
+      "sourceDoi": "10.6084/m9.figshare.6815699",
+      "sourceDois": [
+        "10.6084/m9.figshare.6815699"
+      ],
+      "ownerReleaseEvidence": "NIST Joint Automated Repository for Various Integrated Simulations; Figshare version 11, posted 2026-05-09",
+      "responsibleOrganization": "NIST Joint Automated Repository for Various Integrated Simulations",
+      "releaseEvidence": "Figshare version 11, posted 2026-05-09",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://figshare.com/articles/dataset/JARVIS-DFT_3D/6815699",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY 4.0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-MAT-001",
+        "EARTH-MAT-002",
+        "EARTH-MAT-003",
+        "EARTH-MAT-005",
+        "EARTH-MAT-007",
+        "EARTH-MAT-009"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P0. Pin version 11 and individual file URLs; calculations are reference comparators, not experimental observations.",
+      "priority": "P0",
+      "blockerEvidence": "Pin version 11 and individual file URLs; calculations are reference comparators, not experimental observations.",
+      "blockers": [
+        "Pin version 11 and individual file URLs; calculations are reference comparators, not experimental observations."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-iapws-95-water-formulation",
+      "name": "IAPWS-95 water formulation",
+      "category": "Thermodynamics",
+      "sourceLine": 75,
+      "canonicalSourceEvidence": "[IAPWS release R6-95(2018)](https://iapws.org/public/documents/UZ3kW/IAPWS_R6-95(2018).pdf); DOI for formulation [`10.1063/1.1461829`](https://doi.org/10.1063/1.1461829)",
+      "sourceUrl": "https://iapws.org/public/documents/UZ3kW/IAPWS_R6-95(2018).pdf",
+      "sourceUrls": [
+        "https://iapws.org/public/documents/UZ3kW/IAPWS_R6-95(2018).pdf",
+        "https://doi.org/10.1063/1.1461829"
+      ],
+      "sourceDoi": "10.1063/1.1461829",
+      "sourceDois": [
+        "10.1063/1.1461829"
+      ],
+      "ownerReleaseEvidence": "International Association for the Properties of Water and Steam; revised release R6-95(2018)",
+      "responsibleOrganization": "International Association for the Properties of Water and Steam",
+      "releaseEvidence": "revised release R6-95(2018)",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://iapws.org/relguide/",
+      "redistributionMode": "derived-only",
+      "redistributionEvidence": "derived-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-THERM-004",
+        "EARTH-PLAN-003",
+        "EARTH-PLAN-009"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P0. Implement the published equation and coefficients with citation; no explicit grant to redistribute the source release or copied coefficient tables was located. Validate against IAPWS check values.",
+      "priority": "P0",
+      "blockerEvidence": "Implement the published equation and coefficients with citation; no explicit grant to redistribute the source release or copied coefficient tables was located. Validate against IAPWS check values.",
+      "blockers": [
+        "Implement the published equation and coefficients with citation; no explicit grant to redistribute the source release or copied coefficient tables was located.",
+        "Validate against IAPWS check values."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-preliminary-reference-earth-model-prem",
+      "name": "Preliminary Reference Earth Model (PREM)",
+      "category": "Planets",
+      "sourceLine": 81,
+      "canonicalSourceEvidence": "[EarthScope PREM page and files](https://ds.iris.edu/ds/products/emc-prem/); original DOI [`10.1016/0031-9201(81)90046-7`](https://doi.org/10.1016/0031-9201(81)90046-7)",
+      "sourceUrl": "https://ds.iris.edu/ds/products/emc-prem/",
+      "sourceUrls": [
+        "https://ds.iris.edu/ds/products/emc-prem/",
+        "https://doi.org/10.1016/0031-9201(81)90046-7"
+      ],
+      "sourceDoi": "10.1016/0031-9201(81)90046-7",
+      "sourceDois": [
+        "10.1016/0031-9201(81)90046-7"
+      ],
+      "ownerReleaseEvidence": "Dziewonski and Anderson; EarthScope/IRIS distribution; canonical model published 1981, not 2025",
+      "responsibleOrganization": "Dziewonski and Anderson",
+      "releaseEvidence": "EarthScope/IRIS distribution; canonical model published 1981, not 2025",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.earthscope.org/terms-of-use/",
+      "redistributionMode": "metadata-only",
+      "redistributionEvidence": "metadata-only; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-PLAN-002",
+        "EARTH-PLAN-003",
+        "EARTH-PLAN-004",
+        "EARTH-PLAN-010"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/terms-blocked",
+      "authenticationStatuses": [
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/terms-blocked; P0. Freeze the exact EarthScope file and clarify redistribution. The label \"PREM 2025\" is not a valid release identity.",
+      "priority": "P0",
+      "blockerEvidence": "Freeze the exact EarthScope file and clarify redistribution. The label \"PREM 2025\" is not a valid release identity.",
+      "blockers": [
+        "Freeze the exact EarthScope file and clarify redistribution.",
+        "The label \"PREM 2025\" is not a valid release identity."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-nasa-exoplanet-archive-planetary-systems-table",
+      "name": "NASA Exoplanet Archive, Planetary Systems table",
+      "category": "Planets",
+      "sourceLine": 82,
+      "canonicalSourceEvidence": "[archive](https://exoplanetarchive.ipac.caltech.edu/); [API](https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html); [confirmed-planet counter](https://exoplanetarchive.ipac.caltech.edu/docs/counts_detail.html)",
+      "sourceUrl": "https://exoplanetarchive.ipac.caltech.edu/",
+      "sourceUrls": [
+        "https://exoplanetarchive.ipac.caltech.edu/",
+        "https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html",
+        "https://exoplanetarchive.ipac.caltech.edu/docs/counts_detail.html"
+      ],
+      "sourceDoi": null,
+      "sourceDois": [],
+      "ownerReleaseEvidence": "NASA Exoplanet Science Institute at Caltech/IPAC; live archive, 6,324 confirmed planets reported 2026-07-16",
+      "responsibleOrganization": "NASA Exoplanet Science Institute at Caltech/IPAC",
+      "releaseEvidence": "live archive, 6,324 confirmed planets reported 2026-07-16",
+      "accessClass": "open-api",
+      "accessClasses": [
+        "open-api"
+      ],
+      "termsUrl": "https://exoplanetarchive.ipac.caltech.edu/docs/acknowledge.html",
+      "redistributionMode": "unknown",
+      "redistributionEvidence": "unknown; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-PLAN-001",
+        "EARTH-PLAN-008",
+        "EARTH-PLAN-011",
+        "EARTH-GAL-006"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/live-unfrozen",
+      "authenticationStatuses": [
+        "authenticated/live-unfrozen"
+      ],
+      "authenticationEvidence": "authenticated/live-unfrozen; P1. Freeze TAP/ADQL text, selected columns, row count, update timestamp, and result bytes; no archive-wide immutable release or explicit raw-redistribution license was located. Confirmed planet status is not confirmed biosignature status.",
+      "priority": "P1",
+      "blockerEvidence": "Freeze TAP/ADQL text, selected columns, row count, update timestamp, and result bytes; no archive-wide immutable release or explicit raw-redistribution license was located. Confirmed planet status is not confirmed biosignature status.",
+      "blockers": [
+        "Freeze TAP/ADQL text, selected columns, row count, update timestamp, and result bytes; no archive-wide immutable release or explicit raw-redistribution license was located.",
+        "Confirmed planet status is not confirmed biosignature status."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-gaia-data-release-3",
+      "name": "Gaia Data Release 3",
+      "category": "Stars",
+      "sourceLine": 88,
+      "canonicalSourceEvidence": "[ESA Gaia DR3](https://www.cosmos.esa.int/web/gaia/data-release-3); [archive](https://gea.esac.esa.int/archive/); [release scenario](https://www.cosmos.esa.int/web/gaia/release)",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/data-release-3",
+      "sourceUrls": [
+        "https://www.cosmos.esa.int/web/gaia/data-release-3",
+        "https://gea.esac.esa.int/archive/",
+        "https://www.cosmos.esa.int/web/gaia/release"
+      ],
+      "sourceDoi": null,
+      "sourceDois": [],
+      "ownerReleaseEvidence": "European Space Agency / Gaia DPAC; DR3 released 2022-06-13 and remains the latest full public release; DR4 is scheduled for 2026-12-02",
+      "responsibleOrganization": "European Space Agency / Gaia DPAC",
+      "releaseEvidence": "DR3 released 2022-06-13 and remains the latest full public release; DR4 is scheduled for 2026-12-02",
+      "accessClass": "open-api",
+      "accessClasses": [
+        "open-api"
+      ],
+      "termsUrl": "https://gea.esac.esa.int/archive/documentation/GDR3/Miscellaneous/sec_credit_and_citation_instructions/",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY-SA 3.0 IGO with attribution; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-STAR-001",
+        "EARTH-STAR-003",
+        "EARTH-STAR-004",
+        "EARTH-STAR-008",
+        "EARTH-STAR-009"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/live-unfrozen",
+      "authenticationStatuses": [
+        "authenticated/live-unfrozen"
+      ],
+      "authenticationEvidence": "authenticated/live-unfrozen; P0. Freeze ADQL, archive table versions, quality cuts, selection function, row count, and bytes. \"Gaia DR4 2025\" is not acquisition-ready.",
+      "priority": "P0",
+      "blockerEvidence": "Freeze ADQL, archive table versions, quality cuts, selection function, row count, and bytes. \"Gaia DR4 2025\" is not acquisition-ready.",
+      "blockers": [
+        "Freeze ADQL, archive table versions, quality cuts, selection function, row count, and bytes.",
+        "\"Gaia DR4 2025\" is not acquisition-ready."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-euclid-q1-galaxy-zoo-morphology-catalogue",
+      "name": "Euclid Q1 Galaxy Zoo morphology catalogue",
+      "category": "Galaxies",
+      "sourceLine": 94,
+      "canonicalSourceEvidence": "[Euclid Q1 catalogue](https://euclid.esac.esa.int/msp/refdata/galaxy_zoo_q1.html); DOI [`10.5281/zenodo.18107458`](https://doi.org/10.5281/zenodo.18107458)",
+      "sourceUrl": "https://euclid.esac.esa.int/msp/refdata/galaxy_zoo_q1.html",
+      "sourceUrls": [
+        "https://euclid.esac.esa.int/msp/refdata/galaxy_zoo_q1.html",
+        "https://doi.org/10.5281/zenodo.18107458"
+      ],
+      "sourceDoi": "10.5281/zenodo.18107458",
+      "sourceDois": [
+        "10.5281/zenodo.18107458"
+      ],
+      "ownerReleaseEvidence": "European Space Agency / Euclid Consortium / Galaxy Zoo; Q1 catalogue, 2025 observations, catalogue record verified 2026-07-17",
+      "responsibleOrganization": "European Space Agency / Euclid Consortium / Galaxy Zoo",
+      "releaseEvidence": "Q1 catalogue, 2025 observations, catalogue record verified 2026-07-17",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://zenodo.org/records/18107458",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY 4.0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-GAL-001"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P1. Supplies morphology and winding classes for more than 378,000 galaxies, not a verified 1,842-object numerical pitch-angle catalogue. Freeze the Zenodo record version and files.",
+      "priority": "P1",
+      "blockerEvidence": "Supplies morphology and winding classes for more than 378,000 galaxies, not a verified 1,842-object numerical pitch-angle catalogue. Freeze the Zenodo record version and files.",
+      "blockers": [
+        "Supplies morphology and winding classes for more than 378,000 galaxies, not a verified 1,842-object numerical pitch-angle catalogue.",
+        "Freeze the Zenodo record version and files."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-sparc-rotation-curve-database",
+      "name": "SPARC rotation-curve database",
+      "category": "Galaxies",
+      "sourceLine": 95,
+      "canonicalSourceEvidence": "[SPARC](https://astroweb.case.edu/SPARC/); sample paper DOI [`10.3847/0004-6256/152/6/157`](https://doi.org/10.3847/0004-6256/152/6/157)",
+      "sourceUrl": "https://astroweb.case.edu/SPARC/",
+      "sourceUrls": [
+        "https://astroweb.case.edu/SPARC/",
+        "https://doi.org/10.3847/0004-6256/152/6/157"
+      ],
+      "sourceDoi": "10.3847/0004-6256/152/6/157",
+      "sourceDois": [
+        "10.3847/0004-6256/152/6/157"
+      ],
+      "ownerReleaseEvidence": "SPARC team / Case Western Reserve University; live 175-galaxy database, no versioned release identifier found",
+      "responsibleOrganization": "SPARC team / Case Western Reserve University",
+      "releaseEvidence": "live 175-galaxy database, no versioned release identifier found",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://astroweb.case.edu/SPARC/",
+      "redistributionMode": "unknown",
+      "redistributionEvidence": "unknown; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-GAL-003",
+        "EARTH-GAL-004"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/live-unfrozen",
+      "authenticationStatuses": [
+        "authenticated/live-unfrozen",
+        "authenticated/terms-blocked"
+      ],
+      "authenticationEvidence": "authenticated/live-unfrozen and terms-blocked; P1. Freeze all selected files and assumptions for distances, inclination, mass-to-light ratios, and covariance; obtain redistribution permission.",
+      "priority": "P1",
+      "blockerEvidence": "Freeze all selected files and assumptions for distances, inclination, mass-to-light ratios, and covariance; obtain redistribution permission.",
+      "blockers": [
+        "Freeze all selected files and assumptions for distances, inclination, mass-to-light ratios, and covariance; obtain redistribution permission."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "blocked"
+    },
+    {
+      "datasetId": "earth-dataset-planck-public-data-release-3-2018-legacy-products",
+      "name": "Planck Public Data Release 3 / 2018 legacy products",
+      "category": "Cosmology",
+      "sourceLine": 101,
+      "canonicalSourceEvidence": "[Planck Legacy Archive](https://pla.esac.esa.int/); [2018 release documentation](https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Main_Page)",
+      "sourceUrl": "https://pla.esac.esa.int/",
+      "sourceUrls": [
+        "https://pla.esac.esa.int/",
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Main_Page"
+      ],
+      "sourceDoi": null,
+      "sourceDois": [],
+      "ownerReleaseEvidence": "European Space Agency / Planck Collaboration; final 2018 legacy release (PR3)",
+      "responsibleOrganization": "European Space Agency / Planck Collaboration",
+      "releaseEvidence": "final 2018 legacy release (PR3)",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://www.esa.int/About_Us/Law_at_ESA/Intellectual_Property_Rights/ESA_Information_and_Data_Licence",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY-NC 3.0 IGO where the ESA license applies; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-COS-002",
+        "EARTH-COS-003",
+        "EARTH-COS-004"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P1. Large maps and likelihoods remain offline; verify each product's embedded notice, freeze release/product IDs and checksums, and publish only permitted compact results.",
+      "priority": "P1",
+      "blockerEvidence": "Large maps and likelihoods remain offline; verify each product's embedded notice, freeze release/product IDs and checksums, and publish only permitted compact results.",
+      "blockers": [
+        "Large maps and likelihoods remain offline; verify each product's embedded notice, freeze release/product IDs and checksums, and publish only permitted compact results."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-desi-data-release-1",
+      "name": "DESI Data Release 1",
+      "category": "Cosmology",
+      "sourceLine": 102,
+      "canonicalSourceEvidence": "[DESI DR1](https://data.desi.lbl.gov/doc/releases/dr1/); [data access](https://data.desi.lbl.gov/public/dr1/); survey paper DOI [`10.1088/1538-3873/ade7e4`](https://doi.org/10.1088/1538-3873/ade7e4)",
+      "sourceUrl": "https://data.desi.lbl.gov/doc/releases/dr1/",
+      "sourceUrls": [
+        "https://data.desi.lbl.gov/doc/releases/dr1/",
+        "https://data.desi.lbl.gov/public/dr1/",
+        "https://doi.org/10.1088/1538-3873/ade7e4"
+      ],
+      "sourceDoi": "10.1088/1538-3873/ade7e4",
+      "sourceDois": [
+        "10.1088/1538-3873/ade7e4"
+      ],
+      "ownerReleaseEvidence": "Dark Energy Spectroscopic Instrument collaboration / Lawrence Berkeley National Laboratory; DR1 is the latest public release verified 2026-07-17",
+      "responsibleOrganization": "Dark Energy Spectroscopic Instrument collaboration / Lawrence Berkeley National Laboratory",
+      "releaseEvidence": "DR1 is the latest public release verified 2026-07-17",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://data.desi.lbl.gov/doc/releases/dr1/",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC BY 4.0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-COS-002",
+        "EARTH-COS-005",
+        "EARTH-GAL-007"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P1. Prefer compact value-added or correlation-function products; pin product path, release tag, selection cuts, covariance, and file checksum.",
+      "priority": "P1",
+      "blockerEvidence": "Prefer compact value-added or correlation-function products; pin product path, release tag, selection cuts, covariance, and file checksum.",
+      "blockers": [
+        "Prefer compact value-added or correlation-function products; pin product path, release tag, selection cuts, covariance, and file checksum."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-protein-data-bank-archive",
+      "name": "Protein Data Bank archive",
+      "category": "Biology",
+      "sourceLine": 108,
+      "canonicalSourceEvidence": "[wwPDB](https://www.wwpdb.org/); [annual snapshot policy](https://www.wwpdb.org/news/news?year=2025#6902633209653eec67fb789d); database DOI [`10.1038/nsb1203-980`](https://doi.org/10.1038/nsb1203-980)",
+      "sourceUrl": "https://www.wwpdb.org/",
+      "sourceUrls": [
+        "https://www.wwpdb.org/",
+        "https://www.wwpdb.org/news/news?year=2025#6902633209653eec67fb789d",
+        "https://doi.org/10.1038/nsb1203-980"
+      ],
+      "sourceDoi": "10.1038/nsb1203-980",
+      "sourceDois": [
+        "10.1038/nsb1203-980"
+      ],
+      "ownerReleaseEvidence": "Worldwide Protein Data Bank; immutable annual snapshot dated 2026-01-01 is the latest snapshot verified for this review",
+      "responsibleOrganization": "Worldwide Protein Data Bank",
+      "releaseEvidence": "immutable annual snapshot dated 2026-01-01 is the latest snapshot verified for this review",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web",
+        "open-api"
+      ],
+      "termsUrl": "https://www.wwpdb.org/about/usage-policies",
+      "redistributionMode": "raw",
+      "redistributionEvidence": "raw under CC0; no",
+      "personalData": false,
+      "personalDataEvidence": "no",
+      "requiresControlledHandling": false,
+      "dataHandling": "source-terms",
+      "simulationIds": [
+        "EARTH-BIO-002",
+        "EARTH-BIO-003",
+        "EARTH-BIO-004",
+        "EARTH-BIO-005"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready; P0. Acquire a declared filtered structure set rather than the complete archive; pin PDB IDs, revisions, biological assemblies, model selection, and DSSP implementation/version.",
+      "priority": "P0",
+      "blockerEvidence": "Acquire a declared filtered structure set rather than the complete archive; pin PDB IDs, revisions, biological assemblies, model selection, and DSSP implementation/version.",
+      "blockers": [
+        "Acquire a declared filtered structure set rather than the complete archive; pin PDB IDs, revisions, biological assemblies, model selection, and DSSP implementation/version."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    },
+    {
+      "datasetId": "earth-dataset-eeg-motor-movement-imagery-dataset",
+      "name": "EEG Motor Movement/Imagery Dataset",
+      "category": "Neuroscience",
+      "sourceLine": 114,
+      "canonicalSourceEvidence": "[PhysioNet dataset](https://physionet.org/content/eegmmidb/1.0.0/); DOI [`10.13026/C28G6P`](https://doi.org/10.13026/C28G6P)",
+      "sourceUrl": "https://physionet.org/content/eegmmidb/1.0.0/",
+      "sourceUrls": [
+        "https://physionet.org/content/eegmmidb/1.0.0/",
+        "https://doi.org/10.13026/C28G6P"
+      ],
+      "sourceDoi": "10.13026/C28G6P",
+      "sourceDois": [
+        "10.13026/C28G6P"
+      ],
+      "ownerReleaseEvidence": "PhysioNet; version 1.0.0",
+      "responsibleOrganization": "PhysioNet",
+      "releaseEvidence": "version 1.0.0",
+      "accessClass": "open-web",
+      "accessClasses": [
+        "open-web"
+      ],
+      "termsUrl": "https://physionet.org/content/eegmmidb/view-license/1.0.0/",
+      "redistributionMode": "derived-only",
+      "redistributionEvidence": "derived-only for this project; yes, de-identified EEG from 109 volunteers",
+      "personalData": true,
+      "personalDataEvidence": "yes, de-identified EEG from 109 volunteers",
+      "requiresControlledHandling": true,
+      "dataHandling": "controlled-local-only",
+      "simulationIds": [
+        "EARTH-NEURO-002",
+        "EARTH-NEURO-004",
+        "EARTH-NEURO-006"
+      ],
+      "metadataAuthenticated": true,
+      "authenticationStatus": "authenticated/acquisition-ready",
+      "authenticationStatuses": [
+        "authenticated/acquisition-ready"
+      ],
+      "authenticationEvidence": "authenticated/acquisition-ready for local analysis; P2. Raw redistribution is not needed even though the source license permits it. Complete ethics/privacy review, keep subject-level data offline, and publish only non-reconstructable aggregate outputs. It does not satisfy connectome or longitudinal disease requirements.",
+      "priority": "P2",
+      "blockerEvidence": "Raw redistribution is not needed even though the source license permits it. Complete ethics/privacy review, keep subject-level data offline, and publish only non-reconstructable aggregate outputs. It does not satisfy connectome or longitudinal disease requirements.",
+      "blockers": [
+        "Raw redistribution is not needed even though the source license permits it.",
+        "Complete ethics/privacy review, keep subject-level data offline, and publish only non-reconstructable aggregate outputs.",
+        "It does not satisfy connectome or longitudinal disease requirements."
+      ],
+      "acquisitionStatus": "not-acquired",
+      "frozen": false,
+      "retrievedAt": null,
+      "queryOrSelection": null,
+      "rowCount": null,
+      "byteCount": null,
+      "sha256": null,
+      "g0bState": "pending"
+    }
+  ],
+  "disputedClaims": [
+    {
+      "claimId": "earth-dispute-gaia-dr4-2025",
+      "claim": "\"Gaia DR4 2025\"",
+      "sourceLine": 120,
+      "finding": "ESA identifies DR3 as the latest full public release and schedules DR4 for 2026-12-02. No 2025 DR4 exists.",
+      "registryStatus": "nonexistent-as-claimed",
+      "consequence": "Do not create a DR4 placeholder or relabel DR3. Use a frozen DR3 query as a separately identified comparator.",
+      "simulationIds": []
+    },
+    {
+      "claimId": "earth-dispute-prem-2025",
+      "claim": "\"PREM 2025\"",
+      "sourceLine": 121,
+      "finding": "The canonical PREM is Dziewonski and Anderson (1981). EarthScope distributes that model; no authoritative 2025 PREM release was found.",
+      "registryStatus": "nonexistent-as-claimed",
+      "consequence": "Cite the 1981 model and freeze the distributor file. A newer Earth model must use its own actual name and provenance.",
+      "simulationIds": []
+    },
+    {
+      "claimId": "earth-dispute-exact-1-842-galaxy-pitch-angle-catalogue",
+      "claim": "Exact 1,842-galaxy pitch-angle catalogue",
+      "sourceLine": 122,
+      "finding": "No named authoritative catalogue matching this exact count and scope was authenticated. Euclid/Galaxy Zoo provides a much larger morphology/winding catalogue but not the claimed numerical pitch dataset.",
+      "registryStatus": "unverified-source",
+      "consequence": "EARTH-GAL-001 remains data-blocked for numerical pitch residuals. Do not use morphology classes as silent pitch-angle measurements.",
+      "simulationIds": [
+        "EARTH-GAL-001"
+      ]
+    },
+    {
+      "claimId": "earth-dispute-thousands-of-confirmed-biosignature-planets",
+      "claim": "Thousands of confirmed biosignature planets",
+      "sourceLine": 123,
+      "finding": "NASA Exoplanet Archive reports thousands of confirmed planets, not confirmed biosignatures. No authoritative catalogue of thousands of confirmed biosignature planets exists.",
+      "registryStatus": "nonexistent-as-claimed",
+      "consequence": "EARTH-GAL-006 cannot be validated against the claimed population. Confirmed planets, habitability proxies, and biosignature evidence must remain separate fields.",
+      "simulationIds": [
+        "EARTH-GAL-006"
+      ]
+    }
+  ]
+}

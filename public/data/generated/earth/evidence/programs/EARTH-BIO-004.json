@@ -1,0 +1,722 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-BIO-004",
+  "counts": {
+    "total": 41,
+    "bySourceType": {
+      "formula": 33,
+      "code-block": 4,
+      "simulation-candidate": 4
+    },
+    "byConfidence": {
+      "high": 18,
+      "medium": 23,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+    "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+    "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+    "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+    "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-protein-data-bank-archive"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-10",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-11",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-12",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-13",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:5-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-19",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:17-17"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-2",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-20",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-21",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:29-29"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-22",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-23",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-24",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-25",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:45-45"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-26",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:51-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-27",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:84-84"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-28",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:86-86"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-29",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:98-98"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-3",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:37-37"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-30",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-31",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:163-163",
+        "near-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+        "section:Verification Notes",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-32",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:167-167",
+        "near-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-33",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:169-169"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-34",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:171-171"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-35",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-36",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:175-175"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-37",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:176-176"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-38",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:178-178"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-39",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:plain-line-candidate",
+        "line-span:180-180"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-4",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-5",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:59-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-6",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:68-68"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-7",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-8",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-9",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "formula-kind:display-math",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "formulaId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-1",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "section:Verification Notes",
+        "line-span:135-139",
+        "simulation-candidate:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-1",
+        "simulationCandidateIds": [
+          "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-2",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "section:Verification Notes",
+        "line-span:142-146",
+        "simulation-candidate:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-2",
+        "simulationCandidateIds": [
+          "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-3",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "section:Verification Notes",
+        "line-span:149-153",
+        "simulation-candidate:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-3",
+        "simulationCandidateIds": [
+          "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "section:Verification Notes",
+        "line-span:156-159",
+        "simulation-candidate:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+        "simulationCandidateIds": [
+          "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-1",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "linked-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-1",
+        "source-document:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "section:Verification Notes",
+        "line-in-code-span:135:135-139"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "simulationCandidateId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-1",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-2",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "linked-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-2",
+        "source-document:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "section:Verification Notes",
+        "line-in-code-span:142:142-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "simulationCandidateId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-2",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-3",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "linked-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-3",
+        "source-document:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "section:Verification Notes",
+        "line-in-code-span:149:149-153"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "simulationCandidateId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-3",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-4",
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-3",
+        "document-title:Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+        "linked-code-block:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+        "source-document:earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "section:Verification Notes",
+        "line-in-code-span:156:156-159"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+        "simulationCandidateId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-4",
+        "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4"
+      }
+    }
+  ]
+}

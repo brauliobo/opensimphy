@@ -1,0 +1,1345 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-NEURO-006",
+  "counts": {
+    "total": 76,
+    "bySourceType": {
+      "formula": 50,
+      "code-block": 13,
+      "simulation-candidate": 13
+    },
+    "byConfidence": {
+      "high": 47,
+      "medium": 29,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+    "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+    "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+    "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+    "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-eeg-motor-movement-imagery-dataset"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-10",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-11",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-12",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:104-104"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-13",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:114-114"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-14",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:120-120"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-15",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:130-130"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-21",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-23",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:26-26"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-24",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-25",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-26",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-27",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-28",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:92-92"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-29",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-30",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:133-133"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-31",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:134-134"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-32",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:135-135"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-33",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:267-267",
+        "near-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-34",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:275-275"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-35",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:plain-line-candidate",
+        "line-span:283-283"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-4",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-5",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-6",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-7",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-8",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-9",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "formula-kind:display-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "formulaId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-formula-9"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-10",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-11",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-16",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-17",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-18",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:31-31"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-19",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:38-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-2",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-20",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-21",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-22",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-23",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:117-117"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-24",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-25",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:140-140"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-26",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:214-214",
+        "near-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6",
+        "section:Verification Notes",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-27",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:218-218"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-28",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:223-223"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-29",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:225-225"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-3",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:45-45"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-4",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:53-53"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-5",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-6",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-7",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:69-69"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-8",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:79-79"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-9",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "formula-kind:display-math",
+        "line-span:83-83"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "formulaId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-1",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:200-213",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-1",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-2",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:216-221",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-2",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-3",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:224-230",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-3",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-4",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:233-236",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-4",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-5",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:239-244",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-5",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-6",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:247-250",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-6",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "section:Verification Notes",
+        "line-span:253-259",
+        "simulation-candidate:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7",
+        "simulationCandidateIds": [
+          "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-7"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-1",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:158-166",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-1",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-2",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:169-174",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-2",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-3",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:177-182",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-3",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-4",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:185-189",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-4",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-5",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:192-200",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-5",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "section:Verification Notes",
+        "line-span:203-208",
+        "simulation-candidate:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6",
+        "simulationCandidateIds": [
+          "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-1",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-1",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:200:200-213"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-1",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-2",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-2",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:216:216-221"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-2",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-3",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-3",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:224:224-230"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-3",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-4",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-4",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:233:233-236"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-4",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-5",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-5",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:239:239-244"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-5",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-6",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-6",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:247:247-250"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-6",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-6"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-7",
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-2",
+        "document-title:Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+        "linked-code-block:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7",
+        "source-document:earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "section:Verification Notes",
+        "line-in-code-span:253:253-259"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+        "simulationCandidateId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-7",
+        "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-1",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-1",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:158:158-166"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-1",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-2",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-2",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:169:169-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-2",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-3",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-3",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:177:177-182"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-3",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-4",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-4",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:185:185-189"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-4",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-5",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-5",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:192:192-200"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-5",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-6",
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-1",
+        "document-title:Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+        "linked-code-block:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6",
+        "source-document:earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "section:Verification Notes",
+        "line-in-code-span:203:203-208"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+        "simulationCandidateId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-6",
+        "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6"
+      }
+    }
+  ]
+}

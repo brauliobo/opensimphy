@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "lockedAt": "2026-07-17",
+  "source": {
+    "repository": "https://github.com/SamDoesThings2/EARTH",
+    "revision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+    "root": "EARTH"
+  },
+  "license": {
+    "identifier": "CC-BY-NC-SA-4.0",
+    "declarationPath": "README.md",
+    "attribution": "EARTH Collaboration - Richard Vaught, Alexander T. Rayman (2025)",
+    "note": "License declaration is recorded from the source README; OpenSimPhy does not independently verify authorship or rights ownership."
+  },
+  "files": [
+    {
+      "path": "A Full Publication/Safe Paper/For Your Understanding.md",
+      "sha256": "c3b3b1ded27c228ddd976258f7a4950119c502f12e4e69153210f41bf6a2e150",
+      "bytes": 3428
+    },
+    {
+      "path": "A Full Publication/Safe Paper/Lexicon.md",
+      "sha256": "ecd16405f3b94da03ba4fec34d83a082eb0843b01e4985327ba8fbbab328f92b",
+      "bytes": 16100
+    },
+    {
+      "path": "A Full Publication/Safe Paper/New Maths.md",
+      "sha256": "bc752d8ad2062ad152818c42d30a611c501ace72c458fa56c1ca138cd412164e",
+      "bytes": 6388
+    },
+    {
+      "path": "A Full Publication/Safe Paper/Theory Paper.md",
+      "sha256": "695be848df245849e2e83b5a13d2183e7ae423509ba29cf5c9e9c69a643b62b6",
+      "bytes": 4403
+    },
+    {
+      "path": "A Full Publication/Theorem/Boson Isomorphism.md",
+      "sha256": "9571b0156dfc9bc9dd74b2126ce19fa7c1be3f9fefd010e57ce726c2abc56545",
+      "bytes": 3635
+    },
+    {
+      "path": "A Full Publication/Theorem/Coupling Theorem.md",
+      "sha256": "a77d03910af9f84d4f0e638cb80a94a8959399d5faffcdb13440c42c069876b5",
+      "bytes": 3859
+    },
+    {
+      "path": "A Full Publication/Theorem/Curvature Theorem.md",
+      "sha256": "6eb8be2e74c37012146cbe77d7567dad1563fe165f771276f2bb844e463914a4",
+      "bytes": 3664
+    },
+    {
+      "path": "A Full Publication/Theorem/Fermion Theorem.md",
+      "sha256": "e4e9072947bb7a4d11f8b0d8a73991ca503a76d46c2175bb56a8e726fe51b3f7",
+      "bytes": 7580
+    },
+    {
+      "path": "A Full Publication/Theorem/Fixed Point Uniqueness.md",
+      "sha256": "35cdc396acc58756ee3f4a7f5a2bef779f6501476498d994dbcdc6067b64ccb8",
+      "bytes": 3327
+    },
+    {
+      "path": "A Full Publication/Theorem/Growth.md",
+      "sha256": "f4f2de3bf68365cdb4b6d37fec22e0b20620b06bc4a4bdfbf0600d8501a28d1a",
+      "bytes": 3610
+    },
+    {
+      "path": "A Full Publication/Theorem/Master List – Cosmological Scale.md",
+      "sha256": "754153e18890145ce3201375fd6d251b6c29936d2f2eba7b9c36cdb3b586ac60",
+      "bytes": 18145
+    },
+    {
+      "path": "A Full Publication/Theorem/Metric Theorem.md",
+      "sha256": "58f4f69e903ab21303893aea6ba73a1e9b915397c1c560de07296979ca1e31cb",
+      "bytes": 2814
+    },
+    {
+      "path": "A Full Publication/Theorem/Neuroscience Non-emergence.md",
+      "sha256": "e94a77f3470193c7a9b98dc58b177004aa3c61e185fa25c342eba140a2ad33c6",
+      "bytes": 2216
+    },
+    {
+      "path": "A Full Publication/Theorem/Phase Theorem.md",
+      "sha256": "54d33f765c29c34d014425e13e2a8f19233d12966629783703af44dcf3ee68b7",
+      "bytes": 3520
+    },
+    {
+      "path": "A Full Publication/Theorem/Phi.md",
+      "sha256": "ef0ab131a9636e055509883541d80ce4f8c68c6646c3eb9b7622ab06e221378c",
+      "bytes": 2964
+    },
+    {
+      "path": "A Full Publication/Theorem/Pi.md",
+      "sha256": "720a08dc0d1a3da778a93581ecc78979f37f5a1d548080cba84ed5366c025b10",
+      "bytes": 3459
+    },
+    {
+      "path": "A Full Publication/Theorem/Planck Constant from G-R Twist Counting.md",
+      "sha256": "e0bf5d95671f66d8a08d9e98e340b1ea2c02d5cfcd3b91c36b603ad5b36c370d",
+      "bytes": 3724
+    },
+    {
+      "path": "A Full Publication/Theorem/Quantum Superposition.md",
+      "sha256": "5b3f8262049df2ef675b95e30a4d4297f1f6d55289d2759fedfc9c3baf19cd27",
+      "bytes": 5662
+    },
+    {
+      "path": "A Full Publication/Theorem/QuantumGravity.md",
+      "sha256": "b752c86ed941f17e8ab4de39985bbd70ba7c01ad167261aa181846b857615aba",
+      "bytes": 11526
+    },
+    {
+      "path": "A Full Publication/Theorem/Quasicrystal Projection.md",
+      "sha256": "817912a019a6666851e703213ae27d7e5b3359e6bf5a50f997ad030663c54c2c",
+      "bytes": 3935
+    },
+    {
+      "path": "A Full Publication/Theorem/R(3) Theorem.md",
+      "sha256": "5cd85eff2def4cb2e1b9165c842bb1ef2b24564520b2191dc7758ca08f968be6",
+      "bytes": 3008
+    },
+    {
+      "path": "A Full Publication/Theorem/Response to GOOLSBY777.md",
+      "sha256": "f893e8cb11698999640fa70e5c957d6914cdff8554d0736a786b63a0ff3da3ed",
+      "bytes": 42164
+    },
+    {
+      "path": "A Full Publication/Theorem/Strand-Sharing.md",
+      "sha256": "1da1d71ec1b5697bb83d9a1f9229ed20a718a5ae37e004ce6316de59d2195c35",
+      "bytes": 5636
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers.md",
+      "sha256": "ca346bbd7ad6fc57300e38af88643d260cc66088915ba16f31b099d59fad8f41",
+      "bytes": 9532
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density.md",
+      "sha256": "e3de7bc2bd6e03f13d77ab275dc7604c6cb751052421fc7038eb4d3a009a687b",
+      "bytes": 7848
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist.md",
+      "sha256": "731a4be79208acb35dc008ec1f4f289a14d01ce7a0103daa454f4701b4d1f263",
+      "bytes": 8490
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem BIO-4 – The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table.md",
+      "sha256": "a8e731b57744da256d124a2b3b00b4e31925f9eb351f738884b28a7a6a6e63aa",
+      "bytes": 9582
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate.md",
+      "sha256": "bf2067d5b05e8488e654199907e06626c1a6b272f8123ffd3622468b9e16d0bb",
+      "bytes": 10691
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-1 – Atomic Nuclei Are Prime Torus Knots (p,q).md",
+      "sha256": "f8ff2879c00f45da31df5f2a15990095305c5bf63a8db855c3db257d3c548839",
+      "bytes": 5150
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil.md",
+      "sha256": "cc8b3a18dfad2bfbd1ca09838b80aec87da322ab857cf65c923ab6f35e5d7f33",
+      "bytes": 8954
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-3 – Covalent Bond = Trefoil–Trefoil Golden-Ratio Braid.md",
+      "sha256": "6f786fcdf063979f739ace06b6d7cc42490e2c128d6c1d42491f03b4c0931c47",
+      "bytes": 8355
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-4 – Periodic Table = Layered Pinning of Dislocation Loops in Successive Golden Shells.md",
+      "sha256": "d26cf1ebd8573ef693ce3b574242353c874eb2794da38660083d537f92f45101",
+      "bytes": 7448
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy.md",
+      "sha256": "f798147eeb6b6a763df4be825ead05a846785bf3d90bb4a61cd3e4ab56d96071",
+      "bytes": 5516
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands.md",
+      "sha256": "14344bc441d7e23c01fdb7e396f3ca160d2e17695af7196cf14a23b365e05d03",
+      "bytes": 5694
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points.md",
+      "sha256": "16581254489e9557ade5c9c3cbfaed8853af7f1ddc16770a7cc4b74a4e3c0630",
+      "bytes": 5764
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization.md",
+      "sha256": "9059ee1babab2af8be11f51229b122baba4db72ecfc075cc3137b337ba269a81",
+      "bytes": 8762
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate.md",
+      "sha256": "64a75cc8e05cf1cea87227f8d6cc32af010840ec2002e37f6c7b32918b1eecee",
+      "bytes": 16802
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid.md",
+      "sha256": "d60b0784563193c09358ab45126ddf5959c872ef17426f8b427e3959fac09934",
+      "bytes": 23802
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice.md",
+      "sha256": "fda109a5edc5cedb1a92ddc888863665fd6fc943862afad3a7a59ce33a01b4c6",
+      "bytes": 25169
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem GALAXY-4 – Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate.md",
+      "sha256": "924ee40e98003fbc9dedb554d5ed322e1ded20ad11ad88f7d16a1df5fc7c3a86",
+      "bytes": 25429
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology.md",
+      "sha256": "6dc3bf746e62e43dc0e7b967e54a3eb2b6c5e0702f69fba18409be0f8242aac2",
+      "bytes": 28554
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density.md",
+      "sha256": "1ce916e26a427903ec835e145c3273e997eab0599667eb62b41049d6e8055e9b",
+      "bytes": 12091
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand.md",
+      "sha256": "9b92fb1e68b699963685745f388c53d3237e536c16f47d4d8f39522d636a314b",
+      "bytes": 13868
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate.md",
+      "sha256": "f51540fc67f3914f47a5c48bddf02df0f4570dc90c7b417972b0527bc789da8e",
+      "bytes": 13463
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning.md",
+      "sha256": "fa4f1a307e3240a53362dbb2621bc46fdcd3fd002f738e173d4e8361530b4bbc",
+      "bytes": 16314
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate.md",
+      "sha256": "ef9a103ab717366dc7f4ef93bc908bbd0af721fd7642e3a45ced939f996f2a5a",
+      "bytes": 7640
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop.md",
+      "sha256": "f06b5a40460e79e03742de4042d814fd95657558e73088685c792f8b498343ed",
+      "bytes": 8664
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice.md",
+      "sha256": "ef79be74170434b0524d115287f058a90e85f8ef473af67b286483b9a1e96dce",
+      "bytes": 10089
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-4 – Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate.md",
+      "sha256": "40d1ede0cb6c55930b9936192e620b3602dea394134a98ff5dd247bfc32339fd",
+      "bytes": 9432
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-5 – Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs.md",
+      "sha256": "b6b17ea7f4529da354e411caee0835fa77713b5edf4ac46ee8139e8cd1c982ad",
+      "bytes": 10386
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density.md",
+      "sha256": "d79a64b0565e7888cc1f8a8e6686a38704321c72d65a8e3a6d31cfe9b6e1c461",
+      "bytes": 10569
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer.md",
+      "sha256": "2a59e2bf69782bf022b0e696b275f6fa65f1fed6e0a7e684cdd41b3d9f22035d",
+      "bytes": 10878
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-1 – Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation.md",
+      "sha256": "6a3fcb7e5ce87802935b56378adbeca9dfb59443f2b84ad559eaeeee95161582",
+      "bytes": 13185
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate.md",
+      "sha256": "b26d0f6574db9e492ee326868dea314394c94a13e3f541e792f6d5332803ef0f",
+      "bytes": 11972
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral.md",
+      "sha256": "f6dd52efec29a3937f0e28109307bcad1054e5d195f76d3858d6b99b89ec00fd",
+      "bytes": 14128
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid.md",
+      "sha256": "f30d68dcc6c03e9e4ad905812bde7988df5cc1ff203b3cf505b1d2a13548dd43",
+      "bytes": 13514
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-5 – Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate.md",
+      "sha256": "3bffc1a74ecc66eed998451491956ee84f873ca6b7f9eab4fb4ca048884c0fe0",
+      "bytes": 15544
+    },
+    {
+      "path": "A Full Publication/Theorem/Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot.md",
+      "sha256": "9775d0b14d4c2ff4c6e7eaa2bdafccf8feb4f467c0fa8853829577cb030ed6b1",
+      "bytes": 15498
+    },
+    {
+      "path": "A Full Publication/Theorem/Theory-Zero.md",
+      "sha256": "c53468e2ef5545696fe668871fa18dd6ec5f76fa6a0fc7e53af6b34544922657",
+      "bytes": 3017
+    },
+    {
+      "path": "A Full Publication/Theorem/Topological Surgery Barrier.md",
+      "sha256": "17da49c149b8d20edf996e9dc2d1f27c143dfcb1aa202cad4c9a3c861bd7b1d2",
+      "bytes": 4689
+    },
+    {
+      "path": "A Full Publication/Theorem/Tube Theorem.md",
+      "sha256": "a1ffd2d2000d2214206da2b697eaf6facfc8abd8a4e33b419ab27109a30467a4",
+      "bytes": 3342
+    },
+    {
+      "path": "A Full Publication/Theorem/Unification Theorem.md",
+      "sha256": "6f8f1bacfb3f5da2e9cadc82eb78a74b6f173b20d92657606c02c4f164421ef9",
+      "bytes": 3607
+    },
+    {
+      "path": "README.md",
+      "sha256": "f7764154a3e9b4f6fb57f0580916845348865f3c5fd5cf6085113a5491e8cfaf",
+      "bytes": 3817
+    }
+  ]
+}

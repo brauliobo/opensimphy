@@ -26,6 +26,10 @@ describe('recipe registry', () => {
     )
 
     expect(result.passes).toBe(3)
-    expect(result.evaluations.filter(({ dimensionAudit }) => !dimensionAudit.matches)).toHaveLength(79)
+    expect(result.evaluations.filter(({ dimensionAudit }) => !dimensionAudit.matches)).toHaveLength(68)
+    expect(result.evaluations.find(({ recipeNumber }) => recipeNumber === 243)?.dimensionAudit).toMatchObject({
+      declared: 'm/cycle',
+      matches: true,
+    })
   })
 })

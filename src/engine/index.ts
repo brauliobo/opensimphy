@@ -3,6 +3,7 @@ export * from "./completion.js";
 export * from "./completionRegistry.js";
 export * from "./core.js";
 export * from "./dimensions.js";
+export * from "./earth/index.js";
 export * from "./expression.js";
 export * from "./numberWall.js";
 export * from "./recipes.js";

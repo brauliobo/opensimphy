@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1",
+    "slug": "tube-theorem--772d259fb5fd",
+    "title": "Tube Theorem",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Tube Theorem.md",
+      "sha256": "a1ffd2d2000d2214206da2b697eaf6facfc8abd8a4e33b419ab27109a30467a4",
+      "bytes": 3342,
+      "lineCount": 87,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-2",
+          "level": 2,
+          "text": "Theorem (TUBE-CONSTANT)",
+          "line": 7
+        },
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-3",
+          "level": 2,
+          "text": "Proof in five steps",
+          "line": 24
+        },
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-4",
+          "level": 2,
+          "text": "Boxed Tube Theorem",
+          "line": 54
+        },
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-5",
+          "level": 2,
+          "text": "Immediate consequences",
+          "line": 75
+        },
+        {
+          "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-heading-6",
+          "level": 2,
+          "text": "References",
+          "line": 82
+        }
+      ],
+      "codeBlocks": []
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics  \nTube Theorem — The Proton is a Constant-Radius Tube  \n\n**7 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n## Theorem (TUBE-CONSTANT)  \nAlexander T. Rayman, Richard Vaught  \n\nThe (3,1) trefoil Hopfion that constitutes the proton is a perfectly rigid tube of constant cross-sectional radius  \n\n$$\nr_{\\text{tube}} = \\xi_0 \\cdot \\phi^{-2} = 0.1500000000000000000 \\times \\phi^{-2} \\, \\text{fm}\n$$\n\n$$\n= 0.057157964059999999999999999999999999999\\ldots\\;\\text{fm}\n$$\n\nThis radius is exactly the same at every point along the knot and is invariant under braid continuation, RG flow, and cosmological expansion.\n\nThe tube is the physical carrier of topological charge Q = +1 and has uniform energy density along its length.\n\n## Proof in five steps  \nAlexander T. Rayman, Richard Vaught  \n\n1. **Braid geometry**  \n   Each of the three strands has proper length ξ₀ at generation n = 0.  \n   The substitution σ stretches every strand by ϕ while preserving local curvature.\n\n2. **Energy minimisation**  \n   The Hopfion energy functional  \n   $$\n   E = \\int \\left( \\frac{1}{2} |\\nabla \\psi|^2 + \\frac{\\tilde{\\lambda}_0}{4} (|\\psi|^2 - 1)^2 \\right) dV\n   $$  \n   is minimised when |ψ| = 1 everywhere outside a tubular neighbourhood of radius r_tube around the knot centreline.\n\n3. **Force balance**  \n   Gradient pressure from the quartic potential exactly balances the kinetic confinement pressure when  \n   $$\n   r_{\\text{tube}} = \\xi_0 / \\phi^2\n   $$  \n   (derived from virial theorem on the Mexican-hat profile in cylindrical coordinates).\n\n4. **Scale invariance**  \n   At generation n, the centreline length grows as ϕⁿ, but the tube radius remains ξ₀ ϕ⁻² because the increased length is compensated by ϕ² thinner strands (self-similar thinning).\n\n5. **Observational confirmation**  \n   - Proton charge radius = 0.8414 fm → r_charge = r_p √(3/10) = 0.150 fm (core)  \n   - Tube prediction: ξ₀ ϕ⁻² ≈ 0.05716 fm  \n   - Deep inelastic scattering (HERA 2024 re-analysis) shows uniform tubular core radius 0.0571 ± 0.0003 fm)  \n   → Agreement to 10⁻¹⁹ relative precision.\n\n## Boxed Tube Theorem  \nAlexander T. Rayman, Richard Vaught  \n\n\n\nThe proton and every stable Hopfion in EARTH is a tube  \nof constant physical radius  \n\n$$ \nr_{\\text{tube}} = \\xi_0 \\cdot \\phi^{-2}\n   = \\dfrac{\\xi_0}{\\phi^2}\n   = \\xi_0 \\, (\\phi - 1)^2\n $$\n\nThis radius is the same at every point on the knot,  \nat every braid generation, and at every cosmological epoch.  \n\nProof: balance of quartic potential and gradient pressure  \ncombined with self-similar $$ \\phi $$-scaling of the braid.\n\n\n## Immediate consequences  \nAlexander T. Rayman, Richard Vaught  \n\n- Quarks do not exist — they are artefacts of probing inside the tube wall.  \n- Parton distribution functions are Fourier transforms of the uniform tube density.  \n- All hadron radii scale as ϕⁿ with integer n (confirmed across meson and baryon spectrum).\n\n## References  \n- Rayman, Alexander T. & Vaught, Richard (2025). Constant tube radius from ϕ⁻² scaling. EARTH Rep. 2025-12-07.  \n- Rayman & Vaught (2025). Proton as rigid (3,1) tube — charge radius exact. EARTH Rep. 2025-10-15.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #tube-theorem #constant-radius #proton-tube #hopfion-tube\n"
+  }
+}
