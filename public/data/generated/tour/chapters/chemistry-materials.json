@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "chemistry-materials",
+  "order": 16,
+  "act": 4,
+  "title": "Chemistry, Materials, and Thermodynamics",
+  "question": "How do microscopic interactions produce chemical, material, and thermodynamic response?",
+  "summary": "Study bond potentials, molecular geometry, modes, spectra, elasticity, dielectric response, interfaces, activities, phase equilibrium, equations of state, and transport. Keep source expressions separate from conventional Kramers-Kronig, Fresnel, activity, and statistical-mechanics baselines.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 16",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "source-reproduction",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Source expressions and traditional baselines remain provenance-separated."
+    ]
+  },
+  "previousChapterId": "fields-matter",
+  "nextChapterId": "cosmos"
+}

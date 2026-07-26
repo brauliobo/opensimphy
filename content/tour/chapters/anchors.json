@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "anchors",
+  "order": 4,
+  "act": 2,
+  "title": "Clocks, Action, Light, and Gravity",
+  "question": "How do reproducible standards anchor scales from the laboratory to the Planck regime?",
+  "summary": "Connect the caesium-133 frequency, speed of light, Planck constants, Newtonian gravity, luminous efficacy, and Planck scales. Derived units and normalized coordinates expose relationships among standards, identities, and models without turning reference choices into new predictions.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 4", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell defines curriculum scope; it is not an evaluated scientific result."] }
+}

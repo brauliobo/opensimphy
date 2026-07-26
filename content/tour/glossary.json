@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "physical-quantity",
+      "term": "Physical quantity",
+      "guidedDefinition": "A property of a phenomenon, body, or substance that has a magnitude expressible as a number and a reference; length is a quantity, while 2 metres is a quantity value.",
+      "technicalDefinition": "The Tour uses physical quantity for the VIM concept quantity: a scalar property with a magnitude expressible as a number and a reference. A quantity is not its quantity value, numerical value, kind, dimension, or unit.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["jcgm-vim-3"], "sourceRevision": "JCGM 200:2012", "sourceLocator": "VIM3 entry 1.1", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The guided definition is scoped to scalar quantities used in this lesson."] }
+    },
+    {
+      "id": "quantity-value",
+      "term": "Quantity value",
+      "guidedDefinition": "A number together with a reference that expresses the magnitude of a quantity, such as 2 m for a particular length.",
+      "technicalDefinition": "The number-and-reference expression of a quantity's magnitude. The reference is usually a measurement unit but can also be a measurement procedure, reference material, or combination.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["jcgm-vim-3"], "sourceRevision": "JCGM 200:2012", "sourceLocator": "VIM3 entry 1.19", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": [] }
+    },
+    {
+      "id": "numerical-value",
+      "term": "Numerical value",
+      "guidedDefinition": "The number in a quantity value after choosing its reference; the same length has numerical value 2 in metres and 200 in centimetres.",
+      "technicalDefinition": "The number in the expression of a quantity value, other than any number serving as the reference. It changes under a unit conversion even though the quantity does not.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["jcgm-vim-3"], "sourceRevision": "JCGM 200:2012", "sourceLocator": "VIM3 entry 1.20", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": [] }
+    },
+    {
+      "id": "quantity-kind",
+      "term": "Quantity kind",
+      "guidedDefinition": "The common aspect of quantities that makes them mutually comparable, such as length or thermodynamic temperature.",
+      "technicalDefinition": "The VIM kind of quantity concept groups mutually comparable quantities. Equal dimensions are necessary but not sufficient for the same kind: energy and torque share a dimension but are different kinds of quantity.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["jcgm-vim-3"], "sourceRevision": "JCGM 200:2012", "sourceLocator": "VIM3 entry 1.2", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Dimension equality alone does not establish quantity-kind identity."] }
+    },
+    {
+      "id": "unit",
+      "term": "Unit",
+      "guidedDefinition": "A conventionally defined quantity used as a reference for quantities of the same kind.",
+      "technicalDefinition": "A real scalar quantity defined and adopted by convention with which another quantity of the same kind is compared to express their ratio as a number.",
+      "guided": true,
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update", "sourceLocator": "Section 2.2", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": [] }
+    },
+    {
+      "id": "dimension",
+      "term": "Dimension",
+      "guidedDefinition": "A description of how a quantity depends on chosen base quantities, written with powers such as length divided by time.",
+      "technicalDefinition": "An expression of a quantity kind's dependence on the base quantities of a system as a product of powers. Equal dimensions do not by themselves establish equal quantity kinds; energy and torque are a standard counterexample.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["jcgm-vim-3"], "sourceRevision": "JCGM 200:2012", "sourceLocator": "VIM3 entry 1.7", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The basis is conventional."] }
+    },
+    {
+      "id": "dimensionless",
+      "term": "Dimensionless quantity",
+      "guidedDefinition": "A quantity whose physical dimensions cancel, often a ratio of like quantities.",
+      "technicalDefinition": "A quantity with the zero dimension vector; its value can still depend on conventions such as angle units or normalization.",
+      "guided": true,
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update", "sourceLocator": "Section 2.3.3", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Dimensionless does not mean convention-free."] }
+    },
+    {
+      "id": "dimensional-consistency",
+      "term": "Dimensional consistency",
+      "guidedDefinition": "Corresponding terms in an equation have matching dimensions, which is necessary but does not prove they have the same quantity kind or that the equation is true.",
+      "technicalDefinition": "Every additive term has the same dimension vector and both sides transform covariantly under a multiplicative coherent unit change. This necessary check is not a sufficient quantity-kind or empirical-validity test.",
+      "guided": true,
+      "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["jcgm-vim-3", "nist-sp811"], "sourceRevision": "JCGM 200:2012; NIST SP 811e2008", "sourceLocator": "VIM3 entries 1.2, 1.7, and 1.21; NIST SP 811 chapters 7-8", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Consistency is necessary, not sufficient for empirical validity."] }
+    },
+    {
+      "id": "coordinate-system",
+      "term": "Unit coordinate system",
+      "guidedDefinition": "The collection of units used to write the numerical values of quantities.",
+      "technicalDefinition": "A basis choice in quantity space; changing basis transforms numerical coordinates while preserving the underlying quantity.",
+      "guided": true,
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update", "sourceLocator": "Section 2.3", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The phrase is Tour shorthand for a declared unit basis."] }
+    },
+    {
+      "id": "base-dimension",
+      "term": "Base dimension",
+      "guidedDefinition": "One of the conventionally chosen base-quantity dimensions used to express other dimensions.",
+      "technicalDefinition": "A conventional basis element of a system of quantity dimensions. The Tour uses the seven conventional ISQ base-quantity dimensions and permits rational exponents generally; this activity uses only integer exponents.",
+      "guided": false,
+      "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012", "sourceLocator": "BIPM section 2.3; VIM3 entries 1.3-1.7", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Technical-only term; Guided blocks must not depend on it."] }
+    },
+    {
+      "id": "natural-units",
+      "term": "Natural units",
+      "guidedDefinition": "A coordinate choice that uses important physical constants as reference scales.",
+      "technicalDefinition": "A unit convention setting selected dimensional constants, often c, hbar, or k_B, to numerical unity without erasing their dimensional role.",
+      "guided": false,
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update", "sourceLocator": "Section 2.3 and unit-system discussion", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Technical-only term; Guided blocks must not depend on it."] }
+    }
+  ]
+}

@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 1,
+  "id": "physical-quantities",
+  "chapterId": "units",
+  "order": 1,
+  "title": "A number is not yet a physical quantity",
+  "question": "Why can a numerically correct expression still be physically meaningless?",
+  "answerPreview": "A physical result must preserve its quantity meaning, not only its dimension, when we change the units used to express it.",
+  "summary": "Distinguish quantities, quantity values, numerical values, kinds, and dimensions; then test bounded expressions and multiplicative coherent unit conversions without treating consistency as empirical evidence.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "jcgm-vim-3"],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+    "sourceLocator": "Deep curriculum, Chapter 1; BIPM section 2.3; VIM3 entries 1.1-1.21",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["The lesson defines a bounded source activity and does not report a runtime result."]
+  },
+  "estimatedMinutes": 11,
+  "quickPath": {
+    "estimatedMinutes": 4,
+    "guidedBlockIds": ["si-defining-anchors", "dimensions-and-kinds"],
+    "equationStepIds": ["fixed-si-anchors"],
+    "checkpointIds": ["centimetre-prediction"],
+    "simulationPresetId": "average-speed-from-path"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [],
+  "guidedBlocks": [
+    {
+      "id": "quantity-value-number-reference",
+      "kind": "definition",
+      "title": "A number is only one part of a quantity value",
+      "body": [
+        "The number 30 does not say whether we mean 30 seconds, 30 metres, or 30 kilograms.",
+        "A quantity is a property with a magnitude. A quantity value expresses that magnitude as a number and a reference, usually a unit: 30 m is a length value, and its numerical value is 30 when the chosen unit is the metre.",
+        "Changing the unit can change the numerical value without changing the quantity. The same length value can be written 2 m or 200 cm."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "unit"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["jcgm-vim-3"],
+      "sourceRevision": "JCGM 200:2012",
+      "sourceLocator": "VIM3 entries 1.1, 1.19, and 1.20",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["This activity treats scalar quantities; vector and tensor components require additional structure."]
+    },
+    {
+      "id": "si-defining-anchors",
+      "kind": "prose",
+      "title": "Definitions fix anchors; laboratories realize them",
+      "body": [
+        "The SI second is defined by fixing the caesium-133 ground-state hyperfine transition frequency Delta_nu_Cs at exactly 9 192 631 770 Hz, where Hz is s^-1.",
+        "The metre is defined through the fixed speed of light c = 299 792 458 m s^-1. This definition links length to the second; practical realization uses specified experimental procedures rather than treating every light-path measurement as exact.",
+        "The Planck constant h is fixed at exactly 6.626 070 15 x 10^-34 J s. Its quantity kind is action, and together with the second and metre definitions it participates in the SI definition of mass.",
+        "A unit definition fixes the reference. A practical realization is a documented method for producing or measuring against that reference, with an uncertainty appropriate to the realization."
+      ],
+      "glossaryIds": ["quantity-kind", "unit"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3 and Appendix 2",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Exact defining constants do not make practical realizations uncertainty-free."]
+    },
+    {
+      "id": "dimensions-and-kinds",
+      "kind": "prose",
+      "title": "Dimensions and quantity kinds answer different questions",
+      "body": [
+        "Metres and centimetres are different unit coordinates for the same kind of quantity, length, so their values can be converted and compared.",
+        "Matching dimensions are necessary but not sufficient for matching quantity kinds. Energy and torque have the same dimension, but they are not the same kind of quantity.",
+        "A length cannot be added to a time. No multiplicative conversion factor makes that sum describe one quantity kind."
+      ],
+      "glossaryIds": ["quantity-kind", "dimension", "dimensional-consistency", "coordinate-system"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+      "sourceRevision": "JCGM 200:2012; NIST SP 811e2008",
+      "sourceLocator": "VIM3 entries 1.2 and 1.7; NIST SP 811 chapters 7-8",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["NIST SP 811 predates the SI changes effective 20 May 2019 and is not used here for current SI definitions."]
+    },
+    {
+      "id": "consistency-not-truth",
+      "kind": "caveat",
+      "title": "A necessary check, not a proof",
+      "body": [
+        "A dimensionally inconsistent equation cannot represent the proposed quantity relationship.",
+        "A dimensionally consistent equation can still combine different quantity kinds or use a wrong model, wrong parameter, or unsupported assumption.",
+        "The workshop computes a contract check. It does not make an empirical observation."
+      ],
+      "glossaryIds": ["quantity-kind", "dimensional-consistency"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["jcgm-vim-3"],
+      "sourceRevision": "JCGM 200:2012",
+      "sourceLocator": "VIM3 entries 1.2, 1.7, and 1.21",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["A dimension match does not identify a quantity kind."]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "dimension-vectors",
+      "kind": "derivation",
+      "title": "Dimensions form exponent vectors",
+      "body": [
+        "Represent a dimension by exponents over base quantities. The Tour uses seven conventional ISQ base-quantity dimensions in this order: time, length, mass, electric current, thermodynamic temperature, amount of substance, and luminous intensity.",
+        "Average speed has vector (-1, 1, 0, 0, 0, 0, 0); energy has (-2, 2, 1, 0, 0, 0, 0). Quantities multiply or divide, while their dimension-exponent vectors add or subtract.",
+        "The general dimension representation permits rational exponents. This activity's bounded named expressions use integer exponents only."
+      ],
+      "glossaryIds": ["base-dimension", "dimension"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+      "sourceLocator": "BIPM section 2.3; VIM3 entries 1.3-1.7",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The base-quantity dimensions are a conventional basis, not seven intrinsic dimensions of nature."]
+    },
+    {
+      "id": "coordinate-transform",
+      "kind": "derivation",
+      "title": "Multiplicative coherent unit changes transform numerical values",
+      "body": [
+        "If q = {q}[Q], then choosing a new unit [Q]' = a[Q] changes the numerical value to {q}' = {q}/a while q itself is unchanged.",
+        "The dimensional builder applies declared multiplicative scale transforms only after binding the sample magnitude to the selected target quantity kind.",
+        "The builder excludes affine temperature conversions and electromagnetic CGS conventions; its mechanical-cgs option is limited to centimetre, gram, and second scaling."
+      ],
+      "glossaryIds": ["quantity-value", "numerical-value", "coordinate-system"],
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "nist-sp811"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; NIST SP 811e2008",
+      "sourceLocator": "BIPM section 2.3; NIST SP 811 chapter 8 and Appendix B",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Only multiplicative coherent conversions declared by this activity are in scope."]
+    },
+    {
+      "id": "audit-boundary",
+      "kind": "caveat",
+      "title": "Dimensional audits have a declared basis",
+      "body": [
+        "The historical Atlas expression engine uses a different dimension basis and treatment of amount of substance. This lesson's seven-axis ISQ contract neither normalizes nor repairs those source declarations.",
+        "Historical source-corpus conflicts remain separate audit results tied to their own source and implementation revisions. This activity does not recompute or resolve them."
+      ],
+      "glossaryIds": ["base-dimension", "dimensional-consistency"],
+      "claimClass": "source-claim",
+      "evidenceRefs": ["opensimphy-scientific-scope"],
+      "sourceRevision": "OpenSimPhy Atlas audit 2026-07-17",
+      "sourceLocator": "PHYSICS_TOUR_MASTER_PLAN.md Chapter 1 technical extension and Definition of done; Atlas formula dimension declarations and source-audit ledger",
+      "methodRelationship": "literal-reproduction",
+      "modelOrigin": "source-reproduction",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["This lesson does not supply independent evidence for the historical source declarations."]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "fixed-si-anchors",
+      "label": "Fixed defining anchors",
+      "expression": "Delta_nu_Cs = 9 192 631 770 Hz; c = 299 792 458 m s^-1; h = 6.626 070 15 x 10^-34 J s",
+      "explanation": "The SI fixes these numerical values to define the second, link the metre to the second, and link the kilogram to h. Laboratories still use documented realization procedures whose practical results carry realization uncertainty.",
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3 and Appendix 2",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Exact defining values do not make practical realizations or measurements uncertainty-free."]
+    },
+    {
+      "id": "spoken-average-speed",
+      "label": "Spoken relationship",
+      "expression": "average speed is path length divided by elapsed time",
+      "explanation": "The words identify the quantity kinds and the averaging interval before numerical values enter.",
+      "claimClass": "established-definition",
+      "evidenceRefs": ["jcgm-vim-3"],
+      "sourceRevision": "JCGM 200:2012",
+      "sourceLocator": "VIM3 entries 1.1, 1.2, and 1.22",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Average speed uses total path length, not displacement, and does not assert constant instantaneous speed."]
+    },
+    {
+      "id": "symbolic-average-speed",
+      "label": "Symbolic relationship",
+      "expression": "v_avg = s_path / Delta_t",
+      "explanation": "Division of quantities corresponds to subtraction of the elapsed-time exponent from the path-length exponent.",
+      "claimClass": "identity",
+      "evidenceRefs": ["jcgm-vim-3"],
+      "sourceRevision": "JCGM 200:2012",
+      "sourceLocator": "VIM3 entries 1.21-1.22",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["This is the definition of average speed over the selected interval."]
+    },
+    {
+      "id": "dimension-average-speed",
+      "label": "Dimension relationship",
+      "expression": "dim(v_avg) = L T^-1",
+      "explanation": "Any multiplicative coherent unit representation of average speed transforms as length per time.",
+      "claimClass": "identity",
+      "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+      "sourceRevision": "JCGM 200:2012; NIST SP 811e2008",
+      "sourceLocator": "VIM3 entry 1.7; NIST SP 811 chapter 8",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The dimension alone does not distinguish average speed from velocity or other length-per-time quantity kinds."]
+    }
+  ],
+  "simulationId": "dimensional-equation-builder",
+  "formulaIds": ["Delta_nu_Cs", "h", "c"],
+  "programIds": [],
+  "glossaryIds": [
+    "physical-quantity",
+    "quantity-value",
+    "numerical-value",
+    "quantity-kind",
+    "unit",
+    "dimension",
+    "dimensionless",
+    "dimensional-consistency",
+    "coordinate-system",
+    "base-dimension",
+    "natural-units"
+  ],
+  "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3", "nist-sp811", "codata-2022"],
+  "checkpoints": [
+    {
+      "id": "centimetre-prediction",
+      "kind": "prediction",
+      "prompt": "Before switching units: a rod has quantity value 2 m. What numerical value expresses the same length in centimetres?",
+      "choices": [
+        { "id": "smaller", "label": "0.02" },
+        { "id": "same", "label": "2" },
+        { "id": "larger", "label": "200" }
+      ],
+      "answerId": "larger",
+      "explanation": "A centimetre is one hundredth of a metre, so the numerical value is 100 times larger while the quantity value represents the same length.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+        "sourceRevision": "JCGM 200:2012; NIST SP 811e2008",
+        "sourceLocator": "VIM3 entries 1.19-1.20; NIST SP 811 chapter 8",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored answer is not a record of a learner prediction or runtime evaluation."]
+      }
+    },
+    {
+      "id": "consistency-boundary",
+      "kind": "explanation",
+      "prompt": "A proposed equation has the same dimensions on both sides. What has the audit established?",
+      "choices": [
+        { "id": "truth", "label": "The model is experimentally true" },
+        { "id": "necessary", "label": "It passed one necessary consistency check" },
+        { "id": "same-kind", "label": "Both sides must be the same quantity kind" }
+      ],
+      "answerId": "necessary",
+      "explanation": "Matching dimensions are necessary, but quantity kind, model assumptions, and empirical evidence require separate checks.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["jcgm-vim-3"],
+        "sourceRevision": "JCGM 200:2012",
+        "sourceLocator": "VIM3 entries 1.2, 1.7, and 1.21",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored answer is not a runtime contract-check result."]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The source contract specifies a dimension trace for one bounded named expression and target.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "dimensional-equation-builder controls and output contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The display is computed interface state, not an empirical observation."]
+      }
+    },
+    {
+      "text": "The source contract declares the length-plus-time preset an unlike-quantity addition that the validator must identify as undefined without a numerical result.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["jcgm-vim-3"],
+        "sourceRevision": "JCGM 200:2012; tour-content-2026-07-26",
+        "sourceLocator": "VIM3 entries 1.2 and 1.21; unlike-addition preset",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Undefined unlike-quantity addition is a contract-validator classification, not failed software execution or a physical prediction."]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "The declared immediate operation adds or subtracts dimension exponents for multiplication or division, or classifies unlike addition as undefined when evaluated.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["jcgm-vim-3"],
+        "sourceRevision": "JCGM 200:2012",
+        "sourceLocator": "VIM3 entries 1.7 and 1.21",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This activity's expression exponents are integers, although the general type permits rational exponents."]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "No external numerical result or source-model output is reproduced in this lesson.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "physical-quantities lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": []
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No empirical dataset is loaded or compared in this lesson.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "physical-quantities lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["A computed display is not an empirical dataset."]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "An evaluated selected expression will either match or not match the target dimension in the declared seven-axis ISQ basis.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["jcgm-vim-3"],
+        "sourceRevision": "JCGM 200:2012",
+        "sourceLocator": "VIM3 entries 1.7 and 1.21",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["A target dimension match does not establish the same quantity kind."]
+      }
+    },
+    {
+      "text": "For an evaluated selected target quantity, the declared multiplicative SI-to-mechanical-cgs conversion changes its numerical value and unit while preserving its quantity value.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+        "sourceRevision": "JCGM 200:2012; NIST SP 811e2008",
+        "sourceLocator": "VIM3 entries 1.19-1.20; NIST SP 811 Appendix B",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Electromagnetic CGS and affine temperature conversions are excluded."]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "Matching dimensions do not establish the same quantity kind or a correct law of nature; energy and torque demonstrate the quantity-kind boundary.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["jcgm-vim-3"],
+        "sourceRevision": "JCGM 200:2012",
+        "sourceLocator": "VIM3 entries 1.2 and 1.7",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": []
+      }
+    },
+    {
+      "text": "This lesson does not recompute or resolve historical source-corpus dimension conflicts from the Atlas.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "OpenSimPhy Atlas audit 2026-07-17",
+        "sourceLocator": "Atlas formula dimension declarations and source-audit ledger",
+        "methodRelationship": "literal-reproduction",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The Tour's dimension basis must not be used to silently rewrite source declarations."]
+      }
+    }
+  ]
+}

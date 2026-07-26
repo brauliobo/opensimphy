@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "cosmos",
+  "order": 17,
+  "act": 4,
+  "title": "Planets, Stars, Galaxies, and Cosmology",
+  "question": "How are gravitational models tested across planetary, stellar, galactic, and cosmological scales?",
+  "summary": "Use dimensionless compactness to compare planets, stars, compact objects, and hypothetical states, then examine atmospheres, seismology, dynamos, galaxies, expansion, the cosmic microwave background, and baryon acoustic oscillations. Source claims, traditional models, survey data, selection effects, and unavailable datasets remain distinct.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 17", "methodRelationship": "not-applicable", "modelOrigin": "source-reproduction", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell does not report a dataset comparison."] }
+}

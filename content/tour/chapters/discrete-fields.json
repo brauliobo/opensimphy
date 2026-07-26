@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "discrete-fields",
+  "order": 13,
+  "act": 4,
+  "title": "Discrete Rules and Continuous Fields",
+  "question": "When can discrete growth rules support a continuous field model?",
+  "summary": "Use substitution systems, incidence matrices, growth eigenvalues, fixed points, and density-spacing relations to compare discrete rules with continuous scalar fields. Numerical parallels such as powers of two or the golden ratio do not derive a field theory without a justified continuum limit and dynamics.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 13", "methodRelationship": "not-applicable", "modelOrigin": "source-reproduction", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell does not derive a continuum field theory."] }
+}

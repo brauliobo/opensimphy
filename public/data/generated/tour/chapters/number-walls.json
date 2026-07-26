@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "number-walls",
+  "order": 11,
+  "act": 3,
+  "title": "Number Walls and Recurrence Structure",
+  "question": "What can determinant patterns reveal about a sequence?",
+  "summary": "Build number walls from understood recurrence sequences before examining decimal streams of constants. A visible digit pattern is not physical evidence without a preregistered statistic, a null model, and robustness under changes of units and numerical base.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 11",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "A chapter shell does not report a preregistered pattern analysis."
+    ]
+  },
+  "previousChapterId": "heat-matter",
+  "nextChapterId": "roots-invariants"
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "contentRevision": "2026-07-26",
+  "title": "Physics from observation to justified conclusion",
+  "thesis": "Learn how measurements, quantities, equations, models, simulations, and evidence support a scientific conclusion.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": ["opensimphy-scientific-scope"],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Product thesis; Completion paths; Quick tour",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["Manifest and quick-station text define curriculum scope; they are not evaluated scientific results."]
+  },
+  "readingDepths": ["guided", "technical"],
+  "depthComposition": "technical-includes-guided",
+  "attributionPolicy": {
+    "inheritance": "nearest-attributed-ancestor",
+    "rule": "Every instructional statement uses its explicit attribution when present; otherwise it inherits from the nearest containing record with attribution. Generation must fail when no attributed ancestor exists. Simulation controls, preset text, output descriptions, and visualization text may inherit from their attributed simulation root.",
+    "attributedRoots": ["manifest", "chapter", "lesson", "lesson-block", "equation-step", "checkpoint", "simulation", "finding", "glossary-entry", "claim-vocabulary-entry"],
+    "inheritingRecordKinds": ["quick-station", "lesson-quick-path", "lesson-block-body", "checkpoint-choice", "simulation-equation", "simulation-assumption", "control", "control-option", "preset", "output-field", "visualization", "visualization-alternative", "finding-field", "finding-assumption"],
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": ["opensimphy-scientific-scope"],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Content architecture and Claim and provenance vocabulary",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Inheritance supplies provenance metadata; it does not strengthen the inherited claim."]
+    }
+  },
+  "contentStatusPolicy": {
+    "contentReady": "The required source chapter, lesson, and simulation content records exist and resolve. This status makes no claim that a route, view, style, or runtime implementation exists.",
+    "planned": "The chapter shell exists, but one or more required lesson or simulation content records do not yet exist.",
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": ["opensimphy-scientific-scope"],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Content architecture",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Content readiness is independent of route and interface delivery status."]
+    }
+  },
+  "quickStations": [
+    {
+      "id": "anchors-scales",
+      "order": 1,
+      "title": "Anchors and scales",
+      "question": "How do physicists agree on a second, metre, and quantum of action?",
+      "interaction": "Inspect fixed SI anchors, then test dimensions and quantity kinds in the workshop.",
+      "chapterId": "units",
+      "lessonId": "physical-quantities",
+      "simulationId": "dimensional-equation-builder",
+      "glossaryIds": ["physical-quantity", "quantity-kind", "unit", "dimension", "dimensional-consistency"],
+      "estimatedMinutes": 4,
+      "status": "content-ready"
+    },
+    {
+      "id": "unit-bridges",
+      "order": 2,
+      "title": "Unit bridges",
+      "question": "How can a photon energy be mapped to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales?",
+      "interaction": "Convert one photon energy across labeled representations without assigning photon rest mass or a thermal state.",
+      "chapterId": "unit-bridges",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "electrical-standards",
+      "order": 3,
+      "title": "Electrical standards",
+      "question": "How do fixed h and e support quantum electrical reference relationships and their practical realizations?",
+      "interaction": "Trace exact SI relationships, practical devices, and historical conventional values without conflating them.",
+      "chapterId": "electrical-standards",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "atoms-materials",
+      "order": 4,
+      "title": "Atoms and materials",
+      "question": "How can calibrated spectra constrain a model of atomic structure?",
+      "interaction": "Relate wavelength, frequency, and transition energy under a stated atomic model and selection rules.",
+      "chapterId": "atomic-structure",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 4,
+      "status": "planned"
+    },
+    {
+      "id": "particles-mass",
+      "order": 5,
+      "title": "Particles and mass",
+      "question": "How are massive-particle rest energy, momentum, and quantum wavelengths related without treating them as independent measurements?",
+      "interaction": "Compare electron and proton rest energies and Compton scales, then keep de Broglie wavelength tied to momentum.",
+      "chapterId": "particle-scales",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "spin-magnetism",
+      "order": 6,
+      "title": "Spin and magnetism",
+      "question": "How does a stated spin-moment model predict magnetic response in an applied field?",
+      "interaction": "Predict and calculate precession frequency, then distinguish the model output from a measurement.",
+      "chapterId": "spin-magnetism",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "heat-radiation",
+      "order": 7,
+      "title": "Heat and radiation",
+      "question": "How do thermal models connect temperature, microscopic energy scales, and radiation?",
+      "interaction": "Change modeled temperature and calculate a black-body spectrum.",
+      "chapterId": "heat-matter",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 4,
+      "status": "planned"
+    },
+    {
+      "id": "molar-matter",
+      "order": 8,
+      "title": "Molar matter",
+      "question": "How do particle-scale quantities become laboratory matter?",
+      "interaction": "Scale particles into moles, gas volumes, and bulk quantities.",
+      "chapterId": "heat-matter",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    }
+  ]
+}

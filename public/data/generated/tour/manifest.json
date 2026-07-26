@@ -1,0 +1,805 @@
+{
+  "schemaVersion": 1,
+  "contentRevision": "2026-07-26",
+  "title": "Physics from observation to justified conclusion",
+  "thesis": "Learn how measurements, quantities, equations, models, simulations, and evidence support a scientific conclusion.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Product thesis; Completion paths; Quick tour",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Manifest and quick-station text define curriculum scope; they are not evaluated scientific results."
+    ]
+  },
+  "readingDepths": [
+    "guided",
+    "technical"
+  ],
+  "depthComposition": "technical-includes-guided",
+  "attributionPolicy": {
+    "inheritance": "nearest-attributed-ancestor",
+    "rule": "Every instructional statement uses its explicit attribution when present; otherwise it inherits from the nearest containing record with attribution. Generation must fail when no attributed ancestor exists. Simulation controls, preset text, output descriptions, and visualization text may inherit from their attributed simulation root.",
+    "attributedRoots": [
+      "manifest",
+      "chapter",
+      "lesson",
+      "lesson-block",
+      "equation-step",
+      "checkpoint",
+      "simulation",
+      "finding",
+      "glossary-entry",
+      "claim-vocabulary-entry"
+    ],
+    "inheritingRecordKinds": [
+      "quick-station",
+      "lesson-quick-path",
+      "lesson-block-body",
+      "checkpoint-choice",
+      "simulation-equation",
+      "simulation-assumption",
+      "control",
+      "control-option",
+      "preset",
+      "output-field",
+      "visualization",
+      "visualization-alternative",
+      "finding-field",
+      "finding-assumption"
+    ],
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": [
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Content architecture and Claim and provenance vocabulary",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Inheritance supplies provenance metadata; it does not strengthen the inherited claim."
+      ]
+    }
+  },
+  "contentStatusPolicy": {
+    "contentReady": "The required source chapter, lesson, and simulation content records exist and resolve. This status makes no claim that a route, view, style, or runtime implementation exists.",
+    "planned": "The chapter shell exists, but one or more required lesson or simulation content records do not yet exist.",
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": [
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Content architecture",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Content readiness is independent of route and interface delivery status."
+      ]
+    }
+  },
+  "quickStations": [
+    {
+      "id": "anchors-scales",
+      "order": 1,
+      "title": "Anchors and scales",
+      "question": "How do physicists agree on a second, metre, and quantum of action?",
+      "interaction": "Inspect fixed SI anchors, then test dimensions and quantity kinds in the workshop.",
+      "chapterId": "units",
+      "lessonId": "physical-quantities",
+      "simulationId": "dimensional-equation-builder",
+      "glossaryIds": [
+        "physical-quantity",
+        "quantity-kind",
+        "unit",
+        "dimension",
+        "dimensional-consistency"
+      ],
+      "estimatedMinutes": 4,
+      "status": "content-ready"
+    },
+    {
+      "id": "unit-bridges",
+      "order": 2,
+      "title": "Unit bridges",
+      "question": "How can a photon energy be mapped to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales?",
+      "interaction": "Convert one photon energy across labeled representations without assigning photon rest mass or a thermal state.",
+      "chapterId": "unit-bridges",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "electrical-standards",
+      "order": 3,
+      "title": "Electrical standards",
+      "question": "How do fixed h and e support quantum electrical reference relationships and their practical realizations?",
+      "interaction": "Trace exact SI relationships, practical devices, and historical conventional values without conflating them.",
+      "chapterId": "electrical-standards",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "atoms-materials",
+      "order": 4,
+      "title": "Atoms and materials",
+      "question": "How can calibrated spectra constrain a model of atomic structure?",
+      "interaction": "Relate wavelength, frequency, and transition energy under a stated atomic model and selection rules.",
+      "chapterId": "atomic-structure",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 4,
+      "status": "planned"
+    },
+    {
+      "id": "particles-mass",
+      "order": 5,
+      "title": "Particles and mass",
+      "question": "How are massive-particle rest energy, momentum, and quantum wavelengths related without treating them as independent measurements?",
+      "interaction": "Compare electron and proton rest energies and Compton scales, then keep de Broglie wavelength tied to momentum.",
+      "chapterId": "particle-scales",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "spin-magnetism",
+      "order": 6,
+      "title": "Spin and magnetism",
+      "question": "How does a stated spin-moment model predict magnetic response in an applied field?",
+      "interaction": "Predict and calculate precession frequency, then distinguish the model output from a measurement.",
+      "chapterId": "spin-magnetism",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    },
+    {
+      "id": "heat-radiation",
+      "order": 7,
+      "title": "Heat and radiation",
+      "question": "How do thermal models connect temperature, microscopic energy scales, and radiation?",
+      "interaction": "Change modeled temperature and calculate a black-body spectrum.",
+      "chapterId": "heat-matter",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 4,
+      "status": "planned"
+    },
+    {
+      "id": "molar-matter",
+      "order": 8,
+      "title": "Molar matter",
+      "question": "How do particle-scale quantities become laboratory matter?",
+      "interaction": "Scale particles into moles, gas volumes, and bulk quantities.",
+      "chapterId": "heat-matter",
+      "lessonId": null,
+      "simulationId": null,
+      "estimatedMinutes": 3,
+      "status": "planned"
+    }
+  ],
+  "chapters": [
+    {
+      "schemaVersion": 1,
+      "id": "evidence",
+      "order": 0,
+      "act": 1,
+      "title": "Reproduction Is Not Validation",
+      "question": "What does it mean when software reproduces a number?",
+      "summary": "Distinguish definitions, identities, measurements, calibrations, predictions, reproductions, comparisons, validations, and blind tests. A successful computation shows that an implementation ran under recorded inputs; it does not by itself validate the associated physical theory.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 0",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell defines curriculum scope; it is not an evaluated scientific result."
+        ]
+      },
+      "previousChapterId": null,
+      "nextChapterId": "units"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "units",
+      "order": 1,
+      "act": 1,
+      "title": "Units, Dimensions, and Physical Quantities",
+      "question": "Why can a numerically correct expression still be physically meaningless?",
+      "summary": "Build physical quantities from dimensions and unit coordinates, then change units without changing the represented physics. Dimensional consistency is necessary for a physical equation, but it does not establish that the equation is empirically correct.",
+      "status": "content-ready",
+      "quickStationIds": [
+        "anchors-scales"
+      ],
+      "lessonIds": [
+        "physical-quantities"
+      ],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "bipm-si-brochure-9",
+          "jcgm-vim-3"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+        "sourceLocator": "Deep curriculum, Chapter 1; BIPM section 2.3; VIM3 entries 1.1-1.21",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Content-ready means source content records exist; it does not claim route or runtime implementation."
+        ]
+      },
+      "previousChapterId": "evidence",
+      "nextChapterId": "measurement"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "measurement",
+      "order": 2,
+      "act": 1,
+      "title": "Measurement, Uncertainty, and Standards",
+      "question": "How precise is a physical number?",
+      "summary": "Separate defined values from measured values and interpret significant digits, standard uncertainty, covariance, conventions, and standard states. Exact definitions and algebraic identities are not observations and receive no z-score; a z-score applies only to a declared comparison of uncertain values with covariance and dependence handled.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 2",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell defines curriculum scope; it is not an evaluated statistical comparison."
+        ]
+      },
+      "previousChapterId": "units",
+      "nextChapterId": "formula-anatomy"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "formula-anatomy",
+      "order": 3,
+      "act": 1,
+      "title": "Anatomy of a Formula Recipe",
+      "question": "Where does the expected result enter the calculation?",
+      "summary": "Trace scale factors, conversions, dimensionless terms, root corrections, dependency passes, and target-aware expression selection in formula recipes. Algebraic complexity does not establish independence when a target scale is already embedded in an input or selected factor.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 3",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell defines curriculum scope; it does not report a completed formula audit."
+        ]
+      },
+      "previousChapterId": "measurement",
+      "nextChapterId": "anchors"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "anchors",
+      "order": 4,
+      "act": 2,
+      "title": "Clocks, Action, Light, and Gravity",
+      "question": "How do reproducible standards anchor scales from the laboratory to the Planck regime?",
+      "summary": "Connect the caesium-133 frequency, speed of light, Planck constants, Newtonian gravity, luminous efficacy, and Planck scales. Derived units and normalized coordinates expose relationships among standards, identities, and models without turning reference choices into new predictions.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 4",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell defines curriculum scope; it is not an evaluated scientific result."
+        ]
+      },
+      "previousChapterId": "formula-anatomy",
+      "nextChapterId": "unit-bridges"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "unit-bridges",
+      "order": 5,
+      "act": 2,
+      "title": "Frequency, Energy, Mass, and Temperature",
+      "question": "How can photon energy map to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales?",
+      "summary": "Use E_gamma = h nu and nu = c/lambda for a photon propagating in vacuum, then derive the labeled scales E_gamma/c^2 and E_gamma/k_B. These representations do not assign photon rest mass or assert a thermal system at the equivalent temperature, and massive-particle rest energy remains a separate relationship.",
+      "status": "planned",
+      "quickStationIds": [
+        "unit-bridges"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 5",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Equivalent scales are derived labels, not independent observations or physical-state assignments."
+        ]
+      },
+      "previousChapterId": "anchors",
+      "nextChapterId": "electrical-standards"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "electrical-standards",
+      "order": 6,
+      "act": 2,
+      "title": "Charge and Quantum Electrical Standards",
+      "question": "How do fixed h and e support exact quantum electrical relationships and their practical realizations?",
+      "summary": "Trace fixed elementary charge and Planck's constant through exact ideal conductance, resistance, Josephson, and magnetic-flux relationships while keeping practical device realization, corrections, and uncertainty separate from pre-2019 conventional values. Vacuum permeability and permittivity are not independently fixed exact standards in the present SI.",
+      "status": "planned",
+      "quickStationIds": [
+        "electrical-standards"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 6",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Exact ideal relationships do not make practical realizations uncertainty-free."
+        ]
+      },
+      "previousChapterId": "unit-bridges",
+      "nextChapterId": "atomic-structure"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "atomic-structure",
+      "order": 7,
+      "act": 2,
+      "title": "Atomic Structure and Spectroscopy",
+      "question": "How can a calibrated spectrum constrain an atomic-structure model?",
+      "summary": "Relate hydrogen-like energy levels and transitions to wavelength and frequency under a stated Hamiltonian. Line identification, calibration, selection rules, broadening assumptions, reduced mass, and competing-model checks constrain inference; a spectrum does not reveal a unique atomic structure by inspection, and dimensional combinations cannot replace a bound-state model.",
+      "status": "planned",
+      "quickStationIds": [
+        "atoms-materials"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 7",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Spectral inference is model- and calibration-dependent."
+        ]
+      },
+      "previousChapterId": "electrical-standards",
+      "nextChapterId": "particle-scales"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "particle-scales",
+      "order": 8,
+      "act": 2,
+      "title": "Particle Mass and Quantum Wavelength",
+      "question": "How are invariant mass, rest energy, momentum, Compton scale, and de Broglie wavelength related without conflating them?",
+      "summary": "Compare leptons, nucleons, nuclei, and atomic-mass scales while keeping massive-particle rest energy E_0 = mc^2, Compton scale h/(mc), and state-dependent de Broglie wavelength h/p distinct. Linked axes show derived values rather than independent measurements, momentum is not another form of invariant mass, and composite particles require different interpretation from elementary particles.",
+      "status": "planned",
+      "quickStationIds": [
+        "particles-mass"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 8",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Derived linked-axis values are not independent observations."
+        ]
+      },
+      "previousChapterId": "atomic-structure",
+      "nextChapterId": "spin-magnetism"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "spin-magnetism",
+      "order": 9,
+      "act": 2,
+      "title": "Spin, Magnetic Moments, and Anomalies",
+      "question": "How does a stated spin-moment model predict magnetic response in an applied field?",
+      "summary": "Calculate field-driven precession only after declaring the spin-moment model, field, state, environment, and applicable shielding or composite corrections. Keep model output separate from an identified measurement with uncertainty; measured or fitted magnetic factors do not by themselves validate a proposed geometric particle model.",
+      "status": "planned",
+      "quickStationIds": [
+        "spin-magnetism"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 9",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A calculated response is model output, not an observation."
+        ]
+      },
+      "previousChapterId": "particle-scales",
+      "nextChapterId": "heat-matter"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "heat-matter",
+      "order": 10,
+      "act": 2,
+      "title": "Heat, Radiation, and Bulk Matter",
+      "question": "How do microscopic energy and particle counts become temperature, radiation, and laboratory-scale matter?",
+      "summary": "Link Boltzmann and Avogadro scaling to ideal gases, molar quantities, black-body radiation, Wien laws, and Stefan-Boltzmann emission. Partition functions and standard-state dependence expose the assumptions and limits behind thermodynamic and bulk-matter relationships.",
+      "status": "planned",
+      "quickStationIds": [
+        "heat-radiation",
+        "molar-matter"
+      ],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 10",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell defines curriculum scope; it is not an evaluated scientific result."
+        ]
+      },
+      "previousChapterId": "spin-magnetism",
+      "nextChapterId": "number-walls"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "number-walls",
+      "order": 11,
+      "act": 3,
+      "title": "Number Walls and Recurrence Structure",
+      "question": "What can determinant patterns reveal about a sequence?",
+      "summary": "Build number walls from understood recurrence sequences before examining decimal streams of constants. A visible digit pattern is not physical evidence without a preregistered statistic, a null model, and robustness under changes of units and numerical base.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 11",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell does not report a preregistered pattern analysis."
+        ]
+      },
+      "previousChapterId": "heat-matter",
+      "nextChapterId": "roots-invariants"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "roots-invariants",
+      "order": 12,
+      "act": 3,
+      "title": "Roots, Matrices, and Invariants",
+      "question": "Which quantities remain fixed as polynomial roots move?",
+      "summary": "Relate complex roots, Vieta identities, Newton sums, companion matrices, traces, determinants, spectral transformations, and typed units. A chosen matrix has a mathematical spectrum; that spectrum becomes physical only when a physical model derives the operator.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 12",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A mathematical spectrum is not a physical spectrum without a derived operator."
+        ]
+      },
+      "previousChapterId": "number-walls",
+      "nextChapterId": "discrete-fields"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "discrete-fields",
+      "order": 13,
+      "act": 4,
+      "title": "Discrete Rules and Continuous Fields",
+      "question": "When can discrete growth rules support a continuous field model?",
+      "summary": "Use substitution systems, incidence matrices, growth eigenvalues, fixed points, and density-spacing relations to compare discrete rules with continuous scalar fields. Numerical parallels such as powers of two or the golden ratio do not derive a field theory without a justified continuum limit and dynamics.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 13",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell does not derive a continuum field theory."
+        ]
+      },
+      "previousChapterId": "roots-invariants",
+      "nextChapterId": "topology-solitons"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "topology-solitons",
+      "order": 14,
+      "act": 4,
+      "title": "Knots, Topology, and Soliton Stability",
+      "question": "What mathematical and energetic conditions can stabilize a soliton?",
+      "summary": "Distinguish knots, links, target spaces, homotopy classes, finite-energy boundaries, Derrick scaling, and stabilizing terms. Topological protection depends on the field's target space and dynamics, so topology-incompatible models and unconverged meshes cannot establish stable physical solitons.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 14",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell does not establish a stable physical soliton."
+        ]
+      },
+      "previousChapterId": "discrete-fields",
+      "nextChapterId": "fields-matter"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fields-matter",
+      "order": 15,
+      "act": 4,
+      "title": "From Fields to Matter",
+      "question": "What must a field model derive before it can represent a particle or nucleus?",
+      "summary": "Separate naming a field configuration from deriving finite-energy states, conserved charge, stability, spectra, form factors, and decay channels. Literal source formulas remain distinct from conventional calculations, and models missing operators or boundary conditions remain explicitly blocked.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 15",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Naming a field configuration does not derive a particle or nucleus."
+        ]
+      },
+      "previousChapterId": "topology-solitons",
+      "nextChapterId": "chemistry-materials"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "chemistry-materials",
+      "order": 16,
+      "act": 4,
+      "title": "Chemistry, Materials, and Thermodynamics",
+      "question": "How do microscopic interactions produce chemical, material, and thermodynamic response?",
+      "summary": "Study bond potentials, molecular geometry, modes, spectra, elasticity, dielectric response, interfaces, activities, phase equilibrium, equations of state, and transport. Keep source expressions separate from conventional Kramers-Kronig, Fresnel, activity, and statistical-mechanics baselines.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 16",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Source expressions and traditional baselines remain provenance-separated."
+        ]
+      },
+      "previousChapterId": "fields-matter",
+      "nextChapterId": "cosmos"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "cosmos",
+      "order": 17,
+      "act": 4,
+      "title": "Planets, Stars, Galaxies, and Cosmology",
+      "question": "How are gravitational models tested across planetary, stellar, galactic, and cosmological scales?",
+      "summary": "Use dimensionless compactness to compare planets, stars, compact objects, and hypothetical states, then examine atmospheres, seismology, dynamos, galaxies, expansion, the cosmic microwave background, and baryon acoustic oscillations. Source claims, traditional models, survey data, selection effects, and unavailable datasets remain distinct.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 17",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A chapter shell does not report a dataset comparison."
+        ]
+      },
+      "previousChapterId": "chemistry-materials",
+      "nextChapterId": "biology-neuroscience"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "biology-neuroscience",
+      "order": 18,
+      "act": 4,
+      "title": "Biology, Neuroscience, and Analogy",
+      "question": "When does a mathematical analogy become a biological mechanism?",
+      "summary": "Compare elastic rods, topological descriptions, toy kinks, cable and action-potential models, state graphs, connectome modes, and spectral inference while separating analogy from mechanism. The chapter makes no diagnostic, treatment, or consciousness claims and preserves privacy and controlled-data boundaries.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 18",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Analogy does not establish mechanism; no diagnosis, treatment, or consciousness claim is made."
+        ]
+      },
+      "previousChapterId": "cosmos",
+      "nextChapterId": "blind-test"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "blind-test",
+      "order": 19,
+      "act": 4,
+      "title": "Blind-Test Capstone",
+      "question": "How can a model face a fair test without learning the answer in advance?",
+      "summary": "Define the operator or action, dimensions, boundary conditions, free parameters, calibration data, frozen mapping, held-out observable, null family, uncertainty, provenance, comparison rule, and failure handling before evaluation. Apply one evidential standard across source families without asserting that their theories are equivalent.",
+      "status": "planned",
+      "quickStationIds": [],
+      "lessonIds": [],
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Deep curriculum, Chapter 19",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The capstone specifies a future protocol and does not report a completed validation."
+        ]
+      },
+      "previousChapterId": "biology-neuroscience",
+      "nextChapterId": null
+    }
+  ],
+  "counts": {
+    "chapters": 20,
+    "lessons": 1,
+    "simulations": 1,
+    "glossary": 11,
+    "references": 5
+  }
+}

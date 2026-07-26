@@ -2,7 +2,7 @@
 
 ## Status and authority
 
-This document is the product contract for transforming OpenSimPhy from a registry-led atlas into a guided field course. `PHYSICS_TOUR_IMPLEMENTATION_STATUS.md` records delivery against this plan.
+This document is the product contract for transforming OpenSimPhy from a registry-led atlas into a guided field course. The internal reference record `opensimphy-scientific-scope` resolves to this file at `https://github.com/brauliobo/opensimphy/blob/main/PHYSICS_TOUR_MASTER_PLAN.md`. `PHYSICS_TOUR_IMPLEMENTATION_STATUS.md` records delivery against this plan.
 
 The numbered curriculum is authoritative: the deep path contains 20 chapters numbered 0 through 19. An earlier prose summary called it an eighteen-chapter path; the explicit chapter sequence supersedes that count.
 
@@ -43,9 +43,9 @@ OpenSimPhy has one curriculum and one scientific verdict. A persistent reading-d
 | Mode | Purpose | Presentation |
 | --- | --- | --- |
 | Guided | First-time and lay readers | Phenomenon first, minimal notation, one equation at a time, two or three controls |
-| Technical | Experienced students and physicists | Derivations, dimension vectors, uncertainty, dependencies, numerical methods, source spans, raw results |
+| Technical | Experienced students and physicists | All Guided content plus additive derivations, dimension vectors, uncertainty, dependencies, numerical methods, source spans, raw results, and at most the declared Technical-only controls |
 
-Users can switch depth anywhere without losing position or progress.
+Technical depth includes Guided depth rather than replacing it. Users can switch depth anywhere without losing position or progress, and no conclusion changes with reading depth.
 
 Guided mode assumes basic arithmetic, ratios, percentages, powers of ten, simple graphs, and familiarity with mass, distance, time, temperature, and electricity. Algebra is introduced gradually. Calculus, matrices, differential equations, and topology appear visually before formally.
 
@@ -94,7 +94,7 @@ Primary navigation contains Tour, Atlas, Workbench, and Evidence. Resume and Gui
 
 ### Completion paths
 
-The quick path contains eight stations and takes approximately 20-30 minutes. It establishes the conceptual spine with one representative idea and simulation per station.
+The quick path contains eight stations and takes approximately 20-30 minutes. It establishes the conceptual spine with one representative idea and simulation per station. A station linked to a longer lesson uses that lesson's explicit `quickPath` subset rather than claiming the full lesson fits the station estimate.
 
 The deep path contains chapters 0-19, the existing 31 conventional-physics taxonomy categories, mathematical instruments, EARTH and cross-program audits, technical derivations, and extended workbench exercises.
 
@@ -104,13 +104,13 @@ Quick-path completion means the learner explicitly completed the eight core stat
 
 | Station | Central question | Primary interaction |
 | --- | --- | --- |
-| 1. Anchors and scales | How do physicists agree on a second, metre, and quantum of action? | Build a dimensional quantity from base units |
-| 2. Unit bridges | How can frequency, energy, mass, and temperature describe one scale? | Convert one photon across representations |
-| 3. Electrical standards | How does elementary charge become a measurable electrical standard? | Trace charge through conductance, resistance, voltage, and flux |
-| 4. Atoms and materials | How do spectra reveal atomic structure? | Move between wavelength, frequency, and atomic transition energy |
-| 5. Particles and mass | How can mass appear as energy, momentum, and wavelength? | Compare electron/proton mass-energy and Compton scales |
-| 6. Spin and magnetism | How does microscopic spin produce magnetic response? | Vary field strength and observe precession frequency |
-| 7. Heat and radiation | How does microscopic energy become temperature and light? | Change temperature on a black-body spectrum |
+| 1. Anchors and scales | How do physicists agree on a second, metre, and quantum of action? | Inspect fixed SI anchors, then test dimensions and quantity kinds in the workshop |
+| 2. Unit bridges | How can photon energy map to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales? | Convert one photon energy across labeled representations without assigning rest mass or a thermal state |
+| 3. Electrical standards | How do fixed `h` and `e` support quantum electrical reference relationships and their practical realizations? | Separate exact SI relationships, practical devices, and historical conventional values |
+| 4. Atoms and materials | How can calibrated spectra constrain an atomic-structure model? | Relate wavelength, frequency, and transition energy under stated models and selection rules |
+| 5. Particles and mass | How are massive-particle rest energy, momentum, and quantum wavelengths related? | Compare rest energy and Compton scales while keeping de Broglie wavelength tied to momentum |
+| 6. Spin and magnetism | How does a stated spin-moment model predict magnetic response in an applied field? | Predict and calculate precession frequency, then distinguish output from measurement |
+| 7. Heat and radiation | How do thermal models connect temperature, microscopic energy scales, and radiation? | Change modeled temperature and calculate a black-body spectrum |
 | 8. Molar matter | How do particle-scale quantities become laboratory matter? | Scale particles into moles, gas volumes, and bulk quantities |
 
 Each station links to deeper lessons from the 31-category taxonomy.
@@ -131,17 +131,17 @@ Required conclusion: successful computation establishes that an implementation r
 
 Question: Why can a numerically correct expression still be physically meaningless?
 
-Teach base dimensions, unit coordinates, cancellation, changing units without changing physics, natural units, reference normalization, and dimensional versus dimensionless quantities.
+Teach the VIM distinctions among quantity, quantity value, numerical value, quantity kind, and quantity dimension; then teach conventional base-quantity dimensions, unit coordinates, cancellation, multiplicative coherent unit changes, natural units, and dimensional versus dimensionless quantities. Matching dimensions are necessary but not sufficient for the same quantity kind: energy and torque are the standard counterexample. Say that the Tour uses seven conventional ISQ base-quantity dimensions, never that nature has seven intrinsic dimensions.
 
-Simulation: compose an equation from quantities, receive immediate dimensional feedback, switch SI/CGS/normalized coordinates, and preserve the physical result while numerical coordinates change.
+Simulation: predict first, select one bounded named expression, receive immediate dimensional feedback, and switch between SI and explicitly mechanical-cgs coordinates. The sample magnitude is one target-bound canonical SI quantity value. The builder permits rational exponents in its general contract while this activity uses integer exponents; it excludes electromagnetic CGS and affine temperature conversions. Its average-speed example is `average speed = path length / elapsed time`, not unqualified instantaneous speed. Until the imminent vertical slice contains an implementation, its honest implementation revision is the source-contract label `tour-dimension-contract-v1`, not a claim of generated or runnable code.
 
-Technical extension: five-axis and seven-axis dimension vectors, covariant coordinate transformations, amount-of-substance semantics, and the 68 known formula-dimension conflicts.
+Technical extension: five-axis and seven-axis dimension vectors, covariant coordinate transformations, amount-of-substance semantics, and the 68 historical source-audit formula-dimension conflicts. Those conflicts retain their source basis and are not recomputed or repaired by this lesson.
 
 #### Chapter 2: Measurement, Uncertainty, and Standards
 
 Question: How precise is a physical number?
 
-Teach defined versus measured values, significant digits, standard uncertainty, shared-input covariance, standard states, conventions, and why exact relationships do not require z-scores.
+Teach defined versus measured values, significant digits, standard uncertainty, shared-input covariance, standard states, and conventions. Exact definitions and algebraic identities are not observations and do not receive z-scores. A z-score is meaningful only for a declared comparison of uncertain values with covariance and dependence handled; values derived from the same exact inputs are not independent evidence.
 
 Simulation: compare uncertainty bars and toggle shared versus independent uncertainty. Case study: molar volume and Loschmidt disagreements under differing standard conditions.
 
@@ -159,7 +159,7 @@ Required conclusion: complexity does not guarantee independence. A target scale 
 
 #### Chapter 4: Clocks, Action, Light, and Gravity
 
-Use caesium-133 frequency, Planck and reduced Planck constants, speed of light, Newtonian gravity, Planck scales, and luminous efficacy. Move from reproducible clocks through spacetime conversion, quantum action, and gravitational coupling.
+Use caesium-133 frequency, Planck and reduced Planck constants, speed of light, Newtonian gravity, Planck scales, and luminous efficacy. Distinguish the fixed defining values of `Delta_nu_Cs`, `c`, and `h` from the practical procedures and uncertainties used to realize the second, metre, and kilogram, then move through spacetime conversion, quantum action, and gravitational coupling.
 
 Simulation: logarithmic physical-scale ruler from laboratory to Planck scales with dimension-preserving conversion.
 
@@ -167,27 +167,44 @@ Technical extension: derive Planck units, distinguish identity from model predic
 
 #### Chapter 5: Frequency, Energy, Mass, and Temperature
 
-Core relationship:
+Photon propagation in vacuum:
 
 ```text
-E = h nu = m c^2 = k_B T = h c / lambda
+E_gamma = h nu
+nu = c / lambda
+therefore E_gamma = h c / lambda
 ```
 
-Simulation: lock one representation, vary another, and update frequency, energy, wavelength, equivalent mass, and temperature.
+Derived scale equivalents for that photon energy:
+
+```text
+m_equiv = E_gamma / c^2
+T_equiv = E_gamma / k_B
+```
+
+These are equivalent mass and temperature scales derived from one photon energy. They do not assign a nonzero rest mass to the photon or assert that a thermal system has temperature `T_equiv`.
+
+For a massive particle at rest:
+
+```text
+E_0 = m c^2
+```
+
+Simulation: lock one photon-vacuum representation, vary another, and update frequency, photon energy, vacuum wavelength, derived equivalent mass, and derived equivalent temperature. Massive rest energy remains a separately labeled relationship.
 
 Technical extension: Jacobians, reciprocal conversions, uncertainty propagation, and classification of each relationship.
 
 #### Chapter 6: Charge and Quantum Electrical Standards
 
-Teach elementary charge, conductance quantum, von Klitzing constant, Josephson constant, magnetic flux quantum, vacuum permittivity, and impedance.
+Teach elementary charge, conductance quantum, von Klitzing constant, Josephson constant, magnetic flux quantum, vacuum permittivity, and impedance. Distinguish exact SI defining-constant relationships from physical realization with Josephson and quantum Hall devices, device corrections and uncertainty, and the pre-2019 conventional `K_J-90` and `R_K-90` values. Since 2019, vacuum permeability and permittivity are not independently fixed exact standards; their values are linked to measured electromagnetic constants.
 
-Simulation: trace charge and action into electrical standards; compare ideal relationships with historical 1990 conventional values.
+Simulation: trace fixed `e` and `h` into exact ideal relationships, then place practical device realization and historical 1990 conventional values in separate attributed layers.
 
 Technical extension: `e`, `h`, `K_J`, `R_K`, `G_0`, vacuum response, and dimensional audits of Planck electrical quantities.
 
 #### Chapter 7: Atomic Structure and Spectroscopy
 
-Teach the Rydberg constant, Bohr radius, Hartree energy, atomic units, spectral transitions, silicon lattice spacing, classical electron radius, and Thomson scattering.
+Teach the Rydberg constant, Bohr radius, Hartree energy, atomic units, spectral transitions, silicon lattice spacing, classical electron radius, and Thomson scattering. Spectral inference from a calibrated spectrum constrains transition and structure models only through line identification, calibration, selection rules, broadening assumptions, and competing-model checks; it does not reveal a unique structure by inspection.
 
 Simulation: hydrogen-like energy levels, transition selection, wavelength/frequency conversion, and spectrum rendering.
 
@@ -195,17 +212,17 @@ Technical extension: reduced mass, selection rules, and why dimensional formulas
 
 #### Chapter 8: Particle Mass and Quantum Wavelength
 
-Teach electron, muon, proton, neutron, tau, nuclei, rest energy, relative masses, unified atomic mass, Compton wavelengths, momentum scales, and the Fermi coupling scale.
+Teach electron, muon, proton, neutron, tau, nuclei, invariant mass, rest energy, relative masses, unified atomic mass, Compton wavelengths, momentum scales, and the Fermi coupling scale. Keep `E_0 = m c^2` for massive rest energy, `lambda_C = h/(m c)` for the Compton scale, and `lambda = h/p` for de Broglie wavelength distinct. Momentum is state-dependent and is not another form of invariant mass; linked axes usually show derived values, not independent measurements.
 
 Simulation: compare particle scales on linked mass-energy-wavelength axes and identify dependent quantities as dependent rather than independent measurements.
 
-Technical extension: `E=mc^2` as conversion, Compton derivation, covariance, and composite versus elementary particles.
+Technical extension: the massive-particle rest-energy relationship `E_0 = m c^2`, Compton derivation, covariance, state-dependent momentum, and composite versus elementary particles.
 
 #### Chapter 9: Spin, Magnetic Moments, and Anomalies
 
-Teach Bohr/nuclear magnetons, magnetic moments, ratios, gyromagnetic ratios, g-factors, anomalies, and shielding corrections.
+Teach Bohr/nuclear magnetons, magnetic moments, ratios, gyromagnetic ratios, g-factors, anomalies, and shielding corrections. A calculated spin response requires a declared spin-moment model, field, state, environment, and applicable shielding or composite corrections. An empirical response requires a separately identified measurement and uncertainty.
 
-Simulation: spin precession under a magnetic field for electron, proton, neutron, and muon with linked moment and gyromagnetic representations.
+Simulation: predict and calculate model precession under a specified magnetic field for electron, proton, neutron, and muon with linked moment and gyromagnetic representations; do not label the computed motion an observation.
 
 Technical extension: `mu = gamma S`, composite effects, QED anomaly context, and why a fitted g-factor does not validate a geometric particle model.
 
@@ -245,7 +262,7 @@ Required conclusion: a selected matrix has a mathematical spectrum. It becomes a
 
 Use EARTH FND programs to teach substitution systems, matrix growth, fixed points, density-spacing relations, proposed golden-power relations, and continuous scalar fields.
 
-Simulation: iterate substitutions, build incidence matrices, compare `2^n` and `phi^n`, and visualize the valid `n^(-1/3)` spacing relation.
+Simulation: iterate substitutions, build incidence matrices, compare `2^n` and `phi^n`, and visualize `ell = n^(-1/3)` only when `n` is a uniform three-dimensional number density and `ell` is the resulting characteristic spacing. The relation is an assumption-based scale estimate, not a universal spacing law for clustered, anisotropic, lower-dimensional, or correlated systems.
 
 Technical extension: Perron eigenvalues, symbolic dynamics, continuum limits, and requirements for deriving field theory from substitution rules.
 
@@ -285,6 +302,8 @@ y = m / m_P
 chi = 2 y / x = 2 G m / (L c^2)
 ```
 
+Compactness here is the dimensionless mass-to-size combination `chi = 2 G m/(L c^2)`. Do not call bare `L/m` compactness: in SI it is dimensional, and even its inverse becomes a compactness coordinate only after the declared `G/c^2` conversion and the stated choice of characteristic length `L`. The normalized `x` and `y` axes are reference coordinates, not independent physical observables.
+
 Simulation: compactness map for planets, stars, compact objects, and hypothetical states; source/traditional atmosphere and binding comparisons; direct dataset blocker disclosure.
 
 Technical extension: Kottler, hydrostatic ODEs, Lane-Emden, Jeans models, FLRW, survey selection, and covariance.
@@ -312,29 +331,47 @@ Every lesson follows the same six-part grammar:
 3. **Explain**: familiar meaning in Guided mode; dimensions, assumptions, uncertainty, dependencies, classification, and method in Technical mode.
 4. **Equation ladder**: spoken relationship, symbolic relationship, then full implementation/source expression.
 5. **Try**: prediction prompt, one preset selector, two or three ordinary controls, reset, one visualization, and one finding. Advanced JSON remains in Workbench.
-6. **Interpret**: `Observed here`, `Reproduced here`, and `Not established here`, followed by explicit completion and related links.
+6. **Interpret**: scoped, attributed statements under `Seen in activity`, `Computed here`, `Reproduced from source`, `Compared with evidence`, `Establishes`, and `Does not establish`, followed by explicit completion and related links. Interface state and computed traces are never mislabeled as empirical observations.
 
 Lesson simulations should feel playful through prediction, manipulable parameters, responsive visual state, meaningful presets, and comparison. They must not use points, streaks, forced completion, decorative motion, or misleading celebration.
 
 ## Simulation contract
 
 ```ts
-interface TourSimulation {
+type TourSourceSimulation = TourSourceAttribution & {
   id: string
   lessonId: string
   question: string
   predictionPrompt: string
-  modelOrigin: 'established-physics' | 'source-reproduction' | 'traditional-baseline'
+  revision: SimulationRevision
+  dimensionBasis?: DimensionBasis
+  numericalMethod?: NumericalMethodMetadata
+  datasetState?: DatasetStateMetadata
+  modelComponents: ModelComponent[]
   equations: string[]
   assumptions: string[]
+  glossaryIds: NonEmptyArray<string>
   controls: TourControl[]
   presets: TourPreset[]
-  outputSchema: unknown
+  outputSchema: TourOutputField[]
+  comparison: TourSourceComparisonContract
+  visualization: VisualizationContract
   finding: ResultFinding
   limits: RuntimeLimits
-  evidenceRefs: string[]
+}
+
+type TourGeneratedSimulation = Omit<TourSourceSimulation, 'comparison'> & {
+  comparison: TourGeneratedComparisonContract // adds derived compatibilityKey
 }
 ```
+
+Controls are discriminated by `type`, declare an `inputRole`, and state whether they enter at Guided or additive Technical depth. Roles are not unique and cover `parameter`, `preset-selection`, `coordinate-selection`, `display-option`, `target-quantity`, `canonical-quantity-value`, `fixed-constant`, `calibrated-input`, `nuisance-parameter`, and `held-out-observable`. This supports uncertainty, black-body, spectroscopy, spin, empirical-comparison, and blind-test instruments without forcing unrelated inputs into dimensional-builder roles. Output fields declare `id`, `label`, `type`, `unit`, nullability, and description.
+
+The source comparison contract declares the compatibility rule and incompatible behavior but never carries a manually editable key. Generation derives `compatibilityKey` as a SHA-256 over canonical JSON containing exactly the simulation `id`, `contentRevision`, `modelRevision`, `implementationRevision`, and canonical `outputSchema`, then adds the key only to `TourGeneratedSimulation`. Every visualization supplies textual and table alternatives. Immediate-tier activities perform one exact bounded operation per update; worker, artifact, and unavailable tiers carry different limit contracts. Optional numerical-method metadata identifies exact, direct, iterative, optimization, sampling, integration, interpolation, or other methods; optional dataset-state metadata distinguishes no dataset, not loaded, loaded, precomputed artifact, and unavailable data with declared purposes and revisions.
+
+Every source and generated simulation content record declares a non-empty, resolvable `glossaryIds` list covering the scientific and specialist terminology intentionally exposed by that simulation. Guided simulation surfaces may use only entries available at Guided depth; Technical metadata may additionally declare Technical entries. A quick station may declare `glossaryIds` when its own title, question, or interaction introduces terminology before the linked lesson loads.
+
+All authored simulation roots, findings, lesson conclusions, and checkpoint attributions have `resultStatus: 'not-evaluated'`. Prediction prompts remain predictive interactions, but source JSON does not claim that a user ran them. The runtime engine creates computed, compared, failure, blocked, or unresolved status only for an actual run or audit. An unlike-quantity addition is a declared identity/assumption boundary classified by the contract validator; it is not a physical prediction or software-execution failure.
 
 Every result answers:
 
@@ -391,7 +428,7 @@ Desktop layout:
 
 Desktop columns are approximately 280px / flexible / 320px in a shell no wider than 1600px. Mobile order is stage, essential controls, run/cancel, findings, full controls, evidence, raw data.
 
-Compare mode contains at most two snapshots. Compatibility is declared, never inferred from object keys. Incomparable outputs receive parallel findings with no residual.
+Compare mode contains at most two snapshots. Compatibility is declared by the source rule and checked with the generated compatibility key, never inferred from arbitrary object keys. Incomparable outputs receive parallel findings with no residual.
 
 Saved runs are stored only after explicit action and contain instrument/program ID, method ID, inputs, outputs, finding, provenance, schema version, source revision, implementation revision, timestamp, and user label. Preferences and progress use versioned local storage. Larger artifacts use IndexedDB. There is no account, telemetry, or automatic synchronization.
 
@@ -426,7 +463,9 @@ Motion explains state: marker movement, trace appearance, progress rules, chapte
 
 ## Claim and provenance vocabulary
 
-Every major statement has one explicit class:
+Proposition type, method relationship, model origin, and result state are independent axes. Every major statement exposes all four rather than compressing them into one label.
+
+Claim class describes the epistemic proposition type:
 
 - Established definition
 - Established model
@@ -435,15 +474,36 @@ Every major statement has one explicit class:
 - Identity
 - Assumption
 - Calibration
-- Literal reproduction
-- Traditional baseline
 - Exploratory hypothesis
 - Prediction
+
+Method relationship describes what a computational method does relative to a source or comparison:
+
+- Not applicable
+- Literal reproduction
+- Traditional baseline
+- Contract validator
+
+Model origin remains typed per component:
+
+- Established physics
+- Source reproduction
+- Traditional baseline
+
+Result status describes execution or comparison state:
+
+- Not evaluated
+- Computed
+- Compared
 - Failure
 - Blocked source model
 - Unresolved
 
-Each record exposes source family, exact source span, source revision, claim class, method relationship, model origin, input roles, dataset state, precision/numerical method, result status, caveats, and whether it validates a theory. Ambiguous `pass` labels are not acceptable.
+Each attribution contains `claimClass`, non-empty resolvable `evidenceRefs`, exact `sourceLocator`, `sourceRevision`, `methodRelationship`, typed `modelOrigin`, `resultStatus`, `validatesTheory`, and `caveats`. `TourSourceAttribution` permits only `resultStatus: 'not-evaluated'`, `validatesTheory: false`, and no `validationProtocol`. A separate `TourRuntimeResultAttribution` may represent evaluated statuses; its future `validatesTheory: true` branch is structurally invalid without a `validationProtocol` that identifies the hypothesis, calibrated inputs, held-out observables, datasets, comparison method, uncertainty treatment, acceptance criteria, and failure handling. A bare boolean can never assert validation. Simulation controls also expose input roles; simulation records expose revision metadata, optional dimension basis, attributed model components, numerical method where applicable, declared comparison compatibility, terminology, and dataset state. Ambiguous `pass` labels are not acceptable.
+
+Source attribution follows one explicit policy: `AttributionInheritance = 'nearest-attributed-ancestor'`. The source manifest and lesson records are attributed roots, so their titles, summaries, station text, and quick-path metadata have an ancestor. Chapters, checkpoints, glossary entries, model components, and every claim-vocabulary axis entry carry direct attribution. Lesson blocks, equation steps, conclusions, simulation roots, and findings remain directly attributed. Descendant body text and checkpoint choices inherit from those roots. Control, option, preset, output, equation/assumption, and visualization text may inherit from the nearest attributed simulation ancestor; generation fails if no such ancestor exists. Inheritance supplies provenance but never strengthens a claim.
+
+The reference registry pins the BIPM SI Brochure 9th edition updated in 2026, JCGM VIM3 terminology, the visibly pre-2019 NIST SP 811 guidance, the CODATA 2022 adjustment, and the internal `opensimphy-scientific-scope` policy reference. Reference records identify responsible organization, publication year, edition, revision, DOI where available, exact source locator, access date and status, scope, current-SI supersession state, and license note. Reference URLs remain HTTPS-only.
 
 ## Content architecture
 
@@ -455,6 +515,7 @@ content/tour/
   chapters/
   lessons/
   simulations/
+  claim-vocabulary.json
   glossary.json
   references.json
 
@@ -465,14 +526,44 @@ public/data/generated/tour/
   chapters/*.json
   lessons/*.json
   simulations/*.json
+  claim-vocabulary.json
   glossary.json
   references.json
 ```
 
-JSON is the initial source format to avoid adding a YAML/Markdown parser dependency. The strict generator emits normalized, deterministic, sanitized structured JSON. Markdown with strict front matter remains an optional later authoring layer.
+JSON is the initial source format to avoid adding a YAML/Markdown parser dependency. `TourSourceManifest` carries `contentRevision`, attribution/content-status policies, and quick stations; it does not pretend that the revision is a generation time. `TourGeneratedManifest` adds the actual generated chapter records and counts. There is no `generatedAt` until a real deterministic generation timestamp exists; `contentRevision` must never be copied or renamed into one. Generated chapter and lesson records add `previousChapterId`/`nextChapterId` and `previousLessonId`/`nextLessonId` respectively. Generated simulations add only the derived comparison compatibility key.
+
+The source manifest declares `depthComposition: 'technical-includes-guided'`, assigns each quick station an explicit estimate totaling 20-30 minutes, and uses `content-ready` or `planned`. `content-ready` means the required source chapter, lesson, and simulation records exist and resolve; it never means that a route, view, style, or runtime implementation exists. The strict generator emits normalized, deterministic, sanitized structured JSON. Markdown with strict front matter remains an optional later authoring layer.
 
 ```ts
-interface TourLessonRecord {
+interface TourSourceManifest extends TourManifestBase {}
+
+interface TourGeneratedManifest extends TourManifestBase {
+  chapters: TourGeneratedChapterRecord[]
+  counts: {
+    chapters: number
+    lessons: number
+    simulations: number
+    glossary: number
+    references: number
+  }
+}
+
+interface TourGeneratedChapterRecord extends TourSourceChapterRecord {
+  previousChapterId: string | null
+  nextChapterId: string | null
+}
+
+interface TourGeneratedLessonRecord extends TourSourceLessonRecord {
+  previousLessonId: string | null
+  nextLessonId: string | null
+}
+```
+
+`TourClaimVocabularySource`, `TourGlossarySource`, and `TourReferencesSource` are explicit schema wrappers aligned with their source JSON roots. The vocabulary wrapper requires attribution on every axis entry and a structured `trueRequires` validation-protocol contract. The glossary wrapper requires direct attribution on every term. The reference wrapper attributes its policy and contains the resolvable entries.
+
+```ts
+interface TourSourceLessonRecord {
   schemaVersion: 1
   id: string
   chapterId: string
@@ -481,6 +572,14 @@ interface TourLessonRecord {
   question: string
   summary: string
   estimatedMinutes: number
+  quickPath?: {
+    estimatedMinutes: number
+    guidedBlockIds: string[]
+    equationStepIds: string[]
+    checkpointIds: string[]
+    simulationPresetId: string
+  }
+  depthComposition: 'technical-includes-guided'
   prerequisites: string[]
   guidedBlocks: LessonBlock[]
   technicalBlocks: LessonBlock[]
@@ -491,12 +590,22 @@ interface TourLessonRecord {
   glossaryIds: string[]
   evidenceRefs: string[]
   checkpoints: Checkpoint[]
-  establishes: string[]
-  doesNotEstablish: string[]
+  seenInActivity: ConclusionStatement<'activity'>[]
+  computedHere: ConclusionStatement<'computation'>[]
+  reproducedFromSource: ConclusionStatement<'source'>[]
+  comparedWithEvidence: ConclusionStatement<'empirical-evidence'>[]
+  establishes: ConclusionStatement<'scientific-conclusion'>[]
+  doesNotEstablish: ConclusionStatement<'scientific-conclusion'>[]
 }
 ```
 
-Generation fails when a lesson lacks a question, evidence does not resolve, a simulation lacks bounds, formula/program IDs are unknown, a conclusion boundary is absent, navigation is broken, glossary references do not resolve, or Guided content depends on undefined Technical terminology.
+The scope map is strict: `seenInActivity = activity`, `computedHere = computation`, `reproducedFromSource = source`, `comparedWithEvidence = empirical-evidence`, and both `establishes` and `doesNotEstablish = scientific-conclusion`. Each `ConclusionStatement` contains attributed text and its mapped scope. Empty evidential categories remain explicit through a negative statement, such as “No external result is reproduced” or “No empirical dataset is compared,” rather than disappearing from the record.
+
+`simulationId` remains nullable and `quickPath` optional because ordinary text-only lessons are valid. A content-ready quick station, by contrast, requires a linked lesson quick path and simulation preset. `LessonQuickPath.estimatedMinutes` is a positive number bounded by the full lesson estimate, not a type-level literal tied to the first station.
+
+The current 11-minute `physical-quantities` lesson defines a separate four-minute `quickPath`: Guided blocks `si-defining-anchors` and `dimensions-and-kinds`, equation step `fixed-si-anchors`, prediction checkpoint `centimetre-prediction`, and simulation preset `average-speed-from-path`. This sequence answers how fixed `Delta_nu_Cs`, `c`, and `h` anchor SI definitions, preserves the definition-versus-realization caveat, then moves through dimensions and quantity kinds into dimensional play. The four-minute `anchors-scales` station links to that subset; it does not represent the full lesson as four minutes.
+
+Generation fails when a lesson lacks a question, attribution evidence is empty or does not resolve, an instructional statement has neither explicit nor inherited attribution, source attribution is not `not-evaluated`/`validatesTheory: false` or carries `validationProtocol`, a simulation lacks bounds or a non-empty terminology declaration, source comparison declares a compatibility key, formula/program IDs are unknown, a conclusion scope violates the strict map, a conclusion boundary is absent, navigation is broken, glossary references do not resolve, or Guided content depends on undefined or Technical-only terminology.
 
 ## Progress and local notebook
 
@@ -590,7 +699,7 @@ Focused files are `tour.spec.ts`, `atlas.spec.ts`, `workbench.spec.ts`, `evidenc
 
 Deliver claim vocabulary, lesson schema, simulation schema, conclusion rules, glossary schema, and reference policy.
 
-Exit: every instructional statement can identify claim class, source family, method origin, and conclusion boundary.
+Exit: every instructional statement can identify claim class, resolvable evidence, source revision and locator, method relationship, model origin, source-time `not-evaluated` status, caveats, structured theory-validation state, and exact scoped conclusion boundary through explicit attribution or nearest-attributed-ancestor inheritance.
 
 ### Iteration 1: Route-owned data
 

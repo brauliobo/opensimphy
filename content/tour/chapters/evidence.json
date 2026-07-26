@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "evidence",
+  "order": 0,
+  "act": 1,
+  "title": "Reproduction Is Not Validation",
+  "question": "What does it mean when software reproduces a number?",
+  "summary": "Distinguish definitions, identities, measurements, calibrations, predictions, reproductions, comparisons, validations, and blind tests. A successful computation shows that an implementation ran under recorded inputs; it does not by itself validate the associated physical theory.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 0", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell defines curriculum scope; it is not an evaluated scientific result."] }
+}

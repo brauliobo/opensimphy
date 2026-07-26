@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "measurement",
+  "order": 2,
+  "act": 1,
+  "title": "Measurement, Uncertainty, and Standards",
+  "question": "How precise is a physical number?",
+  "summary": "Separate defined values from measured values and interpret significant digits, standard uncertainty, covariance, conventions, and standard states. Exact definitions and algebraic identities are not observations and receive no z-score; a z-score applies only to a declared comparison of uncertain values with covariance and dependence handled.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 2", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell defines curriculum scope; it is not an evaluated statistical comparison."] }
+}

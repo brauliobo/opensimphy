@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "roots-invariants",
+  "order": 12,
+  "act": 3,
+  "title": "Roots, Matrices, and Invariants",
+  "question": "Which quantities remain fixed as polynomial roots move?",
+  "summary": "Relate complex roots, Vieta identities, Newton sums, companion matrices, traces, determinants, spectral transformations, and typed units. A chosen matrix has a mathematical spectrum; that spectrum becomes physical only when a physical model derives the operator.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 12", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A mathematical spectrum is not a physical spectrum without a derived operator."] }
+}

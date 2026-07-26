@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-bridges",
+  "order": 5,
+  "act": 2,
+  "title": "Frequency, Energy, Mass, and Temperature",
+  "question": "How can photon energy map to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales?",
+  "summary": "Use E_gamma = h nu and nu = c/lambda for a photon propagating in vacuum, then derive the labeled scales E_gamma/c^2 and E_gamma/k_B. These representations do not assign photon rest mass or assert a thermal system at the equivalent temperature, and massive-particle rest energy remains a separate relationship.",
+  "status": "planned",
+  "quickStationIds": [
+    "unit-bridges"
+  ],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 5",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Equivalent scales are derived labels, not independent observations or physical-state assignments."
+    ]
+  },
+  "previousChapterId": "anchors",
+  "nextChapterId": "electrical-standards"
+}

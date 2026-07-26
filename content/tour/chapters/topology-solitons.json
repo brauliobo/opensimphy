@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "topology-solitons",
+  "order": 14,
+  "act": 4,
+  "title": "Knots, Topology, and Soliton Stability",
+  "question": "What mathematical and energetic conditions can stabilize a soliton?",
+  "summary": "Distinguish knots, links, target spaces, homotopy classes, finite-energy boundaries, Derrick scaling, and stabilizing terms. Topological protection depends on the field's target space and dynamics, so topology-incompatible models and unconverged meshes cannot establish stable physical solitons.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 14", "methodRelationship": "not-applicable", "modelOrigin": "source-reproduction", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell does not establish a stable physical soliton."] }
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "heat-matter",
+  "order": 10,
+  "act": 2,
+  "title": "Heat, Radiation, and Bulk Matter",
+  "question": "How do microscopic energy and particle counts become temperature, radiation, and laboratory-scale matter?",
+  "summary": "Link Boltzmann and Avogadro scaling to ideal gases, molar quantities, black-body radiation, Wien laws, and Stefan-Boltzmann emission. Partition functions and standard-state dependence expose the assumptions and limits behind thermodynamic and bulk-matter relationships.",
+  "status": "planned",
+  "quickStationIds": ["heat-radiation", "molar-matter"],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 10", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["A chapter shell defines curriculum scope; it is not an evaluated scientific result."] }
+}

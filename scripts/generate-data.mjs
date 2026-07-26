@@ -13,12 +13,14 @@ import { buildEarthEvidenceArtifacts } from "./lib/earth-evidence.mjs";
 import { buildEarthSimulationCoverage } from "./lib/earth-simulation-coverage.mjs";
 import { buildEarthSimulationRegistry } from "./lib/earth-simulation-registry.mjs";
 import { parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
+import { buildTourArtifacts, readTourSource } from "./lib/tour-content.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const corpusRoot = resolve(root, "..");
 const sourceDirectory = join(root, "public", "data", "sources");
 const generatedDirectory = join(root, "public", "data", "generated");
 const sitePdfDirectory = join(root, "data", "physics_monastery", "site");
+const tourSourceDirectory = join(root, "content", "tour");
 const run = promisify(execFile);
 
 function assert(condition, message) {
@@ -199,6 +201,11 @@ const earthEvidenceArtifacts = buildEarthEvidenceArtifacts({
   registry: earthSimulationArtifacts.registry,
   datasets: earthDatasetRegistry,
 });
+const tourSource = await readTourSource(tourSourceDirectory);
+const tourArtifacts = buildTourArtifacts(tourSource, {
+  recipeIds: recipeRegistry.map(({ constant_id: id }) => id),
+  programIds: earthSimulationArtifacts.registry.items.map(({ id }) => id),
+});
 const earthInventory = earthArtifacts.manifest.documents.map((document) => ({
   id: document.id,
   localPath: `EARTH/${document.source.path}`,
@@ -234,11 +241,19 @@ const earthDocumentDirectory = join(earthGeneratedDirectory, "documents");
 const earthEvidenceDirectory = join(earthGeneratedDirectory, "evidence");
 const earthEvidenceProgramDirectory = join(earthEvidenceDirectory, "programs");
 const earthEvidenceDocumentDirectory = join(earthEvidenceDirectory, "documents");
+const tourGeneratedDirectory = join(generatedDirectory, "tour");
+const tourChapterDirectory = join(tourGeneratedDirectory, "chapters");
+const tourLessonDirectory = join(tourGeneratedDirectory, "lessons");
+const tourSimulationDirectory = join(tourGeneratedDirectory, "simulations");
 await rm(earthDocumentDirectory, { recursive: true, force: true });
 await rm(earthEvidenceDirectory, { recursive: true, force: true });
+await rm(tourGeneratedDirectory, { recursive: true, force: true });
 await mkdir(earthDocumentDirectory, { recursive: true });
 await mkdir(earthEvidenceProgramDirectory, { recursive: true });
 await mkdir(earthEvidenceDocumentDirectory, { recursive: true });
+await mkdir(tourChapterDirectory, { recursive: true });
+await mkdir(tourLessonDirectory, { recursive: true });
+await mkdir(tourSimulationDirectory, { recursive: true });
 
 await Promise.all([
   writeFile(join(generatedDirectory, "recipes.json"), stableJson(recipeRegistry)),
@@ -256,10 +271,17 @@ await Promise.all([
   writeFile(join(earthGeneratedDirectory, "datasets.json"), stableJson(earthDatasetRegistry)),
   writeFile(join(earthGeneratedDirectory, "completion.json"), stableJson(earthSimulationArtifacts.completion)),
   writeFile(join(earthEvidenceDirectory, "manifest.json"), stableJson(earthEvidenceArtifacts.manifest)),
+  writeFile(join(tourGeneratedDirectory, "manifest.json"), stableJson(tourArtifacts.manifest)),
+  writeFile(join(tourGeneratedDirectory, "glossary.json"), stableJson(tourArtifacts.glossary)),
+  writeFile(join(tourGeneratedDirectory, "references.json"), stableJson(tourArtifacts.references)),
+  writeFile(join(tourGeneratedDirectory, "claim-vocabulary.json"), stableJson(tourArtifacts.claimVocabulary)),
   ...earthArtifacts.shards.map(({ slug, artifact }) => writeFile(join(earthDocumentDirectory, `${slug}.json`), stableJson(artifact))),
   ...earthEvidenceArtifacts.programShards.map(({ id, artifact }) => writeFile(join(earthEvidenceProgramDirectory, `${id}.json`), stableJson(artifact))),
   ...earthEvidenceArtifacts.documentShards.map(({ slug, artifact }) => writeFile(join(earthEvidenceDocumentDirectory, `${slug}.json`), stableJson(artifact))),
+  ...tourArtifacts.chapters.map((artifact) => writeFile(join(tourChapterDirectory, `${artifact.id}.json`), stableJson(artifact))),
+  ...tourArtifacts.lessons.map((artifact) => writeFile(join(tourLessonDirectory, `${artifact.id}.json`), stableJson(artifact))),
+  ...tourArtifacts.simulations.map((artifact) => writeFile(join(tourSimulationDirectory, `${artifact.id}.json`), stableJson(artifact))),
 ]);
 await generateCompletion();
 
-console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary }));
+console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary, tour: tourArtifacts.summary }));

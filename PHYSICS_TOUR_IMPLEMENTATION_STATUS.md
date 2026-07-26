@@ -20,7 +20,7 @@ Date: 2026-07-26
 | Item | State |
 | --- | --- |
 | Product plan | Recorded |
-| Tour implementation | Planned |
+| Tour implementation | Iterations 0 and 2 technically complete; remaining iterations planned |
 | Atlas formulas | 288 evaluated, 288 graphed |
 | Known Atlas dimension conflicts | 68; must remain visible in relevant lessons |
 | Number-wall inputs | 351 bounded and simulatable |
@@ -35,9 +35,9 @@ Date: 2026-07-26
 | Scientific validation | False |
 | Automated browser target | Chromium only |
 
-Baseline commit: `57e5b64 earth: add provenance-pure simulation dossier`
+Original baseline commit: `57e5b64 earth: add provenance-pure simulation dossier`
 
-Baseline verification:
+Original baseline verification:
 
 - `npm run verify`: passed.
 - Vitest: 36 files, 234 tests passed.
@@ -46,7 +46,23 @@ Baseline verification:
 - All 134 runnable EARTH method defaults completed in dedicated workers.
 - `git diff --check`: passed.
 
-Measured production baseline:
+Current contract/content checkpoint verification:
+
+- `npm run verify`: passed.
+- Data generation: 20 chapters, 1 lesson, 1 simulation, 11 glossary entries, 5 references, and 8 stations totaling 27 minutes.
+- Vitest: 37 files, 252 tests passed.
+- Focused verification: 18/18 passed.
+- TypeScript typecheck: passed.
+- Production PWA build: passed.
+- `git diff --check`: passed.
+- Independent acceptance review: PASS.
+
+Generated-content checkpoint:
+
+- Comparison compatibility keys are derived, never source-authored: SHA-256 over canonical JSON containing exactly the simulation `id`, `contentRevision`, `modelRevision`, `implementationRevision`, and canonical `outputSchema`.
+- Current dimensional-equation-builder compatibility key: `d2c901afeba03fe439ef211edd0b6399825c66c7b6e2e9c414a8f443c66efef2`.
+
+Original measured production baseline:
 
 - Main JavaScript: 116.11 kB raw / 45.28 kB gzip.
 - Main CSS: 71.81 kB raw / 12.43 kB gzip.
@@ -54,13 +70,19 @@ Measured production baseline:
 - Plotly chunk: 4,682.31 kB raw / 1,429.05 kB gzip, lazy-loaded.
 - PWA precache: 50 entries / 4,399.98 KiB.
 
+Current checkpoint production measurements:
+
+- Main JavaScript: 116.11 kB raw / 45.28 kB gzip.
+- Main CSS: 71.81 kB raw / 12.43 kB gzip.
+- PWA precache: 76 entries / 4,538.81 KiB.
+
 ## Iteration ledger
 
 | Iteration | Scope | Status | Commit | Exit evidence |
 | --- | --- | --- | --- | --- |
-| 0 | Scientific/content contracts | Active | pending | Master plan recorded; executable schemas and validation pending |
+| 0 | Scientific/content contracts | Technically complete | containing commit | Separate epistemic, method, origin, and result axes; nearest-ancestor attribution; nonempty evidence; exact references, revisions, and locators; scoped conclusions; distinct source and runtime statuses; general simulation schema |
 | 1 | Route-owned data | Planned | pending | `/`, `/tour`, EARTH direct entry must avoid full Atlas workers |
-| 2 | Tour content pipeline | Planned | pending | Eight stations plus first lesson generate and fail closed |
+| 2 | Tour content pipeline | Technically complete | containing commit | Foundation exit met: 20 chapter shells; exactly 8 quick stations totaling 27 minutes; first complete 11-minute units lesson linked to its 4-minute quick path; one bounded simulation contract; 11 glossary entries; 5 references; 26 deterministic generated artifacts; exact-key and inert-text policy; closed references and navigation. The other seven planned stations do not yet have full lessons or simulations; those belong to Iteration 5 |
 | 3 | Orientation and Tour map | Planned | pending | First-use begin/resume journey passes |
 | 4 | Units vertical slice | Planned | pending | Responsive, keyboard, reduced-motion, resume, offline journey passes |
 | 5 | Conventional-physics spine | Planned | pending | Eight quick stations complete with bounded simulations |
@@ -122,6 +144,16 @@ Required root-cause refactors:
 
 ## Progress history
 
+### 2026-07-26: scientific contracts and content foundation accepted
+
+- Marked Iteration 0 technically complete with separate epistemic, method, origin, and result axes; nearest-ancestor attribution; nonempty evidence; exact references, revisions, and locators; scoped conclusions; source-vs-runtime statuses; and a general simulation schema.
+- Marked Iteration 2 technically complete for its stated foundation exit: 20 chapter shells, exactly eight quick stations totaling 27 minutes, the first complete 11-minute units lesson linked to its 4-minute quick path, one bounded simulation contract, 11 glossary entries, five references, and 26 deterministic generated artifacts.
+- Confirmed exact-key and inert-text enforcement, closed references and navigation, and generated-only compatibility-key derivation. The seven other station lessons and simulations remain Iteration 5 work.
+- Full `npm run verify` passed: generation produced 20 chapters, 1 lesson, 1 simulation, 11 glossary entries, 5 references, and 8 stations totaling 27 minutes; Vitest passed 37 files and 252 tests; typecheck and the production PWA build passed.
+- Current production measurements are 116.11 kB raw / 45.28 kB gzip for main JavaScript, 71.81 kB raw / 12.43 kB gzip for main CSS, and 76 precache entries / 4,538.81 KiB.
+- Focused verification passed 18/18; `git diff --check` passed; independent acceptance review: PASS.
+- Preserved `scientificallyValidated: false`; technical acceptance does not change any scientific boundary.
+
 ### 2026-07-26: baseline recorded
 
 - Committed schema-v2 EARTH program/method registry, 193 lazy evidence shards, 19-dataset ledger, route dossier, worker execution, accessibility hardening, and PWA cache boundaries.
@@ -130,10 +162,4 @@ Required root-cause refactors:
 
 ## Next implementation step
 
-Complete Iteration 0 and Iteration 2 foundations together:
-
-1. Add TypeScript claim, lesson, block, checkpoint, simulation, control, preset, finding, runtime-limit, glossary, reference, manifest, and progress contracts.
-2. Add strict source content for 20 chapter shells, eight quick stations, the complete units lesson, glossary, references, and dimensional-builder simulation.
-3. Generate deterministic manifest/chapter/lesson/simulation shards.
-4. Validate formula, program, evidence, glossary, navigation, conclusion, and bounds references.
-5. Add schema tests that prove malformed content fails closed.
+Complete Iteration 1 route-owned data so `/`, `/tour`, and EARTH direct entry no longer invoke full Atlas workers. Then implement the Iteration 3 orientation/Tour map and Iteration 4 units vertical slice renderer and simulation engine.

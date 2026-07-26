@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "units",
+  "order": 1,
+  "act": 1,
+  "title": "Units, Dimensions, and Physical Quantities",
+  "question": "Why can a numerically correct expression still be physically meaningless?",
+  "summary": "Build physical quantities from dimensions and unit coordinates, then change units without changing the represented physics. Dimensional consistency is necessary for a physical equation, but it does not establish that the equation is empirically correct.",
+  "status": "content-ready",
+  "quickStationIds": [
+    "anchors-scales"
+  ],
+  "lessonIds": [
+    "physical-quantities"
+  ],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope",
+      "bipm-si-brochure-9",
+      "jcgm-vim-3"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+    "sourceLocator": "Deep curriculum, Chapter 1; BIPM section 2.3; VIM3 entries 1.1-1.21",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Content-ready means source content records exist; it does not claim route or runtime implementation."
+    ]
+  },
+  "previousChapterId": "evidence",
+  "nextChapterId": "measurement"
+}

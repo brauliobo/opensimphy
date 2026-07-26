@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "blind-test",
+  "order": 19,
+  "act": 4,
+  "title": "Blind-Test Capstone",
+  "question": "How can a model face a fair test without learning the answer in advance?",
+  "summary": "Define the operator or action, dimensions, boundary conditions, free parameters, calibration data, frozen mapping, held-out observable, null family, uncertainty, provenance, comparison rule, and failure handling before evaluation. Apply one evidential standard across source families without asserting that their theories are equivalent.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 19", "methodRelationship": "not-applicable", "modelOrigin": "source-reproduction", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The capstone specifies a future protocol and does not report a completed validation."] }
+}

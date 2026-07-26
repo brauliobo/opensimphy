@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "spin-magnetism",
+  "order": 9,
+  "act": 2,
+  "title": "Spin, Magnetic Moments, and Anomalies",
+  "question": "How does a stated spin-moment model predict magnetic response in an applied field?",
+  "summary": "Calculate field-driven precession only after declaring the spin-moment model, field, state, environment, and applicable shielding or composite corrections. Keep model output separate from an identified measurement with uncertainty; measured or fitted magnetic factors do not by themselves validate a proposed geometric particle model.",
+  "status": "planned",
+  "quickStationIds": [
+    "spin-magnetism"
+  ],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 9",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "A calculated response is model output, not an observation."
+    ]
+  },
+  "previousChapterId": "particle-scales",
+  "nextChapterId": "heat-matter"
+}

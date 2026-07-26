@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "id": "dimensional-equation-builder",
+  "lessonId": "physical-quantities",
+  "title": "Quantity workshop",
+  "question": "Can you select a bounded expression whose dimension matches the target without mistaking that match for equal quantity kind?",
+  "predictionPrompt": "Choose a target and predict the result before the dimension trace appears. The unlike-addition preset is deliberately invalid: try to explain why no conversion can rescue it.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3", "nist-sp811"],
+  "sourceRevision": "BIPM SI Brochure 2026 update; JCGM 200:2012; NIST SP 811e2008",
+  "sourceLocator": "BIPM sections 2.2-2.3; VIM3 entries 1.2, 1.7, 1.19-1.21; NIST SP 811 chapter 8 and Appendix B",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "A dimension match is necessary but not sufficient for equal quantity kind or empirical validity.",
+    "NIST SP 811 predates the SI changes effective 20 May 2019 and is used only for notation and conversion guidance."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-26",
+    "modelRevision": "isq-dimension-contract-1",
+    "implementationRevision": "tour-dimension-contract-v1"
+  },
+  "dimensionBasis": {
+    "system": "ISQ",
+    "axes": [
+      { "id": "time", "symbol": "T" },
+      { "id": "length", "symbol": "L" },
+      { "id": "mass", "symbol": "M" },
+      { "id": "electric-current", "symbol": "I" },
+      { "id": "thermodynamic-temperature", "symbol": "Theta" },
+      { "id": "amount-of-substance", "symbol": "N" },
+      { "id": "luminous-intensity", "symbol": "J" }
+    ],
+    "exponentType": "rational",
+    "activityExponentSubset": "integer"
+  },
+  "numericalMethod": {
+    "kind": "exact-symbolic",
+    "name": "Rational dimension-exponent arithmetic",
+    "description": "The source contract specifies exact rational exponent addition, subtraction, and equality; the current activity inputs are restricted to integer exponents.",
+    "deterministic": true
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "isq-dimension-arithmetic",
+      "label": "ISQ dimension arithmetic",
+      "modelOrigin": "established-physics",
+      "description": "Combines quantity dimensions as products of powers over seven conventional ISQ base quantities.",
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+        "sourceLocator": "BIPM section 2.3; VIM3 entries 1.3-1.7",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The seven-axis basis is conventional and the activity inputs use only integer exponents."]
+      }
+    },
+    {
+      "id": "multiplicative-unit-conversion",
+      "label": "Multiplicative SI and mechanical-CGS conversion",
+      "modelOrigin": "established-physics",
+      "description": "Converts a target-bound canonical SI quantity value to declared centimetre-gram-second mechanical coordinates.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "nist-sp811"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; NIST SP 811e2008",
+        "sourceLocator": "BIPM section 2.3; NIST SP 811 chapter 8 and Appendix B",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Electromagnetic CGS and affine temperature conversions are excluded."]
+      }
+    }
+  ],
+  "equations": [
+    "[A B] = [A][B]; dim(A B) = dim(A) + dim(B)",
+    "[A / B] = [A]/[B]; dim(A / B) = dim(A) - dim(B)",
+    "A + B is defined only for quantities of the same kind; then dim(A + B) = dim(A) = dim(B)",
+    "q = {q}[Q] = {q}'[Q]'"
+  ],
+  "assumptions": [
+    "The Tour uses seven conventional ISQ base-quantity dimensions rather than seven intrinsic dimensions.",
+    "The general dimension type permits rational exponents; every expression in this activity uses integer exponents.",
+    "The optional sample magnitude is the selected target's canonical SI quantity value, not a second independent expression magnitude.",
+    "Coordinate conversion is limited to multiplicative coherent scaling between SI and mechanical-cgs units of the selected target kind.",
+    "Electromagnetic CGS conventions and affine temperature conversions are explicitly excluded.",
+    "The exercise checks a dimension contract and does not compare with empirical evidence."
+  ],
+  "glossaryIds": [
+    "physical-quantity",
+    "quantity-value",
+    "numerical-value",
+    "quantity-kind",
+    "unit",
+    "dimension",
+    "dimensional-consistency",
+    "coordinate-system",
+    "base-dimension"
+  ],
+  "controls": [
+    {
+      "id": "target",
+      "label": "Target quantity kind",
+      "type": "select",
+      "inputRole": "target-quantity",
+      "readingDepth": "guided",
+      "description": "Selects the target quantity kind, dimension, canonical SI unit, and mechanical-cgs unit.",
+      "default": "average-speed",
+      "playfulPrompt": "Pick the quantity you want the workshop to construct.",
+      "options": [
+        { "value": "average-speed", "label": "Average speed", "description": "path length per elapsed time" },
+        { "value": "acceleration", "label": "Acceleration", "description": "velocity change per elapsed time" },
+        { "value": "force", "label": "Force", "description": "mass times acceleration" },
+        { "value": "energy", "label": "Energy", "description": "force through a path length" },
+        { "value": "power", "label": "Power", "description": "energy per elapsed time" },
+        { "value": "torque", "label": "Torque", "description": "shares energy's dimension but not its quantity kind" }
+      ]
+    },
+    {
+      "id": "expressionPreset",
+      "label": "Named expression",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects one bounded expression with declared operand quantity kinds and one immediate operation.",
+      "default": "path-length-over-elapsed-time",
+      "playfulPrompt": "Predict the exponent trace before you reveal the result.",
+      "options": [
+        { "value": "path-length-over-elapsed-time", "label": "path length / elapsed time", "description": "average-speed definition" },
+        { "value": "speed-over-elapsed-time", "label": "speed / elapsed time", "description": "acceleration dimension" },
+        { "value": "mass-times-acceleration", "label": "mass x acceleration", "description": "force relationship" },
+        { "value": "force-times-path-length", "label": "force x path length", "description": "energy dimension; quantity kind still requires context" },
+        { "value": "energy-over-elapsed-time", "label": "energy / elapsed time", "description": "power relationship" },
+        { "value": "length-plus-time", "label": "path length + elapsed time", "description": "deliberately invalid unlike-quantity addition" }
+      ]
+    },
+    {
+      "id": "coordinateSystem",
+      "label": "Unit coordinates",
+      "type": "select",
+      "inputRole": "coordinate-selection",
+      "readingDepth": "guided",
+      "description": "Selects SI or mechanical centimetre-gram-second coordinates for the target-bound quantity value.",
+      "default": "si",
+      "playfulPrompt": "Change the coordinate language without changing the target quantity value.",
+      "options": [
+        { "value": "si", "label": "SI", "description": "canonical SI unit for the selected target" },
+        { "value": "mechanical-cgs", "label": "Mechanical CGS", "description": "centimetre, gram, and second scaling only; electromagnetic CGS excluded" }
+      ]
+    },
+    {
+      "id": "sampleSiMagnitude",
+      "label": "Target value in its canonical SI unit",
+      "type": "range",
+      "inputRole": "canonical-quantity-value",
+      "readingDepth": "technical",
+      "description": "Supplies one numerical value bound to the selected target quantity kind and canonical SI unit for multiplicative coordinate conversion.",
+      "unit": "selected target canonical SI unit",
+      "default": 2,
+      "min": 0.1,
+      "max": 100,
+      "step": 0.1,
+      "playfulPrompt": "Follow one target-bound quantity value as only its numerical value and unit change."
+    }
+  ],
+  "presets": [
+    {
+      "id": "average-speed-from-path",
+      "label": "Race the clock",
+      "description": "Construct average speed from path length and elapsed time.",
+      "inspectionPrompt": "Can you predict L T^-1 before revealing the trace?",
+      "inputs": {
+        "target": "average-speed",
+        "expressionPreset": "path-length-over-elapsed-time",
+        "coordinateSystem": "si",
+        "sampleSiMagnitude": 2
+      }
+    },
+    {
+      "id": "force-from-motion",
+      "label": "Push a mass",
+      "description": "Construct the force dimension from mass and acceleration.",
+      "inspectionPrompt": "Which exponents combine when the two quantities multiply?",
+      "inputs": {
+        "target": "force",
+        "expressionPreset": "mass-times-acceleration",
+        "coordinateSystem": "si",
+        "sampleSiMagnitude": 2
+      }
+    },
+    {
+      "id": "energy-or-torque",
+      "label": "Same dimension, different kind",
+      "description": "Match the torque target with a force-times-length expression and inspect the quantity-kind caveat.",
+      "inspectionPrompt": "Will a dimension match alone tell you whether the expression denotes energy or torque?",
+      "inputs": {
+        "target": "torque",
+        "expressionPreset": "force-times-path-length",
+        "coordinateSystem": "mechanical-cgs",
+        "sampleSiMagnitude": 2
+      }
+    },
+    {
+      "id": "unlike-sum",
+      "label": "Break the equation",
+      "description": "Try adding a path length to elapsed time and inspect why the operation is undefined.",
+      "inspectionPrompt": "Predict whether any multiplicative unit conversion can rescue this sum.",
+      "inputs": {
+        "target": "average-speed",
+        "expressionPreset": "length-plus-time",
+        "coordinateSystem": "mechanical-cgs",
+        "sampleSiMagnitude": 2
+      }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "operationStatus",
+      "label": "Operation status",
+      "type": "operation-status",
+      "unit": null,
+      "nullable": false,
+      "description": "Reports defined for a valid bounded operation or undefined-unlike-addition for the deliberately invalid sum; this is distinct from provenance resultStatus."
+    },
+    {
+      "id": "resultDimension",
+      "label": "Result dimension",
+      "type": "rational-dimension-vector",
+      "unit": null,
+      "nullable": true,
+      "description": "Seven-axis rational-exponent vector; null when the selected operation is undefined. This activity emits integer-valued exponents."
+    },
+    {
+      "id": "targetDimension",
+      "label": "Target dimension",
+      "type": "rational-dimension-vector",
+      "unit": null,
+      "nullable": false,
+      "description": "Seven-axis rational-exponent vector declared for the selected target quantity kind."
+    },
+    {
+      "id": "targetMatch",
+      "label": "Target dimension match",
+      "type": "boolean",
+      "unit": null,
+      "nullable": false,
+      "description": "True only when the defined result dimension equals the target dimension; it does not assert equal quantity kind."
+    },
+    {
+      "id": "quantityKindCaveat",
+      "label": "Quantity-kind caveat",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "Explains that dimension equality is necessary but insufficient for quantity-kind identity, including the energy/torque case."
+    },
+    {
+      "id": "coordinateValue",
+      "label": "Target numerical value",
+      "type": "number",
+      "unit": null,
+      "nullable": true,
+      "description": "Converted numerical value of the target-bound canonical SI quantity value; null when the operation is undefined or its dimension misses the target."
+    },
+    {
+      "id": "coordinateUnit",
+      "label": "Target unit",
+      "type": "string",
+      "unit": null,
+      "nullable": true,
+      "description": "Declared SI or mechanical-cgs unit for coordinateValue; null whenever coordinateValue is null."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render parallel findings without a residual or merged quantity when compatibility keys differ."
+  },
+  "visualization": {
+    "kind": "dimension-exponent-trace",
+    "description": "Shows operand, result, and target exponents by declared dimension axis, plus the target-bound coordinate conversion.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "A sentence reports operation status, exponent arithmetic, target match, coordinate value and unit, and the quantity-kind caveat."
+      },
+      {
+        "type": "table",
+        "description": "A table lists each declared dimension axis with operand, result, and target exponents, followed by coordinate fields."
+      }
+    ],
+    "reducedMotionBehavior": "Render the final trace immediately without animated exponent movement."
+  },
+  "finding": {
+    "changed": "At runtime, the result trace is specified to respond to the target, named expression, and coordinate system; Technical depth also exposes one target-bound SI numerical value.",
+    "cause": "Quantities multiply or divide while dimension exponents add or subtract; valid multiplicative unit changes rescale only the target quantity's numerical value.",
+    "equation": "q = {q}[Q] = {q}'[Q]'",
+    "assumptions": [
+      "The named expression's operand quantity kinds are declared correctly",
+      "The selected target's SI and mechanical-cgs units use a multiplicative coherent scale",
+      "No quantity-kind identity is inferred from dimension equality"
+    ],
+    "establishes": "For an evaluated run, whether one bounded named expression has the selected target dimension in the declared ISQ basis, and the coordinate representation of one target-bound quantity value when applicable.",
+    "doesNotEstablish": "That the expression has the target quantity kind, is an empirically correct law, reproduces an external result, or agrees with a dataset.",
+    "claimClass": "identity",
+    "evidenceRefs": ["jcgm-vim-3", "nist-sp811"],
+    "sourceRevision": "JCGM 200:2012; NIST SP 811e2008",
+    "sourceLocator": "VIM3 entries 1.2, 1.7, and 1.19-1.21; NIST SP 811 chapter 8 and Appendix B",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "No external result or empirical dataset is reproduced or compared.",
+      "Electromagnetic CGS and affine temperature conversions are outside the contract."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 16
+  }
+}

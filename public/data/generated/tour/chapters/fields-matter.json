@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "fields-matter",
+  "order": 15,
+  "act": 4,
+  "title": "From Fields to Matter",
+  "question": "What must a field model derive before it can represent a particle or nucleus?",
+  "summary": "Separate naming a field configuration from deriving finite-energy states, conserved charge, stability, spectra, form factors, and decay channels. Literal source formulas remain distinct from conventional calculations, and models missing operators or boundary conditions remain explicitly blocked.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 15",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "source-reproduction",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Naming a field configuration does not derive a particle or nucleus."
+    ]
+  },
+  "previousChapterId": "topology-solitons",
+  "nextChapterId": "chemistry-materials"
+}

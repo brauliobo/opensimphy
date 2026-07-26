@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "biology-neuroscience",
+  "order": 18,
+  "act": 4,
+  "title": "Biology, Neuroscience, and Analogy",
+  "question": "When does a mathematical analogy become a biological mechanism?",
+  "summary": "Compare elastic rods, topological descriptions, toy kinks, cable and action-potential models, state graphs, connectome modes, and spectral inference while separating analogy from mechanism. The chapter makes no diagnostic, treatment, or consciousness claims and preserves privacy and controlled-data boundaries.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 18",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "source-reproduction",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Analogy does not establish mechanism; no diagnosis, treatment, or consciousness claim is made."
+    ]
+  },
+  "previousChapterId": "cosmos",
+  "nextChapterId": "blind-test"
+}
