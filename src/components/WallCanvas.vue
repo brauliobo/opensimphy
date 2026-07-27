@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import type { WallResult } from '../composables/atlasEngine'
+import type { WallResult } from '../registries/wallRegistry'
 
 const props = defineProps<{ result: WallResult }>()
 const canvas = ref<HTMLCanvasElement | null>(null)

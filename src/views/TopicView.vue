@@ -1,20 +1,32 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useAtlasEngine } from '../composables/atlasEngine'
+import { useTourRegistry } from '../registries/tourRegistry'
 
 const props = defineProps<{ id: string }>()
-const atlas = useAtlasEngine()
-const topic = computed(() => atlas.taxonomy.value?.topics.find((item) => item.id === props.id) ?? null)
+const tour = useTourRegistry()
+void tour.initialize()
+
+const tourReady = computed(() => tour.ready.value
+  && !tour.error.value
+  && tour.manifest.value !== null
+  && tour.taxonomy.value !== null)
+const tourError = computed(() => tour.error.value?.message
+  ?? (tour.ready.value && !tourReady.value ? 'The generated tour manifest or taxonomy is unavailable.' : ''))
+const topic = computed(() => tour.taxonomy.value?.topics.find((item) => item.id === props.id) ?? null)
 const nextTopic = computed(() => {
-  const topics = atlas.taxonomy.value?.topics ?? []
+  const topics = tour.taxonomy.value?.topics ?? []
   const index = topics.findIndex((item) => item.id === props.id)
   return index < 0 ? null : topics[(index + 1) % topics.length] ?? null
 })
 </script>
 
 <template lang="pug">
-.view.topic-view
-  .loading-plate(v-if="!atlas.ready.value") Loading topic…
+.view.topic-view(:data-testid="tourReady ? 'tour-ready' : undefined")
+  .loading-plate(v-if="!tour.ready.value") Loading topic…
+  .empty-state(v-else-if="tourError" role="alert")
+    h1 Tour unavailable
+    p {{ tourError }}
+    RouterLink.text-link(to="/") Return to the tour
   .empty-state(v-else-if="!topic")
     strong Topic unavailable
     p This topic is absent from the generated taxonomy.

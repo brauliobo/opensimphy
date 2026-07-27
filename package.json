@@ -13,6 +13,7 @@
     "data:lock:earth": "node scripts/generate-data.mjs --update-earth-lock",
     "build": "vue-tsc --noEmit && vite build",
     "build:pages": "npm run build && node scripts/create-pages-fallback.mjs",
+    "check:routes": "node scripts/check-route-boundaries.mjs",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
@@ -20,7 +21,7 @@
     "test:ui": "vitest run tests/ui",
     "e2e": "playwright test",
     "e2e:chromium": "playwright test --project=chromium",
-    "verify": "npm run data:generate && npm run typecheck && npm run test && npm run build"
+    "verify": "npm run data:generate && npm run typecheck && npm run test && npm run build && npm run check:routes"
   },
   "dependencies": {
     "plotly.js-dist-min": "2.35.3",

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import WallCanvas from '../components/WallCanvas.vue'
-import { useAtlasEngine, type WallMode, type WallResult } from '../composables/atlasEngine'
+import { useWallRegistry, type WallMode, type WallResult } from '../registries/wallRegistry'
 
-const atlas = useAtlasEngine()
+const wallRegistry = useWallRegistry()
+void wallRegistry.initialize()
+
 const query = ref('')
 const category = ref('all')
 const selectedId = ref('')
@@ -16,16 +18,28 @@ const running = ref(false)
 const result = ref<WallResult | null>(null)
 const simulationError = ref('')
 let controller: AbortController | null = null
+let runGeneration = 0
 
-const categories = computed(() => [...new Set(atlas.walls.value.map((item) => item.category))].sort())
+onUnmounted(() => {
+  runGeneration += 1
+  controller?.abort()
+  controller = null
+})
+
+const registryReady = computed(() => wallRegistry.ready.value
+  && !wallRegistry.error.value
+  && wallRegistry.walls.value.length > 0)
+const registryError = computed(() => wallRegistry.error.value?.message
+  ?? (wallRegistry.ready.value && !registryReady.value ? 'The generated number-wall index contains no inputs.' : ''))
+const categories = computed(() => [...new Set(wallRegistry.walls.value.map((item) => item.category))].sort())
 const filtered = computed(() => {
   const search = query.value.trim().toLocaleLowerCase()
-  return atlas.walls.value.filter((item) => (category.value === 'all' || item.category === category.value)
+  return wallRegistry.walls.value.filter((item) => (category.value === 'all' || item.category === category.value)
     && (!search || `${item.title} ${item.id} ${item.description}`.toLocaleLowerCase().includes(search)))
 })
-const selected = computed(() => atlas.walls.value.find((item) => item.id === selectedId.value) ?? filtered.value[0] ?? null)
+const selected = computed(() => wallRegistry.walls.value.find((item) => item.id === selectedId.value) ?? filtered.value[0] ?? null)
 
-watch(() => atlas.walls.value, (items) => {
+watch(() => wallRegistry.walls.value, (items) => {
   if (!selectedId.value && items[0]) selectedId.value = items[0].id
 }, { immediate: true })
 watch(filtered, (items) => {
@@ -35,44 +49,60 @@ watch(filtered, (items) => {
 async function simulate(): Promise<void> {
   if (!selected.value) return
   controller?.abort()
-  controller = new AbortController()
+  const attempt = ++runGeneration
+  const attemptController = new AbortController()
+  controller = attemptController
   running.value = true
   progress.value = 0
   result.value = null
   simulationError.value = ''
   try {
-    result.value = await atlas.runWall(selected.value, {
+    const next = await wallRegistry.runWall(selected.value, {
       depth: depth.value,
       width: width.value,
       mode: mode.value,
       modulus: modulus.value,
-    }, controller.signal, (value) => { progress.value = value })
+    }, attemptController.signal, (value) => {
+      if (attempt === runGeneration && !attemptController.signal.aborted) progress.value = value
+    })
+    if (attempt !== runGeneration || attemptController.signal.aborted) return
+    result.value = next
     progress.value = 100
   } catch (reason) {
-    if (!controller.signal.aborted) simulationError.value = reason instanceof Error ? reason.message : String(reason)
+    if (attempt === runGeneration && !attemptController.signal.aborted) simulationError.value = reason instanceof Error ? reason.message : String(reason)
   } finally {
-    running.value = false
+    if (attempt === runGeneration) {
+      running.value = false
+      if (controller === attemptController) controller = null
+    }
   }
 }
 
 function cancel(): void {
+  runGeneration += 1
   controller?.abort()
+  controller = null
   running.value = false
   simulationError.value = 'Simulation cancelled.'
 }
 </script>
 
 <template lang="pug">
-.view
+.view(:data-testid="registryReady ? 'wall-registry-ready' : undefined")
   header.view-header
     div
       p.eyebrow Instrument 03 / determinant arrays
       h1 Number Walls
-    .header-stat
-      strong {{ atlas.walls.value.length }} / 351
+    .header-stat(v-if="registryReady")
+      strong {{ wallRegistry.walls.value.length }} / 351
       span preserved source inputs
 
-  .wall-layout
+  .loading-plate(v-if="!wallRegistry.ready.value") Loading number-wall index…
+  .empty-state(v-else-if="registryError" role="alert")
+    strong Number-wall registry unavailable
+    p {{ registryError }}
+
+  .wall-layout(v-else-if="registryReady")
     aside.wall-browser
       .wall-search
         label.field

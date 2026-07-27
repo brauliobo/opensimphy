@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CoverageRow } from '../composables/atlasEngine'
+import type { CoverageRow } from '../registries/completionRegistry'
 
 defineProps<{
   rows: readonly CoverageRow[]
@@ -19,18 +19,18 @@ const fields: Array<keyof Pick<CoverageRow, 'expected' | 'implemented' | 'evalua
 <template lang="pug">
 section.coverage-strip(
   :class="{ 'coverage-strip-compact': compact }"
-  aria-label="Global completion coverage"
+  aria-label="Generated completion audit"
   data-testid="coverage-status"
   :data-status="complete ? 'complete' : 'incomplete'"
 )
   template(v-if="compact")
     .compact-coverage-copy
-      strong(:class="complete ? 'signal-ok' : 'signal-error'") {{ complete ? 'AUDIT COMPLETE' : 'AUDIT INCOMPLETE' }}
-      span {{ rows.find((row) => row.key === 'recipes')?.evaluated ?? 0 }} formulas evaluated locally
+      strong(:class="complete ? 'signal-ok' : 'signal-error'") {{ complete ? 'GENERATED AUDIT COMPLETE' : 'GENERATED AUDIT INCOMPLETE' }}
+      span {{ rows.find((row) => row.key === 'recipes')?.evaluated ?? 0 }} formulas evaluated in the generated audit
     RouterLink.text-link(to="/sources") View audit scope
   template(v-else)
     .coverage-heading
-      span.eyebrow Registry integrity
+      span.eyebrow Generated registry audit
       strong(:class="complete ? 'signal-ok' : 'signal-error'") {{ complete ? 'EXACT / COMPLETE' : 'FAIL CLOSED / INCOMPLETE' }}
     .coverage-table
       .coverage-labels(aria-hidden="true")

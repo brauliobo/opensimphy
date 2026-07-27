@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import CoverageStrip from '../components/CoverageStrip.vue'
+import { useCompletionRegistry } from '../registries/completionRegistry'
+
+const completionRegistry = useCompletionRegistry()
+void completionRegistry.initialize()
 
 const siteSources = [
   ['Physics Monastery', 'https://www.physicsmonastery.earth/', 'Primary website; content can drift independently of preserved artifacts.'],
@@ -27,6 +32,11 @@ interface ProvenanceRegistry {
 
 const provenance = ref<ProvenanceRegistry | null>(null)
 const provenanceError = ref('')
+const completionReady = computed(() => completionRegistry.ready.value
+  && !completionRegistry.error.value
+  && completionRegistry.report.value !== null)
+const completionError = computed(() => completionRegistry.error.value?.message
+  ?? (completionRegistry.ready.value && !completionReady.value ? 'The generated completion report is unavailable.' : ''))
 const sitePdfs = computed(() => provenance.value?.physicsMonastery.recoveredSitePdfs ?? [])
 const contextualPdfs = computed(() => provenance.value?.contextualPdfs ?? [])
 
@@ -58,6 +68,22 @@ onMounted(async () => {
   section.caveat-banner(data-testid="sources-caveat")
     strong REPRODUCTION ≠ VALIDATION
     p This instrument tests whether preserved inputs and implemented expressions reproduce stated values. It does not independently validate the physical interpretation, derivation, novelty, or predictive power of the source claims.
+
+  section.source-section(:data-testid="completionReady ? 'completion-registry-ready' : undefined")
+    .section-heading
+      div
+        p.eyebrow Generated completion audit
+        h2 Aggregate generated coverage
+      p This build-time report summarizes generated corpus coverage. It does not describe records evaluated in this browser session or the state of another route.
+    .loading-plate(v-if="!completionRegistry.ready.value") Loading generated completion audit…
+    .empty-state(v-else-if="completionError" role="alert")
+      strong Generated completion audit unavailable
+      p {{ completionError }}
+    CoverageStrip(
+      v-else-if="completionReady"
+      :rows="completionRegistry.coverage.value"
+      :complete="completionRegistry.complete.value"
+    )
 
   section.source-section
     .section-heading

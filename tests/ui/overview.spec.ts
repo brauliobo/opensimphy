@@ -1,11 +1,13 @@
 import { mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import taxonomyJson from '../../public/data/generated/taxonomy.json'
-import { resetAtlasForTests, setAtlasSnapshotForTests } from '../../src/composables/atlasEngine'
+import tourManifestJson from '../../public/data/generated/tour/manifest.json'
+import { resetTaxonomyRegistryForTests } from '../../src/registries/taxonomyRegistry'
+import { resetTourRegistryForTests, setTourRegistryForTests } from '../../src/registries/tourRegistry'
 import type { TaxonomyArtifact } from '../../src/types/engine'
+import type { TourGeneratedManifest } from '../../src/types/tour'
 import OverviewView from '../../src/views/OverviewView.vue'
 import TopicView from '../../src/views/TopicView.vue'
-import { snapshot } from './fixtures'
 
 describe('constant tour overview', () => {
   const router = createRouter({
@@ -19,9 +21,15 @@ describe('constant tour overview', () => {
   })
 
   beforeEach(() => {
-    setAtlasSnapshotForTests({ ...snapshot(), taxonomy: taxonomyJson as TaxonomyArtifact })
+    setTourRegistryForTests({
+      manifest: tourManifestJson as TourGeneratedManifest,
+      taxonomy: taxonomyJson as TaxonomyArtifact,
+    })
   })
-  afterEach(resetAtlasForTests)
+  afterEach(() => {
+    resetTourRegistryForTests()
+    resetTaxonomyRegistryForTests()
+  })
 
   it('keeps the homepage to eight quiet topic entry points', async () => {
     await router.push('/')

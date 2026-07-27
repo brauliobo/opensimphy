@@ -20,7 +20,7 @@ Date: 2026-07-26
 | Item | State |
 | --- | --- |
 | Product plan | Recorded |
-| Tour implementation | Iterations 0 and 2 technically complete; remaining iterations planned |
+| Tour implementation | Iterations 0, 1, and 2 technically complete; remaining iterations planned |
 | Atlas formulas | 288 evaluated, 288 graphed |
 | Known Atlas dimension conflicts | 68; must remain visible in relevant lessons |
 | Number-wall inputs | 351 bounded and simulatable |
@@ -46,16 +46,17 @@ Original baseline verification:
 - All 134 runnable EARTH method defaults completed in dedicated workers.
 - `git diff --check`: passed.
 
-Current contract/content checkpoint verification:
+Current Iteration 1 checkpoint verification:
 
 - `npm run verify`: passed.
 - Data generation: 20 chapters, 1 lesson, 1 simulation, 11 glossary entries, 5 references, and 8 stations totaling 27 minutes.
-- Vitest: 37 files, 252 tests passed.
-- Focused verification: 18/18 passed.
 - TypeScript typecheck: passed.
+- Vitest: 40 files, 279 tests passed.
 - Production PWA build: passed.
+- `npm run check:routes`: passed.
+- Chromium Playwright: 41 tests passed.
 - `git diff --check`: passed.
-- Independent acceptance review: PASS.
+- Independent functional review: PASS.
 
 Generated-content checkpoint:
 
@@ -72,16 +73,20 @@ Original measured production baseline:
 
 Current checkpoint production measurements:
 
-- Main JavaScript: 116.11 kB raw / 45.28 kB gzip.
+- Main JavaScript: 96.36 kB raw / 38.26 kB gzip, reduced from 116.11 kB raw / 45.28 kB gzip.
 - Main CSS: 71.81 kB raw / 12.43 kB gzip.
-- PWA precache: 76 entries / 4,538.81 KiB.
+- Formula worker: 15.27 kB raw.
+- Core worker: 18.92 kB raw.
+- Number-wall worker: 4.30 kB raw.
+- PWA precache: 71 entries / 3,493.49 KiB.
+- Runtime registry revision: `465cc706fe72`.
 
 ## Iteration ledger
 
 | Iteration | Scope | Status | Commit | Exit evidence |
 | --- | --- | --- | --- | --- |
 | 0 | Scientific/content contracts | Technically complete | containing commit | Separate epistemic, method, origin, and result axes; nearest-ancestor attribution; nonempty evidence; exact references, revisions, and locators; scoped conclusions; distinct source and runtime statuses; general simulation schema |
-| 1 | Route-owned data | Planned | pending | `/`, `/tour`, EARTH direct entry must avoid full Atlas workers |
+| 1 | Route-owned data | Technically complete | containing commit | Direct and warm Tour entry plus canonical and legacy EARTH entries, including document routes, do not load formula, Core, or number-wall owners; Formula Atlas/detail, Core, and Number Walls load only their respective owners |
 | 2 | Tour content pipeline | Technically complete | containing commit | Foundation exit met: 20 chapter shells; exactly 8 quick stations totaling 27 minutes; first complete 11-minute units lesson linked to its 4-minute quick path; one bounded simulation contract; 11 glossary entries; 5 references; 26 deterministic generated artifacts; exact-key and inert-text policy; closed references and navigation. The other seven planned stations do not yet have full lessons or simulations; those belong to Iteration 5 |
 | 3 | Orientation and Tour map | Planned | pending | First-use begin/resume journey passes |
 | 4 | Units vertical slice | Planned | pending | Responsive, keyboard, reduced-motion, resume, offline journey passes |
@@ -108,9 +113,15 @@ Current checkpoint production measurements:
 11. Chromium is the sole automated browser target.
 12. Scientific validation remains independent of implementation completeness.
 
-## Known architecture work
+## Current architecture and remaining work
 
-Current `src/App.vue` still invokes the aggregate Atlas initializer on all routes. That initializer fetches recipes, symbols, wall index, completion, and taxonomy, then evaluates all 288 formulas and 37 Core cases. Route ownership must split this behavior before Tour orientation is considered performant.
+`src/App.vue` no longer invokes an aggregate Atlas initializer. Independent modules under `src/registries` give each route direct ownership: Tour loads its generated manifest and taxonomy; Formula Atlas/detail loads recipes and symbols and evaluates them in `formula.worker`; Core evaluates only in `core.worker`; Number Walls loads the index for browsing, then defers the selected payload and dynamic `numberWall.worker` import until Run. EARTH remains isolated behind its existing registries and worker.
+
+Registry initialization is generation-guarded so stale in-flight results cannot publish. Failed attempts clear their initialization promise and may be retried; successful registries remain session-cached. Formula and Core routes use owner counts, and release by the final owner cancels unfinished initialization. Each wall run owns a fresh deferred worker and terminates it on result, failure, or cancellation. The additive runtime audit session ledger records only domains that have loaded, and the completion registry uses the strict `completionReport` parser rather than rebuilding a global engine state.
+
+Production closure checks cover all Tour, Formula Atlas, Core, and Number Wall route groups and six EARTH view groups, including canonical and legacy document navigation. Evaluator signatures occur only in their dedicated workers; no aggregate Atlas or shared simulation worker remains.
+
+Later residuals do not reopen Iteration 1: Formula detail still evaluates all 288 recipes, successful registries intentionally remain session-cached, and cleanup of old cache-storage revisions plus explicit offline packs belongs to later offline work.
 
 Current reusable simulation foundations:
 
@@ -144,6 +155,15 @@ Required root-cause refactors:
 
 ## Progress history
 
+### 2026-07-26: route-owned data accepted
+
+- Marked Iteration 1 technically complete in the containing commit.
+- Confirmed direct and warm Tour navigation and canonical and legacy EARTH navigation, including document routes, do not load formula, Core, or number-wall owners.
+- Confirmed Formula Atlas/detail, Core, and Number Walls route closures load only their respective owners; all Tour/Atlas/Core/Wall route groups and six EARTH view groups are checked, and no aggregate/shared worker remains.
+- `npm run verify` passed: deterministic generation, typecheck, 40 Vitest files with 279 tests, production build, and `check:routes` all passed. The separate Chromium run passed 41 tests; independent functional review: PASS; `git diff --check`: passed.
+- Measured main JavaScript at 96.36 kB raw / 38.26 kB gzip versus 116.11 kB / 45.28 kB previously; CSS at 71.81 kB / 12.43 kB; formula, Core, and number-wall workers at 15.27 kB, 18.92 kB, and 4.30 kB raw; and PWA precache at 71 entries / 3,493.49 KiB with runtime revision `465cc706fe72`.
+- Preserved `scientificallyValidated: false`; route isolation and functional acceptance do not establish scientific validity.
+
 ### 2026-07-26: scientific contracts and content foundation accepted
 
 - Marked Iteration 0 technically complete with separate epistemic, method, origin, and result axes; nearest-ancestor attribution; nonempty evidence; exact references, revisions, and locators; scoped conclusions; source-vs-runtime statuses; and a general simulation schema.
@@ -162,4 +182,4 @@ Required root-cause refactors:
 
 ## Next implementation step
 
-Complete Iteration 1 route-owned data so `/`, `/tour`, and EARTH direct entry no longer invoke full Atlas workers. Then implement the Iteration 3 orientation/Tour map and Iteration 4 units vertical slice renderer and simulation engine.
+Iteration 2 remains complete. Implement Iteration 3 orientation, Tour map, depth selection, and progress, then Iteration 4's units engine and complete lesson vertical slice.

@@ -1,19 +1,27 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
-import { useAtlasEngine } from '../composables/atlasEngine'
+import { useCoreRegistry } from '../registries/coreRegistry'
 
-const atlas = useAtlasEngine()
+const coreRegistry = useCoreRegistry()
+const releaseCoreRegistry = coreRegistry.acquire()
+onUnmounted(releaseCoreRegistry)
+
 const selectedId = ref('')
 const plotIndex = ref(0)
 const camera = ref<'2d' | '3d'>('3d')
+const registryReady = computed(() => coreRegistry.ready.value
+  && !coreRegistry.error.value
+  && coreRegistry.coreCases.value.length > 0)
+const registryError = computed(() => coreRegistry.error.value?.message
+  ?? (coreRegistry.ready.value && !registryReady.value ? 'The generated core registry contains no cases.' : ''))
 
-watch(() => atlas.coreCases.value, (cases) => {
+watch(() => coreRegistry.coreCases.value, (cases) => {
   if (!selectedId.value && cases[0]) selectedId.value = cases[0].id
 }, { immediate: true })
-const selected = computed(() => atlas.coreCases.value.find((item) => item.id === selectedId.value) ?? atlas.coreCases.value[0] ?? null)
+const selected = computed(() => coreRegistry.coreCases.value.find((item) => item.id === selectedId.value) ?? coreRegistry.coreCases.value[0] ?? null)
 const activeGraph = computed(() => selected.value?.graphs[plotIndex.value] ?? selected.value?.graphs[0] ?? null)
-const families = computed(() => [...new Set(atlas.coreCases.value.map((item) => item.family))])
+const families = computed(() => [...new Set(coreRegistry.coreCases.value.map((item) => item.family))])
 
 watch([camera, selected], ([projection, current]) => {
   plotIndex.value = projection === '3d' && (current?.graphs.length ?? 0) > 1 ? 1 : 0
@@ -21,22 +29,27 @@ watch([camera, selected], ([projection, current]) => {
 </script>
 
 <template lang="pug">
-.view
+.view(:data-testid="registryReady ? 'core-registry-ready' : undefined")
   header.view-header
     div
       p.eyebrow Instrument 02 / core registry
       h1 Core Lab
-    .header-stat
-      strong {{ atlas.coreCases.value.filter((item) => item.graphReady).length }} / {{ atlas.coreCases.value.length }}
+    .header-stat(v-if="registryReady")
+      strong {{ coreRegistry.coreCases.value.filter((item) => item.graphReady).length }} / {{ coreRegistry.coreCases.value.length }}
       span graph-ready cases
 
-  .core-family-key
+  .loading-plate(v-if="!coreRegistry.ready.value") Loading core registry…
+  .empty-state(v-else-if="registryError" role="alert")
+    strong Core registry unavailable
+    p {{ registryError }}
+
+  .core-family-key(v-if="registryReady")
     span(v-for="family in families" :key="family") {{ family }}
 
-  .core-layout(v-if="selected")
+  .core-layout(v-if="registryReady && selected")
     aside.core-case-tabs(aria-label="Core cases")
       button(
-        v-for="item in atlas.coreCases.value"
+        v-for="item in coreRegistry.coreCases.value"
         :key="item.id"
         type="button"
         role="tab"
@@ -82,7 +95,4 @@ watch([camera, selected], ([projection, current]) => {
         code {{ selected.formula }}
         span {{ selected.provenance }}
         a.text-link(v-if="selected.sourceUrl" :href="selected.sourceUrl" target="_blank" rel="noreferrer") Source ↗
-  .empty-state(v-else)
-    strong Core registry unavailable
-    p Planck surfaces, quartic roots, invariant checks, companion dynamics, manifold/dilogarithm, transform-space, constructor transforms, and coherent units must all arrive from the engine registry.
 </template>

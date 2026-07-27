@@ -1,9 +1,41 @@
 /// <reference types="vitest/config" />
 
+import { createHash } from 'node:crypto'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+
+const runtimeRegistryFiles = [
+  'data/generated/tour/manifest.json',
+  'data/generated/taxonomy.json',
+  'data/generated/recipes.json',
+  'data/generated/symbols.json',
+  'data/generated/walls.json',
+  'data/generated/completion.json',
+  'data/generated/registry.json',
+]
+
+function computeRuntimeRegistryRevision(): string {
+  const hash = createHash('sha256')
+  for (const file of runtimeRegistryFiles) {
+    const path = fileURLToPath(new URL(`./public/${file}`, import.meta.url))
+    let content: Buffer
+    try {
+      content = readFileSync(path)
+    } catch (error) {
+      throw new Error(`Runtime registry revision input is unavailable: ${file}`, { cause: error })
+    }
+    hash.update(file)
+    hash.update('\0')
+    hash.update(content)
+    hash.update('\0')
+  }
+  return hash.digest('hex').slice(0, 12)
+}
+
+const runtimeRegistryRevision = computeRuntimeRegistryRevision()
 
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/',
@@ -33,6 +65,13 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,json,txt}'],
         globIgnores: [
+          'data/generated/recipes.json',
+          'data/generated/symbols.json',
+          'data/generated/taxonomy.json',
+          'data/generated/walls.json',
+          'data/generated/completion.json',
+          'data/generated/registry.json',
+          'data/generated/tour/manifest.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
           'data/generated/earth/evidence/documents/**/*.json',
@@ -40,15 +79,72 @@ export default defineConfig({
           'data/generated/earth/results/**/*',
           'data/generated/earth/datasets/**/*',
           'data/number-walls/**/*.json',
+          'assets/formula.worker-*.js',
+          'assets/core.worker-*.js',
+          'assets/numberWall.worker-*.js',
           'assets/plotly-*.js',
         ],
         navigateFallback: 'index.html',
         runtimeCaching: [
           {
+            urlPattern: /\/data\/generated\/taxonomy\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-taxonomy-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/tour\/manifest\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-tour-manifest-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/(?:recipes|symbols)\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-formula-sources-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/walls\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-wall-index-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/completion\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-completion-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/registry\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-registry-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
             urlPattern: /\/data\/generated\/earth\/documents\/.*\.json$/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'opensimphy-earth-documents',
+              cacheName: `opensimphy-earth-documents-${runtimeRegistryRevision}`,
               expiration: { maxEntries: 63, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
@@ -56,7 +152,7 @@ export default defineConfig({
             urlPattern: /\/data\/generated\/earth\/evidence\/(?:programs|documents)\/.*\.json$/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'opensimphy-earth-evidence-shards',
+              cacheName: 'opensimphy-earth-evidence-shards' + `-${runtimeRegistryRevision}`,
               expiration: { maxEntries: 48, maxAgeSeconds: 60 * 60 * 24 * 30 },
             },
           },
@@ -68,7 +164,7 @@ export default defineConfig({
             urlPattern: /\/data\/number-walls\/.*\.json$/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'opensimphy-number-walls',
+              cacheName: `opensimphy-number-walls-${runtimeRegistryRevision}`,
               expiration: { maxEntries: 351, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
@@ -76,7 +172,7 @@ export default defineConfig({
             urlPattern: /plotly[^/]*\.js$/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'opensimphy-plotly',
+              cacheName: `opensimphy-plotly-${runtimeRegistryRevision}`,
               expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
@@ -91,6 +187,7 @@ export default defineConfig({
   preview: { port: 4173, strictPort: true },
   build: {
     target: 'es2022',
+    manifest: true,
     rollupOptions: {
       output: {
         manualChunks(id) {

@@ -1,4 +1,4 @@
 import completionJson from "../../public/data/generated/completion.json";
-import { parseCompletionReport } from "./completion.js";
+import { parseCompletionReport } from "./completionReport.js";
 
 export const completion = parseCompletionReport(completionJson);

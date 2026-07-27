@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppNav from './components/AppNav.vue'
-import CoverageStrip from './components/CoverageStrip.vue'
-import { useAtlasEngine } from './composables/atlasEngine'
+import { publishRuntimeAudit } from './registries/runtimeAudit'
 
-const atlas = useAtlasEngine()
 const route = useRoute()
 const router = useRouter()
-const fullCoverageRoutes = new Set(['labs', 'core', 'walls', 'sources'])
-const compactCoverageRoutes = new Set(['atlas', 'formula'])
-const showFullCoverage = computed(() => fullCoverageRoutes.has(String(route.name)))
-const showCompactCoverage = computed(() => compactCoverageRoutes.has(String(route.name)))
+const shellReady = ref(false)
 let headingObserver: MutationObserver | undefined
 let focusRequest = 0
 let routeFocusEnabled = false
+
+function publishAppAudit(): void {
+  publishRuntimeAudit({
+    app: {
+      status: 'ready',
+      shell: true,
+      route: route.fullPath,
+    },
+  })
+}
 
 async function focusRouteHeading(): Promise<void> {
   const request = ++focusRequest
@@ -42,27 +47,28 @@ async function focusRouteHeading(): Promise<void> {
   headingObserver.observe(main, { childList: true, subtree: true })
 }
 
+watch(() => route.fullPath, () => {
+  if (!routeFocusEnabled) return
+  publishAppAudit()
+}, { flush: 'post' })
 watch(() => route.path, () => {
-  if (routeFocusEnabled) void focusRouteHeading()
+  if (!routeFocusEnabled) return
+  void focusRouteHeading()
 }, { flush: 'post' })
 onMounted(async () => {
-  atlas.initialize()
   await router.isReady()
   await nextTick()
+  shellReady.value = true
+  publishAppAudit()
   routeFocusEnabled = true
 })
 onBeforeUnmount(() => headingObserver?.disconnect())
 </script>
 
 <template lang="pug">
-.app-shell(:data-testid="atlas.ready.value ? 'app-ready' : undefined")
+.app-shell(:data-testid="shellReady ? 'app-ready' : undefined")
   a.skip-link(href="#main-content") Skip to instrument
   AppNav
-  CoverageStrip(v-if="showFullCoverage" :rows="atlas.coverage.value" :complete="atlas.complete.value")
-  CoverageStrip(v-else-if="showCompactCoverage" :rows="atlas.coverage.value" :complete="atlas.complete.value" compact)
-  p.system-error(v-if="atlas.error.value" role="alert")
-    strong Registry load error:
-    |  {{ atlas.error.value.message }}
   main#main-content
     RouterView
   footer.app-footer

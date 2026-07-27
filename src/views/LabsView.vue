@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useAtlasEngine } from '../composables/atlasEngine'
+import { useCompletionRegistry } from '../registries/completionRegistry'
 
-const atlas = useAtlasEngine()
-const core = computed(() => atlas.coverage.value.find((row) => row.key === 'core'))
-const walls = computed(() => atlas.coverage.value.find((row) => row.key === 'walls'))
+const completionRegistry = useCompletionRegistry()
+void completionRegistry.initialize()
+
+const registryReady = computed(() => completionRegistry.ready.value
+  && !completionRegistry.error.value
+  && completionRegistry.report.value !== null)
+const registryError = computed(() => completionRegistry.error.value?.message
+  ?? (completionRegistry.ready.value && !registryReady.value ? 'The generated completion report is unavailable.' : ''))
+const core = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'core'))
+const walls = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'walls'))
 </script>
 
 <template lang="pug">
-.view.labs-view
+.view.labs-view(:data-testid="registryReady ? 'completion-registry-ready' : undefined")
   header.view-header
     div
       p.eyebrow Browser laboratories
       h1 Choose an instrument
     p.lab-intro The laboratories are separate from the constants tour. Enter only when you want to inspect transform cases or simulate preserved number-wall inputs.
-  .lab-choice-grid
+  .loading-plate(v-if="!completionRegistry.ready.value") Loading generated laboratory counts…
+  .empty-state(v-else-if="registryError" role="alert")
+    strong Laboratory counts unavailable
+    p {{ registryError }}
+  .lab-choice-grid(v-else-if="registryReady")
     RouterLink(to="/labs/core")
       span 01 / TRANSFORM CASES
       strong Core lab

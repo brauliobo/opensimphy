@@ -8,6 +8,8 @@ import { CORE_CASES, evaluateCoreRegistry, type CoreCase } from "./core.js";
 import { parseWallPayload, simulateNumberWall } from "./numberWall.js";
 import { evaluateRecipes } from "./recipes.js";
 
+export { parseCompletionReport } from "./completionReport.js";
+
 export const EXPECTED_RECIPE_COUNT = 288;
 export const EXPECTED_WALL_COUNT = 351;
 export const COMPLETION_WALL_TERMS = 8;
@@ -152,28 +154,4 @@ export function buildCompletionReport(input: CompletionAuditInput, options: Comp
     unresolved,
     errors,
   };
-}
-
-function completionSection(value: unknown, name: string, required: string[]): CompletionReport["recipes"] {
-  if (!value || typeof value !== "object") throw new TypeError(`Completion ${name} section must be an object`);
-  const source = value as Record<string, unknown>;
-  for (const key of ["source", "implemented", "graphed", ...required]) {
-    if (!Number.isSafeInteger(source[key]) || Number(source[key]) < 0) throw new TypeError(`Completion ${name}.${key} must be a non-negative integer`);
-  }
-  return source as unknown as CompletionReport["recipes"];
-}
-
-export function parseCompletionReport(value: unknown): CompletionReport {
-  if (!value || typeof value !== "object") throw new TypeError("Completion report must be an object");
-  const source = value as Record<string, unknown>;
-  if (source.schemaVersion !== 1) throw new TypeError("Unsupported completion schema version");
-  if (typeof source.generatedAt !== "string" || source.generatedAt.length === 0) throw new TypeError("Completion report requires a generation date");
-  if (!Array.isArray(source.unresolved) || !source.unresolved.every((entry) => typeof entry === "string")) throw new TypeError("Completion unresolved entries must be strings");
-  if (!Array.isArray(source.errors) || !source.errors.every((entry) => typeof entry === "string")) throw new TypeError("Completion errors must be strings");
-  if (typeof source.complete !== "boolean") throw new TypeError("Completion status must be a boolean");
-  completionSection(source.recipes, "recipes", ["evaluated"]);
-  completionSection(source.walls, "walls", ["simulatable"]);
-  completionSection(source.core, "core", ["evaluated", "simulatable"]);
-  if (!source.audit || typeof source.audit !== "object") throw new TypeError("Completion report requires audit settings");
-  return source as unknown as CompletionReport;
 }

@@ -7,11 +7,5 @@ declare module 'plotly.js-dist-min' {
 }
 
 interface Window {
-  __OPENSIMPHY_AUDIT__?: {
-    coverage: Array<{ key: string; expected: number; implemented: number; evaluated: number; graphed: number; simulatable: number }>
-    formulas: Array<{ id: string; ordinal: number; graphReady: boolean }>
-    core: Array<{ id: string; graphReady: boolean }>
-    walls: string[]
-    topics: Array<{ id: string; count: number }>
-  }
+  __OPENSIMPHY_AUDIT__?: import('./registries/runtimeAudit').RuntimeAudit
 }

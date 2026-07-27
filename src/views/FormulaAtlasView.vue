@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAtlasEngine } from '../composables/atlasEngine'
+import { useFormulaRegistry, validateFormulaTaxonomyCompatibility } from '../registries/formulaRegistry'
+import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
 
-const atlas = useAtlasEngine()
+const formulaRegistry = useFormulaRegistry()
+const taxonomyRegistry = useTaxonomyRegistry()
+const releaseFormulaRegistry = formulaRegistry.acquire()
+void taxonomyRegistry.initialize()
+onUnmounted(releaseFormulaRegistry)
+
 const route = useRoute()
 const router = useRouter()
 const query = ref('')
@@ -18,14 +24,38 @@ const representation = ref('all')
 const page = ref(1)
 const pageSize = 24
 
-const topics = computed(() => atlas.taxonomy.value?.topics ?? [])
+const registryLoading = computed(() => !formulaRegistry.ready.value || !taxonomyRegistry.ready.value)
+const compatibilityError = computed(() => {
+  if (registryLoading.value || formulaRegistry.error.value || taxonomyRegistry.error.value) return ''
+  const taxonomy = taxonomyRegistry.taxonomy.value
+  if (!taxonomy) return 'The generated formula taxonomy is unavailable.'
+  try {
+    validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value, taxonomy)
+    return ''
+  } catch (reason) {
+    return reason instanceof Error ? reason.message : String(reason)
+  }
+})
+const registryReady = computed(() => !registryLoading.value
+  && !formulaRegistry.error.value
+  && !taxonomyRegistry.error.value
+  && compatibilityError.value === ''
+  && formulaRegistry.formulas.value.length > 0
+  && taxonomyRegistry.taxonomy.value !== null)
+const registryError = computed(() => {
+  if (formulaRegistry.error.value) return formulaRegistry.error.value.message
+  if (taxonomyRegistry.error.value) return taxonomyRegistry.error.value.message
+  if (compatibilityError.value) return compatibilityError.value
+  return !registryLoading.value && !registryReady.value ? 'The generated formula registry or taxonomy is unavailable.' : ''
+})
+const topics = computed(() => taxonomyRegistry.taxonomy.value?.topics ?? [])
 const selectedTopic = computed(() => topics.value.find((item) => item.id === topic.value) ?? null)
 const categories = computed(() => topic.value === 'all' ? [] : topics.value.find((item) => item.id === topic.value)?.categories ?? [])
 const selectedCategory = computed(() => categories.value.find((item) => item.id === category.value) ?? null)
-const columns = computed(() => [...new Set(atlas.formulas.value.map((item) => item.column))].sort())
-const islands = computed(() => [...new Set(atlas.formulas.value.map((item) => item.island))].sort())
-const constructors = computed(() => atlas.taxonomy.value?.facets.constructor ?? [])
-const representations = computed(() => atlas.taxonomy.value?.facets.representation ?? [])
+const columns = computed(() => [...new Set(formulaRegistry.formulas.value.map((item) => item.column))].sort())
+const islands = computed(() => [...new Set(formulaRegistry.formulas.value.map((item) => item.island))].sort())
+const constructors = computed(() => taxonomyRegistry.taxonomy.value?.facets.constructor ?? [])
+const representations = computed(() => taxonomyRegistry.taxonomy.value?.facets.representation ?? [])
 const advancedFilterCount = computed(() => [column, island, status, constructor, representation].filter((item) => item.value !== 'all').length)
 const detailQuery = computed(() => ({
   ...(topic.value === 'all' ? {} : { topic: topic.value }),
@@ -33,7 +63,7 @@ const detailQuery = computed(() => ({
 }))
 const filtered = computed(() => {
   const search = query.value.trim().toLocaleLowerCase()
-  return atlas.formulas.value.filter((item) => {
+  return formulaRegistry.formulas.value.filter((item) => {
     const matchesSearch = !search || [item.ordinal, item.symbol, item.name, item.equation, item.dependencies.join(' ')].join(' ').toLocaleLowerCase().includes(search)
     return matchesSearch
       && (column.value === 'all' || item.column === column.value)
@@ -84,23 +114,28 @@ function categoryTitle(topicId: string, categoryId: string): string {
 </script>
 
 <template lang="pug">
-.view
+.view(:data-testid="registryReady ? 'formula-registry-ready' : undefined")
   header.view-header
     div
       p.eyebrow Instrument 01 / formula registry
       h1 Formula Atlas
-    .header-stat
-      strong {{ filtered.length }} / {{ atlas.formulas.value.length }}
+    .header-stat(v-if="registryReady")
+      strong {{ filtered.length }} / {{ formulaRegistry.formulas.value.length }}
       span visible recipes
 
-  section.atlas-context(v-if="selectedTopic" data-testid="atlas-context")
+  .loading-plate(v-if="registryLoading") Loading formula registry…
+  .empty-state(v-else-if="registryError" role="alert")
+    strong Formula registry unavailable
+    p {{ registryError }}
+
+  section.atlas-context(v-if="registryReady && selectedTopic" data-testid="atlas-context")
     RouterLink(:to="`/topics/${selectedTopic.id}`") ← {{ selectedTopic.shortTitle }} guide
     span
       strong {{ selectedTopic.title }}
       small {{ selectedCategory?.title ?? 'All categories in this topic' }}
     button.context-clear(type="button" @click="clearContext") Clear context
 
-  section.filter-console.filter-console-primary(aria-label="Primary formula filters")
+  section.filter-console.filter-console-primary(v-if="registryReady" aria-label="Primary formula filters")
     label.field.field-search
       span Search registry
       input(v-model="query" data-testid="formula-search" type="search" placeholder="symbol, equation, dependency…")
@@ -121,7 +156,7 @@ function categoryTitle(topicId: string, categoryId: string): string {
         option(value="exact") exact
         option(value="measured") measured
 
-  details.advanced-filter-panel(data-testid="advanced-filters")
+  details.advanced-filter-panel(v-if="registryReady" data-testid="advanced-filters")
     summary
       span Advanced source filters
       small(v-if="advancedFilterCount") {{ advancedFilterCount }} active
@@ -155,14 +190,14 @@ function categoryTitle(topicId: string, categoryId: string): string {
           option(value="all") all representations
           option(v-for="item in representations" :key="item.id" :value="item.id") {{ item.id.replaceAll('-', ' ') }} ({{ item.count }})
 
-  .atlas-key(aria-label="Table key")
+  .atlas-key(v-if="registryReady" aria-label="Table key")
     span # / symbol
     span equation / name
     span topic / category
     span expected → computed
     span audit
 
-  section.formula-list(aria-live="polite")
+  section.formula-list(v-if="registryReady" aria-live="polite")
     RouterLink.formula-row(
       v-for="formula in visible"
       :key="formula.id"
@@ -190,7 +225,7 @@ function categoryTitle(topicId: string, categoryId: string): string {
       strong No matching registry entries
       p Adjust the query or filters. Missing engine entries are not synthesized.
 
-  nav.pagination(v-if="filtered.length > pageSize" aria-label="Formula pages")
+  nav.pagination(v-if="registryReady && filtered.length > pageSize" aria-label="Formula pages")
     button(type="button" :disabled="page === 1" @click="page--") Previous
     span Page {{ page }} / {{ pages }}
     button(type="button" :disabled="page === pages" @click="page++") Next

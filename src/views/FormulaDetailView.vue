@@ -1,28 +1,56 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
-import { useAtlasEngine, type FormulaRecord, type PlotFigure } from '../composables/atlasEngine'
+import { useFormulaRegistry, validateFormulaTaxonomyCompatibility, type FormulaRecord } from '../registries/formulaRegistry'
+import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
+import type { PlotFigure } from '../types/plot'
 
 const props = defineProps<{ id: string }>()
-const atlas = useAtlasEngine()
+const formulaRegistry = useFormulaRegistry()
+const taxonomyRegistry = useTaxonomyRegistry()
 const route = useRoute()
 const formula = ref<FormulaRecord | null>(null)
 const loading = ref(true)
 const scale = ref(1)
 const graphOpen = ref(false)
 const loadError = ref('')
+const releaseFormulaRegistry = formulaRegistry.acquire()
+let loadGeneration = 0
+onUnmounted(() => {
+  loadGeneration += 1
+  releaseFormulaRegistry()
+})
 
 watch(() => props.id, async (id) => {
+  const attempt = ++loadGeneration
   loading.value = true
   loadError.value = ''
   graphOpen.value = false
-  formula.value = await atlas.formulaById(id)
-  if (!formula.value) loadError.value = `Formula ${id} is absent from the generated registry.`
+  formula.value = null
+  await Promise.all([formulaRegistry.initialize(), taxonomyRegistry.initialize()])
+  if (attempt !== loadGeneration) return
+  if (formulaRegistry.error.value) loadError.value = formulaRegistry.error.value.message
+  else if (taxonomyRegistry.error.value) loadError.value = taxonomyRegistry.error.value.message
+  else if (!taxonomyRegistry.taxonomy.value) loadError.value = 'The generated formula taxonomy is unavailable.'
+  else {
+    try {
+      validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value, taxonomyRegistry.taxonomy.value)
+    } catch (reason) {
+      loadError.value = reason instanceof Error ? reason.message : String(reason)
+    }
+    if (!loadError.value) formula.value = await formulaRegistry.formulaById(id)
+    if (attempt !== loadGeneration) return
+    if (!loadError.value && !formula.value) loadError.value = `Formula ${id} is absent from the generated registry.`
+  }
   loading.value = false
 }, { immediate: true })
 
-const selectedTopic = computed(() => atlas.taxonomy.value?.topics.find((item) => item.id === formula.value?.topic) ?? null)
+const recordReady = computed(() => !loading.value
+  && loadError.value === ''
+  && formula.value !== null
+  && taxonomyRegistry.taxonomy.value !== null)
+const selectedTopic = computed(() => taxonomyRegistry.taxonomy.value?.topics.find((item) => item.id === formula.value?.topic) ?? null)
 const selectedCategory = computed(() => selectedTopic.value?.categories.find((item) => item.id === formula.value?.category) ?? null)
 const backToAtlas = computed(() => ({
   path: '/atlas',
@@ -68,10 +96,10 @@ function toggleGraph(event: Event): void {
 </script>
 
 <template lang="pug">
-.view.formula-detail
+.view.formula-detail(:data-testid="recordReady ? 'formula-record-ready' : undefined")
   .loading-plate(v-if="loading") Loading registry case…
   .empty-state(v-else-if="loadError" role="alert")
-    strong Formula unavailable
+    h1 Formula unavailable
     p {{ loadError }}
     RouterLink.text-link(to="/atlas") Return to atlas
   template(v-else-if="formula")

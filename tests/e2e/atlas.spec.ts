@@ -1,9 +1,24 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
+import type { RuntimeAudit } from '../../src/registries/runtimeAudit'
 
-async function waitForAudit(page: import('@playwright/test').Page) {
-  await page.goto('/')
+type AuditedRoute = 'tour' | 'formulas' | 'core' | 'walls'
+type ReadyAudit<K extends AuditedRoute> = Extract<NonNullable<RuntimeAudit[K]>, { status: 'ready' }>
+
+async function gotoRoute(page: Page, path: string): Promise<void> {
+  await page.goto(path)
   await expect(page.getByTestId('app-ready')).toBeVisible()
-  return page.evaluate(() => window.__OPENSIMPHY_AUDIT__)
+}
+
+async function waitForRouteAudit<K extends AuditedRoute>(
+  page: Page,
+  path: string,
+  readyTestId: string,
+  domain: K,
+): Promise<ReadyAudit<K>> {
+  await gotoRoute(page, path)
+  await expect(page.getByTestId(readyTestId)).toBeVisible()
+  await expect.poll(() => page.evaluate((key) => window.__OPENSIMPHY_AUDIT__?.[key]?.status, domain)).toBe('ready')
+  return page.evaluate((key) => window.__OPENSIMPHY_AUDIT__![key] as ReadyAudit<K>, domain)
 }
 
 async function expectNoDocumentOverflow(page: import('@playwright/test').Page) {
@@ -15,24 +30,23 @@ async function expectNoDocumentOverflow(page: import('@playwright/test').Page) {
 }
 
 test('reports exact complete coverage and captures overview evidence', async ({ page }, testInfo) => {
-  const audit = await waitForAudit(page)
-  expect(audit).toBeTruthy()
-  expect(audit?.formulas).toHaveLength(288)
-  expect(audit?.walls).toHaveLength(351)
-  expect(audit?.topics).toHaveLength(8)
-  expect(audit?.topics.reduce((sum, topic) => sum + topic.count, 0)).toBe(288)
+  const tourAudit = await waitForRouteAudit(page, '/', 'tour-ready', 'tour')
+  expect(tourAudit.taxonomy.total).toBe(288)
+  expect(tourAudit.taxonomy.topics).toHaveLength(8)
+  expect(tourAudit.taxonomy.topics.reduce((sum, topic) => sum + topic.count, 0)).toBe(288)
   await expect(page.locator('.topic-door')).toHaveCount(8)
   await expect(page.locator('.topic-category-card')).toHaveCount(0)
   await page.screenshot({ path: testInfo.outputPath('overview.png'), fullPage: true })
 
-  await page.goto('/sources')
+  await gotoRoute(page, '/sources')
+  await expect(page.getByTestId('completion-registry-ready')).toBeVisible()
   await expect(page.getByTestId('coverage-status')).toHaveAttribute('data-status', 'complete')
   await expect(page.getByTestId('coverage-recipes')).toContainText('288')
   await expect(page.getByTestId('coverage-walls')).toContainText('351')
 })
 
 test('uses the homepage tour to open a classified atlas slice', async ({ page }) => {
-  await waitForAudit(page)
+  await waitForRouteAudit(page, '/', 'tour-ready', 'tour')
   const topicDoor = page.getByTestId('topic-magnetism')
   await expect(topicDoor).toContainText('81 constants / 5 families')
   await topicDoor.click()
@@ -51,8 +65,7 @@ test('uses the homepage tour to open a classified atlas slice', async ({ page })
 })
 
 test('browses and searches the formula atlas', async ({ page }) => {
-  await waitForAudit(page)
-  await page.goto('/atlas')
+  await waitForRouteAudit(page, '/atlas', 'formula-registry-ready', 'formulas')
   await expect(page.getByRole('heading', { name: 'Formula Atlas' })).toBeVisible()
   await expect(page.getByTestId('formula-row-1')).toBeVisible()
   await page.getByTestId('formula-search').fill('hyperfine transition')
@@ -70,13 +83,14 @@ test('browses and searches the formula atlas', async ({ page }) => {
 })
 
 test('all recipe graphs are engine-ready and first, middle, last routes render', async ({ page }, testInfo) => {
-  const audit = await waitForAudit(page)
-  expect(audit?.formulas.every((formula) => formula.graphReady)).toBe(true)
+  const audit = await waitForRouteAudit(page, '/atlas', 'formula-registry-ready', 'formulas')
+  expect(audit.expected).toBe(288)
+  expect(audit.evaluated).toBe(288)
+  expect(audit.graphed).toBe(288)
 
   for (const ordinal of [1, 144, 288]) {
-    const formula = audit?.formulas.find((item) => item.ordinal === ordinal)
-    expect(formula, `missing recipe ${ordinal}`).toBeTruthy()
-    await page.goto(`/atlas/${ordinal}`)
+    await gotoRoute(page, `/atlas/${ordinal}`)
+    await expect(page.getByTestId('formula-record-ready'), `missing recipe ${ordinal}`).toBeVisible()
     await page.getByTestId('graph-disclosure').locator('summary').click()
     await expect(page.getByTestId('formula-graph-ready')).toBeVisible()
     await expect(page.locator('.equation-plate')).toContainText('(EG * EB)')
@@ -85,12 +99,14 @@ test('all recipe graphs are engine-ready and first, middle, last routes render',
 })
 
 test('every core registry case is graph-ready and tabs render', async ({ page }) => {
-  const audit = await waitForAudit(page)
-  expect(audit?.core.length).toBeGreaterThan(0)
-  expect(audit?.core.every((item) => item.graphReady)).toBe(true)
-  await page.goto('/labs/core')
-  for (const item of audit?.core ?? []) {
-    await page.getByTestId(`core-case-${item.id}`).click()
+  const audit = await waitForRouteAudit(page, '/labs/core', 'core-registry-ready', 'core')
+  expect(audit.expected).toBe(37)
+  expect(audit.evaluated).toBe(37)
+  expect(audit.graphed).toBe(37)
+  const cases = page.locator('[data-testid^="core-case-"]')
+  await expect(cases).toHaveCount(37)
+  for (let index = 0; index < 37; index += 1) {
+    await cases.nth(index).click()
     await expect(page.getByTestId('plot-ready')).toBeVisible()
   }
   const plotTabs = page.locator('.plot-tabs button')
@@ -102,9 +118,8 @@ test('every core registry case is graph-ready and tabs render', async ({ page })
 
 test('all wall inputs pass small-simulation completion and UI mode interaction', async ({ page }, testInfo) => {
   test.setTimeout(180_000)
-  const audit = await waitForAudit(page)
-  expect(audit?.walls).toHaveLength(351)
-  const wallCoverage = audit?.coverage.find((row) => row.key === 'walls')
+  const audit = await waitForRouteAudit(page, '/labs/walls', 'wall-registry-ready', 'walls')
+  expect(audit.registered).toBe(351)
 
   const smallSimulationAudit = await page.evaluate(async () => {
     const { simulateNumberWall } = await import('/src/engine/numberWall.ts')
@@ -135,7 +150,6 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   expect(smallSimulationAudit.tested).toBe(351)
   expect(smallSimulationAudit.failures).toEqual([])
 
-  await page.goto('/labs/walls')
   await page.getByTestId('wall-search').fill('Catalan')
   for (const mode of ['mod', 'valuation', 'signed_log', 'row_signed_log', 'zero_windows', 'small_values']) {
     await page.getByTestId('wall-mode').selectOption(mode)
@@ -146,12 +160,12 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   await page.getByTestId('wall-canvas').click({ position: { x: 10, y: 10 } })
   await expect(page.locator('.cell-readout')).toContainText('Cell [')
   await page.screenshot({ path: testInfo.outputPath('number-wall.png'), fullPage: true })
-  expect(wallCoverage?.simulatable).toBe(351)
+  expect(audit.registered).toBe(351)
 })
 
 test('mobile navigation remains operable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await waitForAudit(page)
+  await waitForRouteAudit(page, '/', 'tour-ready', 'tour')
   const toggle = page.getByTestId('nav-toggle')
   await expect(toggle).toHaveAttribute('aria-expanded', 'false')
   await toggle.click()
@@ -161,8 +175,7 @@ test('mobile navigation remains operable', async ({ page }) => {
 })
 
 test('discovers the EARTH dossier and browses its locked corpus without executing source content', async ({ page }) => {
-  await waitForAudit(page)
-  await page.goto('/earth')
+  await gotoRoute(page, '/earth')
   await expect(page.getByRole('heading', { name: 'EARTH Evidence Dossier' })).toBeVisible()
   await expect(page.getByTestId('earth-evidence-ledger')).toContainText('scientificallyValidated: false')
   await expect(page.getByTestId('earth-evidence-ledger')).toContainText('220')
@@ -229,8 +242,7 @@ test('discovers the EARTH dossier and browses its locked corpus without executin
 })
 
 test('filters and pages the URL-backed EARTH program registry, then restores state on back', async ({ page }) => {
-  await waitForAudit(page)
-  await page.goto('/earth/programs')
+  await gotoRoute(page, '/earth/programs')
 
   await expect(page.getByRole('heading', { name: 'EARTH Program Registry' })).toBeVisible()
   await expect(page.getByTestId('simulation-grid').locator('.earth-program-row')).toHaveCount(36)
@@ -308,8 +320,7 @@ test('filters and pages the URL-backed EARTH program registry, then restores sta
 
 test('runs a fast EARTH calculator in the dedicated worker', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await waitForAudit(page)
-  await page.goto('/earth/programs/EARTH-FND-003')
+  await gotoRoute(page, '/earth/programs/EARTH-FND-003')
 
   await expect(page.getByRole('heading', { name: 'Algebraic pi and alpha identities' })).toBeVisible()
   await expect(page.getByTestId('simulation-inputs')).toHaveValue('{}')
@@ -327,8 +338,7 @@ test('runs a fast EARTH calculator in the dedicated worker', async ({ page }) =>
 
 test('switches a multi-method EARTH pilot on mobile without overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await waitForAudit(page)
-  await page.goto('/earth/programs/EARTH-PLAN-008')
+  await gotoRoute(page, '/earth/programs/EARTH-PLAN-008')
 
   await expect(page).toHaveURL(/method=traditional-analytic-baseline-v1/)
   await expect(page.getByText('LOCAL TRADITIONAL BASELINE READY', { exact: false })).toBeVisible()
@@ -352,7 +362,8 @@ test('switches a multi-method EARTH pilot on mobile without overflow', async ({ 
 
 test('runs all 134 EARTH method defaults through dedicated workers', async ({ page }) => {
   test.setTimeout(180_000)
-  await waitForAudit(page)
+  await gotoRoute(page, '/earth/programs')
+  await expect(page.getByTestId('program-registry-statement')).toBeVisible()
 
   const workerAudit = await page.evaluate(async () => {
     const [{ runEarthMethodInWorker }, engine] = await Promise.all([
@@ -390,8 +401,7 @@ test('runs all 134 EARTH method defaults through dedicated workers', async ({ pa
 
 test('renders the program registry without horizontal overflow on a narrow route', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await waitForAudit(page)
-  await page.goto('/earth/programs')
+  await gotoRoute(page, '/earth/programs')
 
   await expect(page.getByRole('heading', { name: 'EARTH Program Registry' })).toBeVisible()
   await expect(page.getByTestId('simulation-search')).toBeVisible()
@@ -407,8 +417,7 @@ test('renders the program registry without horizontal overflow on a narrow route
 })
 
 test('audits authenticated EARTH dataset metadata without claiming G0b passed', async ({ page }) => {
-  await waitForAudit(page)
-  await page.goto('/earth/datasets')
+  await gotoRoute(page, '/earth/datasets')
 
   await expect(page.getByRole('heading', { name: 'EARTH Dataset Ledger' })).toBeVisible()
   await expect(page.getByTestId('dataset-grid').locator('.dataset-record')).toHaveCount(19)
@@ -459,8 +468,7 @@ test('navigates compact EARTH evidence from program sources to query-filtered da
   const requested: string[] = []
   page.on('request', (request) => requested.push(new URL(request.url()).pathname))
   await page.setViewportSize({ width: 390, height: 844 })
-  await waitForAudit(page)
-  await page.goto('/earth/programs/EARTH-PRT-001')
+  await gotoRoute(page, '/earth/programs/EARTH-PRT-001')
 
   await expect(page.getByTestId('program-evidence-summary')).toContainText('Formula records')
   await expect(page.getByTestId('program-evidence-summary')).toContainText('30')
@@ -484,8 +492,8 @@ test('navigates compact EARTH evidence from program sources to query-filtered da
 })
 
 test('shows source caveat and PWA manifest/service-worker evidence', async ({ page, request }) => {
-  await waitForAudit(page)
-  await page.goto('/sources')
+  await gotoRoute(page, '/sources')
+  await expect(page.getByTestId('completion-registry-ready')).toBeVisible()
   await expect(page.getByTestId('sources-caveat')).toContainText('REPRODUCTION ≠ VALIDATION')
 
   const manifestLink = await page.locator('link[rel="manifest"]').getAttribute('href')
@@ -503,9 +511,7 @@ for (const width of [320, 390, 768, 1440]) {
   test(`keeps the EARTH routes operable without document overflow at ${width}px`, async ({ page }) => {
     test.setTimeout(120_000)
     await page.setViewportSize({ width, height: 900 })
-    await waitForAudit(page)
-
-    await page.goto('/earth')
+    await gotoRoute(page, '/earth')
     await expect(page.getByRole('heading', { name: 'EARTH Evidence Dossier' })).toBeVisible()
     await expectNoDocumentOverflow(page)
 

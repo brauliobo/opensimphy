@@ -17,7 +17,7 @@ describe('completion audit', () => {
     expect(completion.recipes).toMatchObject({ source: 288, implemented: 288, evaluated: 288, graphed: 288 })
     expect(completion.walls).toMatchObject({ source: 351, implemented: 351, parseable: 351, simulatable: 351 })
     expect(completion.core).toMatchObject({ source: 37, implemented: 37, evaluated: 37, graphed: 37, simulatable: 37 })
-    expect(() => parseCompletionReport({ ...completionJson, walls: { source: 351, implemented: 351, graphed: 0 } })).toThrow(/walls\.simulatable/)
+    expect(() => parseCompletionReport({ ...completionJson, walls: { source: 351, implemented: 351, parseable: 351, graphed: 0 } })).toThrow(/walls\.simulatable/)
   })
 
   it('keeps the aggregate registry synchronized with generated inputs', () => {

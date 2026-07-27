@@ -15,7 +15,7 @@ export interface WallWorkerRequest {
   options?: Omit<WallSimulationOptions, "shouldCancel">;
 }
 
-export interface RecipeWorkerRequest {
+export interface FormulaWorkerRequest {
   type: "evaluate-recipes";
   requestId: WorkerRequestId;
   recipes: RecipeSource[];
@@ -29,7 +29,8 @@ export interface CoreWorkerRequest {
 }
 
 export type WallWorkerMessage = WallWorkerRequest | CancelWorkerRequest;
-export type SimulationWorkerMessage = RecipeWorkerRequest | CoreWorkerRequest | CancelWorkerRequest;
+export type FormulaWorkerMessage = FormulaWorkerRequest | CancelWorkerRequest;
+export type CoreWorkerMessage = CoreWorkerRequest | CancelWorkerRequest;
 
 export type WorkerResponse<T> =
   | { type: "result"; requestId: WorkerRequestId; result: T }
@@ -37,4 +38,5 @@ export type WorkerResponse<T> =
   | { type: "error"; requestId: WorkerRequestId; error: string };
 
 export type WallWorkerResponse = WorkerResponse<WallSimulation>;
-export type SimulationWorkerResponse = WorkerResponse<RecipeBatchResult | CoreEvaluation[]>;
+export type FormulaWorkerResponse = WorkerResponse<RecipeBatchResult>;
+export type CoreWorkerResponse = WorkerResponse<CoreEvaluation[]>;

@@ -1,5 +1,9 @@
-import type { AtlasSnapshot, CoreCase, FormulaRecord, PlotFigure, WallInput } from '../../src/composables/atlasEngine'
+import type { CoreRecord } from '../../src/registries/coreRegistry'
+import type { CoverageRow } from '../../src/registries/completionRegistry'
+import type { FormulaRecord } from '../../src/registries/formulaRegistry'
+import type { WallInput } from '../../src/registries/wallRegistry'
 import type { TaxonomyArtifact } from '../../src/types/engine'
+import type { PlotFigure } from '../../src/types/plot'
 
 export const figure: PlotFigure = {
   data: [{ x: [0, 1, 2], y: [1, 2, 3], type: 'scatter', mode: 'lines' }],
@@ -42,7 +46,7 @@ export function formula(ordinal: number, overrides: Partial<FormulaRecord> = {})
   }
 }
 
-export const coreCase: CoreCase = {
+export const coreCase: CoreRecord = {
   id: 'planck-surface',
   title: 'Planck complex surface',
   family: 'planck-complex',
@@ -105,16 +109,10 @@ export const taxonomy: TaxonomyArtifact = {
   },
 }
 
-export function snapshot(complete = true): AtlasSnapshot {
-  return {
-    formulas: [formula(1), formula(2), formula(3)],
-    coreCases: [coreCase],
-    walls: [wall],
-    coverage: [
-      { key: 'recipes', label: 'Formula recipes', expected: 3, implemented: complete ? 3 : 2, evaluated: 3, graphed: 3, simulatable: 0 },
-      { key: 'core', label: 'Core cases', expected: 1, implemented: 1, evaluated: 1, graphed: 1, simulatable: 1 },
-      { key: 'walls', label: 'Number-wall inputs', expected: 1, implemented: 1, evaluated: 0, graphed: 0, simulatable: 1 },
-    ],
-    taxonomy,
-  }
+export function coverage(complete = true): CoverageRow[] {
+  return [
+    { key: 'recipes', label: 'Formula recipes', expected: 3, implemented: complete ? 3 : 2, evaluated: 3, graphed: 3, simulatable: 0 },
+    { key: 'core', label: 'Core cases', expected: 1, implemented: 1, evaluated: 1, graphed: 1, simulatable: 1 },
+    { key: 'walls', label: 'Number-wall inputs', expected: 1, implemented: 1, evaluated: 0, graphed: 0, simulatable: 1 },
+  ]
 }
