@@ -59,7 +59,15 @@ const METHOD_RELATIONSHIPS = new Set(METHOD_RELATIONSHIP_IDS)
 const MODEL_ORIGINS = new Set(MODEL_ORIGIN_IDS)
 const LESSON_BLOCK_KINDS = new Set(['prose', 'definition', 'list', 'caveat', 'derivation'])
 const CHECKPOINT_KINDS = new Set(['prediction', 'classification', 'explanation'])
-const OBSERVATION_ITEM_ROLES = new Set(['fixed-definition', 'practical-realization'])
+const OBSERVATION_ITEM_ROLES = new Set([
+  'fixed-definition',
+  'measured-reference',
+  'derived-model-value',
+  'conventional-value',
+  'model-input',
+  'illustrative-scale',
+  'practical-realization',
+])
 const INPUT_ROLES = new Set(['parameter', 'preset-selection', 'coordinate-selection', 'display-option', 'target-quantity', 'canonical-quantity-value', 'fixed-constant', 'calibrated-input', 'nuisance-parameter', 'held-out-observable'])
 const OUTPUT_TYPES = new Set(['operation-status', 'rational-dimension-vector', 'boolean', 'string', 'number'])
 const DIMENSION_AXES = ['time', 'length', 'mass', 'electric-current', 'thermodynamic-temperature', 'amount-of-substance', 'luminous-intensity']
@@ -68,6 +76,7 @@ const DATASET_STATES = new Set(['not-applicable', 'not-loaded', 'loaded', 'preco
 const DATASET_PURPOSES = new Set(['calibration', 'comparison', 'held-out-evaluation', 'visualization'])
 const REFERENCE_CLASSIFICATIONS = new Set(['primary-standard', 'reference-data', 'textbook', 'source-corpus', 'internal-policy'])
 const ACCESS_STATUSES = new Set(['verified-accessible', 'partially-accessible', 'blocked', 'not-checked'])
+const CURRENT_CONTENT_REVISION = '2026-07-27'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -193,7 +202,11 @@ function simulationOwners(value: TourGeneratedManifest, loadedLessons = lessons)
 }
 
 export function parseTourManifest(value: unknown): TourGeneratedManifest {
-  return parseTourOfflineManifest(value)
+  const parsed = parseTourOfflineManifest(value)
+  if (parsed.contentRevision !== CURRENT_CONTENT_REVISION) {
+    fail('Tour manifest.contentRevision', `must be ${CURRENT_CONTENT_REVISION} for the current content summary`)
+  }
+  return parsed
 }
 
 function validateChapter(value: unknown, path: string): asserts value is Record<string, unknown> {
@@ -518,7 +531,7 @@ function validateLimits(value: unknown, path: string): void {
   requireRecord(value, path)
   if (value.tier === 'immediate') {
     requireExactKeys(value, ['tier', 'maxOperations', 'maxDurationMs'], [], path)
-    if (value.maxOperations !== 1) fail(`${path}.maxOperations`, 'must be 1 for immediate tier')
+    requirePositiveInteger(value.maxOperations, `${path}.maxOperations`)
     requirePositiveInteger(value.maxDurationMs, `${path}.maxDurationMs`)
   } else if (value.tier === 'local-worker') {
     requireExactKeys(value, ['tier', 'maxOperations', 'maxDurationMs', 'maxIterations'], [], path)
@@ -791,9 +804,9 @@ export function validateTourOfflinePackResources(
       loadedLessons.set(lessonId, lesson)
     }
   }
-  const simulationIds = [...new Set(ownerManifest.quickStations
-    .filter(({ status, simulationId }) => status === 'content-ready' && simulationId !== null)
-    .map(({ simulationId }) => simulationId!))]
+  const simulationIds = [...new Set([...loadedLessons.values()]
+    .map(({ simulationId }) => simulationId)
+    .filter((simulationId): simulationId is string => simulationId !== null))]
   for (const simulationId of simulationIds) {
     parseSimulation(resourceEndingWith(resources, `/data/generated/tour/simulations/${simulationId}.json`), simulationId, ownerManifest, loadedLessons)
   }

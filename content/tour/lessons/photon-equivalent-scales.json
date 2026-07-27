@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "id": "photon-equivalent-scales",
+  "chapterId": "unit-bridges",
+  "order": 1,
+  "title": "One photon, several carefully labeled scales",
+  "question": "How can one stated photon frequency determine energy and vacuum wavelength, then support equivalent mass and temperature labels without changing what the photon is?",
+  "answerPreview": "Use E_gamma = h nu and lambda_vac = c/nu for the photon and its vacuum propagation, then label E_gamma/c^2 and E_gamma/k_B only as equivalent scales, not photon rest mass or a thermal state.",
+  "summary": "Keep photon vacuum identities separate from energy-equivalent mass and temperature coordinates, preserve the stated input-frequency uncertainty boundary, and avoid physical-state claims that the equations do not support.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022"],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+    "sourceLocator": "Deep curriculum, Chapter 5; fixed h, c, and k_B; photon bridge scope",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["The lesson specifies identity calculations for a stated frequency and contains no source-time evaluated output."]
+  },
+  "estimatedMinutes": 7,
+  "quickPath": {
+    "estimatedMinutes": 3,
+    "guidedBlockIds": ["photon-vacuum-identities", "equivalent-label-boundary"],
+    "equationStepIds": ["photon-energy-rung", "vacuum-wavelength-rung", "equivalent-label-rung"],
+    "checkpointIds": ["equivalent-mass-check"],
+    "simulationPresetId": "visible-blue"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": ["physical-quantities"],
+  "observationStage": {
+    "title": "Exact International System of Units (SI) constants used by the bridge",
+    "question": "Which constants are exact, and what information must still come from the source?",
+    "items": [
+      {
+        "id": "photon-planck-constant",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes h exactly; multiplying it by a stated cyclic frequency gives one photon's energy through E_gamma = h nu.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "photon-light-speed",
+        "label": "Speed of light in vacuum",
+        "value": 299792458,
+        "unit": "m s^-1",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes c exactly; lambda_vac = c/nu applies to propagation in vacuum.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "photon-boltzmann-constant",
+        "label": "Boltzmann constant",
+        "value": 1.380649e-23,
+        "unit": "J K^-1",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes k_B exactly; dividing energy by k_B labels an equivalent temperature scale without specifying a thermal ensemble.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      }
+    ],
+    "conclusion": "The bridge constants have exact SI values, but the frequency is a stated input or illustrative preset. Without an input-frequency uncertainty, the activity reports no propagated uncertainty and does not turn a source choice into an exact spectral observation.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+      "sourceLocator": "Fixed h, c, and k_B; photon bridge input contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Exact constants do not make a measured or illustrative input frequency exact."]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "photon-vacuum-identities",
+      "kind": "prose",
+      "title": "Start with the photon and vacuum equations",
+      "body": [
+        "A photon with stated cyclic frequency nu has energy E_gamma = h nu.",
+        "For propagation in vacuum, its wavelength is lambda_vac = c/nu. A wavelength in matter would require the material response and is not this vacuum identity.",
+        "The radio, microwave, visible-blue, X-ray, and gamma-ray choices are illustrative presets. Spectral-band boundaries are conventions, not SI definitions."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "unit"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Fixed h and c; photon energy and vacuum propagation relationships",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The activity uses cyclic frequency, not angular frequency."]
+    },
+    {
+      "id": "equivalent-label-boundary",
+      "kind": "caveat",
+      "title": "Equivalent is a label, not a new physical state",
+      "body": [
+        "Dividing the photon energy by c squared gives an energy-equivalent mass scale m_equiv = E_gamma/c^2.",
+        "That label does not assign a nonzero rest mass to the photon. A photon in vacuum is not being placed at rest by this conversion.",
+        "Dividing by k_B gives T_equiv = E_gamma/k_B. This compares energy coordinates; it does not claim that the photon is a thermal system or that a material has that temperature."
+      ],
+      "glossaryIds": ["quantity-kind", "unit", "coordinate-system"],
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Chapter 5 equivalent-scale labeling boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Mass-equivalent and temperature-equivalent values are not independent observations."]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "four-representation-map",
+      "kind": "derivation",
+      "title": "The bridge is one algebraic map",
+      "body": [
+        "For a positive stated nu, direct substitution gives E_gamma = h nu and lambda_vac = c/nu.",
+        "Substituting E_gamma gives m_equiv = h nu/c^2 and T_equiv = h nu/k_B. All four outputs therefore share one input and are correlated identities, not four independent measurements.",
+        "The implementation evaluates each expression once with finite floating-point arithmetic and does not fit parameters or load a dataset."
+      ],
+      "glossaryIds": ["quantity-value", "dimension", "coordinate-system"],
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-photon-bridge-v1 contract",
+      "sourceLocator": "Photon bridge equation and immediate-evaluation contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Finite floating-point values are not mathematically exact digit strings even when the SI constants are exact."]
+    },
+    {
+      "id": "uncertainty-and-domain",
+      "kind": "caveat",
+      "title": "The source frequency controls the uncertainty boundary",
+      "body": [
+        "If nu has relative standard uncertainty u(nu)/nu, then these one-input identities inherit that relative uncertainty in E_gamma, m_equiv, and T_equiv; lambda_vac has the same relative magnitude under first-order propagation.",
+        "The activity accepts no uncertainty field, so it must not invent output uncertainties or describe the values as measured results.",
+        "The vacuum wavelength equation excludes dispersion and refractive index. Equivalent temperature excludes occupation statistics, emissivity, and thermodynamic equilibrium."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "quantity-kind"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022 adjustment; tour content contract 2026-07-26",
+      "sourceLocator": "Uncertainty reporting convention and photon bridge domain boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["First-order relative-uncertainty statements assume the one-variable identity model and a sufficiently small input uncertainty."]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "photon-energy-rung",
+      "label": "Photon energy",
+      "expression": "E_gamma = h nu",
+      "explanation": "The stated cyclic frequency and exact SI Planck constant determine the energy assigned to one photon by the established relationship.",
+      "claimClass": "established-model",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Planck constant and photon energy-frequency relationship",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["nu is cyclic frequency in hertz."]
+    },
+    {
+      "id": "vacuum-wavelength-rung",
+      "label": "Vacuum wavelength",
+      "expression": "lambda_vac = c/nu",
+      "explanation": "This wavelength follows for propagation in vacuum and does not describe wavelength in a dispersive medium.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Fixed c and vacuum propagation relationship",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Material wavelength requires a refractive model outside this activity."]
+    },
+    {
+      "id": "equivalent-mass-rung",
+      "label": "Energy-equivalent mass scale",
+      "expression": "m_equiv = E_gamma/c^2 = h nu/c^2",
+      "explanation": "The expression converts the photon energy to a mass coordinate and is explicitly not a photon rest-mass assignment.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+      "sourceLocator": "Energy-mass equivalence and Chapter 5 labeling boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["A vacuum photon has no rest frame in which this value becomes rest mass."]
+    },
+    {
+      "id": "equivalent-label-rung",
+      "label": "Energy-equivalent temperature scale",
+      "expression": "T_equiv = E_gamma/k_B = h nu/k_B",
+      "explanation": "The expression labels the temperature coordinate whose k_B T energy scale equals E_gamma; it specifies no thermal distribution or state.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+      "sourceLocator": "Fixed k_B and Chapter 5 labeling boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Equivalent temperature is not a thermodynamic-state claim."]
+    }
+  ],
+  "simulationId": "photon-scale-converter",
+  "formulaIds": ["h", "c", "k_B"],
+  "programIds": [],
+  "glossaryIds": ["physical-quantity", "quantity-value", "quantity-kind", "unit", "dimension", "coordinate-system"],
+  "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022"],
+  "checkpoints": [
+    {
+      "id": "equivalent-mass-check",
+      "kind": "classification",
+      "prompt": "The converter reports m_equiv = E_gamma/c^2 for a blue photon. What does m_equiv mean?",
+      "choices": [
+        { "id": "rest-mass", "label": "The photon's nonzero rest mass" },
+        { "id": "energy-coordinate", "label": "An energy-equivalent mass scale" },
+        { "id": "measured-particle", "label": "A separately measured particle mass" }
+      ],
+      "answerId": "energy-coordinate",
+      "explanation": "m_equiv is the stated photon energy divided by c squared. It is a labeled equivalent scale, not photon rest mass.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+        "sourceLocator": "Energy-equivalent mass labeling boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored checkpoint is ungraded and stores no learner result."]
+      }
+    },
+    {
+      "id": "equivalent-temperature-check",
+      "kind": "explanation",
+      "prompt": "What additional information would be needed to claim that radiation is in a thermal state?",
+      "choices": [
+        { "id": "none", "label": "None; E_gamma/k_B already proves it" },
+        { "id": "state-model", "label": "A thermodynamic model and evidence for the radiation state" },
+        { "id": "rest-frame", "label": "Only a photon rest frame" }
+      ],
+      "answerId": "state-model",
+      "explanation": "An equivalent energy scale does not specify a distribution, equilibrium, occupation statistics, or empirical state evidence.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["codata-2022", "opensimphy-scientific-scope"],
+        "sourceRevision": "CODATA 2022 adjustment; tour content contract 2026-07-26",
+        "sourceLocator": "Equivalent-temperature scientific boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored checkpoint is ungraded and is not evidence about a radiation field."]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The activity supplies one bounded positive frequency and displays photon energy, vacuum wavelength, equivalent mass scale, and equivalent temperature scale with explicit labels.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9"],
+        "sourceRevision": "tour-photon-bridge-v1 contract; BIPM SI Brochure 2026 update",
+        "sourceLocator": "photon-scale-converter controls and output contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Preset frequencies are illustrative source choices, not exact definitions of spectral bands."]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "When evaluated, direct substitution applies E_gamma = h nu, lambda_vac = c/nu, m_equiv = E_gamma/c^2, and T_equiv = E_gamma/k_B once.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+        "sourceRevision": "tour-photon-bridge-v1 contract; BIPM SI Brochure 2026 update",
+        "sourceLocator": "Photon bridge direct-evaluation equations",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The source record declares the computation but contains no runtime values."]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "The exact SI numerical values of h, c, and k_B are source references; no external photon-spectrum result is reproduced.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["bipm-si-brochure-9"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "SI defining constants",
+        "methodRelationship": "literal-reproduction",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Illustrative preset frequencies are not reproduced measurements."]
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No empirical spectrum, source-frequency uncertainty, or held-out measurement is loaded or compared.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "codata-2022"],
+        "sourceRevision": "tour content contract 2026-07-26; CODATA 2022 adjustment",
+        "sourceLocator": "Photon bridge dataset and uncertainty boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Agreement among algebraically linked outputs is not an empirical comparison."]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For a stated frequency, an evaluated run establishes values satisfying the four displayed identities to finite floating-point precision.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "tour-photon-bridge-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Photon bridge finding contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["No input-frequency uncertainty is represented or propagated."]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The bridge does not establish photon rest mass, a photon rest frame, a thermal state, spectral-band boundaries, or empirical validation of the identities.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "tour content contract 2026-07-26; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Chapter 5 conclusion boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Equivalent mass and temperature are coordinate labels derived from the same photon energy."]
+      }
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "id": "spin-precession-visualizer",
+  "lessonId": "spin-precession",
+  "title": "Spin-precession visualizer",
+  "question": "How do signed gamma/(2 pi), field magnitude, and time determine signed cyclic frequency, angular frequency, and phase in the declared model?",
+  "predictionPrompt": "Under phi = -omega t with B along positive z, predict clockwise or counterclockwise rotation for the selected signed gamma; keep omega = 2 pi f explicit.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+  "sourceRevision": "CODATA 2022 adjustment; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+  "sourceLocator": "Signed free-particle gamma/(2 pi) values; OpenStax sections 8.2-8.3; Chapter 9 moment-field limits",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "The unit-circle marker is phase-model output, not an observed classical spin trajectory.",
+    "No relaxation, shielding, material response, environmental coupling, or detector measurement is represented."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "signed-free-particle-moment-field-phase-1",
+    "implementationRevision": "tour-spin-precession-engine-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Bounded signed precession phase evaluation",
+    "description": "Evaluates signed cyclic and angular frequencies, period, phase, and 2-128 deterministic unit-circle samples.",
+    "deterministic": true,
+    "implementationRef": "src/tour/spinPrecessionEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "signed-free-particle-ratios",
+      "label": "Signed free-particle cyclic gyromagnetic ratios",
+      "modelOrigin": "established-physics",
+      "description": "Supplies signed gamma/(2 pi) in Hz per tesla for electron, free proton, and negative muon.",
+      "attribution": {
+        "claimClass": "observed-value",
+        "evidenceRefs": ["codata-2022"],
+        "sourceRevision": "CODATA 2022 adjustment",
+        "sourceLocator": "gamma/(2 pi) entries for electron, free proton, and negative muon",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The ratios are model inputs; their uncertainties are not propagated."]
+      }
+    },
+    {
+      "id": "moment-field-phase-model",
+      "label": "Moment-field phase model",
+      "modelOrigin": "established-physics",
+      "description": "Uses mu = gamma S and H = -mu dot B with phi = -omega t to evolve transverse phase in a static uniform field along positive z.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["openstax-university-physics-v3", "opensimphy-scientific-scope"],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+        "sourceLocator": "OpenStax sections 8.2-8.3; Deep curriculum Chapter 9 technical extension",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The activity does not derive gamma from a microscopic particle model."]
+      }
+    },
+    {
+      "id": "signed-phase-projection",
+      "label": "Signed phase and unit-circle projection",
+      "modelOrigin": "established-physics",
+      "description": "Converts cyclic to angular frequency exactly once, applies phi = -omega t, and projects signed phase to x=cos(phi), y=sin(phi).",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "tour-spin-precession-engine-v1 contract",
+        "sourceLocator": "Frequency, phase, period, and sample output definitions",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The coordinates are visualization state, not detector samples."]
+      }
+    }
+  ],
+  "equations": [
+    "mu = gamma S; H = -mu dot B",
+    "f = (gamma/(2 pi)) B; omega = 2 pi f = gamma B",
+    "phi(t) = -omega t; phaseCycles = -f * t; T = 1/|f|; x = cos(phi); y = sin(phi)"
+  ],
+  "assumptions": [
+    "A static uniform magnetic field points along positive z and the control supplies its positive magnitude from 10^-6 through 20 T.",
+    "The selected catalog ratio is the signed free-particle gamma/(2 pi), not angular gamma and not a shielded material value.",
+    "The particle starts at phase zero and uses phi=-omega t, x=cos(phi), y=sin(phi).",
+    "Time is bounded from 0 through 10 s and sample count from 2 through 128 including both endpoints.",
+    "Relaxation, shielding, field gradients, interactions, material response, detector signals, and uncertainty are omitted."
+  ],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "coordinate-system"],
+  "controls": [
+    {
+      "id": "particle",
+      "label": "Free particle",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects one engine catalog particle and its signed cyclic gamma/(2 pi) value.",
+      "default": "proton",
+      "playfulPrompt": "Switch sign and watch the declared phase convention reverse direction.",
+      "options": [
+        { "value": "electron", "label": "Electron", "description": "negative signed cyclic ratio" },
+        { "value": "proton", "label": "Free proton", "description": "positive unshielded cyclic ratio" },
+        { "value": "muon", "label": "Negative muon", "description": "negative signed cyclic ratio" }
+      ]
+    },
+    {
+      "id": "magneticFieldTesla",
+      "label": "Magnetic field magnitude",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Sets a positive static uniform field magnitude along the declared positive z axis.",
+      "default": 1,
+      "unit": "T",
+      "min": 0.000001,
+      "max": 20,
+      "step": 0.000001,
+      "playfulPrompt": "Double the field and predict both frequency magnitudes."
+    },
+    {
+      "id": "timeSeconds",
+      "label": "Elapsed model time",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Sets elapsed phase-evolution time within the engine bound.",
+      "default": 0.000001,
+      "unit": "s",
+      "min": 0,
+      "max": 10,
+      "step": 0.000000001,
+      "playfulPrompt": "Advance model time without calling the marker a detector trace."
+    },
+    {
+      "id": "sampleCount",
+      "label": "Phase sample count",
+      "type": "range",
+      "inputRole": "display-option",
+      "readingDepth": "technical",
+      "description": "Sets the deterministic table and unit-circle sample count, including both time endpoints.",
+      "default": 64,
+      "unit": "samples",
+      "min": 2,
+      "max": 128,
+      "step": 1,
+      "playfulPrompt": "Change display resolution without changing the endpoint phase."
+    }
+  ],
+  "presets": [
+    {
+      "id": "proton-nmr-1t",
+      "label": "Free proton at 1 T",
+      "description": "Maps to the engine's conventional free-proton 1 T state for 1 microsecond; it is not a material-specific nuclear magnetic resonance (NMR) line.",
+      "inspectionPrompt": "Convert about 42.58 MHz to angular frequency with one explicit factor 2 pi.",
+      "inputs": { "particle": "proton", "magneticFieldTesla": 1, "timeSeconds": 0.000001, "sampleCount": 64 }
+    },
+    {
+      "id": "proton-nmr-3t",
+      "label": "Free proton at 3 T",
+      "description": "Maps to the engine's conventional free-proton 3 T state for 1 microsecond without shielding or material response.",
+      "inspectionPrompt": "Predict the factor-of-three change in f and omega before revealing it.",
+      "inputs": { "particle": "proton", "magneticFieldTesla": 3, "timeSeconds": 0.000001, "sampleCount": 64 }
+    },
+    {
+      "id": "electron-resonance",
+      "label": "Electron reference at 0.34 T",
+      "description": "Maps to the engine electron resonance reference state for 1 nanosecond; no material g-tensor is modeled.",
+      "inspectionPrompt": "Predict the negative signed frequencies and counterclockwise marker under phi = -omega t.",
+      "inputs": { "particle": "electron", "magneticFieldTesla": 0.34, "timeSeconds": 0.000000001, "sampleCount": 64 }
+    },
+    {
+      "id": "earth-ish",
+      "label": "Earth-ish free-proton field",
+      "description": "Uses a representative 50 microtesla input for 1 millisecond, not a local geomagnetic measurement.",
+      "inspectionPrompt": "Keep the field labeled as a conventional input rather than observed data.",
+      "inputs": { "particle": "proton", "magneticFieldTesla": 0.00005, "timeSeconds": 0.001, "sampleCount": 64 }
+    }
+  ],
+  "outputSchema": [
+    { "id": "signedCyclicGammaHzPerTesla", "label": "Signed gamma divided by 2 pi", "type": "number", "unit": "Hz T^-1", "nullable": false, "description": "Selected signed free-particle cyclic gyromagnetic ratio; not angular gamma." },
+    { "id": "signedCyclicFrequencyHz", "label": "Signed cyclic frequency", "type": "number", "unit": "Hz", "nullable": false, "description": "f = (gamma/(2 pi))B retaining the catalog sign." },
+    { "id": "cyclicFrequencyMagnitudeHz", "label": "Cyclic frequency magnitude", "type": "number", "unit": "Hz", "nullable": false, "description": "Absolute value |f| used for the positive reciprocal period." },
+    { "id": "angularFrequencyRadPerSecond", "label": "Signed angular frequency", "type": "number", "unit": "rad s^-1", "nullable": false, "description": "omega = 2 pi f with sign retained and the conversion applied exactly once." },
+    { "id": "angularFrequencyMagnitudeRadPerSecond", "label": "Angular frequency magnitude", "type": "number", "unit": "rad s^-1", "nullable": false, "description": "Absolute value |omega| reported separately from signed angular frequency." },
+    { "id": "periodSeconds", "label": "Positive period", "type": "number", "unit": "s", "nullable": false, "description": "1/|f|, positive for every catalog sign." },
+    { "id": "phaseRadians", "label": "Signed endpoint phase", "type": "number", "unit": "rad", "nullable": false, "description": "Negative omega times selected elapsed model time: phi = -omega t." },
+    { "id": "phaseCycles", "label": "Signed endpoint cycles", "type": "number", "unit": "cycles", "nullable": false, "description": "Negative signed cyclic frequency times selected elapsed model time: phaseCycles = -f * t, linked to phaseRadians by 2 pi." },
+    { "id": "rotationSense", "label": "Rotation sense", "type": "string", "unit": null, "nullable": false, "description": "Clockwise for positive omega and counterclockwise for negative omega under phi = -omega t in the stated x-y projection." }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render parallel model findings without merging phases or calculating measurement residuals when compatibility keys differ."
+  },
+  "visualization": {
+    "kind": "signed-unit-circle-phase",
+    "description": "Shows a bounded unit-circle phase marker, rotation-sense label, signed cyclic frequency, signed angular frequency, and positive period.",
+    "alternatives": [
+      { "type": "text", "description": "A sentence states particle, field input, signed gamma/(2 pi), signed f, signed omega, positive period, endpoint phase, rotation convention, and omitted physics." },
+      { "type": "table", "description": "A table lists 2-128 deterministic samples with index, model time, signed phase, x, and y, including both endpoints." }
+    ],
+    "reducedMotionBehavior": "Render the endpoint marker, direction label, and complete sample table immediately without animated rotation."
+  },
+  "finding": {
+    "changed": "At runtime, particle sign sets rotation sense, field scales both frequencies linearly, time sets endpoint phase, and sample count changes only visualization resolution.",
+    "cause": "The moment-field phase model multiplies signed gamma/(2 pi) by positive B, converts cyclic to angular frequency with exactly one factor 2 pi, and applies the declared phase sign phi = -omega t.",
+    "equation": "mu = gamma S; H = -mu dot B; f = (gamma/(2 pi))B; omega = 2 pi f; phi = -omega t; phaseCycles = -f * t",
+    "assumptions": [
+      "Static uniform field along positive z with positive magnitude",
+      "Signed free-particle cyclic gamma/(2 pi) catalog input",
+      "Initial phase zero with phi=-omega t and x=cos(phi), y=sin(phi)"
+    ],
+    "establishes": "For an evaluated state, the declared model computes signed cyclic and angular frequencies, positive period, signed phase, rotation sense, and bounded visualization samples.",
+    "doesNotEstablish": "An observed resonance, relaxation, shielding, material or composite response, detector signal, fitted uncertainty, or validation of a magnetic-moment or geometric particle theory.",
+    "claimClass": "established-model",
+    "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+    "sourceRevision": "CODATA 2022; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+    "sourceLocator": "Spin precession equations, controls, outputs, OpenStax sections 8.2-8.3, and Chapter 9 limits",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Signed cyclic and angular frequencies encode rotation sense only after applying the stated axis and phi=-omega t phase convention.",
+      "The period uses magnitude and remains positive.",
+      "No T1/T2 relaxation, shielding, anisotropic response, material response, field gradient, interaction, or detector model is included.",
+      "Preset fields are conventional model inputs, not measurements."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 16
+  }
+}

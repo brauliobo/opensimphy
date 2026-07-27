@@ -3,6 +3,32 @@ import { expect, test, type Page } from '@playwright/test'
 const FULL_LESSON = '/tour/units/physical-quantities'
 const QUICK_LESSON = `${FULL_LESSON}?path=quick`
 const LESSON_SECTION_HASHES = ['#question', '#observe', '#explain', '#equation-ladder', '#try', '#interpret']
+const SCIENTIFIC_NUMBER = /[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i
+
+interface QuickStationCase {
+  id: string
+  path: string
+  simulationId: string
+  minutes: 3 | 4
+  instrumentTestId: string
+  predictionTestId: string
+  revealTestId: string
+  resultTestId: string
+  staleTestId: string
+  resetTestId: string
+  assertResult: (page: Page) => Promise<void>
+  changeInput: (page: Page) => Promise<void>
+}
+
+interface InstrumentCase {
+  name: string
+  path: string
+  instrumentTestId: string
+  predictionTestId: string
+  revealTestId: string
+  resultTestId: string
+  svgTestId?: string
+}
 
 async function gotoLesson(page: Page, path = FULL_LESSON): Promise<void> {
   await page.goto(path)
@@ -14,13 +40,189 @@ async function expectNoDocumentOverflow(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0)
 }
 
-async function expectNoDocumentOverflowSoft(page: Page, path: string): Promise<void> {
-  const { clientWidth, scrollWidth } = await page.evaluate(() => ({
-    clientWidth: document.documentElement.clientWidth,
-    scrollWidth: document.documentElement.scrollWidth,
-  }))
-  expect.soft(scrollWidth, `${path} should fit its ${clientWidth}px CSS viewport`).toBeLessThanOrEqual(clientWidth)
+async function expectFiniteOutput(page: Page, testId: string): Promise<number> {
+  const text = await page.getByTestId(testId).innerText()
+  const match = text.match(SCIENTIFIC_NUMBER)
+  expect(match, `${testId} should expose a finite numeric output`).not.toBeNull()
+  const value = Number(match![0])
+  expect(Number.isFinite(value), `${testId} should expose a finite numeric output`).toBe(true)
+  return value
 }
+
+const quickStations: QuickStationCase[] = [
+  {
+    id: 'anchors-scales',
+    path: '/tour/units/physical-quantities?path=quick',
+    simulationId: 'dimensional-equation-builder',
+    minutes: 4,
+    instrumentTestId: 'dimension-builder',
+    predictionTestId: 'prediction-matches-target',
+    revealTestId: 'reveal-dimension-result',
+    resultTestId: 'dimension-result',
+    staleTestId: 'prediction-stale',
+    resetTestId: 'reset-dimension-builder',
+    assertResult: async (page) => {
+      await expect(page.getByTestId('operation-status')).toHaveText('Defined')
+      await expect(page.getByTestId('target-match')).toContainText('Dimensions match')
+      await expectFiniteOutput(page, 'coordinate-value')
+    },
+    changeInput: async (page) => page.getByTestId('preset-force-from-motion').click(),
+  },
+  {
+    id: 'unit-bridges',
+    path: '/tour/unit-bridges/photon-equivalent-scales?path=quick',
+    simulationId: 'photon-scale-converter',
+    minutes: 3,
+    instrumentTestId: 'photon-bridge',
+    predictionTestId: 'photon-prediction-wavelength-falls',
+    revealTestId: 'reveal-photon-bridge',
+    resultTestId: 'photon-bridge-result',
+    staleTestId: 'photon-prediction-stale',
+    resetTestId: 'reset-photon-bridge',
+    assertResult: async (page) => {
+      await expectFiniteOutput(page, 'photon-frequency-result')
+      await expect(page.getByTestId('photon-equivalence-caveat')).toContainText('not photon rest mass')
+      await expect(page.getByTestId('photon-equivalence-caveat')).toContainText('not a thermodynamic state')
+    },
+    changeInput: async (page) => page.getByTestId('photon-preset-x-ray').click(),
+  },
+  {
+    id: 'electrical-standards',
+    path: '/tour/electrical-standards/quantum-electrical-standards?path=quick',
+    simulationId: 'electrical-standards-network',
+    minutes: 3,
+    instrumentTestId: 'electrical-standards-network',
+    predictionTestId: 'electrical-prediction-mixed-status',
+    revealTestId: 'reveal-electrical-standards',
+    resultTestId: 'electrical-standards-result',
+    staleTestId: 'electrical-prediction-stale',
+    resetTestId: 'reset-electrical-standards',
+    assertResult: async (page) => {
+      await expectFiniteOutput(page, 'electrical-charge-result')
+      await expect(page.getByTestId('electrical-standards-table')).toContainText('current exact SI')
+      await expect(page.getByTestId('electrical-standards-table')).toContainText('Historical 1990 conventional value')
+    },
+    changeInput: async (page) => {
+      await page.locator('.tour-lesson-controls').getByTestId('reading-depth-technical').check()
+      await page.getByTestId('electrical-preset-josephson').click()
+      await expect(page.getByTestId('electrical-frequency')).toBeEnabled()
+      expect(Number(await page.getByTestId('electrical-frequency').inputValue())).toBeGreaterThan(0)
+      await expect(page.getByTestId('electrical-direction-results')).toContainText('Josephson voltage from frequency')
+    },
+  },
+  {
+    id: 'atoms-materials',
+    path: '/tour/atomic-structure/hydrogen-spectra?path=quick',
+    simulationId: 'hydrogen-spectrum-explorer',
+    minutes: 4,
+    instrumentTestId: 'atomic-spectrum-explorer',
+    predictionTestId: 'atomic-prediction-longer',
+    revealTestId: 'reveal-atomic-result',
+    resultTestId: 'atomic-result',
+    staleTestId: 'atomic-prediction-stale',
+    resetTestId: 'reset-atomic-explorer',
+    assertResult: async (page) => {
+      const proton = await expectFiniteOutput(page, 'atomic-proton-comparison-wavelength')
+      const infinite = await expectFiniteOutput(page, 'atomic-infinite-comparison-wavelength')
+      expect(proton).toBeGreaterThan(infinite)
+      await expect(page.getByTestId('atomic-prediction-comparison')).toContainText('The two align')
+    },
+    changeInput: async (page) => page.getByTestId('atomic-upper').fill('4'),
+  },
+  {
+    id: 'particles-mass',
+    path: '/tour/particle-scales/particle-mass-scales?path=quick',
+    simulationId: 'particle-scale-comparator',
+    minutes: 3,
+    instrumentTestId: 'particle-scale-comparator',
+    predictionTestId: 'particle-prediction-state-derived',
+    revealTestId: 'reveal-particle-result',
+    resultTestId: 'particle-result',
+    staleTestId: 'particle-prediction-stale',
+    resetTestId: 'reset-particle-comparator',
+    assertResult: async (page) => {
+      await expectFiniteOutput(page, 'particle-rest-energy')
+      await expectFiniteOutput(page, 'particle-de-broglie')
+      await expect(page.getByTestId('particle-prediction-comparison')).toContainText('momentum-state-derived outputs')
+    },
+    changeInput: async (page) => {
+      const before = await page.getByTestId('particle-de-broglie').innerText()
+      await page.getByTestId('particle-momentum').fill('2')
+      await expect(page.getByTestId('particle-de-broglie')).not.toHaveText(before)
+    },
+  },
+  {
+    id: 'spin-magnetism',
+    path: '/tour/spin-magnetism/spin-precession?path=quick',
+    simulationId: 'spin-precession-visualizer',
+    minutes: 3,
+    instrumentTestId: 'spin-precession-visualizer',
+    predictionTestId: 'spin-prediction-clockwise',
+    revealTestId: 'reveal-spin-result',
+    resultTestId: 'spin-result',
+    staleTestId: 'spin-prediction-stale',
+    resetTestId: 'reset-spin-visualizer',
+    assertResult: async (page) => {
+      expect(await expectFiniteOutput(page, 'spin-cyclic-frequency')).toBeGreaterThan(0)
+      await expect(page.getByTestId('spin-prediction-comparison')).toContainText('Result: clockwise')
+      await expect(page.getByTestId('spin-text-alternative')).toContainText('not a measured spin trajectory')
+    },
+    changeInput: async (page) => {
+      await page.getByTestId('spin-particle').selectOption('electron')
+      expect(await expectFiniteOutput(page, 'spin-cyclic-frequency')).toBeLessThan(0)
+      await expect(page.getByTestId('spin-result')).toContainText('counterclockwise')
+    },
+  },
+  {
+    id: 'heat-radiation',
+    path: '/tour/heat-matter/blackbody-radiation?path=quick',
+    simulationId: 'blackbody-spectrum',
+    minutes: 4,
+    instrumentTestId: 'blackbody-spectrum',
+    predictionTestId: 'blackbody-prediction-shorter-t4',
+    revealTestId: 'reveal-blackbody-result',
+    resultTestId: 'blackbody-result',
+    staleTestId: 'blackbody-prediction-stale',
+    resetTestId: 'reset-blackbody',
+    assertResult: async (page) => {
+      await expectFiniteOutput(page, 'blackbody-peak-value')
+      await expectFiniteOutput(page, 'blackbody-exitance-value')
+      await expect(page.getByTestId('blackbody-prediction-comparison')).toContainText('peak shifts to shorter wavelength')
+      await expect(page.getByTestId('blackbody-prediction-comparison')).toContainText('^4')
+    },
+    changeInput: async (page) => page.getByTestId('blackbody-preset-room').click(),
+  },
+  {
+    id: 'molar-matter',
+    path: '/tour/heat-matter/particle-to-mole?path=quick',
+    simulationId: 'particle-to-mole-scaler',
+    minutes: 3,
+    instrumentTestId: 'molar-matter-scaler',
+    predictionTestId: 'molar-prediction-all-linear',
+    revealTestId: 'reveal-molar-result',
+    resultTestId: 'molar-result',
+    staleTestId: 'molar-prediction-stale',
+    resetTestId: 'reset-molar',
+    assertResult: async (page) => {
+      await expect(page.getByTestId('molar-prediction-comparison')).toContainText('entity-count ratio 2')
+      await expect(page.getByTestId('molar-prediction-comparison')).toContainText('mass ratio 2')
+      await expect(page.getByTestId('molar-doubling-table')).toContainText('2x at the same T and p')
+    },
+    changeInput: async (page) => page.getByTestId('molar-amount').fill('2'),
+  },
+]
+
+const instruments: InstrumentCase[] = [
+  { name: 'dimension builder', path: FULL_LESSON, instrumentTestId: 'dimension-builder', predictionTestId: 'prediction-matches-target', revealTestId: 'reveal-dimension-result', resultTestId: 'dimension-result' },
+  { name: 'scale ruler', path: '/tour/anchors/clocks-action-light-gravity', instrumentTestId: 'scale-ruler', predictionTestId: 'scale-prediction-near-zero', revealTestId: 'reveal-scale-ruler', resultTestId: 'scale-ruler-result', svgTestId: 'scale-ruler-svg' },
+  { name: 'photon bridge', path: quickStations[1]!.path, instrumentTestId: 'photon-bridge', predictionTestId: 'photon-prediction-wavelength-falls', revealTestId: 'reveal-photon-bridge', resultTestId: 'photon-bridge-result', svgTestId: 'photon-bridge-svg' },
+  { name: 'electrical standards', path: quickStations[2]!.path, instrumentTestId: 'electrical-standards-network', predictionTestId: 'electrical-prediction-mixed-status', revealTestId: 'reveal-electrical-standards', resultTestId: 'electrical-standards-result', svgTestId: 'electrical-standards-svg' },
+  { name: 'atomic spectrum', path: quickStations[3]!.path, instrumentTestId: 'atomic-spectrum-explorer', predictionTestId: 'atomic-prediction-longer', revealTestId: 'reveal-atomic-result', resultTestId: 'atomic-result', svgTestId: 'atomic-svg' },
+  { name: 'particle scales', path: quickStations[4]!.path, instrumentTestId: 'particle-scale-comparator', predictionTestId: 'particle-prediction-state-derived', revealTestId: 'reveal-particle-result', resultTestId: 'particle-result', svgTestId: 'particle-svg' },
+  { name: 'spin precession', path: quickStations[5]!.path, instrumentTestId: 'spin-precession-visualizer', predictionTestId: 'spin-prediction-clockwise', revealTestId: 'reveal-spin-result', resultTestId: 'spin-result', svgTestId: 'spin-svg' },
+  { name: 'black-body spectrum', path: quickStations[6]!.path, instrumentTestId: 'blackbody-spectrum', predictionTestId: 'blackbody-prediction-shorter-t4', revealTestId: 'reveal-blackbody-result', resultTestId: 'blackbody-result', svgTestId: 'blackbody-spectrum-svg' },
+  { name: 'molar matter', path: quickStations[7]!.path, instrumentTestId: 'molar-matter-scaler', predictionTestId: 'molar-prediction-all-linear', revealTestId: 'reveal-molar-result', resultTestId: 'molar-result', svgTestId: 'molar-flow-svg' },
+]
 
 async function revealDimensionResult(page: Page, prediction: 'matches-target' | 'different-dimension' | 'operation-undefined'): Promise<void> {
   await page.getByTestId(`prediction-${prediction}`).check()
@@ -37,12 +239,14 @@ async function expectResumeLink(page: Page, testId: 'nav-resume' | 'overview-res
   return href!
 }
 
-test('a first-time Guided user starts the only content-ready quick station', async ({ page }) => {
+test('orientation exposes all eight content-ready quick stations', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByTestId('tour-ready')).toBeVisible()
 
   await expect(page.locator('.tour-station-tick')).toHaveCount(8)
-  await expect(page.locator('.tour-station-link')).toHaveCount(1)
+  await expect(page.locator('.tour-station-link')).toHaveCount(8)
+  await expect(page.locator('.tour-station-planned')).toHaveCount(0)
+  await expect(page.locator('.tour-station-link small:first-of-type')).toHaveText(quickStations.map(({ minutes }) => `${minutes} min / content-ready`))
   await expect(page.locator('.topic-door, .formula-list, [data-testid="coverage-status"]')).toHaveCount(0)
   await expect(page.locator('.home-hero').getByTestId('reading-depth-guided')).toBeChecked()
   await page.getByTestId('begin-tour').click()
@@ -61,6 +265,31 @@ test('a first-time Guided user starts the only content-ready quick station', asy
     '06 / Interpret',
   ])
 })
+
+for (const station of quickStations) {
+  test(`${station.id} completes its prediction-first quick-station journey`, async ({ page }) => {
+    const simulationResponse = page.waitForResponse((response) => new URL(response.url()).pathname.endsWith(`/data/generated/tour/simulations/${station.simulationId}.json`))
+    await gotoLesson(page, station.path)
+    await simulationResponse
+
+    await expect(page.getByText(`Quick station / ${station.minutes} min`, { exact: true })).toBeVisible()
+    await expect(page.getByTestId(station.instrumentTestId)).toBeVisible()
+    await expect(page.getByTestId(station.revealTestId)).toBeDisabled()
+    await page.getByTestId(station.predictionTestId).check()
+    await page.getByTestId(station.revealTestId).click()
+    await expect(page.getByTestId(station.resultTestId)).toBeVisible()
+    await station.assertResult(page)
+
+    await station.changeInput(page)
+    await expect(page.getByTestId(station.staleTestId)).toBeVisible()
+    await expect(page.getByTestId(station.predictionTestId)).not.toBeChecked()
+
+    await page.getByTestId(station.resetTestId).click()
+    await expect(page.getByTestId(station.resultTestId)).toHaveCount(0)
+    await expect(page.getByTestId(station.staleTestId)).toHaveCount(0)
+    await expect(page.getByTestId(station.revealTestId)).toBeDisabled()
+  })
+}
 
 test('the prediction-first dimension builder distinguishes valid, mismatched-kind, and undefined presets', async ({ page }) => {
   await gotoLesson(page)
@@ -190,22 +419,89 @@ test('visiting a lesson in a fresh browser context does not complete it', async 
   await expect(summary.locator('dd')).toHaveText(['1', '0', '0'])
 })
 
-test('the full map has four acts, 20 chapters, one available lesson, and honest planned chapters', async ({ page }) => {
+test('the full map reports eight ready chapters, nine lessons, and 12 honest planned chapters', async ({ page }) => {
   await page.goto('/tour')
   await expect(page.getByTestId('tour-map-ready')).toBeVisible()
   await expect(page.locator('.tour-act')).toHaveCount(4)
   await expect(page.locator('.tour-chapter-spine li')).toHaveCount(20)
-  await expect(page.getByRole('link', { name: /Units, Dimensions, and Physical Quantities/ })).toContainText('Available')
+  await expect(page.locator('.tour-chapter-spine small').filter({ hasText: /^Available/ })).toHaveCount(8)
+  await expect(page.locator('.tour-chapter-spine small').filter({ hasText: /^Planned overview/ })).toHaveCount(12)
+  expect(await page.evaluate(() => window.__OPENSIMPHY_AUDIT__?.tour)).toEqual(expect.objectContaining({
+    status: 'ready',
+    manifest: { chapters: 20, lessons: 9, simulations: 9, quickStations: 8 },
+  }))
 
   await page.getByRole('link', { name: /Units, Dimensions, and Physical Quantities/ }).click()
   await expect(page.getByRole('heading', { name: 'Units, Dimensions, and Physical Quantities' })).toBeVisible()
   await expect(page.getByRole('link', { name: /Physical quantities/ })).toHaveAttribute('href', FULL_LESSON)
 
-  await page.goto('/tour/anchors')
-  await expect(page.getByRole('heading', { name: 'Clocks, Action, Light, and Gravity' })).toBeVisible()
+  await page.goto('/tour/evidence')
+  await expect(page.getByRole('heading', { name: 'Reproduction Is Not Validation' })).toBeVisible()
   await expect(page.getByText('Planned chapter', { exact: true })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'This chapter is on the field-course roadmap' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Lessons' })).toHaveCount(0)
+})
+
+test('sequential lesson and chapter links swap all nine instruments without leaking local state', async ({ page }) => {
+  const resultIds = instruments.map(({ resultTestId }) => resultTestId)
+  const expectCleanInstrument = async (instrument: InstrumentCase, previousTestId?: string) => {
+    await expect(page.getByTestId('tour-lesson-ready')).toBeVisible()
+    await expect(page.getByTestId(instrument.instrumentTestId)).toBeVisible()
+    if (previousTestId) await expect(page.getByTestId(previousTestId)).toHaveCount(0)
+    for (const resultId of resultIds) await expect(page.getByTestId(resultId)).toHaveCount(0)
+    await expect(page.getByTestId(instrument.instrumentTestId).locator('input[type="radio"]:checked')).toHaveCount(0)
+  }
+  const openOnlyLesson = async (path: string) => {
+    await page.locator(`a[href="${path}"]`).click()
+    await expect(page).toHaveURL(new RegExp(`${path}$`))
+  }
+
+  await gotoLesson(page)
+  await revealDimensionResult(page, 'matches-target')
+  await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: /^Next chapter:/ }).click()
+  await expect(page.getByRole('heading', { name: 'Measurement, Uncertainty, and Standards' })).toBeVisible()
+  await page.getByRole('navigation', { name: 'Adjacent Tour chapters' }).getByRole('link', { name: 'Next chapter' }).click()
+  await expect(page.getByRole('heading', { name: 'Anatomy of a Formula Recipe' })).toBeVisible()
+  await page.getByRole('navigation', { name: 'Adjacent Tour chapters' }).getByRole('link', { name: 'Next chapter' }).click()
+  await expect(page.getByRole('heading', { name: 'Clocks, Action, Light, and Gravity' })).toBeVisible()
+  await openOnlyLesson('/tour/anchors/clocks-action-light-gravity')
+  await expectCleanInstrument(instruments[1]!, instruments[0]!.instrumentTestId)
+  await expect(page.getByTestId('scale-family')).toHaveValue('length')
+
+  for (let index = 2; index < instruments.length - 2; index += 1) {
+    const instrument = instruments[index]!
+    const previous = instruments[index - 1]!
+    await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: /^Next chapter:/ }).click()
+    await openOnlyLesson(instrument.path.replace('?path=quick', ''))
+    await expectCleanInstrument(instrument, previous.instrumentTestId)
+  }
+
+  const blackbody = instruments[7]!
+  const molar = instruments[8]!
+  await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: /^Next chapter:/ }).click()
+  await openOnlyLesson(blackbody.path.replace('?path=quick', ''))
+  await expectCleanInstrument(blackbody, instruments[6]!.instrumentTestId)
+  await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: 'Next lesson' }).click()
+  await expectCleanInstrument(molar, blackbody.instrumentTestId)
+  await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: 'Previous lesson' }).click()
+  await expectCleanInstrument(blackbody, molar.instrumentTestId)
+  await page.getByRole('navigation', { name: 'Tour lesson navigation' }).getByRole('link', { name: 'Next lesson' }).click()
+  await expectCleanInstrument(molar, blackbody.instrumentTestId)
+})
+
+test('the deep anchors scale ruler preserves status and evidence distinctions', async ({ page }) => {
+  await gotoLesson(page, '/tour/anchors/clocks-action-light-gravity')
+  await page.getByTestId('scale-preset-planck-length').click()
+  await page.getByTestId('scale-prediction-negative').check()
+  await page.getByTestId('reveal-scale-ruler').click()
+
+  await expectFiniteOutput(page, 'scale-selected-value')
+  await expect(page.getByTestId('scale-result-status')).toHaveText('COMPUTED')
+  await expect(page.getByTestId('scale-ruler-table')).toContainText('Exact defined reference')
+  await expect(page.getByTestId('scale-ruler-table')).toContainText('Measured or adjusted')
+  await expect(page.getByTestId('scale-ruler-table')).toContainText('Derived from measured value')
+  await expect(page.getByTestId('scale-evidence-refs').getByRole('link')).not.toHaveCount(0)
+  await expect(page.getByTestId('scale-normalization-caveat')).toContainText('not predictions')
 })
 
 test('unknown URLs and chapters preserve their requested path and expose recovery', async ({ page }) => {
@@ -250,64 +546,49 @@ test('chapter and lesson routes publish their generated titles', async ({ page }
   await expect(page).toHaveTitle('A number is not yet a physical quantity | OpenSimPhy Atlas')
 })
 
-for (const width of [320, 390, 768, 1440]) {
-  test(`keeps orientation, map, and lesson operable without overflow at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 })
+test('orientation and map reflow at 320px without document overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 })
+  await page.goto('/')
+  await expect(page.getByTestId('tour-ready')).toBeVisible()
+  await expectNoDocumentOverflow(page)
+  await page.goto('/tour')
+  await expect(page.getByTestId('tour-map-ready')).toBeVisible()
+  await expectNoDocumentOverflow(page)
+})
 
-    await page.goto('/')
-    await expect(page.getByTestId('tour-ready')).toBeVisible()
-    await expectNoDocumentOverflowSoft(page, '/')
-
-    await page.goto('/tour')
-    await expect(page.getByTestId('tour-map-ready')).toBeVisible()
-    await expectNoDocumentOverflowSoft(page, '/tour')
-
-    await gotoLesson(page)
-    await expect(page.getByTestId('dimension-builder')).toBeVisible()
-    await expectNoDocumentOverflowSoft(page, FULL_LESSON)
-  })
-}
-
-for (const zoom of [
-  { label: '200%', width: 640 },
-  { label: '400%', width: 320 },
-]) {
-  test(`reflows the Tour lesson at the ${zoom.label} CSS viewport equivalent`, async ({ page }) => {
-    await page.setViewportSize({ width: zoom.width, height: 900 })
-    await gotoLesson(page)
+for (const instrument of instruments) {
+  test(`${instrument.name} supports keyboard, 320px/400% reflow, target size, reduced motion, and forced colors`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' })
+    await gotoLesson(page, instrument.path)
+    const root = page.getByTestId(instrument.instrumentTestId)
+    await expect(root).toBeVisible()
     await expectNoDocumentOverflow(page)
-    await expect(page.getByTestId('dimension-target')).toBeVisible()
-    await expect(page.getByTestId('mark-lesson-complete')).toBeVisible()
+
+    const targets = await root.locator('button, select, input[type="range"]').evaluateAll((elements) => elements
+      .filter((element) => {
+        const style = getComputedStyle(element)
+        const box = element.getBoundingClientRect()
+        return style.visibility !== 'hidden' && style.display !== 'none' && box.width > 0 && box.height > 0
+      })
+      .map((element) => {
+        const box = element.getBoundingClientRect()
+        return { testId: element.getAttribute('data-testid'), width: box.width, height: box.height }
+      }))
+    expect(targets.length).toBeGreaterThan(0)
+    for (const target of targets) {
+      expect.soft(target.width, `${instrument.name} ${target.testId ?? 'target'} width`).toBeGreaterThanOrEqual(44)
+      expect.soft(target.height, `${instrument.name} ${target.testId ?? 'target'} height`).toBeGreaterThanOrEqual(44)
+    }
+
+    await page.getByTestId(instrument.predictionTestId).focus()
+    await page.keyboard.press('Space')
+    await page.getByTestId(instrument.revealTestId).focus()
+    await page.keyboard.press('Enter')
+    await expect(page.getByTestId(instrument.resultTestId)).toBeVisible()
+    if (instrument.svgTestId) await expect(page.getByTestId(instrument.svgTestId)).toHaveAttribute('role', 'img')
+    expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true)
+    expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches)).toBe(true)
+    await expectNoDocumentOverflow(page)
   })
 }
-
-test('Tour controls remain keyboard operable', async ({ page }) => {
-  await gotoLesson(page)
-  const guided = page.locator('.tour-lesson-controls').getByTestId('reading-depth-guided')
-  await guided.focus()
-  await page.keyboard.press('ArrowRight')
-  await expect(page.locator('.tour-lesson-controls').getByTestId('reading-depth-technical')).toBeChecked()
-
-  const preset = page.getByTestId('preset-force-from-motion')
-  await preset.focus()
-  await page.keyboard.press('Enter')
-  await expect(page.getByTestId('dimension-target')).toHaveValue('force')
-  await page.getByTestId('prediction-matches-target').focus()
-  await page.keyboard.press('Space')
-  await page.getByTestId('reveal-dimension-result').focus()
-  await page.keyboard.press('Enter')
-  await expect(page.getByTestId('dimension-result')).toBeVisible()
-})
-
-test.describe('reduced motion', () => {
-  test.use({ reducedMotion: 'reduce' })
-
-  test('renders the Tour activity with reduced motion enabled', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' })
-    await gotoLesson(page)
-    expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true)
-    expect(await page.locator('html').evaluate((element) => getComputedStyle(element).scrollBehavior)).toBe('auto')
-    await revealDimensionResult(page, 'matches-target')
-    await expect(page.getByTestId('dimension-axis-table')).toBeVisible()
-  })
-})

@@ -6,8 +6,8 @@
   "title": "Particle Mass and Quantum Wavelength",
   "question": "How are invariant mass, rest energy, momentum, Compton scale, and de Broglie wavelength related without conflating them?",
   "summary": "Compare leptons, nucleons, nuclei, and atomic-mass scales while keeping massive-particle rest energy E_0 = mc^2, Compton scale h/(mc), and state-dependent de Broglie wavelength h/p distinct. Linked axes show derived values rather than independent measurements, momentum is not another form of invariant mass, and composite particles require different interpretation from elementary particles.",
-  "status": "planned",
+  "status": "content-ready",
   "quickStationIds": ["particles-mass"],
-  "lessonIds": [],
+  "lessonIds": ["particle-mass-scales"],
   "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 8", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Derived linked-axis values are not independent observations."] }
 }

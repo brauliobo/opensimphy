@@ -2,6 +2,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import taxonomyJson from '../../public/data/generated/taxonomy.json'
 import anchorsChapterJson from '../../public/data/generated/tour/chapters/anchors.json'
+import heatChapterJson from '../../public/data/generated/tour/chapters/heat-matter.json'
 import unitsChapterJson from '../../public/data/generated/tour/chapters/units.json'
 import tourManifestJson from '../../public/data/generated/tour/manifest.json'
 import {
@@ -24,6 +25,8 @@ const taxonomy = taxonomyJson as TaxonomyArtifact
 const manifest = tourManifestJson as TourGeneratedManifest
 const unitsChapter = unitsChapterJson as TourGeneratedChapterRecord
 const anchorsChapter = anchorsChapterJson as TourGeneratedChapterRecord
+const heatChapter = heatChapterJson as TourGeneratedChapterRecord
+const plannedChapter = manifest.chapters.find(({ status }) => status === 'planned')!
 
 function createTestRouter() {
   return createRouter({
@@ -53,7 +56,7 @@ describe('Tour and support navigation', () => {
     setTourRegistryForTests({
       manifest,
       taxonomy,
-      chapters: [unitsChapter, anchorsChapter],
+      chapters: [unitsChapter, anchorsChapter, heatChapter, plannedChapter],
     })
   })
 
@@ -115,7 +118,7 @@ describe('Tour and support navigation', () => {
     expect(appRouter.currentRoute.value.query.from).toBe('/topics/unknown-taxonomy')
   })
 
-  it('renders all 20 chapters in four ordered acts without false completion', async () => {
+  it('renders all 20 chapters in four acts with eight available and twelve planned', async () => {
     const router = createTestRouter()
     await router.push('/tour')
     const wrapper = mount(TourMapView, { global: { plugins: [router] } })
@@ -124,8 +127,13 @@ describe('Tour and support navigation', () => {
     expect(wrapper.findAll('.tour-act')).toHaveLength(4)
     expect(wrapper.findAll('.tour-chapter-spine li')).toHaveLength(20)
     expect(wrapper.findAll('[data-progress="complete"]')).toHaveLength(0)
-    expect(wrapper.get('a[href="/tour/units"]').text()).toContain('Available')
-    expect(wrapper.get('a[href="/tour/anchors"]').text()).toContain('Planned overview')
+    const available = manifest.chapters.filter(({ status }) => status === 'content-ready')
+    const planned = manifest.chapters.filter(({ status }) => status === 'planned')
+    expect(available).toHaveLength(8)
+    expect(planned).toHaveLength(12)
+    for (const chapter of available) expect(wrapper.get(`a[href="/tour/${chapter.id}"]`).text()).toContain('Available')
+    for (const chapter of planned) expect(wrapper.get(`a[href="/tour/${chapter.id}"]`).text()).toContain('Planned overview')
+    expect(wrapper.get('a[href="/tour/anchors"]').text()).toContain('Available')
   })
 
   it('renders an available chapter with its lesson and actual document title', async () => {
@@ -142,11 +150,32 @@ describe('Tour and support navigation', () => {
     expect(document.title).toBe('Units, Dimensions, and Physical Quantities | OpenSimPhy Atlas')
   })
 
-  it('renders planned roadmap links and an explicit unknown-chapter state', async () => {
+  it('renders the available anchors lesson and both ordered heat lessons', async () => {
     const router = createTestRouter()
     await router.push('/tour/anchors')
-    const planned = mount(TourChapterView, {
+    const wrapper = mount(TourChapterView, {
       props: { chapter: 'anchors' },
+      global: { plugins: [router] },
+    })
+    await flushPromises()
+
+    expect(wrapper.find('a[href="/tour/anchors/clocks-action-light-gravity"]').exists()).toBe(true)
+    expect(wrapper.text()).not.toContain('Planned chapter')
+
+    await wrapper.setProps({ chapter: 'heat-matter' })
+    await flushPromises()
+    expect(wrapper.findAll('.tour-lesson-list li')).toHaveLength(2)
+    expect(wrapper.findAll('.tour-lesson-list a').map((link) => link.attributes('href'))).toEqual([
+      '/tour/heat-matter/blackbody-radiation',
+      '/tour/heat-matter/particle-to-mole',
+    ])
+  })
+
+  it('renders planned roadmap links and an explicit unknown-chapter state', async () => {
+    const router = createTestRouter()
+    await router.push(`/tour/${plannedChapter.id}`)
+    const planned = mount(TourChapterView, {
+      props: { chapter: plannedChapter.id },
       global: { plugins: [router] },
     })
     await flushPromises()

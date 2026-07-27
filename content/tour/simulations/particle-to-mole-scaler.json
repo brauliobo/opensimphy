@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "id": "particle-to-mole-scaler",
+  "lessonId": "particle-to-mole",
+  "title": "Particle-to-mole scaler",
+  "question": "How do count, mass, ideal-gas volume, and Faraday charge depend on one declared amount of substance?",
+  "predictionPrompt": "If amount of substance doubles while molar mass, temperature, pressure, and signed charge number remain fixed, predict which dependent count, mass, ideal-gas volume, and Faraday charge outputs double.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "iupac-green-book-3"],
+  "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; IUPAC Green Book, 3rd edition, 2nd printing",
+  "sourceLocator": "BIPM sections 2.2-2.3 and 5.4.8; CODATA Avogadro, molar gas, and Faraday entries; IUPAC amount, molar quantity, ideal-gas, and standard-pressure entries",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "All outputs are dependent conversions from declared inputs, not independent physical predictions.",
+    "Ideal-gas volume applies only under the stated model and temperature-pressure convention."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "molar-dependent-conversions-1",
+    "implementationRevision": "tour-particle-to-mole-scaler-engine-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Bounded molar dependency evaluation",
+    "description": "Evaluates four algebraic dependency paths over bounded finite controls, formats the large entity count in scientific notation, and emits no iterative or stochastic result.",
+    "deterministic": true,
+    "implementationRef": "tour-particle-to-mole-scaler-engine-v1"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "amount-entity-count",
+      "label": "Amount and entity-count identity",
+      "modelOrigin": "established-physics",
+      "description": "Maps declared amount n to the count N of specified entities through exact N_A.",
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": ["bipm-si-brochure-9"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "Sections 2.2-2.3 and 5.4.8, mole definition",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The entity type must be specified outside the scalar conversion."]
+      }
+    },
+    {
+      "id": "molar-mass-scaling",
+      "label": "Molar-mass scaling",
+      "modelOrigin": "established-physics",
+      "description": "Maps amount to mass through the explicitly selected molar mass.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["iupac-green-book-3"],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing",
+        "sourceLocator": "Section 2.10, molar quantities",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The engine does not infer composition or molar mass."]
+      }
+    },
+    {
+      "id": "declared-state-ideal-gas",
+      "label": "Declared-state ideal-gas volume",
+      "modelOrigin": "established-physics",
+      "description": "Maps amount to ideal-gas volume using chosen temperature and pressure model inputs; only the standard-atmosphere conversion 1 atm = 101325 Pa is exact.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["iupac-green-book-3", "bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "IUPAC ideal-gas and standard-pressure entries; BIPM standard atmosphere conversion; CODATA molar gas constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["No non-ideal equation of state or composition correction is included."]
+      }
+    },
+    {
+      "id": "faraday-charge-scaling",
+      "label": "Faraday charge scaling",
+      "modelOrigin": "established-physics",
+      "description": "Maps amount and signed charge number to charge through exact F = N_A e.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "SI defining constants and CODATA Faraday constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["No reaction mechanism, yield, or current efficiency is modeled."]
+      }
+    }
+  ],
+  "equations": [
+    "N = n N_A",
+    "m = n M",
+    "V = n R T / p",
+    "F = N_A e; Q = z n F"
+  ],
+  "assumptions": [
+    "The elementary entity associated with amount n is explicitly specified by the learner's interpretation.",
+    "Molar mass M is a declared input and remains fixed while amount is scaled.",
+    "Gas output obeys pV = nRT with uniform equilibrium temperature and pressure.",
+    "Temperature and pressure are chosen model inputs; the standard preset uses the exact pressure conversion 1 atm = 101325 Pa but does not make an arbitrary T or p exact.",
+    "Charge number z is the signed number of elementary charges transferred per specified entity.",
+    "No empirical dataset, uncertainty propagation, non-ideal gas correction, or electrochemical efficiency is included."
+  ],
+  "glossaryIds": ["physical-quantity", "numerical-value", "unit", "amount-of-substance", "mole", "elementary-entity", "avogadro-constant", "molar-mass", "ideal-gas", "standard-atmosphere", "state-convention", "faraday-constant"],
+  "controls": [
+    {
+      "id": "substancePreset",
+      "label": "Substance preset",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects the engine's generic-particle path so the explicitly supplied molar mass is the sole mass basis.",
+      "default": "generic-particle",
+      "playfulPrompt": "Keep the entity generic and make its molar mass explicit.",
+      "options": [
+        { "value": "generic-particle", "label": "Generic particle", "description": "uses the declared molarMassKgPerMol engine input" }
+      ]
+    },
+    {
+      "id": "amountMol",
+      "label": "Amount of substance",
+      "type": "range",
+      "inputRole": "canonical-quantity-value",
+      "readingDepth": "guided",
+      "description": "Sets the amount n shared by the entity-count, mass, ideal-gas, and Faraday conversions.",
+      "unit": "mol",
+      "default": 1,
+      "min": 1e-12,
+      "max": 1000,
+      "step": 1e-12,
+      "playfulPrompt": "Scale one declared amount and follow every dependent quantity."
+    },
+    {
+      "id": "gasModel",
+      "label": "Gas model",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects the engine's ideal-gas branch for the conditional volume output.",
+      "default": "ideal",
+      "playfulPrompt": "Keep the gas assumption visible beside its dependent volume.",
+      "options": [
+        { "value": "ideal", "label": "Ideal gas", "description": "computes V = n R T/p" }
+      ]
+    },
+    {
+      "id": "temperatureKelvin",
+      "label": "Gas temperature",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Sets the engine's bounded positive equilibrium temperature input for the ideal-gas branch.",
+      "unit": "K",
+      "default": 273.15,
+      "min": 1,
+      "max": 5000,
+      "step": 0.01
+    },
+    {
+      "id": "pressurePascal",
+      "label": "Gas pressure",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Sets the engine's bounded positive pressure input; the standard preset uses exactly 101325 Pa.",
+      "unit": "Pa",
+      "default": 101325,
+      "min": 1,
+      "max": 100000000,
+      "step": 1
+    },
+    {
+      "id": "chargeNumber",
+      "label": "Signed charge number per entity",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Sets integer z for Q = z n F; sign records the chosen charge-transfer direction convention.",
+      "unit": "elementary charges/entity",
+      "default": 0,
+      "min": -100,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "id": "molarMassKgPerMol",
+      "label": "Declared molar mass",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Supplies the engine's required generic-particle molar mass; catalog composition is not inferred.",
+      "unit": "kg/mol",
+      "default": 0.02897,
+      "min": 1e-12,
+      "max": 1000,
+      "step": 1e-12
+    }
+  ],
+  "presets": [
+    {
+      "id": "standard-ideal-gas",
+      "label": "Standard ideal gas",
+      "description": "Matches the engine preset: one mole of generic particles with chosen molar mass 0.02897 kg/mol and temperature 273.15 K at the exact conventional conversion 1 atm = 101325 Pa.",
+      "inspectionPrompt": "Identify the approximately 22.414 litre result as an ideal-gas conversion at a declared state, not a universal molar volume.",
+      "inputs": {
+        "substancePreset": "generic-particle",
+        "amountMol": 1,
+        "gasModel": "ideal",
+        "temperatureKelvin": 273.15,
+        "pressurePascal": 101325,
+        "chargeNumber": 0,
+        "molarMassKgPerMol": 0.02897
+      }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "amountOfSubstanceMol",
+      "label": "Amount of substance",
+      "type": "number",
+      "unit": "mol",
+      "nullable": false,
+      "description": "Validated shared engine amount input n."
+    },
+    {
+      "id": "entityCount",
+      "label": "Specified entity count",
+      "type": "number",
+      "unit": null,
+      "nullable": false,
+      "description": "Engine value N = n N_A; the interface must format it in scientific notation without claiming unit-by-unit floating-point precision."
+    },
+    {
+      "id": "molarMassKgPerMol",
+      "label": "Resolved molar mass",
+      "type": "number",
+      "unit": "kg/mol",
+      "nullable": false,
+      "description": "Engine-resolved generic-particle molar mass supplied by the explicit control."
+    },
+    {
+      "id": "bulkMassKg",
+      "label": "Dependent mass",
+      "type": "number",
+      "unit": "kg",
+      "nullable": false,
+      "description": "m = n M from the declared molar-mass input."
+    },
+    {
+      "id": "idealGasVolumeCubicMetres",
+      "label": "Dependent ideal-gas volume",
+      "type": "number",
+      "unit": "m^3",
+      "nullable": true,
+      "description": "V = n R T/p when gasModel is ideal; the engine type is nullable for its none branch."
+    },
+    {
+      "id": "faradayChargeCoulombs",
+      "label": "Dependent Faraday charge",
+      "type": "number",
+      "unit": "C",
+      "nullable": false,
+      "description": "Q = z n F for the declared signed charge number per specified entity."
+    },
+    {
+      "id": "perParticleEnergyJoule",
+      "label": "Optional per-particle energy",
+      "type": "number",
+      "unit": "J",
+      "nullable": true,
+      "description": "Null because this bounded activity does not expose the engine's optional perParticleEnergyJoule input."
+    },
+    {
+      "id": "molarEnergyJoulePerMol",
+      "label": "Optional molar energy",
+      "type": "number",
+      "unit": "J/mol",
+      "nullable": true,
+      "description": "Null when perParticleEnergyJoule is omitted, as it is in this activity."
+    },
+    {
+      "id": "sampleEnergyJoule",
+      "label": "Optional sample energy",
+      "type": "number",
+      "unit": "J",
+      "nullable": true,
+      "description": "Null when perParticleEnergyJoule is omitted, as it is in this activity."
+    },
+    {
+      "id": "standardAtmospherePascal",
+      "label": "Standard atmosphere convention",
+      "type": "number",
+      "unit": "Pa",
+      "nullable": false,
+      "description": "Engine constant 101325 Pa exactly, distinct from measured ambient pressure."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render runs separately without merged values, residuals, or claims of disagreement when compatibility keys differ."
+  },
+  "visualization": {
+    "kind": "molar-dependency-scaler",
+    "description": "Shows amount as the shared root of count, mass, conditional ideal-gas volume, and Faraday charge branches, with the selected state attached to the gas branch.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "Reports the amount, formatted entity count, mass, declared gas state and ideal volume, signed Faraday charge, and each dependency caveat."
+      },
+      {
+        "type": "table",
+        "description": "Lists each output with equation, numerical value, unit, direct inputs, assumptions, and dependent-conversion status."
+      }
+    ],
+    "reducedMotionBehavior": "Render the complete dependency branches immediately without animated particle multiplication or scale transitions."
+  },
+  "finding": {
+    "changed": "At runtime, changing amount is specified to scale count, mass, ideal-gas volume, and Faraday charge linearly; molar mass, state convention, and charge number affect only their declared branches.",
+    "cause": "The bounded outputs follow N = n N_A, m = n M, V = n R T/p, and Q = z n F.",
+    "equation": "N = n N_A; m = n M; V = n R T/p; F = N_A e; Q = z n F",
+    "assumptions": [
+      "Specified elementary entity and amount of substance",
+      "Explicit molar mass held fixed during amount scaling",
+      "Ideal gas at chosen temperature and pressure inputs, with exactness reserved for the 101325 Pa standard-atmosphere conversion",
+      "Declared signed integer charge number with no efficiency model"
+    ],
+    "establishes": "For an evaluated run, the bounded dependent values implied by the declared inputs, identities, ideal-gas model, state convention, and implementation revision.",
+    "doesNotEstablish": "A sample's composition, measured mass or volume, real-gas behavior, reaction completion, charge-transfer efficiency, or independent confirmation of any input relationship.",
+    "claimClass": "identity",
+    "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "iupac-green-book-3", "opensimphy-scientific-scope"],
+    "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; IUPAC Green Book, 3rd edition, 2nd printing; tour-content-2026-07-26",
+    "sourceLocator": "Mole, molar mass, ideal-gas, standard-state, and Faraday relationships; particle-to-mole-scaler provenance contract",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "The standard atmosphere is exactly 101325 Pa, while the separate 100 kPa option is a different declared convention.",
+      "The current SI does not define carbon-12 molar mass as exactly 0.012 kg/mol."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 2,
+    "maxDurationMs": 16
+  }
+}

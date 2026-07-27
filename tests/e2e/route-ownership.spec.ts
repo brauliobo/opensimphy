@@ -82,6 +82,18 @@ function expectOwnerArtifacts(activity: RouteActivity, expected: readonly string
   expect(requestedOwnerArtifacts(activity)).toEqual([...expected].sort())
 }
 
+function lessonArtifacts(chapterId: string, lessonId: string, simulationId: string): string[] {
+  return [
+    '/data/generated/tour/manifest.json',
+    '/data/generated/taxonomy.json',
+    `/data/generated/tour/chapters/${chapterId}.json`,
+    `/data/generated/tour/lessons/${lessonId}.json`,
+    `/data/generated/tour/simulations/${simulationId}.json`,
+    '/data/generated/tour/glossary.json',
+    '/data/generated/tour/references.json',
+  ]
+}
+
 test('the tour owns only its manifest and taxonomy', async ({ page }) => {
   const activity = await gotoColdRoute(page, '/')
   await expect(page.getByTestId('tour-ready')).toBeVisible()
@@ -108,19 +120,21 @@ const tourRoutes = [
     ],
     ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Units, Dimensions, and Physical Quantities' })).toBeVisible(),
   },
-  {
-    path: '/tour/units/physical-quantities?path=quick',
-    expected: [
-      '/data/generated/tour/manifest.json',
-      '/data/generated/taxonomy.json',
-      '/data/generated/tour/chapters/units.json',
-      '/data/generated/tour/lessons/physical-quantities.json',
-      '/data/generated/tour/simulations/dimensional-equation-builder.json',
-      '/data/generated/tour/glossary.json',
-      '/data/generated/tour/references.json',
-    ],
+  ...[
+    ['units', 'physical-quantities', 'dimensional-equation-builder'],
+    ['anchors', 'clocks-action-light-gravity', 'physical-scale-ruler'],
+    ['unit-bridges', 'photon-equivalent-scales', 'photon-scale-converter'],
+    ['electrical-standards', 'quantum-electrical-standards', 'electrical-standards-network'],
+    ['atomic-structure', 'hydrogen-spectra', 'hydrogen-spectrum-explorer'],
+    ['particle-scales', 'particle-mass-scales', 'particle-scale-comparator'],
+    ['spin-magnetism', 'spin-precession', 'spin-precession-visualizer'],
+    ['heat-matter', 'blackbody-radiation', 'blackbody-spectrum'],
+    ['heat-matter', 'particle-to-mole', 'particle-to-mole-scaler'],
+  ].map(([chapterId, lessonId, simulationId]) => ({
+    path: `/tour/${chapterId}/${lessonId}`,
+    expected: lessonArtifacts(chapterId!, lessonId!, simulationId!),
     ready: async (page: Page) => expect(page.getByTestId('tour-lesson-ready')).toBeVisible(),
-  },
+  })),
   {
     path: '/saved',
     expected: ['/data/generated/tour/manifest.json', '/data/generated/taxonomy.json'],

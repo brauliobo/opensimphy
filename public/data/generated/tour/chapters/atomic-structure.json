@@ -6,11 +6,13 @@
   "title": "Atomic Structure and Spectroscopy",
   "question": "How can a calibrated spectrum constrain an atomic-structure model?",
   "summary": "Relate hydrogen-like energy levels and transitions to wavelength and frequency under a stated Hamiltonian. Line identification, calibration, selection rules, broadening assumptions, reduced mass, and competing-model checks constrain inference; a spectrum does not reveal a unique atomic structure by inspection, and dimensional combinations cannot replace a bound-state model.",
-  "status": "planned",
+  "status": "content-ready",
   "quickStationIds": [
     "atoms-materials"
   ],
-  "lessonIds": [],
+  "lessonIds": [
+    "hydrogen-spectra"
+  ],
   "attribution": {
     "claimClass": "source-claim",
     "evidenceRefs": [

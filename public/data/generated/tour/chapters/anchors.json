@@ -6,9 +6,11 @@
   "title": "Clocks, Action, Light, and Gravity",
   "question": "How do reproducible standards anchor scales from the laboratory to the Planck regime?",
   "summary": "Connect the caesium-133 frequency, speed of light, Planck constants, Newtonian gravity, luminous efficacy, and Planck scales. Derived units and normalized coordinates expose relationships among standards, identities, and models without turning reference choices into new predictions.",
-  "status": "planned",
+  "status": "content-ready",
   "quickStationIds": [],
-  "lessonIds": [],
+  "lessonIds": [
+    "clocks-action-light-gravity"
+  ],
   "attribution": {
     "claimClass": "source-claim",
     "evidenceRefs": [

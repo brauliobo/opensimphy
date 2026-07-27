@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "id": "particle-scale-comparator",
+  "lessonId": "particle-mass-scales",
+  "title": "Particle scale comparator",
+  "question": "Which displayed scales reuse invariant mass, and which additionally depend on the selected momentum state?",
+  "predictionPrompt": "Choose one particle and predict which outputs change when its momentum multiplier changes while its catalog mass stays fixed.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["codata-2022", "bipm-si-brochure-9", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+  "sourceRevision": "CODATA 2022 adjustment; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+  "sourceLocator": "Electron, muon, proton, and neutron masses; exact h and c; OpenStax sections 5.8-5.9, 6.3, and 6.5; Chapter 8 limits",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "Linked axes show dependent representations rather than independent measurements.",
+    "The proton and neutron are composite catalog particles; their internal mass structure is not modeled."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "free-particle-mass-momentum-scales-1",
+    "implementationRevision": "tour-particle-scale-engine-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Bounded free-particle scale evaluation",
+    "description": "Evaluates mass-energy, Compton, de Broglie, and relativistic free-particle identities from one catalog particle and one p/(m c) multiplier.",
+    "deterministic": true,
+    "implementationRef": "src/tour/particleScaleEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "codata-particle-mass-catalog",
+      "label": "Bounded particle mass catalog",
+      "modelOrigin": "established-physics",
+      "description": "Supplies CODATA 2022 invariant masses and elementary/composite labels for electron, muon, proton, and neutron.",
+      "attribution": {
+        "claimClass": "observed-value",
+        "evidenceRefs": ["codata-2022"],
+        "sourceRevision": "CODATA 2022 adjustment",
+        "sourceLocator": "Electron, muon, proton, and neutron mass entries",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The engine does not propagate mass uncertainties or correlations."]
+      }
+    },
+    {
+      "id": "mass-derived-scales",
+      "label": "Mass-derived scale identities",
+      "modelOrigin": "established-physics",
+      "description": "Derives rest energy, mass ratios, and ordinary and reduced Compton wavelengths from the selected invariant mass.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["codata-2022", "bipm-si-brochure-9", "openstax-university-physics-v3"],
+        "sourceRevision": "CODATA 2022 masses; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "E_0 = m c^2 and Compton identities using exact h, hbar, and c; OpenStax sections 5.9 and 6.3",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The Compton scale is not a measured particle diameter."]
+      }
+    },
+    {
+      "id": "momentum-state-scales",
+      "label": "Momentum-state scale identities",
+      "modelOrigin": "established-physics",
+      "description": "Uses p = k m c to derive de Broglie wavelength and relativistic free-particle total and kinetic energies.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["bipm-si-brochure-9", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+        "sourceRevision": "SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+        "sourceLocator": "Exact h and c; OpenStax sections 5.8-5.9 and 6.5; Chapter 8 state-dependency boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Direction, frame comparison, and wave-packet spread are omitted."]
+      }
+    }
+  ],
+  "equations": [
+    "E_0 = m c^2; lambda_C = h/(m c); reduced_lambda_C = hbar/(m c)",
+    "p = k m c; lambda_dB = h/p",
+    "E = sqrt((p c)^2 + (m c^2)^2); K = E - E_0"
+  ],
+  "assumptions": [
+    "The catalog mass is the CODATA 2022 invariant rest mass of a free particle.",
+    "The activity exposes only the engine's mass-times-c momentum mode with positive multiplier k from 10^-6 through 10^6.",
+    "Momentum is a magnitude in one inertial frame; direction and wave-packet spread are not represented.",
+    "The relativistic dispersion relation describes a free particle in vacuum.",
+    "Interactions, binding, medium response, finite lifetime, spin, and uncertainty propagation are omitted."
+  ],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "coordinate-system"],
+  "controls": [
+    {
+      "id": "particle",
+      "label": "Particle",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects one engine catalog particle and its CODATA invariant mass and composition label.",
+      "default": "electron",
+      "playfulPrompt": "Move from the light electron toward the nucleon scale.",
+      "options": [
+        { "value": "electron", "label": "Electron", "description": "elementary catalog particle" },
+        { "value": "muon", "label": "Muon", "description": "elementary catalog particle" },
+        { "value": "proton", "label": "Proton", "description": "composite catalog particle" },
+        { "value": "neutron", "label": "Neutron", "description": "composite catalog particle" }
+      ]
+    },
+    {
+      "id": "momentumMultiplier",
+      "label": "Momentum divided by m c",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Sets the positive state momentum as p = k m c within the engine bound.",
+      "default": 1,
+      "unit": "1",
+      "min": 0.000001,
+      "max": 1000000,
+      "step": 0.000001,
+      "playfulPrompt": "Change momentum without changing the selected invariant mass."
+    }
+  ],
+  "presets": [
+    {
+      "id": "electron",
+      "label": "Electron at p = m c",
+      "description": "One valid engine state where the multiplier is one, making electron de Broglie and ordinary Compton wavelengths numerically equal.",
+      "inspectionPrompt": "Identify which equality comes from the chosen state rather than from a new measurement.",
+      "inputs": { "particle": "electron", "momentumMultiplier": 1 }
+    },
+    {
+      "id": "proton",
+      "label": "Proton at p = m c",
+      "description": "One composite-particle state using the proton's total invariant mass and no internal-structure model.",
+      "inspectionPrompt": "Compare its rest and Compton scales with the electron without treating linked axes as independent evidence.",
+      "inputs": { "particle": "proton", "momentumMultiplier": 1 }
+    },
+    {
+      "id": "proton-fast",
+      "label": "Proton at p = 2 m c",
+      "description": "The same proton catalog mass with twice the p/(m c) multiplier.",
+      "inspectionPrompt": "Predict which mass-derived outputs stay fixed and which state-derived outputs change.",
+      "inputs": { "particle": "proton", "momentumMultiplier": 2 }
+    }
+  ],
+  "outputSchema": [
+    { "id": "massKg", "label": "Invariant mass", "type": "number", "unit": "kg", "nullable": false, "description": "Selected CODATA catalog mass." },
+    { "id": "massRatioToElectron", "label": "Mass ratio to electron", "type": "number", "unit": null, "nullable": false, "description": "Selected mass divided by electron mass; mass-derived and not an independent observation." },
+    { "id": "massRatioToProton", "label": "Mass ratio to proton", "type": "number", "unit": null, "nullable": false, "description": "Selected mass divided by proton mass; mass-derived and not an independent observation." },
+    { "id": "restEnergyJ", "label": "Rest energy", "type": "number", "unit": "J", "nullable": false, "description": "m c^2 derived from the selected mass." },
+    { "id": "restEnergyEv", "label": "Rest energy", "type": "number", "unit": "eV", "nullable": false, "description": "The same mass-derived rest energy represented in electron volts." },
+    { "id": "comptonWavelengthM", "label": "Compton wavelength", "type": "number", "unit": "m", "nullable": false, "description": "h/(m c), a mass-derived characteristic scale." },
+    { "id": "reducedComptonWavelengthM", "label": "Reduced Compton wavelength", "type": "number", "unit": "m", "nullable": false, "description": "hbar/(m c) = lambda_C/(2 pi), another dependent mass representation." },
+    { "id": "momentumKgMPerS", "label": "State momentum", "type": "number", "unit": "kg m s^-1", "nullable": false, "description": "Positive state momentum k m c selected by the control." },
+    { "id": "deBroglieWavelengthM", "label": "de Broglie wavelength", "type": "number", "unit": "m", "nullable": false, "description": "h/p, dependent on the selected momentum state." },
+    { "id": "relativisticTotalEnergyJ", "label": "Relativistic total energy", "type": "number", "unit": "J", "nullable": false, "description": "Free-particle total energy depending on mass and selected momentum." },
+    { "id": "relativisticKineticEnergyJ", "label": "Relativistic kinetic energy", "type": "number", "unit": "J", "nullable": false, "description": "Total energy minus rest energy for the selected state." },
+    { "id": "particleLabel", "label": "Particle label", "type": "string", "unit": null, "nullable": false, "description": "Human-readable label for the selected engine catalog particle; composition caveats remain part of the source model contract." }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render parallel findings without merging axes or treating differences as empirical residuals when compatibility keys differ."
+  },
+  "visualization": {
+    "kind": "linked-particle-scale-axes",
+    "description": "Shows catalog mass, mass-derived energy and Compton scales, and momentum-state-derived wavelength and energy with dependency labels.",
+    "alternatives": [
+      { "type": "text", "description": "A sentence names the particle, composition, invariant mass, mass-derived outputs, selected momentum, state-derived outputs, and dependency caveats." },
+      { "type": "table", "description": "A seven-row table lists quantity, symbol, value, unit, and catalog, mass-derived, or momentum-state-derived dependency." }
+    ],
+    "reducedMotionBehavior": "Render final linked-axis markers and dependency labels immediately without animated scale movement."
+  },
+  "finding": {
+    "changed": "At runtime, particle choice changes the catalog mass and every dependent scale; momentum multiplier changes only state-dependent momentum, wavelength, and energy outputs.",
+    "cause": "Rest energy and Compton scales reuse invariant mass, while de Broglie wavelength and relativistic energy additionally reuse selected state momentum.",
+    "equation": "E_0 = m c^2; lambda_C = h/(m c); lambda_dB = h/p; E^2 = (p c)^2 + (m c^2)^2",
+    "assumptions": [
+      "CODATA 2022 free-particle catalog masses",
+      "Positive momentum magnitude p = k m c in one inertial frame",
+      "Free-particle relativistic dispersion in vacuum"
+    ],
+    "establishes": "For an evaluated state, the activity computes explicitly labeled catalog, mass-derived, and momentum-state-derived representations.",
+    "doesNotEstablish": "Independent measurements of linked outputs, momentum inferred from mass alone, a particle radius, localized wave-packet behavior, composite internal structure, or empirical model validation.",
+    "claimClass": "established-model",
+    "evidenceRefs": ["codata-2022", "bipm-si-brochure-9", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+    "sourceRevision": "CODATA 2022; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+    "sourceLocator": "Particle scale equations, dependencies, outputs, OpenStax sections 5.8-5.9, 6.3, and 6.5, and Chapter 8 limits",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Rest energy and Compton scales are mass-derived; de Broglie wavelength is state-dependent.",
+      "Joule/electron-volt and ordinary/reduced-Compton pairs are dependent representations, not additional observations.",
+      "Composite catalog entries use total invariant mass without an internal constituent model.",
+      "No empirical dataset, uncertainty propagation, interaction, or material response is evaluated."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 16
+  }
+}

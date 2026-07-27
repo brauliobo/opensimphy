@@ -201,24 +201,27 @@
       "id": "coordinate-system",
       "term": "Unit coordinate system",
       "guidedDefinition": "The collection of units used to write the numerical values of quantities.",
-      "technicalDefinition": "A basis choice in quantity space; changing basis transforms numerical coordinates while preserving the underlying quantity.",
+      "technicalDefinition": "A basis choice in quantity space; changing basis transforms numerical coordinates while preserving the underlying quantity. An exact nominal astronomical conversion constant changes coordinates but does not make a body's measured property exact.",
       "guided": true,
       "evidenceRefs": [
-        "bipm-si-brochure-9"
+        "bipm-si-brochure-9",
+        "iau-resolution-b3-2015"
       ],
       "attribution": {
         "claimClass": "established-definition",
         "evidenceRefs": [
-          "bipm-si-brochure-9"
+          "bipm-si-brochure-9",
+          "iau-resolution-b3-2015"
         ],
-        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
-        "sourceLocator": "Section 2.3",
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IAU 2015 Resolution B3",
+        "sourceLocator": "BIPM section 2.3; IAU Resolution B3 nominal conversion constants",
         "methodRelationship": "not-applicable",
         "modelOrigin": "established-physics",
         "resultStatus": "not-evaluated",
         "validatesTheory": false,
         "caveats": [
-          "The phrase is Tour shorthand for a declared unit basis."
+          "The phrase is Tour shorthand for a declared unit basis.",
+          "Nominal astronomical conversion constants are not measured properties."
         ]
       }
     },
@@ -271,6 +274,426 @@
         "validatesTheory": false,
         "caveats": [
           "Technical-only term; Guided blocks must not depend on it."
+        ]
+      }
+    },
+    {
+      "id": "black-body",
+      "term": "Black body",
+      "guidedDefinition": "An ideal object that absorbs all incident radiation and emits a thermal spectrum determined only by its thermodynamic temperature.",
+      "technicalDefinition": "An idealized absorber with absorptivity one at every wavelength and direction; at thermal equilibrium its emitted spectral distribution is the Planck distribution. The Tour's simulation fixes emissivity to one and does not model a material surface.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3"
+      ],
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Section 6.1, blackbody idealization and radiation",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Real sources generally depart from the ideal through emissivity, geometry, environment, and instrument response."
+        ]
+      }
+    },
+    {
+      "id": "emissivity",
+      "term": "Emissivity",
+      "guidedDefinition": "A comparison of how strongly a real surface emits thermal radiation with how strongly an ideal black body would emit at the same temperature.",
+      "technicalDefinition": "A dimensionless ratio of a surface's emitted radiometric quantity to the corresponding black-body quantity at the same thermodynamic temperature, with spectral, directional, or hemispherical scope stated as applicable.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Section 6.1, ideal and real thermal emitters",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Emissivity can depend on wavelength, direction, polarization, temperature, and surface condition."
+        ]
+      }
+    },
+    {
+      "id": "thermodynamic-temperature",
+      "term": "Thermodynamic temperature",
+      "guidedDefinition": "A physical quantity that orders thermal states and sets thermal energy scales; its SI unit is the kelvin.",
+      "technicalDefinition": "The base quantity T of the International System of Quantities for thermodynamic temperature. Its SI unit, the kelvin, is defined by fixing the numerical value of the Boltzmann constant k_B.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "BIPM sections 2.2-2.3; IUPAC thermodynamic-quantity tables",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A temperature-equivalent energy scale does not by itself identify a thermodynamic state."
+        ]
+      }
+    },
+    {
+      "id": "spectral-radiance",
+      "term": "Spectral radiance",
+      "guidedDefinition": "Radiant power described per projected emitting area, per viewing direction, and per wavelength or frequency interval.",
+      "technicalDefinition": "Radiance density with respect to a declared spectral coordinate. The simulation uses wavelength spectral radiance B_lambda in W m^-3 sr^-1; changing to B_nu requires the spectral-coordinate Jacobian and changes the peak coordinate.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "OpenStax section 6.1; IUPAC radiometric quantities and units",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Wavelength-domain and frequency-domain spectral radiance are different densities."
+        ]
+      }
+    },
+    {
+      "id": "radiant-exitance",
+      "term": "Radiant exitance",
+      "guidedDefinition": "The total radiant power leaving a surface per unit emitting area.",
+      "technicalDefinition": "Radiant flux emitted into the outward hemisphere divided by source area, measured in W m^-2. For an ideal black body integrated over all wavelengths, M = sigma T^4.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "OpenStax section 6.1, Stefan law; IUPAC radiometric quantities",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Exitance is hemispherically integrated and is not the same quantity as directional radiance."
+        ]
+      }
+    },
+    {
+      "id": "wien-displacement-law",
+      "term": "Wien displacement law",
+      "guidedDefinition": "For an ideal black-body wavelength spectrum, the peak wavelength moves inversely with thermodynamic temperature.",
+      "technicalDefinition": "The wavelength-domain Planck distribution satisfies lambda_max T = b, where b is the Wien wavelength displacement constant. This maximum is not the reciprocal coordinate of the frequency-domain maximum.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "OpenStax section 6.1; CODATA Wien wavelength displacement constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The stated law and constant apply to the wavelength-form spectrum."
+        ]
+      }
+    },
+    {
+      "id": "stefan-boltzmann-law",
+      "term": "Stefan-Boltzmann law",
+      "guidedDefinition": "An ideal black body's total emitted radiant power per area grows as the fourth power of thermodynamic temperature.",
+      "technicalDefinition": "The all-wavelength radiant exitance of an ideal black body is M = sigma T^4. A real surface requires an appropriately defined emissivity and may not follow a single-temperature ideal spectrum.",
+      "guided": true,
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "OpenStax section 6.1; CODATA Stefan-Boltzmann constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The ideal law is not a material-emissivity or measured-source model."
+        ]
+      }
+    },
+    {
+      "id": "amount-of-substance",
+      "term": "Amount of substance",
+      "guidedDefinition": "A physical quantity that counts specified elementary entities by using the mole as its unit.",
+      "technicalDefinition": "The ISQ base quantity n proportional to the number N of specified elementary entities, with N = n N_A. It is distinct from the dimensionless entity count N and requires the entity to be specified.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "BIPM sections 2.2-2.3 and 5.4.8; IUPAC section 2.10",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Amount of substance is not interchangeable with a bare entity count."
+        ]
+      }
+    },
+    {
+      "id": "mole",
+      "term": "Mole",
+      "guidedDefinition": "The SI unit of amount of substance; one mole contains exactly 6.022 140 76 x 10^23 specified elementary entities.",
+      "technicalDefinition": "The SI base unit mol. One mole contains exactly N_A = 6.02214076 x 10^23 specified elementary entities because the Avogadro constant has the fixed numerical value 6.02214076 x 10^23 mol^-1.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "Sections 2.2-2.3 and 5.4.8",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The current definition fixes an entity count, not the mass of one mole of carbon-12."
+        ]
+      }
+    },
+    {
+      "id": "elementary-entity",
+      "term": "Elementary entity",
+      "guidedDefinition": "The specified particle, atom, molecule, ion, electron, or defined group being counted by an amount of substance.",
+      "technicalDefinition": "An entity that must be specified when amount of substance is stated; it may be an atom, molecule, ion, electron, another particle, or a specified group of such particles.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "BIPM section 5.4.8; IUPAC section 2.10",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Different specified entities are not interchangeable counts."
+        ]
+      }
+    },
+    {
+      "id": "avogadro-constant",
+      "term": "Avogadro constant",
+      "guidedDefinition": "The exact number of specified entities per mole, N_A = 6.022 140 76 x 10^23 mol^-1.",
+      "technicalDefinition": "The SI defining constant N_A with fixed exact numerical value 6.02214076 x 10^23 when expressed in mol^-1; it connects entity count and amount through N = n N_A.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "Sections 2.2-2.3 and 5.4.8",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "An exact N_A does not make a user-supplied amount or sample composition exact."
+        ]
+      }
+    },
+    {
+      "id": "molar-mass",
+      "term": "Molar mass",
+      "guidedDefinition": "The mass of a substance divided by its amount of substance, usually expressed in kilograms per mole or grams per mole.",
+      "technicalDefinition": "The molar quantity M = m/n with SI unit kg mol^-1. It depends on the specified substance and composition and, in the current SI, is not fixed exactly by the definition of the mole.",
+      "guided": true,
+      "evidenceRefs": [
+        "iupac-green-book-3",
+        "bipm-si-brochure-9"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "iupac-green-book-3",
+          "bipm-si-brochure-9"
+        ],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, corrected 2nd printing; BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "IUPAC section 2.10; BIPM section 2.3.3 and mole notes",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Isotopic composition, mixtures, association, and impurities can affect the applicable molar mass."
+        ]
+      }
+    },
+    {
+      "id": "ideal-gas",
+      "term": "Ideal gas",
+      "guidedDefinition": "A model gas whose pressure, volume, amount, and thermodynamic temperature obey p V = n R T.",
+      "technicalDefinition": "A limiting equation-of-state model with pV = nRT, neglecting intermolecular interactions and finite molecular volume. Real-gas use requires checking the state range and non-ideal corrections.",
+      "guided": true,
+      "evidenceRefs": [
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "Section 2.11, gas equations and thermodynamic quantities",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The ideal-gas equation does not establish that a real sample is ideal at a selected state."
+        ]
+      }
+    },
+    {
+      "id": "standard-atmosphere",
+      "term": "Standard atmosphere",
+      "guidedDefinition": "A pressure convention equal exactly to 101 325 pascals, written 1 atm.",
+      "technicalDefinition": "The non-SI pressure unit standard atmosphere, symbol atm, defined exactly as 101325 Pa. It is not a measured ambient pressure and does not by itself define a complete thermodynamic standard state.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "BIPM non-SI pressure-unit table; IUPAC section 4.3",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "One atmosphere is distinct from 100000 Pa and from an unstated ambient pressure."
+        ]
+      }
+    },
+    {
+      "id": "state-convention",
+      "term": "State convention",
+      "guidedDefinition": "An explicit choice of conditions, such as temperature and pressure, used when quoting a state-dependent quantity.",
+      "technicalDefinition": "Tour shorthand for a declared set of thermodynamic reference conditions. A gas volume must carry its selected temperature, pressure, composition, and model rather than relying on an ambiguous label such as standard conditions.",
+      "guided": true,
+      "evidenceRefs": [
+        "iupac-green-book-3"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, corrected 2nd printing",
+        "sourceLocator": "Sections 2.11 and 4.3, thermodynamic and standard-state conventions",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The phrase is Tour shorthand; the actual temperature, pressure, composition, and model must be stated."
+        ]
+      }
+    },
+    {
+      "id": "faraday-constant",
+      "term": "Faraday constant",
+      "guidedDefinition": "The electric-charge magnitude carried by one mole of singly charged entities, F = N_A e.",
+      "technicalDefinition": "The molar elementary charge F = N_A e with SI unit C mol^-1. Because N_A and e have fixed exact SI values, F is exact in the current SI; Q = z n F additionally requires a signed charge number z.",
+      "guided": true,
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Fixed N_A and e; CODATA Faraday constant entry",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The conversion does not establish reaction completion, charge-transfer efficiency, or measured current."
         ]
       }
     }

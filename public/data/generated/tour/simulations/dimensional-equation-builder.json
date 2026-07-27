@@ -22,7 +22,7 @@
     "NIST SP 811 predates the International System of Units (SI) changes effective 20 May 2019 and is used only for notation and conversion guidance."
   ],
   "revision": {
-    "contentRevision": "2026-07-26",
+    "contentRevision": "2026-07-27",
     "modelRevision": "isq-dimension-contract-1",
     "implementationRevision": "tour-dimension-engine-v1"
   },
@@ -376,7 +376,7 @@
   "comparison": {
     "compatibility": "same-simulation-revision-and-output-schema",
     "incompatibleBehavior": "Render parallel findings without a residual or merged quantity when compatibility keys differ.",
-    "compatibilityKey": "a96ac0f56a99cdcaf9688fce60b65239fed3cdccdf6fad3ee410b26d44e77805"
+    "compatibilityKey": "1ecb7b383154f3daa44bf2d8976fde1edd19131054ff37444842d2a9192f17dc"
   },
   "visualization": {
     "kind": "dimension-exponent-trace",

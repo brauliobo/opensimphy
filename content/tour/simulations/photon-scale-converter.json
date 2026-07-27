@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "id": "photon-scale-converter",
+  "lessonId": "photon-equivalent-scales",
+  "title": "Photon scale converter",
+  "question": "What linked energy, vacuum wavelength, equivalent mass, and equivalent temperature scales follow from one stated photon frequency?",
+  "predictionPrompt": "Choose an illustrative source frequency, predict which outputs rise or fall with frequency, and name the two equivalent scales without turning them into rest-mass or thermal-state claims.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022"],
+  "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+  "sourceLocator": "Chapter 5 photon bridge; fixed h, c, and k_B; bounded frequency contract",
+  "methodRelationship": "not-applicable",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "Equivalent mass E_gamma/c^2 is not photon rest mass.",
+    "Equivalent temperature E_gamma/k_B is not a thermodynamic state.",
+    "No source-frequency uncertainty is supplied or propagated."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "photon-vacuum-equivalent-scale-map-1",
+    "implementationRevision": "tour-photon-bridge-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "One-frequency photon identity evaluation",
+    "description": "Evaluates four algebraically linked identities once for one finite frequency within the engine bounds.",
+    "deterministic": true,
+    "implementationRef": "src/tour/photonBridgeEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "photon-frequency-energy-map",
+      "label": "Photon frequency-energy relationship",
+      "modelOrigin": "established-physics",
+      "description": "Maps a stated cyclic frequency to one-photon energy using the exact International System of Units (SI) Planck constant.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Fixed h and photon energy-frequency relationship",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["nu is cyclic frequency in hertz, not angular frequency."]
+      }
+    },
+    {
+      "id": "vacuum-propagation-map",
+      "label": "Vacuum frequency-wavelength relationship",
+      "modelOrigin": "established-physics",
+      "description": "Maps the stated frequency to vacuum wavelength with exact SI c and excludes material dispersion.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+        "sourceLocator": "Fixed c and vacuum propagation relationship",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Wavelength in matter requires a refractive model outside this simulation."]
+      }
+    },
+    {
+      "id": "equivalent-coordinate-map",
+      "label": "Energy-equivalent coordinate map",
+      "modelOrigin": "established-physics",
+      "description": "Divides the same photon energy by c squared and k_B to produce explicitly labeled equivalent mass and temperature scales.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-photon-bridge-v1 contract",
+        "sourceLocator": "Equivalent mass and temperature labeling boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The outputs are coordinate labels, not photon rest mass or a thermal-state assignment."]
+      }
+    }
+  ],
+  "equations": [
+    "E_gamma = h nu",
+    "lambda_vac = c/nu",
+    "m_equiv = E_gamma/c^2",
+    "T_equiv = E_gamma/k_B"
+  ],
+  "assumptions": [
+    "The input is a finite positive cyclic frequency within [1e3, 1e25] Hz.",
+    "The radiation is represented by one photon of the stated frequency.",
+    "The reported wavelength is a vacuum wavelength.",
+    "No input-frequency uncertainty is supplied, so no output uncertainty is reported.",
+    "Illustrative presets are source choices rather than exact spectral-band definitions."
+  ],
+  "glossaryIds": ["physical-quantity", "quantity-value", "quantity-kind", "unit", "coordinate-system"],
+  "controls": [
+    {
+      "id": "frequencyHz",
+      "label": "Photon frequency",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Supplies one cyclic frequency to the photon identity engine within its exact finite bounds.",
+      "unit": "Hz",
+      "default": 500000000000000,
+      "min": 1000,
+      "max": 1e25,
+      "step": 0.1,
+      "playfulPrompt": "Move from radio waves toward gamma rays and predict which scale runs backward."
+    }
+  ],
+  "presets": [
+    {
+      "id": "radio",
+      "label": "Radio",
+      "description": "Use the engine's illustrative 100 MHz radio frequency.",
+      "inspectionPrompt": "Why is the vacuum wavelength macroscopic while one-photon energy is small?",
+      "inputs": { "frequencyHz": 100000000 }
+    },
+    {
+      "id": "microwave",
+      "label": "Microwave",
+      "description": "Use the engine's illustrative 10 GHz microwave frequency.",
+      "inspectionPrompt": "Which outputs scale directly with frequency, and which one scales inversely?",
+      "inputs": { "frequencyHz": 10000000000 }
+    },
+    {
+      "id": "visible-blue",
+      "label": "Visible blue",
+      "description": "Use the engine's illustrative frequency corresponding to a 450 nm vacuum wavelength.",
+      "inspectionPrompt": "Can you state the mass and temperature outputs with equivalent labels before reading their values?",
+      "inputs": { "frequencyHz": 666205462222222.2 }
+    },
+    {
+      "id": "x-ray",
+      "label": "X-ray",
+      "description": "Use the engine's illustrative frequency corresponding to a 0.1 nm vacuum wavelength.",
+      "inspectionPrompt": "How does shortening vacuum wavelength change one-photon energy?",
+      "inputs": { "frequencyHz": 2.99792458e18 }
+    },
+    {
+      "id": "gamma",
+      "label": "Gamma ray",
+      "description": "Use the engine's illustrative high-energy gamma-ray frequency.",
+      "inspectionPrompt": "Why does a large equivalent temperature still not identify a thermal state?",
+      "inputs": { "frequencyHz": 1e20 }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "frequencyHz",
+      "label": "Frequency",
+      "type": "number",
+      "unit": "Hz",
+      "nullable": false,
+      "description": "The stated cyclic frequency accepted by the engine."
+    },
+    {
+      "id": "photonEnergyJ",
+      "label": "Photon energy",
+      "type": "number",
+      "unit": "J",
+      "nullable": false,
+      "description": "One-photon energy E_gamma = h nu."
+    },
+    {
+      "id": "vacuumWavelengthM",
+      "label": "Vacuum wavelength",
+      "type": "number",
+      "unit": "m",
+      "nullable": false,
+      "description": "Vacuum wavelength lambda_vac = c/nu; no material refractive model is applied."
+    },
+    {
+      "id": "equivalentMassKg",
+      "label": "Equivalent mass scale",
+      "type": "number",
+      "unit": "kg",
+      "nullable": false,
+      "description": "Energy-equivalent mass E_gamma/c^2, explicitly not photon rest mass."
+    },
+    {
+      "id": "equivalentTemperatureK",
+      "label": "Equivalent temperature scale",
+      "type": "number",
+      "unit": "K",
+      "nullable": false,
+      "description": "Energy-equivalent temperature E_gamma/k_B, explicitly not a thermodynamic state."
+    },
+    {
+      "id": "relationStatus",
+      "label": "Relationship status",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "Reports exact-si-identity-for-stated-frequency while retaining the input and floating-point caveats."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render frequency cases in parallel without residuals or merged equivalent scales when simulation revision or output schema differs."
+  },
+  "visualization": {
+    "kind": "linked-photon-scale-map",
+    "description": "Shows one photon frequency linked separately to photon energy, vacuum wavelength, equivalent mass scale, and equivalent temperature scale.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "A sentence reports all five numerical values, their equations and units, and the rest-mass, thermal-state, vacuum, and uncertainty caveats."
+      },
+      {
+        "type": "table",
+        "description": "A table lists frequency, photon energy, vacuum wavelength, equivalent mass, and equivalent temperature with equation and interpretation columns."
+      }
+    ],
+    "reducedMotionBehavior": "Render the complete linked photon scale map immediately without animated transitions between representations."
+  },
+  "finding": {
+    "changed": "At runtime, the bounded frequency changes four linked representations through one direct identity evaluation.",
+    "cause": "Exact SI values of h, c, and k_B transform the stated frequency through photon, vacuum, and equivalent-coordinate relationships.",
+    "equation": "E_gamma = h nu; lambda_vac = c/nu; m_equiv = E_gamma/c^2; T_equiv = E_gamma/k_B",
+    "assumptions": [
+      "The radiation is represented by one photon of the stated cyclic frequency",
+      "The wavelength is a vacuum wavelength",
+      "No uncertainty for the input frequency is supplied or propagated"
+    ],
+    "establishes": "For an evaluated stated frequency, values satisfying the four displayed identities to finite floating-point precision.",
+    "doesNotEstablish": "Photon rest mass, a photon rest frame, a thermodynamic state, exact spectral-band boundaries, source-frequency accuracy, or empirical validation.",
+    "claimClass": "identity",
+    "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "opensimphy-scientific-scope"],
+    "sourceRevision": "tour-photon-bridge-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+    "sourceLocator": "Photon bridge evaluation and projection contract",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Equivalent mass is explicitly not photon rest mass.",
+      "Equivalent temperature is explicitly not a thermodynamic state.",
+      "Exact defining constants do not make an illustrative or measured frequency uncertainty-free."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 10
+  }
+}

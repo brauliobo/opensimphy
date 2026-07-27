@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "id": "quantum-electrical-standards",
+  "chapterId": "electrical-standards",
+  "order": 1,
+  "title": "Exact electrical identities, realized in real devices",
+  "question": "How did quantum electrical standards move from 1990 conventional values to exact post-2019 International System of Units (SI) relationships without making laboratory realizations uncertainty-free?",
+  "answerPreview": "Fixed h and e make K_J = 2e/h and R_K = h/e^2 exact SI relationships, while Josephson and quantum Hall devices remain practical realizations with operating conditions and uncertainty; K_J-90 and R_K-90 belong to a separate historical convention.",
+  "summary": "Trace fixed h and e through exact Josephson, von Klitzing, conductance, flux, charge, and electron-volt identities; compare the historical 1990 conventional values without substituting them for current SI or practical realization results.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM Recommendations 1 and 2 (CI-1988)",
+    "sourceLocator": "Deep curriculum, Chapter 6; fixed h and e; Appendix 2 practical realizations; quantum electrical relationships; CIPM Recommendations 1 and 2 historical conventional values",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["The lesson specifies a standards-network activity and stores no source-time computed or compared result."]
+  },
+  "estimatedMinutes": 7,
+  "quickPath": {
+    "estimatedMinutes": 3,
+    "guidedBlockIds": ["fixed-h-e-network", "realization-is-not-identity"],
+    "equationStepIds": ["josephson-rung", "hall-rung", "electron-volt-rung"],
+    "checkpointIds": ["post-2019-status-check"],
+    "simulationPresetId": "single-electron"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": ["physical-quantities"],
+  "observationStage": {
+    "title": "Current SI anchors and the historical conventional layer",
+    "question": "Which values are current exact SI inputs, and which values were adopted as a historical practical convention?",
+    "items": [
+      {
+        "id": "electrical-planck-anchor",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The present SI fixes h exactly; it is an input to exact current relationships for K_J, R_K, G_0, and the superconducting flux quantum.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "elementary-charge-anchor",
+        "label": "Elementary charge",
+        "value": 1.602176634e-19,
+        "unit": "C",
+        "role": "fixed-definition",
+        "explanation": "The present SI fixes e exactly; it anchors charge and the exact joule value of one electron volt.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "historical-kj90",
+        "label": "1990 conventional Josephson constant K_J-90",
+        "value": 483597.9,
+        "unit": "GHz V^-1",
+        "role": "conventional-value",
+        "explanation": "This CIPM 1988 conventional value was used from 1990 for practical voltage representations; it is historical and is not the current exact SI value of K_J.",
+        "evidenceRefs": ["cipm-1988-electrical-conventional-values"]
+      },
+      {
+        "id": "historical-rk90",
+        "label": "1990 conventional von Klitzing constant R_K-90",
+        "value": 25812.807,
+        "unit": "ohm",
+        "role": "conventional-value",
+        "explanation": "This CIPM 1988 conventional value was used from 1990 for practical resistance representations; it is historical and is not the current exact SI value of R_K.",
+        "evidenceRefs": ["cipm-1988-electrical-conventional-values"]
+      }
+    ],
+    "conclusion": "After the revised SI took effect on 20 May 2019, fixed h and e made the ideal K_J and R_K relationships exact in SI. The former K_J-90 and R_K-90 values remain useful historical comparison points, not current substitutions, while device realizations still require uncertainty evaluation.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+      "sourceLocator": "SI defining constants, revised-SI effective date, practical realizations, and quantum electrical constants",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The conventional-value role records historical exactness by convention and does not describe a measured device output or a current SI defining value."]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "fixed-h-e-network",
+      "kind": "prose",
+      "title": "Two fixed anchors support a network of exact identities",
+      "body": [
+        "The present SI fixes h and e exactly. Algebra then makes K_J = 2e/h and R_K = h/e^2 exact current SI relationships.",
+        "The same anchors give the conductance quantum G_0 = 2e^2/h, the superconducting flux quantum Phi_0 = h/(2e), and the exact joule value 1 eV = e J.",
+        "These equations connect quantity values and units. They do not by themselves report how accurately a laboratory device realizes voltage or resistance."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "unit"],
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Fixed h and e and exact derived electrical relationships",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["G_0 includes the conventional factor of two associated with spin degeneracy."]
+    },
+    {
+      "id": "realization-is-not-identity",
+      "kind": "caveat",
+      "title": "An exact relation and a practical realization answer different questions",
+      "body": [
+        "A Josephson device can connect frequency and voltage, and a quantum Hall device can support resistance realization under specified operating conditions.",
+        "The ideal constants in the equations are exact in the current SI. A practical realization still has device conditions, corrections, traceability, and an uncertainty budget.",
+        "The network therefore labels exact identities separately from computed input values, historical conventional values, and practical realization claims."
+      ],
+      "glossaryIds": ["quantity-value", "numerical-value", "unit"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Appendix 2 practical realizations; Chapter 6 conclusion boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Ideal device equations do not certify a particular device or calibration chain."]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "historical-comparison-layer",
+      "kind": "derivation",
+      "title": "The 1990 conventional values are comparison records, not current constants",
+      "body": [
+        "The CIPM adopted conventional values K_J-90 = 483 597.9 GHz V^-1 and R_K-90 = 25 812.807 ohm for use from 1 January 1990 in practical electrical metrology.",
+        "They were exact by convention for those practical representations but did not equal the then-SI constants by definition. The revised SI replaced this arrangement by fixing h and e, so current K_J and R_K follow exactly from 2e/h and h/e^2.",
+        "The activity reports signed relative differences as (conventional - current exact SI)/current exact SI and never silently substitutes a 1990 value into the current network."
+      ],
+      "glossaryIds": ["quantity-value", "numerical-value", "coordinate-system"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+      "sourceLocator": "CIPM Recommendations 1 and 2 (CI-1988) and revised-SI relationships",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Historical conventional exactness and present SI exactness have different definitional contexts."]
+    },
+    {
+      "id": "input-network-boundary",
+      "kind": "caveat",
+      "title": "Carrier count is only a calculator input",
+      "body": [
+        "For integer N, the calculator forms the charge magnitude q = N e and, when voltage V is supplied, the energy magnitude E = N e V.",
+        "In the Josephson view, a supplied V can be mapped by f = K_J V. This ideal conversion remains separate from junction step index, irradiation details, and practical realization uncertainty.",
+        "N is not a Hall filling factor, a conductance-channel count, or evidence that a quantized plateau has been realized."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-kind", "unit"],
+      "claimClass": "assumption",
+      "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-electrical-standards-v1 contract",
+      "sourceLocator": "Electrical standards input and finding contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Charge sign and device dynamics are outside the calculator."]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "josephson-rung",
+      "label": "Josephson constant and ideal conversion",
+      "expression": "K_J = 2e/h; f = K_J V",
+      "explanation": "Fixed h and e make K_J exact in the present SI; applying f = K_J V is an ideal device relationship, not a complete realization uncertainty statement.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Josephson constant and practical voltage realization relationship",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Real Josephson realization requires specified junction operation and traceability."]
+    },
+    {
+      "id": "hall-rung",
+      "label": "von Klitzing and conductance identities",
+      "expression": "R_K = h/e^2; G_0 = 2e^2/h = 2/R_K",
+      "explanation": "These are exact present-SI relationships derived from fixed h and e; a resistance realization also requires a valid quantum Hall operating condition.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "von Klitzing constant and conductance quantum relationships",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The activity does not model a Hall plateau or filling factor."]
+    },
+    {
+      "id": "flux-rung",
+      "label": "Superconducting magnetic flux quantum",
+      "expression": "Phi_0 = h/(2e)",
+      "explanation": "The exact identity uses the charge magnitude 2e associated with paired superconducting carriers.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Magnetic flux quantum relationship",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The identity does not model flux trapping or a specific superconducting device."]
+    },
+    {
+      "id": "electron-volt-rung",
+      "label": "Charge and electron-volt energy",
+      "expression": "q = N e; E = q V; 1 eV = e J",
+      "explanation": "For an integer carrier count, the calculator forms a charge magnitude and voltage-dependent energy; at one volt and N = 1 the joule value is exactly e.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Fixed elementary charge and electron-volt definition",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The calculator reports magnitude and omits charge sign and device dynamics."]
+    },
+    {
+      "id": "historical-rung",
+      "label": "Historical comparison convention",
+      "expression": "delta_X = (X_90 - X_SI)/X_SI, for X in {K_J, R_K}",
+      "explanation": "The signed ratio compares each 1990 conventional value with its current exact SI relationship without merging their statuses.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+      "sourceLocator": "CIPM Recommendations 1 and 2 (CI-1988) historical comparison layer",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The sign convention is conventional minus current, divided by current."]
+    }
+  ],
+  "simulationId": "electrical-standards-network",
+  "formulaIds": ["h", "K_J", "R_K", "G_0", "eV"],
+  "programIds": [],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "coordinate-system"],
+  "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+  "checkpoints": [
+    {
+      "id": "post-2019-status-check",
+      "kind": "classification",
+      "prompt": "In the present SI, what is the status of K_J = 2e/h?",
+      "choices": [
+        { "id": "exact-derived", "label": "An exact relationship derived from fixed h and e" },
+        { "id": "kj90", "label": "The unchanged K_J-90 convention" },
+        { "id": "device-reading", "label": "A particular junction's uncertainty-free reading" }
+      ],
+      "answerId": "exact-derived",
+      "explanation": "Since 20 May 2019 the SI fixes h and e, so K_J follows exactly. A practical Josephson realization remains a separate device and uncertainty question.",
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Revised SI fixed constants and Josephson relationship",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored checkpoint is ungraded and stores no learner result."]
+      }
+    },
+    {
+      "id": "historical-substitution-check",
+      "kind": "explanation",
+      "prompt": "Why does the network retain K_J-90 and R_K-90 as separate nodes?",
+      "choices": [
+        { "id": "replace-current", "label": "To replace current exact SI values" },
+        { "id": "historical-trace", "label": "To trace the historical practical convention explicitly" },
+        { "id": "prove-device", "label": "To prove every device realizes the ideal relation" }
+      ],
+      "answerId": "historical-trace",
+      "explanation": "Separate nodes preserve provenance and permit signed comparison without conflating the 1990 convention, the current SI identities, or practical device results.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["bipm-si-brochure-9", "cipm-1988-electrical-conventional-values", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+        "sourceLocator": "CIPM Recommendations 1 and 2 (CI-1988) and conclusion boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This source-authored checkpoint is ungraded and is not a runtime comparison."]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The activity displays fixed h and e, exact current SI derived identities, input-dependent charge and energy nodes, and separate K_J-90 and R_K-90 historical nodes.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+        "sourceRevision": "tour-electrical-standards-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "electrical-standards-network node and edge contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Node status distinguishes definitions, identities, input calculations, and historical conventions."]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "When evaluated, the network applies exact h/e identities, forms q = N e and E = N e V when applicable, and computes signed historical relative differences.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values", "opensimphy-scientific-scope"],
+        "sourceRevision": "tour-electrical-standards-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Electrical standards evaluation and comparison contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The source record declares future runtime calculations and stores no evaluated values."]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "The fixed h and e values and the historical K_J-90 and R_K-90 conventional values are transcribed with their distinct status labels.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+        "sourceLocator": "SI defining constants and CIPM Recommendations 1 and 2 (CI-1988)",
+        "methodRelationship": "literal-reproduction",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["No practical device dataset or calibration certificate is reproduced."]
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No Josephson junction, quantum Hall plateau, calibration chain, or uncertainty dataset is loaded for empirical comparison.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9"],
+        "sourceRevision": "tour content contract 2026-07-26; BIPM SI Brochure 2026 update",
+        "sourceLocator": "Practical realization and dataset boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["A historical numerical difference is not a device-performance residual."]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated input, the network establishes the exact algebraic h/e relationships, bounded input calculations, and explicitly signed historical comparisons represented by the engine.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values", "opensimphy-scientific-scope"],
+        "sourceRevision": "tour-electrical-standards-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Electrical standards finding contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Exact identity status and practical realization status remain separate."]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The network does not establish device accuracy, an uncertainty-free practical realization, a quantized Hall plateau, a Hall filling factor, a channel count, or empirical validation.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "tour content contract 2026-07-26; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Chapter 6 scientific conclusion boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The carrier count is used only for charge and voltage-dependent energy calculations."]
+      }
+    }
+  ]
+}

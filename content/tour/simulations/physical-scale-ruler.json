@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "id": "physical-scale-ruler",
+  "lessonId": "clocks-action-light-gravity",
+  "title": "Physical scale ruler",
+  "question": "Where does a labeled length, time, or mass sit on an International System of Units (SI) logarithmic ruler, and what is its evidence status?",
+  "predictionPrompt": "Choose one family and a matching labeled scale, predict its base-10 exponent, then inspect whether the entry is defined, derived, measured, or illustrative.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022", "iau-2012-resolution-b2", "iau-resolution-b3-2015"],
+  "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; IAU 2012 Resolution B2; IAU 2015 Resolution B3",
+  "sourceLocator": "Chapter 4 scale-ruler contract; fixed SI constants; CODATA Planck scales; IAU 2012 astronomical-unit definition; exact declared or derived Julian-year, light-year, and parsec relationships; IAU 2015 nominal solar conversion constant",
+  "methodRelationship": "not-applicable",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "Defined, derived, measured, and order-of-magnitude illustrative catalog statuses are not interchangeable.",
+    "A normalized logarithmic coordinate compares stated magnitudes and does not predict a scale."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "bounded-physical-scale-catalog-1",
+    "implementationRevision": "tour-scale-ruler-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Base-10 SI scale projection",
+    "description": "Selects one bounded catalog entry, filters its quantity family, and evaluates log10(Q/(1 U)) once using the declared SI unit U.",
+    "deterministic": true,
+    "implementationRef": "src/tour/scaleRulerEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "status-labeled-scale-catalog",
+      "label": "Status-labeled physical scale catalog",
+      "modelOrigin": "established-physics",
+      "description": "Provides bounded positive SI values in separate length, time, and mass families with defined, derived, measured, or illustrative status labels.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "iau-2012-resolution-b2", "iau-resolution-b3-2015", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure 2026 update; CODATA 2022 adjustment; IAU 2012 Resolution B2; IAU 2015 Resolution B3; bounded representative catalog 2026-07-26",
+        "sourceLocator": "Scale-ruler catalog entries; exact astronomical-unit definition; exact declared or derived Julian-year, light-year, and parsec relationships; nominal solar conversion constant; representative-entry notes",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Representative pedagogical entries are not universal object properties or precision reference data."]
+      }
+    },
+    {
+      "id": "si-logarithmic-coordinate",
+      "label": "SI logarithmic coordinate",
+      "modelOrigin": "established-physics",
+      "description": "Maps each positive same-family SI quantity value to a dimensionless base-10 logarithmic coordinate relative to one stated SI unit.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-scale-ruler-v1 contract",
+        "sourceLocator": "Quantity-value convention and scale-ruler coordinate",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Changing the reference unit shifts the coordinate and creates no physical prediction."]
+      }
+    }
+  ],
+  "equations": [
+    "x = log10(Q/(1 U))",
+    "l_P = sqrt(hbar G/c^3)",
+    "t_P = sqrt(hbar G/c^5)",
+    "m_P = sqrt(hbar c/G)"
+  ],
+  "assumptions": [
+    "Every selected catalog value is finite, positive, and interpreted only within its declared length, time, or mass family.",
+    "The selected preset belongs to the selected quantityFamily; invalid cross-family pairs fail rather than being coerced.",
+    "Planck-scale SI values use exact hbar and c with measured G and therefore inherit uncertainty from G.",
+    "Representative entries are pedagogical scales and catalog proximity carries no causal meaning.",
+    "The astronomical unit is exact under IAU 2012 Resolution B2; the Julian year is declared as 365.25 days, the light-year is derived from c times that interval, and the parsec is derived geometrically as 648000/pi astronomical units.",
+    "Exact IAU nominal solar and planetary values are conversion constants and are not exact measurements of the corresponding bodies.",
+    "No empirical dataset is fitted or compared."
+  ],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimensionless", "coordinate-system"],
+  "controls": [
+    {
+      "id": "quantityFamily",
+      "label": "Physical quantity family",
+      "type": "select",
+      "inputRole": "target-quantity",
+      "readingDepth": "guided",
+      "description": "Selects the length, time, or mass family and its SI unit.",
+      "default": "length",
+      "playfulPrompt": "Choose which ruler to open.",
+      "options": [
+        { "value": "length", "label": "Length", "description": "SI values in metres" },
+        { "value": "time", "label": "Time", "description": "SI values in seconds" },
+        { "value": "mass", "label": "Mass", "description": "SI values in kilograms" }
+      ]
+    },
+    {
+      "id": "presetId",
+      "label": "Labeled scale",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects one bounded engine scale; choose an entry from the active physical quantity family.",
+      "default": "human-height",
+      "playfulPrompt": "Jump from a familiar scale toward either end of the ruler.",
+      "options": [
+        { "value": "planck-length", "label": "Planck length", "description": "derived length using measured G" },
+        { "value": "proton-radius", "label": "Proton charge-radius scale", "description": "measured length scale" },
+        { "value": "atom-radius", "label": "Atomic radius scale", "description": "illustrative length scale" },
+        { "value": "human-height", "label": "Human height scale", "description": "illustrative length scale" },
+        { "value": "earth-radius", "label": "Earth mean radius", "description": "rounded measured length" },
+        { "value": "astronomical-unit", "label": "Astronomical unit", "description": "defined length" },
+        { "value": "light-year", "label": "Light-year", "description": "derived length" },
+        { "value": "parsec", "label": "Parsec", "description": "Exact geometrical value 648000/pi astronomical units under the stated IAU convention." },
+        { "value": "observable-universe-radius", "label": "Observable-universe radius scale", "description": "model-dependent illustrative length" },
+        { "value": "planck-time", "label": "Planck time", "description": "derived time using measured G" },
+        { "value": "proton-light-crossing-time", "label": "Proton light-crossing scale", "description": "derived time scale" },
+        { "value": "caesium-period", "label": "Caesium defining-transition period", "description": "exact reciprocal of the fixed frequency" },
+        { "value": "human-heartbeat", "label": "Human heartbeat scale", "description": "illustrative time scale" },
+        { "value": "day", "label": "Day", "description": "conventional time" },
+        { "value": "julian-year", "label": "Julian year", "description": "conventional time" },
+        { "value": "earth-age", "label": "Earth age", "description": "rounded measured time" },
+        { "value": "universe-age", "label": "Universe age scale", "description": "model-dependent illustrative time" },
+        { "value": "electron-mass", "label": "Electron rest mass", "description": "measured mass" },
+        { "value": "proton-mass", "label": "Proton rest mass", "description": "measured mass" },
+        { "value": "atomic-mass-unit", "label": "Unified atomic mass unit", "description": "measured mass" },
+        { "value": "human-mass", "label": "Human mass scale", "description": "illustrative mass scale" },
+        { "value": "planck-mass", "label": "Planck mass", "description": "derived mass using measured G" },
+        { "value": "earth-mass", "label": "Earth mass", "description": "rounded measured mass" },
+        { "value": "solar-mass", "label": "Solar mass", "description": "representative measured mass" },
+        { "value": "milky-way-mass", "label": "Milky Way mass scale", "description": "model-dependent illustrative mass" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "id": "human-height",
+      "label": "Start at human height",
+      "description": "Open the length ruler at an illustrative 1.7 metre human scale.",
+      "inspectionPrompt": "Which powers of ten separate this scale from the Planck length and Earth radius?",
+      "inputs": { "quantityFamily": "length", "presetId": "human-height" }
+    },
+    {
+      "id": "planck-length",
+      "label": "Inspect the Planck length",
+      "description": "Locate the derived Planck length while retaining its measured-G status.",
+      "inspectionPrompt": "Why is a derived Planck scale not an exact SI anchor or a predicted minimum length?",
+      "inputs": { "quantityFamily": "length", "presetId": "planck-length" }
+    },
+    {
+      "id": "caesium-period",
+      "label": "Invert the clock anchor",
+      "description": "Locate the exact reciprocal of the fixed caesium defining frequency on the time ruler.",
+      "inspectionPrompt": "How does an exact derived period differ from a practical clock realization?",
+      "inputs": { "quantityFamily": "time", "presetId": "caesium-period" }
+    },
+    {
+      "id": "planck-mass",
+      "label": "Inspect the Planck mass",
+      "description": "Locate the derived Planck mass among measured and illustrative masses.",
+      "inspectionPrompt": "Which input prevents its SI numerical value from being exact?",
+      "inputs": { "quantityFamily": "mass", "presetId": "planck-mass" }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "selectedSiValue",
+      "label": "Selected SI value",
+      "type": "number",
+      "unit": null,
+      "nullable": false,
+      "description": "The selected catalog numerical value in metres, seconds, or kilograms according to quantityFamily."
+    },
+    {
+      "id": "selectedUnit",
+      "label": "Selected SI unit",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "The engine unit m, s, or kg for the selected physical quantity family."
+    },
+    {
+      "id": "selectedLog10",
+      "label": "Logarithmic SI coordinate",
+      "type": "number",
+      "unit": null,
+      "nullable": false,
+      "description": "The base-10 coordinate log10(Q/(1 U)) for the selected catalog value."
+    },
+    {
+      "id": "selectedStatus",
+      "label": "Evidence status",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "One of defined, derived, measured, or order-of-magnitude-illustrative."
+    },
+    {
+      "id": "selectedSourceLabel",
+      "label": "Source label",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "The catalog source family associated with the selected value."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render selections in parallel without subtracting or merging coordinates when simulation revision or output schema differs."
+  },
+  "visualization": {
+    "kind": "status-labeled-logarithmic-ruler",
+    "description": "Places every entry in the selected physical quantity family on a base-10 SI ruler and marks the current selection with its evidence status.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "A sentence reports the selected label, SI value and unit, logarithmic coordinate, status, source label, and catalog caveat."
+      },
+      {
+        "type": "table",
+        "description": "A table lists each same-family entry with SI value, base-10 coordinate, status, source label, and selected marker."
+      }
+    ],
+    "reducedMotionBehavior": "Render the final physical quantity ruler and selected marker immediately without animated travel between scales."
+  },
+  "finding": {
+    "changed": "At runtime, selecting a matching quantityFamily and presetId changes the bounded same-family catalog projection and selected logarithmic coordinate.",
+    "cause": "The engine filters the catalog by quantity family and maps each positive SI value through x = log10(Q/(1 U)).",
+    "equation": "x = log10(Q/(1 U))",
+    "assumptions": [
+      "The selected preset belongs to the selected quantity family",
+      "Each catalog value is interpreted in its declared SI unit and evidence status",
+      "No physical relationship is inferred from ruler proximity"
+    ],
+    "establishes": "For an evaluated selection, the bounded catalog location, SI value, source label, and status of one labeled scale within its quantity family.",
+    "doesNotEstablish": "A new scale prediction, exactness for measured G or G-derived Planck scales, a minimum physical scale, a causal relation between entries, or agreement with empirical data.",
+    "claimClass": "identity",
+    "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "iau-2012-resolution-b2", "iau-resolution-b3-2015", "opensimphy-scientific-scope"],
+    "sourceRevision": "tour-scale-ruler-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment; IAU 2012 Resolution B2; IAU 2015 Resolution B3",
+    "sourceLocator": "Scale-ruler evaluation and projection contract; exact astronomical-unit definition; exact declared or derived astronomical relationships; nominal solar conversion constant",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Planck scales inherit uncertainty from measured G.",
+      "IAU nominal values are exact conversion constants rather than measured current-best body properties.",
+      "Representative entries are pedagogical scales rather than universal exact properties.",
+      "Normalization is not prediction."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 10
+  }
+}

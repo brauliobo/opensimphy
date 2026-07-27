@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import earthRegistryJson from '../../public/data/generated/earth/scientific-simulations.json'
 import recipesJson from '../../public/data/generated/recipes.json'
 import { buildTourArtifacts, readTourSource } from '../../scripts/lib/tour-content.mjs'
+import { SCALE_RULER_PRESET_IDS } from '../../src/tour/scaleRulerEngine'
 import type { TourProgress } from '../../src/types/tour'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
@@ -22,6 +23,8 @@ describe('tour content generator', () => {
 
   beforeAll(async () => {
     source = await readTourSource(sourceDirectory)
+    source.lessons = [source.lessons.find(({ id }) => id === 'physical-quantities')!, ...source.lessons.filter(({ id }) => id !== 'physical-quantities')]
+    source.simulations = [source.simulations.find(({ id }) => id === 'dimensional-equation-builder')!, ...source.simulations.filter(({ id }) => id !== 'dimensional-equation-builder')]
     artifacts = buildTourArtifacts(source, { recipeIds, programIds })
   })
 
@@ -34,19 +37,29 @@ describe('tour content generator', () => {
   it('builds the exact ordered corpus with closed references and acyclic navigation', () => {
     expect(artifacts.summary).toEqual({
       chapters: 20,
-      lessons: 1,
-      simulations: 1,
-      glossary: 11,
-      references: 5,
+      lessons: 9,
+      simulations: 9,
+      glossary: 27,
+      references: 10,
       quickStations: 8,
       quickStationMinutes: 27,
     })
     expect(artifacts.chapters.map(({ order }) => order)).toEqual(Array.from({ length: 20 }, (_, index) => index))
     expect(artifacts.manifest.quickStations.map(({ order }) => order)).toEqual(Array.from({ length: 8 }, (_, index) => index + 1))
     expect(artifacts.manifest.quickStations.reduce((total, station) => total + station.estimatedMinutes, 0)).toBe(27)
-    expect(artifacts.manifest).toMatchObject({ contentRevision: '2026-07-26', depthComposition: 'technical-includes-guided' })
+    expect(artifacts.manifest).toMatchObject({ contentRevision: '2026-07-27', depthComposition: 'technical-includes-guided' })
     expect(artifacts.manifest).not.toHaveProperty('generatedAt')
     expect(new Set(artifacts.chapters.map(({ status }) => status))).toEqual(new Set(['content-ready', 'planned']))
+    expect(artifacts.manifest.quickStations.map(({ id, chapterId, lessonId, simulationId, status }) => ({ id, chapterId, lessonId, simulationId, status }))).toEqual([
+      { id: 'anchors-scales', chapterId: 'units', lessonId: 'physical-quantities', simulationId: 'dimensional-equation-builder', status: 'content-ready' },
+      { id: 'unit-bridges', chapterId: 'unit-bridges', lessonId: 'photon-equivalent-scales', simulationId: 'photon-scale-converter', status: 'content-ready' },
+      { id: 'electrical-standards', chapterId: 'electrical-standards', lessonId: 'quantum-electrical-standards', simulationId: 'electrical-standards-network', status: 'content-ready' },
+      { id: 'atoms-materials', chapterId: 'atomic-structure', lessonId: 'hydrogen-spectra', simulationId: 'hydrogen-spectrum-explorer', status: 'content-ready' },
+      { id: 'particles-mass', chapterId: 'particle-scales', lessonId: 'particle-mass-scales', simulationId: 'particle-scale-comparator', status: 'content-ready' },
+      { id: 'spin-magnetism', chapterId: 'spin-magnetism', lessonId: 'spin-precession', simulationId: 'spin-precession-visualizer', status: 'content-ready' },
+      { id: 'heat-radiation', chapterId: 'heat-matter', lessonId: 'blackbody-radiation', simulationId: 'blackbody-spectrum', status: 'content-ready' },
+      { id: 'molar-matter', chapterId: 'heat-matter', lessonId: 'particle-to-mole', simulationId: 'particle-to-mole-scaler', status: 'content-ready' },
+    ])
 
     const referenceIds = new Set(artifacts.references.entries.map(({ id }) => id))
     const glossaryIds = new Set(artifacts.glossary.entries.map(({ id }) => id))
@@ -89,8 +102,98 @@ describe('tour content generator', () => {
     expect(artifacts.chapters[0].previousChapterId).toBeNull()
     expect(artifacts.chapters.at(-1)?.nextChapterId).toBeNull()
     expect(new Set(artifacts.chapters.map(({ nextChapterId }) => nextChapterId).filter(Boolean)).size).toBe(19)
-    expect(artifacts.lessons[0]).toMatchObject({ previousLessonId: null, nextLessonId: null })
+    expect(artifacts.lessons.map(({ id, previousLessonId, nextLessonId }) => ({ id, previousLessonId, nextLessonId }))).toEqual([
+      { id: 'physical-quantities', previousLessonId: null, nextLessonId: 'clocks-action-light-gravity' },
+      { id: 'clocks-action-light-gravity', previousLessonId: 'physical-quantities', nextLessonId: 'photon-equivalent-scales' },
+      { id: 'photon-equivalent-scales', previousLessonId: 'clocks-action-light-gravity', nextLessonId: 'quantum-electrical-standards' },
+      { id: 'quantum-electrical-standards', previousLessonId: 'photon-equivalent-scales', nextLessonId: 'hydrogen-spectra' },
+      { id: 'hydrogen-spectra', previousLessonId: 'quantum-electrical-standards', nextLessonId: 'particle-mass-scales' },
+      { id: 'particle-mass-scales', previousLessonId: 'hydrogen-spectra', nextLessonId: 'spin-precession' },
+      { id: 'spin-precession', previousLessonId: 'particle-mass-scales', nextLessonId: 'blackbody-radiation' },
+      { id: 'blackbody-radiation', previousLessonId: 'spin-precession', nextLessonId: 'particle-to-mole' },
+      { id: 'particle-to-mole', previousLessonId: 'blackbody-radiation', nextLessonId: null },
+    ])
+    expect(artifacts.manifest.quickStations.every((station) => artifacts.lessons.find(({ id }) => id === station.lessonId)?.quickPath?.estimatedMinutes === station.estimatedMinutes)).toBe(true)
+    expect(artifacts.simulations.every(({ revision }) => revision.contentRevision === artifacts.manifest.contentRevision)).toBe(true)
     expect(buildTourArtifacts(source, { recipeIds, programIds })).toEqual(artifacts)
+  })
+
+  it('preserves the corrected scientific and interaction contracts', () => {
+    const lessonById = new Map(artifacts.lessons.map((lesson) => [lesson.id, lesson]))
+    const simulationById = new Map(artifacts.simulations.map((simulation) => [simulation.id, simulation]))
+    expect(artifacts.references.entries.map(({ id }) => id)).toContain('iau-resolution-b3-2015')
+    expect(artifacts.references.entries.map(({ id }) => id)).toEqual(expect.arrayContaining([
+      'iau-2012-resolution-b2',
+      'cipm-1988-electrical-conventional-values',
+    ]))
+    expect(artifacts.manifest.quickStations.find(({ id }) => id === 'atoms-materials')?.interaction).toContain('does not evaluate')
+
+    expect(lessonById.get('clocks-action-light-gravity')?.observationStage.items.map(({ id, role }) => ({ id, role }))).toEqual(expect.arrayContaining([
+      { id: 'measured-gravity', role: 'measured-reference' },
+      { id: 'derived-planck-length', role: 'derived-model-value' },
+    ]))
+    expect(lessonById.get('quantum-electrical-standards')?.observationStage.items.slice(2).every(({ role }) => role === 'conventional-value')).toBe(true)
+    expect(lessonById.get('spin-precession')?.observationStage.items.map(({ value, role }) => ({ value, role }))).toEqual([
+      { value: -2.80249513861e10, role: 'measured-reference' },
+      { value: 42577478.461, role: 'measured-reference' },
+      { value: 1, role: 'model-input' },
+    ])
+    expect(lessonById.get('spin-precession')?.equationSteps.find(({ id }) => id === 'phase-circle')?.expression).toContain('phi(t) = -omega t')
+    const spin = simulationById.get('spin-precession-visualizer')!
+    expect(spin.outputSchema.find(({ id }) => id === 'phaseCycles')?.description).toContain('phaseCycles = -f * t')
+    expect(spin.equations).toContain('phi(t) = -omega t; phaseCycles = -f * t; T = 1/|f|; x = cos(phi); y = sin(phi)')
+
+    const scale = simulationById.get('physical-scale-ruler')!
+    expect(scale.evidenceRefs).toEqual(expect.arrayContaining(['iau-2012-resolution-b2', 'iau-resolution-b3-2015']))
+    expect(scale.sourceLocator).toContain('exact declared or derived Julian-year, light-year, and parsec relationships')
+    const scalePresetControl = scale.controls.find(({ id }) => id === 'presetId')
+    expect(scalePresetControl?.type).toBe('select')
+    if (scalePresetControl?.type === 'select') {
+      expect(scalePresetControl.options.map(({ value }) => value)).toEqual(SCALE_RULER_PRESET_IDS)
+      expect(scalePresetControl.options.find(({ value }) => value === 'parsec')).toEqual({
+        value: 'parsec',
+        label: 'Parsec',
+        description: 'Exact geometrical value 648000/pi astronomical units under the stated IAU convention.',
+      })
+    }
+
+    const molarCheckpoint = lessonById.get('particle-to-mole')?.checkpoints.find(({ id }) => id === 'dependent-conversion-check')
+    expect(molarCheckpoint).toMatchObject({
+      kind: 'prediction',
+      answerId: 'all-linear',
+    })
+    expect(molarCheckpoint?.choices.map(({ id }) => id)).toEqual(['all-linear', 'count-mass-only', 'none'])
+    const molar = simulationById.get('particle-to-mole-scaler')!
+    expect(molar.predictionPrompt).toBe('If amount of substance doubles while molar mass, temperature, pressure, and signed charge number remain fixed, predict which dependent count, mass, ideal-gas volume, and Faraday charge outputs double.')
+    expect(molar.limits).toEqual({ tier: 'immediate', maxOperations: 2, maxDurationMs: 16 })
+
+    const electrical = simulationById.get('electrical-standards-network')!
+    expect(electrical.evidenceRefs).toContain('cipm-1988-electrical-conventional-values')
+    expect(electrical.modelComponents.find(({ id }) => id === 'historical-conventional-comparison')?.attribution.evidenceRefs).toContain('cipm-1988-electrical-conventional-values')
+    expect(electrical.controls.filter(({ readingDepth }) => readingDepth === 'guided')).toHaveLength(3)
+    expect(electrical.controls.find(({ id }) => id === 'frequencyHz')).toMatchObject({ readingDepth: 'technical', min: 0, max: 1e15 })
+    expect(electrical.presets.every(({ inputs }) => Object.keys(inputs).sort().join(',') === 'chargeCarriers,frequencyHz,presetId,voltageV')).toBe(true)
+    expect(electrical.outputSchema.map(({ id }) => id)).toContain('josephsonVoltageFromFrequencyV')
+    expect(electrical.equations).toEqual(expect.arrayContaining(['K_J = 2e/h', 'f = K_J V', 'V = f/K_J']))
+    expect(electrical.outputSchema.find(({ id }) => id === 'josephsonVoltageFromFrequencyV')?.description).toContain('V = f/K_J')
+
+    const blackbody = simulationById.get('blackbody-spectrum')!
+    expect(blackbody.limits).toEqual({ tier: 'immediate', maxOperations: 2, maxDurationMs: 16 })
+    expect(blackbody.predictionPrompt).toBe('When thermodynamic temperature increases, predict whether the wavelength-form peak shifts shorter, shifts longer, or stays unchanged, and whether ideal radiant exitance follows the fourth power of the temperature ratio, follows it linearly, or stays unchanged.')
+    const blackbodyCheckpoint = lessonById.get('blackbody-radiation')?.checkpoints.find(({ id }) => id === 'hotter-curve-check')
+    expect(blackbodyCheckpoint?.answerId).toBe('shorter-t4')
+    expect(blackbodyCheckpoint?.choices.map(({ id }) => id)).toEqual(['shorter-t4', 'longer-linear', 'unchanged'])
+    const atomic = simulationById.get('hydrogen-spectrum-explorer')!
+    expect(atomic.predictionPrompt).toBe('For the selected transition, use the finite-proton reduced-mass factor below one to predict whether its wavelength is longer, shorter, or unchanged relative to the same infinite-mass state.')
+    expect(atomic.limits).toEqual({ tier: 'immediate', maxOperations: 2, maxDurationMs: 16 })
+    for (const id of ['hydrogen-spectra', 'particle-mass-scales', 'spin-precession']) {
+      const lesson = lessonById.get(id)!
+      expect(lesson.evidenceRefs).toContain('openstax-university-physics-v3')
+      expect([...lesson.guidedBlocks, ...lesson.technicalBlocks].some(({ evidenceRefs }) => evidenceRefs.includes('openstax-university-physics-v3'))).toBe(true)
+    }
+    for (const id of ['hydrogen-spectrum-explorer', 'particle-scale-comparator', 'spin-precession-visualizer']) {
+      expect(simulationById.get(id)?.finding.evidenceRefs).toContain('openstax-university-physics-v3')
+    }
   })
 
   it('matches every generated aggregate and shard', async () => {
@@ -140,6 +243,9 @@ describe('tour content generator', () => {
     expect(rebuild((candidate) => {
       delete candidate.lessons[0].observationStage.attribution
     })).toThrow('is missing properties: attribution')
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items[0].role = 'reference'
+    })).toThrow('role is not recognized')
   })
 
   it('fails closed on invalid numeric controls and preset values', () => {
@@ -149,6 +255,9 @@ describe('tour content generator', () => {
     expect(rebuild((candidate) => {
       candidate.simulations[0].presets[0].inputs.sampleSiMagnitude = 1000
     })).toThrow('must be within [0.1, 100]')
+    expect(rebuild((candidate) => {
+      candidate.simulations[0].limits.maxOperations = 0
+    })).toThrow('limits.maxOperations must be a positive integer')
   })
 
   it('fails closed on malformed attribution and result axes', () => {
@@ -234,19 +343,19 @@ describe('tour content generator', () => {
     const key = artifacts.simulations[0].comparison.compatibilityKey
     expect(key).toMatch(/^[a-f0-9]{64}$/)
     expect(artifacts.simulations[0].revision.implementationRevision).toBe('tour-dimension-engine-v1')
-    expect(key).toBe('a96ac0f56a99cdcaf9688fce60b65239fed3cdccdf6fad3ee410b26d44e77805')
+    expect(key).toBe('1ecb7b383154f3daa44bf2d8976fde1edd19131054ff37444842d2a9192f17dc')
     expect(source.simulations[0].comparison).not.toHaveProperty('compatibilityKey')
     expect(buildTourArtifacts(source, { recipeIds, programIds }).simulations[0].comparison.compatibilityKey).toBe(key)
+
+    const limitsChanged = structuredClone(source)
+    limitsChanged.simulations[0].limits.maxOperations += 1
+    expect(buildTourArtifacts(limitsChanged, { recipeIds, programIds }).simulations[0].comparison.compatibilityKey).toBe(key)
 
     const mutations = [
       (candidate: any) => {
         candidate.simulations[0].id = 'dimensional-equation-builder-revised'
         candidate.lessons[0].simulationId = 'dimensional-equation-builder-revised'
         candidate.manifest.quickStations[0].simulationId = 'dimensional-equation-builder-revised'
-      },
-      (candidate: any) => {
-        candidate.manifest.contentRevision = '2026-07-27'
-        candidate.simulations[0].revision.contentRevision = '2026-07-27'
       },
       (candidate: any) => { candidate.simulations[0].revision.modelRevision += '-revised' },
       (candidate: any) => { candidate.simulations[0].revision.implementationRevision += '-revised' },
@@ -257,18 +366,15 @@ describe('tour content generator', () => {
       mutate(changed)
       expect(buildTourArtifacts(changed, { recipeIds, programIds }).simulations[0].comparison.compatibilityKey).not.toBe(key)
     }
+    expect(rebuild((candidate) => {
+      candidate.manifest.contentRevision = '2026-07-28'
+      candidate.simulations.forEach((simulation: any) => { simulation.revision.contentRevision = '2026-07-28' })
+    })).toThrow('manifest.contentRevision must be 2026-07-27 for the current corpus')
   })
 
-  it('accepts planned text-only lessons without quick paths or simulations', () => {
-    const textOnly = structuredClone(source)
-    textOnly.manifest.quickStations[0].status = 'planned'
-    textOnly.manifest.quickStations[0].lessonId = null
-    textOnly.manifest.quickStations[0].simulationId = null
-    textOnly.chapters.find(({ id }: { id: string }) => id === 'units').status = 'planned'
-    delete textOnly.lessons[0].quickPath
-    textOnly.lessons[0].simulationId = null
-    textOnly.simulations = []
-    expect(() => buildTourArtifacts(textOnly, { recipeIds, programIds })).not.toThrow()
+  it('fails closed when the current lesson or simulation corpus is incomplete', () => {
+    expect(rebuild((candidate) => { candidate.lessons.pop() })).toThrow('Expected 9 lessons, found 8')
+    expect(rebuild((candidate) => { candidate.simulations.pop() })).toThrow('Expected 9 simulations, found 8')
   })
 
   it('accepts generalized duplicate input roles when controls remain valid', () => {

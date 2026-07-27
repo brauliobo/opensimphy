@@ -6,8 +6,8 @@
   "title": "Charge and Quantum Electrical Standards",
   "question": "How do fixed h and e support exact quantum electrical relationships and their practical realizations?",
   "summary": "Trace fixed elementary charge and Planck's constant through exact ideal conductance, resistance, Josephson, and magnetic-flux relationships while keeping practical device realization, corrections, and uncertainty separate from pre-2019 conventional values. Vacuum permeability and permittivity are not independently fixed exact standards in the present SI.",
-  "status": "planned",
+  "status": "content-ready",
   "quickStationIds": ["electrical-standards"],
-  "lessonIds": [],
+  "lessonIds": ["quantum-electrical-standards"],
   "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract", "sourceLocator": "Deep curriculum, Chapter 6", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Exact ideal relationships do not make practical realizations uncertainty-free."] }
 }

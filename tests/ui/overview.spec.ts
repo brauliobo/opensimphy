@@ -52,10 +52,10 @@ describe('Tour orientation', () => {
 
     expect(wrapper.attributes('data-testid')).toBe('tour-ready')
     expect(wrapper.findAll('.tour-station')).toHaveLength(8)
-    expect(wrapper.findAll('.tour-station-spine .tour-station-link')).toHaveLength(1)
+    expect(wrapper.findAll('.tour-station-spine .tour-station-link')).toHaveLength(8)
     expect(wrapper.get('[data-testid="station-anchors-scales"] a').attributes('href')).toBe('/tour/units/physical-quantities?path=quick')
-    expect(wrapper.get('[data-testid="station-unit-bridges"]').find('a').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="station-unit-bridges"]').text()).toContain('Planned')
+    expect(wrapper.get('[data-testid="station-unit-bridges"] a').attributes('href')).toBe('/tour/unit-bridges/photon-equivalent-scales?path=quick')
+    expect(wrapper.findAll('.tour-station-planned')).toHaveLength(0)
     expect(wrapper.get('[data-testid="begin-tour"]').attributes('href')).toBe('/tour/units/physical-quantities?path=quick')
     expect(wrapper.find('a[href="/tour"]').exists()).toBe(true)
     expect(wrapper.text()).not.toContain('Registry coverage')
@@ -85,6 +85,10 @@ describe('Tour orientation', () => {
 
     expect(wrapper.get('[data-testid="station-anchors-scales"]').attributes('data-progress')).toBe('complete')
     expect(wrapper.get('[data-testid="station-progress-anchors-scales"]').text()).toBe('Quick station: complete')
+    for (const station of manifest.quickStations.filter(({ id }) => id !== 'anchors-scales')) {
+      expect(wrapper.get(`[data-testid="station-${station.id}"]`).attributes('data-progress')).toBe('not-started')
+      expect(wrapper.get(`[data-testid="station-progress-${station.id}"]`).text()).toBe('Quick station: not-started')
+    }
     expect(progress.state.value.lessons['physical-quantities']).toBeUndefined()
     expect(progress.state.value.chapters.units).toBeUndefined()
   })

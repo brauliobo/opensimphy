@@ -10,7 +10,18 @@ const METHOD_RELATIONSHIPS = new Set(['not-applicable', 'literal-reproduction', 
 const MODEL_ORIGINS = new Set(['established-physics', 'source-reproduction', 'traditional-baseline'])
 const ATTRIBUTED_ROOTS = ['manifest', 'chapter', 'lesson', 'observation-stage', 'lesson-block', 'equation-step', 'checkpoint', 'simulation', 'finding', 'glossary-entry', 'claim-vocabulary-entry']
 const INHERITING_RECORD_KINDS = ['quick-station', 'lesson-quick-path', 'observation-stage-item', 'lesson-block-body', 'checkpoint-choice', 'simulation-equation', 'simulation-assumption', 'control', 'control-option', 'preset', 'output-field', 'visualization', 'visualization-alternative', 'finding-field', 'finding-assumption']
-const CURRENT_SUMMARY = { chapters: 20, stations: 8, lessons: 1, simulations: 1, glossary: 11, references: 5 } as const
+const CURRENT_SUMMARY = { chapters: 20, stations: 8, lessons: 9, simulations: 9, glossary: 27, references: 10 } as const
+const CURRENT_SIMULATION_IDS = [
+  'dimensional-equation-builder',
+  'physical-scale-ruler',
+  'photon-scale-converter',
+  'electrical-standards-network',
+  'hydrogen-spectrum-explorer',
+  'particle-scale-comparator',
+  'spin-precession-visualizer',
+  'blackbody-spectrum',
+  'particle-to-mole-scaler',
+] as const
 
 export interface TourOfflinePackMetadata {
   schemaVersion: 1
@@ -225,7 +236,8 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   const lessonIds = chapters.flatMap((chapter) => chapter.lessonIds as string[])
   if (new Set(lessonIds).size !== lessonIds.length || lessonIds.length !== CURRENT_SUMMARY.lessons) fail('Tour manifest lesson coverage', `must contain ${CURRENT_SUMMARY.lessons} unique lesson`)
   const simulationIds = stations.filter((station) => station.status === 'content-ready').map((station) => station.simulationId as string)
-  if (new Set(simulationIds).size !== simulationIds.length || simulationIds.length !== CURRENT_SUMMARY.simulations) fail('Tour manifest simulation coverage', `must contain ${CURRENT_SUMMARY.simulations} unique simulation`)
+  if (new Set(simulationIds).size !== simulationIds.length || simulationIds.length !== CURRENT_SUMMARY.stations) fail('Tour manifest station simulation coverage', `must contain ${CURRENT_SUMMARY.stations} unique simulations`)
+  if (!simulationIds.every((id) => CURRENT_SIMULATION_IDS.includes(id as typeof CURRENT_SIMULATION_IDS[number]))) fail('Tour manifest station simulation coverage', 'contains an unknown current simulation')
   return value as unknown as TourGeneratedManifest
 }
 
@@ -287,9 +299,7 @@ export function tourOfflinePackUrls(
     'data/generated/tour/references.json',
     ...contentReadyChapters.map(({ id }) => `data/generated/tour/chapters/${safeId(id, 'Tour chapter ID')}.json`),
     ...contentReadyChapters.flatMap(({ lessonIds }) => lessonIds.map((id) => `data/generated/tour/lessons/${safeId(id, 'Tour lesson ID')}.json`)),
-    ...validatedManifest.quickStations
-      .filter(({ status, simulationId }) => status === 'content-ready' && simulationId !== null)
-      .map(({ simulationId }) => `data/generated/tour/simulations/${safeId(simulationId!, 'Tour simulation ID')}.json`),
+    ...CURRENT_SIMULATION_IDS.map((id) => `data/generated/tour/simulations/${safeId(id, 'Tour simulation ID')}.json`),
   ]
 
   return [...new Set(paths.map((path) => resourceUrl(path, environment)))]

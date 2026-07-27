@@ -221,6 +221,7 @@ describe('route-owned registries', () => {
     ['non-positive station minutes', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.estimatedMinutes = 0 }, /positive integer/],
     ['duplicate station glossary ID', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.glossaryIds!.push(candidate.quickStations[0]!.glossaryIds![0]!) }, /unique values/],
     ['current count summary drift', (candidate: TourGeneratedManifest) => { candidate.counts.lessons = 2 }, /current content summary/],
+    ['current revision drift', (candidate: TourGeneratedManifest) => { candidate.contentRevision = '2026-07-28' }, /must be 2026-07-27/],
     ['content-ready ownership drift', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.lessonId = 'unknown-lesson' }, /content-ready chapter/],
     ['chapter coverage drift', (candidate: TourGeneratedManifest) => { candidate.chapters.pop() }, /20 chapters/],
     ['station coverage drift', (candidate: TourGeneratedManifest) => { candidate.quickStations.pop() }, /8 stations/],
@@ -279,7 +280,7 @@ describe('route-owned registries', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 
-  it('rejects a current manifest that removes its only content-ready simulation declaration', async () => {
+  it('rejects a current manifest that removes one content-ready station simulation declaration', async () => {
     const manifestWithoutStationSimulation = {
       ...generatedTourManifest,
       quickStations: generatedTourManifest.quickStations.map((station) => station.id === 'anchors-scales'
@@ -406,6 +407,7 @@ describe('route-owned registries', () => {
     ['checkpoint choice', (lesson: TourGeneratedLessonRecord) => { lesson.checkpoints[0]!.choices[0]!.label = '' }, /checkpoints\[0\]\.choices\[0\]\.label/],
     ['conclusion attribution', (lesson: TourGeneratedLessonRecord) => { delete (lesson.establishes[0]!.attribution as unknown as { sourceLocator?: string }).sourceLocator }, /establishes\[0\]\.attribution.*sourceLocator/],
     ['observation item', (lesson: TourGeneratedLessonRecord) => { (lesson.observationStage.items[0] as unknown as { value: unknown }).value = 'exact' }, /observationStage\.items\[0\]\.value/],
+    ['observation role', (lesson: TourGeneratedLessonRecord) => { lesson.observationStage.items[0]!.role = 'reference' as never }, /observationStage\.items\[0\]\.role/],
   ])('rejects a malformed nested lesson %s at the lazy boundary', async (_name, mutate, expected) => {
     setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
     const candidate = structuredClone(generatedTourLesson)
@@ -416,10 +418,28 @@ describe('route-owned registries', () => {
   })
 
   it.each([
+    'fixed-definition',
+    'measured-reference',
+    'derived-model-value',
+    'conventional-value',
+    'model-input',
+    'illustrative-scale',
+    'practical-realization',
+  ] as const)('accepts observation item role %s at the lazy boundary', async (role) => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const candidate = structuredClone(generatedTourLesson)
+    candidate.observationStage.items[0]!.role = role
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(candidate)))
+
+    await expect(useTourRegistry().lessonById('physical-quantities')).resolves.toEqual(candidate)
+  })
+
+  it.each([
     ['select option', (simulation: TourGeneratedSimulation) => { (simulation.controls[0] as Extract<TourGeneratedSimulation['controls'][number], { type: 'select' }>).options[0]!.label = '' }, /controls\[0\]\.options\[0\]\.label/],
     ['preset input', (simulation: TourGeneratedSimulation) => { delete simulation.presets[0]!.inputs.target }, /presets\[0\]\.inputs.*target/],
     ['output field', (simulation: TourGeneratedSimulation) => { (simulation.outputSchema[0] as unknown as { nullable: unknown }).nullable = 'false' }, /outputSchema\[0\]\.nullable/],
     ['visualization alternative', (simulation: TourGeneratedSimulation) => { simulation.visualization.alternatives[0]!.description = '' }, /visualization\.alternatives\[0\]\.description/],
+    ['runtime operations', (simulation: TourGeneratedSimulation) => { if (simulation.limits.tier === 'immediate') simulation.limits.maxOperations = 0 }, /limits\.maxOperations/],
     ['runtime limits', (simulation: TourGeneratedSimulation) => { (simulation.limits as unknown as { maxDurationMs: number }).maxDurationMs = 0 }, /limits\.maxDurationMs/],
     ['compatibility key', (simulation: TourGeneratedSimulation) => { simulation.comparison.compatibilityKey = 'not-a-hash' }, /comparison\.compatibilityKey/],
     ['implementation revision', (simulation: TourGeneratedSimulation) => { simulation.revision.implementationRevision = 'other-engine' }, /revision\.implementationRevision/],

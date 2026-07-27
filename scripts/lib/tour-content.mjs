@@ -3,9 +3,12 @@ import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 
 const EXPECTED_CHAPTERS = 20;
+const EXPECTED_LESSONS = 9;
+const EXPECTED_SIMULATIONS = 9;
 const EXPECTED_STATIONS = 8;
-const EXPECTED_GLOSSARY = 11;
-const EXPECTED_REFERENCES = 5;
+const EXPECTED_GLOSSARY = 27;
+const EXPECTED_REFERENCES = 10;
+const EXPECTED_CONTENT_REVISION = "2026-07-27";
 const CLAIM_CLASSES = [
   "established-definition",
   "established-model",
@@ -48,7 +51,15 @@ const CONTROL_TYPES = new Set(["range", "number", "select", "toggle"]);
 const READING_DEPTHS = new Set(["guided", "technical"]);
 const LESSON_BLOCK_KINDS = new Set(["prose", "definition", "list", "caveat", "derivation"]);
 const CHECKPOINT_KINDS = new Set(["prediction", "classification", "explanation"]);
-const OBSERVATION_ITEM_ROLES = new Set(["fixed-definition", "practical-realization"]);
+const OBSERVATION_ITEM_ROLES = new Set([
+  "fixed-definition",
+  "measured-reference",
+  "derived-model-value",
+  "conventional-value",
+  "model-input",
+  "illustrative-scale",
+  "practical-realization",
+]);
 const REFERENCE_CLASSIFICATIONS = new Set(["primary-standard", "reference-data", "textbook", "source-corpus", "internal-policy"]);
 const ACCESS_STATUSES = new Set(["verified-accessible", "partially-accessible", "blocked", "not-checked"]);
 const OUTPUT_TYPES = new Set(["operation-status", "rational-dimension-vector", "boolean", "string", "number"]);
@@ -327,6 +338,7 @@ function validateGlossary(glossary, referencesById) {
 function validateManifest(manifest, referencesById, glossaryById) {
   assertSchema(manifest, "manifest", ["schemaVersion", "contentRevision", "title", "thesis", "attribution", "readingDepths", "depthComposition", "attributionPolicy", "contentStatusPolicy", "quickStations"]);
   assertIsoDate(manifest.contentRevision, "manifest.contentRevision");
+  assert(manifest.contentRevision === EXPECTED_CONTENT_REVISION, `manifest.contentRevision must be ${EXPECTED_CONTENT_REVISION} for the current corpus`);
   assertString(manifest.title, "manifest.title");
   assertString(manifest.thesis, "manifest.thesis");
   validateAttribution(manifest.attribution, "manifest.attribution", referencesById);
@@ -506,6 +518,7 @@ function validateQuickPathShape(quickPath, lesson, path) {
 }
 
 function validateLessons(lessons, chapterById, glossaryById, referencesById, recipeIds, programIds) {
+  assert(lessons.length === EXPECTED_LESSONS, `Expected ${EXPECTED_LESSONS} lessons, found ${lessons.length}`);
   assertUnique(lessons.map(({ id }) => id), "Lesson IDs");
   const lessonById = new Map(lessons.map((lesson) => [lesson.id, lesson]));
   for (const [index, lesson] of lessons.entries()) {
@@ -745,7 +758,7 @@ function validateRuntimeLimits(limits, path) {
   assertObject(limits, path);
   if (limits.tier === "immediate") {
     assertExactKeys(limits, ["tier", "maxOperations", "maxDurationMs"], path);
-    assert(limits.maxOperations === 1, `${path}.maxOperations must be 1 for immediate tier`);
+    assertPositiveInteger(limits.maxOperations, `${path}.maxOperations`);
     assertPositiveInteger(limits.maxDurationMs, `${path}.maxDurationMs`);
   } else if (limits.tier === "local-worker") {
     assertExactKeys(limits, ["tier", "maxOperations", "maxDurationMs", "maxIterations"], path);
@@ -771,6 +784,7 @@ function validateFinding(finding, path, referencesById) {
 }
 
 function validateSimulations(simulations, lessonById, glossaryById, referencesById, contentRevision) {
+  assert(simulations.length === EXPECTED_SIMULATIONS, `Expected ${EXPECTED_SIMULATIONS} simulations, found ${simulations.length}`);
   assertUnique(simulations.map(({ id }) => id), "Simulation IDs");
   const required = ["schemaVersion", "id", "lessonId", "title", "question", "predictionPrompt", ...ATTRIBUTION_KEYS, "revision", "modelComponents", "equations", "assumptions", "glossaryIds", "controls", "presets", "outputSchema", "comparison", "visualization", "finding", "limits"];
   const optional = ["dimensionBasis", "numericalMethod", "datasetState"];

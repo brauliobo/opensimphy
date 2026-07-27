@@ -50,8 +50,9 @@ test('redirects a legacy topic into the Tour and opens the same classified Atlas
   await gotoRoute(page, '/topics/magnetism')
   await expect(page).toHaveURL(/\/tour\/spin-magnetism$/)
   await expect(page.getByRole('heading', { name: 'Spin, Magnetic Moments, and Anomalies' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'This chapter is on the field-course roadmap' })).toBeVisible()
-  await page.getByRole('link', { name: 'Search the Atlas' }).click()
+  await expect(page.getByRole('heading', { name: 'Lessons' })).toBeVisible()
+  await expect(page.locator('a[href="/tour/spin-magnetism/spin-precession"]')).toBeVisible()
+  await page.locator('#primary-navigation').getByRole('link', { name: 'Atlas' }).click()
 
   await expect(page).toHaveURL(/\/atlas$/)
   await expect(page.getByTestId('formula-registry-ready')).toBeVisible()

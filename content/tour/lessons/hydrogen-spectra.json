@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "id": "hydrogen-spectra",
+  "chapterId": "atomic-structure",
+  "order": 1,
+  "title": "Hydrogen lines constrain a stated atomic model",
+  "question": "What can a hydrogen spectrum establish about atomic structure?",
+  "answerPreview": "A calibrated line can constrain level differences in a declared hydrogen-like Hamiltonian model, but it does not reveal a unique structure or transition strength by inspection.",
+  "summary": "Connect hydrogen-like level differences to photon energy, cyclic frequency, and vacuum wavelength while declaring reduced mass, transition assumptions, selection-rule limits, and omitted corrections.",
+  "attribution": {
+    "claimClass": "established-model",
+    "evidenceRefs": ["codata-2022", "bipm-si-brochure-9", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+    "sourceRevision": "CODATA 2022 adjustment; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+    "sourceLocator": "Rydberg constant and electron/proton masses; SI h and c; OpenStax sections 6.4, 8.1, and 8.5; Deep curriculum Chapter 7",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["The source lesson specifies a model activity and reports no evaluated spectrum."]
+  },
+  "estimatedMinutes": 7,
+  "quickPath": {
+    "estimatedMinutes": 4,
+    "guidedBlockIds": ["lines-as-model-constraints", "reduced-mass-shift"],
+    "equationStepIds": ["rydberg-transition"],
+    "checkpointIds": ["balmer-direction"],
+    "simulationPresetId": "balmer-alpha"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [],
+  "observationStage": {
+    "title": "Reference inputs behind a hydrogen-like line",
+    "question": "Which displayed values are reference inputs or exact International System of Units (SI) anchors, and which spectral quantities are derived from the model?",
+    "items": [
+      {
+        "id": "rydberg-infinite-mass",
+        "label": "Infinite-nuclear-mass Rydberg constant",
+        "value": 10973731.568157,
+        "unit": "m^-1",
+        "role": "measured-reference",
+        "explanation": "This CODATA adjusted reference value is a model input. It is not a wavelength measured by this activity.",
+        "evidenceRefs": ["codata-2022"]
+      },
+      {
+        "id": "electron-rest-mass",
+        "label": "Electron rest mass",
+        "value": 9.1093837139e-31,
+        "unit": "kg",
+        "role": "measured-reference",
+        "explanation": "The adjusted electron mass enters the electron-nucleus reduced mass when the finite-proton option is selected.",
+        "evidenceRefs": ["codata-2022"]
+      },
+      {
+        "id": "planck-defining-value",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this value exactly. The model uses it to represent a selected level difference as photon energy and cyclic frequency.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      }
+    ],
+    "conclusion": "R_inf and the particle masses are reference inputs, while h is an exact SI defining value. A line wavelength, frequency, and energy produced from them remain linked outputs of the stated model, not independent observations.",
+    "attribution": {
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "bipm-si-brochure-9"],
+      "sourceRevision": "CODATA 2022 adjustment; SI Brochure 2026 update",
+      "sourceLocator": "R_inf, electron mass, proton mass, h, and c",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No calibration data or measured line profile is loaded."]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "lines-as-model-constraints",
+      "kind": "prose",
+      "title": "A line constrains a declared model",
+      "body": [
+        "The activity selects a one-electron ion, an upper principal level, a lower principal level, and a nuclear-mass option. It then calculates one positive level difference.",
+        "That difference has linked photon representations: energy E, cyclic frequency nu, and vacuum wavelength lambda. Changing representation does not create three independent measurements.",
+        "Agreement with a calibrated line could constrain this model only after line identification, calibration, uncertainty, and alternatives are stated. This source activity performs none of those empirical steps."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "unit"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022 adjustment; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+      "sourceLocator": "Hydrogen-like Rydberg relation; OpenStax sections 6.4, 8.1, and 8.5; Deep curriculum Chapter 7",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["A model line is not a detected spectral feature."]
+    },
+    {
+      "id": "reduced-mass-shift",
+      "kind": "prose",
+      "title": "A moving nucleus changes the scale",
+      "body": [
+        "An infinitely heavy nucleus leaves the electron mass as the orbital mass scale. A finite proton moves too, so the two-body problem uses the reduced mass mu = m_e m_p/(m_e + m_p).",
+        "Because mu/m_e is slightly below one, the finite-proton option lowers the effective Rydberg value and transition energy and increases the vacuum wavelength relative to the infinite-mass option.",
+        "For atomic number above one, assigning the proton mass is only an illustrative engine choice, not a realistic isotope model."
+      ],
+      "glossaryIds": ["quantity-value", "numerical-value"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022"],
+      "sourceRevision": "CODATA 2022 electron mass, proton mass, and R_inf",
+      "sourceLocator": "Reduced-mass correction to the hydrogen-like Rydberg relation",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The engine has no isotope catalog or recoil correction beyond this reduced-mass factor."]
+    },
+    {
+      "id": "transition-is-not-intensity",
+      "kind": "caveat",
+      "title": "An energy difference is not a selection rule",
+      "body": [
+        "Principal levels identify a possible energy difference but do not specify orbital angular momentum, spin, polarization, or transition matrix elements.",
+        "The explorer therefore does not claim that every listed difference is allowed, strong, or observed.",
+        "Fine structure, hyperfine structure, Lamb shifts, finite nuclear size, external fields, broadening, and medium response are outside this activity."
+      ],
+      "glossaryIds": ["quantity-kind"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["openstax-university-physics-v3", "opensimphy-scientific-scope"],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+      "sourceLocator": "OpenStax section 8.5 selection rules; Deep curriculum Chapter 7 scientific limits",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No line strengths or selection-rule quantum numbers are evaluated."]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "hamiltonian-boundary",
+      "kind": "derivation",
+      "title": "The spectrum requires a Hamiltonian",
+      "body": [
+        "The nonrelativistic point-Coulomb Hamiltonian supplies the bound states whose level differences lead to the Rydberg expression. Dimensional consistency alone cannot determine the discrete 1/n^2 structure or its state labels.",
+        "The explorer uses the Bohr/Rydberg result as a conventional model contract; it does not solve an eigenvalue problem at runtime.",
+        "Changing the Hamiltonian or adding perturbations can split or shift lines, so a spectrum constrains a specified family of models rather than revealing a unique Hamiltonian."
+      ],
+      "glossaryIds": ["dimensional-consistency", "dimension"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["openstax-university-physics-v3", "opensimphy-scientific-scope"],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+      "sourceLocator": "OpenStax sections 8.1 and 8.5; Deep curriculum Chapter 7 technical extension",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The runtime calculation is direct evaluation, not a numerical Hamiltonian solver."]
+    },
+    {
+      "id": "correction-hierarchy",
+      "kind": "caveat",
+      "title": "The Rydberg baseline has a bounded domain",
+      "body": [
+        "The engine models a nonrelativistic one-electron point-Coulomb system with atomic number from 1 through 10 and principal levels up to 12.",
+        "A finite-proton mass is physically appropriate for ordinary hydrogen but only illustrative for higher atomic number. Nuclear charge radius, isotope mass, radiative corrections, and environmental shifts require additional model terms and data.",
+        "A measured spectrum also requires instrument calibration, resolution, line-shape modeling, uncertainty, and competing assignments before comparison."
+      ],
+      "glossaryIds": ["quantity-value", "unit"],
+      "claimClass": "assumption",
+      "evidenceRefs": ["codata-2022", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022 adjustment; Tour contract 2026-07-26",
+      "sourceLocator": "Atomic engine bounds and Chapter 7 inference limits",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No empirical residual or uncertainty budget is computed."]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "reduced-mass-factor",
+      "label": "Electron-proton reduced mass",
+      "expression": "mu = m_e m_p/(m_e + m_p); R_H = R_inf mu/m_e",
+      "explanation": "The finite-proton factor is below one; the infinite-nuclear-mass option sets mu/m_e to one.",
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022"],
+      "sourceRevision": "CODATA 2022 masses and R_inf",
+      "sourceLocator": "Reduced-mass hydrogen-like baseline",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Higher-order recoil and isotope-specific masses are omitted."]
+    },
+    {
+      "id": "rydberg-transition",
+      "label": "Hydrogen-like transition",
+      "expression": "1/lambda = R_H Z^2 (1/n_lower^2 - 1/n_upper^2); n_upper > n_lower",
+      "explanation": "The positive wavenumber gives the model vacuum wavelength for the selected downward level difference.",
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "openstax-university-physics-v3"],
+      "sourceRevision": "CODATA 2022 R_inf; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "Rydberg level-difference relation; OpenStax sections 6.4 and 8.1",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The equation does not assert transition probability or observation."]
+    },
+    {
+      "id": "photon-representations",
+      "label": "Linked photon representations",
+      "expression": "nu = c/lambda; E = h nu = h c/lambda",
+      "explanation": "Energy, cyclic frequency, and vacuum wavelength are derived representations of the same selected level difference.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "SI Brochure 2026 update",
+      "sourceLocator": "Fixed h and c; photon relations",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The wavelength is in vacuum and no refractive index is applied."]
+    }
+  ],
+  "simulationId": "hydrogen-spectrum-explorer",
+  "formulaIds": ["R_∞", "m_e", "m_+", "h", "c"],
+  "programIds": [],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "dimensional-consistency"],
+  "evidenceRefs": ["codata-2022", "bipm-si-brochure-9", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+  "checkpoints": [
+    {
+      "id": "balmer-direction",
+      "kind": "prediction",
+      "prompt": "For the same 3 to 2 transition, what does the finite proton mass do relative to an infinite nuclear mass?",
+      "choices": [
+        { "id": "shorter", "label": "Shortens the wavelength" },
+        { "id": "longer", "label": "Lengthens the wavelength" },
+        { "id": "unchanged", "label": "Leaves it unchanged" }
+      ],
+      "answerId": "longer",
+      "explanation": "The reduced-mass factor lowers the effective Rydberg value, so the wavenumber decreases and the vacuum wavelength increases.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["codata-2022"],
+        "sourceRevision": "CODATA 2022 masses and R_inf",
+        "sourceLocator": "Reduced-mass hydrogen-like relation",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This authored answer is not a learner result."]
+      }
+    },
+    {
+      "id": "line-inference-limit",
+      "kind": "explanation",
+      "prompt": "A calculated level difference matches one calibrated line. What is established?",
+      "choices": [
+        { "id": "unique", "label": "A unique atomic structure" },
+        { "id": "constraint", "label": "One constraint on the stated model" },
+        { "id": "strength", "label": "A nonzero transition strength" }
+      ],
+      "answerId": "constraint",
+      "explanation": "A line comparison can constrain a declared model, but unique identification and transition strength require additional state, calibration, uncertainty, and competing-model information.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": ["opensimphy-scientific-scope"],
+        "sourceRevision": "Tour contract 2026-07-26",
+        "sourceLocator": "Deep curriculum Chapter 7",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["No measured line is compared in this lesson."]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The activity declares a hydrogen-like one-electron model, bounded level inputs, and an optional finite-proton reduced-mass correction.",
+      "scope": "activity",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "hydrogen-spectrum-explorer source contract", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["This is source configuration, not an evaluated run."] }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "When evaluated, the engine directly computes reduced-mass factor, effective Rydberg value, level-difference energy, cyclic frequency, and vacuum wavelength.",
+      "scope": "computation",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["codata-2022", "bipm-si-brochure-9"], "sourceRevision": "CODATA 2022; SI Brochure 2026 update", "sourceLocator": "Hydrogen-like relation and linked photon identities", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["No runtime output is stored in this source lesson."] }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "No external spectrum or published line-fit result is reproduced.",
+      "scope": "source",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "hydrogen-spectra conclusion boundary", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": [] }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No measured spectrum, calibration record, uncertainty, or line profile is loaded for comparison.",
+      "scope": "empirical-evidence",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "hydrogen-spectra conclusion boundary", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Reference constants are inputs, not a held-out spectrum."] }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated state, the declared model determines linked energy, cyclic frequency, and vacuum wavelength for the selected level difference.",
+      "scope": "scientific-conclusion",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["codata-2022", "bipm-si-brochure-9"], "sourceRevision": "CODATA 2022; SI Brochure 2026 update", "sourceLocator": "Hydrogen-like Rydberg and photon relations", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The conclusion is conditional on the declared Hamiltonian baseline."] }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The activity does not establish transition strength, observation, unique atomic identity, empirical validation, or a Hamiltonian derived from dimensional analysis.",
+      "scope": "scientific-conclusion",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "Tour contract 2026-07-26", "sourceLocator": "Deep curriculum Chapter 7 limits", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Selection rules and omitted corrections can alter spectral interpretation."] }
+    }
+  ]
+}

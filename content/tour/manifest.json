@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentRevision": "2026-07-26",
+  "contentRevision": "2026-07-27",
   "title": "Physics from observation to justified conclusion",
   "thesis": "Learn how measurements, quantities, equations, models, simulations, and evidence support a scientific conclusion.",
   "attribution": {
@@ -69,10 +69,11 @@
       "question": "How can a photon energy be mapped to frequency and vacuum wavelength, then to derived equivalent mass and temperature scales?",
       "interaction": "Convert one photon energy across labeled representations without assigning photon rest mass or a thermal state.",
       "chapterId": "unit-bridges",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "photon-equivalent-scales",
+      "simulationId": "photon-scale-converter",
+      "glossaryIds": ["physical-quantity", "quantity-value", "quantity-kind", "unit", "coordinate-system"],
       "estimatedMinutes": 3,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "electrical-standards",
@@ -81,22 +82,24 @@
       "question": "How do fixed h and e support quantum electrical reference relationships and their practical realizations?",
       "interaction": "Trace exact SI relationships, practical devices, and historical conventional values without conflating them.",
       "chapterId": "electrical-standards",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "quantum-electrical-standards",
+      "simulationId": "electrical-standards-network",
+      "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "coordinate-system"],
       "estimatedMinutes": 3,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "atoms-materials",
       "order": 4,
       "title": "Atoms and materials",
       "question": "How can calibrated spectra constrain a model of atomic structure?",
-      "interaction": "Relate wavelength, frequency, and transition energy under a stated atomic model and selection rules.",
+      "interaction": "Relate wavelength, frequency, and transition energy under a hydrogen-like model, while treating selection rules as context that this engine does not evaluate.",
       "chapterId": "atomic-structure",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "hydrogen-spectra",
+      "simulationId": "hydrogen-spectrum-explorer",
+      "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "dimensional-consistency"],
       "estimatedMinutes": 4,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "particles-mass",
@@ -105,10 +108,11 @@
       "question": "How are massive-particle rest energy, momentum, and quantum wavelengths related without treating them as independent measurements?",
       "interaction": "Compare electron and proton rest energies and Compton scales, then keep de Broglie wavelength tied to momentum.",
       "chapterId": "particle-scales",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "particle-mass-scales",
+      "simulationId": "particle-scale-comparator",
+      "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "dimensional-consistency", "coordinate-system"],
       "estimatedMinutes": 3,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "spin-magnetism",
@@ -117,10 +121,11 @@
       "question": "How does a stated spin-moment model predict magnetic response in an applied field?",
       "interaction": "Predict and calculate precession frequency, then distinguish the model output from a measurement.",
       "chapterId": "spin-magnetism",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "spin-precession",
+      "simulationId": "spin-precession-visualizer",
+      "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "coordinate-system"],
       "estimatedMinutes": 3,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "heat-radiation",
@@ -129,10 +134,11 @@
       "question": "How do thermal models connect temperature, microscopic energy scales, and radiation?",
       "interaction": "Change modeled temperature and calculate a black-body spectrum.",
       "chapterId": "heat-matter",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "blackbody-radiation",
+      "simulationId": "blackbody-spectrum",
+      "glossaryIds": ["black-body", "emissivity", "thermodynamic-temperature", "spectral-radiance", "radiant-exitance", "wien-displacement-law", "stefan-boltzmann-law"],
       "estimatedMinutes": 4,
-      "status": "planned"
+      "status": "content-ready"
     },
     {
       "id": "molar-matter",
@@ -141,10 +147,11 @@
       "question": "How do particle-scale quantities become laboratory matter?",
       "interaction": "Scale particles into moles, gas volumes, and bulk quantities.",
       "chapterId": "heat-matter",
-      "lessonId": null,
-      "simulationId": null,
+      "lessonId": "particle-to-mole",
+      "simulationId": "particle-to-mole-scaler",
+      "glossaryIds": ["physical-quantity", "amount-of-substance", "mole", "elementary-entity", "avogadro-constant", "molar-mass", "ideal-gas", "standard-atmosphere", "state-convention", "faraday-constant"],
       "estimatedMinutes": 3,
-      "status": "planned"
+      "status": "content-ready"
     }
   ]
 }

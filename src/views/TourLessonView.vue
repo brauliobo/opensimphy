@@ -2,15 +2,16 @@
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ConclusionBoundary from '../components/tour/ConclusionBoundary.vue'
-import DimensionBuilder from '../components/tour/DimensionBuilder.vue'
 import EquationLadder from '../components/tour/EquationLadder.vue'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
+import TourSimulationStage from '../components/tour/TourSimulationStage.vue'
 import { useTourProgress } from '../registries/tourProgress'
 import { useTourRegistry } from '../registries/tourRegistry'
 import { isSafeTourAnchor } from '../tour/progress'
 import type {
   Checkpoint,
   LessonBlock,
+  ObservationItemRole,
   TourGeneratedChapterRecord,
   TourGeneratedLessonRecord,
   TourGeneratedSimulation,
@@ -115,7 +116,6 @@ const stationComplete = computed(() => currentStation.value
   : false)
 const currentComplete = computed(() => isQuickPath.value ? stationComplete.value : lessonComplete.value)
 const initialPresetId = computed(() => isQuickPath.value ? lessonRecord.value?.quickPath?.simulationPresetId : undefined)
-const dimensionBuilderKey = computed(() => `${isQuickPath.value ? 'quick' : 'full'}:${initialPresetId.value ?? 'default'}`)
 const fullLessonLocation = computed(() => ({
   path: route.path,
   query: Object.fromEntries(Object.entries(route.query).filter(([key]) => key !== 'path')),
@@ -129,11 +129,6 @@ interface TourNavigation {
   to: string
 }
 
-function lessonPath(lessonId: string): string | null {
-  const owner = registry.manifest.value?.chapters.find(({ lessonIds }) => lessonIds.includes(lessonId))
-  return owner ? `/tour/${encodeURIComponent(owner.id)}/${encodeURIComponent(lessonId)}` : null
-}
-
 function chapterNavigation(chapterId: string | null, direction: 'Previous' | 'Next'): TourNavigation | null {
   if (!chapterId) return null
   const target = registry.manifest.value?.chapters.find(({ id }) => id === chapterId)
@@ -145,12 +140,16 @@ function navigationFor(direction: 'previous' | 'next'): TourNavigation | null {
   const lesson = lessonRecord.value
   if (!chapter || !lesson) return null
   const titleDirection = direction === 'previous' ? 'Previous' : 'Next'
-  if (chapter.lessonIds.length === 1) {
-    return chapterNavigation(direction === 'previous' ? chapter.previousChapterId : chapter.nextChapterId, titleDirection)
+  const lessonIndex = chapter.lessonIds.indexOf(lesson.id)
+  const targetLessonId = lessonIndex === -1
+    ? null
+    : chapter.lessonIds[lessonIndex + (direction === 'previous' ? -1 : 1)]
+  if (targetLessonId) {
+    return {
+      label: `${titleDirection} lesson`,
+      to: `/tour/${encodeURIComponent(chapter.id)}/${encodeURIComponent(targetLessonId)}`,
+    }
   }
-  const targetLessonId = direction === 'previous' ? lesson.previousLessonId : lesson.nextLessonId
-  const path = targetLessonId ? lessonPath(targetLessonId) : null
-  if (targetLessonId && path) return { label: `${titleDirection} lesson`, to: path }
   return chapterNavigation(direction === 'previous' ? chapter.previousChapterId : chapter.nextChapterId, titleDirection)
 }
 
@@ -200,8 +199,18 @@ function completeCurrentLesson(): void {
   completionAnnouncement.value = 'Lesson marked complete.'
 }
 
-function observationRole(role: 'fixed-definition' | 'practical-realization'): string {
-  return role === 'fixed-definition' ? 'Fixed definition' : 'Practical realization'
+const OBSERVATION_ROLE_LABELS: Readonly<Record<ObservationItemRole, string>> = Object.freeze({
+  'fixed-definition': 'Fixed definition',
+  'measured-reference': 'Measured reference',
+  'derived-model-value': 'Derived model value',
+  'conventional-value': 'Conventional value',
+  'model-input': 'Model input',
+  'illustrative-scale': 'Illustrative scale',
+  'practical-realization': 'Practical realization',
+})
+
+function observationRole(role: ObservationItemRole): string {
+  return OBSERVATION_ROLE_LABELS[role]
 }
 
 function attributionEvidence(attribution: TourSourceAttribution): string {
@@ -502,9 +511,8 @@ onUnmounted(() => {
         <section id="try" tabindex="-1" data-tour-section="try" aria-labelledby="try-heading">
           <p class="eyebrow">05 / Try</p>
           <h2 id="try-heading">Try</h2>
-          <DimensionBuilder
+          <TourSimulationStage
             v-if="simulation"
-            :key="dimensionBuilderKey"
             :simulation="simulation"
             :depth="progress.depth.value"
             :initial-preset-id="initialPresetId"

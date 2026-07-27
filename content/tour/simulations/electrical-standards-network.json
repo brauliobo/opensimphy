@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "id": "electrical-standards-network",
+  "lessonId": "quantum-electrical-standards",
+  "title": "Electrical standards network",
+  "question": "How do fixed h and e connect exact present International System of Units (SI) electrical identities, bounded charge and voltage calculations, and historical 1990 conventional values?",
+  "predictionPrompt": "Choose whether exact, input-dependent, and historical nodes remain distinct; the Josephson view can evaluate both f = K_J V and V = f/K_J from separate stated inputs.",
+  "claimClass": "established-model",
+  "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+  "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+  "sourceLocator": "Chapter 6 standards network; fixed h and e; K_J-90 and R_K-90 historical comparison layer",
+  "methodRelationship": "not-applicable",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "Exact ideal relationships do not make practical electrical realizations uncertainty-free.",
+    "K_J-90 and R_K-90 are historical conventional values and are not current exact SI substitutions.",
+    "The carrier count is not a Hall filling factor or conductance-channel count."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "quantum-electrical-identity-network-1",
+    "implementationRevision": "tour-electrical-standards-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Exact identity network with bounded inputs",
+    "description": "Evaluates the fixed h/e identity network, one integer carrier count, bounded voltage and Josephson-frequency inputs, and two signed historical comparisons once.",
+    "deterministic": true,
+    "implementationRef": "src/tour/electricalStandardsEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "current-si-electrical-identities",
+      "label": "Current SI electrical identity network",
+      "modelOrigin": "established-physics",
+      "description": "Derives K_J, R_K, G_0, Phi_0, and the joule value of eV from the fixed exact SI values of h and e.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Fixed h and e and exact quantum electrical relationships",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Identity exactness is separate from practical device realization uncertainty."]
+      }
+    },
+    {
+      "id": "bounded-charge-voltage-calculation",
+      "label": "Bounded charge and voltage calculation",
+      "modelOrigin": "established-physics",
+      "description": "Uses an integer carrier count to form q = N e and a supplied voltage to form E = N e V; the Josephson view maps V to f = K_J V and an independently supplied f to V = f/K_J.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["bipm-si-brochure-9", "opensimphy-scientific-scope"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-electrical-standards-v1 contract",
+        "sourceLocator": "Electrical standards bounded input relationships",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["The calculation uses charge magnitude and omits sign, junction dynamics, and Hall-device state."]
+      }
+    },
+    {
+      "id": "historical-conventional-comparison",
+      "label": "Historical 1990 conventional comparison",
+      "modelOrigin": "established-physics",
+      "description": "Retains K_J-90 and R_K-90 as separate historical nodes and compares each with the corresponding current exact SI relationship.",
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values"],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+        "sourceLocator": "CIPM Recommendations 1 and 2 (CI-1988) and revised-SI comparison",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Historical conventional values are never substituted for current exact SI values."]
+      }
+    }
+  ],
+  "equations": [
+    "K_J = 2e/h",
+    "R_K = h/e^2",
+    "G_0 = 2e^2/h = 2/R_K",
+    "Phi_0 = h/(2e)",
+    "q = N e; E = q V; 1 eV = e J",
+    "f = K_J V",
+    "V = f/K_J",
+    "delta_X = (X_90 - X_SI)/X_SI"
+  ],
+  "assumptions": [
+    "chargeCarriers is an integer count used only for total charge and voltage-dependent carrier energy.",
+    "The ideal Josephson and quantum Hall relationships remain separate from practical device realization.",
+    "The supplied voltage is finite and within [0, 1e6] V.",
+    "The supplied Josephson frequency is finite and within [0, 1e15] Hz; it is active only in the Josephson view.",
+    "K_J-90 and R_K-90 are retained only as historical conventional comparison values.",
+    "No calibration certificate, device correction, Hall plateau, or uncertainty dataset is loaded."
+  ],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "coordinate-system"],
+  "controls": [
+    {
+      "id": "presetId",
+      "label": "Standards view",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects the single-electron, Josephson, or quantum Hall view recognized by the electrical standards engine.",
+      "default": "single-electron",
+      "playfulPrompt": "Choose which path through h and e to highlight.",
+      "options": [
+        { "value": "single-electron", "label": "Single electron", "description": "inspect one elementary charge and its voltage-dependent energy" },
+        { "value": "josephson", "label": "Josephson relation", "description": "trace K_J and the ideal voltage-to-frequency relationship" },
+        { "value": "hall", "label": "Quantum Hall relation", "description": "trace R_K while keeping practical plateau realization separate" }
+      ]
+    },
+    {
+      "id": "chargeCarriers",
+      "label": "Charge-carrier count",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Supplies the engine's bounded integer N for q = N e; it is not a Hall filling factor or channel count.",
+      "unit": "count",
+      "default": 1,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "playfulPrompt": "Count charge magnitudes without assigning a device state."
+    },
+    {
+      "id": "voltageV",
+      "label": "Applied voltage",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Supplies a bounded voltage for E = N e V and, in the Josephson view, f = K_J V.",
+      "unit": "V",
+      "default": 1,
+      "min": 0,
+      "max": 1000000,
+      "step": 0.001,
+      "playfulPrompt": "Predict the input-dependent nodes before the network updates."
+    },
+    {
+      "id": "frequencyHz",
+      "label": "Josephson frequency",
+      "type": "number",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Supplies bounded cyclic frequency f for V = f/K_J in the Josephson view; zero is the inactive placeholder in complete non-Josephson presets.",
+      "unit": "Hz",
+      "default": 0,
+      "min": 0,
+      "max": 1000000000000000,
+      "step": 1000000
+    }
+  ],
+  "presets": [
+    {
+      "id": "single-electron",
+      "label": "Single electron at one volt",
+      "description": "Inspect one elementary charge and the exact joule value of one electron volt.",
+      "inspectionPrompt": "Which nodes are exact identities, and which one depends on the selected voltage?",
+      "inputs": { "presetId": "single-electron", "chargeCarriers": 1, "voltageV": 1, "frequencyHz": 0 }
+    },
+    {
+      "id": "josephson",
+      "label": "Josephson voltage path",
+      "description": "Trace two charge magnitudes, K_J, the ideal frequency associated with one millivolt, and the ideal voltage associated with 70 GHz.",
+      "inspectionPrompt": "Compare f = K_J V with V = f/K_J, then explain why exact K_J does not certify a practical junction realization.",
+      "inputs": { "presetId": "josephson", "chargeCarriers": 2, "voltageV": 0.001, "frequencyHz": 70000000000 }
+    },
+    {
+      "id": "hall",
+      "label": "Quantum Hall identity path",
+      "description": "Highlight R_K and G_0 while retaining the historical R_K-90 comparison as a separate node.",
+      "inspectionPrompt": "What device evidence would still be needed to claim a resistance realization?",
+      "inputs": { "presetId": "hall", "chargeCarriers": 1, "voltageV": 0, "frequencyHz": 0 }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "totalChargeC",
+      "label": "Total charge magnitude",
+      "type": "number",
+      "unit": "C",
+      "nullable": false,
+      "description": "The bounded input calculation q = N e."
+    },
+    {
+      "id": "carrierEnergyJ",
+      "label": "Carrier energy magnitude",
+      "type": "number",
+      "unit": "J",
+      "nullable": true,
+      "description": "The voltage-dependent magnitude E = N e V; null only when no voltage input is supplied."
+    },
+    {
+      "id": "josephsonFrequencyFromVoltageHz",
+      "label": "Josephson frequency from voltage",
+      "type": "number",
+      "unit": "Hz",
+      "nullable": true,
+      "description": "The ideal f = K_J V result in the Josephson view; null in the other views."
+    },
+    {
+      "id": "josephsonVoltageFromFrequencyV",
+      "label": "Josephson voltage from frequency",
+      "type": "number",
+      "unit": "V",
+      "nullable": true,
+      "description": "The ideal V = f/K_J result from the Technical frequency input in the Josephson view; null in the other views."
+    },
+    {
+      "id": "kj90DifferencePpm",
+      "label": "K_J-90 relative difference",
+      "type": "number",
+      "unit": "ppm",
+      "nullable": false,
+      "description": "One million times (K_J-90 - K_J)/K_J, with positive sign when the historical value is larger."
+    },
+    {
+      "id": "rk90DifferencePpm",
+      "label": "R_K-90 relative difference",
+      "type": "number",
+      "unit": "ppm",
+      "nullable": false,
+      "description": "One million times (R_K-90 - R_K)/R_K, with negative sign when the historical value is smaller."
+    },
+    {
+      "id": "networkStatus",
+      "label": "Network status summary",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "Distinguishes exact defining SI, exact derived SI, input-dependent, and historical-conventional-1990 nodes."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render standards networks in parallel without merging nodes or historical differences when simulation revision or output schema differs."
+  },
+  "visualization": {
+    "kind": "status-labeled-electrical-identity-network",
+    "description": "Shows h and e feeding exact present-SI identity nodes, bounded input-dependent nodes, and separate historical 1990 conventional comparison nodes.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "A sentence reports the selected standards view, bounded inputs, exact identity values, input calculations, historical signed differences, and realization caveats."
+      },
+      {
+        "type": "table",
+        "description": "A table lists each network node with symbol, value, unit, status label, and note, followed by the historical comparison rows."
+      }
+    ],
+    "reducedMotionBehavior": "Render the complete electrical standards network immediately without animated edge tracing or node movement."
+  },
+  "finding": {
+    "changed": "At runtime, the standards view, integer carrier count, bounded voltage, and Technical Josephson frequency change only the highlighted and input-dependent portions of the fixed identity network.",
+    "cause": "Fixed exact SI h and e determine K_J, R_K, G_0, Phi_0, and eV algebraically; N, V, and f determine charge, energy, and the two Josephson conversions.",
+    "equation": "K_J = 2e/h; R_K = h/e^2; G_0 = 2e^2/h; Phi_0 = h/(2e); q = N e; E = q V; f = K_J V; V = f/K_J",
+    "assumptions": [
+      "N is an integer count used only for charge magnitude and voltage-dependent energy",
+      "Ideal quantum electrical relationships are separate from practical realization",
+      "K_J-90 and R_K-90 remain historical comparison values"
+    ],
+    "establishes": "For an evaluated input, the exact h/e identity network, bounded charge and voltage calculations, and both signed historical relative differences.",
+    "doesNotEstablish": "Device accuracy, uncertainty-free realization, a Josephson step condition, a quantized Hall plateau, a Hall filling factor, a conductance-channel count, or empirical validation.",
+    "claimClass": "identity",
+    "evidenceRefs": ["bipm-si-brochure-9", "codata-2022", "cipm-1988-electrical-conventional-values", "opensimphy-scientific-scope"],
+    "sourceRevision": "tour-electrical-standards-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment; CIPM 1988 conventional values effective 1990",
+    "sourceLocator": "Electrical standards evaluation, node, edge, and historical comparison contract",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Exact current SI relationships and practical device realizations have distinct uncertainty statements.",
+      "Historical relative differences use (conventional - current exact SI)/current exact SI.",
+      "The carrier count is not interpreted as a Hall or transport-state parameter."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 1,
+    "maxDurationMs": 10
+  }
+}

@@ -1,6 +1,13 @@
 export type ReadingDepth = 'guided' | 'technical'
 export type DepthComposition = 'technical-includes-guided'
-export type ObservationItemRole = 'fixed-definition' | 'practical-realization'
+export type ObservationItemRole =
+  | 'fixed-definition'
+  | 'measured-reference'
+  | 'derived-model-value'
+  | 'conventional-value'
+  | 'model-input'
+  | 'illustrative-scale'
+  | 'practical-realization'
 
 export type ClaimClass =
   | 'established-definition'
@@ -269,7 +276,7 @@ export type ResultFinding = TourSourceAttribution & {
 
 export interface ImmediateRuntimeLimits {
   tier: 'immediate'
-  maxOperations: 1
+  maxOperations: number
   maxDurationMs: number
 }
 

@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "id": "spin-precession",
+  "chapterId": "spin-magnetism",
+  "order": 1,
+  "title": "Signed spin precession under a declared field model",
+  "question": "How does a signed gyromagnetic ratio predict cyclic and angular precession frequencies?",
+  "answerPreview": "The moment-field model gives signed cyclic frequency f = (gamma/2 pi)B and signed angular frequency omega = 2 pi f. With transverse phase phi = -omega t, positive omega rotates clockwise and negative omega counterclockwise in the declared x-y view.",
+  "summary": "Keep signed cyclic gamma/(2 pi), signed angular omega, the explicit 2 pi conversion, and the separate phase sign phi = -omega t distinct while bounding the calculation to free-particle moment-field phase evolution without relaxation, shielding, material, or detector claims.",
+  "attribution": {
+    "claimClass": "established-model",
+    "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+    "sourceRevision": "CODATA 2022 adjustment; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+    "sourceLocator": "Signed free-particle gyromagnetic ratios; OpenStax sections 8.2-8.3; Deep curriculum Chapter 9",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": ["The source lesson specifies model output and no measured magnetic response."]
+  },
+  "estimatedMinutes": 7,
+  "quickPath": {
+    "estimatedMinutes": 3,
+    "guidedBlockIds": ["signed-cyclic-frequency", "model-not-measurement"],
+    "equationStepIds": ["cyclic-to-angular"],
+    "checkpointIds": ["two-pi-check"],
+    "simulationPresetId": "proton-nmr-1t"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [],
+  "observationStage": {
+    "title": "Signed free-particle cyclic ratios",
+    "question": "Which sign and 2 pi convention must be retained before multiplying by a field?",
+    "items": [
+      {
+        "id": "electron-cyclic-gamma",
+        "label": "Electron gamma divided by 2 pi",
+        "value": -28024951386.1,
+        "unit": "Hz T^-1",
+        "role": "measured-reference",
+        "explanation": "This is a signed cyclic-frequency ratio for a free electron, not an angular-frequency ratio. Its negative sign controls rotation sense under the activity convention.",
+        "evidenceRefs": ["codata-2022"]
+      },
+      {
+        "id": "proton-cyclic-gamma",
+        "label": "Free-proton gamma divided by 2 pi",
+        "value": 42577478.461,
+        "unit": "Hz T^-1",
+        "role": "measured-reference",
+        "explanation": "This positive free-proton cyclic ratio excludes shielding and material-specific corrections.",
+        "evidenceRefs": ["codata-2022"]
+      },
+      {
+        "id": "one-tesla-model-field",
+        "label": "Preset magnetic field magnitude",
+        "value": 1,
+        "unit": "T",
+        "role": "model-input",
+        "explanation": "One tesla is a conventional preset input to the model, not a field measurement made by the activity.",
+        "evidenceRefs": ["opensimphy-scientific-scope"]
+      }
+    ],
+    "conclusion": "The catalog supplies signed cyclic ratios in Hz per tesla. Multiplying by the positive field magnitude gives signed cycles per second; multiplying once more by 2 pi gives signed radians per second.",
+    "attribution": {
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022 adjustment; Tour contract 2026-07-26",
+      "sourceLocator": "gamma/(2 pi) for electron, proton, and muon; preset input policy",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No field probe, resonance detector, or material sample is represented."]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "signed-cyclic-frequency",
+      "kind": "prose",
+      "title": "Keep sign, cycles, and radians separate",
+      "body": [
+        "The catalog stores gamma/(2 pi) in hertz per tesla. For a positive field magnitude along positive z, f = (gamma/(2 pi))B keeps the catalog sign.",
+        "Angular frequency is omega = 2 pi f. The factor 2 pi converts cycles to radians exactly once; f and omega are not numerically interchangeable.",
+        "The transverse projection uses phi = -omega t, x = cos(phi), and y = sin(phi). Positive omega therefore rotates clockwise and negative omega counterclockwise in the declared x-y view."
+      ],
+      "glossaryIds": ["physical-quantity", "quantity-value", "unit"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "openstax-university-physics-v3"],
+      "sourceRevision": "CODATA 2022 signed gyromagnetic ratios; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "gamma/(2 pi) for electron, free proton, and negative muon; OpenStax sections 8.2-8.3",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Changing the axis or phase convention can change the verbal rotation-sense label."]
+    },
+    {
+      "id": "model-not-measurement",
+      "kind": "caveat",
+      "title": "A rotating marker is model output",
+      "body": [
+        "The visualizer evolves a unit-circle phase marker under a static uniform field and a free-particle gyromagnetic ratio.",
+        "It does not model longitudinal or transverse relaxation, shielding, field gradients, interactions, anisotropy, material response, or detector signals.",
+        "A displayed frequency is therefore a calculated reference under the moment-field model, not an observed resonance or a material measurement."
+      ],
+      "glossaryIds": ["quantity-kind", "coordinate-system"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["opensimphy-scientific-scope"],
+      "sourceRevision": "Tour contract 2026-07-26",
+      "sourceLocator": "Deep curriculum Chapter 9 evidence boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No relaxation time, linewidth, amplitude, noise, or uncertainty is calculated."]
+    },
+    {
+      "id": "moment-field-coupling",
+      "kind": "prose",
+      "title": "The response starts from a moment-field model",
+      "body": [
+        "The declared model uses magnetic moment mu = gamma S and interaction Hamiltonian H = -mu dot B.",
+        "For a static field along positive z, define signed angular frequency omega = gamma B and transverse phase phi(t) = -omega t in the declared x-y projection.",
+        "The catalog ratio already contains particle-specific magnetic information; the activity does not derive gamma from particle geometry."
+      ],
+      "glossaryIds": ["physical-quantity", "dimension"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+      "sourceLocator": "Signed ratios; OpenStax sections 8.2-8.3; Chapter 9 moment-field model",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The gyromagnetic ratio is an input, not a prediction of this activity."]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "phase-and-period",
+      "kind": "derivation",
+      "title": "Signed phase and positive period carry different information",
+      "body": [
+        "The signed phase is phi(t) = -omega t. It decreases for positive gamma and increases for negative gamma under the declared positive-z and x-y convention.",
+        "The cyclic magnitude is |f| and the period is T = 1/|f|, so period remains positive even for the electron and negative muon.",
+        "The bounded sample table evaluates cos(phi) and sin(phi) at 2 through 128 points including both time endpoints."
+      ],
+      "glossaryIds": ["quantity-value", "numerical-value", "coordinate-system"],
+      "claimClass": "identity",
+      "evidenceRefs": ["codata-2022"],
+      "sourceRevision": "CODATA 2022 ratios; tour-spin-precession-engine-v1 contract",
+      "sourceLocator": "Signed phase, magnitude, period, and sampling definitions",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Samples are visualization coordinates, not successive detector readings."]
+    },
+    {
+      "id": "environment-corrections",
+      "kind": "caveat",
+      "title": "Free-particle gamma is not a material resonance model",
+      "body": [
+        "The proton entry is an unshielded free-proton value. Chemical shielding would alter a material-specific nuclear magnetic resonance frequency.",
+        "Electron spin resonance in matter can require an anisotropic g-tensor, and composite particles can require context-specific moment corrections.",
+        "Relaxation, coupling, line shape, field calibration, and measurement uncertainty must be supplied before a model frequency can be compared with an observed signal."
+      ],
+      "glossaryIds": ["quantity-kind", "unit"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["codata-2022", "opensimphy-scientific-scope"],
+      "sourceRevision": "CODATA 2022; Tour contract 2026-07-26",
+      "sourceLocator": "Free-particle ratio scope and Chapter 9 limits",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["No shielding, composite, or environmental correction is available in this engine."]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "moment-field-model",
+      "label": "Moment-field interaction",
+      "expression": "mu = gamma S; H = -mu dot B",
+      "explanation": "The precession calculation is conditional on this magnetic moment and static-field interaction model.",
+      "claimClass": "established-model",
+      "evidenceRefs": ["openstax-university-physics-v3", "opensimphy-scientific-scope"],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+      "sourceLocator": "OpenStax sections 8.2-8.3; Deep curriculum Chapter 9 technical extension",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The activity does not derive or fit gamma."]
+    },
+    {
+      "id": "cyclic-to-angular",
+      "label": "Cyclic and angular frequency",
+      "expression": "f = (gamma/(2 pi)) B; omega = 2 pi f = gamma B",
+      "explanation": "The catalog value is signed gamma/(2 pi) in Hz per tesla. Multiplication by 2 pi converts signed cycles per second to signed radians per second.",
+      "claimClass": "identity",
+      "evidenceRefs": ["codata-2022"],
+      "sourceRevision": "CODATA 2022 signed cyclic gyromagnetic ratios",
+      "sourceLocator": "gamma/(2 pi) entries and frequency conversion",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["B is a positive magnitude along positive z in the activity convention."]
+    },
+    {
+      "id": "phase-circle",
+      "label": "Bounded phase visualization",
+      "expression": "phi(t) = -omega t; x = cos(phi); y = sin(phi); T = 1/|f|",
+      "explanation": "The explicit minus sign maps signed angular frequency to marker direction under the declared projection, while the reciprocal period uses frequency magnitude and remains positive.",
+      "claimClass": "identity",
+      "evidenceRefs": ["opensimphy-scientific-scope"],
+      "sourceRevision": "tour-spin-precession-engine-v1 contract",
+      "sourceLocator": "Phase, unit-circle, and period output definitions",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The marker is not a classical picture of a measured spin trajectory."]
+    }
+  ],
+  "simulationId": "spin-precession-visualizer",
+  "formulaIds": ["γ_e", "γ_+", "μ_μ", "h"],
+  "programIds": [],
+  "glossaryIds": ["physical-quantity", "quantity-value", "numerical-value", "quantity-kind", "unit", "dimension", "coordinate-system"],
+  "evidenceRefs": ["codata-2022", "openstax-university-physics-v3", "opensimphy-scientific-scope"],
+  "checkpoints": [
+    {
+      "id": "two-pi-check",
+      "kind": "prediction",
+      "prompt": "A free proton at 1 T has f about 42.58 MHz. What is the angular-frequency magnitude?",
+      "choices": [
+        { "id": "same", "label": "About 42.58 Mrad/s" },
+        { "id": "times-two-pi", "label": "About 267.5 Mrad/s" },
+        { "id": "divide-two-pi", "label": "About 6.78 Mrad/s" }
+      ],
+      "answerId": "times-two-pi",
+      "explanation": "omega = 2 pi f, so 42.58 million cycles per second corresponds to about 267.5 million radians per second.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["codata-2022"],
+        "sourceRevision": "CODATA 2022 free-proton gamma/(2 pi)",
+        "sourceLocator": "Cyclic-to-angular frequency conversion",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["This authored answer is not a measured resonance."]
+      }
+    },
+    {
+      "id": "negative-gamma",
+      "kind": "classification",
+      "prompt": "Under the activity phase convention, what does a negative signed gamma change?",
+      "choices": [
+        { "id": "period-sign", "label": "Makes the period negative" },
+        { "id": "rotation", "label": "Reverses the rotation sense" },
+        { "id": "field", "label": "Makes the field negative" }
+      ],
+      "answerId": "rotation",
+      "explanation": "The signed angular frequency reverses phase direction. With phi = -omega t, negative gamma gives positive phase advance and counterclockwise rotation; the period still uses |f| and remains positive.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": ["codata-2022"],
+        "sourceRevision": "CODATA 2022 signed gyromagnetic ratios",
+        "sourceLocator": "Signed frequency, phase, and period definitions",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": ["Rotation sense depends on the declared axis and phase convention."]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The activity declares a free-particle signed cyclic gyromagnetic ratio, a positive static field magnitude along positive z, a duration, and a bounded sample count.",
+      "scope": "activity",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "spin-precession-visualizer source contract", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["This is source configuration, not an evaluated run."] }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "When evaluated, direct identities compute signed cyclic and angular frequencies, positive period, signed phase phi = -omega t, rotation sense, and unit-circle coordinates.",
+      "scope": "computation",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["codata-2022", "openstax-university-physics-v3"], "sourceRevision": "CODATA 2022 signed ratios; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27", "sourceLocator": "Moment-field and transverse-phase equations; OpenStax sections 8.2-8.3", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["No runtime output is stored in the lesson source."] }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "No external resonance spectrum, relaxation curve, or published fit is reproduced.",
+      "scope": "source",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "spin-precession conclusion boundary", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": [] }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No field measurement, detector signal, uncertainty, or material-response dataset is compared.",
+      "scope": "empirical-evidence",
+      "attribution": { "claimClass": "source-claim", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "tour-content-2026-07-26", "sourceLocator": "spin-precession conclusion boundary", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Catalog ratios are inputs rather than held-out evidence."] }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated state, the declared moment-field phase model maps signed gamma/(2 pi) and field magnitude to signed f, signed omega, positive period, and phase coordinates with phi = -omega t.",
+      "scope": "scientific-conclusion",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["codata-2022", "openstax-university-physics-v3"], "sourceRevision": "CODATA 2022 signed ratios; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27", "sourceLocator": "Moment-field and cyclic/angular relations; OpenStax sections 8.2-8.3", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["The conclusion is conditional on the declared free-particle, field, and phase conventions."] }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The activity does not establish an observed resonance, relaxation behavior, shielding, composite correction, material response, detector signal, or validation of a magnetic-moment theory.",
+      "scope": "scientific-conclusion",
+      "attribution": { "claimClass": "established-model", "evidenceRefs": ["opensimphy-scientific-scope"], "sourceRevision": "Tour contract 2026-07-26", "sourceLocator": "Deep curriculum Chapter 9 limits", "methodRelationship": "contract-validator", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Environmental and measurement models are absent."] }
+    }
+  ]
+}

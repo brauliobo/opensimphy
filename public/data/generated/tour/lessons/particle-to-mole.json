@@ -1,0 +1,629 @@
+{
+  "schemaVersion": 1,
+  "id": "particle-to-mole",
+  "chapterId": "heat-matter",
+  "order": 2,
+  "title": "Amount of substance bridges entities and laboratory matter",
+  "question": "How does amount of substance connect an entity count to molar mass, ideal-gas volume, and electric charge?",
+  "answerPreview": "Amount of substance n uses the exact Avogadro constant to relate entities and moles; molar mass, an explicitly chosen ideal-gas state, and charge number then determine dependent mass, volume, and Faraday conversions.",
+  "summary": "Scale a declared elementary entity from count to amount, mass, an assumption-bound ideal-gas volume, and Faraday charge without treating dependent conversions as independent predictions.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope",
+      "bipm-si-brochure-9",
+      "codata-2022",
+      "iupac-green-book-3"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; IUPAC Green Book, 3rd edition, 2nd printing",
+    "sourceLocator": "Deep curriculum, Chapter 10; BIPM sections 2.2-2.3 and 5.4.8; CODATA recommended-values tables; IUPAC sections 2.10 and 4.3",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "The lesson specifies dependent quantity conversions and does not report a weighed sample, counted ensemble, gas measurement, or runtime result."
+    ]
+  },
+  "estimatedMinutes": 7,
+  "quickPath": {
+    "estimatedMinutes": 3,
+    "guidedBlockIds": [
+      "amount-count-bridge",
+      "ideal-gas-state"
+    ],
+    "equationStepIds": [
+      "entity-count",
+      "ideal-gas-volume"
+    ],
+    "checkpointIds": [
+      "dependent-conversion-check"
+    ],
+    "simulationPresetId": "standard-ideal-gas"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [],
+  "observationStage": {
+    "title": "Exact definitions and a declared pressure convention",
+    "question": "Which International System of Units (SI) values are exact, and which state variables must be stated before an ideal-gas volume is meaningful?",
+    "items": [
+      {
+        "id": "avogadro-anchor",
+        "label": "Avogadro constant",
+        "value": 6.02214076e+23,
+        "unit": "mol^-1",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly. One mole contains exactly this many specified elementary entities.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "elementary-charge-anchor",
+        "label": "Elementary charge",
+        "value": 1.602176634e-19,
+        "unit": "C",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly. Multiplying it by the Avogadro constant gives the exact Faraday constant.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "standard-atmosphere-convention",
+        "label": "Standard atmosphere",
+        "value": 101325,
+        "unit": "Pa",
+        "role": "conventional-value",
+        "explanation": "The non-SI standard atmosphere is exactly 101325 pascals. It is one declared pressure convention, not a universal unstated standard state.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3"
+        ]
+      }
+    ],
+    "conclusion": "The Avogadro constant and elementary charge are exact SI defining values, and the standard atmosphere is an exact pressure conversion. An ideal-gas volume still requires both temperature and pressure to be stated.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, 2nd printing",
+      "sourceLocator": "BIPM sections 2.2-2.3 and non-SI pressure-unit table; IUPAC sections 2.10 and 4.3",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "A pressure convention alone does not define gas temperature, composition, or ideality."
+      ]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "amount-count-bridge",
+      "kind": "definition",
+      "title": "Amount of substance counts specified entities in moles",
+      "body": [
+        "Amount of substance n is a physical quantity whose SI unit is the mole. The elementary entity must be specified: atoms, molecules, ions, electrons, or another defined group are not interchangeable counts.",
+        "The exact relation is N = n N_A, where N is the number of specified entities and N_A is the Avogadro constant.",
+        "One mole therefore corresponds to exactly 6.022 140 76 x 10^23 specified elementary entities."
+      ],
+      "glossaryIds": [
+        "physical-quantity",
+        "amount-of-substance",
+        "mole",
+        "elementary-entity",
+        "avogadro-constant"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, 2nd printing",
+      "sourceLocator": "BIPM sections 2.2-2.3 and 5.4.8; IUPAC section 2.10",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Entity count is dimensionless, while amount of substance is a distinct quantity with SI unit mol."
+      ]
+    },
+    {
+      "id": "mass-from-molar-mass",
+      "kind": "prose",
+      "title": "Mass scaling needs a molar mass",
+      "body": [
+        "For a specified substance or entity, mass follows m = n M, where M is its molar mass.",
+        "Changing amount scales mass linearly only while composition and molar mass remain fixed.",
+        "Molar mass is an input property or measured reference for the selected substance; it is not determined by the Avogadro constant alone."
+      ],
+      "glossaryIds": [
+        "amount-of-substance",
+        "molar-mass"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "iupac-green-book-3",
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing; BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "IUPAC section 2.10, amount and molar quantities; BIPM section 5.4.8",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Mixtures, isotopic composition, chemical association, and sample impurities require an appropriately defined molar mass."
+      ]
+    },
+    {
+      "id": "ideal-gas-state",
+      "kind": "prose",
+      "title": "Ideal-gas volume depends on a stated state",
+      "body": [
+        "Under the ideal-gas assumptions, p V = n R T and therefore V = n R T divided by p.",
+        "The standard-ideal-gas preset declares 273.15 K and one standard atmosphere, exactly 101325 Pa. Another common reference uses 273.15 K and 100000 Pa, so the two dependent molar volumes differ.",
+        "Neither pressure-temperature pair is an unstated universal standard state. Always carry the selected state convention with the volume."
+      ],
+      "glossaryIds": [
+        "ideal-gas",
+        "standard-atmosphere",
+        "state-convention",
+        "amount-of-substance"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "iupac-green-book-3",
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing; BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "IUPAC sections 2.11 and 4.3; BIPM non-SI pressure-unit table",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Real gases can require an equation of state with composition-dependent non-ideal corrections."
+      ]
+    },
+    {
+      "id": "faraday-bridge",
+      "kind": "prose",
+      "title": "The Faraday constant scales elementary charge to a mole",
+      "body": [
+        "The Faraday constant is F = N_A e. Because N_A and the elementary charge e have exact fixed SI values, F is exact in the current SI.",
+        "If each specified entity transfers signed charge number z in elementary-charge units, the dependent charge is Q = z n F.",
+        "This relation converts a declared amount and charge number. It does not predict whether a chemical reaction occurs, reaches completion, or transfers that charge with perfect efficiency."
+      ],
+      "glossaryIds": [
+        "faraday-constant",
+        "elementary-entity",
+        "amount-of-substance",
+        "avogadro-constant"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "BIPM defining constants; CODATA Faraday constant entry",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Electrochemical yield, side reactions, and current efficiency are outside this conversion."
+      ]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "current-carbon-12-wording",
+      "kind": "caveat",
+      "title": "The current mole definition no longer fixes carbon-12 molar mass exactly",
+      "body": [
+        "Before 20 May 2019, the mole definition referred to the number of atoms in 0.012 kilogram of carbon-12. The current SI instead fixes the numerical value of N_A exactly.",
+        "Consequently, the molar mass of carbon-12 is no longer defined to be exactly 0.012 kg/mol. It is experimentally determined and remains extremely close to that value, with stated uncertainty.",
+        "The activity therefore treats molar mass as an explicit input and does not use 0.012 kg/mol as an exact current-SI identity."
+      ],
+      "glossaryIds": [
+        "mole",
+        "molar-mass",
+        "avogadro-constant"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "BIPM section 2.3.3 and note on molar mass of carbon-12; CODATA molar mass constant and carbon-12 entries",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Rounded teaching values must not be relabeled as exact defining values."
+      ]
+    },
+    {
+      "id": "dependency-graph",
+      "kind": "derivation",
+      "title": "Every displayed bulk value has an explicit dependency graph",
+      "body": [
+        "Entity count depends on n and N_A. Mass additionally depends on selected molar mass M. Ideal-gas volume additionally depends on the chosen T, p, and the ideal-gas equation.",
+        "Faraday charge depends on n, signed charge number z, and F. These outputs share n and must not be treated as independent evidence for one another.",
+        "Changing a state convention changes only state-dependent outputs such as ideal-gas volume; it does not change entity count or mass."
+      ],
+      "glossaryIds": [
+        "amount-of-substance",
+        "molar-mass",
+        "ideal-gas",
+        "state-convention",
+        "faraday-constant"
+      ],
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iupac-green-book-3"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, 2nd printing",
+      "sourceLocator": "Amount, molar quantity, ideal-gas, and charge relationships",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "A dependent conversion cannot serve as an independent prediction of its own input assumptions."
+      ]
+    },
+    {
+      "id": "count-representation",
+      "kind": "derivation",
+      "title": "Large entity counts need an honest numerical representation",
+      "body": [
+        "Macroscopic entity counts exceed the exact-integer range of ordinary binary floating-point numbers. The engine formats N in bounded scientific notation rather than claiming unit-by-unit integer precision.",
+        "The selected decimal amount is treated as the declared input quantity value. Its displayed particle count inherits that input precision even though N_A itself is exact.",
+        "All controls are bounded so mass, volume, charge, and logarithmic count remain finite."
+      ],
+      "glossaryIds": [
+        "amount-of-substance",
+        "avogadro-constant",
+        "elementary-entity"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-content-2026-07-26",
+      "sourceLocator": "Avogadro definition; particle-to-mole-scaler output and bounds contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Exact defining constants do not remove rounding or uncertainty from user-supplied amounts and molar masses."
+      ]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "entity-count",
+      "label": "Entity count from amount of substance",
+      "expression": "N = n N_A",
+      "explanation": "The specified entity count N is the amount n multiplied by the exact Avogadro constant.",
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3 and 5.4.8, mole definition",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The identity requires the elementary entity to be specified."
+      ]
+    },
+    {
+      "id": "mass-scaling",
+      "label": "Mass from molar mass",
+      "expression": "m = n M",
+      "explanation": "For fixed composition, sample mass is amount of substance multiplied by the declared molar mass.",
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "iupac-green-book-3"
+      ],
+      "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing",
+      "sourceLocator": "Section 2.10, molar quantities",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Molar mass is an explicit input and may carry uncertainty."
+      ]
+    },
+    {
+      "id": "ideal-gas-volume",
+      "label": "Ideal-gas volume at a declared state",
+      "expression": "V = n R T / p",
+      "explanation": "This dependent volume follows only under the ideal-gas model at the selected temperature and pressure convention.",
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "iupac-green-book-3",
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing; BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "IUPAC ideal-gas and standard-pressure entries; BIPM pressure units",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The equation omits non-ideal interactions and composition-dependent corrections."
+      ]
+    },
+    {
+      "id": "faraday-scaling",
+      "label": "Faraday charge conversion",
+      "expression": "F = N_A e; Q = z n F",
+      "explanation": "For a declared signed charge number z per entity, amount scales to charge through the exact Faraday constant.",
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "SI defining constants; CODATA Faraday constant entry",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The conversion does not model reaction completion or current efficiency."
+      ]
+    }
+  ],
+  "simulationId": "particle-to-mole-scaler",
+  "formulaIds": [
+    "N_A",
+    "R",
+    "F"
+  ],
+  "programIds": [],
+  "glossaryIds": [
+    "physical-quantity",
+    "numerical-value",
+    "unit",
+    "amount-of-substance",
+    "mole",
+    "elementary-entity",
+    "avogadro-constant",
+    "molar-mass",
+    "ideal-gas",
+    "standard-atmosphere",
+    "state-convention",
+    "faraday-constant"
+  ],
+  "evidenceRefs": [
+    "bipm-si-brochure-9",
+    "codata-2022",
+    "iupac-green-book-3",
+    "opensimphy-scientific-scope"
+  ],
+  "checkpoints": [
+    {
+      "id": "dependent-conversion-check",
+      "kind": "prediction",
+      "prompt": "If amount n doubles while molar mass M, temperature T, pressure p, and signed charge number z remain fixed, which displayed outputs double?",
+      "choices": [
+        {
+          "id": "all-linear",
+          "label": "Entity count, mass, ideal-gas volume, and Faraday charge"
+        },
+        {
+          "id": "count-mass-only",
+          "label": "Only entity count and mass double"
+        },
+        {
+          "id": "none",
+          "label": "None of the dependent outputs double"
+        }
+      ],
+      "answerId": "all-linear",
+      "explanation": "Expected outcome: N = n N_A, m = n M, V = n R T/p, and Q = z n F are all linear in n when M, T, p, and z are held fixed, so all four outputs double. This ungraded checkpoint records no score.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "iupac-green-book-3",
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "IUPAC Green Book, 3rd edition, 2nd printing; tour-content-2026-07-26",
+        "sourceLocator": "Ideal-gas relationship; dependent-output provenance boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source-authored answer is not a runtime result or empirical validation."
+        ]
+      }
+    },
+    {
+      "id": "carbon-12-check",
+      "kind": "explanation",
+      "prompt": "In the current SI, which statement about one mole of carbon-12 is correct?",
+      "choices": [
+        {
+          "id": "exact-mass",
+          "label": "Its molar mass is defined as exactly 0.012 kg/mol"
+        },
+        {
+          "id": "exact-count",
+          "label": "It contains exactly N_A carbon-12 atoms, while its molar mass is experimentally determined"
+        },
+        {
+          "id": "uncertain-count",
+          "label": "Its entity count is measured and N_A has uncertainty"
+        }
+      ],
+      "answerId": "exact-count",
+      "explanation": "The current SI fixes N_A exactly. Carbon-12 molar mass is no longer an exact defining value, although it remains extremely close to 0.012 kg/mol.",
+      "attribution": {
+        "claimClass": "established-definition",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "BIPM current mole definition and carbon-12 note; CODATA molar mass entries",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source-authored answer is ungraded and does not report a molar-mass measurement."
+        ]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The source contract presents one declared amount and its dependent count, mass, ideal-gas state volume, and Faraday charge conversions.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "particle-to-mole-scaler controls and output contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source contract is not evidence that a physical sample was prepared or measured."
+        ]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "An evaluated run applies N = n N_A, m = n M, V = n R T/p, and Q = z n F with the declared inputs and state convention.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, 2nd printing; CODATA 2022 adjustment",
+        "sourceLocator": "Mole, molar quantity, ideal-gas, and Faraday relationships",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Every output depends on declared inputs; none is an independent observation."
+        ]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "No external sample result, gas-volume table, or electrochemical measurement is reproduced in this lesson.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "particle-to-mole lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": []
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No empirical mass, pressure-volume-temperature, entity-count, or charge dataset is loaded or compared.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "particle-to-mole lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Agreement among dependent conversions is not empirical comparison."
+        ]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated run, the declared equations uniquely determine bounded dependent conversions from the selected amount, molar mass, state convention, and signed charge number.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "iupac-green-book-3",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IUPAC Green Book, 3rd edition, 2nd printing; CODATA 2022 adjustment",
+        "sourceLocator": "Declared conversion equations and particle-to-mole-scaler bounds",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The ideal-gas output is conditional on its state and model assumptions."
+        ]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The conversions do not establish sample composition, real-gas ideality, reaction completion, current efficiency, or independent experimental confirmation of any input.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "iupac-green-book-3"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; IUPAC Green Book, 3rd edition, 2nd printing",
+        "sourceLocator": "Theory-validation boundary; ideal-gas and molar-quantity assumptions",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Dependent outputs cannot validate the equations used to calculate them."
+        ]
+      }
+    }
+  ],
+  "previousLessonId": "blackbody-radiation",
+  "nextLessonId": null
+}
