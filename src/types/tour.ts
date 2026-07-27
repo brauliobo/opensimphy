@@ -1,5 +1,6 @@
 export type ReadingDepth = 'guided' | 'technical'
 export type DepthComposition = 'technical-includes-guided'
+export type ObservationItemRole = 'fixed-definition' | 'practical-realization'
 
 export type ClaimClass =
   | 'established-definition'
@@ -101,6 +102,24 @@ export type EquationStep = TourSourceAttribution & {
   explanation: string
 }
 
+export interface ObservationStageItem extends AttributableText {
+  id: string
+  label: string
+  value: number
+  unit: string
+  role: ObservationItemRole
+  explanation: string
+  evidenceRefs: NonEmptyArray<string>
+}
+
+export interface ObservationStage {
+  title: string
+  question: string
+  items: NonEmptyArray<ObservationStageItem>
+  conclusion: string
+  attribution: TourSourceAttribution
+}
+
 export interface Checkpoint {
   id: string
   kind: 'prediction' | 'classification' | 'explanation'
@@ -133,6 +152,7 @@ export interface TourSourceLessonRecord {
   quickPath?: LessonQuickPath
   depthComposition: DepthComposition
   prerequisites: string[]
+  observationStage: ObservationStage
   guidedBlocks: LessonBlock[]
   technicalBlocks: LessonBlock[]
   equationSteps: EquationStep[]
@@ -541,6 +561,11 @@ export interface TourProgress {
     visited: boolean
     complete: boolean
     lastAnchor?: string
+  }>
+  stations: Record<string, {
+    visited: boolean
+    complete: boolean
+    updatedAt?: string
   }>
   resumeRoute?: string
 }

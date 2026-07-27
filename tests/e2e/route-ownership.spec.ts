@@ -78,7 +78,7 @@ function activitySince(activity: RouteActivity, start: ActivityCheckpoint): Rout
   }
 }
 
-function expectOwnerArtifacts(activity: RouteActivity, expected: string[]): void {
+function expectOwnerArtifacts(activity: RouteActivity, expected: readonly string[]): void {
   expect(requestedOwnerArtifacts(activity)).toEqual([...expected].sort())
 }
 
@@ -92,6 +92,61 @@ test('the tour owns only its manifest and taxonomy', async ({ page }) => {
   ])
   expect(workerOwners(activity).filter((owner) => owner === 'formula' || owner === 'core' || owner === 'wall')).toEqual([])
 })
+
+const tourRoutes = [
+  {
+    path: '/tour',
+    expected: ['/data/generated/tour/manifest.json', '/data/generated/taxonomy.json'],
+    ready: async (page: Page) => expect(page.getByTestId('tour-map-ready')).toBeVisible(),
+  },
+  {
+    path: '/tour/units',
+    expected: [
+      '/data/generated/tour/manifest.json',
+      '/data/generated/taxonomy.json',
+      '/data/generated/tour/chapters/units.json',
+    ],
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Units, Dimensions, and Physical Quantities' })).toBeVisible(),
+  },
+  {
+    path: '/tour/units/physical-quantities?path=quick',
+    expected: [
+      '/data/generated/tour/manifest.json',
+      '/data/generated/taxonomy.json',
+      '/data/generated/tour/chapters/units.json',
+      '/data/generated/tour/lessons/physical-quantities.json',
+      '/data/generated/tour/simulations/dimensional-equation-builder.json',
+      '/data/generated/tour/glossary.json',
+      '/data/generated/tour/references.json',
+    ],
+    ready: async (page: Page) => expect(page.getByTestId('tour-lesson-ready')).toBeVisible(),
+  },
+  {
+    path: '/saved',
+    expected: ['/data/generated/tour/manifest.json', '/data/generated/taxonomy.json'],
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Saved Tour Progress' })).toBeVisible(),
+  },
+  {
+    path: '/evidence',
+    expected: [],
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Evidence Guide' })).toBeVisible(),
+  },
+  {
+    path: '/unknown/ownership-route',
+    expected: [],
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible(),
+  },
+] as const
+
+for (const route of tourRoutes) {
+  test(`${route.path} loads only its Tour-owned artifacts and no workers`, async ({ page }) => {
+    const activity = await gotoColdRoute(page, route.path)
+    await route.ready(page)
+
+    expectOwnerArtifacts(activity, route.expected)
+    expect(workerOwners(activity)).toEqual([])
+  })
+}
 
 const earthDocumentSlug = 'for-your-understanding--ab8c1d3e7b71'
 const earthRoutes = [
@@ -200,8 +255,8 @@ test('warm Atlas to Tour to EARTH navigation keeps owner activity route-bound an
 
   const afterAtlas = checkpoint(activity)
   await page.locator('#primary-navigation').getByRole('link', { name: /Tour/ }).click()
-  await expect(page).toHaveURL(/\/$/)
-  await expect(page.getByTestId('tour-ready')).toBeVisible()
+  await expect(page).toHaveURL(/\/tour$/)
+  await expect(page.getByTestId('tour-map-ready')).toBeVisible()
   const tourActivity = activitySince(activity, afterAtlas)
   expectOwnerArtifacts(tourActivity, ['/data/generated/tour/manifest.json'])
   expect(workerOwners(tourActivity)).toEqual([])
@@ -212,7 +267,9 @@ test('warm Atlas to Tour to EARTH navigation keeps owner activity route-bound an
   expect(tourAudit?.tour).toEqual(expect.objectContaining({ status: 'ready' }))
 
   const afterTour = checkpoint(activity)
-  await page.locator('#primary-navigation').getByRole('link', { name: /EARTH/ }).click()
+  await page.locator('#primary-navigation').getByRole('link', { name: /Evidence/ }).click()
+  await expect(page).toHaveURL(/\/evidence$/)
+  await page.getByRole('link', { name: 'Open the EARTH evidence dossier' }).click()
   await expect(page).toHaveURL(/\/earth$/)
   await expect(page.getByTestId('earth-evidence-ledger')).toBeVisible()
   const earthActivity = activitySince(activity, afterTour)

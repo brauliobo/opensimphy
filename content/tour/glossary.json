@@ -86,7 +86,7 @@
       "id": "base-dimension",
       "term": "Base dimension",
       "guidedDefinition": "One of the conventionally chosen base-quantity dimensions used to express other dimensions.",
-      "technicalDefinition": "A conventional basis element of a system of quantity dimensions. The Tour uses the seven conventional ISQ base-quantity dimensions and permits rational exponents generally; this activity uses only integer exponents.",
+      "technicalDefinition": "A conventional basis element of a system of quantity dimensions. The Tour uses the seven conventional base-quantity dimensions of the International System of Quantities (ISQ) and permits rational exponents generally; this activity uses only integer exponents.",
       "guided": false,
       "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
       "attribution": { "claimClass": "established-definition", "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"], "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012", "sourceLocator": "BIPM section 2.3; VIM3 entries 1.3-1.7", "methodRelationship": "not-applicable", "modelOrigin": "established-physics", "resultStatus": "not-evaluated", "validatesTheory": false, "caveats": ["Technical-only term; Guided blocks must not depend on it."] }

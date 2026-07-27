@@ -27,22 +27,30 @@ public/data/generated/earth
 public/data/number-walls
                          preserved per-input static JSON
 data/physics_monastery  non-public recovered PDF/text source artifacts used by generation
+content/tour            attributed Tour source content and generated-artifact contracts
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
+src/tour                Tour dimension engine, progress model, and transactional offline pack
 src/workers             dedicated formula, Core, number-wall, and isolated EARTH workers
-src/components          navigation, coverage, Plotly, and canvas instruments
+src/components          navigation, Tour lesson, coverage, Plotly, and canvas instruments
 src/views               lazy-routed tour, atlas, lab, EARTH dossier/program/data, and provenance views
 tests/ui                Vitest and Vue Test Utils contracts
 tests/e2e               Playwright browser audit
 ```
 
-Routes own their data directly through `src/registries` rather than a global Atlas initializer or shared worker. Tour owns only its generated manifest and formula taxonomy. Formula Atlas and detail routes own recipes, symbols, and the dedicated formula worker. Core owns only the dedicated Core worker. Number Walls loads its compact index for browsing, then fetches the selected payload and dynamically imports its worker only when the user chooses Run. EARTH remains isolated behind its own registries, evidence shards, and terminating simulation worker. Successful registries remain cached for the browser session; route release cancels unfinished formula or Core initialization after the final owner leaves.
+Routes own their data directly through `src/registries` rather than a global Atlas initializer or shared worker. Tour owns its manifest, taxonomy, and lazily loaded chapter, lesson, simulation, glossary, and reference artifacts. Formula Atlas and detail routes own recipes, symbols, and the dedicated formula worker. Core owns only the dedicated Core worker. Number Walls loads its compact index for browsing, then fetches the selected payload and dynamically imports its worker only when the user chooses Run. EARTH remains isolated behind its own registries, evidence shards, and terminating simulation worker. Successful registries remain cached for the browser session; route release cancels unfinished formula or Core initialization after the final owner leaves.
 
 `src/registries/runtimeAudit.ts` publishes an additive session ledger as route domains become ready, while `src/registries/completionRegistry.ts` validates generated completion data through the strict `completionReport` parser. Formula figures are converted from worker-produced inversion-sweep points and markers. Core plots must come from Core worker results, and wall canvases must come from wall worker results. Missing graph or worker output has no placeholder fallback: coverage and the corresponding panel remain incomplete.
 
-The Tour content pipeline deterministically generates the manifest, chapter shells, structured lesson and simulation artifacts, glossary, references, and quick-station navigation. The generated taxonomy classifies every formula into one of eight scientific topics and a subordinate category, then records cross-cutting basis, constructor, dependency-pass, source-unit, representation, entity, and source-topology facets. Generation fails closed if content references, a topic count, category count, or curated tour example drifts from the retained source snapshot.
+The Tour content pipeline deterministically generates the manifest, 20 chapter shells in four acts, structured lesson and simulation artifacts, glossary, references, and a continuous eight-station spine. The lesson renderer uses six stages: Question, Observe, Explain, Equation ladder, Try, and Interpret. Generation fails closed on attribution, ownership, navigation, summary-count, compatibility, or reference drift. The generated formula taxonomy retains eight scientific topics and cross-cutting basis, constructor, dependency-pass, source-unit, representation, entity, and source-topology facets.
 
 Plotly is dynamically imported into its own lazy chunk and formula sweeps are mounted only when their detail disclosure is opened. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows; topic, category, search, and basis stay primary while source topology, audit state, constructor, and representation remain in an advanced disclosure.
+
+### Physics Tour
+
+`/` provides orientation, Begin/Resume controls, the eight-station spine, and Guided-pack controls. `/tour` presents the 20-chapter/four-act map; `/tour/:chapter` and `/tour/:chapter/:lesson` provide chapter and lesson routes with generated titles and real section anchors. `/evidence`, `/saved`, and `/not-found` provide scope guidance, local progress/offline-pack management, and recovery. Legacy `/topics/:id` links redirect to their mapped Tour chapters.
+
+Guided or Technical depth persists locally, with Technical content added without replacing Guided material. Visits do not imply completion: quick-station and full-lesson progress are independent, and Resume points to the last real lesson anchor. The completed units vertical slice provides the 11-minute full lesson and its four-minute Guided quick subset at `/tour/units/physical-quantities` (add `?path=quick` for the subset). It distinguishes exact SI defining anchors from practical realization, then uses a prediction-first dimensional builder with bounded presets, SI/mechanical-CGS coordinates, energy-versus-torque meaning, unlike-addition rejection, full provenance, and explicit conclusion limits.
 
 ### EARTH Program, Method, and Result Model
 
@@ -66,7 +74,7 @@ A release is complete only when all of the following are true at the same genera
 - Every wall input passes the engine’s small-simulation completion audit, and the UI produces a canvas result in all supported worker modes.
 - `data-testid="coverage-status"` has `data-status="complete"`; any mismatch must instead render `FAIL CLOSED / INCOMPLETE`.
 - Type checking, engine tests, UI tests, the production build, and the Chromium suite pass.
-- The production build contains a web manifest and service worker whose precache excludes route-owner JSON and the formula, Core, and number-wall worker assets; generated registries use bounded, content-revisioned runtime caches.
+- The production build contains a web manifest and service worker whose precache excludes route-owner JSON, all generated Tour JSON, and the formula, Core, and number-wall worker assets; Atlas registries use bounded, content-revisioned runtime caches, while Tour offline use is explicit.
 - EARTH registry and completion schema v2 distinguish 130 programs, 220 declared methods, and 134 runnable methods. Every program default names a runnable method; all 134 runnable `(programId, methodId)` pairs complete through the dedicated browser-worker boundary, while all 86 unavailable source-model records have no kernel and cannot be defaulted or run.
 - The compact EARTH evidence manifest indexes exactly 130 program shards, 63 document shards, and 2,422 assignments: 1,984 canonical-program assignments and 438 classified assignments. The large source-coverage ledger remains excluded from precache.
 - All 30 dataset-audit programs carry corrected G0b states, and all 19 programs requiring observable-independence review carry explicit G2a states. Dataset assignments remain program-level until acquisition and preregistration freeze them for a specific method.
@@ -78,7 +86,9 @@ The global strip compares expected, implemented, evaluated, graphed, and simulat
 
 Each route registry starts independently, rejects stale in-flight results, exposes retry after failure, and keeps successful data cached for the browser session. Formula and Core registries evaluate through separate cancellable workers; final-owner release cancels unfinished work. Number Walls loads only its index during route initialization, then loads one payload and dynamically imports a fresh number-wall worker on Run. Runnable EARTH methods use their own terminating worker boundary with cloned JSON defaults and no main-thread fallback. The UI does not send inputs to a network service and does not fall back to unbounded main-thread computation when a worker is unavailable.
 
-The PWA precaches the app shell but excludes route-owner JSON and the dedicated formula, Core, and number-wall workers. Deterministic generated registries use content-revisioned `NetworkFirst` caches with a 5-second network timeout, bounded entry counts, and a 7-day maximum age. Per-wall JSON, EARTH document shards, and the lazily loaded Plotly chunk retain bounded cache-first policies; evidence shards remain bounded to 30 days, while the large EARTH scientific-coverage ledger and future result/dataset payload directories remain outside precache. Explicit downloadable offline packs and old revision-cache cleanup are later work rather than an Iteration 1 requirement.
+The PWA precaches the app shell but excludes route-owner JSON, every generated Tour JSON artifact, and the dedicated formula, Core, and number-wall workers. Deterministic Atlas registries use content-revisioned `NetworkFirst` caches with a 5-second timeout and 7-day bound. Per-wall JSON, EARTH document shards, evidence shards, and Plotly retain their bounded runtime policies.
+
+Tour offline use is opt-in rather than automatic. The current Guided-only pack contains eight validated resources totaling 146,033 bytes (about 143 KB) at content revision `2026-07-26`: manifest, taxonomy, claim vocabulary, glossary, references, the available chapter, lesson, and simulation. Installation is transactional, the included taxonomy provides a self-contained fallback, and `/` or `/saved` can install, refresh, inspect, or clear it. Iteration 10 remains planned for richer packs, saved runs, storage/revision management, and update warnings.
 
 ## Commands
 
@@ -95,14 +105,15 @@ npm run test:ui
 npm test
 npm run e2e
 npm run e2e:chromium
+npm run e2e:pwa
 npm run verify
 ```
 
-`npm run verify` runs deterministic data generation, type checking, all Vitest suites, the production build, and `check:routes`. The route check inspects built transitive closures, dedicated worker isolation, and PWA ownership boundaries. Playwright is separate because it requires Chromium. `npm run e2e` and `npm run e2e:chromium` run the same Chromium-only browser suite. Their only web server command is `npm run dev -- --host 127.0.0.1`.
+`npm run verify` runs deterministic data generation, type checking, all Vitest suites, the production build, and `check:routes`. The route check inspects built transitive closures, dedicated worker isolation, and PWA ownership boundaries. Playwright is separate because it requires Chromium: `npm run e2e` and `npm run e2e:chromium` run the default development-server suite, while `npm run e2e:pwa` builds and runs the service-worker test against production preview.
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. It fails if the sibling EARTH corpus differs from `public/data/sources/earth-source-lock.json`. `npm run data:lock:earth` is the explicit acceptance path for a clean new EARTH revision. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; both update commands are intentionally excluded from routine verification so a source change cannot silently rewrite the corpus.
 
-UI tests cover fail-closed completion, route ownership, topic isolation, asynchronous graph readiness, formula filtering/detail, canvas drawing and exact cell selection, responsive navigation state, strict EARTH registry/dataset adapters, multi-method execution, provenance labeling, and worker lifecycle behavior. Verification recorded on 2026-07-26: `npm run verify` passed with 40 Vitest files and 279 tests; data generation, type checking, the production build, and `check:routes` passed. The separate Chromium Playwright run passed all 41 tests. These are technical and functional checks, not independent scientific validation.
+UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, the units engine and lesson grammar, formula and wall interaction, responsive navigation, strict EARTH adapters, provenance labeling, and worker lifecycles. Verification recorded on 2026-07-26: `npm run verify` passed with 46 Vitest files and 419 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 65 tests, and one production-preview Chromium PWA test passed. Independent code and scientific/UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
 
 ## Static Deployment
 
@@ -147,4 +158,5 @@ The Curtis R. Horn Jr. and Nassim Haramein PDFs are contextual cross-links unles
 - Website content and number-wall JSON can drift after acquisition. Generated registries must be rebuilt and completion rerun when source hashes change.
 - Some related papers could not be acquired because of Akamai/Cloudflare protection, HTTP `403`/`429`, or timeout. The corpus records those failures and does not substitute reconstructed or placeholder PDFs.
 - The 134 runnable EARTH methods provide bounded technical execution, not blanket implementation of the 86 unavailable source models. Of the runnable methods, 37 reproduce source expressions and 97 are traditional analytic/numerical baselines or source-contract validators. No external dataset has been acquired or frozen, none has passed G0b, assignments are not method-frozen, and aggregate scientific validation remains false.
-- Offline reuse is limited to the installed app shell and data that have already populated their runtime caches; route-owned workers are not precached, and explicit offline packs remain later work. Clearing site storage removes cached shell and data.
+- Offline Tour use currently covers only the explicit Guided pack. Richer packs, saved runs, storage/revision management, and update warnings remain Iteration 10 work; final performance, forced-colors, and editorial review remain Iteration 11 work. Clearing site storage removes cached shell, data, progress, and packs.
+- Tour generation currently enforces strict summary counts for 20 chapters, 8 stations, 1 lesson, 1 simulation, 11 glossary entries, and 5 references; those contracts must be updated deliberately as Iteration 5 adds the remaining seven station lessons and simulations.

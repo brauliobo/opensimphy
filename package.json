@@ -21,6 +21,7 @@
     "test:ui": "vitest run tests/ui",
     "e2e": "playwright test",
     "e2e:chromium": "playwright test --project=chromium",
+    "e2e:pwa": "npm run build && playwright test --config=playwright.pwa.config.ts",
     "verify": "npm run data:generate && npm run typecheck && npm run test && npm run build && npm run check:routes"
   },
   "dependencies": {

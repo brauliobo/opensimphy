@@ -15,12 +15,12 @@
   "validatesTheory": false,
   "caveats": [
     "A dimension match is necessary but not sufficient for equal quantity kind or empirical validity.",
-    "NIST SP 811 predates the SI changes effective 20 May 2019 and is used only for notation and conversion guidance."
+    "NIST SP 811 predates the International System of Units (SI) changes effective 20 May 2019 and is used only for notation and conversion guidance."
   ],
   "revision": {
     "contentRevision": "2026-07-26",
     "modelRevision": "isq-dimension-contract-1",
-    "implementationRevision": "tour-dimension-contract-v1"
+    "implementationRevision": "tour-dimension-engine-v1"
   },
   "dimensionBasis": {
     "system": "ISQ",
@@ -50,9 +50,9 @@
   "modelComponents": [
     {
       "id": "isq-dimension-arithmetic",
-      "label": "ISQ dimension arithmetic",
+      "label": "International System of Quantities dimension arithmetic",
       "modelOrigin": "established-physics",
-      "description": "Combines quantity dimensions as products of powers over seven conventional ISQ base quantities.",
+      "description": "Combines quantity dimensions as products of powers over the seven conventional base quantities of the International System of Quantities (ISQ).",
       "attribution": {
         "claimClass": "established-definition",
         "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
@@ -67,9 +67,9 @@
     },
     {
       "id": "multiplicative-unit-conversion",
-      "label": "Multiplicative SI and mechanical-CGS conversion",
+      "label": "Multiplicative International System of Units and mechanical centimetre-gram-second conversion",
       "modelOrigin": "established-physics",
-      "description": "Converts a target-bound canonical SI quantity value to declared centimetre-gram-second mechanical coordinates.",
+      "description": "Converts a target-bound canonical International System of Units (SI) quantity value to declared mechanical centimetre-gram-second (CGS) coordinates.",
       "attribution": {
         "claimClass": "identity",
         "evidenceRefs": ["bipm-si-brochure-9", "nist-sp811"],
@@ -90,7 +90,7 @@
     "q = {q}[Q] = {q}'[Q]'"
   ],
   "assumptions": [
-    "The Tour uses seven conventional ISQ base-quantity dimensions rather than seven intrinsic dimensions.",
+    "The Tour uses seven conventional International System of Quantities (ISQ) base-quantity dimensions rather than seven intrinsic dimensions.",
     "The general dimension type permits rational exponents; every expression in this activity uses integer exponents.",
     "The optional sample magnitude is the selected target's canonical SI quantity value, not a second independent expression magnitude.",
     "Coordinate conversion is limited to multiplicative coherent scaling between SI and mechanical-cgs units of the selected target kind.",
@@ -115,7 +115,7 @@
       "type": "select",
       "inputRole": "target-quantity",
       "readingDepth": "guided",
-      "description": "Selects the target quantity kind, dimension, canonical SI unit, and mechanical-cgs unit.",
+      "description": "Selects the target quantity kind, dimension, canonical International System of Units (SI) unit, and mechanical centimetre-gram-second (CGS) unit.",
       "default": "average-speed",
       "playfulPrompt": "Pick the quantity you want the workshop to construct.",
       "options": [
@@ -151,12 +151,12 @@
       "type": "select",
       "inputRole": "coordinate-selection",
       "readingDepth": "guided",
-      "description": "Selects SI or mechanical centimetre-gram-second coordinates for the target-bound quantity value.",
+      "description": "Selects International System of Units (SI) or mechanical centimetre-gram-second (CGS) coordinates for the target-bound quantity value.",
       "default": "si",
       "playfulPrompt": "Change the coordinate language without changing the target quantity value.",
       "options": [
-        { "value": "si", "label": "SI", "description": "canonical SI unit for the selected target" },
-        { "value": "mechanical-cgs", "label": "Mechanical CGS", "description": "centimetre, gram, and second scaling only; electromagnetic CGS excluded" }
+        { "value": "si", "label": "International System of Units (SI)", "description": "canonical SI unit for the selected target" },
+        { "value": "mechanical-cgs", "label": "Mechanical centimetre-gram-second (CGS)", "description": "centimetre, gram, and second scaling only; electromagnetic CGS excluded" }
       ]
     },
     {

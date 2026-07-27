@@ -4665,3 +4665,253 @@ main {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Tour utilities are shared because AppNav is present on every route. */
+.app-header .nav-utilities {
+  display: flex;
+  min-width: 0;
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+.app-header .nav-utilities > .text-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.tour-depth-control {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--rule-bright);
+}
+
+.tour-depth-control legend {
+  padding: 0 0.4rem;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tour-depth-introduction {
+  max-width: 62ch;
+  padding: 0.75rem;
+  margin: 0;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tour-depth-option {
+  display: grid;
+  min-width: 0;
+  min-height: 56px;
+  padding: 0.65rem 0.75rem;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tour-depth-option:last-of-type {
+  border-bottom: 0;
+}
+
+.tour-depth-option:hover,
+.tour-depth-option:focus-within {
+  background: var(--ink-2);
+}
+
+.tour-depth-option:has(input:checked) {
+  box-shadow: inset 3px 0 var(--amber);
+  background: var(--ink-0);
+}
+
+.tour-depth-option input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--amber);
+}
+
+.tour-depth-option-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tour-depth-option-copy strong,
+.tour-depth-option-copy > span {
+  overflow-wrap: anywhere;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tour-depth-option-copy strong {
+  color: var(--paper);
+  text-transform: uppercase;
+}
+
+.tour-depth-option-copy > span {
+  color: var(--paper-dim);
+}
+
+.tour-depth-persistence-error {
+  padding: 0.75rem;
+  margin: 0;
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-top: 1px solid var(--red);
+}
+
+.app-header .tour-depth-control {
+  display: flex;
+  border-color: var(--rule);
+}
+
+.app-header .tour-depth-control legend,
+.app-header .tour-depth-introduction,
+.app-header .tour-depth-option-copy > span,
+.app-header .tour-depth-persistence-error {
+  display: none;
+}
+
+.app-header .tour-depth-option {
+  min-height: 44px;
+  padding: 0.45rem 0.55rem;
+  grid-template-columns: 18px auto;
+  gap: 0.45rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 0;
+}
+
+.app-header .tour-depth-option:last-of-type {
+  border-right: 0;
+}
+
+.app-header .tour-depth-option input {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 1260px) and (min-width: 1101px) {
+  .app-header .nav-utilities > .text-link {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .app-header {
+    min-height: 68px;
+    padding: 0;
+  }
+
+  .app-header .brand {
+    width: auto;
+    flex: 1;
+    border-right: 0;
+  }
+
+  .app-header .brand-mark {
+    width: 68px;
+  }
+
+  .app-header .nav-toggle {
+    display: grid;
+    width: 68px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-left: 1px solid var(--rule-bright);
+    background: var(--ink-1);
+  }
+
+  .app-header .nav-toggle-lines,
+  .app-header .nav-toggle-lines::before,
+  .app-header .nav-toggle-lines::after {
+    display: block;
+    width: 22px;
+    height: 1px;
+    content: '';
+    background: var(--paper);
+  }
+
+  .app-header .nav-toggle-lines::before {
+    transform: translateY(-6px);
+  }
+
+  .app-header .nav-toggle-lines::after {
+    transform: translateY(5px);
+  }
+
+  .app-header .primary-nav {
+    position: absolute;
+    top: 68px;
+    right: 0;
+    left: 0;
+    display: none;
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
+    flex-direction: column;
+    border-bottom: 1px solid var(--rule-bright);
+    background: var(--ink-0);
+  }
+
+  .app-header .primary-nav.is-open {
+    display: flex;
+  }
+
+  .app-header .nav-link {
+    min-height: 58px;
+    padding: 0.7rem 1rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .app-header .nav-utilities {
+    display: grid;
+    padding: 0.8rem 1rem 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    border-left: 0;
+  }
+
+  .app-header .nav-utilities > .text-link {
+    display: inline-flex;
+  }
+
+  .app-header .tour-depth-control {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-header .tour-depth-option {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  .tour-depth-option:has(input:checked) {
+    color: HighlightText;
+    background: Highlight;
+  }
+}

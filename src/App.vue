@@ -7,6 +7,7 @@ import { publishRuntimeAudit } from './registries/runtimeAudit'
 const route = useRoute()
 const router = useRouter()
 const shellReady = ref(false)
+const navigationOpen = ref(false)
 let headingObserver: MutationObserver | undefined
 let focusRequest = 0
 let routeFocusEnabled = false
@@ -19,6 +20,10 @@ function publishAppAudit(): void {
       route: route.fullPath,
     },
   })
+}
+
+function handleMenuStateChange(open: boolean): void {
+  navigationOpen.value = open
 }
 
 async function focusRouteHeading(): Promise<void> {
@@ -68,10 +73,16 @@ onBeforeUnmount(() => headingObserver?.disconnect())
 <template lang="pug">
 .app-shell(:data-testid="shellReady ? 'app-ready' : undefined")
   a.skip-link(href="#main-content") Skip to instrument
-  AppNav
-  main#main-content
+  AppNav(@menu-state-change="handleMenuStateChange")
+  main#main-content(
+    :inert="navigationOpen ? '' : undefined"
+    :aria-hidden="navigationOpen ? 'true' : undefined"
+  )
     RouterView
-  footer.app-footer
+  footer.app-footer(
+    :inert="navigationOpen ? '' : undefined"
+    :aria-hidden="navigationOpen ? 'true' : undefined"
+  )
     span OPENSIMPHY / browser instrument
     span Reproduction is not validation
     span No telemetry / no API

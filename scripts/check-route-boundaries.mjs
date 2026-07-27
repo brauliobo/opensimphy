@@ -11,7 +11,6 @@ const swPath = join(distRoot, 'sw.js')
 const failures = []
 
 const runtimeRegistryFiles = [
-  'data/generated/tour/manifest.json',
   'data/generated/taxonomy.json',
   'data/generated/recipes.json',
   'data/generated/symbols.json',
@@ -22,7 +21,12 @@ const runtimeRegistryFiles = [
 
 const routes = {
   overview: 'src/views/OverviewView.vue',
-  topic: 'src/views/TopicView.vue',
+  tourMap: 'src/views/TourMapView.vue',
+  tourChapter: 'src/views/TourChapterView.vue',
+  tourLesson: 'src/views/TourLessonView.vue',
+  evidence: 'src/views/EvidenceView.vue',
+  saved: 'src/views/SavedView.vue',
+  notFound: 'src/views/NotFoundView.vue',
   formulaAtlas: 'src/views/FormulaAtlasView.vue',
   formulaDetail: 'src/views/FormulaDetailView.vue',
   coreLab: 'src/views/CoreLabView.vue',
@@ -35,6 +39,8 @@ const routes = {
   earthDatasets: 'src/views/EarthDatasetsView.vue',
 }
 
+const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
+const nonNumericalRoutes = [...tourRoutes, 'evidence', 'saved', 'notFound']
 const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthDatasets']
 
 const ownershipMarkers = {
@@ -61,7 +67,15 @@ const ownershipMarkers = {
     ['number-wall evaluator identifier', /simulateNumberWall|bareissDeterminant/],
     ['number-wall evaluator diagnostic', /Bareiss determinant requires a square matrix|Number-wall simulation cancelled/],
   ],
+  plotly: [
+    ['Plotly asset', /^assets\/plotly-[A-Za-z0-9_-]+\.js$/],
+  ],
 }
+
+const dimensionEngineMarkers = [
+  'Unknown dimension builder target:',
+  'No quantity-kind identity is inferred from dimension equality.',
+]
 
 const coreEvaluatorIdentifiers = [
   'CORE_CASES',
@@ -193,11 +207,18 @@ function markerHits(chunks, owners) {
   for (const owner of owners) {
     for (const [label, pattern] of ownershipMarkers[owner]) {
       for (const chunk of chunks) {
-        if (pattern.test(chunk.content)) hits.push(`${owner} ${label} in ${chunk.file}`)
+        const inspected = owner === 'plotly' ? chunk.file : chunk.content
+        if (pattern.test(inspected)) hits.push(`${owner} ${label} in ${chunk.file}`)
       }
     }
   }
   return [...new Set(hits)].sort()
+}
+
+function assertContainsAny(label, chunks, markers) {
+  if (!chunks.some(({ content }) => markers.some((marker) => content.includes(marker)))) {
+    fail(`${label} does not contain any expected markers: ${markers.join(', ')}`)
+  }
 }
 
 function assertNoOwnership(label, chunks, owners) {
@@ -315,7 +336,6 @@ function assertRuntimeRegistryPolicies(sw, revision) {
   const registrations = extractCalls(sw, 'registerRoute')
   const policies = [
     { prefix: 'opensimphy-taxonomy', marker: 'taxonomy\\.json$', maxEntries: 1 },
-    { prefix: 'opensimphy-tour-manifest', marker: 'tour\\/manifest\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-formula-sources', marker: '(?:recipes|symbols)\\.json$', maxEntries: 2 },
     { prefix: 'opensimphy-wall-index', marker: 'walls\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-completion', marker: 'completion\\.json$', maxEntries: 1 },
@@ -366,9 +386,11 @@ if (manifest) {
   closures.root = await manifestClosure(manifest, 'index.html', false)
   for (const [name, key] of Object.entries(routes)) closures[name] = await manifestClosure(manifest, key, true)
 
-  assertNoOwnership('Root entry static closure', closures.root, ['formula', 'core', 'wall'])
-  assertNoOwnership('OverviewView route closure', closures.overview, ['formula', 'core', 'wall'])
-  assertNoOwnership('TopicView route closure', closures.topic, ['formula', 'core', 'wall'])
+  assertNoOwnership('Root entry static closure', closures.root, ['formula', 'core', 'wall', 'plotly'])
+  for (const route of nonNumericalRoutes) {
+    assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'plotly'])
+  }
+  assertContainsAny('tourLesson route closure', closures.tourLesson, dimensionEngineMarkers)
 
   assertOwns('FormulaAtlasView route closure', closures.formulaAtlas, 'formula')
   assertOwns('FormulaDetailView route closure', closures.formulaDetail, 'formula')
@@ -441,9 +463,19 @@ for (const path of legacyFiles.sort()) {
   }
 }
 
+if (manifestText?.includes('TopicView')) fail('Vite build manifest still contains the deleted TopicView route chunk')
+for (const path of jsFiles) {
+  if (relative(distRoot, path).includes('TopicView') || jsContents.get(path)?.includes('TopicView')) {
+    fail(`${relative(distRoot, path)} still contains the deleted TopicView or old topic route chunk`)
+  }
+}
+
 const sw = await readRequired(swPath, 'Generated service worker')
 const precacheUrls = sw === null ? [] : extractPrecacheUrls(sw)
 const runtimeCacheNames = sw === null ? [] : assertRuntimeRegistryPolicies(sw, runtimeRegistryRevision)
+const tourJsonUrls = (await listFiles(join(publicRoot, 'data', 'generated', 'tour')))
+  .filter((path) => path.endsWith('.json'))
+  .map((path) => relative(publicRoot, path).split(sep).join('/'))
 const excludedPrecacheUrls = [
   'data/generated/recipes.json',
   'data/generated/symbols.json',
@@ -451,7 +483,7 @@ const excludedPrecacheUrls = [
   'data/generated/walls.json',
   'data/generated/completion.json',
   'data/generated/registry.json',
-  'data/generated/tour/manifest.json',
+  ...tourJsonUrls,
 ]
 for (const url of excludedPrecacheUrls) {
   if (precacheUrls.some((candidate) => candidate === url || candidate.endsWith(`/${url}`))) {
@@ -481,5 +513,5 @@ if (failures.length > 0) {
   console.log(`Runtime registry revision: ${runtimeRegistryRevision}.`)
   console.log(`Manifest: ${Object.keys(manifest).length} entries; root static closure=${closures.root.length}; transitive route closures: ${routeSummary}.`)
   console.log(`Workers: ${workerSummary}.`)
-  console.log(`PWA: ${precacheUrls.length} precache URLs; ${runtimeCacheNames.length} revisioned NetworkFirst registry routes; owner JSON and formula/core/numberWall workers excluded.`)
+  console.log(`PWA: ${precacheUrls.length} precache URLs; ${runtimeCacheNames.length} revisioned NetworkFirst registry routes; ${tourJsonUrls.length} Tour JSON files, owner JSON, and formula/core/numberWall workers excluded.`)
 }

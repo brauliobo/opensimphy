@@ -8,7 +8,6 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const runtimeRegistryFiles = [
-  'data/generated/tour/manifest.json',
   'data/generated/taxonomy.json',
   'data/generated/recipes.json',
   'data/generated/symbols.json',
@@ -71,7 +70,7 @@ export default defineConfig({
           'data/generated/walls.json',
           'data/generated/completion.json',
           'data/generated/registry.json',
-          'data/generated/tour/manifest.json',
+          'data/generated/tour/**/*.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
           'data/generated/earth/evidence/documents/**/*.json',
@@ -91,15 +90,6 @@ export default defineConfig({
             handler: 'NetworkFirst',
             options: {
               cacheName: `opensimphy-taxonomy-${runtimeRegistryRevision}`,
-              networkTimeoutSeconds: 5,
-              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
-            },
-          },
-          {
-            urlPattern: /\/data\/generated\/tour\/manifest\.json$/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: `opensimphy-tour-manifest-${runtimeRegistryRevision}`,
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },

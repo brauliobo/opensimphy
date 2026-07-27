@@ -1,0 +1,608 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import {
+  DIMENSION_AXES,
+  DIMENSION_COORDINATE_SYSTEM_IDS,
+  DIMENSION_EXPRESSION_PRESET_IDS,
+  DIMENSION_EXPRESSION_PRESETS,
+  DIMENSION_TARGET_IDS,
+  DIMENSION_TARGETS,
+  evaluateDimensionBuilder,
+  formatDimensionVector,
+  projectDimensionAxisTable,
+  type DimensionBuilderEvaluation,
+  type DimensionBuilderInput,
+  type DimensionCoordinateSystem,
+  type DimensionExpressionPresetId,
+  type DimensionTargetId,
+} from '../../tour/dimensionEngine'
+import type {
+  ReadingDepth,
+  TourControl,
+  TourGeneratedSimulation,
+  TourPreset,
+  TourSelectControl,
+} from '../../types/tour'
+
+type Prediction = '' | 'matches-target' | 'different-dimension' | 'operation-undefined'
+type NumericControl = Extract<TourControl, { type: 'range' | 'number' }>
+
+const props = defineProps<{
+  simulation: TourGeneratedSimulation
+  depth: ReadingDepth
+  initialPresetId?: string
+}>()
+
+const emit = defineEmits<{
+  evaluated: [output: DimensionBuilderEvaluation]
+}>()
+
+const EXPECTED_PRESETS = Object.freeze([
+  { id: 'average-speed-from-path', label: 'Race the clock' },
+  { id: 'force-from-motion', label: 'Push a mass' },
+  { id: 'energy-or-torque', label: 'Same dimension, different kind' },
+  { id: 'unlike-sum', label: 'Break the equation' },
+] as const)
+
+const EXPECTED_OUTPUTS = Object.freeze([
+  { id: 'operationStatus', type: 'operation-status', nullable: false },
+  { id: 'resultDimension', type: 'rational-dimension-vector', nullable: true },
+  { id: 'targetDimension', type: 'rational-dimension-vector', nullable: false },
+  { id: 'targetMatch', type: 'boolean', nullable: false },
+  { id: 'quantityKindCaveat', type: 'string', nullable: false },
+  { id: 'coordinateValue', type: 'number', nullable: true },
+  { id: 'coordinateUnit', type: 'string', nullable: true },
+] as const)
+
+function sameOrderedValues(actual: readonly string[], expected: readonly string[]): boolean {
+  return actual.length === expected.length && actual.every((value, index) => value === expected[index])
+}
+
+function selectControl(simulation: TourGeneratedSimulation, id: string): TourSelectControl | null {
+  const control = simulation.controls.find((candidate) => candidate.id === id)
+  return control?.type === 'select' ? control : null
+}
+
+function numericControl(simulation: TourGeneratedSimulation, id: string): NumericControl | null {
+  const control = simulation.controls.find((candidate) => candidate.id === id)
+  return control?.type === 'range' || control?.type === 'number' ? control : null
+}
+
+function isDimensionInput(value: Record<string, number | string | boolean>): boolean {
+  const keys = Object.keys(value).sort()
+  return sameOrderedValues(keys, ['coordinateSystem', 'expressionPreset', 'sampleSiMagnitude', 'target'])
+    && (DIMENSION_TARGET_IDS as readonly unknown[]).includes(value.target)
+    && (DIMENSION_EXPRESSION_PRESET_IDS as readonly unknown[]).includes(value.expressionPreset)
+    && (DIMENSION_COORDINATE_SYSTEM_IDS as readonly unknown[]).includes(value.coordinateSystem)
+    && typeof value.sampleSiMagnitude === 'number'
+    && Number.isFinite(value.sampleSiMagnitude)
+}
+
+function validateContract(simulation: TourGeneratedSimulation, initialPresetId?: string): string | null {
+  const targetControl = selectControl(simulation, 'target')
+  const expressionControl = selectControl(simulation, 'expressionPreset')
+  const coordinateControl = selectControl(simulation, 'coordinateSystem')
+  const magnitudeControl = numericControl(simulation, 'sampleSiMagnitude')
+
+  if (simulation.controls.length !== 4 || !targetControl || !expressionControl || !coordinateControl || !magnitudeControl) {
+    return 'The simulation controls do not match the four inputs supported by the dimension engine.'
+  }
+  if ([targetControl, expressionControl, coordinateControl].some((control) => control.readingDepth !== 'guided') || magnitudeControl.readingDepth !== 'technical') {
+    return 'The simulation reading-depth contract does not match the dimension builder.'
+  }
+  if (!sameOrderedValues(targetControl.options.map(({ value }) => value), DIMENSION_TARGET_IDS)
+    || !sameOrderedValues(expressionControl.options.map(({ value }) => value), DIMENSION_EXPRESSION_PRESET_IDS)
+    || !sameOrderedValues(coordinateControl.options.map(({ value }) => value), DIMENSION_COORDINATE_SYSTEM_IDS)) {
+    return 'The simulation option catalogs do not match the bounded dimension engine catalogs.'
+  }
+  if (!(DIMENSION_TARGET_IDS as readonly string[]).includes(targetControl.default)
+    || !(DIMENSION_EXPRESSION_PRESET_IDS as readonly string[]).includes(expressionControl.default)
+    || !(DIMENSION_COORDINATE_SYSTEM_IDS as readonly string[]).includes(coordinateControl.default)) {
+    return 'A simulation source default is not supported by the dimension engine.'
+  }
+  if (!Number.isFinite(magnitudeControl.default)
+    || magnitudeControl.default < magnitudeControl.min
+    || magnitudeControl.default > magnitudeControl.max
+    || magnitudeControl.min < 0.1
+    || magnitudeControl.max > 100
+    || magnitudeControl.step <= 0) {
+    return 'The sample SI magnitude contract is outside the dimension engine bounds.'
+  }
+  if ([...simulation.controls, ...simulation.presets].some((item) => !item.label.trim() || !item.description.trim())) {
+    return 'The simulation contract is missing required control or preset copy.'
+  }
+
+  const basis = simulation.dimensionBasis
+  if (!basis
+    || basis.system !== 'ISQ'
+    || basis.exponentType !== 'rational'
+    || basis.activityExponentSubset !== 'integer'
+    || basis.axes.length !== DIMENSION_AXES.length
+    || basis.axes.some((axis, index) => axis.id !== DIMENSION_AXES[index]?.id || axis.symbol !== DIMENSION_AXES[index]?.symbol)) {
+    return 'The declared dimension basis does not match the engine ISQ axis order.'
+  }
+
+  if (simulation.outputSchema.length !== EXPECTED_OUTPUTS.length
+    || EXPECTED_OUTPUTS.some((expected, index) => {
+      const field = simulation.outputSchema[index]
+      return !field || field.id !== expected.id || field.type !== expected.type || field.nullable !== expected.nullable
+    })) {
+    return 'The simulation output schema does not match the dimension engine output.'
+  }
+
+  if (simulation.presets.length !== EXPECTED_PRESETS.length
+    || EXPECTED_PRESETS.some((expected, index) => {
+      const preset = simulation.presets[index]
+      return !preset || preset.id !== expected.id || preset.label !== expected.label
+    })) {
+    return 'The dimension builder presets do not match the generated simulation contract.'
+  }
+  for (const preset of simulation.presets) {
+    if (!isDimensionInput(preset.inputs)) return `Preset ${preset.id} does not provide a complete dimension-engine input.`
+    try {
+      evaluateDimensionBuilder(preset.inputs as unknown as DimensionBuilderInput)
+    } catch {
+      return `Preset ${preset.id} is outside the dimension engine bounds.`
+    }
+  }
+  if (initialPresetId && !simulation.presets.some(({ id }) => id === initialPresetId)) {
+    return `Initial preset ${initialPresetId} is not declared by this simulation.`
+  }
+  return null
+}
+
+const contractError = validateContract(props.simulation, props.initialPresetId)
+const targetControl = selectControl(props.simulation, 'target')
+const expressionControl = selectControl(props.simulation, 'expressionPreset')
+const coordinateControl = selectControl(props.simulation, 'coordinateSystem')
+const magnitudeControl = numericControl(props.simulation, 'sampleSiMagnitude')
+
+function presetInput(preset: TourPreset | undefined): DimensionBuilderInput | null {
+  return preset && isDimensionInput(preset.inputs)
+    ? preset.inputs as unknown as DimensionBuilderInput
+    : null
+}
+
+const sourceDefaults = targetControl && expressionControl && coordinateControl && magnitudeControl
+  ? {
+      target: targetControl.default as DimensionTargetId,
+      expressionPreset: expressionControl.default as DimensionExpressionPresetId,
+      coordinateSystem: coordinateControl.default as DimensionCoordinateSystem,
+      sampleSiMagnitude: magnitudeControl.default,
+    }
+  : null
+const initialPreset = props.initialPresetId
+  ? props.simulation.presets.find(({ id }) => id === props.initialPresetId)
+  : undefined
+const initialInput = presetInput(initialPreset) ?? sourceDefaults
+
+const target = ref<DimensionTargetId | ''>(initialInput?.target ?? '')
+const expressionPreset = ref<DimensionExpressionPresetId | ''>(initialInput?.expressionPreset ?? '')
+const coordinateSystem = ref<DimensionCoordinateSystem | ''>(initialInput?.coordinateSystem ?? '')
+const sampleSiMagnitude = ref(initialInput?.sampleSiMagnitude ?? Number.NaN)
+const prediction = ref<Prediction>('')
+const recordedPrediction = ref<Prediction>('')
+const predictionStale = ref(false)
+const revealed = ref(false)
+const result = ref<DimensionBuilderEvaluation | null>(null)
+const evaluationError = ref<string | null>(null)
+
+const selectedExpression = computed(() => expressionControl?.options.find(({ value }) => value === expressionPreset.value) ?? null)
+const selectedCoordinate = computed(() => coordinateControl?.options.find(({ value }) => value === coordinateSystem.value) ?? null)
+const selectedExpressionCatalog = computed(() => DIMENSION_EXPRESSION_PRESETS.find(({ id }) => id === expressionPreset.value) ?? null)
+const selectedTargetCatalog = computed(() => DIMENSION_TARGETS.find(({ id }) => id === target.value) ?? null)
+const selectedPreset = computed(() => props.simulation.presets.find((preset) => {
+  const input = presetInput(preset)
+  return input
+    && input.target === target.value
+    && input.expressionPreset === expressionPreset.value
+    && input.coordinateSystem === coordinateSystem.value
+    && input.sampleSiMagnitude === sampleSiMagnitude.value
+}) ?? null)
+const axisRows = computed(() => result.value ? projectDimensionAxisTable(result.value) : [])
+const predictionOptions: Array<{ value: Exclude<Prediction, ''>; label: string }> = [
+  { value: 'matches-target', label: 'Matches target' },
+  { value: 'different-dimension', label: 'Different dimension' },
+  { value: 'operation-undefined', label: 'Operation undefined' },
+]
+
+const actualOutcome = computed<Exclude<Prediction, ''> | null>(() => {
+  if (!result.value) return null
+  if (result.value.operationStatus === 'undefined-unlike-addition') return 'operation-undefined'
+  return result.value.targetMatch ? 'matches-target' : 'different-dimension'
+})
+
+const predictionComparison = computed(() => {
+  if (!recordedPrediction.value || predictionStale.value || !actualOutcome.value) return ''
+  const predictedLabel = predictionOptions.find(({ value }) => value === recordedPrediction.value)?.label
+  const actualLabel = predictionOptions.find(({ value }) => value === actualOutcome.value)?.label
+  return `Prediction: ${predictedLabel}. Result: ${actualLabel}. ${recordedPrediction.value === actualOutcome.value ? 'The two align.' : 'The two differ.'}`
+})
+
+const operationStatusText = computed(() => result.value?.operationStatus === 'undefined-unlike-addition'
+  ? 'Undefined: addition of unlike quantity kinds'
+  : 'Defined')
+
+const targetMatchText = computed(() => {
+  if (!result.value) return ''
+  if (result.value.operationStatus === 'undefined-unlike-addition') return 'Not applicable: the operation is undefined'
+  return result.value.targetMatch
+    ? 'Dimensions match; quantity-kind identity is not established'
+    : 'Different dimension from the target'
+})
+
+const coordinateText = computed(() => {
+  if (!result.value) return ''
+  if (result.value.coordinateValue !== null && result.value.coordinateUnit) {
+    return `${result.value.coordinateValue} ${result.value.coordinateUnit}`
+  }
+  return result.value.operationStatus === 'undefined-unlike-addition'
+    ? 'Unavailable because the operation is undefined'
+    : 'Unavailable because the result dimension differs from the target'
+})
+
+function currentInput(): DimensionBuilderInput | null {
+  if (contractError || !target.value || !expressionPreset.value || !coordinateSystem.value) return null
+  return {
+    target: target.value,
+    expressionPreset: expressionPreset.value,
+    coordinateSystem: coordinateSystem.value,
+    sampleSiMagnitude: sampleSiMagnitude.value,
+  }
+}
+
+function evaluateCurrentInput(): void {
+  const input = currentInput()
+  if (!input) return
+  try {
+    const output = evaluateDimensionBuilder(input)
+    result.value = output
+    evaluationError.value = null
+    emit('evaluated', output)
+  } catch (error) {
+    result.value = null
+    evaluationError.value = error instanceof Error ? error.message : 'The dimension engine could not evaluate this input.'
+  }
+}
+
+function revealResult(): void {
+  if (!prediction.value || contractError) return
+  revealed.value = true
+  evaluateCurrentInput()
+  recordedPrediction.value = prediction.value
+  predictionStale.value = false
+}
+
+function assignInput(input: DimensionBuilderInput): void {
+  target.value = input.target
+  expressionPreset.value = input.expressionPreset
+  coordinateSystem.value = input.coordinateSystem
+  sampleSiMagnitude.value = input.sampleSiMagnitude
+}
+
+function applyPreset(preset: TourPreset): void {
+  const input = presetInput(preset)
+  if (input) assignInput(input)
+}
+
+function resetBuilder(): void {
+  if (sourceDefaults) assignInput(sourceDefaults)
+  prediction.value = ''
+  recordedPrediction.value = ''
+  predictionStale.value = false
+  revealed.value = false
+  result.value = null
+  evaluationError.value = null
+}
+
+function outputLabel(id: string): string {
+  return props.simulation.outputSchema.find((field) => field.id === id)?.label ?? id
+}
+
+function coordinateOptionLabel(value: string, label: string): string {
+  if (value === 'si') return `${label}, International System of Units (SI)`
+  if (value === 'mechanical-cgs') return 'Mechanical centimetre-gram-second (CGS)'
+  return label
+}
+
+function evidenceHref(evidenceRef: string): string {
+  return `#reference-${evidenceRef}`
+}
+
+watch([target, expressionPreset, coordinateSystem, sampleSiMagnitude], () => {
+  if (revealed.value) {
+    prediction.value = ''
+    recordedPrediction.value = ''
+    predictionStale.value = true
+    evaluateCurrentInput()
+  } else if (prediction.value) {
+    prediction.value = ''
+  }
+})
+</script>
+
+<template>
+  <section class="dimension-builder" data-testid="dimension-builder" :aria-labelledby="`${simulation.id}-title`">
+    <header class="dimension-builder-heading">
+      <p class="dimension-builder-kicker">Dimension workshop</p>
+      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
+      <p>{{ simulation.question }}</p>
+    </header>
+
+    <p v-if="contractError" class="dimension-builder-error" role="alert" data-testid="dimension-builder-error">
+      This activity cannot run because its generated contract and dimension engine do not agree. {{ contractError }}
+    </p>
+
+    <template v-else>
+      <section class="dimension-builder-presets" aria-labelledby="dimension-builder-presets-title">
+        <h3 id="dimension-builder-presets-title">Try a setup</h3>
+        <ul class="dimension-builder-preset-list">
+          <li v-for="preset in simulation.presets" :key="preset.id">
+            <button
+              class="dimension-builder-preset tour-touch-target"
+              type="button"
+              :data-testid="`preset-${preset.id}`"
+              :aria-describedby="`preset-${preset.id}-description`"
+              @click="applyPreset(preset)"
+            >
+              {{ preset.label }}
+            </button>
+            <p :id="`preset-${preset.id}-description`">{{ preset.description }}</p>
+          </li>
+        </ul>
+        <p v-if="selectedPreset" class="dimension-builder-inspection-prompt" data-testid="preset-inspection-prompt">
+          {{ selectedPreset.inspectionPrompt }}
+        </p>
+      </section>
+
+      <section class="dimension-builder-controls" aria-labelledby="dimension-builder-controls-title">
+        <h3 id="dimension-builder-controls-title">Build an expression</h3>
+
+        <div v-if="targetControl" class="dimension-builder-control" data-testid="builder-control-target">
+          <label for="dimension-builder-target">{{ targetControl.label }}</label>
+          <select
+            id="dimension-builder-target"
+            v-model="target"
+            data-testid="dimension-target"
+            :aria-describedby="'dimension-builder-target-description'"
+          >
+            <option v-for="option in targetControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
+          </select>
+          <p id="dimension-builder-target-description">
+            {{ targetControl.description }}
+            {{ targetControl.options.find(({ value }) => value === target)?.description }}
+            <span v-if="targetControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ targetControl.playfulPrompt }}</span>
+          </p>
+        </div>
+
+        <div v-if="expressionControl" class="dimension-builder-control" data-testid="builder-control-expression">
+          <label for="dimension-builder-expression">{{ expressionControl.label }}</label>
+          <select
+            id="dimension-builder-expression"
+            v-model="expressionPreset"
+            data-testid="dimension-expression"
+            :aria-describedby="'dimension-builder-expression-description'"
+          >
+            <option v-for="option in expressionControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
+          </select>
+          <p id="dimension-builder-expression-description">
+            {{ expressionControl.description }}
+            {{ expressionControl.options.find(({ value }) => value === expressionPreset)?.description }}
+            <span v-if="expressionControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ expressionControl.playfulPrompt }}</span>
+          </p>
+        </div>
+
+        <div v-if="coordinateControl" class="dimension-builder-control" data-testid="builder-control-coordinate">
+          <label for="dimension-builder-coordinate">{{ coordinateControl.label }}</label>
+          <select
+            id="dimension-builder-coordinate"
+            v-model="coordinateSystem"
+            data-testid="dimension-coordinate"
+            :aria-describedby="'dimension-builder-coordinate-description'"
+          >
+            <option v-for="option in coordinateControl.options" :key="option.value" :value="option.value">
+              {{ coordinateOptionLabel(option.value, option.label) }}
+            </option>
+          </select>
+          <p id="dimension-builder-coordinate-description">
+            {{ coordinateControl.description }}
+            {{ coordinateControl.options.find(({ value }) => value === coordinateSystem)?.description }}
+            <span v-if="coordinateControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ coordinateControl.playfulPrompt }}</span>
+          </p>
+        </div>
+
+        <p v-if="depth === 'guided'" class="dimension-builder-coordinate-disclosure" data-testid="guided-coordinate-disclosure">
+          The displayed coordinate uses the activity's fixed target-bound sample value of
+          {{ sampleSiMagnitude }} {{ selectedTargetCatalog?.coordinates.si.unit }} in the International System of Units (SI).
+          This supplied value is not produced from measurements of the expression operands. Technical depth exposes it as a parameter.
+        </p>
+
+        <div
+          v-if="depth === 'technical' && magnitudeControl"
+          class="dimension-builder-control dimension-builder-control-technical"
+          data-testid="builder-control-magnitude"
+        >
+          <label for="dimension-builder-magnitude">{{ magnitudeControl.label }}</label>
+          <input
+            id="dimension-builder-magnitude"
+            v-model.number="sampleSiMagnitude"
+            data-testid="dimension-magnitude"
+            :type="magnitudeControl.type"
+            :min="magnitudeControl.min"
+            :max="magnitudeControl.max"
+            :step="magnitudeControl.step"
+            :aria-describedby="'dimension-builder-magnitude-description'"
+          >
+          <output for="dimension-builder-magnitude">{{ sampleSiMagnitude }}</output>
+          <p id="dimension-builder-magnitude-description">
+            {{ magnitudeControl.description }}
+            <span v-if="magnitudeControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ magnitudeControl.playfulPrompt }}</span>
+          </p>
+        </div>
+      </section>
+
+      <fieldset class="dimension-builder-prediction" data-testid="prediction-gate">
+        <legend>Make a prediction before revealing the trace</legend>
+        <p>{{ simulation.predictionPrompt }}</p>
+        <label v-for="option in predictionOptions" :key="option.value" class="dimension-builder-prediction-option tour-touch-target">
+          <input
+            v-model="prediction"
+            type="radio"
+            name="dimension-builder-prediction"
+            :value="option.value"
+            :data-testid="`prediction-${option.value}`"
+          >
+          <span>{{ option.label }}</span>
+        </label>
+      </fieldset>
+
+      <div class="dimension-builder-actions">
+        <button
+          class="dimension-builder-reveal tour-touch-target"
+          type="button"
+          data-testid="reveal-dimension-result"
+          :disabled="!prediction"
+          @click="revealResult"
+        >
+          Reveal result
+        </button>
+        <button class="dimension-builder-reset tour-touch-target" type="button" data-testid="reset-dimension-builder" @click="resetBuilder">
+          Reset
+        </button>
+      </div>
+
+      <p v-if="evaluationError" class="dimension-builder-error" role="alert" data-testid="dimension-evaluation-error">
+        The dimension engine could not produce a result. {{ evaluationError }}
+      </p>
+
+      <p v-if="predictionStale" class="dimension-builder-prediction-stale" aria-live="polite" data-testid="prediction-stale">
+        The setup changed, so the previous prediction is not compared with this live result. Choose a new prediction and reveal it for the current setup.
+      </p>
+
+      <section v-if="revealed && result" class="dimension-builder-stage" data-testid="dimension-result" aria-labelledby="dimension-result-title">
+        <header>
+          <p>Selected expression</p>
+          <h3 id="dimension-result-title" data-testid="dimension-expression-stage">{{ selectedExpression?.label }}</h3>
+          <p v-if="selectedExpressionCatalog">
+            {{ selectedExpressionCatalog.left.label }}
+            {{ selectedExpressionCatalog.operation === 'multiply' ? 'multiplied by' : selectedExpressionCatalog.operation === 'divide' ? 'divided by' : 'added to' }}
+            {{ selectedExpressionCatalog.right.label }}
+          </p>
+        </header>
+
+        <dl class="dimension-builder-readout">
+          <dt>{{ outputLabel('operationStatus') }}</dt>
+          <dd data-testid="operation-status">{{ operationStatusText }}</dd>
+          <dt>{{ outputLabel('targetMatch') }}</dt>
+          <dd data-testid="target-match">{{ targetMatchText }}</dd>
+          <dt>Result dimension</dt>
+          <dd data-testid="result-dimension">{{ formatDimensionVector(result.resultDimension) }}</dd>
+          <dt>Target dimension</dt>
+          <dd data-testid="target-dimension">{{ formatDimensionVector(result.targetDimension) }}</dd>
+          <dt>{{ selectedCoordinate?.label }} coordinate</dt>
+          <dd data-testid="coordinate-value">{{ coordinateText }}</dd>
+        </dl>
+
+        <p class="dimension-builder-comparison" data-testid="prediction-comparison">{{ predictionComparison }}</p>
+        <p class="dimension-builder-caveat" data-testid="quantity-kind-caveat">{{ result.quantityKindCaveat }}</p>
+
+        <div class="dimension-builder-table-wrap">
+          <table data-testid="dimension-axis-table">
+            <caption>Result and target exponents in the seven-axis International System of Quantities (ISQ) dimension basis</caption>
+            <thead>
+              <tr>
+                <th scope="col">Base quantity</th>
+                <th scope="col">Symbol</th>
+                <th scope="col">Result exponent</th>
+                <th scope="col">Target exponent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in axisRows" :key="row.axisId">
+                <th scope="row">{{ row.axisLabel }}</th>
+                <td>{{ row.axisSymbol }}</td>
+                <td>{{ row.resultText }}</td>
+                <td>{{ row.targetText }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <section class="dimension-builder-finding" data-testid="dimension-finding-panel" aria-labelledby="dimension-finding-title">
+          <h3 id="dimension-finding-title">Live finding</h3>
+          <p role="status" aria-live="polite" data-testid="dimension-finding">{{ result.finding.establishes }}</p>
+          <dl class="dimension-builder-finding-summary">
+            <dt>Runtime result status</dt>
+            <dd data-testid="finding-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
+            <dt>Claim class</dt>
+            <dd data-testid="finding-claim-class">{{ result.finding.claimClass }}</dd>
+            <dt>Model origin</dt>
+            <dd data-testid="finding-model-origin">{{ result.finding.modelOrigin }}</dd>
+            <dt>Method relationship</dt>
+            <dd data-testid="finding-method-relationship">{{ result.finding.methodRelationship }}</dd>
+          </dl>
+          <section>
+            <h4>What changed</h4>
+            <p data-testid="finding-changed">{{ result.finding.changed }}</p>
+          </section>
+          <section>
+            <h4>Why</h4>
+            <p data-testid="finding-cause">{{ result.finding.cause }}</p>
+          </section>
+          <section>
+            <h4>Equation</h4>
+            <p data-testid="finding-equation"><code>{{ result.finding.equation }}</code></p>
+          </section>
+          <section>
+            <h4>Assumptions</h4>
+            <ul data-testid="finding-assumptions">
+              <li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Establishes</h4>
+            <p data-testid="finding-establishes">{{ result.finding.establishes }}</p>
+          </section>
+          <section>
+            <h4>Does not establish</h4>
+            <p data-testid="finding-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
+          </section>
+          <section>
+            <h4>Evidence references</h4>
+            <ul data-testid="finding-evidence-refs">
+              <li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef">
+                <a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a>
+              </li>
+            </ul>
+          </section>
+          <p data-testid="finding-validation-boundary">
+            No empirical comparison or theory validation is claimed by this dimension-contract result.
+          </p>
+        </section>
+      </section>
+
+      <section v-if="depth === 'technical'" class="dimension-builder-disclosure" data-testid="technical-disclosure">
+        <h3>Assumptions and dimension basis</h3>
+        <ul>
+          <li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li>
+        </ul>
+        <dl v-if="simulation.dimensionBasis">
+          <dt>System</dt>
+          <dd>International System of Quantities ({{ simulation.dimensionBasis.system }})</dd>
+          <dt>Exponent type</dt>
+          <dd>{{ simulation.dimensionBasis.exponentType }}</dd>
+          <dt>Activity exponent subset</dt>
+          <dd>{{ simulation.dimensionBasis.activityExponentSubset }}</dd>
+          <dt>Ordered axes</dt>
+          <dd>
+            <ol>
+              <li v-for="axis in simulation.dimensionBasis.axes" :key="axis.id">
+                {{ DIMENSION_AXES.find(({ id }) => id === axis.id)?.label }} ({{ axis.symbol }})
+              </li>
+            </ol>
+          </dd>
+        </dl>
+      </section>
+    </template>
+  </section>
+</template>

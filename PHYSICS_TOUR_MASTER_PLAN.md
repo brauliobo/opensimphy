@@ -501,7 +501,7 @@ Result status describes execution or comparison state:
 
 Each attribution contains `claimClass`, non-empty resolvable `evidenceRefs`, exact `sourceLocator`, `sourceRevision`, `methodRelationship`, typed `modelOrigin`, `resultStatus`, `validatesTheory`, and `caveats`. `TourSourceAttribution` permits only `resultStatus: 'not-evaluated'`, `validatesTheory: false`, and no `validationProtocol`. A separate `TourRuntimeResultAttribution` may represent evaluated statuses; its future `validatesTheory: true` branch is structurally invalid without a `validationProtocol` that identifies the hypothesis, calibrated inputs, held-out observables, datasets, comparison method, uncertainty treatment, acceptance criteria, and failure handling. A bare boolean can never assert validation. Simulation controls also expose input roles; simulation records expose revision metadata, optional dimension basis, attributed model components, numerical method where applicable, declared comparison compatibility, terminology, and dataset state. Ambiguous `pass` labels are not acceptable.
 
-Source attribution follows one explicit policy: `AttributionInheritance = 'nearest-attributed-ancestor'`. The source manifest and lesson records are attributed roots, so their titles, summaries, station text, and quick-path metadata have an ancestor. Chapters, checkpoints, glossary entries, model components, and every claim-vocabulary axis entry carry direct attribution. Lesson blocks, equation steps, conclusions, simulation roots, and findings remain directly attributed. Descendant body text and checkpoint choices inherit from those roots. Control, option, preset, output, equation/assumption, and visualization text may inherit from the nearest attributed simulation ancestor; generation fails if no such ancestor exists. Inheritance supplies provenance but never strengthens a claim.
+Source attribution follows one explicit policy: `AttributionInheritance = 'nearest-attributed-ancestor'`. The source manifest and lesson records are attributed roots, so their titles, summaries, station text, and quick-path metadata have an ancestor. Chapters, observation stages, checkpoints, glossary entries, model components, and every claim-vocabulary axis entry carry direct attribution. Observation-stage items carry non-empty evidence references and may carry direct attribution; otherwise their instructional text inherits from the attributed observation stage. Lesson blocks, equation steps, conclusions, simulation roots, and findings remain directly attributed. Descendant body text and checkpoint choices inherit from those roots. Control, option, preset, output, equation/assumption, and visualization text may inherit from the nearest attributed simulation ancestor; generation fails if no such ancestor exists. Inheritance supplies provenance but never strengthens a claim.
 
 The reference registry pins the BIPM SI Brochure 9th edition updated in 2026, JCGM VIM3 terminology, the visibly pre-2019 NIST SP 811 guidance, the CODATA 2022 adjustment, and the internal `opensimphy-scientific-scope` policy reference. Reference records identify responsible organization, publication year, edition, revision, DOI where available, exact source locator, access date and status, scope, current-SI supersession state, and license note. Reference URLs remain HTTPS-only.
 
@@ -581,6 +581,22 @@ interface TourSourceLessonRecord {
   }
   depthComposition: 'technical-includes-guided'
   prerequisites: string[]
+  observationStage: {
+    title: string
+    question: string
+    items: Array<{
+      id: string
+      label: string
+      value: number
+      unit: string
+      role: 'fixed-definition' | 'practical-realization'
+      explanation: string
+      evidenceRefs: [string, ...string[]]
+      attribution?: TourSourceAttribution
+    }>
+    conclusion: string
+    attribution: TourSourceAttribution
+  }
   guidedBlocks: LessonBlock[]
   technicalBlocks: LessonBlock[]
   equationSteps: EquationStep[]
@@ -603,7 +619,7 @@ The scope map is strict: `seenInActivity = activity`, `computedHere = computatio
 
 `simulationId` remains nullable and `quickPath` optional because ordinary text-only lessons are valid. A content-ready quick station, by contrast, requires a linked lesson quick path and simulation preset. `LessonQuickPath.estimatedMinutes` is a positive number bounded by the full lesson estimate, not a type-level literal tied to the first station.
 
-The current 11-minute `physical-quantities` lesson defines a separate four-minute `quickPath`: Guided blocks `si-defining-anchors` and `dimensions-and-kinds`, equation step `fixed-si-anchors`, prediction checkpoint `centimetre-prediction`, and simulation preset `average-speed-from-path`. This sequence answers how fixed `Delta_nu_Cs`, `c`, and `h` anchor SI definitions, preserves the definition-versus-realization caveat, then moves through dimensions and quantity kinds into dimensional play. The four-minute `anchors-scales` station links to that subset; it does not represent the full lesson as four minutes.
+The current 15-minute `physical-quantities` lesson defines a separate four-minute `quickPath`: its required `observationStage` is included automatically, followed by Guided blocks `si-defining-anchors` and `dimensions-and-kinds`, equation step `fixed-si-anchors`, prediction checkpoint `centimetre-prediction`, and simulation preset `average-speed-from-path`. This sequence answers how fixed `Delta_nu_Cs`, `c`, and `h` anchor International System of Units (SI) definitions, preserves the definition-versus-realization caveat, then moves through dimensions and quantity kinds into dimensional play. The four-minute `anchors-scales` station links to that subset; it does not represent the full lesson as four minutes.
 
 Generation fails when a lesson lacks a question, attribution evidence is empty or does not resolve, an instructional statement has neither explicit nor inherited attribution, source attribution is not `not-evaluated`/`validatesTheory: false` or carries `validationProtocol`, a simulation lacks bounds or a non-empty terminology declaration, source comparison declares a compatibility key, formula/program IDs are unknown, a conclusion scope violates the strict map, a conclusion boundary is absent, navigation is broken, glossary references do not resolve, or Guided content depends on undefined or Technical-only terminology.
 
@@ -623,11 +639,16 @@ interface TourProgress {
     complete: boolean
     lastAnchor?: string
   }>
+  stations: Record<string, {
+    visited: boolean
+    complete: boolean
+    updatedAt?: string
+  }>
   resumeRoute?: string
 }
 ```
 
-Completion is explicit. Visiting is not completion. State remains local, exportable, and clearable. There are no streaks, scores, or mastery claims. Registry revisions do not silently invalidate learning state.
+Completion is explicit. Visiting is not completion. Quick-station records are independent from chapter and lesson records, so completing a four-minute station does not imply lesson or chapter completion. State remains local, exportable, and clearable. There are no streaks, scores, or mastery claims. Registry revisions do not silently invalidate learning state.
 
 Knowledge checks ask for prediction and explanation rather than trivia. Users can reveal explanations without punishment.
 

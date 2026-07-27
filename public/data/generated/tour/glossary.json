@@ -226,7 +226,7 @@
       "id": "base-dimension",
       "term": "Base dimension",
       "guidedDefinition": "One of the conventionally chosen base-quantity dimensions used to express other dimensions.",
-      "technicalDefinition": "A conventional basis element of a system of quantity dimensions. The Tour uses the seven conventional ISQ base-quantity dimensions and permits rational exponents generally; this activity uses only integer exponents.",
+      "technicalDefinition": "A conventional basis element of a system of quantity dimensions. The Tour uses the seven conventional base-quantity dimensions of the International System of Quantities (ISQ) and permits rational exponents generally; this activity uses only integer exponents.",
       "guided": false,
       "evidenceRefs": [
         "bipm-si-brochure-9",

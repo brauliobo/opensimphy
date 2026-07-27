@@ -18,9 +18,9 @@
   "depthComposition": "technical-includes-guided",
   "attributionPolicy": {
     "inheritance": "nearest-attributed-ancestor",
-    "rule": "Every instructional statement uses its explicit attribution when present; otherwise it inherits from the nearest containing record with attribution. Generation must fail when no attributed ancestor exists. Simulation controls, preset text, output descriptions, and visualization text may inherit from their attributed simulation root.",
-    "attributedRoots": ["manifest", "chapter", "lesson", "lesson-block", "equation-step", "checkpoint", "simulation", "finding", "glossary-entry", "claim-vocabulary-entry"],
-    "inheritingRecordKinds": ["quick-station", "lesson-quick-path", "lesson-block-body", "checkpoint-choice", "simulation-equation", "simulation-assumption", "control", "control-option", "preset", "output-field", "visualization", "visualization-alternative", "finding-field", "finding-assumption"],
+    "rule": "Every instructional statement uses its explicit attribution when present; otherwise it inherits from the nearest containing record with attribution. Generation must fail when no attributed ancestor exists. Observation-stage items inherit from their attributed observation stage unless they carry direct attribution. Simulation controls, preset text, output descriptions, and visualization text may inherit from their attributed simulation root.",
+    "attributedRoots": ["manifest", "chapter", "lesson", "observation-stage", "lesson-block", "equation-step", "checkpoint", "simulation", "finding", "glossary-entry", "claim-vocabulary-entry"],
+    "inheritingRecordKinds": ["quick-station", "lesson-quick-path", "observation-stage-item", "lesson-block-body", "checkpoint-choice", "simulation-equation", "simulation-assumption", "control", "control-option", "preset", "output-field", "visualization", "visualization-alternative", "finding-field", "finding-assumption"],
     "attribution": {
       "claimClass": "source-claim",
       "evidenceRefs": ["opensimphy-scientific-scope"],
@@ -53,8 +53,8 @@
       "id": "anchors-scales",
       "order": 1,
       "title": "Anchors and scales",
-      "question": "How do physicists agree on a second, metre, and quantum of action?",
-      "interaction": "Inspect fixed SI anchors, then test dimensions and quantity kinds in the workshop.",
+      "question": "How do physicists agree on a second, metre, and quantum of action in the International System of Units (SI)?",
+      "interaction": "Inspect fixed defining anchors, then test dimensions and quantity kinds in the workshop.",
       "chapterId": "units",
       "lessonId": "physical-quantities",
       "simulationId": "dimensional-equation-builder",

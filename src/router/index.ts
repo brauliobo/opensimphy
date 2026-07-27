@@ -1,10 +1,63 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouterScrollBehavior } from 'vue-router'
+
+const legacyTopicChapters: Record<string, string> = {
+  foundations: 'anchors',
+  metrology: 'unit-bridges',
+  electromagnetism: 'electrical-standards',
+  atomic: 'atomic-structure',
+  particles: 'particle-scales',
+  magnetism: 'spin-magnetism',
+  thermal: 'heat-matter',
+  'molar-matter': 'heat-matter',
+}
+
+function safeHashSelector(hash: string): string | null {
+  if (!hash.startsWith('#')) return null
+  try {
+    const id = decodeURIComponent(hash.slice(1))
+    if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/.test(id)) return null
+    const escapedId = id.replace(/[^A-Za-z0-9_-]/g, (character) => `\\${character.codePointAt(0)!.toString(16)} `)
+    return `#${escapedId}`
+  } catch {
+    return null
+  }
+}
+
+export const tourScrollBehavior: RouterScrollBehavior = (to, _from, savedPosition) => {
+  if (savedPosition) return savedPosition
+  const selector = safeHashSelector(to.hash)
+  return selector ? { el: selector } : { top: 0 }
+}
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'overview', component: () => import('../views/OverviewView.vue'), meta: { title: 'Tour' } },
-    { path: '/topics/:id', name: 'topic', component: () => import('../views/TopicView.vue'), props: true, meta: { title: 'Topic' } },
+    { path: '/', name: 'overview', component: () => import('../views/OverviewView.vue'), meta: { title: 'Tour Orientation' } },
+    { path: '/tour', name: 'tour', component: () => import('../views/TourMapView.vue'), meta: { title: 'Tour Map' } },
+    {
+      path: '/tour/:chapter',
+      name: 'tour-chapter',
+      component: () => import('../views/TourChapterView.vue'),
+      props: true,
+      meta: { title: 'Not Found' },
+    },
+    {
+      path: '/tour/:chapter/:lesson',
+      name: 'tour-lesson',
+      component: () => import('../views/TourLessonView.vue'),
+      props: true,
+      meta: { title: 'Not Found' },
+    },
+    {
+      path: '/topics/:id',
+      name: 'legacy-topic',
+      redirect: (to) => {
+        const chapter = legacyTopicChapters[String(to.params.id)]
+        return chapter
+          ? { name: 'tour-chapter', params: { chapter } }
+          : { path: '/not-found', query: { from: to.fullPath } }
+      },
+    },
     { path: '/atlas', name: 'atlas', component: () => import('../views/FormulaAtlasView.vue'), meta: { title: 'Formula Atlas' } },
     {
       path: '/atlas/:id',
@@ -43,9 +96,12 @@ export const router = createRouter({
       meta: { title: 'EARTH Source Record' },
     },
     { path: '/sources', name: 'sources', component: () => import('../views/SourcesView.vue'), meta: { title: 'Sources' } },
-    { path: '/:pathMatch(.*)*', redirect: '/' },
+    { path: '/evidence', name: 'evidence', component: () => import('../views/EvidenceView.vue'), meta: { title: 'Evidence Guide' } },
+    { path: '/saved', name: 'saved', component: () => import('../views/SavedView.vue'), meta: { title: 'Saved Tour Progress' } },
+    { path: '/not-found', name: 'not-found', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page Not Found' } },
+    { path: '/:pathMatch(.*)*', name: 'catch-all', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page Not Found' } },
   ],
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: tourScrollBehavior,
 })
 
 router.afterEach((to) => {

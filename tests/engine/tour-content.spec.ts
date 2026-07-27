@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import earthRegistryJson from '../../public/data/generated/earth/scientific-simulations.json'
 import recipesJson from '../../public/data/generated/recipes.json'
 import { buildTourArtifacts, readTourSource } from '../../scripts/lib/tour-content.mjs'
+import type { TourProgress } from '../../src/types/tour'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 const sourceDirectory = join(root, 'content', 'tour')
@@ -69,6 +70,21 @@ describe('tour content generator', () => {
       simulationPresetId: 'average-speed-from-path',
     })
     expect(artifacts.lessons[0].equationSteps.find(({ id }) => id === 'fixed-si-anchors')?.evidenceRefs).toEqual(['bipm-si-brochure-9'])
+    expect(artifacts.lessons[0].observationStage.items.map(({ id, value, unit, role }) => ({ id, value, unit, role }))).toEqual([
+      { id: 'caesium-133-transition', value: 9192631770, unit: 'Hz', role: 'fixed-definition' },
+      { id: 'speed-of-light', value: 299792458, unit: 'm/s', role: 'fixed-definition' },
+      { id: 'planck-constant', value: 6.62607015e-34, unit: 'J s', role: 'fixed-definition' },
+    ])
+    expect(artifacts.lessons[0].observationStage.items.every((item) => item.evidenceRefs.length > 0)).toBe(true)
+    expect(artifacts.lessons[0].observationStage.items.every((item) => !Object.hasOwn(item, 'attribution'))).toBe(true)
+    expect(artifacts.manifest.attributionPolicy.attributedRoots).toContain('observation-stage')
+    expect(artifacts.manifest.attributionPolicy.inheritingRecordKinds).toContain('observation-stage-item')
+
+    const guidedRatio = artifacts.lessons[0].guidedBlocks.find(({ id }) => id === 'dimensionless-ratios')
+    expect(guidedRatio?.body).toContain('Dimensionless does not mean meaningless. A ratio can encode shape, efficiency, probability, refractive index, an angle convention, or another physically important comparison.')
+    expect(guidedRatio?.glossaryIds.every((id) => glossaryIds.has(id))).toBe(true)
+    expect(artifacts.lessons[0].technicalBlocks.find(({ id }) => id === 'natural-unit-conventions')?.body.join(' ')).toContain('restore the powers of c, hbar, and k_B')
+    expect(artifacts.lessons[0].technicalBlocks.find(({ id }) => id === 'audit-boundary')?.body.join(' ')).toContain('exactly 68 known source declaration dimension conflicts')
 
     expect(artifacts.chapters[0].previousChapterId).toBeNull()
     expect(artifacts.chapters.at(-1)?.nextChapterId).toBeNull()
@@ -103,6 +119,27 @@ describe('tour content generator', () => {
     expect(rebuild((candidate) => {
       candidate.lessons[0].checkpoints[0].attribution.evidenceRefs = []
     })).toThrow('evidenceRefs must not be empty')
+  })
+
+  it('fails closed on malformed observation stages and item evidence', () => {
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items = []
+    })).toThrow('observationStage.items must be a non-empty array')
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items[0].unexpected = 'not in the contract'
+    })).toThrow('has unknown properties: unexpected')
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items[0].evidenceRefs = ['not-a-reference']
+    })).toThrow('unknown evidence reference not-a-reference')
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items[1].id = candidate.lessons[0].observationStage.items[0].id
+    })).toThrow('observationStage item IDs must contain unique values')
+    expect(rebuild((candidate) => {
+      candidate.lessons[0].observationStage.items[0].explanation = '<b>not inert plain text</b>'
+    })).toThrow('HTML-like or executable text')
+    expect(rebuild((candidate) => {
+      delete candidate.lessons[0].observationStage.attribution
+    })).toThrow('is missing properties: attribution')
   })
 
   it('fails closed on invalid numeric controls and preset values', () => {
@@ -177,8 +214,8 @@ describe('tour content generator', () => {
 
   it('validates quickPath duration and every linked record', () => {
     expect(rebuild((candidate) => {
-      candidate.lessons[0].quickPath.estimatedMinutes = 12
-    })).toThrow('must not exceed lesson estimatedMinutes 11')
+      candidate.lessons[0].quickPath.estimatedMinutes = 16
+    })).toThrow('must not exceed lesson estimatedMinutes 15')
     expect(rebuild((candidate) => {
       candidate.lessons[0].quickPath.guidedBlockIds[0] = 'dimension-vectors'
     })).toThrow('unknown or non-Guided block dimension-vectors')
@@ -196,6 +233,8 @@ describe('tour content generator', () => {
   it('derives stable compatibility keys from id, every revision, and structured outputs', () => {
     const key = artifacts.simulations[0].comparison.compatibilityKey
     expect(key).toMatch(/^[a-f0-9]{64}$/)
+    expect(artifacts.simulations[0].revision.implementationRevision).toBe('tour-dimension-engine-v1')
+    expect(key).toBe('a96ac0f56a99cdcaf9688fce60b65239fed3cdccdf6fad3ee410b26d44e77805')
     expect(source.simulations[0].comparison).not.toHaveProperty('compatibilityKey')
     expect(buildTourArtifacts(source, { recipeIds, programIds }).simulations[0].comparison.compatibilityKey).toBe(key)
 
@@ -269,6 +308,30 @@ describe('tour content generator', () => {
     expect(rebuild((candidate) => {
       candidate.simulations[0].glossaryIds.push(candidate.simulations[0].glossaryIds[0])
     })).toThrow('simulations.dimensional-equation-builder.glossaryIds must contain unique values')
+  })
+
+  it('represents quick-station completion independently in TourProgress v1', () => {
+    const progress: TourProgress = {
+      version: 1,
+      readingDepth: 'guided',
+      chapters: {},
+      lessons: {},
+      stations: {
+        'anchors-scales': {
+          visited: true,
+          complete: true,
+          updatedAt: '2026-07-26T12:00:00.000Z',
+        },
+      },
+    }
+
+    expect(progress.stations['anchors-scales']).toEqual({
+      visited: true,
+      complete: true,
+      updatedAt: '2026-07-26T12:00:00.000Z',
+    })
+    expect(progress.chapters).toEqual({})
+    expect(progress.lessons).toEqual({})
   })
 
   it('rejects HTML-like and executable strings before artifact construction', () => {

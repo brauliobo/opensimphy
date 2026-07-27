@@ -32,8 +32,8 @@ const CONCLUSION_SCOPE_MAPPING = {
 };
 const ATTRIBUTION_KEYS = ["claimClass", "evidenceRefs", "sourceRevision", "sourceLocator", "methodRelationship", "modelOrigin", "resultStatus", "validatesTheory", "caveats"];
 const VALIDATION_PROTOCOL_KEYS = ["id", "hypothesis", "calibratedInputIds", "heldOutObservableIds", "datasetRefs", "comparisonMethod", "uncertaintyTreatment", "acceptanceCriteria", "failureHandling"];
-const ATTRIBUTED_ROOTS = ["manifest", "chapter", "lesson", "lesson-block", "equation-step", "checkpoint", "simulation", "finding", "glossary-entry", "claim-vocabulary-entry"];
-const INHERITING_RECORD_KINDS = ["quick-station", "lesson-quick-path", "lesson-block-body", "checkpoint-choice", "simulation-equation", "simulation-assumption", "control", "control-option", "preset", "output-field", "visualization", "visualization-alternative", "finding-field", "finding-assumption"];
+const ATTRIBUTED_ROOTS = ["manifest", "chapter", "lesson", "observation-stage", "lesson-block", "equation-step", "checkpoint", "simulation", "finding", "glossary-entry", "claim-vocabulary-entry"];
+const INHERITING_RECORD_KINDS = ["quick-station", "lesson-quick-path", "observation-stage-item", "lesson-block-body", "checkpoint-choice", "simulation-equation", "simulation-assumption", "control", "control-option", "preset", "output-field", "visualization", "visualization-alternative", "finding-field", "finding-assumption"];
 const DIMENSION_AXES = ["time", "length", "mass", "electric-current", "thermodynamic-temperature", "amount-of-substance", "luminous-intensity"];
 const INPUT_ROLES = new Set(["parameter", "preset-selection", "coordinate-selection", "display-option", "target-quantity", "canonical-quantity-value", "fixed-constant", "calibrated-input", "nuisance-parameter", "held-out-observable"]);
 const DATASET_STATES = new Set(["not-applicable", "not-loaded", "loaded", "precomputed-artifact", "unavailable"]);
@@ -48,6 +48,7 @@ const CONTROL_TYPES = new Set(["range", "number", "select", "toggle"]);
 const READING_DEPTHS = new Set(["guided", "technical"]);
 const LESSON_BLOCK_KINDS = new Set(["prose", "definition", "list", "caveat", "derivation"]);
 const CHECKPOINT_KINDS = new Set(["prediction", "classification", "explanation"]);
+const OBSERVATION_ITEM_ROLES = new Set(["fixed-definition", "practical-realization"]);
 const REFERENCE_CLASSIFICATIONS = new Set(["primary-standard", "reference-data", "textbook", "source-corpus", "internal-policy"]);
 const ACCESS_STATUSES = new Set(["verified-accessible", "partially-accessible", "blocked", "not-checked"]);
 const OUTPUT_TYPES = new Set(["operation-status", "rational-dimension-vector", "boolean", "string", "number"]);
@@ -417,6 +418,29 @@ function validateBlock(block, path, glossaryById, lessonGlossaryIds, referencesB
   }
 }
 
+function validateObservationStage(stage, path, referencesById) {
+  assertExactKeys(stage, ["title", "question", "items", "conclusion", "attribution"], path);
+  assertString(stage.title, `${path}.title`);
+  assertString(stage.question, `${path}.question`);
+  assert(Array.isArray(stage.items) && stage.items.length > 0, `${path}.items must be a non-empty array`);
+  assertUnique(stage.items.map(({ id }) => id), `${path} item IDs`);
+  assertString(stage.conclusion, `${path}.conclusion`);
+  validateAttribution(stage.attribution, `${path}.attribution`, referencesById);
+
+  for (const [index, item] of stage.items.entries()) {
+    const itemPath = `${path}.items[${index}]`;
+    assertExactKeys(item, keysWithOptionals(item, ["id", "label", "value", "unit", "role", "explanation", "evidenceRefs"], ["attribution"]), itemPath);
+    assertId(item.id, `${itemPath}.id`);
+    assertString(item.label, `${itemPath}.label`);
+    assertFiniteNumber(item.value, `${itemPath}.value`);
+    assertString(item.unit, `${itemPath}.unit`);
+    assert(OBSERVATION_ITEM_ROLES.has(item.role), `${itemPath}.role is not recognized`);
+    assertString(item.explanation, `${itemPath}.explanation`);
+    assertEvidenceRefs(item.evidenceRefs, referencesById, `${itemPath}.evidenceRefs`, { nonEmpty: true });
+    validateOptionalAttribution(item, itemPath, referencesById);
+  }
+}
+
 function validateConclusionStatement(statement, field, path, referencesById) {
   assertExactKeys(statement, ["text", "scope", "attribution"], path);
   assertString(statement.text, `${path}.text`);
@@ -441,6 +465,12 @@ function validateGuidedTerms(texts, declaredGlossaryIds, glossaryEntries, path) 
 function validateLessonGuidedTerminology(lesson, glossaryEntries, path) {
   const lessonGlossaryIds = new Set(lesson.glossaryIds);
   validateGuidedTerms([lesson.title, lesson.question, lesson.answerPreview, lesson.summary], lessonGlossaryIds, glossaryEntries, path);
+  validateGuidedTerms([
+    lesson.observationStage.title,
+    lesson.observationStage.question,
+    lesson.observationStage.conclusion,
+    ...lesson.observationStage.items.flatMap(({ label, unit, explanation }) => [label, unit, explanation]),
+  ], lessonGlossaryIds, glossaryEntries, `${path}.observationStage`);
   for (const block of lesson.guidedBlocks) {
     validateGuidedTerms([block.title, ...block.body], lessonGlossaryIds, glossaryEntries, `${path}.guidedBlocks.${block.id}`);
   }
@@ -480,7 +510,7 @@ function validateLessons(lessons, chapterById, glossaryById, referencesById, rec
   const lessonById = new Map(lessons.map((lesson) => [lesson.id, lesson]));
   for (const [index, lesson] of lessons.entries()) {
     const path = `lessons.${lesson.id ?? index}`;
-    const required = ["schemaVersion", "id", "chapterId", "order", "title", "question", "answerPreview", "summary", "attribution", "estimatedMinutes", "depthComposition", "prerequisites", "guidedBlocks", "technicalBlocks", "equationSteps", "simulationId", "formulaIds", "programIds", "glossaryIds", "evidenceRefs", "checkpoints", ...CONCLUSION_FIELDS];
+    const required = ["schemaVersion", "id", "chapterId", "order", "title", "question", "answerPreview", "summary", "attribution", "estimatedMinutes", "depthComposition", "prerequisites", "observationStage", "guidedBlocks", "technicalBlocks", "equationSteps", "simulationId", "formulaIds", "programIds", "glossaryIds", "evidenceRefs", "checkpoints", ...CONCLUSION_FIELDS];
     assertSchema(lesson, path, keysWithOptionals(lesson, required, ["quickPath"]));
     assertId(lesson.id, `${path}.id`);
     assertId(lesson.chapterId, `${path}.chapterId`);
@@ -495,6 +525,7 @@ function validateLessons(lessons, chapterById, glossaryById, referencesById, rec
     assert(lesson.depthComposition === "technical-includes-guided", `${path}.depthComposition must be technical-includes-guided`);
     assertStringArray(lesson.prerequisites, `${path}.prerequisites`);
     assertUnique(lesson.prerequisites, `${path}.prerequisites`);
+    validateObservationStage(lesson.observationStage, `${path}.observationStage`, referencesById);
     assert(Array.isArray(lesson.guidedBlocks) && lesson.guidedBlocks.length > 0, `${path}.guidedBlocks must be a non-empty array`);
     assert(Array.isArray(lesson.technicalBlocks) && lesson.technicalBlocks.length > 0, `${path}.technicalBlocks must be a non-empty array`);
     assert(Array.isArray(lesson.equationSteps) && lesson.equationSteps.length > 0, `${path}.equationSteps must be a non-empty array`);
@@ -913,7 +944,7 @@ function validateGeneratedArtifacts(artifacts) {
     assertExactKeys(chapter, ["schemaVersion", "id", "order", "act", "title", "question", "summary", "status", "quickStationIds", "lessonIds", "attribution", "previousChapterId", "nextChapterId"], `generated chapters.${chapter.id}`);
   }
   for (const lesson of artifacts.lessons) {
-    const required = ["schemaVersion", "id", "chapterId", "order", "title", "question", "answerPreview", "summary", "attribution", "estimatedMinutes", "depthComposition", "prerequisites", "guidedBlocks", "technicalBlocks", "equationSteps", "simulationId", "formulaIds", "programIds", "glossaryIds", "evidenceRefs", "checkpoints", ...CONCLUSION_FIELDS, "previousLessonId", "nextLessonId"];
+    const required = ["schemaVersion", "id", "chapterId", "order", "title", "question", "answerPreview", "summary", "attribution", "estimatedMinutes", "depthComposition", "prerequisites", "observationStage", "guidedBlocks", "technicalBlocks", "equationSteps", "simulationId", "formulaIds", "programIds", "glossaryIds", "evidenceRefs", "checkpoints", ...CONCLUSION_FIELDS, "previousLessonId", "nextLessonId"];
     assertExactKeys(lesson, keysWithOptionals(lesson, required, ["quickPath"]), `generated lessons.${lesson.id}`);
   }
   for (const simulation of artifacts.simulations) {

@@ -1,7 +1,12 @@
 import { vi } from 'vitest'
 import completionJson from '../../public/data/generated/completion.json'
 import taxonomyJson from '../../public/data/generated/taxonomy.json'
+import tourChapterJson from '../../public/data/generated/tour/chapters/units.json'
+import tourGlossaryJson from '../../public/data/generated/tour/glossary.json'
+import tourLessonJson from '../../public/data/generated/tour/lessons/physical-quantities.json'
 import tourManifestJson from '../../public/data/generated/tour/manifest.json'
+import tourReferencesJson from '../../public/data/generated/tour/references.json'
+import tourSimulationJson from '../../public/data/generated/tour/simulations/dimensional-equation-builder.json'
 import wallsJson from '../../public/data/generated/walls.json'
 import { resetCompletionRegistryForTests, setCompletionRegistryForTests, useCompletionRegistry } from '../../src/registries/completionRegistry'
 import { resetCoreRegistryForTests, setCoreRegistryForTests, useCoreRegistry } from '../../src/registries/coreRegistry'
@@ -10,12 +15,28 @@ import { resetTaxonomyRegistryForTests, setTaxonomyRegistryForTests, useTaxonomy
 import { resetTourRegistryForTests, setTourRegistryForTests, useTourRegistry } from '../../src/registries/tourRegistry'
 import { resetWallRegistryForTests, setWallRegistryForTests, useWallRegistry } from '../../src/registries/wallRegistry'
 import type { CompletionReport, TaxonomyArtifact } from '../../src/types/engine'
-import type { TourGeneratedManifest } from '../../src/types/tour'
+import type {
+  TourGeneratedChapterRecord,
+  TourGeneratedLessonRecord,
+  TourGeneratedManifest,
+  TourGeneratedSimulation,
+  TourGlossarySource,
+  TourReferencesSource,
+} from '../../src/types/tour'
 import { coreCase, formula, wall } from './fixtures'
 
 const generatedCompletion = completionJson as CompletionReport
 const generatedTaxonomy = taxonomyJson as TaxonomyArtifact
 const generatedTourManifest = tourManifestJson as TourGeneratedManifest
+const generatedTourChapter = tourChapterJson as TourGeneratedChapterRecord
+const generatedTourLesson = tourLessonJson as TourGeneratedLessonRecord
+const generatedTourSimulation = tourSimulationJson as TourGeneratedSimulation
+const generatedTourGlossary = tourGlossaryJson as TourGlossarySource
+const generatedTourReferences = tourReferencesJson as TourReferencesSource
+
+function jsonResponse(value: unknown) {
+  return { ok: true, status: 200, json: async () => value }
+}
 
 describe('route-owned registries', () => {
   afterEach(() => {
@@ -169,6 +190,262 @@ describe('route-owned registries', () => {
     await tourRegistry.initialize()
     await tourRegistry.initialize()
     expect(tourRegistry.manifest.value).toEqual(generatedTourManifest)
+  })
+
+  it('initializes from only the tour manifest and taxonomy before lazily loading one chapter shard', async () => {
+    const fetchMock = vi.fn().mockImplementation(async (input: string | URL | Request) => {
+      const url = String(input)
+      if (url.endsWith('/data/generated/tour/manifest.json')) return jsonResponse(generatedTourManifest)
+      if (url.endsWith('/data/generated/taxonomy.json')) return jsonResponse(generatedTaxonomy)
+      if (url.endsWith('/data/generated/tour/chapters/units.json')) return jsonResponse(generatedTourChapter)
+      throw new Error(`Unexpected request: ${url}`)
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await registry.initialize()
+
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+    expect(fetchMock.mock.calls.map(([input]) => String(input))).toEqual(expect.arrayContaining([
+      expect.stringContaining('/data/generated/tour/manifest.json'),
+      expect.stringContaining('/data/generated/taxonomy.json'),
+    ]))
+
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+
+  it.each([
+    ['unknown root key', (candidate: TourGeneratedManifest) => { (candidate as TourGeneratedManifest & { extra?: boolean }).extra = true }, /unknown properties/],
+    ['station order', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.order = 2 }, /order must be 1/],
+    ['non-positive station minutes', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.estimatedMinutes = 0 }, /positive integer/],
+    ['duplicate station glossary ID', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.glossaryIds!.push(candidate.quickStations[0]!.glossaryIds![0]!) }, /unique values/],
+    ['current count summary drift', (candidate: TourGeneratedManifest) => { candidate.counts.lessons = 2 }, /current content summary/],
+    ['content-ready ownership drift', (candidate: TourGeneratedManifest) => { candidate.quickStations[0]!.lessonId = 'unknown-lesson' }, /content-ready chapter/],
+    ['chapter coverage drift', (candidate: TourGeneratedManifest) => { candidate.chapters.pop() }, /20 chapters/],
+    ['station coverage drift', (candidate: TourGeneratedManifest) => { candidate.quickStations.pop() }, /8 stations/],
+    ['duplicate station ID', (candidate: TourGeneratedManifest) => { candidate.quickStations[1]!.id = candidate.quickStations[0]!.id }, /unique values/],
+    ['attribution inheritance drift', (candidate: TourGeneratedManifest) => { candidate.attributionPolicy.inheritance = 'other' as never }, /nearest-attributed-ancestor/],
+  ])('rejects eager Tour manifest %s', (_name, mutate, expected) => {
+    const candidate = structuredClone(generatedTourManifest)
+    mutate(candidate)
+
+    setTourRegistryForTests({ manifest: candidate, taxonomy: generatedTaxonomy })
+
+    expect(useTourRegistry().manifest.value).toBeNull()
+    expect(useTourRegistry().error.value?.message).toMatch(expected)
+  })
+
+  it('deduplicates in-flight tour shards and caches successful records', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    let resolveJson!: (value: TourGeneratedChapterRecord) => void
+    const json = new Promise<TourGeneratedChapterRecord>((resolve) => { resolveJson = resolve })
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: () => json })
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    const first = registry.chapterById('units')
+    const second = registry.chapterById('units')
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce())
+    resolveJson(generatedTourChapter)
+
+    await expect(Promise.all([first, second])).resolves.toEqual([generatedTourChapter, generatedTourChapter])
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    expect(fetchMock).toHaveBeenCalledOnce()
+  })
+
+  it('returns null without fetching for unknown or path-traversal tour IDs', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await expect(registry.chapterById('../units')).resolves.toBeNull()
+    await expect(registry.lessonById('unknown-lesson')).resolves.toBeNull()
+    await expect(registry.simulationById('unknown/simulation')).resolves.toBeNull()
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('rejects mismatched IDs and lesson ownership without caching corrupt shards', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(jsonResponse({ ...generatedTourChapter, id: 'measurement' }))
+      .mockResolvedValueOnce(jsonResponse({ ...generatedTourLesson, chapterId: 'measurement' }))
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await expect(registry.chapterById('units')).rejects.toThrow(/requested ID/)
+    await expect(registry.lessonById('physical-quantities')).rejects.toThrow(/chapter ownership/)
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('rejects a current manifest that removes its only content-ready simulation declaration', async () => {
+    const manifestWithoutStationSimulation = {
+      ...generatedTourManifest,
+      quickStations: generatedTourManifest.quickStations.map((station) => station.id === 'anchors-scales'
+        ? { ...station, status: 'planned' as const, lessonId: null, simulationId: null }
+        : station),
+    }
+    setTourRegistryForTests({ manifest: manifestWithoutStationSimulation, taxonomy: generatedTaxonomy })
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+
+    expect(useTourRegistry().manifest.value).toBeNull()
+    expect(useTourRegistry().error.value?.message).toContain('simulation coverage')
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('loads and caches glossary and reference collections independently', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const fetchMock = vi.fn().mockImplementation(async (input: string | URL | Request) => {
+      const url = String(input)
+      if (url.endsWith('/glossary.json')) return jsonResponse(generatedTourGlossary)
+      if (url.endsWith('/references.json')) return jsonResponse(generatedTourReferences)
+      throw new Error(`Unexpected request: ${url}`)
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await expect(Promise.all([registry.loadGlossary(), registry.loadReferences()])).resolves.toEqual([
+      generatedTourGlossary,
+      generatedTourReferences,
+    ])
+    await registry.loadGlossary()
+    await registry.loadReferences()
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('isolates consumer cancellation while a deduplicated shard succeeds and populates cache', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    let resolveJson!: (value: TourGeneratedChapterRecord) => void
+    const json = new Promise<TourGeneratedChapterRecord>((resolve) => { resolveJson = resolve })
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: () => json })
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+    const abortController = new AbortController()
+
+    const cancelled = registry.chapterById('units', abortController.signal)
+    const shared = registry.chapterById('units')
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce())
+    abortController.abort()
+    await expect(cancelled).rejects.toMatchObject({ name: 'AbortError' })
+    const fetchSignal = (fetchMock.mock.calls[0]?.[1] as RequestInit | undefined)?.signal
+    expect(fetchSignal?.aborted).toBe(false)
+    resolveJson(generatedTourChapter)
+
+    await expect(shared).resolves.toEqual(generatedTourChapter)
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    expect(fetchMock).toHaveBeenCalledOnce()
+  })
+
+  it('evicts an underlying shard failure so a later call retries', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 503 })
+      .mockResolvedValueOnce(jsonResponse(generatedTourChapter))
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await expect(registry.chapterById('units')).rejects.toThrow('(503)')
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('invalidates a stale lazy completion on reset and does not cache it', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    let resolveJson!: (value: TourGeneratedChapterRecord) => void
+    const json = new Promise<TourGeneratedChapterRecord>((resolve) => { resolveJson = resolve })
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({ ok: true, status: 200, json: () => json })
+      .mockResolvedValueOnce(jsonResponse(generatedTourChapter))
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    const pending = registry.chapterById('units')
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce())
+    resetTourRegistryForTests()
+    const signal = (fetchMock.mock.calls[0]?.[1] as RequestInit | undefined)?.signal
+    expect(signal?.aborted).toBe(true)
+    resolveJson(generatedTourChapter)
+    await expect(pending).rejects.toMatchObject({ name: 'AbortError' })
+
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('preloads optional tour fixture shards and clears them on reset', async () => {
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+    setTourRegistryForTests({
+      manifest: generatedTourManifest,
+      taxonomy: generatedTaxonomy,
+      chapters: [generatedTourChapter],
+      lessons: [generatedTourLesson],
+      simulations: [generatedTourSimulation],
+      glossary: generatedTourGlossary,
+      references: generatedTourReferences,
+    })
+    const registry = useTourRegistry()
+
+    await expect(registry.chapterById('units')).resolves.toEqual(generatedTourChapter)
+    await expect(registry.lessonById('physical-quantities')).resolves.toEqual(generatedTourLesson)
+    await expect(registry.simulationById('dimensional-equation-builder')).resolves.toEqual(generatedTourSimulation)
+    await expect(registry.loadGlossary()).resolves.toEqual(generatedTourGlossary)
+    await expect(registry.loadReferences()).resolves.toEqual(generatedTourReferences)
+    expect(fetchMock).not.toHaveBeenCalled()
+
+    resetTourRegistryForTests()
+    await expect(registry.chapterById('units')).resolves.toBeNull()
+    await expect(registry.loadGlossary()).resolves.toBeNull()
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    ['block body', (lesson: TourGeneratedLessonRecord) => { (lesson.guidedBlocks[0] as unknown as { body: unknown[] }).body = [7] }, /guidedBlocks\[0\]\.body\[0\]/],
+    ['checkpoint choice', (lesson: TourGeneratedLessonRecord) => { lesson.checkpoints[0]!.choices[0]!.label = '' }, /checkpoints\[0\]\.choices\[0\]\.label/],
+    ['conclusion attribution', (lesson: TourGeneratedLessonRecord) => { delete (lesson.establishes[0]!.attribution as unknown as { sourceLocator?: string }).sourceLocator }, /establishes\[0\]\.attribution.*sourceLocator/],
+    ['observation item', (lesson: TourGeneratedLessonRecord) => { (lesson.observationStage.items[0] as unknown as { value: unknown }).value = 'exact' }, /observationStage\.items\[0\]\.value/],
+  ])('rejects a malformed nested lesson %s at the lazy boundary', async (_name, mutate, expected) => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const candidate = structuredClone(generatedTourLesson)
+    mutate(candidate)
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(candidate)))
+
+    await expect(useTourRegistry().lessonById('physical-quantities')).rejects.toThrow(expected)
+  })
+
+  it.each([
+    ['select option', (simulation: TourGeneratedSimulation) => { (simulation.controls[0] as Extract<TourGeneratedSimulation['controls'][number], { type: 'select' }>).options[0]!.label = '' }, /controls\[0\]\.options\[0\]\.label/],
+    ['preset input', (simulation: TourGeneratedSimulation) => { delete simulation.presets[0]!.inputs.target }, /presets\[0\]\.inputs.*target/],
+    ['output field', (simulation: TourGeneratedSimulation) => { (simulation.outputSchema[0] as unknown as { nullable: unknown }).nullable = 'false' }, /outputSchema\[0\]\.nullable/],
+    ['visualization alternative', (simulation: TourGeneratedSimulation) => { simulation.visualization.alternatives[0]!.description = '' }, /visualization\.alternatives\[0\]\.description/],
+    ['runtime limits', (simulation: TourGeneratedSimulation) => { (simulation.limits as unknown as { maxDurationMs: number }).maxDurationMs = 0 }, /limits\.maxDurationMs/],
+    ['compatibility key', (simulation: TourGeneratedSimulation) => { simulation.comparison.compatibilityKey = 'not-a-hash' }, /comparison\.compatibilityKey/],
+    ['implementation revision', (simulation: TourGeneratedSimulation) => { simulation.revision.implementationRevision = 'other-engine' }, /revision\.implementationRevision/],
+  ])('rejects a malformed nested simulation %s at the lazy boundary', async (_name, mutate, expected) => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const candidate = structuredClone(generatedTourSimulation)
+    mutate(candidate)
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(candidate)))
+
+    await expect(useTourRegistry().simulationById('dimensional-equation-builder')).rejects.toThrow(expected)
+  })
+
+  it('rejects malformed glossary and reference entry fields at their lazy boundaries', async () => {
+    setTourRegistryForTests({ manifest: generatedTourManifest, taxonomy: generatedTaxonomy })
+    const malformedGlossary = structuredClone(generatedTourGlossary)
+    malformedGlossary.entries[0]!.guidedDefinition = ''
+    const malformedReferences = structuredClone(generatedTourReferences)
+    malformedReferences.entries[0]!.accessStatus = 'not-a-status' as never
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(jsonResponse(malformedGlossary))
+      .mockResolvedValueOnce(jsonResponse(malformedReferences))
+    vi.stubGlobal('fetch', fetchMock)
+    const registry = useTourRegistry()
+
+    await expect(registry.loadGlossary()).rejects.toThrow(/entries\[0\]\.guidedDefinition/)
+    await expect(registry.loadReferences()).rejects.toThrow(/entries\[0\]\.accessStatus/)
   })
 
   it('starts every registry unloaded after reset', () => {

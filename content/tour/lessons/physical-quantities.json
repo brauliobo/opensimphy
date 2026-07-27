@@ -6,7 +6,7 @@
   "title": "A number is not yet a physical quantity",
   "question": "Why can a numerically correct expression still be physically meaningless?",
   "answerPreview": "A physical result must preserve its quantity meaning, not only its dimension, when we change the units used to express it.",
-  "summary": "Distinguish quantities, quantity values, numerical values, kinds, and dimensions; then test bounded expressions and multiplicative coherent unit conversions without treating consistency as empirical evidence.",
+  "summary": "Distinguish quantities, quantity values, numerical values, kinds, dimensions, and meaningful dimensionless ratios; then test bounded expressions and unit conventions without treating consistency as empirical evidence.",
   "attribution": {
     "claimClass": "source-claim",
     "evidenceRefs": ["opensimphy-scientific-scope", "bipm-si-brochure-9", "jcgm-vim-3"],
@@ -18,7 +18,7 @@
     "validatesTheory": false,
     "caveats": ["The lesson defines a bounded source activity and does not report a runtime result."]
   },
-  "estimatedMinutes": 11,
+  "estimatedMinutes": 15,
   "quickPath": {
     "estimatedMinutes": 4,
     "guidedBlockIds": ["si-defining-anchors", "dimensions-and-kinds"],
@@ -28,6 +28,51 @@
   },
   "depthComposition": "technical-includes-guided",
   "prerequisites": [],
+  "observationStage": {
+    "title": "International System of Units (SI) defining anchors",
+    "question": "Which values are exact definitions, and where does practical uncertainty enter?",
+    "items": [
+      {
+        "id": "caesium-133-transition",
+        "label": "Caesium-133 transition frequency",
+        "value": 9192631770,
+        "unit": "Hz",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly to define the second. A practical clock realizes the definition through a physical procedure and reports the uncertainty of that realization or measurement.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "speed-of-light",
+        "label": "Speed of light in vacuum",
+        "value": 299792458,
+        "unit": "m/s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly, linking realization of the metre to the second. A practical length realization or light-path measurement still has method-dependent uncertainty.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      },
+      {
+        "id": "planck-constant",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly as an action scale used in defining the kilogram. A practical realization transfers that definition through an experiment whose result carries realization uncertainty.",
+        "evidenceRefs": ["bipm-si-brochure-9"]
+      }
+    ],
+    "conclusion": "The displayed numbers are fixed defining values, not three uncertainty-free measurements. Definitions establish exact references; practical realizations and measurements connect physical apparatus to those references and carry stated uncertainty.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3 and Appendix 2",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Exact defining values do not make practical realizations or measurements uncertainty-free."]
+    }
+  },
   "guidedBlocks": [
     {
       "id": "quantity-value-number-reference",
@@ -52,9 +97,9 @@
     {
       "id": "si-defining-anchors",
       "kind": "prose",
-      "title": "Definitions fix anchors; laboratories realize them",
+      "title": "International System of Units definitions fix anchors; laboratories realize them",
       "body": [
-        "The SI second is defined by fixing the caesium-133 ground-state hyperfine transition frequency Delta_nu_Cs at exactly 9 192 631 770 Hz, where Hz is s^-1.",
+        "The International System of Units (SI) second is defined by fixing the caesium-133 ground-state hyperfine transition frequency Delta_nu_Cs at exactly 9 192 631 770 Hz, where Hz is s^-1.",
         "The metre is defined through the fixed speed of light c = 299 792 458 m s^-1. This definition links length to the second; practical realization uses specified experimental procedures rather than treating every light-path measurement as exact.",
         "The Planck constant h is fixed at exactly 6.626 070 15 x 10^-34 J s. Its quantity kind is action, and together with the second and metre definitions it participates in the SI definition of mass.",
         "A unit definition fixes the reference. A practical realization is a documented method for producing or measuring against that reference, with an uncertainty appropriate to the realization."
@@ -91,6 +136,26 @@
       "caveats": ["NIST SP 811 predates the SI changes effective 20 May 2019 and is not used here for current SI definitions."]
     },
     {
+      "id": "dimensionless-ratios",
+      "kind": "prose",
+      "title": "A dimensionless ratio can still carry meaning",
+      "body": [
+        "Dividing one length by another length cancels the length dimension. For example, a 2 m height divided by a 4 m reference height gives the dimensionless ratio 0.5.",
+        "Dimensionless does not mean meaningless. A ratio can encode shape, efficiency, probability, refractive index, an angle convention, or another physically important comparison.",
+        "Always name what was compared and any convention used; the zero dimension vector alone does not tell us the quantity kind or interpretation."
+      ],
+      "glossaryIds": ["dimensionless", "dimension", "quantity-kind"],
+      "claimClass": "established-definition",
+      "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+      "sourceLocator": "BIPM section 2.3.3; VIM3 entries 1.2 and 1.7",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Some dimensionless quantity values depend on conventions, including angle units and normalization choices."]
+    },
+    {
       "id": "consistency-not-truth",
       "kind": "caveat",
       "title": "A necessary check, not a proof",
@@ -117,7 +182,7 @@
       "kind": "derivation",
       "title": "Dimensions form exponent vectors",
       "body": [
-        "Represent a dimension by exponents over base quantities. The Tour uses seven conventional ISQ base-quantity dimensions in this order: time, length, mass, electric current, thermodynamic temperature, amount of substance, and luminous intensity.",
+        "Represent a dimension by exponents over base quantities. The Tour uses seven conventional International System of Quantities (ISQ) base-quantity dimensions in this order: time, length, mass, electric current, thermodynamic temperature, amount of substance, and luminous intensity.",
         "Average speed has vector (-1, 1, 0, 0, 0, 0, 0); energy has (-2, 2, 1, 0, 0, 0, 0). Quantities multiply or divide, while their dimension-exponent vectors add or subtract.",
         "The general dimension representation permits rational exponents. This activity's bounded named expressions use integer exponents only."
       ],
@@ -139,7 +204,7 @@
       "body": [
         "If q = {q}[Q], then choosing a new unit [Q]' = a[Q] changes the numerical value to {q}' = {q}/a while q itself is unchanged.",
         "The dimensional builder applies declared multiplicative scale transforms only after binding the sample magnitude to the selected target quantity kind.",
-        "The builder excludes affine temperature conversions and electromagnetic CGS conventions; its mechanical-cgs option is limited to centimetre, gram, and second scaling."
+        "The builder excludes affine temperature conversions and electromagnetic centimetre-gram-second (CGS) conventions; its mechanical CGS option is limited to centimetre, gram, and second scaling."
       ],
       "glossaryIds": ["quantity-value", "numerical-value", "coordinate-system"],
       "claimClass": "identity",
@@ -153,12 +218,33 @@
       "caveats": ["Only multiplicative coherent conversions declared by this activity are in scope."]
     },
     {
+      "id": "natural-unit-conventions",
+      "kind": "derivation",
+      "title": "Natural units change coordinates, not dimensional meaning",
+      "body": [
+        "A natural-unit convention chooses dimensional constants such as c, hbar, or k_B as reference scales and assigns them numerical value 1 in that coordinate system.",
+        "Writing c = 1 can make time and length share one numerical coordinate, but it does not erase their dimensional relationship. To return to SI coordinates, restore the powers of c, hbar, and k_B required by the target dimension.",
+        "For example, the coordinate x^0 = c t has length dimension. Natural-unit notation may write x^0 = t after setting c = 1; restoring SI coordinates requires x^0 = c t, not a claim that seconds and metres are identical units."
+      ],
+      "glossaryIds": ["natural-units", "coordinate-system", "dimension"],
+      "claimClass": "established-model",
+      "evidenceRefs": ["bipm-si-brochure-9", "nist-sp811"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; NIST SP 811e2008",
+      "sourceLocator": "BIPM section 2.3; NIST SP 811 chapters 7-8",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Restoration factors depend on the declared natural-unit convention and target quantity dimension."]
+    },
+    {
       "id": "audit-boundary",
       "kind": "caveat",
-      "title": "Dimensional audits have a declared basis",
+      "title": "Five-axis Atlas declarations and seven-axis Tour checks are separate audits",
       "body": [
-        "The historical Atlas expression engine uses a different dimension basis and treatment of amount of substance. This lesson's seven-axis ISQ contract neither normalizes nor repairs those source declarations.",
-        "Historical source-corpus conflicts remain separate audit results tied to their own source and implementation revisions. This activity does not recompute or resolve them."
+        "The historical Atlas source-audit model uses five axes and its own treatment of amount of substance. The Tour uses the seven-axis International System of Quantities (ISQ) model: time, length, mass, electric current, thermodynamic temperature, amount of substance, and luminous intensity.",
+        "The current typed Atlas engine reports exactly 68 known source declaration dimension conflicts in that historical five-axis audit. They are source-audit findings, not sixty-eight equations repaired by the Tour.",
+        "This lesson's seven-axis contract neither normalizes nor repairs those declarations. The 68 conflicts remain tied to their source basis and implementation revision, and this activity does not recompute or resolve them."
       ],
       "glossaryIds": ["base-dimension", "dimensional-consistency"],
       "claimClass": "source-claim",
@@ -175,7 +261,7 @@
   "equationSteps": [
     {
       "id": "fixed-si-anchors",
-      "label": "Fixed defining anchors",
+      "label": "International System of Units fixed defining anchors",
       "expression": "Delta_nu_Cs = 9 192 631 770 Hz; c = 299 792 458 m s^-1; h = 6.626 070 15 x 10^-34 J s",
       "explanation": "The SI fixes these numerical values to define the second, link the metre to the second, and link the kilogram to h. Laboratories still use documented realization procedures whose practical results carry realization uncertainty.",
       "claimClass": "established-definition",
@@ -187,6 +273,36 @@
       "resultStatus": "not-evaluated",
       "validatesTheory": false,
       "caveats": ["Exact defining values do not make practical realizations or measurements uncertainty-free."]
+    },
+    {
+      "id": "dimensionless-length-ratio",
+      "label": "Dimensionless ratio",
+      "expression": "r = H / H_ref; dim(r) = L / L = 1",
+      "explanation": "The dimensions cancel, but r still means the stated comparison between a height and its reference height. Its interpretation is not supplied by the zero dimension vector alone.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "jcgm-vim-3"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; JCGM 200:2012",
+      "sourceLocator": "BIPM section 2.3.3; VIM3 entries 1.2 and 1.7",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["Dimensionless does not imply quantity-kind-free or convention-free."]
+    },
+    {
+      "id": "natural-unit-coordinate",
+      "label": "Natural-unit coordinate convention",
+      "expression": "x^0 = c t; with c = 1, x^0 = t; restoring SI: x^0 = c t",
+      "explanation": "Setting c to numerical unity is a coordinate convention. Restoring SI coordinates inserts c so the time coordinate is expressed with length dimension.",
+      "claimClass": "identity",
+      "evidenceRefs": ["bipm-si-brochure-9", "nist-sp811"],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; NIST SP 811e2008",
+      "sourceLocator": "BIPM section 2.3; NIST SP 811 chapters 7-8",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": ["The required restoration factors depend on the target dimension and all constants set to numerical unity."]
     },
     {
       "id": "spoken-average-speed",
@@ -431,7 +547,7 @@
       }
     },
     {
-      "text": "This lesson does not recompute or resolve historical source-corpus dimension conflicts from the Atlas.",
+      "text": "This lesson does not recompute, repair, or resolve the exactly 68 known source declaration dimension conflicts reported by the historical five-axis Atlas audit.",
       "scope": "scientific-conclusion",
       "attribution": {
         "claimClass": "source-claim",
