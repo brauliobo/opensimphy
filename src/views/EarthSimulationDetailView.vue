@@ -3,6 +3,9 @@ import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import EarthStructuredValue from '../components/EarthStructuredValue.vue'
+import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
+import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
+import WorkbenchShell from '../components/workbench/WorkbenchShell.vue'
 import type { EarthDocumentRecord } from '../earth/corpus'
 import { loadEarthDatasetRegistry, type EarthDatasetRegistry } from '../earth/datasets'
 import {
@@ -21,13 +24,21 @@ import {
   type SimulationMethodValue,
 } from '../earth/simulations'
 import {
+  buildEarthWorkbenchFinding,
   buildInputFields,
+  EARTH_OUTPUT_SCHEMA_REVISION,
+  EARTH_WORKER_ADAPTER_REVISION,
+  earthCompatibilityKey,
+  earthInputsEqual,
+  earthModelRevision,
+  earthParallelScalarDeltas,
   formatScalar,
   formatToken,
   humanizeKey,
   inferExplicitUnit,
   isJsonObject,
   isScalar,
+  validateEarthWorkbenchInputs,
   type WorkbenchInputField,
 } from '../earth/workbench'
 import {
@@ -36,9 +47,42 @@ import {
   type EarthMethodId,
 } from '../engine/earth'
 import type { EarthWorkerExecution } from '../types/earthWorkers'
+import { useSavedRunRegistry } from '../registries/savedRunRegistry'
+import type {
+  JsonObject,
+  WorkbenchActionErrors,
+  WorkbenchExecutionMode,
+  WorkbenchExecutionStatus,
+  WorkbenchFindingV1,
+  WorkbenchSnapshotCount,
+  WorkbenchSnapshotInputV1,
+} from '../types/workbench'
+import {
+  addSnapshot,
+  cloneJsonValue,
+  compareSnapshotPair,
+  createSnapshotPair,
+  createWorkbenchSnapshot,
+  type SnapshotPair,
+} from '../workbench/snapshots'
+import {
+  decodeWorkbenchInputEnvelope,
+  encodeWorkbenchInputEnvelope,
+  mergeOwnedQuery,
+} from '../workbench/urlState'
 
 type ExecutionStatus = 'idle' | 'starting' | 'running' | 'completed' | 'cancelled' | 'failed'
 type CompletedExecution = Extract<EarthWorkerExecution, { status: 'completed' }>
+interface CompletedRun {
+  readonly execution: CompletedExecution
+  readonly dispatchedInputs: JsonObject
+  readonly finding: WorkbenchFindingV1
+  readonly sourceRevision: string
+  readonly implementationRevision: string
+  readonly modelRevision: string
+  readonly outputSchemaRevision: string
+  readonly compatibilityKey: string
+}
 
 interface WorkbenchMethod extends SimulationExecutionMethod {
   kind: string
@@ -55,9 +99,13 @@ interface MethodInputState {
   advancedError: string
 }
 
-const props = defineProps<{ id: string }>()
+const props = withDefaults(defineProps<{
+  id: string
+  surface?: 'evidence' | 'workbench'
+}>(), { surface: 'evidence' })
 const route = useRoute()
 const router = useRouter()
+const savedRunRegistry = useSavedRunRegistry()
 const bundle = ref<ScientificSimulationBundle | null>(null)
 const simulation = ref<ScientificSimulationRecord | null>(null)
 const datasetRegistry = ref<EarthDatasetRegistry | null>(null)
@@ -71,12 +119,20 @@ const inputStates = ref<Record<string, MethodInputState>>({})
 const executionError = ref('')
 const executionStatus = ref<ExecutionStatus>('idle')
 const progress = ref(0)
-const completedResults = ref<Record<string, CompletedExecution>>({})
+const completedResults = ref<Record<string, CompletedRun>>({})
+const comparisonPair = ref<SnapshotPair>(createSnapshotPair())
+const actionErrors = ref<WorkbenchActionErrors>({})
+const saveResult = ref('')
+const urlStateWarning = ref('')
 let executionController: AbortController | null = null
+let retainRejectedUrlWarning = false
+
+if (!savedRunRegistry.hydrated.value) savedRunRegistry.hydrate()
 
 const sourceDocuments = computed(() => simulation.value?.sourceDocumentIds.map((id) => (
   bundle.value?.sourceDocuments.get(id)
 )).filter((document): document is EarthDocumentRecord => Boolean(document)) ?? [])
+const isWorkbenchSurface = computed(() => props.surface === 'workbench')
 const evidenceDocuments = computed(() => programEvidence.value?.linkedDocumentIds.map((id) => (
   bundle.value?.sourceDocuments.get(id)
 )).filter((document): document is EarthDocumentRecord => Boolean(document)) ?? [])
@@ -133,10 +189,11 @@ const canRunSelected = computed(() => Boolean(
   && hasSimulationRunControl(simulation.value)
   && isEarthSimulationId(simulation.value.id),
 ))
-const selectedResult = computed(() => completedResults.value[selectedMethodId.value] ?? null)
+const selectedCompletedRun = computed(() => completedResults.value[selectedMethodId.value] ?? null)
+const selectedResult = computed(() => selectedCompletedRun.value?.execution ?? null)
 const completedResultEntries = computed(() => methods.value.map((method) => ({
   method,
-  result: completedResults.value[method.id] ?? null,
+  result: completedResults.value[method.id]?.execution ?? null,
 })))
 const progressStage = computed(() => {
   if (executionStatus.value === 'completed') return 'Result received'
@@ -172,6 +229,79 @@ const methodAvailabilityLabel = computed(() => {
 const scalarOutputs = computed(() => resultScalarOutputs(selectedResult.value))
 const structuredOutputs = computed(() => resultStructuredOutputs(selectedResult.value))
 const resultDiagnostics = computed(() => Object.entries(selectedResult.value?.diagnostics ?? {}))
+const workbenchExecutionMode = computed<WorkbenchExecutionMode>(() => canRunSelected.value ? 'manual' : 'unavailable')
+const workbenchStatus = computed<WorkbenchExecutionStatus>(() => {
+  if (!canRunSelected.value) return 'unavailable'
+  if (executionStatus.value === 'starting' || executionStatus.value === 'running') return 'running'
+  return executionStatus.value
+})
+const snapshotCount = computed(() => comparisonPair.value.length as WorkbenchSnapshotCount)
+const selectedFinding = computed(() => selectedCompletedRun.value?.finding ?? null)
+const selectedResultStale = computed(() => {
+  const run = selectedCompletedRun.value
+  const state = selectedInputState.value
+  const method = selectedMethod.value
+  if (!run || !state || !method?.defaultInputs) return false
+  if (inputFields.value.some((field) => field.kind === 'json'
+    && state.fieldTexts[field.key] !== JSON.stringify(run.dispatchedInputs[field.key], null, 2))) return true
+  try {
+    const current = validateEarthWorkbenchInputs(JSON.parse(state.advancedText) as unknown, method.defaultInputs)
+    return !earthInputsEqual(current, run.dispatchedInputs)
+  } catch {
+    return true
+  }
+})
+const comparison = computed(() => comparisonPair.value.length === 2 ? compareSnapshotPair(comparisonPair.value) : null)
+const parallelScalarDeltas = computed(() => {
+  if (!comparison.value?.compatible) return []
+  return earthParallelScalarDeltas(comparison.value.snapshots[0], comparison.value.snapshots[1])
+})
+function methodEvidenceRefs(method: WorkbenchMethod): string[] {
+  if (method.relationship.startsWith('traditional-')) {
+    return [`src/engine/earth/index.ts#getEarthMethodDefinition:${simulation.value?.id ?? props.id}:${method.id}`]
+  }
+  return simulation.value?.sourceDocumentIds.length
+    ? [...simulation.value.sourceDocumentIds]
+    : ['public/data/generated/earth/manifest.json#sourceRevision']
+}
+
+function methodSourceLocator(method: WorkbenchMethod): string {
+  if (method.relationship.startsWith('traditional-')) {
+    return `src/engine/earth/index.ts#getEarthMethodDefinition:${simulation.value?.id ?? props.id}:${method.id}`
+  }
+  return methodEvidenceRefs(method).join(', ')
+}
+
+function methodSourceRevision(method: WorkbenchMethod): string {
+  return method.relationship.startsWith('traditional-')
+    ? earthModelRevision(simulation.value?.id ?? props.id, method.id)
+    : bundle.value?.sourceRevision ?? 'source-revision-unavailable'
+}
+
+const evidenceRefs = computed(() => selectedMethod.value ? methodEvidenceRefs(selectedMethod.value) : [])
+const workbenchProvenance = computed(() => selectedMethod.value ? {
+  claimClass: selectedMethod.value.relationship === 'earth-source-reproduction'
+    ? 'bounded-source-audit'
+    : selectedMethod.value.relationship.startsWith('traditional-')
+      ? 'independent-traditional-comparator'
+      : 'bounded-contract-audit',
+  evidenceRefs: methodEvidenceRefs(selectedMethod.value),
+  sourceRevision: methodSourceRevision(selectedMethod.value),
+  sourceLocator: methodSourceLocator(selectedMethod.value),
+  methodRelationship: selectedMethod.value.relationship,
+  modelOrigin: selectedMethod.value.modelOrigin,
+  resultStatus: workbenchStatus.value,
+  caveats: ['Scientific validation is not established.'],
+  implementationRevision: EARTH_WORKER_ADAPTER_REVISION,
+  modelRevision: earthModelRevision(simulation.value?.id ?? props.id, selectedMethod.value.id),
+  outputSchemaRevision: EARTH_OUTPUT_SCHEMA_REVISION,
+} : undefined)
+const workbenchExecutionMessage = computed(() => {
+  if (!canRunSelected.value) return ''
+  if (running.value) return `${progressStage.value}. Worker dispatch is ${progress.value}% complete.`
+  if (selectedResultStale.value) return 'Execution completed. The retained result is stale because controls have changed.'
+  return ''
+})
 
 function methodLines(value: SimulationMethodValue): string[] {
   return typeof value === 'string' ? [value] : value
@@ -212,7 +342,11 @@ function inputDescribedBy(field: WorkbenchInputField): string {
 
 function initializeInputState(method: WorkbenchMethod): MethodInputState | null {
   if (!method.defaultInputs) return null
-  const values = structuredClone(method.defaultInputs)
+  return inputStateFromValues(method.defaultInputs)
+}
+
+function inputStateFromValues(inputs: Record<string, unknown>): MethodInputState {
+  const values = structuredClone(inputs)
   return {
     values,
     fieldTexts: Object.fromEntries(Object.entries(values)
@@ -221,6 +355,50 @@ function initializeInputState(method: WorkbenchMethod): MethodInputState | null 
     fieldErrors: {},
     advancedText: JSON.stringify(values, null, 2),
     advancedError: '',
+  }
+}
+
+function queriesEqual(left: Record<string, unknown>, right: Record<string, unknown>): boolean {
+  const leftKeys = Object.keys(left).sort()
+  const rightKeys = Object.keys(right).sort()
+  return leftKeys.length === rightKeys.length
+    && leftKeys.every((key, index) => key === rightKeys[index] && JSON.stringify(left[key]) === JSON.stringify(right[key]))
+}
+
+function canonicalWorkbenchQuery(methodId: string, inputs: Record<string, unknown> | null) {
+  const record = simulation.value
+  const method = methods.value.find(({ id }) => id === methodId)
+  const encodedInputs = method?.defaultInputs && inputs && !earthInputsEqual(inputs, method.defaultInputs)
+    ? encodeWorkbenchInputEnvelope(inputs)
+    : null
+  return mergeOwnedQuery(
+    route.query,
+    ['method', 'inputs'],
+    { method: methodId, inputs: encodedInputs },
+    { method: record?.defaultMethodId ?? '', inputs: null },
+  )
+}
+
+function replaceWorkbenchQuery(methodId: string, inputs: Record<string, unknown> | null, force = false): void {
+  try {
+    const query = canonicalWorkbenchQuery(methodId, inputs)
+    if (force || !queriesEqual(route.query, query)) void router.replace({ query })
+  } catch (reason) {
+    const message = reason instanceof Error ? reason.message : String(reason)
+    actionErrors.value = { ...actionErrors.value, reset: message }
+  }
+}
+
+function syncSelectedInputsToUrl(): void {
+  const state = selectedInputState.value
+  const method = selectedMethod.value
+  if (!state || !method?.defaultInputs) return
+  try {
+    const parsed = JSON.parse(state.advancedText) as unknown
+    const validated = validateEarthWorkbenchInputs(parsed, method.defaultInputs)
+    replaceWorkbenchQuery(method.id, validated)
+  } catch {
+    // Invalid in-progress controls remain local and never replace canonical URL state.
   }
 }
 
@@ -243,7 +421,9 @@ function updatePrimitiveField(field: WorkbenchInputField, event: Event): void {
   else if (field.kind === 'number') state.values[field.key] = target.value === '' ? '' : target.valueAsNumber
   else state.values[field.key] = target.value
   delete state.fieldErrors[field.key]
+  urlStateWarning.value = ''
   syncAdvancedFromValues(state)
+  syncSelectedInputsToUrl()
 }
 
 function parseJsonField(field: WorkbenchInputField, reportError = true): boolean {
@@ -256,6 +436,7 @@ function parseJsonField(field: WorkbenchInputField, reportError = true): boolean
     state.values[field.key] = parsed
     delete state.fieldErrors[field.key]
     syncAdvancedFromValues(state)
+    syncSelectedInputsToUrl()
     return true
   } catch (reason) {
     if (reportError) state.fieldErrors[field.key] = `${field.label} ${reason instanceof Error ? reason.message : String(reason)}.`
@@ -267,6 +448,7 @@ function updateJsonField(field: WorkbenchInputField, event: Event): void {
   const state = selectedInputState.value
   if (!state) return
   state.fieldTexts[field.key] = (event.target as HTMLTextAreaElement).value
+  urlStateWarning.value = ''
   delete state.fieldErrors[field.key]
   parseJsonField(field, false)
 }
@@ -275,13 +457,18 @@ function updateAdvancedJson(event: Event): void {
   const state = selectedInputState.value
   if (!state) return
   state.advancedText = (event.target as HTMLTextAreaElement).value
+  urlStateWarning.value = ''
   state.advancedError = ''
   try {
     const parsed = JSON.parse(state.advancedText) as unknown
     if (!isJsonObject(parsed)) return
-    state.values = parsed
+    const method = selectedMethod.value
+    if (!method?.defaultInputs) return
+    const validated = validateEarthWorkbenchInputs(parsed, method.defaultInputs)
+    state.values = structuredClone(validated)
     state.fieldErrors = {}
     syncFieldsFromValues(state)
+    syncSelectedInputsToUrl()
   } catch {
     // Keep the in-progress editor text; validation reports the complete parse error.
   }
@@ -289,7 +476,8 @@ function updateAdvancedJson(event: Event): void {
 
 function validateInputs(): Record<string, unknown> | null {
   const state = selectedInputState.value
-  if (!state) return null
+  const method = selectedMethod.value
+  if (!state || !method?.defaultInputs) return null
   let parsed: unknown
   try {
     parsed = JSON.parse(state.advancedText) as unknown
@@ -301,8 +489,14 @@ function validateInputs(): Record<string, unknown> | null {
     state.advancedError = 'Advanced input JSON must be an object.'
     return null
   }
+  const actualKeys = Object.keys(parsed).sort()
+  const expectedKeys = Object.keys(method.defaultInputs).sort()
+  if (actualKeys.length !== expectedKeys.length || actualKeys.some((key, index) => key !== expectedKeys[index])) {
+    state.advancedError = `Advanced input JSON must contain exactly these fields: ${expectedKeys.join(', ')}.`
+    return null
+  }
   state.advancedError = ''
-  state.values = parsed
+  state.values = structuredClone(parsed)
   let valid = true
   inputFields.value.forEach((field) => {
     const value = state.values[field.key]
@@ -321,8 +515,16 @@ function validateInputs(): Record<string, unknown> | null {
       delete state.fieldErrors[field.key]
     }
   })
+  if (valid) {
+    try {
+      parsed = validateEarthWorkbenchInputs(parsed, method.defaultInputs)
+    } catch (reason) {
+      state.advancedError = reason instanceof Error ? reason.message : String(reason)
+      valid = false
+    }
+  }
   syncFieldsFromValues(state)
-  return valid ? parsed : null
+  return valid ? structuredClone(parsed) : null
 }
 
 function abortExecution(): void {
@@ -341,10 +543,9 @@ function restoreSelectedStatus(): void {
   }
 }
 
-function replaceMethodQuery(methodId: string): void {
-  const routeMethod = typeof route.query.method === 'string' ? route.query.method : ''
-  if (routeMethod === methodId) return
-  void router.replace({ query: { ...route.query, method: methodId } })
+function resetMethodInputs(method: WorkbenchMethod): void {
+  const state = initializeInputState(method)
+  if (state) inputStates.value = { ...inputStates.value, [method.id]: state }
 }
 
 function selectMethod(methodId: string, syncQuery = true): void {
@@ -354,13 +555,44 @@ function selectMethod(methodId: string, syncQuery = true): void {
   if (selectedMethodId.value !== methodId) {
     abortExecution()
     selectedMethodId.value = methodId
+    const method = methods.value.find(({ id }) => id === methodId)
+    if (method) resetMethodInputs(method)
     restoreSelectedStatus()
   }
-  if (syncQuery) replaceMethodQuery(methodId)
+  if (syncQuery) {
+    urlStateWarning.value = ''
+    replaceWorkbenchQuery(methodId, selectedInputState.value?.values ?? null)
+  }
 }
 
 function selectMethodFromEvent(event: Event): void {
   selectMethod((event.target as HTMLSelectElement).value)
+}
+
+function restoreMethodDefaults(): void {
+  const method = selectedMethod.value
+  if (!method) return
+  resetMethodInputs(method)
+  urlStateWarning.value = ''
+  actionErrors.value = {}
+  replaceWorkbenchQuery(method.id, selectedInputState.value?.values ?? null, true)
+}
+
+function resetSelectedMethod(): void {
+  const method = selectedMethod.value
+  if (!method) return
+  abortExecution()
+  resetMethodInputs(method)
+  const { [method.id]: _removed, ...retained } = completedResults.value
+  completedResults.value = retained
+  executionError.value = ''
+  executionStatus.value = 'idle'
+  progress.value = 0
+  comparisonPair.value = createSnapshotPair()
+  actionErrors.value = {}
+  saveResult.value = ''
+  urlStateWarning.value = ''
+  replaceWorkbenchQuery(method.id, selectedInputState.value?.values ?? null, true)
 }
 
 async function runSelectedMethod(): Promise<void> {
@@ -369,6 +601,8 @@ async function runSelectedMethod(): Promise<void> {
   if (!record || !method || !canRunSelected.value || !isEarthSimulationId(record.id)) return
   const inputs = validateInputs()
   if (!inputs) return
+  const dispatchedInputs = cloneJsonValue(inputs, 'earth.dispatchedInputs')
+  if (!isJsonObject(dispatchedInputs)) return
 
   abortExecution()
   const controller = new AbortController()
@@ -378,7 +612,7 @@ async function runSelectedMethod(): Promise<void> {
   executionStatus.value = 'starting'
 
   try {
-    const execution = await runEarthMethodInWorker(record.id, method.id as EarthMethodId, inputs, {
+    const execution = await runEarthMethodInWorker(record.id, method.id as EarthMethodId, structuredClone(dispatchedInputs), {
       signal: controller.signal,
       onProgress(value) {
         if (executionController !== controller) return
@@ -389,9 +623,31 @@ async function runSelectedMethod(): Promise<void> {
     if (executionController !== controller) return
     executionController = null
     if (execution.status === 'completed') {
+      const sourceRevision = methodSourceRevision(method)
+      const finding = buildEarthWorkbenchFinding({
+        programId: record.id,
+        method,
+        sourceRevision,
+        sourceLocator: methodSourceLocator(method),
+        resultStatus: execution.executionStatus ?? execution.status,
+        output: execution.output,
+        evidenceRefs: methodEvidenceRefs(method),
+      })
       progress.value = 100
       executionStatus.value = 'completed'
-      completedResults.value = { ...completedResults.value, [method.id]: execution }
+      completedResults.value = {
+        ...completedResults.value,
+        [method.id]: {
+          execution,
+          dispatchedInputs,
+          finding,
+          sourceRevision,
+          implementationRevision: EARTH_WORKER_ADAPTER_REVISION,
+          modelRevision: earthModelRevision(record.id, method.id),
+          outputSchemaRevision: EARTH_OUTPUT_SCHEMA_REVISION,
+          compatibilityKey: earthCompatibilityKey(record.id, method, sourceRevision),
+        },
+      }
     } else if (execution.status === 'cancelled') {
       executionStatus.value = 'cancelled'
     } else {
@@ -412,6 +668,72 @@ function cancelExecution(): void {
   executionStatus.value = 'cancelled'
 }
 
+function snapshotInput(run: CompletedRun): WorkbenchSnapshotInputV1 {
+  const method = methods.value.find(({ id }) => id === run.execution.methodId)
+  const record = simulation.value
+  if (!record || !method) throw new Error('The completed EARTH method is no longer available.')
+  return {
+    programId: record.id,
+    methodId: method.id,
+    inputs: run.dispatchedInputs,
+    outputs: {
+      output: cloneJsonValue(run.execution.output, 'earth.result.output'),
+      diagnostics: cloneJsonValue(run.execution.diagnostics, 'earth.result.diagnostics'),
+      executionStatus: run.execution.executionStatus ?? run.execution.status,
+      method: run.execution.method,
+    },
+    finding: cloneJsonValue(run.finding, 'earth.result.finding') as JsonObject,
+    provenance: cloneJsonValue({
+      ...run.execution.provenance,
+      programId: record.id,
+      methodId: method.id,
+      relationship: method.relationship,
+      modelOrigin: method.modelOrigin,
+      validatesEarthTheory: false,
+    }, 'earth.result.provenance') as JsonObject,
+    sourceRevision: run.sourceRevision,
+    implementationRevision: run.implementationRevision,
+    modelRevision: run.modelRevision,
+    compatibilityKey: run.compatibilityKey,
+    label: `${record.id} / ${method.title}`,
+  }
+}
+
+function saveSelectedRun(): void {
+  const run = selectedCompletedRun.value
+  if (!run) return
+  actionErrors.value = {}
+  saveResult.value = ''
+  try {
+    const saved = savedRunRegistry.save(snapshotInput(run))
+    if (savedRunRegistry.persistenceError.value) {
+      actionErrors.value = { save: 'The run is retained for this session, but browser storage could not save it.' }
+    } else {
+      saveResult.value = `Saved EARTH run at ${saved.timestamp}.`
+    }
+  } catch (reason) {
+    actionErrors.value = { save: reason instanceof Error ? reason.message : String(reason) }
+  }
+}
+
+function freezeSelectedRun(): void {
+  const run = selectedCompletedRun.value
+  if (!run || comparisonPair.value.length === 2) return
+  actionErrors.value = {}
+  try {
+    const timestamp = new Date(Date.now() + comparisonPair.value.length).toISOString()
+    const snapshot = createWorkbenchSnapshot(snapshotInput(run), timestamp)
+    comparisonPair.value = addSnapshot(comparisonPair.value, snapshot)
+  } catch (reason) {
+    actionErrors.value = { freeze: reason instanceof Error ? reason.message : String(reason) }
+  }
+}
+
+function clearComparison(): void {
+  comparisonPair.value = createSnapshotPair()
+  actionErrors.value = {}
+}
+
 function resultScalarOutputs(result: CompletedExecution | null): Array<{ key: string, value: unknown, unit: string }> {
   if (!result || !isJsonObject(result.output)) return []
   return Object.entries(result.output)
@@ -427,23 +749,51 @@ function resultStructuredOutputs(result: CompletedExecution | null): Array<{ key
     .map(([key, value]) => ({ key, value }))
 }
 
-function scientificFinding(method: WorkbenchMethod): string {
-  if (method.relationship === 'earth-source-reproduction') {
-    return 'Source reproduction / audit only. This result evaluates the declared EARTH source expression; scientific validation is not established.'
-  }
-  if (method.relationship.startsWith('traditional-')) {
-    return 'Independent traditional baseline. This result is not an EARTH source reproduction and does not validate EARTH theory; scientific validation is not established.'
-  }
-  return 'Source-contract audit only. This checks a bounded contract rather than reproducing or validating a physical model; scientific validation is not established.'
-}
-
 function ledgerOutput(result: CompletedExecution | null): string {
   const outputs = resultScalarOutputs(result).slice(0, 3)
   if (!outputs.length) return result ? 'Completed · structured output available' : 'Not run'
   return outputs.map(({ key, value, unit }) => `${humanizeKey(key)}: ${formatScalar(value)}${unit ? ` ${unit}` : ''}`).join(' · ')
 }
 
-watch(() => props.id, async (id, _previous, onCleanup) => {
+function applyRouteWorkbenchState(): void {
+  const record = simulation.value
+  if (!record) return
+  const requestedMethod = typeof route.query.method === 'string'
+    && record.executionMethods.some(({ id }) => id === route.query.method)
+    ? route.query.method
+    : record.defaultMethodId
+  const rejected: string[] = []
+  if (route.query.method !== undefined && requestedMethod !== route.query.method) rejected.push('method')
+  selectMethod(requestedMethod, false)
+
+  const method = selectedMethod.value
+  let inputs = method?.defaultInputs ? structuredClone(method.defaultInputs) : null
+  if (method?.defaultInputs && route.query.inputs !== undefined) {
+    try {
+      inputs = structuredClone(validateEarthWorkbenchInputs(
+        decodeWorkbenchInputEnvelope(route.query.inputs),
+        method.defaultInputs,
+      ))
+    } catch (reason) {
+      inputs = structuredClone(method.defaultInputs)
+      rejected.push(`inputs (${reason instanceof Error ? reason.message : String(reason)})`)
+    }
+  } else if (route.query.inputs !== undefined) {
+    rejected.push('inputs (the selected method has no local input contract)')
+  }
+  if (rejected.length) {
+    urlStateWarning.value = `Requested EARTH URL state was rejected for ${rejected.join(', ')}. Canonical method defaults were restored.`
+    retainRejectedUrlWarning = true
+  } else if (retainRejectedUrlWarning) {
+    retainRejectedUrlWarning = false
+  } else {
+    urlStateWarning.value = ''
+  }
+  if (method && inputs) inputStates.value = { ...inputStates.value, [method.id]: inputStateFromValues(inputs) }
+  replaceWorkbenchQuery(requestedMethod, inputs)
+}
+
+watch(() => [props.id, props.surface] as const, async ([id], _previous, onCleanup) => {
   const controller = new AbortController()
   onCleanup(() => {
     controller.abort()
@@ -461,6 +811,10 @@ watch(() => props.id, async (id, _previous, onCleanup) => {
   selectedMethodId.value = ''
   inputStates.value = {}
   completedResults.value = {}
+  comparisonPair.value = createSnapshotPair()
+  actionErrors.value = {}
+  saveResult.value = ''
+  urlStateWarning.value = ''
   executionError.value = ''
   executionStatus.value = 'idle'
   progress.value = 0
@@ -474,10 +828,9 @@ watch(() => props.id, async (id, _previous, onCleanup) => {
       const state = initializeInputState(method)
       return state ? [[method.id, state]] : []
     }))
-    const requested = typeof route.query.method === 'string' ? route.query.method : ''
-    selectMethod(match.executionMethods.some(({ id: methodId }) => methodId === requested) ? requested : match.defaultMethodId)
+    applyRouteWorkbenchState()
 
-    if (loaded.sourceRevision && isEarthSimulationId(match.id)) {
+    if (!isWorkbenchSurface.value && loaded.sourceRevision && isEarthSimulationId(match.id)) {
       evidenceLoading.value = true
       try {
         const loadedDatasets = await loadEarthDatasetRegistry(controller.signal)
@@ -510,32 +863,26 @@ watch(() => props.id, async (id, _previous, onCleanup) => {
   }
 }, { immediate: true })
 
-watch(() => route.query.method, (method) => {
-  const record = simulation.value
-  if (!record) return
-  const requested = typeof method === 'string' && record.executionMethods.some(({ id }) => id === method)
-    ? method
-    : record.defaultMethodId
-  selectMethod(requested)
-})
+watch(() => [route.query.method, route.query.inputs], applyRouteWorkbenchState)
 
 onUnmounted(abortExecution)
 </script>
 
 <template lang="pug">
-.view.earth-simulation-detail-view
-  EarthLocalNav
-  RouterLink.earth-back-link(to="/earth/programs") ← 03/C Program registry
+.view.earth-simulation-detail-view(:data-surface="props.surface")
+  EarthLocalNav(v-if="!isWorkbenchSurface")
+  RouterLink.earth-back-link(v-if="isWorkbenchSurface" to="/labs") ← Workbench index
+  RouterLink.earth-back-link(v-else to="/earth/programs") ← 03/C Program registry
   p.inline-error(v-if="error" role="alert") {{ error }}
   p.earth-loading(v-else-if="!simulation") Loading EARTH program…
 
   template(v-else)
-    header.detail-header.earth-simulation-header
+    header.detail-header.earth-simulation-header(:data-testid="isWorkbenchSurface ? 'earth-workbench-header' : 'earth-evidence-header'")
       .detail-index
         code {{ simulation.id }}
         span {{ simulation.prefix }} / {{ simulation.classification }}
       .detail-title
-        p.eyebrow 03/C / Program question / intended tier {{ simulation.executionTiers.join(' + ') }}
+        p.eyebrow {{ isWorkbenchSurface ? 'Workbench / EARTH bounded method' : '03/C / Program question' }} / intended tier {{ simulation.executionTiers.join(' + ') }}
         h1 {{ simulation.title }}
         p {{ simulation.highLevelGoal }}
       .detail-status.earth-readiness-stack
@@ -543,13 +890,13 @@ onUnmounted(abortExecution)
         span {{ scientificReadinessLabel }}
         span {{ methodAvailabilityLabel }}
 
-    section.simulation-goal-section(aria-labelledby="program-question-heading")
+    section.simulation-goal-section(v-if="!isWorkbenchSurface" aria-labelledby="program-question-heading")
       p.eyebrow 01 / Question
       h2#program-question-heading {{ simulation.highLevelGoal }}
       ul.simulation-minor-goals
         li(v-for="goal in simulation.minorGoals" :key="goal") {{ goal }}
 
-    section.simulation-source-section(aria-labelledby="source-readiness-heading")
+    section.simulation-source-section(v-if="!isWorkbenchSurface" aria-labelledby="source-readiness-heading")
       p.eyebrow 02 / Source readiness
       h2#source-readiness-heading {{ sourceReadinessLabel }}
       p.simulation-source-state {{ simulation.sourceState.text }}
@@ -559,60 +906,101 @@ onUnmounted(abortExecution)
         li(v-for="document in sourceDocuments" :key="document.id")
           RouterLink(:to="`/earth/corpus/${document.slug}`") {{ document.title }}
 
-    section.simulation-workbench-section(aria-labelledby="method-workbench-heading" :aria-busy="running")
+    section.simulation-workbench-section(aria-labelledby="method-workbench-heading")
       p.eyebrow 03 / Declared methods
       h2#method-workbench-heading Method workbench
       p.simulation-run-copy Select one bounded execution method. Method choice changes inputs, provenance, runtime, and retained result independently of source readiness.
-      label.simulation-method-mobile-label(for="earth-method-select") Selected execution method
-      select#earth-method-select.simulation-method-mobile(
-        :value="selectedMethodId"
-        data-testid="simulation-method-select"
-        @change="selectMethodFromEvent"
+      WorkbenchShell(
+        v-if="selectedMethod"
+        :title="selectedMethod.title"
+        :identity="`${simulation.id} / ${selectedMethod.id}`"
+        :provenance="workbenchProvenance"
+        conclusion="Scientific validation is not established. Each result is bounded to its exact method relationship and dispatched inputs."
+        :execution-mode="workbenchExecutionMode"
+        :status="workbenchStatus"
+        :progress="progress"
+        :capabilities="{ save: canRunSelected, compare: canRunSelected }"
+        :snapshot-count="snapshotCount"
+        :has-result="Boolean(selectedResult)"
+        :action-errors="actionErrors"
+        :state-warning="urlStateWarning"
+        heading-level="h3"
+        :execution-message="workbenchExecutionMessage"
+        :unavailable-reason="integrityError || selectedMethod.model"
+        :action-labels="{ run: 'Run selected method', cancel: 'Cancel dispatch', reset: 'Reset selected method' }"
+        @run="runSelectedMethod"
+        @cancel="cancelExecution"
+        @reset="resetSelectedMethod"
+        @save="saveSelectedRun"
+        @freeze="freezeSelectedRun"
+        @clear-compare="clearComparison"
       )
-        option(v-for="method in methods" :key="method.id" :value="method.id") {{ method.title }}
+        template(#identity)
+          p {{ simulation.id }} / {{ selectedMethod.id }}
+          small {{ selectedMethod.title }}
 
-      .simulation-workbench-layout
-        fieldset.simulation-method-rail(data-testid="simulation-method-rail")
-          legend Execution methods
-          label.simulation-method-option(v-for="method in methods" :key="method.id" :class="{ 'is-selected': method.id === selectedMethodId }")
-            input(
-              type="radio"
-              name="earth-execution-method"
-              :value="method.id"
-              :checked="method.id === selectedMethodId"
-              @change="selectMethod(method.id)"
-            )
-            strong {{ method.title }}
-            span {{ formatToken(method.relationship) }}
-            small {{ method.runtime }} · {{ method.runnable ? 'runnable' : 'no local control' }}
+        template(#essential-controls)
+          label.simulation-method-mobile-label(for="earth-method-select") Selected execution method
+          select#earth-method-select.simulation-method-mobile(
+            :value="selectedMethodId"
+            data-testid="simulation-method-select"
+            @change="selectMethodFromEvent"
+          )
+            option(v-for="method in methods" :key="method.id" :value="method.id") {{ method.title }}
+          button.text-button(
+            v-if="selectedMethod.defaultInputs"
+            type="button"
+            data-testid="simulation-method-defaults"
+            :disabled="running"
+            @click="restoreMethodDefaults"
+          ) Restore method-default preset
 
-        article.simulation-method-sheet(v-if="selectedMethod" data-testid="selected-method-sheet")
-          p.eyebrow Selected method
-          h3 {{ selectedMethod.title }}
-          p.simulation-method-model {{ selectedMethod.model }}
-          dl.simulation-provenance-grid(data-testid="method-provenance")
-            dt Relationship
-            dd {{ formatToken(selectedMethod.relationship) }}
-            dt Model origin
-            dd {{ formatToken(selectedMethod.modelOrigin) }}
-            dt EARTH-derived
-            dd {{ selectedMethod.earthDerived }}
-            dt Intended program tier
-            dd {{ simulation.executionTiers.join(' + ') }}{{ simulation.tierSource ? ` · source ${simulation.tierSource}` : '' }}
-            dt Actual adapter runtime
-            dd {{ formatToken(selectedMethod.runtime) }}
-            dt Runnable here
-            dd {{ selectedMethod.runnable && selectedMethod.runtime === 'browser-worker' ? 'true' : 'false' }}
-            dt Numerical precision
-            dd {{ selectedMethod.precision }}
-            dt Validates EARTH theory
-            dd false
+        template(#stage)
+          article.simulation-result(v-if="selectedResult" aria-label="Method result" data-testid="simulation-result")
+            .simulation-result-heading
+              div
+                span Execution status
+                strong {{ selectedResult.executionStatus ?? selectedResult.status }}
+              div
+                span Method
+                strong {{ selectedMethod.title }}
+            p.simulation-result-stale(v-if="selectedResultStale" role="status" data-testid="simulation-result-stale") Result stale: controls differ from the dispatched inputs frozen with this result.
+            p.simulation-finding-summary(v-if="selectedFinding") {{ selectedFinding.changed }}
+            section.simulation-scalar-outputs
+              h4 Key scalar outputs
+              dl(v-if="scalarOutputs.length")
+                template(v-for="output in scalarOutputs" :key="output.key")
+                  dt {{ humanizeKey(output.key) }}
+                  dd {{ formatScalar(output.value) }}{{ output.unit ? ` ${output.unit}` : '' }}
+              p(v-else) No top-level scalar outputs were returned.
+            section.simulation-diagnostics
+              h4 Diagnostics
+              dl
+                template(v-for="([key, value]) in resultDiagnostics" :key="key")
+                  dt {{ humanizeKey(key) }}
+                  dd {{ formatScalar(value) }}
+            section.simulation-structured-outputs(v-if="structuredOutputs.length")
+              h4 Structured outputs
+              article(v-for="output in structuredOutputs" :key="output.key")
+                h5 {{ humanizeKey(output.key) }}
+                EarthStructuredValue(:value="output.value")
+          p.simulation-result-empty(v-else-if="canRunSelected") Run the selected method to create a session result. Completed results remain method-addressed while this program page is open.
+          p.simulation-result-empty(v-else) This unavailable source formulation cannot create a result.
 
-          template(v-if="integrityError")
-            h4 Execution unavailable
-            p.inline-error(role="alert" data-testid="simulation-integrity-error") {{ integrityError }}
+        template(#findings)
+          WorkbenchFinding(v-if="selectedFinding" :finding="selectedFinding" heading-level="h5")
+          p(v-else) No finding has been evaluated for this method. Scientific validation remains unestablished.
+          p.save-result(v-if="saveResult" role="status" data-testid="earth-save-result") {{ saveResult }}
+          WorkbenchCompare(:pair="comparisonPair" heading-level="h5")
+            template(#domain-comparison)
+              dl(v-if="parallelScalarDeltas.length" data-testid="earth-parallel-scalar-deltas")
+                template(v-for="delta in parallelScalarDeltas" :key="delta.key")
+                  dt {{ humanizeKey(delta.key) }} delta (snapshot 2 − snapshot 1)
+                  dd {{ formatScalar(delta.delta) }}{{ delta.unit ? ` ${delta.unit}` : '' }}
+              p(v-else data-testid="earth-parallel-findings-only") No declared parallel scalar keys with matching inferred units are available. Findings remain parallel; no generic residual is inferred.
 
-          form.simulation-run-form(v-else-if="canRunSelected && selectedInputState" @submit.prevent="runSelectedMethod")
+        template(#controls)
+          .simulation-run-form(v-if="canRunSelected && selectedInputState")
             fieldset.simulation-input-controls(:disabled="running")
               legend Method inputs
               p.simulation-input-empty(v-if="!inputFields.length") This method has no configurable inputs.
@@ -659,7 +1047,6 @@ onUnmounted(abortExecution)
                       span(v-if="field.unit") {{ field.unit }}
                   small(:id="inputDescriptionId(field)") Default: {{ field.kind === 'json' ? `${field.jsonType} JSON` : formatScalar(field.defaultValue) }}{{ field.unit ? ` ${field.unit}` : '' }}
                   p.inline-error(v-if="selectedInputState.fieldErrors[field.key]" :id="inputErrorId(field)" role="alert") {{ selectedInputState.fieldErrors[field.key] }}
-
             details.simulation-advanced-inputs(data-testid="simulation-advanced-inputs")
               summary Advanced JSON editor
               p Edit the complete method input object. Valid edits synchronize the field controls above.
@@ -675,15 +1062,6 @@ onUnmounted(abortExecution)
                 @input="updateAdvancedJson"
               )
               p#earth-advanced-input-error.inline-error(v-if="selectedInputState.advancedError" role="alert" data-testid="simulation-input-error") {{ selectedInputState.advancedError }}
-
-            .simulation-run-actions
-              button.button-link(type="submit" :disabled="running" data-testid="simulation-run-control") {{ running ? 'Dispatching selected method…' : 'Run selected method' }}
-              button.text-button(v-if="running" type="button" data-testid="simulation-cancel" @click="cancelExecution") Cancel dispatch
-
-          p.simulation-method-unavailable(v-else data-testid="simulation-method-unavailable")
-            strong Source formulation unavailable.
-            |  {{ selectedMethod.model }} No local execution controls are exposed for this registry-only method.
-
           .simulation-execution-status(v-if="canRunSelected" aria-live="polite" data-testid="simulation-status")
             span Dispatch status
             strong {{ executionStatus }}
@@ -701,57 +1079,55 @@ onUnmounted(abortExecution)
             span Dispatch checkpoint {{ progress }} / 100 · {{ progressStage }}
           p.inline-error(v-if="executionError" role="alert" data-testid="simulation-execution-error") {{ executionError }}
 
-    section.simulation-results-section(aria-labelledby="simulation-results-heading")
+        template(#method)
+          fieldset.simulation-method-rail(data-testid="simulation-method-rail")
+            legend Execution methods
+            label.simulation-method-option(v-for="method in methods" :key="method.id" :class="{ 'is-selected': method.id === selectedMethodId }")
+              input(type="radio" name="earth-execution-method" :value="method.id" :checked="method.id === selectedMethodId" @change="selectMethod(method.id)")
+              strong {{ method.title }}
+              span {{ formatToken(method.relationship) }}
+              small {{ method.runtime }} · {{ method.runnable ? 'runnable' : 'no local control' }}
+          article.simulation-method-sheet(data-testid="selected-method-sheet")
+            p.simulation-method-model {{ selectedMethod.model }}
+            dl.simulation-provenance-grid(data-testid="method-provenance")
+              dt Relationship
+              dd {{ formatToken(selectedMethod.relationship) }}
+              dt Model origin
+              dd {{ formatToken(selectedMethod.modelOrigin) }}
+              dt EARTH-derived
+              dd {{ selectedMethod.earthDerived }}
+              dt Intended program tier
+              dd {{ simulation.executionTiers.join(' + ') }}{{ simulation.tierSource ? ` · source ${simulation.tierSource}` : '' }}
+              dt Actual adapter runtime
+              dd {{ formatToken(selectedMethod.runtime) }}
+              dt Runnable here
+              dd {{ canRunSelected }}
+              dt Numerical precision
+              dd {{ selectedMethod.precision }}
+              dt Validates EARTH theory
+              dd false
+            p.inline-error(v-if="integrityError" role="alert" data-testid="simulation-integrity-error") {{ integrityError }}
+            p.simulation-method-unavailable(v-if="!canRunSelected" data-testid="simulation-method-unavailable")
+              strong Source formulation unavailable.
+              |  {{ selectedMethod.model }} No local execution controls are exposed for this registry-only method.
+
+        template(#evidence)
+          p(v-if="isWorkbenchSurface") This bounded method links to the canonical Evidence record; the Workbench does not load or reproduce its dossier.
+          p(v-else) The complete evidence dossier remains below with exact assignments, linked documents, datasets, disputed claims, gates, and blockers.
+          p {{ evidenceRefs.length }} source or assignment references currently linked to this method finding.
+          RouterLink.text-link(v-if="isWorkbenchSurface" :to="`/earth/programs/${simulation.id}`") Open canonical Evidence record
+
+        template(#raw)
+          section.simulation-raw-result(v-if="selectedResult" data-testid="simulation-raw-result")
+            h4 Raw JSON result
+            pre
+              code {{ JSON.stringify({ dispatchedInputs: selectedCompletedRun?.dispatchedInputs, result: selectedResult }, null, 2) }}
+          p(v-else) No raw result is available for this method.
+
+    section.simulation-results-section(v-if="!isWorkbenchSurface" aria-labelledby="simulation-results-heading")
       p.eyebrow 04 / Results
-      h2#simulation-results-heading Method results
-      article.simulation-result(v-if="selectedResult && selectedMethod" aria-label="Method result" data-testid="simulation-result")
-        .simulation-result-heading
-          div
-            span Execution status
-            strong {{ selectedResult.executionStatus ?? selectedResult.status }}
-          div
-            span Method
-            strong {{ selectedMethod.title }}
-        section.simulation-finding
-          h3 Scientific finding
-          p {{ scientificFinding(selectedMethod) }}
-        dl.simulation-result-provenance
-          dt Relationship
-          dd {{ formatToken(selectedResult.provenance.relationship) }}
-          dt Model origin
-          dd {{ formatToken(selectedResult.provenance.modelOrigin) }}
-          dt Model
-          dd {{ selectedResult.provenance.model }}
-          dt Precision
-          dd {{ selectedResult.provenance.precision }}
-          dt EARTH-derived
-          dd {{ selectedResult.provenance.earthDerived }}
-          dt Validates EARTH theory
-          dd false
-        section.simulation-scalar-outputs
-          h3 Key scalar outputs
-          dl(v-if="scalarOutputs.length")
-            template(v-for="output in scalarOutputs" :key="output.key")
-              dt {{ humanizeKey(output.key) }}
-              dd {{ formatScalar(output.value) }}{{ output.unit ? ` ${output.unit}` : '' }}
-          p(v-else) No top-level scalar outputs were returned.
-        section.simulation-diagnostics
-          h3 Diagnostics
-          dl
-            template(v-for="([key, value]) in resultDiagnostics" :key="key")
-              dt {{ humanizeKey(key) }}
-              dd {{ formatScalar(value) }}
-        section.simulation-structured-outputs(v-if="structuredOutputs.length")
-          h3 Structured outputs
-          article(v-for="output in structuredOutputs" :key="output.key")
-            h4 {{ humanizeKey(output.key) }}
-            EarthStructuredValue(:value="output.value")
-        details.simulation-raw-result(data-testid="simulation-raw-result")
-          summary Raw JSON result
-          pre
-            code {{ JSON.stringify(selectedResult, null, 2) }}
-      p.simulation-result-empty(v-else-if="selectedMethod?.runnable") Run the selected method to create a session result. Completed results remain attached to their methods while this program page is open.
-      p.simulation-result-empty(v-else) This unavailable source formulation cannot create a result. Its source blocker remains recorded in the selected method metadata.
+      h2#simulation-results-heading Method-addressed session ledger
+      p Current structured output, diagnostics, finding, and raw result are shown in the shared workbench stage above. Frozen comparison snapshots remain immutable across reruns.
 
       section.simulation-run-ledger(v-if="methods.length > 1 && completedResultEntries.some(({ result }) => result)" data-testid="simulation-run-ledger")
         h3 Session run ledger
@@ -762,7 +1138,7 @@ onUnmounted(abortExecution)
           b {{ entry.result ? 'COMPLETED' : 'NOT RUN' }}
           small {{ ledgerOutput(entry.result) }}
 
-    section.simulation-evidence-section(aria-labelledby="program-evidence-heading")
+    section.simulation-evidence-section(v-if="!isWorkbenchSurface" aria-labelledby="program-evidence-heading")
       p.eyebrow 05 / Program and source evidence
       h2#program-evidence-heading Evidence ledger
       p.inline-error(v-if="evidenceError" role="alert" data-testid="program-evidence-error") {{ evidenceError }}

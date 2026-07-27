@@ -31,10 +31,10 @@ content/tour            attributed Tour source content and generated-artifact co
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
 src/tour                pure Tour engines, progress model, and transactional offline pack
-src/workbench           strict version-1 snapshots and saved-run validation
+src/workbench           strict URL state, SHA-256, version-1 snapshots, and saved-run validation
 src/workers             dedicated formula, Core, number-wall, and isolated EARTH workers
 src/components/tour     lesson grammar, instruments, and ID-based lazy simulation dispatcher
-src/components          navigation, coverage, Plotly, and canvas instruments
+src/components          navigation, shared Workbench shell, coverage, Plotly, and canvas instruments
 src/views               lazy-routed tour, atlas, lab, EARTH dossier/program/data, and provenance views
 tests/ui                Vitest and Vue Test Utils contracts
 tests/e2e               Playwright browser audit
@@ -48,7 +48,7 @@ At Tour revision `2026-07-27`, the content pipeline deterministically generates 
 
 Nine pure TypeScript Tour engines evaluate bounded inputs without network calls or Plotly. `TourSimulationStage.vue` dispatches by simulation ID and lazily imports only the selected instrument: units builder, physical scale ruler, photon equivalent converter, electrical standards network, hydrogen spectrum, particle scales, spin precession, blackbody spectrum, or particle-to-mole scaler. The conventional spine establishes standard physics and its limits before later source-specific tracks.
 
-Plotly is dynamically imported into its own lazy chunk and Formula sweeps mount it only when their detail disclosure opens; the complete 65-row sweep table is always available. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows with debounced result-status announcements; topic, category, search, and basis stay primary while source criterion, dimension audit, constructor, and representation remain in an advanced disclosure.
+Plotly is dynamically imported into its own lazy chunk and Formula sweeps mount it only when their detail disclosure opens; the complete 65-row sweep table is always available. Number-wall values are rendered with canvas so exact source strings and exact-zero identity can be retained for pointer or keyboard cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows with debounced result-status announcements; topic, category, search, and basis stay primary while source criterion, dimension audit, constructor, and representation remain in an advanced disclosure.
 
 ### Physics Tour
 
@@ -72,7 +72,13 @@ The synthetic inversion-boundary sweep is sensitivity analysis, not uncertainty 
 
 Formula detail can explicitly save a local version-1 snapshot or freeze up to two in-session comparison states. Snapshots separate the selected synthetic sweep point from nominal scale-one source-comparison outputs. Comparison uses only the compatibility key: incompatible states show findings in parallel with no residual, while compatible Formula states may report only the selected-real delta.
 
-The saved-run registry accepts finite plain JSON only, rejects unsafe keys, non-plain prototypes, cycles, sparse/decorated arrays, and unsupported values, and caps each serialized run at 512 KiB. `/saved` lists, links, deletes, or clears local runs. Formula run import/export, revision replay, richer storage management, and saved-run migration remain Iteration 10 work; Tour progress import/export is a separate existing feature.
+The saved-run registry accepts finite plain JSON only, rejects unsafe keys, non-plain prototypes, cycles, sparse/decorated arrays, and unsupported values, and caps each serialized run at 512 KiB. `/saved` lists, links, deletes, or clears local Formula, Core, Number Walls, and EARTH runs. Run import/export, revision replay, richer storage management, and saved-run migration remain Iteration 10 work; Tour progress import/export is a separate existing feature.
+
+### Shared Workbench
+
+`/labs` links to Core, Number Walls, and a bounded EARTH method route. All three use one capability-driven shell with the same stage, essential controls, action, findings, full-controls, evidence, and raw-result order. URL-owned state is strictly parsed and canonicalized; rejected requested values remain visibly announced instead of silently becoming defaults. Reset, explicit save, immutable two-snapshot comparison, structured findings, progress/cancel state, and advanced disclosures use one action grammar without duplicate domain controls.
+
+Core remains route-evaluated and exposes no fake Run action. It labels external sources as unpinned, prevents 2D/3D plot-state contradictions, and does not expose its case-specific internal diagnostic as a generic scientific residual. Number Walls still defers payload and worker loading until Run; exact determinant zero identity is independent of display transforms, absent display extrema remain absent, valuation mode requires a prime, and modular/valuation compatibility binds the active modulus or prime. `/labs/earth/:programId` is a distinct Workbench surface that does not load dossier evidence shards; canonical `/earth/programs/:id` retains Evidence ownership. Traditional, source-reproduction, validator, and unavailable EARTH methods keep separate source/implementation references, revisions, origins, and conclusion boundaries.
 
 ### EARTH Program, Method, and Result Model
 
@@ -82,7 +88,7 @@ The saved-run registry accepts finite plain JSON only, rejects unsafe keys, non-
 
 `EARTH-THERM-006`, `EARTH-COS-006`, `EARTH-PLAN-008`, and `EARTH-PLAN-012` are provenance-pure two-method pilots: each exposes a source reproduction and a separate traditional analytic baseline, each with its own defaults and result. The remaining unavailable source-model records preserve what the corpus proposes and what is missing; they do not contain executable kernels. See `../research/earth-thad-nassim/TRADITIONAL_PHYSICS_METHODS.md` for the baseline taxonomy and provenance rules.
 
-The EARTH dossier uses canonical routes `/earth`, `/earth/corpus`, `/earth/corpus/:slug`, `/earth/programs`, `/earth/programs/:id`, and `/earth/datasets`. `/earth/simulations`, `/earth/simulations/:id`, and `/earth/:slug` remain legacy aliases. Dossier-local navigation, compact URL-backed ledgers, a multi-method workbench, typed inputs initialized from each method's defaults with advanced JSON editing, structured findings plus raw artifacts, and safe reading/exact-source modes are available across responsive and keyboard-accessible layouts.
+The EARTH dossier uses canonical routes `/earth`, `/earth/corpus`, `/earth/corpus/:slug`, `/earth/programs`, `/earth/programs/:id`, and `/earth/datasets`. `/earth/simulations`, `/earth/simulations/:id`, and `/earth/:slug` remain legacy aliases. Dossier-local navigation, compact URL-backed ledgers, typed method inputs with advanced JSON editing, structured findings plus raw artifacts, and safe reading/exact-source modes are available across responsive and keyboard-accessible layouts. Runnable records link to the separate `/labs/earth/:programId` Workbench surface.
 
 ## Definition of Done
 
@@ -135,7 +141,7 @@ npm run verify
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. It fails if the sibling EARTH corpus differs from `public/data/sources/earth-source-lock.json`. `npm run data:lock:earth` is the explicit acceptance path for a clean new EARTH revision. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; both update commands are intentionally excluded from routine verification so a source change cannot silently rewrite the corpus.
 
-UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour instruments, meaning-first Formula records, dependency/provenance audits, strict snapshots and saved runs, responsive navigation, strict EARTH adapters, and worker lifecycles. Verification recorded on 2026-07-27: `npm run verify` passed with 58 Vitest files and 600 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 91 tests, and one production-preview Chromium PWA test passed. Independent scientific and UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
+UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour instruments, meaning-first Formula records, dependency/provenance audits, strict snapshots and URL state, the shared Workbench, responsive navigation, strict EARTH adapters, and worker lifecycles. Verification recorded on 2026-07-27: `npm run verify` passed with 63 Vitest files and 659 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 103 tests, and one production-preview Chromium PWA test passed. Independent scientific and UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
 
 ## Static Deployment
 

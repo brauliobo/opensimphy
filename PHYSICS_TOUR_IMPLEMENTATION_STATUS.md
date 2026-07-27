@@ -20,7 +20,7 @@ Date: 2026-07-27
 | Item | State |
 | --- | --- |
 | Product plan | Recorded |
-| Tour implementation | Iterations 0 through 6 technically complete; remaining iterations planned |
+| Tour implementation | Iterations 0 through 7 technically complete; remaining iterations planned |
 | Tour content revision | `2026-07-27` |
 | Tour chapters | 20 total; 8 content-ready conventional, 12 planned mathematical/research |
 | Tour lessons / simulations | 9 / 9 |
@@ -53,15 +53,15 @@ Original baseline verification:
 - All 134 runnable EARTH method defaults completed in dedicated workers.
 - `git diff --check`: passed.
 
-Current Iteration 6 checkpoint verification:
+Current Iteration 7 checkpoint verification:
 
 - `npm run verify`: passed.
 - Data generation: revision `2026-07-27`; 20 chapters, 9 lessons, 9 simulations, 27 glossary entries, 10 references, and 8/8 content-ready stations totaling 27 minutes.
 - TypeScript typecheck: passed.
-- Vitest: 58 files, 600 tests passed.
+- Vitest: 63 files, 659 tests passed.
 - Production PWA build: passed.
 - `npm run check:routes`: passed.
-- Default Chromium Playwright: 91 tests passed.
+- Default Chromium Playwright: 103 tests passed.
 - Production-preview Chromium PWA Playwright: 1 test passed.
 - `git diff --check`: passed.
 - Independent scientific acceptance: PASS.
@@ -100,17 +100,16 @@ Original measured production baseline:
 
 Current checkpoint production measurements:
 
-- Main JavaScript: 113.05 kB raw / 43.71 kB gzip.
-- Eager CSS: 85.37 kB raw / 14.54 kB gzip.
-- Formula Atlas: 14.07 kB raw / 4.62 kB gzip.
-- Formula registry: 19.80 kB raw / 7.56 kB gzip.
-- Formula detail: 29.00 kB raw / 8.90 kB gzip.
-- Saved-run registry: 8.43 kB raw / 2.99 kB gzip.
-- Saved view: 11.83 kB raw / 3.89 kB gzip.
-- Formula worker: 15.27 kB raw.
+- Main JavaScript: 114.08 kB raw / 44.06 kB gzip.
+- Eager CSS: 91.53 kB raw / 15.45 kB gzip.
+- Shared URL-state/snapshot chunk: 18.56 kB raw / 5.68 kB gzip.
+- Core Workbench: 16.67 kB raw / 6.39 kB gzip.
+- Number Walls Workbench: 26.35 kB raw / 9.88 kB gzip.
+- EARTH Workbench/Evidence detail: 46.76 kB raw / 14.65 kB gzip.
+- Formula worker: 15.27 kB raw; Core worker: 18.92 kB raw; number-wall worker: 4.63 kB raw.
 - Plotly: still lazy-loaded.
 - Initial compressed JavaScript: below the 200 KB budget.
-- PWA precache: 75 entries / 3,856.34 KiB.
+- PWA precache: 79 entries / 3,918.70 KiB.
 - Runtime registry revision: `6647c006a9d3`.
 
 ## Iteration ledger
@@ -124,7 +123,7 @@ Current checkpoint production measurements:
 | 4 | Units vertical slice | Technically complete | containing commit | 11-minute full units lesson plus 4-minute Guided quick subset; six-stage lesson grammar; exact SI observation anchors; prediction-first dimensional builder with presets, SI/mechanical-CGS coordinates, energy/torque caveat, and unlike-addition rejection; additive Technical content; provenance and conclusion boundary; accessible reflow; explicit Guided offline pack |
 | 5 | Conventional-physics spine | Technically complete | containing commit | Revision `2026-07-27`; 8/8 content-ready stations and conventional chapters; 9 lessons and pure-engine simulations; 27-minute spine; status/provenance corrections; official IAU/CIPM references; lazy instruments; 31-resource Guided pack |
 | 6 | Formula specimen | Technically complete | containing commit | 288 meaning-first records; authoritative identity/NFC-bound source audits; exact fetched-byte hashes; progressive equation ladder; separate source/runtime dependencies; dimension/mol caveats; accessible table/lazy plot; strict local v1 snapshots and saved-run ledger |
-| 7 | Shared Workbench | Planned | pending | Core/walls/EARTH share declared interaction grammar |
+| 7 | Shared Workbench | Technically complete | containing commit | Core, Number Walls, and EARTH share one capability-driven grammar with strict announced URL state, reset, explicit saves, immutable two-state comparison, structured findings, domain-safe compatibility, route ownership, keyboard/reflow support, and no loss of domain behavior |
 | 8 | Mathematical instruments | Planned | pending | Null-model/base-dependence caveats enforced |
 | 9 | EARTH research track | Planned | pending | Provenance classes remain distinct across all lessons |
 | 10 | Notebook/offline packs | Planned | pending | Richer packs, saved-run import/export and revision replay, migration/storage policy, and update warnings pass |
@@ -163,6 +162,8 @@ Each v7 Formula record has a progressive constructor, separate source/runtime de
 
 The local snapshot foundation uses strict schema version 1, finite plain JSON, safe keys/prototypes, cycle rejection, and a 512 KiB per-run cap. Formula snapshots separate selected sweep output from nominal scale-one comparison output; in-session comparison holds at most two states and uses compatibility key equality only. Incompatible states have no residual, while compatible Formula states may report only selected-real delta. The Local Notebook lists, links, deletes, and clears saved runs. Saved-run import/export, revision replay, migration, and broader storage management remain Iteration 10 work.
 
+Core, Number Walls, and EARTH now share a capability-driven Workbench shell and one semantic mobile order. Strict scalar/base64url state preserves unrelated query values, canonicalizes invalid requests with an announced rejection, and follows browser history. Core is honestly route-evaluated, discloses unpinned external source identity, and keeps plot/projection state consistent. Number Walls defers source/worker work, carries exact-zero identity independently of display values, rejects composite valuation bases, and binds modular/valuation compatibility to the active base. The distinct `/labs/earth/:programId` surface skips dossier evidence shards while preserving exact method relationship, model origin, source/implementation revision, immutable dispatched inputs, progress/cancel, unavailable-method boundaries, saves, and comparisons. Output-schema revisions remain distinct from content revisions.
+
 Generated Tour JSON is not automatically precached. The explicit Guided-only pack transactionally installs and validates 31 resources totaling 485,129 bytes at revision `2026-07-27`, includes all station lessons and simulations plus taxonomy as a self-contained fallback, preserves the prior complete pack on failure, and supports explicit clearing. Iteration 10 remains planned: richer packs, saved-run import/export and revision replay, migration/storage policy, and update warnings are not complete.
 
 Production closure checks cover all Tour, Formula Atlas, Core, and Number Wall route groups and six EARTH view groups, including canonical and legacy document navigation. Evaluator signatures occur only in their dedicated workers; no aggregate Atlas or shared simulation worker remains.
@@ -176,6 +177,7 @@ Current reusable simulation foundations:
 - Exact, measured, derived, and illustrative statuses with explicit assumptions, provenance, conclusion boundaries, and `validatesTheory: false`.
 - A transactional Guided Tour pack with validated manifest, taxonomy, vocabulary, glossary, references, chapter, lesson, and simulation resources.
 - Meaning-first v7 Formula records with byte-pinned sources, dual provenance, progressive equations, dependency/dimension audits, complete sweep tables, and strict local snapshots.
+- A shared responsive Workbench shell, strict announced URL state, explicit local saves, and declared two-snapshot compatibility for Core, Number Walls, and EARTH.
 - 53 frequency/energy/mass/temperature bridge formula records.
 - 64 particle formula records.
 - Complete bounded number-wall engine and worker.
@@ -201,6 +203,18 @@ Required future abstractions:
 - Controlled and proprietary datasets cannot be publicly bundled without permission.
 
 ## Progress history
+
+### 2026-07-27: Shared Workbench accepted
+
+- Marked Iteration 7 technically complete in the containing commit.
+- Accepted one capability-driven shell and action grammar for Core, Number Walls, and EARTH: stage, essential controls, run/cancel or route-evaluated state, reset, explicit save, immutable two-snapshot comparison, findings, full controls, evidence, and raw output.
+- Accepted strict canonical scalar/base64url state with preserved foreign query values, browser-history restoration, explicit warnings for rejected requested state, and no automatic save or synchronization.
+- Accepted route-evaluated Core with all 37 cases, consistent 2D/3D projection state, unpinned-source disclosure, no undefined generic residual, and compatibility-bound snapshots.
+- Accepted deferred Number Walls payload/worker execution, exact payload hashes, exact-zero identity independent of all six display transforms, absent display extrema, prime-only valuations, mode-aware modulus/prime compatibility, stale-result disclosure, and pointer/keyboard cell inspection.
+- Accepted distinct EARTH Workbench and Evidence surfaces: `/labs/earth/:programId` does not fetch dossier evidence shards; methods retain separate relationship, origin, source/implementation references and revisions; unavailable methods have no Run; worker inputs remain immutable; save and comparison feedback stays visible in Findings.
+- `npm run verify` passed: generation, typecheck, 63 Vitest files with 659 tests, production build, and route checker passed. The default Chromium suite passed 103 tests and the production-preview PWA suite passed 1 test; independent scientific and UX acceptance: PASS; `git diff --check`: passed.
+- Measured main JavaScript at 114.08 kB raw / 44.06 kB gzip, eager CSS at 91.53/15.45 kB, shared URL-state/snapshot chunk at 18.56/5.68 kB, Core at 16.67/6.39 kB, Number Walls at 26.35/9.88 kB, EARTH detail at 46.76/14.65 kB, and PWA precache at 79 entries / 3,918.70 KiB. Plotly remains lazy, runtime revision is `6647c006a9d3`, and initial compressed JavaScript remains below 200 KB.
+- Preserved `scientificallyValidated: false`, all EARTH dataset/topology/derivation blockers, all source caveats, and the visible 68-conflict Atlas boundary.
 
 ### 2026-07-27: Formula specimen accepted
 
@@ -262,4 +276,4 @@ Required future abstractions:
 
 ## Next implementation step
 
-Implement Iteration 7's common Workbench shell and interaction grammar for Core, Number Walls, and EARTH. Iterations 8 through 11 remain planned.
+Implement Iteration 8's mathematical-instrument curriculum, including number-wall and quartic/root lessons plus null-model and base-dependence caveats. Iterations 9 through 11 remain planned.

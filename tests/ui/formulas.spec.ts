@@ -359,7 +359,6 @@ describe('formula iteration 6 views', () => {
       },
       sourceRevision: 'fixture-composite-source-v1',
       implementationRevision: 'fixture-formula-evaluator-v1',
-      contentRevision: 'formula-record-v7',
       compatibilityKey: '1'.padStart(64, '0'),
       label: 'High scale',
     })

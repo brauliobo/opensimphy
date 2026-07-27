@@ -69,6 +69,13 @@ export const router = createRouter({
     { path: '/labs', name: 'labs', component: () => import('../views/LabsView.vue'), meta: { title: 'Labs' } },
     { path: '/labs/core', alias: '/core', name: 'core', component: () => import('../views/CoreLabView.vue'), meta: { title: 'Core Lab' } },
     { path: '/labs/walls', alias: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue'), meta: { title: 'Number Walls' } },
+    {
+      path: '/labs/earth/:programId',
+      name: 'earth-workbench',
+      component: () => import('../views/EarthSimulationDetailView.vue'),
+      props: (route) => ({ id: route.params.programId, surface: 'workbench' }),
+      meta: { title: 'EARTH Workbench' },
+    },
     { path: '/earth', name: 'earth', component: () => import('../views/EarthOverviewView.vue'), meta: { title: 'EARTH Dossier' } },
     { path: '/earth/corpus', name: 'earth-corpus', component: () => import('../views/EarthCorpusView.vue'), meta: { title: 'EARTH Source Index' } },
     {
@@ -83,7 +90,7 @@ export const router = createRouter({
       alias: '/earth/simulations/:id',
       name: 'earth-simulation',
       component: () => import('../views/EarthSimulationDetailView.vue'),
-      props: true,
+      props: (route) => ({ id: route.params.id, surface: 'evidence' }),
       meta: { title: 'EARTH Program Record' },
     },
     { path: '/earth/datasets', name: 'earth-datasets', component: () => import('../views/EarthDatasetsView.vue'), meta: { title: 'EARTH Dataset Ledger' } },

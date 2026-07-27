@@ -36,9 +36,15 @@ describe('number-wall engine', () => {
       const result = simulateNumberWall(payload, { terms: 8, depth: 3, mode })
       expect(result.mode).toBe(mode)
       expect(result.cells.length).toBeGreaterThan(0)
+      expect(result.cells.filter(({ isExactZero }) => isExactZero).map(({ row, column }) => ({ row, column }))).toEqual(
+        result.cells.filter(({ row, column }) => numberWallCell(payload.sequence.map(BigInt), row, column) === 0n)
+          .map(({ row, column }) => ({ row, column })),
+      )
     }
     expect(() => simulateNumberWall(payload, { shouldCancel: () => true })).toThrow(WallCancelledError)
     expect(() => simulateNumberWall(payload, { terms: 101 })).toThrow(/terms must be an integer/)
+    expect(() => simulateNumberWall(payload, { mode: 'valuation', valuationPrime: 9 })).toThrow(/must be prime/)
+    expect(() => simulateNumberWall(payload, { mode: 'mod', modulus: 9 })).not.toThrow()
   })
 
   it.each([

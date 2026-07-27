@@ -308,7 +308,6 @@ function snapshotInput(): WorkbenchSnapshotInputV1 {
     provenance,
     sourceRevision: record.sourceRevision,
     implementationRevision: record.implementationRevision,
-    contentRevision: record.outputSchemaRevision,
     compatibilityKey: record.compatibilityKey,
     ...(saveLabel.value.trim() ? { label: saveLabel.value.trim() } : {}),
   }

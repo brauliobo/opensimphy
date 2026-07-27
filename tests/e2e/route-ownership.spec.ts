@@ -182,6 +182,14 @@ const earthRoutes = [
     ready: async (page: Page) => expect(page.getByTestId('program-evidence-summary')).toContainText('Formula records'),
   },
   {
+    path: '/earth/programs/EARTH-FND-006',
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Fixed-point and recognizability tests' })).toBeVisible(),
+  },
+  {
+    path: '/labs/earth/EARTH-FND-006',
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Fixed-point and recognizability tests' })).toBeVisible(),
+  },
+  {
     path: '/earth/datasets',
     ready: async (page: Page) => expect(page.getByTestId('dataset-summary')).toContainText('19 metadata-authenticated records'),
   },
@@ -202,7 +210,7 @@ for (const route of earthRoutes) {
 
     expectOwnerArtifacts(activity, [])
     expect(workerOwners(activity).filter((owner) => owner === 'formula' || owner === 'core' || owner === 'wall')).toEqual([])
-    if (route.path === '/earth/programs/EARTH-PRT-001') expect(workerOwners(activity)).not.toContain('earth')
+    if (route.path.includes('/EARTH-')) expect(workerOwners(activity)).not.toContain('earth')
     if (route.path.endsWith(earthDocumentSlug)) {
       await expect(page.getByRole('heading', { name: 'For Your Understanding' })).toBeVisible()
       expect(workerOwners(activity)).toEqual([])
@@ -244,7 +252,7 @@ test('/labs/walls defers its selected payload and wall worker until Run', async 
   expect(unique(activity.requests.filter((path) => path.startsWith('/data/number-walls/')))).toEqual([])
   expect(workerOwners(activity)).toEqual([])
 
-  await page.getByTestId('wall-run').click()
+  await page.getByTestId('workbench-run').click()
   await expect(page.getByTestId('wall-simulation-ready')).toBeVisible()
 
   expect(unique(activity.requests.filter((path) => path.startsWith('/data/number-walls/')))).toHaveLength(1)
@@ -257,7 +265,30 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
+  await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
+  await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')
 })
+
+for (const route of [
+  { path: '/labs/earth/EARTH-FND-006', owner: 'Workbench', otherOwner: 'Evidence' },
+  { path: '/earth/programs/EARTH-FND-006', owner: 'Evidence', otherOwner: 'Workbench' },
+] as const) {
+  test(`${route.path} creates only its EARTH worker after explicit Run`, async ({ page }) => {
+    const activity = await gotoColdRoute(page, route.path)
+    await expect(page.getByRole('heading', { name: 'Fixed-point and recognizability tests' })).toBeVisible()
+    await expect(page.locator('#primary-navigation').getByRole('link', { name: new RegExp(route.owner) })).toHaveAttribute('aria-current', 'location')
+    await expect(page.locator('#primary-navigation').getByRole('link', { name: new RegExp(route.otherOwner) })).not.toHaveClass(/router-link-active/)
+
+    expectOwnerArtifacts(activity, [])
+    expect(workerOwners(activity)).toEqual([])
+    await page.getByTestId('workbench-run').click()
+    await expect(page.getByTestId('simulation-result')).toBeVisible()
+
+    expect(workerOwners(activity)).toEqual(['earth'])
+    expect(workerOwners(activity).filter((owner) => owner !== 'earth')).toEqual([])
+  })
+}
 
 test('warm Atlas to Tour to EARTH navigation keeps owner activity route-bound and audit history session-wide', async ({ page }) => {
   const activity = await gotoColdRoute(page, '/atlas')

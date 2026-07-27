@@ -1,11 +1,21 @@
 import { readonly, shallowRef } from 'vue'
 import type { CoreEvaluation } from '../engine/core'
 import type { PlotFigure } from '../types/plot'
+import type { JsonValue, WorkbenchFindingV1, WorkbenchProvenanceSummary } from '../types/workbench'
 import type { CoreWorkerResponse } from '../types/workers'
+import { sha256 } from '../workbench/sha256'
+import { cloneJsonValue } from '../workbench/snapshots'
 import CoreWorker from '../workers/core.worker?worker'
 import { clearRuntimeAuditDomain, publishRuntimeAudit } from './runtimeAudit'
 
 export const EXPECTED_CORE_CASES = 37
+export const CORE_IMPLEMENTATION_REVISION = 'core-engine-float64-v1'
+export const CORE_OUTPUT_SCHEMA_REVISION = 'core-record-output-v1'
+
+export interface CoreSourceIdentity {
+  readonly provenance: CoreEvaluation['provenance']
+  readonly sourceUrl: string
+}
 
 export interface CoreRecord {
   id: string
@@ -14,11 +24,17 @@ export interface CoreRecord {
   description: string
   graphs: Array<{ id: string; label: string; figure: PlotFigure }>
   graphReady: boolean
-  formula?: string
-  result?: string
-  residual?: string
-  sourceUrl?: string
-  provenance?: string
+  formula: string
+  output: JsonValue
+  residual: number | null
+  sourceUrl: string
+  sourceIdentity: CoreSourceIdentity
+  sourceRevision: string
+  implementationRevision: string
+  outputSchemaRevision: string
+  compatibilityKey: string
+  finding: WorkbenchFindingV1
+  provenance: WorkbenchProvenanceSummary
 }
 
 const coreCases = shallowRef<CoreRecord[]>([])
@@ -30,12 +46,53 @@ let generation = 0
 let owners = 0
 let ownershipGeneration = 0
 
-function scientific(value: number): string {
-  if (value === 0) return '0'
-  return value.toExponential(12)
-}
-
 export function coreFromEvaluation(evaluation: CoreEvaluation): CoreRecord {
+  const output = cloneJsonValue(evaluation.result, `core.${evaluation.id}.output`)
+  const sourceIdentity: CoreSourceIdentity = {
+    provenance: evaluation.provenance,
+    sourceUrl: evaluation.sourceUrl,
+  }
+  const sourceRevision = 'external-source-unpinned'
+  const compatibilityKey = sha256(JSON.stringify({
+    caseId: evaluation.id,
+    formula: evaluation.formula,
+    sourceIdentity,
+    sourceRevision,
+    implementationRevision: CORE_IMPLEMENTATION_REVISION,
+    outputSchemaRevision: CORE_OUTPUT_SCHEMA_REVISION,
+  }))
+  const provenance: WorkbenchProvenanceSummary = {
+    claimClass: 'bounded-local-evaluation',
+    evidenceRefs: [evaluation.sourceUrl],
+    sourceRevision,
+    sourceLocator: evaluation.sourceUrl,
+    methodRelationship: evaluation.provenance === 'physics-monastery'
+      ? 'browser evaluation of a declared Physics Monastery Core preset'
+      : 'browser evaluation of a declared engine-extension Core preset',
+    modelOrigin: 'declared Core preset',
+    resultStatus: 'computed bounded local evaluation',
+    caveats: [
+      'The route-owned worker evaluates a finite parameter sweep with float64 arithmetic.',
+      'Graph readiness reports local engine output availability, not empirical agreement.',
+      'The external source URL is identified but its bytes are not fetched or revision-pinned by this route.',
+    ],
+    implementationRevision: CORE_IMPLEMENTATION_REVISION,
+    outputSchemaRevision: CORE_OUTPUT_SCHEMA_REVISION,
+  }
+  const finding: WorkbenchFindingV1 = {
+    schemaVersion: 1,
+    changed: `Declared Core preset ${evaluation.id} is selected for presentation.`,
+    cause: 'The route-owned Core worker evaluated this preset and its finite graph sweep when the route loaded.',
+    equation: evaluation.formula,
+    assumptions: [
+      'The selected case is a declared preset rather than a free-form experimental input.',
+      'The evaluator uses float64 reproduction arithmetic over its bounded local graph domain.',
+    ],
+    establishes: 'The selected preset produced structured output and a graph-ready bounded local evaluation.',
+    doesNotEstablish: 'This computation is not empirical evidence and does not validate the source theory or any physical claim.',
+    provenance,
+    validatesTheory: false,
+  }
   const sweep: PlotFigure = {
     data: [{
       x: evaluation.graph.map((point) => point.x),
@@ -91,10 +148,16 @@ export function coreFromEvaluation(evaluation: CoreEvaluation): CoreRecord {
     graphs,
     graphReady: evaluation.graphReady && graphs.length > 0,
     formula: evaluation.formula,
-    result: JSON.stringify(evaluation.result),
-    residual: evaluation.residual === null ? 'not applicable' : scientific(evaluation.residual),
+    output,
+    residual: evaluation.residual,
     sourceUrl: evaluation.sourceUrl,
-    provenance: evaluation.provenance,
+    sourceIdentity,
+    sourceRevision,
+    implementationRevision: CORE_IMPLEMENTATION_REVISION,
+    outputSchemaRevision: CORE_OUTPUT_SCHEMA_REVISION,
+    compatibilityKey,
+    finding,
+    provenance,
   }
 }
 

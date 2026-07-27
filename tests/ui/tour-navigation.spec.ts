@@ -72,6 +72,8 @@ describe('Tour and support navigation', () => {
     expect(appRouter.resolve('/tour/units').name).toBe('tour-chapter')
     expect(appRouter.resolve('/tour/units/physical-quantities').name).toBe('tour-lesson')
     expect(appRouter.resolve('/evidence').name).toBe('evidence')
+    expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').name).toBe('earth-workbench')
+    expect(appRouter.resolve('/earth/programs/EARTH-PLAN-008').name).toBe('earth-simulation')
     expect(appRouter.resolve('/saved').name).toBe('saved')
     expect(appRouter.resolve('/not-found').name).toBe('not-found')
     expect(appRouter.resolve('/missing/deep/path').name).toBe('catch-all')

@@ -5,6 +5,7 @@ import type {
   WallSimulation,
   WallSimulationOptions,
 } from "../types/engine.js";
+import { isPrimeInteger } from "../math/integer.js";
 
 export const MAX_WALL_TERMS = 100;
 export const MAX_WALL_DEPTH = 50;
@@ -110,15 +111,16 @@ function normalizeMod(value: bigint, modulus: bigint): number {
 }
 
 function modeCell(row: number, column: number, exact: bigint, mode: WallMode, options: Required<Pick<WallSimulationOptions, "modulus" | "valuationPrime" | "smallValueLimit">>): WallCell {
-  if (mode === "mod") return { row, column, value: normalizeMod(exact, BigInt(options.modulus)) };
-  if (mode === "valuation") return { row, column, value: valuation(exact, BigInt(options.valuationPrime)) };
+  const isExactZero = exact === 0n;
+  if (mode === "mod") return { row, column, isExactZero, value: normalizeMod(exact, BigInt(options.modulus)) };
+  if (mode === "valuation") return { row, column, isExactZero, value: valuation(exact, BigInt(options.valuationPrime)) };
   if (mode === "small_values") {
     const small = absolute(exact) <= BigInt(options.smallValueLimit);
-    return { row, column, exact: small ? exact.toString() : undefined, value: small ? exact.toString() : null };
+    return { row, column, isExactZero, exact: small ? exact.toString() : undefined, value: small ? exact.toString() : null };
   }
-  if (mode === "zero_windows") return { row, column, value: exact === 0n ? 1 : 0, sign: exact === 0n ? 0 : exact > 0n ? 1 : -1 };
+  if (mode === "zero_windows") return { row, column, isExactZero, value: isExactZero ? 1 : 0, sign: isExactZero ? 0 : exact > 0n ? 1 : -1 };
   const transformed = signedLog(exact);
-  return { row, column, value: transformed.log, sign: transformed.sign };
+  return { row, column, isExactZero, value: transformed.log, sign: transformed.sign };
 }
 
 export function simulateNumberWall(payloadInput: WallPayload | unknown, inputOptions: WallSimulationOptions = {}): WallSimulation {
@@ -133,6 +135,7 @@ export function simulateNumberWall(payloadInput: WallPayload | unknown, inputOpt
   assertInteger(depth, "depth", 0, MAX_WALL_DEPTH);
   assertInteger(modulus, "modulus", 2, 2_147_483_647);
   assertInteger(valuationPrime, "valuationPrime", 2, 2_147_483_647);
+  if (mode === "valuation" && !isPrimeInteger(valuationPrime)) throw new RangeError("valuationPrime must be prime in valuation mode");
   assertInteger(smallValueLimit, "smallValueLimit", 0, 2_147_483_647);
 
   const sequence = payload.sequence.slice(0, terms).map(BigInt);

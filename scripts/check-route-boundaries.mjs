@@ -31,6 +31,7 @@ const routes = {
   formulaDetail: 'src/views/FormulaDetailView.vue',
   coreLab: 'src/views/CoreLabView.vue',
   numberWalls: 'src/views/NumberWallsView.vue',
+  earthWorkbench: 'src/views/EarthSimulationDetailView.vue',
   earthOverview: 'src/views/EarthOverviewView.vue',
   earthCorpus: 'src/views/EarthCorpusView.vue',
   earthDocument: 'src/views/EarthDocumentView.vue',
@@ -41,7 +42,7 @@ const routes = {
 
 const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
 const nonNumericalRoutes = [...tourRoutes, 'evidence', 'saved', 'notFound']
-const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthDatasets']
+const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthWorkbench', 'earthDatasets']
 
 const ownershipMarkers = {
   formula: [

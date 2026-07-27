@@ -1,4 +1,9 @@
 import { CORE_CASES, evaluateCoreRegistry } from '../../src/engine/core'
+import {
+  CORE_IMPLEMENTATION_REVISION,
+  CORE_OUTPUT_SCHEMA_REVISION,
+  coreFromEvaluation,
+} from '../../src/registries/coreRegistry'
 
 interface ComplexResult {
   re: number
@@ -27,6 +32,32 @@ describe('core registry', () => {
     expect(evaluations.filter(({ graph }) => graph.length !== 33).map(({ id }) => id)).toEqual([])
     expect(evaluations.filter(({ residual }) => residual !== null && !Number.isFinite(residual)).map(({ id }) => id)).toEqual([])
     expect(evaluations.filter(({ graph }) => graph.every(({ y }) => y === graph[0]?.y)).map(({ id }) => id)).toEqual([])
+  })
+
+  it('adapts all 37 evaluations to structured immutable records with exact compatibility revisions', () => {
+    const records = evaluations.map(coreFromEvaluation)
+    const quarticEvaluation = structuredClone(evaluation('hyperbolic-quartic-roots'))
+    const quarticRecord = coreFromEvaluation(quarticEvaluation)
+    const sameCase = coreFromEvaluation(structuredClone(quarticEvaluation))
+    const changedSource = coreFromEvaluation({ ...structuredClone(quarticEvaluation), formula: `${quarticEvaluation.formula} + source revision` })
+
+    expect(records).toHaveLength(37)
+    expect(new Set(records.map(({ compatibilityKey }) => compatibilityKey)).size).toBe(37)
+    expect(records.every(({ output }) => typeof output !== 'string')).toBe(true)
+    expect(records.every(({ finding }) => finding.validatesTheory === false)).toBe(true)
+    expect(records.every(({ implementationRevision }) => implementationRevision === CORE_IMPLEMENTATION_REVISION)).toBe(true)
+    expect(records.every(({ outputSchemaRevision }) => outputSchemaRevision === CORE_OUTPUT_SCHEMA_REVISION)).toBe(true)
+    expect(records.every(({ sourceRevision }) => sourceRevision === 'external-source-unpinned')).toBe(true)
+    expect(records.every(({ provenance, sourceUrl }) => provenance.evidenceRefs.includes(sourceUrl))).toBe(true)
+    expect(records.every(({ provenance }) => provenance.caveats.some((value) => value.includes('not fetched or revision-pinned')))).toBe(true)
+    expect(records.every(({ compatibilityKey }) => /^[a-f0-9]{64}$/.test(compatibilityKey))).toBe(true)
+    expect(sameCase.compatibilityKey).toBe(quarticRecord.compatibilityKey)
+    expect(changedSource.compatibilityKey).not.toBe(quarticRecord.compatibilityKey)
+
+    const mutableResult = quarticEvaluation.result as { a: number }
+    mutableResult.a = -1
+    expect((quarticRecord.output as { a: number }).a).not.toBe(-1)
+    expect(Object.isFrozen(quarticRecord.output)).toBe(true)
   })
 
   it('computes the five Monastery Planck closed forms, boundaries, and normalized site surfaces', () => {

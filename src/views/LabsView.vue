@@ -36,4 +36,10 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
       strong Number walls
       p Exact source sequences rendered through six local simulation modes in a cancellable worker.
       small {{ walls?.simulatable ?? 0 }} simulatable inputs →
+    RouterLink(to="/labs/earth/EARTH-PLAN-008")
+      span 03 / EARTH METHODS
+      strong EARTH method workbench
+      p Run one bounded method for the representative atmospheric scale-height program without entering the evidence registry.
+      small Open EARTH-PLAN-008 →
+  p.lab-intro Choose another EARTH program from the full canonical #[RouterLink.text-link(to="/earth/programs") Program Registry].
 </template>

@@ -210,6 +210,7 @@ export interface WallPayload {
 export interface WallCell {
   row: number;
   column: number;
+  isExactZero: boolean;
   exact?: string;
   value: number | string | null;
   sign?: -1 | 0 | 1;

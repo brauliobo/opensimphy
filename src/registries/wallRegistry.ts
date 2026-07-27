@@ -1,12 +1,15 @@
 import { readonly, shallowRef } from 'vue'
-import { loadWallPayload } from '../engine/numberWall'
-import type { WallMode } from '../types/engine'
+import { parseWallPayload } from '../engine/numberWall'
+import type { WallMode, WallPayload } from '../types/engine'
 import type { WallWorkerResponse } from '../types/workers'
+import { sha256 } from '../workbench/sha256'
 import { clearRuntimeAuditDomain, publishRuntimeAudit } from './runtimeAudit'
 
 export type { WallMode } from '../types/engine'
 
 export const EXPECTED_WALLS = 351
+export const WALL_IMPLEMENTATION_REVISION = 'number-wall-bareiss-worker-v2'
+export const WALL_OUTPUT_SCHEMA_REVISION = 'number-wall-matrix-v2'
 
 export interface WallInput {
   id: string
@@ -18,16 +21,38 @@ export interface WallInput {
   dimension?: string
 }
 
+export interface WallRunOptions {
+  depth: number
+  width: number
+  mode: WallMode
+  modulus: number
+}
+
+export interface WallSourceProvenance {
+  url: string
+  filename: string
+  sha256: string
+}
+
 export interface WallResult {
   id: string
   width: number
   depth: number
   mode: WallMode
   values: Array<Array<string | number | null>>
-  min: number
-  max: number
+  exactZeroMask: Array<Array<boolean | null>>
+  min: number | null
+  max: number | null
   zeroCount: number
   graphReady: boolean
+  input: WallInput
+  options: WallRunOptions
+  payload: WallPayload
+  sourceRevision: string
+  implementationRevision: string
+  outputSchemaRevision: string
+  compatibilityKey: string
+  sourceProvenance: WallSourceProvenance
 }
 
 type UnknownRecord = Record<string, unknown>
@@ -130,21 +155,75 @@ async function wallById(id: string): Promise<WallInput | null> {
   return walls.value.find((wall) => wall.id === id) ?? null
 }
 
-async function runWall(input: WallInput, options: { depth: number; width: number; mode: WallMode; modulus: number }, signal?: AbortSignal, onProgress?: (value: number) => void): Promise<WallResult> {
+function cloneWallInput(input: WallInput): WallInput {
+  return {
+    id:          input.id,
+    title:       input.title,
+    category:    input.category,
+    kind:        input.kind,
+    description: input.description,
+    filename:    input.filename,
+    ...(input.dimension === undefined ? {} : { dimension: input.dimension }),
+  }
+}
+
+function cloneWallOptions(options: WallRunOptions): WallRunOptions {
+  return {
+    depth:   options.depth,
+    width:   options.width,
+    mode:    options.mode,
+    modulus: options.modulus,
+  }
+}
+
+function wallPayloadUrl(filename: string): string {
+  if (!filename.endsWith('.json') || filename.includes('/') || filename.includes('\\')) throw new Error('Unsafe wall filename')
+  return `${import.meta.env.BASE_URL}data/number-walls/${encodeURIComponent(filename)}`
+}
+
+export function wallCompatibilityKey(
+  wallId: string,
+  sourceRevision: string,
+  options: Pick<WallRunOptions, 'mode' | 'width' | 'depth' | 'modulus'>,
+): string {
+  return sha256(JSON.stringify({
+    wallId,
+    sourceRevision,
+    mode:                   options.mode,
+    modulus:                options.mode === 'mod' || options.mode === 'valuation' ? options.modulus : null,
+    width:                  options.width,
+    depth:                  options.depth,
+    implementationRevision: WALL_IMPLEMENTATION_REVISION,
+    outputSchemaRevision:   WALL_OUTPUT_SCHEMA_REVISION,
+  }))
+}
+
+async function runWall(input: WallInput, options: WallRunOptions, signal?: AbortSignal, onProgress?: (value: number) => void): Promise<WallResult> {
   const cancelled = () => new DOMException('Simulation cancelled', 'AbortError')
+  const dispatchedInput = cloneWallInput(input)
+  const dispatchedOptions = cloneWallOptions(options)
   if (signal?.aborted) throw cancelled()
   await initialize()
   if (signal?.aborted) throw cancelled()
   if (error.value) throw error.value
   onProgress?.(5)
-  let payload
+  const sourceUrl = wallPayloadUrl(dispatchedInput.filename)
+  let sourceText: string
   try {
-    payload = await loadWallPayload(input.filename, `${import.meta.env.BASE_URL}data/number-walls`)
+    const response = await fetch(sourceUrl, { signal })
+    if (!response.ok) throw new Error(`Failed to load wall payload ${dispatchedInput.filename}: ${response.status}`)
+    sourceText = await response.text()
   } catch (reason) {
     if (signal?.aborted) throw cancelled()
     throw reason
   }
   if (signal?.aborted) throw cancelled()
+  const payload = parseWallPayload(JSON.parse(sourceText) as unknown)
+  if (payload.id !== dispatchedInput.id) {
+    throw new Error(`Wall payload ID ${payload.id} does not match registry ID ${dispatchedInput.id}`)
+  }
+  const sourceRevision = sha256(sourceText)
+  const compatibilityKey = wallCompatibilityKey(dispatchedInput.id, sourceRevision, dispatchedOptions)
   onProgress?.(15)
   let NumberWallWorker: typeof import('../workers/numberWall.worker?worker')['default']
   try {
@@ -156,7 +235,7 @@ async function runWall(input: WallInput, options: { depth: number; width: number
   }
   if (signal?.aborted) throw cancelled()
   const worker = new NumberWallWorker()
-  const requestId = `${input.id}-${Date.now()}`
+  const requestId = `${dispatchedInput.id}-${Date.now()}`
   return new Promise<WallResult>((resolve, reject) => {
     let settled = false
     const stop = () => {
@@ -196,6 +275,7 @@ async function runWall(input: WallInput, options: { depth: number; width: number
       }
       const simulation = response.result
       const rows = Array.from({ length: simulation.depth + 2 }, () => Array<string | number | null>(simulation.terms).fill(null))
+      const exactZeroMask = Array.from({ length: simulation.depth + 2 }, () => Array<boolean | null>(simulation.terms).fill(null))
       let min = Number.POSITIVE_INFINITY
       let max = Number.NEGATIVE_INFINITY
       let zeroCount = 0
@@ -206,12 +286,15 @@ async function runWall(input: WallInput, options: { depth: number; width: number
           ? cell.value * (cell.sign ?? 0)
           : cell.value
         row[cell.column] = cell.exact ?? signedValue
-        const numeric = typeof signedValue === 'number' ? signedValue : Number(signedValue)
-        if (Number.isFinite(numeric)) {
-          min = Math.min(min, numeric)
-          max = Math.max(max, numeric)
-          if ((simulation.mode === 'zero_windows' && numeric === 1) || (simulation.mode !== 'zero_windows' && numeric === 0)) zeroCount += 1
+        exactZeroMask[cell.row + 1]![cell.column] = cell.isExactZero
+        if (signedValue !== null) {
+          const numeric = typeof signedValue === 'number' ? signedValue : Number(signedValue)
+          if (Number.isFinite(numeric)) {
+            min = Math.min(min, numeric)
+            max = Math.max(max, numeric)
+          }
         }
+        if (cell.isExactZero) zeroCount += 1
       }
       settled = true
       stop()
@@ -222,10 +305,23 @@ async function runWall(input: WallInput, options: { depth: number; width: number
         depth: simulation.depth + 2,
         mode: simulation.mode,
         values: rows,
-        min: Number.isFinite(min) ? min : 0,
-        max: Number.isFinite(max) ? max : 0,
+        exactZeroMask,
+        min: Number.isFinite(min) ? min : null,
+        max: Number.isFinite(max) ? max : null,
         zeroCount,
         graphReady: simulation.cells.length > 0,
+        input: dispatchedInput,
+        options: dispatchedOptions,
+        payload,
+        sourceRevision,
+        implementationRevision: WALL_IMPLEMENTATION_REVISION,
+        outputSchemaRevision: WALL_OUTPUT_SCHEMA_REVISION,
+        compatibilityKey,
+        sourceProvenance: {
+          url: sourceUrl,
+          filename: dispatchedInput.filename,
+          sha256: sourceRevision,
+        },
       })
     })
     if (signal?.aborted) {
@@ -238,11 +334,11 @@ async function runWall(input: WallInput, options: { depth: number; width: number
       requestId,
       payload,
       options: {
-        terms: Math.min(options.width, payload.sequence.length),
-        depth: options.depth,
-        mode: options.mode,
-        modulus: options.modulus,
-        valuationPrime: options.modulus,
+        terms: Math.min(dispatchedOptions.width, payload.sequence.length),
+        depth: dispatchedOptions.depth,
+        mode: dispatchedOptions.mode,
+        modulus: dispatchedOptions.modulus,
+        valuationPrime: dispatchedOptions.modulus,
       },
     })
   })

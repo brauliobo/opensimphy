@@ -18,6 +18,9 @@ const routes = [
   { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' } },
   { path: '/atlas', name: 'atlas', component: { template: '<div />' } },
   { path: '/labs', name: 'labs', component: { template: '<div />' } },
+  { path: '/labs/core', name: 'core', component: { template: '<div />' } },
+  { path: '/labs/walls', name: 'walls', component: { template: '<div />' } },
+  { path: '/labs/earth/:programId', name: 'earth-workbench', component: { template: '<div />' } },
   { path: '/evidence', name: 'evidence', component: { template: '<div />' } },
   { path: '/saved', name: 'saved', component: { template: '<div />' } },
   { path: '/earth', name: 'earth', component: { template: '<div />' } },
@@ -254,6 +257,24 @@ describe('responsive navigation state', () => {
     expect(evidence.attributes('aria-current')).toBe(path === '/evidence' ? 'page' : 'location')
   })
 
+  it.each([
+    '/labs',
+    '/labs/core',
+    '/labs/walls',
+    '/labs/earth/EARTH-PLAN-008',
+  ])('keeps Workbench active on %s', async (path) => {
+    const router = createTestRouter()
+    await router.push(path)
+    const wrapper = mount(AppNav, { global: { plugins: [router] } })
+
+    const workbench = wrapper.get('a[href="/labs"]')
+    const evidence = wrapper.get('a[href="/evidence"]')
+    expect(workbench.classes()).toContain('router-link-active')
+    expect(workbench.attributes('aria-current')).toBe(path === '/labs' ? 'page' : 'location')
+    expect(evidence.classes()).not.toContain('router-link-active')
+    expect(evidence.attributes('aria-current')).toBeUndefined()
+  })
+
   it('preserves canonical and legacy EARTH aliases', () => {
     expect(appRouter.resolve('/earth').name).toBe('earth')
     expect(appRouter.resolve('/earth/corpus').name).toBe('earth-corpus')
@@ -266,6 +287,8 @@ describe('responsive navigation state', () => {
     expect(appRouter.resolve('/earth/source-record').name).toBe('earth-document')
     expect(appRouter.resolve('/core').name).toBe('core')
     expect(appRouter.resolve('/walls').name).toBe('walls')
+    expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').name).toBe('earth-workbench')
+    expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').params.programId).toBe('EARTH-PLAN-008')
   })
 
   it('updates the document title from route metadata', async () => {

@@ -344,7 +344,7 @@ describe('EARTH scientific simulation registry', () => {
     const wrapper = await mountDetail('sim-001')
 
     expect(wrapper.text()).toContain('Required calibration is unavailable')
-    expect(wrapper.find('[data-testid="simulation-run-control"]').exists()).toBe(false)
+    expect(wrapper.find('[data-testid="workbench-run"]').exists()).toBe(false)
     expect(wrapper.find('.simulation-run-section').exists()).toBe(false)
   })
 
@@ -375,7 +375,7 @@ describe('EARTH scientific simulation registry', () => {
     const wrapper = await mountDetail('EARTH-FLD-005')
 
     expect(wrapper.text()).toContain('EARTH physical model BX')
-    expect(wrapper.find('[data-testid="simulation-run-control"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="workbench-run"]').exists()).toBe(true)
     const comparison = generatedRegistry.items.find(({ id }) => id === 'EARTH-FLD-005')!
     const record = {
       ...normalizedSimulation(2),
@@ -408,7 +408,7 @@ describe('EARTH scientific simulation registry', () => {
     expect((wrapper.get('[data-testid="simulation-method-select"]').element as HTMLSelectElement).value).toBe('earth-source-model-v1')
     expect(wrapper.get('[data-testid="selected-method-sheet"]').text()).toContain(sourceState)
     expect(wrapper.get('[data-testid="simulation-method-unavailable"]').text()).toContain('governing EARTH source contract is incomplete')
-    expect(wrapper.find('[data-testid="simulation-run-control"]').exists()).toBe(false)
+    expect(wrapper.find('[data-testid="workbench-run"]').exists()).toBe(false)
     expect(wrapper.find('[data-testid="simulation-inputs"]').exists()).toBe(false)
     expect(wrapper.find('[data-testid="simulation-progress"]').exists()).toBe(false)
     expect(runnerMock).not.toHaveBeenCalled()
@@ -445,7 +445,7 @@ describe('EARTH scientific simulation registry', () => {
     const wrapper = await mountDetail('sim-002')
 
     expect(wrapper.get('[data-testid="simulation-integrity-error"]').text()).toContain('sim-002 is not supported')
-    expect(wrapper.find('[data-testid="simulation-run-control"]').exists()).toBe(false)
+    expect(wrapper.find('[data-testid="workbench-run"]').exists()).toBe(false)
     expect(runnerMock).not.toHaveBeenCalled()
   })
 
@@ -459,7 +459,7 @@ describe('EARTH scientific simulation registry', () => {
     })
     await flushPromises()
 
-    expect(router.currentRoute.value.query.method).toBe('traditional-analytic-baseline-v1')
+    expect(router.currentRoute.value.query.method).toBeUndefined()
     expect((wrapper.get('[data-testid="simulation-method-select"]').element as HTMLSelectElement).value).toBe('traditional-analytic-baseline-v1')
     expect(JSON.parse((wrapper.get('[data-testid="simulation-inputs"]').element as HTMLTextAreaElement).value)).toEqual(
       DEFAULT_EARTH_METHOD_INPUTS['EARTH-PLAN-008']['traditional-analytic-baseline-v1'],
@@ -515,14 +515,14 @@ describe('EARTH scientific simulation registry', () => {
     const inputs = wrapper.get('[data-testid="simulation-inputs"]')
 
     expect(JSON.parse((inputs.element as HTMLTextAreaElement).value)).toEqual(DEFAULT_EARTH_SIMULATION_INPUTS['EARTH-FND-003'])
-    await inputs.setValue('{"codataAlpha": 0.0072973525643}')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await inputs.setValue('{}')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await flushPromises()
 
     expect(runnerMock).toHaveBeenCalledWith(
       'EARTH-FND-003',
       'earth-source-reproduction-v1',
-      { codataAlpha: 0.0072973525643 },
+      {},
       expect.objectContaining({ signal: expect.any(AbortSignal), onProgress: expect.any(Function) }),
     )
     expect(wrapper.get('[data-testid="simulation-status"]').text()).toContain('completed')
@@ -533,7 +533,7 @@ describe('EARTH scientific simulation registry', () => {
     expect(wrapper.get('.simulation-scalar-outputs dd').text()).toBe('1.25 m')
     expect(wrapper.get('[data-testid="simulation-result"]').text()).toContain('Structured outputs')
     expect(wrapper.get('[data-testid="simulation-result"]').text()).toContain('Received Inputs')
-    expect(wrapper.get('[data-testid="simulation-raw-result"] summary').text()).toBe('Raw JSON result')
+    expect(wrapper.get('[data-testid="simulation-raw-result"] h4').text()).toBe('Raw JSON result')
     expect(wrapper.get('[data-testid="simulation-raw-result"]').text()).toContain('"status": "completed"')
     expect(wrapper.get('[data-testid="simulation-result"]').find('script').exists()).toBe(false)
   })
@@ -544,13 +544,13 @@ describe('EARTH scientific simulation registry', () => {
     const inputs = wrapper.get('[data-testid="simulation-inputs"]')
 
     await inputs.setValue('[]')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     expect(wrapper.get('[data-testid="simulation-input-error"]').text()).toBe('Advanced input JSON must be an object.')
     expect(runnerMock).not.toHaveBeenCalled()
 
     runnerMock.mockResolvedValue({ id: 'EARTH-FND-003', status: 'failed', error: 'kernel rejected inputs' } as never)
     await inputs.setValue('{}')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await flushPromises()
 
     expect(wrapper.get('[data-testid="simulation-status"]').text()).toContain('failed')
@@ -564,7 +564,7 @@ describe('EARTH scientific simulation registry', () => {
     const temperature = wrapper.get('[data-testid="simulation-input-temperatureKelvin"]')
 
     await temperature.setValue('')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     expect(temperature.attributes('aria-invalid')).toBe('true')
     expect(wrapper.get(`#${temperature.attributes('id')}-error`).text()).toBe('Temperature Kelvin must be a finite number.')
     expect(runnerMock).not.toHaveBeenCalled()
@@ -579,7 +579,7 @@ describe('EARTH scientific simulation registry', () => {
       error: 'temperatureKelvin must be from 1 to 1000000000',
     } as never)
     await temperature.setValue('0')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await flushPromises()
     expect(wrapper.get('[data-testid="simulation-execution-error"]').text()).toBe('temperatureKelvin must be from 1 to 1000000000')
 
@@ -629,12 +629,12 @@ describe('EARTH scientific simulation registry', () => {
     const wrapper = await mountDetail('EARTH-PLAN-008')
     const scientificStatus = wrapper.get('.earth-readiness-stack span').text()
 
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await flushPromises()
     expect(wrapper.get('[data-testid="simulation-result"]').text()).toContain('Independent traditional baseline')
 
     await wrapper.get('[data-testid="simulation-method-select"]').setValue('earth-source-reproduction-v1')
-    await wrapper.get('.simulation-run-form').trigger('submit')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await flushPromises()
 
     const ledger = wrapper.get('[data-testid="simulation-run-ledger"]')
@@ -661,25 +661,25 @@ describe('EARTH scientific simulation registry', () => {
     })
     const wrapper = await mountDetail('EARTH-PLAN-008')
 
-    void wrapper.get('.simulation-run-form').trigger('submit')
+    void wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await wrapper.vm.$nextTick()
     await wrapper.get('[data-testid="simulation-method-select"]').setValue('earth-source-reproduction-v1')
     expect(signals[0]?.aborted).toBe(true)
 
-    void wrapper.get('.simulation-run-form').trigger('submit')
+    void wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await wrapper.vm.$nextTick()
-    await wrapper.get('[data-testid="simulation-cancel"]').trigger('click')
+    await wrapper.get('[data-testid="workbench-cancel"]').trigger('click')
     await flushPromises()
     expect(signals[1]?.aborted).toBe(true)
     expect(wrapper.get('[data-testid="simulation-status"]').text()).toContain('cancelled')
 
-    void wrapper.get('.simulation-run-form').trigger('submit')
+    void wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await wrapper.vm.$nextTick()
     await wrapper.setProps({ id: 'EARTH-FND-002' })
     await flushPromises()
     expect(signals[2]?.aborted).toBe(true)
 
-    void wrapper.get('.simulation-run-form').trigger('submit')
+    void wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await wrapper.vm.$nextTick()
     wrapper.unmount()
     await flushPromises()

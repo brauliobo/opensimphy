@@ -256,7 +256,7 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   await page.getByTestId('wall-search').fill('Catalan')
   for (const mode of ['mod', 'valuation', 'signed_log', 'row_signed_log', 'zero_windows', 'small_values']) {
     await page.getByTestId('wall-mode').selectOption(mode)
-    await page.getByTestId('wall-run').click()
+    await page.getByTestId('workbench-run').click()
     await expect(page.getByTestId('wall-simulation-ready')).toBeVisible()
   }
   await expect(page.getByTestId('wall-canvas')).toBeVisible()
@@ -386,20 +386,22 @@ test('filters and pages the URL-backed EARTH program registry, then restores sta
   await expect(blockedRow.locator('.program-row-evidence')).toContainText('Next blocker')
   await page.getByTestId('simulation-record-EARTH-FND-006').click()
 
-  await expect(page).toHaveURL(/\/earth\/programs\/EARTH-FND-006\?method=source-contract-validator-v1$/)
+  await expect(page).toHaveURL(/\/earth\/programs\/EARTH-FND-006$/)
   await expect(page.getByRole('heading', { name: 'Fixed-point and recognizability tests' })).toBeVisible()
   await expect(page.getByTestId('simulation-gates')).toBeVisible()
   await expect(page.locator('.simulation-blockers-section')).toHaveClass(/has-scientific-blockers/)
   await expect(page.locator('.simulation-blockers-section')).not.toHaveClass(/is-blocked/)
   await expect(page.getByRole('heading', { name: 'Scientific limitations' })).toBeVisible()
-  await expect(page.getByTestId('simulation-run-control')).toBeVisible()
+  await expect(page.getByTestId('workbench-run')).toBeVisible()
   await expect(page.getByTestId('simulation-source-links').locator('a').first()).toHaveAttribute('href', /^\/earth\/corpus\/.+/)
 
+  await page.locator('.workbench-method-disclosure summary').click()
   await page.locator('input[type="radio"][value="earth-source-model-v1"]').check()
   await expect(page).toHaveURL(/method=earth-source-model-v1/)
   await expect(page.getByTestId('simulation-method-unavailable')).toContainText('governing EARTH source contract is incomplete')
   await expect(page.getByTestId('simulation-method-unavailable')).toContainText('physical equivalence BX')
-  await expect(page.getByTestId('simulation-run-control')).toHaveCount(0)
+  await expect(page.getByTestId('workbench-run')).toHaveCount(0)
+  await expect(page.getByTestId('workbench-run')).toHaveCount(0)
   await expect(page.getByTestId('simulation-inputs')).toHaveCount(0)
 
   await page.goBack()
@@ -429,13 +431,13 @@ test('runs a fast EARTH calculator in the dedicated worker', async ({ page }) =>
 
   await expect(page.getByRole('heading', { name: 'Algebraic pi and alpha identities' })).toBeVisible()
   await expect(page.getByTestId('simulation-inputs')).toHaveValue('{}')
-  await expect(page.getByTestId('simulation-run-control')).toHaveText('Run selected method')
-  await page.getByTestId('simulation-run-control').click()
+  await expect(page.getByTestId('workbench-run')).toHaveText('Run selected method')
+  await page.getByTestId('workbench-run').click()
 
   await expect(page.getByTestId('simulation-status')).toContainText('completed')
   await expect(page.getByTestId('simulation-progress')).toHaveAttribute('aria-valuenow', '100')
   await expect(page.getByTestId('simulation-result')).toContainText('Source reproduction / audit only')
-  await expect(page.getByTestId('simulation-result')).toContainText('scientific validation is not established')
+  await expect(page.getByTestId('workbench-conclusion')).toContainText('Scientific validation is not established')
   await expect(page.getByTestId('simulation-raw-result')).toContainText('"id": "EARTH-FND-003"')
   await expect(page.getByTestId('simulation-raw-result')).toContainText('"status": "completed"')
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
@@ -445,7 +447,7 @@ test('switches a multi-method EARTH pilot on mobile without overflow', async ({ 
   await page.setViewportSize({ width: 390, height: 844 })
   await gotoRoute(page, '/earth/programs/EARTH-PLAN-008')
 
-  await expect(page).toHaveURL(/method=traditional-analytic-baseline-v1/)
+  await expect(page).toHaveURL(/\/earth\/programs\/EARTH-PLAN-008$/)
   await expect(page.getByText('LOCAL TRADITIONAL BASELINE READY', { exact: false })).toBeVisible()
   await expect(page.getByTestId('simulation-method-rail')).toBeHidden()
   await expect(page.getByTestId('simulation-method-select')).toBeVisible()
@@ -456,7 +458,7 @@ test('switches a multi-method EARTH pilot on mobile without overflow', async ({ 
   await page.getByTestId('simulation-method-select').selectOption('earth-source-reproduction-v1')
   await expect(page).toHaveURL(/method=earth-source-reproduction-v1/)
   await expect(page.getByTestId('simulation-input-surfaceMassDensityKgPerCubicMetre')).toHaveValue('1.225')
-  await page.getByTestId('simulation-run-control').click()
+  await page.getByTestId('workbench-run').click()
 
   await expect(page.getByTestId('simulation-status')).toContainText('completed')
   await expect(page.getByTestId('simulation-result')).toContainText('Source reproduction / audit only')
@@ -633,12 +635,13 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.getByTestId('simulation-method-select')).toBeVisible()
       await page.getByTestId('simulation-method-select').selectOption('earth-source-reproduction-v1')
     } else {
+      await page.locator('.workbench-method-disclosure summary').click()
       const sourceMethod = page.getByRole('radio', { name: /EARTH atmospheric density-coherence transform/ })
       await expect(sourceMethod).toBeVisible()
       await sourceMethod.check()
     }
     await expect(page.getByTestId('simulation-input-surfaceMassDensityKgPerCubicMetre')).toBeVisible()
-    await expect(page.getByTestId('simulation-run-control')).toBeEnabled()
+    await expect(page.getByTestId('workbench-run')).toBeEnabled()
     await expectNoDocumentOverflow(page)
 
     await page.goto('/earth/datasets')

@@ -92,8 +92,9 @@ test('supports labeled method controls, native keyboard selection, status text, 
   await page.goto('/earth/programs/EARTH-PLAN-008')
   await expect(page.getByRole('heading', { name: 'Atmospheric scale-height audit' })).toBeVisible()
 
-  const workbench = page.locator('.simulation-workbench-section')
+  const workbench = page.locator('.simulation-workbench-section .workbench-shell')
   await expect(workbench).toHaveAttribute('aria-busy', 'false')
+  await page.locator('.workbench-method-disclosure summary').click()
   await expect(page.getByRole('group', { name: 'Execution methods' })).toBeVisible()
   await expect(page.getByLabel('Selected execution method')).toHaveCount(1)
 
@@ -115,7 +116,7 @@ test('supports labeled method controls, native keyboard selection, status text, 
   await expect(page.getByTestId('simulation-grid')).toHaveCount(0)
 
   await expectTargetSize(source.locator('xpath=..'))
-  await expectTargetSize(page.getByTestId('simulation-run-control'))
+  await expectTargetSize(page.getByTestId('workbench-run'))
   await expectTargetSize(page.getByTestId('simulation-advanced-inputs').locator('summary'))
   await expectTargetSize(page.getByTestId('simulation-source-links').locator('a').first())
 })
@@ -201,7 +202,7 @@ test('reflows at the CSS viewport equivalent of 200% zoom', async ({ page }) => 
   await page.goto('/earth/programs/EARTH-PLAN-008')
   await expect(page.getByRole('heading', { name: 'Atmospheric scale-height audit' })).toBeVisible()
   await expectNoDocumentOverflow(page)
-  await expect(page.getByTestId('simulation-run-control')).toBeVisible()
+  await expect(page.getByTestId('workbench-run')).toBeVisible()
 
   await page.goto('/earth/datasets')
   await expect(page.getByRole('heading', { name: 'EARTH Dataset Ledger' })).toBeVisible()
