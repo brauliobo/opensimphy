@@ -40,6 +40,7 @@ export interface RecipeSource {
   expected_digits_label: string;
   model_value: string;
   wall_id: string;
+  source_caveats?: string[];
   published_result?: PublishedRecipeResult;
   taxonomy: RecipeTaxonomy;
 }
@@ -104,6 +105,23 @@ export interface PrimitiveSymbolSource {
   dimension: string;
 }
 
+export type PublishedRecipeSourceAudit = PublishedExactSourceAudit | PublishedMeasuredSourceAudit;
+
+export interface PublishedExactSourceAudit {
+  kind: "exact";
+  assessment: "full match" | "almost-full match" | "not a match";
+  matchedDigits: number;
+  totalCompared: number;
+  met: boolean;
+}
+
+export interface PublishedMeasuredSourceAudit {
+  kind: "measured";
+  zScore: number;
+  threshold: 5.2;
+  met: boolean;
+}
+
 export interface PublishedRecipeResult {
   recipeNumber: number;
   constantId: string;
@@ -112,7 +130,7 @@ export interface PublishedRecipeResult {
   dependencies: string[];
   computed: string | null;
   computedDimension: string | null;
-  zScore: number | null;
+  sourceAudit: PublishedRecipeSourceAudit;
 }
 
 export interface GraphPoint {

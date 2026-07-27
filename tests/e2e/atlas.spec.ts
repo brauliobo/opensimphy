@@ -67,15 +67,20 @@ test('redirects a legacy topic into the Tour and opens the same classified Atlas
 test('browses and searches the formula atlas', async ({ page }) => {
   await waitForRouteAudit(page, '/atlas', 'formula-registry-ready', 'formulas')
   await expect(page.getByRole('heading', { name: 'Formula Atlas' })).toBeVisible()
+  await expect(page.getByTestId('formula-list')).not.toHaveAttribute('aria-live')
+  await expect(page.getByTestId('formula-result-count')).toHaveAttribute('aria-live', 'polite')
+  await expect(page.getByTestId('formula-result-count')).toContainText('Showing 1–24 of 288 matching formulas')
+  await expect(page.getByTestId('dimension-conflict-count')).toHaveText('68 dimension conflicts')
+  await expect(page.getByTestId('dependency-drift-count')).toHaveText('26 direct dependency differences')
   await expect(page.getByTestId('formula-row-1')).toBeVisible()
   await page.getByTestId('formula-search').fill('hyperfine transition')
   await expect(page.getByTestId('formula-row-1')).toBeVisible()
-  await page.getByTestId('formula-classification').selectOption('exact')
+  await page.getByTestId('formula-basis').selectOption('exact')
   await expect(page.locator('.formula-row').first()).toBeVisible()
   await page.getByTestId('formula-search').fill('')
-  await page.getByTestId('formula-classification').selectOption('all')
+  await page.getByTestId('formula-basis').selectOption('all')
   await page.getByTestId('advanced-filters').locator('summary').click()
-  await page.getByTestId('formula-status').selectOption('fail')
+  await page.getByTestId('formula-source-criterion').selectOption('not-met')
   await expect(page.locator('.formula-row')).toHaveCount(3)
   await expect(page.getByTestId('formula-row-120')).toBeVisible()
   await expect(page.getByTestId('formula-row-211')).toBeVisible()
@@ -96,6 +101,104 @@ test('all recipe graphs are engine-ready and first, middle, last routes render',
     await expect(page.locator('.equation-plate')).toContainText('(EG * EB)')
   }
   await page.screenshot({ path: testInfo.outputPath('formula-288.png'), fullPage: true })
+})
+
+test('formula ordinal 2 is meaning-first, tabled, revisioned, saved, and compared', async ({ page }) => {
+  await gotoRoute(page, '/atlas/2')
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await expect(page).toHaveTitle(/electron volt-hertz relationship/)
+  await expect(page.getByTestId('formula-meaning')).toContainText('What this quantity means')
+  await expect(page.getByTestId('guided-meaning')).toContainText('Named target')
+  await expect(page.getByTestId('guided-meaning')).toContainText('source-labelled')
+  await expect(page.getByTestId('meaning-caveats')).toContainText('preserved wording, not an authoritative physical definition')
+  await expect(page.getByTestId('formula-meaning')).toContainText('does not independently validate')
+  await expect(page.getByTestId('constructor-token-key')).toContainText('External geometry')
+  await expect(page.getByTestId('constructor-token-key')).toContainText('Inversion-boundary scale')
+  await expect(page.getByTestId('sweep-table').locator('tbody tr')).toHaveCount(65)
+  await expect(page.getByTestId('sweep-table').getByRole('columnheader')).toHaveText([
+    'Scale', 'Real', 'Imaginary', 'Magnitude', 'Sign', 'Finite',
+  ])
+
+  const meaningOrder = await page.evaluate(() => {
+    const meaning = document.querySelector('[data-testid="formula-meaning"]')
+    const raw = document.querySelector('[data-testid="raw-anatomy"]')
+    return Boolean(meaning && raw && (meaning.compareDocumentPosition(raw) & Node.DOCUMENT_POSITION_FOLLOWING))
+  })
+  expect(meaningOrder).toBe(true)
+
+  await page.getByTestId('sweep-scale').fill('0.5')
+  await page.getByTestId('freeze-comparison').click()
+  await page.getByTestId('sweep-scale').fill('1.5')
+  await page.getByTestId('freeze-comparison').click()
+  await expect(page.getByTestId('compatible-comparison')).toContainText('selected-real delta')
+  await expect(page.getByTestId('freeze-comparison')).toBeDisabled()
+
+  await page.getByTestId('save-label').fill('Ordinal 2 formula state')
+  await page.getByTestId('save-formula-run').click()
+  await expect(page.locator('.save-result')).toContainText('Saved formula run')
+  await page.goto('/saved')
+  await expect(page.getByRole('heading', { name: 'Local Notebook' })).toBeVisible()
+  await expect(page.getByTestId('saved-run-count')).toHaveText('1 run')
+  await expect(page.getByTestId('saved-run-formula-link')).toHaveAttribute('href', '/atlas/2')
+})
+
+test('round trips a Unicode canonical formula ID while saving and notebook linking by ordinal', async ({ page }) => {
+  const unicodeId = 'ℏ'
+  const atlasQuery = 'q=reduced+Planck'
+  const safeReturn = '/tour/anchors/units-and-dimensions?path=quick#interpret'
+  const detailQuery = new URLSearchParams({ q: 'reduced Planck', returnTo: safeReturn }).toString()
+
+  await gotoRoute(page, `/atlas?${atlasQuery}`)
+  await page.goto(`/atlas/${encodeURIComponent(unicodeId)}?${detailQuery}`)
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await expect(page).toHaveURL(new RegExp(`/atlas/${encodeURIComponent(unicodeId)}\\?`))
+  await expect(page.getByTestId('formula-record-identity')).toContainText('ℏ')
+  await expect(page.getByTestId('tour-return')).toHaveAttribute('href', safeReturn)
+
+  await page.getByTestId('save-label').fill('Reduced Planck constant')
+  await page.getByTestId('save-formula-run').click()
+  await expect(page.locator('.save-result')).toContainText('Saved formula run')
+  await page.getByTestId('atlas-return').click()
+  await expect(page).toHaveURL(/\/atlas\?q=reduced(?:\+|%20)Planck$/)
+  await expect(page.getByTestId('formula-search')).toHaveValue('reduced Planck')
+
+  await page.goBack()
+  await expect(page).toHaveURL(new RegExp(`/atlas/${encodeURIComponent(unicodeId)}\\?`))
+  await page.goto(`/atlas/${encodeURIComponent(unicodeId)}?returnTo=${encodeURIComponent('https://evil.test/tour/a/b')}`)
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await expect(page.getByTestId('tour-return')).toHaveCount(0)
+
+  await page.goto('/saved')
+  await expect(page.getByTestId('saved-run-count')).toHaveText('1 run')
+  await expect(page.getByTestId('saved-run-formula-link')).toHaveAttribute('href', '/atlas/7')
+})
+
+test('renders the preserved V_m_1 pressure-label correction before numeric comparison', async ({ page }) => {
+  await gotoRoute(page, '/atlas/V_m_1')
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await expect(page.getByTestId('meaning-caveats')).toContainText('source label says 100 kPa')
+  await expect(page.getByTestId('meaning-caveats')).toContainText('101325.003754773 Pa')
+  await expect(page.getByTestId('meaning-caveats')).toContainText('about 101.325 kPa')
+  const caveatBeforeResidual = await page.evaluate(() => {
+    const caveat = document.querySelector('[data-testid="meaning-caveats"]')
+    const residual = document.querySelector('[data-testid="residual-scales"]')
+    return Boolean(caveat && residual && (caveat.compareDocumentPosition(residual) & Node.DOCUMENT_POSITION_FOLLOWING))
+  })
+  expect(caveatBeforeResidual).toBe(true)
+})
+
+test('restores complete Atlas context after a formula round trip', async ({ page }) => {
+  await gotoRoute(page, '/atlas')
+  await page.getByTestId('formula-search').fill('hyperfine transition')
+  await page.getByTestId('formula-basis').selectOption('exact')
+  await expect(page).toHaveURL(/q=hyperfine(?:\+|%20)transition/)
+  await expect(page).toHaveURL(/basis=exact/)
+  await page.getByTestId('formula-row-1').click()
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await page.getByTestId('atlas-return').click()
+  await expect(page.getByTestId('formula-registry-ready')).toBeVisible()
+  await expect(page.getByTestId('formula-search')).toHaveValue('hyperfine transition')
+  await expect(page.getByTestId('formula-basis')).toHaveValue('exact')
 })
 
 test('every core registry case is graph-ready and tabs render', async ({ page }) => {

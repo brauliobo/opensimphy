@@ -12,7 +12,7 @@ import { buildEarthDatasetRegistry } from "./lib/earth-dataset-registry.mjs";
 import { buildEarthEvidenceArtifacts } from "./lib/earth-evidence.mjs";
 import { buildEarthSimulationCoverage } from "./lib/earth-simulation-coverage.mjs";
 import { buildEarthSimulationRegistry } from "./lib/earth-simulation-registry.mjs";
-import { parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
+import { bindPublishedResults, parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
 import { buildTourArtifacts, readTourSource } from "./lib/tour-content.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -33,6 +33,25 @@ function stableJson(value) {
 
 function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+const V_M_1_SOURCE_CAVEAT = "The source label says 100 kPa, while its p_1 dependency is 101325.003754773 Pa and expected value 0.02241396954 m^3/mol corresponds to about 101.325 kPa.";
+
+function formulaSourceCaveats(recipe, result, recipes, symbols) {
+  if (recipe.constant_id !== "V_m_1") return [];
+  assert(recipe.recipe_number === 120, "V_m_1 must remain recipe 120");
+  assert(recipe.display_name === "molar volume of ideal gas (273.15 K, 100kPa)", "V_m_1 source label changed");
+  assert(recipe.expected_kind === "exact" && recipe.expected_value === 0.02241396954, "V_m_1 expected source value changed");
+  assert(result.dependencies.includes("p_1"), "V_m_1 published dependencies do not contain p_1");
+  const p0 = symbols.find(({ token }) => token === "p_0");
+  const p1 = symbols.find(({ token }) => token === "p_1");
+  assert(p0?.value === "1e5" && p0.dimension === "pascal", "p_0 source value changed");
+  assert(p1?.value === "101325.003754773" && p1.dimension === "pascal", "p_1 source value changed");
+  const reference = recipes.find(({ recipe_number: recipeNumber }) => recipeNumber === 119);
+  assert(reference?.constant_id === "V_m_0" && reference.expected_value === 0.02271095464, "V_m_0 reference source value changed");
+  const impliedPressure = Number(p0.value) * Number(reference.expected_value) / Number(recipe.expected_value);
+  assert(Number.isFinite(impliedPressure) && Math.abs(impliedPressure - Number(p1.value)) < 0.01, "V_m_1 expected value no longer corresponds to about 101.325 kPa");
+  return [V_M_1_SOURCE_CAVEAT];
 }
 
 function generateCompletion() {
@@ -131,6 +150,7 @@ const generatedAt = process.env.SOURCE_DATE || sourceManifest.acquisitionDate;
 const recipes = parseConstantsYaml(constantsText);
 const symbols = parseSymbolsCsv(symbolsText);
 const published = parsePublishedOutput(publishedText);
+const publishedByRecipe = bindPublishedResults(recipes, published);
 
 assert(recipes.length === 288, `Expected 288 parsed recipes, found ${recipes.length}`);
 assert(symbols.length === 80, `Expected 80 parsed symbols, found ${symbols.length}`);
@@ -140,16 +160,18 @@ const natureWalls = wallIndex.filter((entry) => entry.category === "constants-of
 assert(natureWalls.length === 288, `Expected 288 nature walls, found ${natureWalls.length}`);
 
 const recipeRegistryBase = recipes.map((recipe, index) => {
-  const result = published[index];
+  const result = publishedByRecipe.get(recipe.recipe_number);
   const wall = natureWalls[index];
   assert(recipe.recipe_number === index + 1, `Recipe order mismatch at ${index + 1}`);
-  assert(result.recipeNumber === recipe.recipe_number, `Published output order mismatch at ${index + 1}`);
+  assert(result, `Published output is missing recipe ${recipe.recipe_number}`);
   assert(wall.id.startsWith(`nature-${String(index + 1).padStart(3, "0")}-`), `Wall order mismatch at ${index + 1}`);
+  const sourceCaveats = formulaSourceCaveats(recipe, result, recipes, symbols);
   return {
     ...recipe,
     model_value: wall.modelValue,
     wall_id: wall.id,
     published_result: result,
+    ...(sourceCaveats.length > 0 ? { source_caveats: sourceCaveats } : {}),
   };
 });
 const { recipes: recipeRegistry, artifact: taxonomy } = buildConstantTaxonomy(recipeRegistryBase, generatedAt);

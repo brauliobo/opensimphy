@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter, type RouteLocationRaw } from 'vue-router'
 import ConclusionBoundary from '../components/tour/ConclusionBoundary.vue'
 import EquationLadder from '../components/tour/EquationLadder.vue'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
@@ -23,6 +23,7 @@ import type {
 
 const props = defineProps<{ chapter: string, lesson: string }>()
 const route = useRoute()
+const router = useRouter()
 const registry = useTourRegistry()
 const progress = useTourProgress()
 
@@ -121,6 +122,17 @@ const fullLessonLocation = computed(() => ({
   query: Object.fromEntries(Object.entries(route.query).filter(([key]) => key !== 'path')),
   hash: route.hash,
 }))
+const formulaReturnTo = computed(() => {
+  const chapter = chapterRecord.value
+  const lesson = lessonRecord.value
+  if (!chapter || !lesson) return ''
+  return router.resolve({
+    name: 'tour-lesson',
+    params: { chapter: chapter.id, lesson: lesson.id },
+    query: route.query.path === 'quick' ? { path: 'quick' } : {},
+    hash: '#interpret',
+  }).fullPath
+})
 const previousNavigation = computed(() => navigationFor('previous'))
 const nextNavigation = computed(() => navigationFor('next'))
 
@@ -151,6 +163,14 @@ function navigationFor(direction: 'previous' | 'next'): TourNavigation | null {
     }
   }
   return chapterNavigation(direction === 'previous' ? chapter.previousChapterId : chapter.nextChapterId, titleDirection)
+}
+
+function formulaLocation(formulaId: string): RouteLocationRaw {
+  return {
+    name: 'formula',
+    params: { id: formulaId },
+    query: { returnTo: formulaReturnTo.value },
+  }
 }
 
 function isAbortError(reason: unknown): boolean {
@@ -585,7 +605,12 @@ onUnmounted(() => {
           </details>
 
           <div class="tour-resource-links">
-            <RouterLink v-for="formulaId in lessonRecord.formulaIds" :key="formulaId" :to="`/atlas/${encodeURIComponent(formulaId)}`">
+            <RouterLink
+              v-for="formulaId in lessonRecord.formulaIds"
+              :key="formulaId"
+              :to="formulaLocation(formulaId)"
+              :aria-label="`Formula ${formulaId}, opens Formula record`"
+            >
               {{ formulaId }}
             </RouterLink>
             <RouterLink to="/evidence">Evidence</RouterLink>

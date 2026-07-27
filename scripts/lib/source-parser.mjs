@@ -146,26 +146,117 @@ export function parseSymbolsCsv(text) {
 }
 
 export function parsePublishedOutput(text) {
+  const source = text.replace(/\r/g, "");
+  const summary = source.match(/^(\d+) constants built\.\n\s*(\d+) exact, (\d+) passed, (\d+) failed\n\s*(\d+) measured, (\d+) passed, (\d+) failed$/m);
+  if (!summary) throw new Error("Published output summary is missing or malformed");
+  const summaryCounts = summary.slice(1).map(Number);
+  if (summaryCounts.some((value) => !Number.isSafeInteger(value))) throw new Error("Published output summary contains nonfinite counts");
+  const [total, exact, exactMet, exactUnmet, measured, measuredMet, measuredUnmet] = summaryCounts;
+  if (total !== 288 || exact !== 70 || exactMet !== 68 || exactUnmet !== 2 || measured !== 218 || measuredMet !== 217 || measuredUnmet !== 1) {
+    throw new Error("Published output summary does not match the preserved 288-record audit");
+  }
+
   const header = /^(\d{3})\. (.+?)\s+—\s+(.+?)\s+\[built on pass (\d+)\]$/gm;
-  const matches = [...text.matchAll(header)];
-  return matches.map((match, index) => {
+  const matches = [...source.matchAll(header)];
+  if (matches.length !== total) throw new Error(`Published output contains ${matches.length}/${total} records`);
+  const results = matches.map((match, index) => {
     const blockStart = match.index + match[0].length;
-    const blockEnd = matches[index + 1]?.index ?? text.length;
-    const block = text.slice(blockStart, blockEnd);
+    const blockEnd = matches[index + 1]?.index ?? source.length;
+    const block = source.slice(blockStart, blockEnd);
     const computed = block.match(/^computed:\s+([^\s]+)(?:\s+(.+))?$/m);
     const dependencies = block.match(/^deps:\s*(.*)$/m)?.[1].split(",").map((item) => item.trim()).filter(Boolean) ?? [];
-    const sigma = block.match(/^sigma:\s+([+-]?[\d.]+)$/m);
+    const recipeNumber = Number(match[1]);
+    const buildPass = Number(match[4]);
+    if (!Number.isSafeInteger(recipeNumber) || recipeNumber !== index + 1) throw new Error(`Published record ${index + 1} has a malformed recipe number`);
+    if (!Number.isSafeInteger(buildPass) || buildPass < 1) throw new Error(`Published record ${recipeNumber} has a malformed build pass`);
+    if (!computed || !Number.isFinite(Number(computed[1]))) throw new Error(`Published record ${recipeNumber} has a missing or nonfinite computed value`);
+
+    const digitMarkers = [...block.matchAll(/^digits:/gm)];
+    const sigmaMarkers = [...block.matchAll(/^sigma:/gm)];
+    const withinMarkers = [...block.matchAll(/^within 5\.2\u03c3:/gm)];
+    let sourceAudit;
+    if (digitMarkers.length === 1 && sigmaMarkers.length === 0 && withinMarkers.length === 0) {
+      const digits = block.match(/^digits:\s+(full match|almost-full match|not a match)\s+\((\d+)\/(\d+)\)\s*$/m);
+      if (!digits) throw new Error(`Published exact audit ${recipeNumber} is malformed`);
+      const matchedDigits = Number(digits[2]);
+      const totalCompared = Number(digits[3]);
+      if (!Number.isSafeInteger(matchedDigits) || !Number.isSafeInteger(totalCompared) || matchedDigits < 0 || totalCompared < 1 || matchedDigits > totalCompared) {
+        throw new Error(`Published exact audit ${recipeNumber} has malformed digit counts`);
+      }
+      sourceAudit = {
+        kind: "exact",
+        assessment: digits[1],
+        matchedDigits,
+        totalCompared,
+        met: digits[1] !== "not a match",
+      };
+    } else if (digitMarkers.length === 0 && sigmaMarkers.length === 1 && withinMarkers.length === 1) {
+      const sigma = block.match(/^sigma:\s+([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)\s*$/m);
+      const within = block.match(/^within 5\.2\u03c3:\s+(yes|no)\s*$/m);
+      if (!sigma || !within) throw new Error(`Published measured audit ${recipeNumber} is malformed`);
+      const zScore = Number(sigma[1]);
+      if (!Number.isFinite(zScore)) throw new Error(`Published measured audit ${recipeNumber} has a nonfinite z-score`);
+      const met = within[1] === "yes";
+      if (met !== (Math.abs(zScore) <= 5.2)) throw new Error(`Published measured audit ${recipeNumber} disagrees with its 5.2-sigma result`);
+      sourceAudit = { kind: "measured", zScore, threshold: 5.2, met };
+    } else {
+      throw new Error(`Published record ${recipeNumber} does not contain one complete source audit`);
+    }
     return {
-      recipeNumber: Number(match[1]),
+      recipeNumber,
       constantId: match[2].trim(),
       displayName: match[3].trim(),
-      buildPass: Number(match[4]),
+      buildPass,
       dependencies,
-      computed: computed?.[1] ?? null,
-      computedDimension: computed?.[2]?.trim() ?? null,
-      zScore: sigma ? Number(sigma[1]) : null,
+      computed: computed[1],
+      computedDimension: computed[2]?.trim() ?? null,
+      sourceAudit,
     };
   });
+  const actual = {
+    exact: results.filter(({ sourceAudit }) => sourceAudit.kind === "exact"),
+    measured: results.filter(({ sourceAudit }) => sourceAudit.kind === "measured"),
+  };
+  if (actual.exact.length !== exact || actual.exact.filter(({ sourceAudit }) => sourceAudit.met).length !== exactMet) {
+    throw new Error("Published exact audits do not match the source summary");
+  }
+  if (actual.measured.length !== measured || actual.measured.filter(({ sourceAudit }) => sourceAudit.met).length !== measuredMet) {
+    throw new Error("Published measured audits do not match the source summary");
+  }
+  return results;
+}
+
+function assertSourceIdentity(actual, expected, field, recipeNumber) {
+  if (actual !== expected && actual.normalize("NFD") === expected.normalize("NFD")) {
+    throw new Error(`Published ${field} for recipe ${recipeNumber} has a Unicode-normalization mismatch`);
+  }
+  if (actual !== actual.normalize("NFC") || expected !== expected.normalize("NFC")) {
+    throw new Error(`Published ${field} for recipe ${recipeNumber} is not NFC-normalized`);
+  }
+  if (actual === expected) return;
+  throw new Error(`Published ${field} for recipe ${recipeNumber} does not exactly match constants.yaml`);
+}
+
+export function bindPublishedResults(recipes, published) {
+  if (recipes.length !== published.length) throw new Error(`Published result coverage is ${published.length}/${recipes.length}`);
+  const byNumber = new Map();
+  for (const result of published) {
+    if (!Number.isSafeInteger(result.recipeNumber) || byNumber.has(result.recipeNumber)) {
+      throw new Error(`Published recipe number ${result.recipeNumber} is invalid or duplicated`);
+    }
+    byNumber.set(result.recipeNumber, result);
+  }
+  const bound = new Map();
+  for (const recipe of recipes) {
+    const recipeNumber = recipe.recipe_number;
+    if (!Number.isSafeInteger(recipeNumber) || bound.has(recipeNumber)) throw new Error(`Source recipe number ${recipeNumber} is invalid or duplicated`);
+    const result = byNumber.get(recipeNumber);
+    if (!result) throw new Error(`Published result for recipe ${recipeNumber} is missing`);
+    assertSourceIdentity(result.constantId, recipe.constant_id, "constant ID", recipeNumber);
+    assertSourceIdentity(result.displayName, recipe.display_name, "display name", recipeNumber);
+    bound.set(recipeNumber, result);
+  }
+  return bound;
 }
 
 export async function readJson(path) {

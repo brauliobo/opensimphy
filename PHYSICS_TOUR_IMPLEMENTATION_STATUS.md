@@ -20,13 +20,15 @@ Date: 2026-07-27
 | Item | State |
 | --- | --- |
 | Product plan | Recorded |
-| Tour implementation | Iterations 0 through 5 technically complete; remaining iterations planned |
+| Tour implementation | Iterations 0 through 6 technically complete; remaining iterations planned |
 | Tour content revision | `2026-07-27` |
 | Tour chapters | 20 total; 8 content-ready conventional, 12 planned mathematical/research |
 | Tour lessons / simulations | 9 / 9 |
 | Tour quick stations | 8/8 content-ready; 27 minutes total |
 | Tour glossary / references | 27 / 10 |
-| Atlas formulas | 288 evaluated, 288 graphed |
+| Atlas formulas | 288 meaning-first, evaluated, graphed, and source-audited |
+| Formula exact source criterion | 70 total; 68 met, 2 not met; 50 full / 18 almost-full / 2 no match |
+| Formula measured source criterion | 218 total; 217 within source 5.2 sigma, 1 outside |
 | Known Atlas dimension conflicts | 68; must remain visible in relevant lessons |
 | Number-wall inputs | 351 bounded and simulatable |
 | Core mathematical cases | 37 evaluated and graphed |
@@ -51,15 +53,15 @@ Original baseline verification:
 - All 134 runnable EARTH method defaults completed in dedicated workers.
 - `git diff --check`: passed.
 
-Current Iteration 5 checkpoint verification:
+Current Iteration 6 checkpoint verification:
 
 - `npm run verify`: passed.
 - Data generation: revision `2026-07-27`; 20 chapters, 9 lessons, 9 simulations, 27 glossary entries, 10 references, and 8/8 content-ready stations totaling 27 minutes.
 - TypeScript typecheck: passed.
-- Vitest: 53 files, 544 tests passed.
+- Vitest: 58 files, 600 tests passed.
 - Production PWA build: passed.
 - `npm run check:routes`: passed.
-- Default Chromium Playwright: 85 tests passed.
+- Default Chromium Playwright: 91 tests passed.
 - Production-preview Chromium PWA Playwright: 1 test passed.
 - `git diff --check`: passed.
 - Independent scientific acceptance: PASS.
@@ -81,6 +83,13 @@ Current generated simulation compatibility keys:
 | `blackbody-spectrum` | `2b300b53db827cff15c17c36fbd7a01a753f0fe64f07644548a984c936844f33` |
 | `particle-to-mole-scaler` | `67e4b110368f67d803e04456b9bc3c8a5c2b30c640892c593a79d5e4190dbf0d` |
 
+Current Formula source and compatibility checkpoint:
+
+- Recipes SHA-256: `fe17912cd1915171a3fa9d124f9154ce78f64da7f4a5e99b9b5361d0e4d64fa1`.
+- Symbols SHA-256: `fbdbce921c993df9ccd726eade309b8735d5d84446f74c8b649571fa6e3fa9b6`.
+- Exact fetched bytes are hash-checked against `registry.json` before JSON parsing.
+- Formula compatibility includes Formula ID, both source hashes, implementation revision `formula-evaluator-contract-v1`, and output schema `formula-record-v7`.
+
 Original measured production baseline:
 
 - Main JavaScript: 116.11 kB raw / 45.28 kB gzip.
@@ -91,16 +100,18 @@ Original measured production baseline:
 
 Current checkpoint production measurements:
 
-- Main JavaScript: 112.97 kB raw / 43.67 kB gzip.
-- Eager CSS: 75.67 kB raw / 12.96 kB gzip.
-- Lazy Tour CSS: 37.92 kB raw / 6.37 kB gzip.
-- Base Tour lesson chunk: 24.64 kB raw / 7.86 kB gzip.
-- Each lazy Tour instrument: approximately 19.32-30.50 kB raw / 6.71-9.53 kB gzip.
-- Tour dependency on Plotly: none.
-- Tour manifest: 36,668 bytes, below the 100 KB budget.
+- Main JavaScript: 113.05 kB raw / 43.71 kB gzip.
+- Eager CSS: 85.37 kB raw / 14.54 kB gzip.
+- Formula Atlas: 14.07 kB raw / 4.62 kB gzip.
+- Formula registry: 19.80 kB raw / 7.56 kB gzip.
+- Formula detail: 29.00 kB raw / 8.90 kB gzip.
+- Saved-run registry: 8.43 kB raw / 2.99 kB gzip.
+- Saved view: 11.83 kB raw / 3.89 kB gzip.
+- Formula worker: 15.27 kB raw.
+- Plotly: still lazy-loaded.
 - Initial compressed JavaScript: below the 200 KB budget.
-- PWA precache: 73 entries / 3,789.31 KiB.
-- Explicit Guided pack: 31 validated resources / 485,129 bytes (about 474 KB), revision `2026-07-27`.
+- PWA precache: 75 entries / 3,856.34 KiB.
+- Runtime registry revision: `6647c006a9d3`.
 
 ## Iteration ledger
 
@@ -112,11 +123,11 @@ Current checkpoint production measurements:
 | 3 | Orientation and Tour map | Technically complete | containing commit | Orientation; continuous 8-station spine; 20-chapter/4-act map; persisted Guided/Technical depth; Begin/Resume with real anchors; independent station/lesson progress; evidence, saved, and not-found routes; legacy topic redirects; generated route titles; modal mobile navigation |
 | 4 | Units vertical slice | Technically complete | containing commit | 11-minute full units lesson plus 4-minute Guided quick subset; six-stage lesson grammar; exact SI observation anchors; prediction-first dimensional builder with presets, SI/mechanical-CGS coordinates, energy/torque caveat, and unlike-addition rejection; additive Technical content; provenance and conclusion boundary; accessible reflow; explicit Guided offline pack |
 | 5 | Conventional-physics spine | Technically complete | containing commit | Revision `2026-07-27`; 8/8 content-ready stations and conventional chapters; 9 lessons and pure-engine simulations; 27-minute spine; status/provenance corrections; official IAU/CIPM references; lazy instruments; 31-resource Guided pack |
-| 6 | Formula specimen | Planned | pending | Meaning-first and dependency-complete views pass |
+| 6 | Formula specimen | Technically complete | containing commit | 288 meaning-first records; authoritative identity/NFC-bound source audits; exact fetched-byte hashes; progressive equation ladder; separate source/runtime dependencies; dimension/mol caveats; accessible table/lazy plot; strict local v1 snapshots and saved-run ledger |
 | 7 | Shared Workbench | Planned | pending | Core/walls/EARTH share declared interaction grammar |
 | 8 | Mathematical instruments | Planned | pending | Null-model/base-dependence caveats enforced |
 | 9 | EARTH research track | Planned | pending | Provenance classes remain distinct across all lessons |
-| 10 | Notebook/offline packs | Planned | pending | Saved revisioned state and explicit packs pass |
+| 10 | Notebook/offline packs | Planned | pending | Richer packs, saved-run import/export and revision replay, migration/storage policy, and update warnings pass |
 | 11 | Accessibility/performance/editorial | Planned | pending | Final budgets and Chromium audit pass |
 
 ## Locked decisions
@@ -136,7 +147,7 @@ Current checkpoint production measurements:
 
 ## Current architecture and remaining work
 
-`src/App.vue` no longer invokes an aggregate Atlas initializer. Independent modules under `src/registries` give each route direct ownership: Tour loads its manifest and taxonomy first, then chapter, lesson, simulation, glossary, and reference artifacts on demand; Formula Atlas/detail loads recipes and symbols and evaluates them in `formula.worker`; Core evaluates only in `core.worker`; Number Walls loads the index for browsing, then defers the selected payload and dynamic `numberWall.worker` import until Run. EARTH remains isolated behind its existing registries and worker.
+`src/App.vue` no longer invokes an aggregate Atlas initializer. Independent modules under `src/registries` give each route direct ownership: Tour loads its generated artifacts on demand; Formula Atlas/detail fetches `recipes.json`, `symbols.json`, and `registry.json`, hash-checks the exact bytes, and evaluates in `formula.worker`; Core evaluates only in `core.worker`; Number Walls defers payload and worker loading until Run. Formula assets use revisioned runtime caches and Formula closures contain no Tour JSON, Core/Wall evaluator, or aggregate worker. EARTH remains isolated behind its existing registries and worker.
 
 Registry initialization is generation-guarded so stale in-flight results cannot publish. Failed attempts clear their initialization promise and may be retried; successful registries remain session-cached. Formula and Core routes use owner counts, and release by the final owner cancels unfinished initialization. Each wall run owns a fresh deferred worker and terminates it on result, failure, or cancellation. The additive runtime audit session ledger records only domains that have loaded, and the completion registry uses the strict `completionReport` parser rather than rebuilding a global engine state.
 
@@ -146,11 +157,17 @@ Nine pure engines own the units builder, physical scale ruler, photon equivalent
 
 Scientific status and correction boundaries are part of the generated contracts and runtime findings. Exact, measured, derived, and illustrative values remain distinct; photon mass/temperature outputs are equivalent labels; current SI and 1990 electrical values are separated; Rydberg, particle, signed-spin, ideal-blackbody, amount, and standard-state assumptions stay visible; official IAU/CIPM references are linked; and every Tour runtime result keeps `validatesTheory: false`. The Tour does not alter the five-axis source-audit engine or hide the Atlas's 68 dimension conflicts.
 
-Generated Tour JSON is not automatically precached. The explicit Guided-only pack transactionally installs and validates 31 resources totaling 485,129 bytes at revision `2026-07-27`, includes all station lessons and simulations plus taxonomy as a self-contained fallback, preserves the prior complete pack on failure, and supports explicit clearing. Iteration 10 remains planned: richer packs, saved runs, storage/revision management, and update warnings are not complete.
+Formula records lead with source-labelled meaning and caveats, never an independently authoritative definition. The authoritative `latest-output` audit is identity/NFC-bound to all 288 recipes: 70 exact records divide into 50 full, 18 almost-full, and 2 no-match assessments; 218 measured records divide into 217 within and 1 outside the source's 5.2-sigma criterion. Formula provenance separately locates `constants.yaml` and `sources/latest-output.txt`; the `V_m_1` caveat preserves 100 kPa source wording while disclosing `p_1 = 101325.003754773 Pa`.
+
+Each v7 Formula record has a progressive constructor, separate source/runtime dependency graphs with parent edges, and separate constructor literals. Direct ledgers agree for 262 records; 26 differences remain disclosed. The 68 historical five-axis dimension conflicts stay visible, including the explicit inability to audit amount-of-substance semantics while `mol` is treated as dimensionless. The complete 65-row synthetic sensitivity table is always available, Plotly remains lazy, and the route supports Unicode identity, Tour return context, actual titles, and narrow/400%-equivalent reflow.
+
+The local snapshot foundation uses strict schema version 1, finite plain JSON, safe keys/prototypes, cycle rejection, and a 512 KiB per-run cap. Formula snapshots separate selected sweep output from nominal scale-one comparison output; in-session comparison holds at most two states and uses compatibility key equality only. Incompatible states have no residual, while compatible Formula states may report only selected-real delta. The Local Notebook lists, links, deletes, and clears saved runs. Saved-run import/export, revision replay, migration, and broader storage management remain Iteration 10 work.
+
+Generated Tour JSON is not automatically precached. The explicit Guided-only pack transactionally installs and validates 31 resources totaling 485,129 bytes at revision `2026-07-27`, includes all station lessons and simulations plus taxonomy as a self-contained fallback, preserves the prior complete pack on failure, and supports explicit clearing. Iteration 10 remains planned: richer packs, saved-run import/export and revision replay, migration/storage policy, and update warnings are not complete.
 
 Production closure checks cover all Tour, Formula Atlas, Core, and Number Wall route groups and six EARTH view groups, including canonical and legacy document navigation. Evaluator signatures occur only in their dedicated workers; no aggregate Atlas or shared simulation worker remains.
 
-Later residuals do not reopen completed iterations: Formula detail still evaluates all 288 recipes; successful registries intentionally remain session-cached; strict current Tour summary/count validation must update deliberately with future content; richer revision/storage behavior belongs to Iteration 10; and final budgets, forced-colors, and editorial work belongs to Iteration 11. Chromium remains the sole automated browser target.
+Later residuals do not reopen completed iterations: Formula detail still evaluates all 288 recipes; successful registries intentionally remain session-cached; strict current Tour summary/count validation must update deliberately with future content; Formula saved-run import/export, revision replay, migration, and richer storage behavior belong to Iteration 10; and final budgets, forced-colors, and editorial work belongs to Iteration 11. Chromium remains the sole automated browser target.
 
 Current reusable simulation foundations:
 
@@ -158,6 +175,7 @@ Current reusable simulation foundations:
 - Units/dimensions, physical scales, photon equivalents, electrical standards, hydrogen spectra, particle scales, signed spin precession, ideal blackbody radiation, and particle-to-mole instruments.
 - Exact, measured, derived, and illustrative statuses with explicit assumptions, provenance, conclusion boundaries, and `validatesTheory: false`.
 - A transactional Guided Tour pack with validated manifest, taxonomy, vocabulary, glossary, references, chapter, lesson, and simulation resources.
+- Meaning-first v7 Formula records with byte-pinned sources, dual provenance, progressive equations, dependency/dimension audits, complete sweep tables, and strict local snapshots.
 - 53 frequency/energy/mass/temperature bridge formula records.
 - 64 particle formula records.
 - Complete bounded number-wall engine and worker.
@@ -183,6 +201,18 @@ Required future abstractions:
 - Controlled and proprietary datasets cannot be publicly bundled without permission.
 
 ## Progress history
+
+### 2026-07-27: Formula specimen accepted
+
+- Marked Iteration 6 technically complete in the containing commit.
+- Accepted all 288 meaning-first Formula records with source-labelled exact/measured wording and no claim that source labels are definitions or validation. The identity/NFC-bound latest-output audit reports 70 exact records (68 criterion met, 2 not met; 50 full, 18 almost-full, 2 no match) and 218 measured records (217 within the source 5.2-sigma criterion, 1 outside).
+- Bound exact fetched bytes to recipes SHA `fe17912cd1915171a3fa9d124f9154ce78f64da7f4a5e99b9b5361d0e4d64fa1` and symbols SHA `fbdbce921c993df9ccd726eade309b8735d5d84446f74c8b649571fa6e3fa9b6`; compatibility includes Formula ID, both hashes, implementation revision, and output schema v7.
+- Accepted the progressive equation ladder, separate source/runtime parent-aware dependency ledgers with 262 direct matches and 26 disclosed differences, separate constructor literals, 68 visible historical five-axis conflicts, explicit `mol`/amount limitation, dual `constants.yaml`/`latest-output` provenance, and the `V_m_1` pressure wording correction.
+- Accepted the always-available 65-row sweep table, lazy Plotly view, synthetic-sensitivity caveat, debounced search status, Unicode route/Tour round trip/actual title, 320 px and 400%-equivalent reflow, strict version-1 snapshots, two-state compatibility-only comparison, and local saved-run list/delete/clear.
+- Confirmed Formula route ownership of recipes, symbols, registry, and formula worker only; all three JSON assets are revision-cached, with no Tour JSON or other evaluator worker in Formula closures.
+- `npm run verify` passed: generation, typecheck, 58 Vitest files with 600 tests, production build, and route checker passed. The default Chromium suite passed 91 tests and the production-preview PWA suite passed 1 test; independent scientific and UX acceptance: PASS; `git diff --check`: passed.
+- Measured main JavaScript at 113.05 kB raw / 43.71 kB gzip, eager CSS at 85.37/14.54 kB, Formula Atlas at 14.07/4.62 kB, Formula registry at 19.80/7.56 kB, Formula detail at 29.00/8.90 kB, saved-run registry at 8.43/2.99 kB, Saved view at 11.83/3.89 kB, formula worker at 15.27 kB raw, and PWA precache at 75 entries / 3,856.34 KiB. Plotly remains lazy, runtime revision is `6647c006a9d3`, and initial compressed JavaScript remains below 200 KB.
+- Preserved Iteration 5 content, `scientificallyValidated: false`, all EARTH/data/topology blockers, all scientific caveats, and the visible 68-conflict boundary.
 
 ### 2026-07-27: conventional-physics spine accepted
 
@@ -232,4 +262,4 @@ Required future abstractions:
 
 ## Next implementation step
 
-Implement Iteration 6's meaning-first, dependency-complete Formula specimen and Iteration 7's shared Workbench interaction grammar. Iterations 8 through 11 remain planned.
+Implement Iteration 7's common Workbench shell and interaction grammar for Core, Number Walls, and EARTH. Iterations 8 through 11 remain planned.

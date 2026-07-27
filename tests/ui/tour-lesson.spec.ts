@@ -119,8 +119,8 @@ function routerFor(path: string) {
     routes: [
       { path: '/tour', component: { template: '<div />' } },
       { path: '/tour/:chapter', component: { template: '<div />' } },
-      { path: '/tour/:chapter/:lesson', component: { template: '<div />' }, meta: { title: 'Tour Lesson' } },
-      { path: '/atlas/:id', component: { template: '<div />' } },
+      { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' }, meta: { title: 'Tour Lesson' } },
+      { path: '/atlas/:id', name: 'formula', component: { template: '<div />' } },
       { path: '/evidence', component: { template: '<div />' } },
     ],
   })
@@ -385,6 +385,39 @@ describe('Tour lesson vertical slice', () => {
     expect(wrapper.find('[data-checkpoint-id="centimetre-prediction"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="dimension-builder-stub"]').attributes('data-preset')).toBe('average-speed-from-path')
     expect(wrapper.get('[data-testid="full-lesson-link"]').attributes('href')).toBe('/tour/units/physical-quantities')
+  })
+
+  it('links every formula record back to the canonical standard lesson interpret section', async () => {
+    const wrapper = await mountLesson('/tour/units/physical-quantities?topic=foundations&path=full#try')
+    await flushPromises()
+    const formulaLinks = wrapper.findAll('.tour-resource-links a').slice(0, -1)
+
+    expect(formulaLinks).toHaveLength(lesson.formulaIds.length)
+    formulaLinks.forEach((link, index) => {
+      const formulaId = lesson.formulaIds[index]!
+      const href = `/atlas/${formulaId}?returnTo=/tour/units/physical-quantities%23interpret`
+      expect(link.attributes('href')).toBe(href)
+      expect(link.attributes('aria-label')).toBe(`Formula ${formulaId}, opens Formula record`)
+      expect(link.attributes('target')).toBeUndefined()
+      expect(wrapper.vm.$router.resolve(href).query).toEqual({
+        returnTo: '/tour/units/physical-quantities#interpret',
+      })
+    })
+  })
+
+  it('preserves only an exact quick path in the encoded formula return context', async () => {
+    const wrapper = await mountLesson('/tour/units/physical-quantities?path=quick&topic=foundations#try')
+    await flushPromises()
+    const formulaLinks = wrapper.findAll('.tour-resource-links a').slice(0, -1)
+
+    formulaLinks.forEach((link, index) => {
+      const formulaId = lesson.formulaIds[index]!
+      const href = `/atlas/${formulaId}?returnTo=/tour/units/physical-quantities?path=quick%23interpret`
+      expect(link.attributes('href')).toBe(href)
+      expect(wrapper.vm.$router.resolve(href).query).toEqual({
+        returnTo: '/tour/units/physical-quantities?path=quick#interpret',
+      })
+    })
   })
 
   it('keeps quick completion separate, then completes the lesson and chapter only on the full path', async () => {

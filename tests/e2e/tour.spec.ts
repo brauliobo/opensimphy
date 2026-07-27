@@ -504,6 +504,16 @@ test('the deep anchors scale ruler preserves status and evidence distinctions', 
   await expect(page.getByTestId('scale-normalization-caveat')).toContainText('not predictions')
 })
 
+test('returns from a Formula record to the exact quick-path lesson context', async ({ page }) => {
+  await gotoLesson(page, '/tour/units/physical-quantities?path=quick')
+  await page.getByRole('link', { name: 'Formula Delta_nu_Cs, opens Formula record' }).click()
+  await expect(page.getByTestId('formula-record-ready')).toBeVisible()
+  await expect(page).toHaveURL(/\/atlas\/Delta_nu_Cs\?returnTo=/)
+  await page.getByTestId('tour-return').click()
+  await expect(page).toHaveURL(/\/tour\/units\/physical-quantities\?path=quick#interpret$/)
+  await expect(page.getByTestId('tour-lesson-ready')).toBeVisible()
+})
+
 test('unknown URLs and chapters preserve their requested path and expose recovery', async ({ page }) => {
   await page.goto('/unknown/tour/path?mode=recovery')
   await expect(page).toHaveURL(/\/unknown\/tour\/path\?mode=recovery$/)
@@ -521,7 +531,7 @@ test('saved progress can be exported and explicitly cleared', async ({ page }) =
   await gotoLesson(page)
   await page.getByTestId('preset-average-speed-from-path').click()
   await page.goto('/saved')
-  await expect(page.getByRole('heading', { name: 'Saved Tour Progress' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Local Notebook' })).toBeVisible()
   await expectResumeLink(page, 'saved-resume')
 
   await page.getByTestId('export-progress').click()

@@ -57,7 +57,13 @@
       ],
       "computed": "9192631770.42965",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -134,7 +140,13 @@
       ],
       "computed": "241798924253021.",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -208,7 +220,13 @@
       ],
       "computed": "1.50919017971269e+33",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -279,7 +297,13 @@
       ],
       "computed": "6.62607014968854e-34",
       "computedDimension": "J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 8,
+        "totalCompared": 9,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -356,7 +380,13 @@
       ],
       "computed": "4.13566769616115e-15",
       "computedDimension": "eV",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -429,7 +459,13 @@
       ],
       "computed": "6.58211956829518e-16",
       "computedDimension": "eV s",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -496,7 +532,13 @@
       ],
       "computed": "1.05457181759659e-34",
       "computedDimension": "J s",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -567,7 +609,13 @@
       ],
       "computed": "6.62607014968854e-34",
       "computedDimension": "J s",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 8,
+        "totalCompared": 9,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -639,7 +687,12 @@
       ],
       "computed": "0.000363694754800780",
       "computedDimension": "m^2/s",
-      "zScore": 1.19
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.19,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -712,7 +765,12 @@
       ],
       "computed": "0.000727389509601561",
       "computedDimension": "m^2/s",
-      "zScore": 1.19
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.19,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -785,7 +843,12 @@
       ],
       "computed": "5.78838180031390e-5",
       "computedDimension": "eV/T",
-      "zScore": 1.17
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.17,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -858,7 +921,12 @@
       ],
       "computed": "3.15245125534847e-8",
       "computedDimension": "eV/T",
-      "zScore": 1.2
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.2,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -934,7 +1002,13 @@
       ],
       "computed": "12906.4037306099",
       "computedDimension": "Ohm",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -1011,7 +1085,13 @@
       ],
       "computed": "7.74809172928724e-5",
       "computedDimension": "S",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -1082,7 +1162,13 @@
       ],
       "computed": "1.60217663422017e-19",
       "computedDimension": "J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -1158,7 +1244,13 @@
       ],
       "computed": "6.24150907360306e+18",
       "computedDimension": "eV",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -1232,7 +1324,12 @@
       ],
       "computed": "-175882000934.636",
       "computedDimension": "C/kg",
-      "zScore": -1.76
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.76,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -1305,7 +1402,12 @@
       ],
       "computed": "95788331.4831663",
       "computedDimension": "C/kg",
-      "zScore": 1.83
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.83,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -1384,7 +1486,12 @@
       ],
       "computed": "13996244924.8204",
       "computedDimension": "Hz/T",
-      "zScore": 1.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -1463,7 +1570,12 @@
       ],
       "computed": "7.62259322303547",
       "computedDimension": "MHz/T",
-      "zScore": 4.68
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 4.68,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -1543,7 +1655,12 @@
       ],
       "computed": "5.43102018763797e-10",
       "computedDimension": "m",
-      "zScore": -3.63
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.63,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -1626,7 +1743,12 @@
       ],
       "computed": "1.92015560171992e-10",
       "computedDimension": "m",
-      "zScore": -3.57
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.57,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -1705,7 +1827,12 @@
       ],
       "computed": "10973731.5681100",
       "computedDimension": "1/m",
-      "zScore": -3.92
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.92,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -1782,7 +1909,12 @@
       ],
       "computed": "21947463.1362200",
       "computedDimension": "1/m",
-      "zScore": -3.92
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.92,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -1861,7 +1993,12 @@
       ],
       "computed": "4.55633525292919e-8",
       "computedDimension": "E_h",
-      "zScore": 3.2
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.2,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -1928,7 +2065,13 @@
       ],
       "computed": "1.00000008888173",
       "computedDimension": "A",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 11,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -1995,7 +2138,13 @@
       ],
       "computed": "1.00000008888173",
       "computedDimension": "C",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 11,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -2075,7 +2224,12 @@
       ],
       "computed": "46.6864477302116",
       "computedDimension": "1/m*T",
-      "zScore": 0.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -2155,7 +2309,12 @@
       ],
       "computed": "0.0254262341068941",
       "computedDimension": "1/m*T",
-      "zScore": 0.76
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.76,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -2226,7 +2385,12 @@
       ],
       "computed": "8987551793.02985",
       "computedDimension": "m/F",
-      "zScore": 0.52
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.52,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -2297,7 +2461,12 @@
       ],
       "computed": "1.11265005535270e-10",
       "computedDimension": "F/m",
-      "zScore": -4.98
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.98,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -2372,7 +2541,12 @@
       ],
       "computed": "8.85418781204267e-12",
       "computedDimension": "F/m",
-      "zScore": -4.83
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.83,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -2448,7 +2622,12 @@
       ],
       "computed": "2.41888432657499e-17",
       "computedDimension": "s",
-      "zScore": -4.39
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.39,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -2528,7 +2707,12 @@
       ],
       "computed": "1.51982984605029e-16",
       "computedDimension": "E_h",
-      "zScore": -4.18
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.18,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -2607,7 +2791,12 @@
       ],
       "computed": "6.57968392052075e+15",
       "computedDimension": "Hz",
-      "zScore": 2.9
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.9,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -2686,7 +2875,12 @@
       ],
       "computed": "3.28984196026037e+15",
       "computedDimension": "Hz",
-      "zScore": 2.88
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.88,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -2764,7 +2958,12 @@
       ],
       "computed": "-0.684979091085623",
       "computedDimension": "-",
-      "zScore": 1.62
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.62,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -2846,7 +3045,12 @@
       ],
       "computed": "-1.45989857648808",
       "computedDimension": "-",
-      "zScore": -1.64
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.64,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -2926,7 +3130,12 @@
       ],
       "computed": "960.920149475118",
       "computedDimension": "-",
-      "zScore": -1.44
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.44,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3007,7 +3216,12 @@
       ],
       "computed": "0.00104066919665097",
       "computedDimension": "-",
-      "zScore": 1.49
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.49,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3089,7 +3303,12 @@
       ],
       "computed": "1.85480201153129e-23",
       "computedDimension": "J/T",
-      "zScore": -2.79
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.79,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3170,7 +3389,12 @@
       ],
       "computed": "9.27401005765645e-24",
       "computedDimension": "J/T",
-      "zScore": -2.77
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.77,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3251,7 +3475,12 @@
       ],
       "computed": "5.05078373489253e-27",
       "computedDimension": "J/T",
-      "zScore": -2.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3337,7 +3566,12 @@
       ],
       "computed": "1.50460951611439e-26",
       "computedDimension": "J/T",
-      "zScore": -0.56
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.56,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3415,7 +3649,12 @@
       ],
       "computed": "1.06663991754138",
       "computedDimension": "-",
-      "zScore": -0.65
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.65,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3494,7 +3733,12 @@
       ],
       "computed": "2.97896247563038",
       "computedDimension": "-",
-      "zScore": 1.8
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.8,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3572,7 +3816,12 @@
       ],
       "computed": "0.00162239367061580",
       "computedDimension": "-",
-      "zScore": 1.82
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.82,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3650,7 +3899,12 @@
       ],
       "computed": "5.95792495126075",
       "computedDimension": "-",
-      "zScore": 1.77
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.77,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3720,7 +3974,12 @@
       ],
       "computed": "206.766985041623",
       "computedDimension": "-",
-      "zScore": -0.66
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.66,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -3793,7 +4052,12 @@
       ],
       "computed": "6.67430315504538e-11",
       "computedDimension": "m^3/(s^2*kg)",
-      "zScore": 0.02
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.02,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -3865,7 +4129,12 @@
       ],
       "computed": "6.70882525604658e-39",
       "computedDimension": "c^4/GeV^2",
-      "zScore": -0.03
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.03,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -3944,7 +4213,12 @@
       ],
       "computed": "1.67492749887877e-27",
       "computedDimension": "kg",
-      "zScore": -1.98
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.98,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -4028,7 +4302,12 @@
       ],
       "computed": "1.67262192525165e-27",
       "computedDimension": "kg",
-      "zScore": -1.34
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.34,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -4107,7 +4386,12 @@
       ],
       "computed": "3.34358377536356e-27",
       "computedDimension": "kg",
-      "zScore": -1.44
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.44,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -4183,7 +4467,12 @@
       ],
       "computed": "1.88353161502363e-28",
       "computedDimension": "kg",
-      "zScore": -0.29
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.29,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -4262,7 +4551,12 @@
       ],
       "computed": "-0.000466434558972165",
       "computedDimension": "-",
-      "zScore": -3.31
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.31,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4343,7 +4637,12 @@
       ],
       "computed": "-2143.92347386008",
       "computedDimension": "-",
-      "zScore": 3.26
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.26,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4426,7 +4725,12 @@
       ],
       "computed": "0.307012209390825",
       "computedDimension": "-",
-      "zScore": 0.11
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.11,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4510,7 +4814,12 @@
       ],
       "computed": "-0.448206589662330",
       "computedDimension": "-",
-      "zScore": -0.63
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.63,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4601,7 +4910,12 @@
       ],
       "computed": "4.33073505993243e-27",
       "computedDimension": "J/T",
-      "zScore": -2.46
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.46,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4683,7 +4997,12 @@
       ],
       "computed": "-0.00115867149694879",
       "computedDimension": "-",
-      "zScore": -2.53
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.53,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4769,7 +5088,12 @@
       ],
       "computed": "-2.12749776673057",
       "computedDimension": "-",
-      "zScore": -2.55
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.55,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4853,7 +5177,12 @@
       ],
       "computed": "-4.25525070422300",
       "computedDimension": "dimensionless",
-      "zScore": -1.39
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.39,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -4936,7 +5265,12 @@
       ],
       "computed": "-2.12762535211150",
       "computedDimension": "-",
-      "zScore": -1.36
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.36,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -5015,7 +5349,12 @@
       ],
       "computed": "-0.00115874098211894",
       "computedDimension": "-",
-      "zScore": -1.37
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.37,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -5094,7 +5433,12 @@
       ],
       "computed": "1.25663706158249e-6",
       "computedDimension": "N/A^2",
-      "zScore": 1.56
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.56,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -5168,7 +5512,12 @@
       ],
       "computed": "9.10938371013637e-31",
       "computedDimension": "kg",
-      "zScore": -1.34
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.34,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -5250,7 +5599,12 @@
       ],
       "computed": "3.16754546668953e-27",
       "computedDimension": "kg",
-      "zScore": 0.03
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.03,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -5334,7 +5688,12 @@
       ],
       "computed": "5.00735674868071e-27",
       "computedDimension": "kg",
-      "zScore": -1.57
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.57,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -5421,7 +5780,13 @@
       ],
       "computed": "683.002503039572",
       "computedDimension": "lm/W",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 3,
+        "totalCompared": 3,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -5498,7 +5863,12 @@
       ],
       "computed": "5.00641278404442e-27",
       "computedDimension": "kg",
-      "zScore": -1.35
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.35,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -5579,7 +5949,12 @@
       ],
       "computed": "6.64465734214073e-27",
       "computedDimension": "kg",
-      "zScore": -1.36
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.36,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -5656,7 +6031,12 @@
       ],
       "computed": "1.22088572754077e+19",
       "computedDimension": "GeV",
-      "zScore": -0.31
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.31,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -5735,7 +6115,13 @@
       ],
       "computed": "25812.8074493917",
       "computedDimension": "Ohm",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -5811,7 +6197,12 @@
       ],
       "computed": "376.730313712033",
       "computedDimension": "Ohm",
-      "zScore": 5.09
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 5.09,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -5885,7 +6276,12 @@
       ],
       "computed": "29.9792458199152",
       "computedDimension": "Ohm",
-      "zScore": 0
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -5955,7 +6351,13 @@
       ],
       "computed": "3.33564095322874e-9",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6027,7 +6429,12 @@
       ],
       "computed": "2187691.26392059",
       "computedDimension": "m/s",
-      "zScore": 5.18
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 5.18,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -6101,7 +6508,12 @@
       ],
       "computed": "1.99285191623659e-24",
       "computedDimension": "m*kg/s",
-      "zScore": 2.54
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.54,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -6172,7 +6584,12 @@
       ],
       "computed": "2.73092453230547e-22",
       "computedDimension": "m*kg/s",
-      "zScore": -2.53
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.53,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -6240,7 +6657,13 @@
       ],
       "computed": "1.78266192320573e-36",
       "computedDimension": "kg",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6310,7 +6733,13 @@
       ],
       "computed": "1.11265005688553e-17",
       "computedDimension": "kg",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6380,7 +6809,12 @@
       ],
       "computed": "6700535254.99261",
       "computedDimension": "u",
-      "zScore": 3.76
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.76,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6449,7 +6883,12 @@
       ],
       "computed": "1.49241808593481e-10",
       "computedDimension": "J",
-      "zScore": -3.79
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.79,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6526,7 +6965,12 @@
       ],
       "computed": "0.510998950028076",
       "computedDimension": "MeV/c",
-      "zScore": -4.14
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.14,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -6597,7 +7041,12 @@
       ],
       "computed": "931.494102497143",
       "computedDimension": "MeV/c",
-      "zScore": -4.22
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.22,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -6666,7 +7115,13 @@
       ],
       "computed": "8.98755178064363e+16",
       "computedDimension": "J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6739,7 +7194,13 @@
       ],
       "computed": "5.60958859883647e+35",
       "computedDimension": "eV",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 7,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -6811,7 +7272,12 @@
       ],
       "computed": "2.07214623578054e-13",
       "computedDimension": "J",
-      "zScore": -1.47
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.47,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -6888,7 +7354,12 @@
       ],
       "computed": "1.29333195324567",
       "computedDimension": "MeV",
-      "zScore": -1.47
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.47,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -6964,7 +7435,12 @@
       ],
       "computed": "0.510998950028076",
       "computedDimension": "MeV",
-      "zScore": -4.14
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.14,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7037,7 +7513,12 @@
       ],
       "computed": "105.658374731846",
       "computedDimension": "MeV",
-      "zScore": -0.33
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.33,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7112,7 +7593,12 @@
       ],
       "computed": "938.272088205555",
       "computedDimension": "MeV",
-      "zScore": -4.22
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.22,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7187,7 +7673,12 @@
       ],
       "computed": "939.565420158800",
       "computedDimension": "MeV",
-      "zScore": -3.71
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.71,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7262,7 +7753,12 @@
       ],
       "computed": "1776.86269362378",
       "computedDimension": "MeV",
-      "zScore": 0.02
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.02,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7337,7 +7833,12 @@
       ],
       "computed": "1875.61294255340",
       "computedDimension": "MeV",
-      "zScore": -4.22
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.22,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7412,7 +7913,12 @@
       ],
       "computed": "2808.39160744447",
       "computedDimension": "MeV",
-      "zScore": -4.18
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.18,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7487,7 +7993,12 @@
       ],
       "computed": "2808.92113277062",
       "computedDimension": "MeV",
-      "zScore": -4.44
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.44,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7562,7 +8073,12 @@
       ],
       "computed": "3727.37940696477",
       "computedDimension": "MeV",
-      "zScore": -4.03
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.03,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7633,7 +8149,12 @@
       ],
       "computed": "8.18710577846023e-14",
       "computedDimension": "J",
-      "zScore": -3.67
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.67,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7704,7 +8225,12 @@
       ],
       "computed": "1.69283379205042e-11",
       "computedDimension": "J",
-      "zScore": -0.31
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.31,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7775,7 +8301,12 @@
       ],
       "computed": "1.50327761626390e-10",
       "computedDimension": "J",
-      "zScore": -3.74
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.74,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7846,7 +8377,12 @@
       ],
       "computed": "1.50534976249968e-10",
       "computedDimension": "J",
-      "zScore": -3.47
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.47,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7917,7 +8453,12 @@
       ],
       "computed": "2.84684788994152e-10",
       "computedDimension": "J",
-      "zScore": 0.04
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.04,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -7988,7 +8529,12 @@
       ],
       "computed": "3.00506323139999e-10",
       "computedDimension": "J",
-      "zScore": -3.73
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.73,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -8059,7 +8605,12 @@
       ],
       "computed": "4.49953941318755e-10",
       "computedDimension": "J",
-      "zScore": -3.79
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.79,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -8130,7 +8681,12 @@
       ],
       "computed": "4.50038780629233e-10",
       "computedDimension": "J",
-      "zScore": -4.01
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.01,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -8201,7 +8757,12 @@
       ],
       "computed": "5.97192019271237e-10",
       "computedDimension": "J",
-      "zScore": -3.68
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.68,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -8276,7 +8837,12 @@
       ],
       "computed": "0.857438235960776",
       "computedDimension": "-",
-      "zScore": 1.12
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.12,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8351,7 +8917,12 @@
       ],
       "computed": "0.857438235960776",
       "computedDimension": "-",
-      "zScore": 1.12
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.12,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8432,7 +9003,12 @@
       ],
       "computed": "0.000466975458182758",
       "computedDimension": "-",
-      "zScore": 1.15
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.15,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8520,7 +9096,12 @@
       ],
       "computed": "-4.49044833035197e-26",
       "computedDimension": "J/T",
-      "zScore": -0.3
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.3,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8593,7 +9174,12 @@
       ],
       "computed": "0.00115965218025155",
       "computedDimension": "-",
-      "zScore": -1.16
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.16,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8666,7 +9252,12 @@
       ],
       "computed": "0.00116592060110470",
       "computedDimension": "-",
-      "zScore": -0.05
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.05,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8741,7 +9332,12 @@
       ],
       "computed": "-2.00233184172840",
       "computedDimension": "-",
-      "zScore": -0.61
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.61,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8822,7 +9418,12 @@
       ],
       "computed": "-0.00484197050791186",
       "computedDimension": "-",
-      "zScore": -0.25
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.25,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8903,7 +9504,12 @@
       ],
       "computed": "-8.89059709269179",
       "computedDimension": "-",
-      "zScore": -0.26
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.26,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -8989,7 +9595,13 @@
       ],
       "computed": "8.31446261978168",
       "computedDimension": "J/mol*K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -9077,7 +9689,13 @@
       ],
       "computed": "0.0227109546459337",
       "computedDimension": "m^3/mol",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -9165,8 +9783,17 @@
       ],
       "computed": "0.0224139687188157",
       "computedDimension": "m^3/mol",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "not a match",
+        "matchedDigits": 7,
+        "totalCompared": 10,
+        "met": false
+      }
     },
+    "source_caveats": [
+      "The source label says 100 kPa, while its p_1 dependency is 101325.003754773 Pa and expected value 0.02241396954 m^3/mol corresponds to about 101.325 kPa."
+    ],
     "taxonomy": {
       "topic": "thermal",
       "category": "gas-standard-states",
@@ -9239,7 +9866,12 @@
       ],
       "computed": "-2.00231930436065",
       "computedDimension": "-",
-      "zScore": 0.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9315,7 +9947,12 @@
       ],
       "computed": "-1.00115965218032",
       "computedDimension": "-",
-      "zScore": 0.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9397,7 +10034,12 @@
       ],
       "computed": "-1838.28197186465",
       "computedDimension": "-",
-      "zScore": 0.39
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.39,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9486,7 +10128,12 @@
       ],
       "computed": "-9.28476469207113e-24",
       "computedDimension": "J/T",
-      "zScore": -0.13
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.13,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9569,7 +10216,12 @@
       ],
       "computed": "176085962907.620",
       "computedDimension": "1/s*T",
-      "zScore": 2.25
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.25,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9656,7 +10308,12 @@
       ],
       "computed": "28024.9514058438",
       "computedDimension": "MHz/T",
-      "zScore": 2.27
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.27,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9741,7 +10398,12 @@
       ],
       "computed": "42.5763852810158",
       "computedDimension": "MHz/T",
-      "zScore": -0.88
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.88,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9821,7 +10483,12 @@
       ],
       "computed": "267515318.430496",
       "computedDimension": "1/s*T",
-      "zScore": -0.88
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.88,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9909,7 +10576,12 @@
       ],
       "computed": "1.41057057939800e-26",
       "computedDimension": "J/T",
-      "zScore": -0.62
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.62,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -9992,7 +10664,12 @@
       ],
       "computed": "0.00152103220255243",
       "computedDimension": "-",
-      "zScore": 0.56
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.56,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10069,7 +10746,12 @@
       ],
       "computed": "2.79284734506471",
       "computedDimension": "-",
-      "zScore": 0.53
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.53,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10146,7 +10828,12 @@
       ],
       "computed": "5.58569469012941",
       "computedDimension": "-",
-      "zScore": 0.52
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.52,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10227,7 +10914,12 @@
       ],
       "computed": "-0.684997004903255",
       "computedDimension": "-",
-      "zScore": -0.41
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.41,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10310,7 +11002,12 @@
       ],
       "computed": "-658.210687490436",
       "computedDimension": "-",
-      "zScore": 2.1
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.1,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10391,7 +11088,12 @@
       ],
       "computed": "-658.227587029047",
       "computedDimension": "-",
-      "zScore": -0.53
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.53,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10475,7 +11177,12 @@
       ],
       "computed": "-3.18334511221314",
       "computedDimension": "-",
-      "zScore": 0.48
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.48,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10555,7 +11262,12 @@
       ],
       "computed": "2.79277562234849",
       "computedDimension": "-",
-      "zScore": -2.33
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.33,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10640,7 +11352,12 @@
       ],
       "computed": "0.00152099314114036",
       "computedDimension": "-",
-      "zScore": -2.25
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.25,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10723,7 +11440,12 @@
       ],
       "computed": "267522187.170413",
       "computedDimension": "1/s*T",
-      "zScore": 0.82
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.82,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10810,7 +11532,12 @@
       ],
       "computed": "42.5774784749264",
       "computedDimension": "MHz/T",
-      "zScore": 0.77
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.77,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10898,7 +11625,12 @@
       ],
       "computed": "1.41060679716312e-26",
       "computedDimension": "J/T",
-      "zScore": 2.86
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 2.86,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -10975,7 +11707,13 @@
       ],
       "computed": "96485.3322042859",
       "computedDimension": "C/mol",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 8,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -11064,7 +11802,13 @@
       ],
       "computed": "3.99031271062296e-10",
       "computedDimension": "J/(Hz*mol)",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -11154,7 +11898,12 @@
       ],
       "computed": "1.20588317215771e-5",
       "computedDimension": "m^3/mol",
-      "zScore": -0.45
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.45,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -11222,7 +11971,13 @@
       ],
       "computed": "299792458.097899",
       "computedDimension": "m/s",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 9,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -11290,7 +12045,13 @@
       ],
       "computed": "299792458.097899",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 9,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -11362,7 +12123,12 @@
       ],
       "computed": "2.81794032699479e-15",
       "computedDimension": "m",
-      "zScore": 5
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 5,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -11436,7 +12202,12 @@
       ],
       "computed": "5.29177210521101e-11",
       "computedDimension": "m",
-      "zScore": -0.28
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.28,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -11514,7 +12285,12 @@
       ],
       "computed": "6.65245873589776e-29",
       "computedDimension": "m^2",
-      "zScore": 4.97
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 4.97,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -11597,7 +12373,12 @@
       ],
       "computed": "1.16637852183351e-5",
       "computedDimension": "1/GeV^2",
-      "zScore": -0.3
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.3,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -11667,7 +12448,12 @@
       ],
       "computed": "1.66053906821322e-27",
       "computedDimension": "kg",
-      "zScore": -1.36
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.36,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -11741,7 +12527,12 @@
       ],
       "computed": "6.02214075623046e+26",
       "computedDimension": "u",
-      "zScore": 1.33
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.33,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -11809,7 +12600,12 @@
       ],
       "computed": "0.000548579909049541",
       "computedDimension": "-",
-      "zScore": 0.56
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.56,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -11885,7 +12681,12 @@
       ],
       "computed": "1.00727646658226",
       "computedDimension": "-",
-      "zScore": 0.4
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.4,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -11961,7 +12762,12 @@
       ],
       "computed": "1.00866491547290",
       "computedDimension": "-",
-      "zScore": -1.47
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.47,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12037,7 +12843,12 @@
       ],
       "computed": "2.01355321254878",
       "computedDimension": "-",
-      "zScore": 0.32
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.32,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12113,7 +12924,12 @@
       ],
       "computed": "3.01493224693071",
       "computedDimension": "-",
-      "zScore": -0.02
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.02,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12189,7 +13005,12 @@
       ],
       "computed": "3.01550071572158",
       "computedDimension": "-",
-      "zScore": -2.48
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.48,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12265,7 +13086,12 @@
       ],
       "computed": "4.00150617912917",
       "computedDimension": "-",
-      "zScore": 0
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12335,7 +13161,12 @@
       ],
       "computed": "0.000548579909049541",
       "computedDimension": "u",
-      "zScore": 0.56
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.56,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12412,7 +13243,12 @@
       ],
       "computed": "0.00138844889063547",
       "computedDimension": "u",
-      "zScore": -1.4
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.4,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12489,7 +13325,12 @@
       ],
       "computed": "0.113428925044824",
       "computedDimension": "u",
-      "zScore": -0.26
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.26,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12565,7 +13406,12 @@
       ],
       "computed": "1.00727646658226",
       "computedDimension": "u",
-      "zScore": 0.4
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.4,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12641,7 +13487,12 @@
       ],
       "computed": "1.00866491547290",
       "computedDimension": "u",
-      "zScore": -1.47
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.47,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12717,7 +13568,12 @@
       ],
       "computed": "1.90754046521641",
       "computedDimension": "u",
-      "zScore": 0
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12793,7 +13649,12 @@
       ],
       "computed": "2.01355321254878",
       "computedDimension": "u",
-      "zScore": 0.32
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.32,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12869,7 +13730,12 @@
       ],
       "computed": "3.01493224693071",
       "computedDimension": "u",
-      "zScore": -0.02
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.02,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -12945,7 +13811,12 @@
       ],
       "computed": "3.01550071572158",
       "computedDimension": "u",
-      "zScore": -2.48
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.48,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -13021,7 +13892,12 @@
       ],
       "computed": "4.00150617912917",
       "computedDimension": "u",
-      "zScore": 0
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -13105,7 +13981,12 @@
       ],
       "computed": "1.07354410142667e-9",
       "computedDimension": "u",
-      "zScore": 1.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13186,7 +14067,12 @@
       ],
       "computed": "931494103.195446",
       "computedDimension": "eV",
-      "zScore": -1.81
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.81,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13265,7 +14151,13 @@
       ],
       "computed": "5.03411656778381e+24",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13342,7 +14234,13 @@
       ],
       "computed": "806554.393884384",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13425,7 +14323,13 @@
       ],
       "computed": "1.23984198410222e-6",
       "computedDimension": "eV",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13504,7 +14408,13 @@
       ],
       "computed": "1.98644585705374e-25",
       "computedDimension": "J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13584,7 +14494,13 @@
       ],
       "computed": "197.326980422731",
       "computedDimension": "MeV fm",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -13665,7 +14581,12 @@
       ],
       "computed": "27.2113862459610",
       "computedDimension": "V",
-      "zScore": -0.67
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.67,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -13749,7 +14670,12 @@
       ],
       "computed": "13.6056931229805",
       "computedDimension": "eV",
-      "zScore": -0.63
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.63,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -13832,7 +14758,12 @@
       ],
       "computed": "27.2113862459610",
       "computedDimension": "eV",
-      "zScore": -0.67
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.67,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13917,7 +14848,12 @@
       ],
       "computed": "0.0367493221756771",
       "computedDimension": "E_h",
-      "zScore": 0.3
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.3,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -13985,7 +14921,13 @@
       ],
       "computed": "0.999999982178026",
       "computedDimension": "F",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 11,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -14051,7 +14993,13 @@
       ],
       "computed": "1.00000001782197",
       "computedDimension": "H",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 10,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -14117,7 +15065,13 @@
       ],
       "computed": "1.00000001782197",
       "computedDimension": "Ω",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 10,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -14185,7 +15139,12 @@
       ],
       "computed": "2.30557506526313e-30",
       "computedDimension": "kg",
-      "zScore": 0.68
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.68,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -14258,7 +15217,12 @@
       ],
       "computed": "5.99670299153332e-5",
       "computedDimension": "-",
-      "zScore": 0.04
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.04,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -14328,7 +15292,12 @@
       ],
       "computed": "2.39369251464031e-8",
       "computedDimension": "-",
-      "zScore": -4.04
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.04,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -14397,7 +15366,12 @@
       ],
       "computed": "1.98769745110889e-8",
       "computedDimension": "-",
-      "zScore": -0.03
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.03,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -14465,7 +15439,12 @@
       ],
       "computed": "2.56684124759787e-5",
       "computedDimension": "-",
-      "zScore": -0.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -14546,7 +15525,12 @@
       ],
       "computed": "1.64877727300423e-41",
       "computedDimension": "m^2*C^2/J",
-      "zScore": 1.73
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.73,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -14627,7 +15611,12 @@
       ],
       "computed": "514220674774.745",
       "computedDimension": "V/m",
-      "zScore": -4.22
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.22,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -14706,7 +15695,12 @@
       ],
       "computed": "8.23872349803778e-8",
       "computedDimension": "N",
-      "zScore": -4.43
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.43,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -14785,7 +15779,12 @@
       ],
       "computed": "1081202385617.98",
       "computedDimension": "C/m^3",
-      "zScore": -2.26
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.26,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -14868,7 +15867,12 @@
       ],
       "computed": "-9.66235818798184e-27",
       "computedDimension": "J/T",
-      "zScore": 3.09
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.09,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -14951,7 +15955,12 @@
       ],
       "computed": "29.1646871897930",
       "computedDimension": "MHz/T",
-      "zScore": -0.91
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.91,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -15030,7 +16039,12 @@
       ],
       "computed": "183247134.039396",
       "computedDimension": "1/(s*T)",
-      "zScore": -0.93
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.93,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -15109,7 +16123,12 @@
       ],
       "computed": "-0.00104187546165271",
       "computedDimension": "-",
-      "zScore": 0.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -15188,7 +16207,12 @@
       ],
       "computed": "-1.91304241427757",
       "computedDimension": "-",
-      "zScore": 0.77
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.77,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -15267,7 +16291,12 @@
       ],
       "computed": "-3.82608482855515",
       "computedDimension": "-",
-      "zScore": 0.77
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.77,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -15344,7 +16373,13 @@
       ],
       "computed": "7.37249732369515e-51",
       "computedDimension": "kg",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -15421,7 +16456,12 @@
       ],
       "computed": "4.43982166082254e-24",
       "computedDimension": "u",
-      "zScore": 1.3
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.3,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -15492,7 +16532,12 @@
       ],
       "computed": "1.28808866695581e-21",
       "computedDimension": "s",
-      "zScore": 1.29
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.29,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -15567,7 +16612,12 @@
       ],
       "computed": "2.25234272093083e+23",
       "computedDimension": "Hz",
-      "zScore": -1.31
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.31,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -15642,7 +16692,13 @@
       ],
       "computed": "1.35639248967169e+50",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -15721,7 +16777,13 @@
       ],
       "computed": "1.38064900009247e-23",
       "computedDimension": "J/K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 7,
+        "totalCompared": 7,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -15804,7 +16866,13 @@
       ],
       "computed": "8.61733326153817e-5",
       "computedDimension": "eV/K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -15885,7 +16953,13 @@
       ],
       "computed": "1.38064900009247e-23",
       "computedDimension": "J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 7,
+        "totalCompared": 7,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -15970,7 +17044,13 @@
       ],
       "computed": "8.61733326153817e-5",
       "computedDimension": "eV",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -16053,7 +17133,13 @@
       ],
       "computed": "11604.5181221091",
       "computedDimension": "K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -16136,7 +17222,13 @@
       ],
       "computed": "7.24297051539353e+22",
       "computedDimension": "K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -16219,7 +17311,13 @@
       ],
       "computed": "2.65164580464709e+25",
       "computedDimension": "1/m^3",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -16302,7 +17400,13 @@
       ],
       "computed": "2.68678021112194e+25",
       "computedDimension": "1/m^3",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "not a match",
+        "matchedDigits": 7,
+        "totalCompared": 10,
+        "met": false
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -16381,7 +17485,12 @@
       ],
       "computed": "0.671713814961807",
       "computedDimension": "K/T",
-      "zScore": 1.15
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.15,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -16460,7 +17569,12 @@
       ],
       "computed": "0.000365826777199877",
       "computedDimension": "K/T",
-      "zScore": 1.27
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.27,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -16536,7 +17650,12 @@
       ],
       "computed": "2.17987236111221e-18",
       "computedDimension": "J",
-      "zScore": 3.84
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.84,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -16610,7 +17729,12 @@
       ],
       "computed": "4.35974472222442e-18",
       "computedDimension": "J",
-      "zScore": 3.84
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 3.84,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -16684,7 +17808,12 @@
       ],
       "computed": "2.29371227838601e+17",
       "computedDimension": "E_h",
-      "zScore": -4.36
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.36,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -16763,7 +17892,13 @@
       ],
       "computed": "483597848424072.",
       "computedDimension": "Hz/V",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -16840,7 +17975,13 @@
       ],
       "computed": "1.51926744790089e+15",
       "computedDimension": "A/J",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "electromagnetism",
@@ -16919,7 +18060,13 @@
       ],
       "computed": "2.06783384843115e-15",
       "computedDimension": "Wb",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -16998,7 +18145,13 @@
       ],
       "computed": "6.58211956941109e-16",
       "computedDimension": "eV*s",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -17080,7 +18233,13 @@
       ],
       "computed": "4.13566769686230e-15",
       "computedDimension": "eV/Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "foundations",
@@ -17155,7 +18314,13 @@
       ],
       "computed": "3.74177185285691e-16",
       "computedDimension": "W*m^2",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -17230,7 +18395,13 @@
       ],
       "computed": "1.19104297260859e-16",
       "computedDimension": "W*m^2/sr",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -17302,7 +18473,12 @@
       ],
       "computed": "203789460.878420",
       "computedDimension": "1/s*T",
-      "zScore": 0.55
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.55,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17383,7 +18559,12 @@
       ],
       "computed": "32.4341000488329",
       "computedDimension": "MHz/T",
-      "zScore": 0.57
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.57,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17466,7 +18647,12 @@
       ],
       "computed": "-1.07461755420272e-26",
       "computedDimension": "J/T",
-      "zScore": -2.39
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.39,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17550,7 +18736,12 @@
       ],
       "computed": "-1.07455311098445e-26",
       "computedDimension": "J/T",
-      "zScore": -0.68
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.68,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17630,7 +18821,12 @@
       ],
       "computed": "-0.761766577306795",
       "computedDimension": "-",
-      "zScore": -0.15
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.15,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17713,7 +18909,12 @@
       ],
       "computed": "-0.761786134617097",
       "computedDimension": "-",
-      "zScore": -0.39
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.39,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17798,7 +18999,12 @@
       ],
       "computed": "864.058236541591",
       "computedDimension": "-",
-      "zScore": -4.74
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.74,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -17870,7 +19076,12 @@
       ],
       "computed": "34231776.9077000",
       "computedDimension": "E_h",
-      "zScore": -1.3
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -1.3,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -17939,7 +19150,12 @@
       ],
       "computed": "2.92126231920799e-8",
       "computedDimension": "u",
-      "zScore": 1.36
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.36,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18014,7 +19230,12 @@
       ],
       "computed": "2.06148578874053e+34",
       "computedDimension": "E_h",
-      "zScore": -0.44
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.44,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18086,7 +19307,12 @@
       ],
       "computed": "4.85087020954404e-35",
       "computedDimension": "kg",
-      "zScore": 0.4
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.4,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18158,7 +19384,13 @@
       ],
       "computed": "1.53617918688373e-40",
       "computedDimension": "kg",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18229,7 +19461,13 @@
       ],
       "computed": "6.50965726204756e+39",
       "computedDimension": "K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18303,7 +19541,12 @@
       ],
       "computed": "9.25108729020563e-14",
       "computedDimension": "u",
-      "zScore": 0.62
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.62,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18374,7 +19617,12 @@
       ],
       "computed": "10809540204307.9",
       "computedDimension": "K",
-      "zScore": -0.7
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.7,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18450,7 +19698,13 @@
       ],
       "computed": "4.52443833598082e+41",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18526,7 +19780,12 @@
       ],
       "computed": "751300661861779.",
       "computedDimension": "cycles/m",
-      "zScore": -0.99
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.99,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18602,7 +19861,13 @@
       ],
       "computed": "2.21021909404021e-42",
       "computedDimension": "kg",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18680,7 +19945,12 @@
       ],
       "computed": "1.33102504864186e-15",
       "computedDimension": "u",
-      "zScore": 0.98
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.98,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -18756,7 +20026,12 @@
       ],
       "computed": "2.42631023609293e-12",
       "computedDimension": "m/cycle",
-      "zScore": 0.94
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.94,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -18832,7 +20107,12 @@
       ],
       "computed": "1.17344411764094e-14",
       "computedDimension": "m/cycle",
-      "zScore": 0.29
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.29,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -18910,7 +20190,12 @@
       ],
       "computed": "1.32140985399775e-15",
       "computedDimension": "m/cycle",
-      "zScore": 0.97
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.97,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -18988,7 +20273,12 @@
       ],
       "computed": "1.31959090499128e-15",
       "computedDimension": "m/cycle",
-      "zScore": 1.75
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.75,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19066,7 +20356,12 @@
       ],
       "computed": "6.97770282157987e-16",
       "computedDimension": "m/cycle",
-      "zScore": -0.02
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.02,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19140,7 +20435,12 @@
       ],
       "computed": "3.86159267548654e-13",
       "computedDimension": "m/cycle",
-      "zScore": 0.91
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.91,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19212,7 +20512,12 @@
       ],
       "computed": "1.86759431764662e-15",
       "computedDimension": "m/cycle",
-      "zScore": 0.28
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.28,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19286,7 +20591,12 @@
       ],
       "computed": "2.10308910114081e-16",
       "computedDimension": "m/cycle",
-      "zScore": 0.96
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.96,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19360,7 +20670,12 @@
       ],
       "computed": "2.10019415388470e-16",
       "computedDimension": "m/cycle",
-      "zScore": 1.71
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.71,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19434,7 +20749,12 @@
       ],
       "computed": "1.11053589548070e-16",
       "computedDimension": "m/cycle",
-      "zScore": -0.03
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.03,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "particles",
@@ -19514,7 +20834,13 @@
       ],
       "computed": "58789257579.6312",
       "computedDimension": "Hz/K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -19589,7 +20915,13 @@
       ],
       "computed": "20836619124.4486",
       "computedDimension": "Hz/K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -19667,7 +20999,13 @@
       ],
       "computed": "20836619124.4486",
       "computedDimension": "Hz",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -19745,7 +21083,13 @@
       ],
       "computed": "4.79924307302319e-11",
       "computedDimension": "K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -19818,7 +21162,13 @@
       ],
       "computed": "0.00289777195379426",
       "computedDimension": "m*K/cycle",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -19888,7 +21238,13 @@
       ],
       "computed": "0.0143877687681333",
       "computedDimension": "m*K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -19961,7 +21317,13 @@
       ],
       "computed": "0.0143877687681333",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -20035,7 +21397,13 @@
       ],
       "computed": "69.5034800805251",
       "computedDimension": "cycles/m",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -20109,7 +21477,13 @@
       ],
       "computed": "69.5034800805251",
       "computedDimension": "cycles/m*K",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "almost-full match",
+        "matchedDigits": 9,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -20184,7 +21558,12 @@
       ],
       "computed": "315775.024803817",
       "computedDimension": "K",
-      "zScore": -0.48
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.48,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -20262,7 +21641,12 @@
       ],
       "computed": "3.16681156345811e-6",
       "computedDimension": "E_h",
-      "zScore": 0.5
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.5,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -20339,7 +21723,12 @@
       ],
       "computed": "5.48579909796586e-7",
       "computedDimension": "kg/mol",
-      "zScore": 1.04
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.04,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20418,7 +21807,12 @@
       ],
       "computed": "0.000113428925199289",
       "computedDimension": "kg/mol",
-      "zScore": -0.24
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.24,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20497,7 +21891,12 @@
       ],
       "computed": "0.00100000000136176",
       "computedDimension": "kg/mol",
-      "zScore": 1.01
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.01,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20574,7 +21973,12 @@
       ],
       "computed": "0.00100727646795395",
       "computedDimension": "kg/mol",
-      "zScore": 1.01
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.01,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20653,7 +22057,12 @@
       ],
       "computed": "0.00100866491684648",
       "computedDimension": "kg/mol",
-      "zScore": -0.54
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -0.54,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20732,7 +22141,12 @@
       ],
       "computed": "0.00190754046781406",
       "computedDimension": "kg/mol",
-      "zScore": 0
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20811,7 +22225,12 @@
       ],
       "computed": "0.00201355321529080",
       "computedDimension": "kg/mol",
-      "zScore": 1
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20890,7 +22309,12 @@
       ],
       "computed": "0.00301493225103639",
       "computedDimension": "kg/mol",
-      "zScore": 1
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -20969,7 +22393,12 @@
       ],
       "computed": "0.00301550071982803",
       "computedDimension": "kg/mol",
-      "zScore": 0.74
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.74,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -21048,7 +22477,12 @@
       ],
       "computed": "0.00400150618457834",
       "computedDimension": "kg/mol",
-      "zScore": 1.07
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.07,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -21128,7 +22562,12 @@
       ],
       "computed": "0.0120000000163411",
       "computedDimension": "kg/mol",
-      "zScore": 1.04
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.04,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -21204,7 +22643,13 @@
       ],
       "computed": "6.02214076443130e+23",
       "computedDimension": "1/mol",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 9,
+        "totalCompared": 9,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "molar-matter",
@@ -21282,7 +22727,12 @@
       ],
       "computed": "-1.15170753432429",
       "computedDimension": "-",
-      "zScore": 1.35
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.35,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -21360,7 +22810,12 @@
       ],
       "computed": "-1.16487055751258",
       "computedDimension": "-",
-      "zScore": -76.64
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -76.64,
+        "threshold": 5.2,
+        "met": false
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -21442,7 +22897,13 @@
       ],
       "computed": "5.67037441987324e-8",
       "computedDimension": "W/m^2*K^4",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 10,
+        "totalCompared": 10,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "thermal",
@@ -21508,7 +22969,13 @@
       ],
       "computed": "1.00000010665218",
       "computedDimension": "V",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 11,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -21574,7 +23041,13 @@
       ],
       "computed": "1.00000019552285",
       "computedDimension": "W",
-      "zScore": null
+      "sourceAudit": {
+        "kind": "exact",
+        "assessment": "full match",
+        "matchedDigits": 11,
+        "totalCompared": 12,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "metrology",
@@ -21651,7 +23124,12 @@
       ],
       "computed": "9.71736242779307e+21",
       "computedDimension": "V/m^2",
-      "zScore": -4.87
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.87,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -21729,7 +23207,12 @@
       ],
       "computed": "0.00662361823748097",
       "computedDimension": "A",
-      "zScore": -3.78
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.78,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -21808,7 +23291,12 @@
       ],
       "computed": "235051.756770603",
       "computedDimension": "T",
-      "zScore": -4.2
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -4.2,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "magnetism",
@@ -21889,7 +23377,12 @@
       ],
       "computed": "8.47835362016677e-30",
       "computedDimension": "m*C",
-      "zScore": 0.28
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 0.28,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -21968,7 +23461,12 @@
       ],
       "computed": "7.89103656936022e-29",
       "computedDimension": "J/T^2",
-      "zScore": -2.05
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.05,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -22048,7 +23546,12 @@
       ],
       "computed": "4.48655151342650e-40",
       "computedDimension": "m*C",
-      "zScore": -3.62
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -3.62,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -22129,7 +23632,12 @@
       ],
       "computed": "3.20636129566258e-53",
       "computedDimension": "m^3*C^3/J^2",
-      "zScore": -2.62
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": -2.62,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",
@@ -22211,7 +23719,12 @@
       ],
       "computed": "6.23537998029124e-65",
       "computedDimension": "m^4*C^4/J^3",
-      "zScore": 1.74
+      "sourceAudit": {
+        "kind": "measured",
+        "zScore": 1.74,
+        "threshold": 5.2,
+        "met": true
+      }
     },
     "taxonomy": {
       "topic": "atomic",

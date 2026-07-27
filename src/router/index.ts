@@ -97,7 +97,7 @@ export const router = createRouter({
     },
     { path: '/sources', name: 'sources', component: () => import('../views/SourcesView.vue'), meta: { title: 'Sources' } },
     { path: '/evidence', name: 'evidence', component: () => import('../views/EvidenceView.vue'), meta: { title: 'Evidence Guide' } },
-    { path: '/saved', name: 'saved', component: () => import('../views/SavedView.vue'), meta: { title: 'Saved Tour Progress' } },
+    { path: '/saved', name: 'saved', component: () => import('../views/SavedView.vue'), meta: { title: 'Local Notebook' } },
     { path: '/not-found', name: 'not-found', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page Not Found' } },
     { path: '/:pathMatch(.*)*', name: 'catch-all', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page Not Found' } },
   ],

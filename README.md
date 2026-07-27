@@ -6,7 +6,7 @@ OpenSimPhy is a static, browser-only Vue instrument for reproducing and auditing
 
 The atlas covers:
 
-- 288 ordered formula recipes recovered from the site’s `288` presentation and Transform Dictionary.
+- 288 ordered, meaning-first Formula records recovered from the site's `288` presentation and Transform Dictionary, with source-labelled exact/measured wording and no claim that those labels are authoritative definitions or validation.
 - 351 source number-wall inputs: 18 famous sequences, 45 mathematical constants, and 288 constants-of-nature entries.
 - Every case in the core simulation registry, including Planck complex surfaces, quartic root loci, invariant checks, companion dynamics, manifold/dilogarithm cases, transform-space, constructor transforms, and coherent/typed units.
 - Source metadata for recovered site artifacts and the contextual local PDF corpus.
@@ -31,6 +31,7 @@ content/tour            attributed Tour source content and generated-artifact co
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
 src/tour                pure Tour engines, progress model, and transactional offline pack
+src/workbench           strict version-1 snapshots and saved-run validation
 src/workers             dedicated formula, Core, number-wall, and isolated EARTH workers
 src/components/tour     lesson grammar, instruments, and ID-based lazy simulation dispatcher
 src/components          navigation, coverage, Plotly, and canvas instruments
@@ -39,7 +40,7 @@ tests/ui                Vitest and Vue Test Utils contracts
 tests/e2e               Playwright browser audit
 ```
 
-Routes own their data directly through `src/registries` rather than a global Atlas initializer or shared worker. Tour owns its manifest, taxonomy, and lazily loaded chapter, lesson, simulation, glossary, and reference artifacts. Formula Atlas and detail routes own recipes, symbols, and the dedicated formula worker. Core owns only the dedicated Core worker. Number Walls loads its compact index for browsing, then fetches the selected payload and dynamically imports its worker only when the user chooses Run. EARTH remains isolated behind its own registries, evidence shards, and terminating simulation worker. Successful registries remain cached for the browser session; route release cancels unfinished formula or Core initialization after the final owner leaves.
+Routes own their data directly through `src/registries` rather than a global Atlas initializer or shared worker. Tour owns its manifest, taxonomy, and lazily loaded chapter, lesson, simulation, glossary, and reference artifacts. Formula Atlas and detail routes own exact fetched bytes for `recipes.json`, `symbols.json`, and `registry.json`, plus the dedicated formula worker; all three JSON assets use revisioned runtime caches, and Formula routes load no Tour JSON or other evaluator workers. Core owns only the dedicated Core worker. Number Walls loads its compact index for browsing, then fetches the selected payload and dynamically imports its worker only when the user chooses Run. EARTH remains isolated behind its own registries, evidence shards, and terminating simulation worker.
 
 `src/registries/runtimeAudit.ts` publishes an additive session ledger as route domains become ready, while `src/registries/completionRegistry.ts` validates generated completion data through the strict `completionReport` parser. Formula figures are converted from worker-produced inversion-sweep points and markers. Core plots must come from Core worker results, and wall canvases must come from wall worker results. Missing graph or worker output has no placeholder fallback: coverage and the corresponding panel remain incomplete.
 
@@ -47,7 +48,7 @@ At Tour revision `2026-07-27`, the content pipeline deterministically generates 
 
 Nine pure TypeScript Tour engines evaluate bounded inputs without network calls or Plotly. `TourSimulationStage.vue` dispatches by simulation ID and lazily imports only the selected instrument: units builder, physical scale ruler, photon equivalent converter, electrical standards network, hydrogen spectrum, particle scales, spin precession, blackbody spectrum, or particle-to-mole scaler. The conventional spine establishes standard physics and its limits before later source-specific tracks.
 
-Plotly is dynamically imported into its own lazy chunk and formula sweeps are mounted only when their detail disclosure is opened. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows; topic, category, search, and basis stay primary while source topology, audit state, constructor, and representation remain in an advanced disclosure.
+Plotly is dynamically imported into its own lazy chunk and Formula sweeps mount it only when their detail disclosure opens; the complete 65-row sweep table is always available. Number-wall values are rendered with canvas so exact source strings can be retained for cell inspection without creating a DOM node for every cell. Formula browsing is paginated at 24 rows with debounced result-status announcements; topic, category, search, and basis stay primary while source criterion, dimension audit, constructor, and representation remain in an advanced disclosure.
 
 ### Physics Tour
 
@@ -56,6 +57,22 @@ Plotly is dynamically imported into its own lazy chunk and formula sweeps are mo
 Guided or Technical depth persists locally, with Technical content added without replacing Guided material. Visits do not imply completion: quick-station and full-lesson progress are independent, and Resume points to the last real lesson anchor. The spine's instruments cover dimensions and SI/mechanical-CGS coordinates, physical scales, photon equivalents, current and historical electrical standards, hydrogen-like spectra, dependent particle representations, signed spin precession, ideal blackbody radiation, and particle-to-mole scaling.
 
 Every lesson and runtime finding keeps exact, measured, derived, and illustrative statuses distinct and reports `validatesTheory: false`. Scientific corrections remain explicit: equivalent mass and temperature are labels rather than photon rest mass or a thermal state; current SI electrical relationships differ from 1990 conventional values; the Rydberg model has bounded assumptions; linked particle quantities are dependent representations; spin phase uses a declared sign convention; blackbody output is idealized; and mole/standard-state results depend on stated amount, composition, temperature, and pressure assumptions. Official IAU and CIPM records supplement BIPM, CODATA, JCGM, NIST, and textbook references.
+
+### Formula Atlas
+
+All 288 records lead with the named source target, unit, taxonomy context, and preserved-label caveats before revealing the constructor. The authoritative `latest-output` audit records are bound one-to-one to recipe identities with Unicode NFC checks: 70 are source-labelled exact, with 68 meeting the published digit criterion (50 full match and 18 almost-full match) and 2 not meeting it; 218 are source-labelled measured, with 217 within the source's 5.2-sigma criterion and 1 outside it. These are source reproduction criteria, not independent definitions, evidence, or scientific validation.
+
+Formula source bytes are pinned by SHA-256: recipes `fe17912cd1915171a3fa9d124f9154ce78f64da7f4a5e99b9b5361d0e4d64fa1` and symbols `fbdbce921c993df9ccd726eade309b8735d5d84446f74c8b649571fa6e3fa9b6`. The registry hash-checks the exact fetched text before parsing. Each compatibility key includes the Formula ID, both hashes, implementation revision `formula-evaluator-contract-v1`, and output schema `formula-record-v7`.
+
+The detail route provides a progressive equation ladder and separate preserved-source/current-runtime dependency ledgers, including parent edges; constructor literals remain separate from dependencies. Direct dependencies agree for 262 records, while 26 qualified differences are disclosed without merging the ledgers. The historical five-axis audit still reports 68 dimension conflicts and explicitly cannot audit amount of substance because it treats `mol` as dimensionless. Provenance links both `constants.yaml` recipe material and `sources/latest-output.txt`; `V_m_1` preserves the source's 100 kPa wording while disclosing that dependency `p_1` is `101325.003754773 Pa`.
+
+The synthetic inversion-boundary sweep is sensitivity analysis, not uncertainty propagation or a physical trajectory. Its accessible table remains available without Plotly; the plot is lazy. Formula routes support Unicode IDs, Tour return links, generated document titles, keyboard use, and 320 px/400%-equivalent reflow.
+
+### Local Notebook
+
+Formula detail can explicitly save a local version-1 snapshot or freeze up to two in-session comparison states. Snapshots separate the selected synthetic sweep point from nominal scale-one source-comparison outputs. Comparison uses only the compatibility key: incompatible states show findings in parallel with no residual, while compatible Formula states may report only the selected-real delta.
+
+The saved-run registry accepts finite plain JSON only, rejects unsafe keys, non-plain prototypes, cycles, sparse/decorated arrays, and unsupported values, and caps each serialized run at 512 KiB. `/saved` lists, links, deletes, or clears local runs. Formula run import/export, revision replay, richer storage management, and saved-run migration remain Iteration 10 work; Tour progress import/export is a separate existing feature.
 
 ### EARTH Program, Method, and Result Model
 
@@ -93,7 +110,7 @@ Each route registry starts independently, rejects stale in-flight results, expos
 
 The PWA precaches the app shell but excludes route-owner JSON, every generated Tour JSON artifact, and the dedicated formula, Core, and number-wall workers. Deterministic Atlas registries use content-revisioned `NetworkFirst` caches with a 5-second timeout and 7-day bound. Per-wall JSON, EARTH document shards, evidence shards, and Plotly retain their bounded runtime policies.
 
-Tour offline use is opt-in rather than automatic. The current Guided-only pack contains 31 validated resources totaling 485,129 bytes (about 474 KB) at content revision `2026-07-27`, including every station lesson and simulation. Installation is transactional, the included taxonomy provides a self-contained fallback, and `/` or `/saved` can install, refresh, inspect, or clear it. Generated Tour JSON is never automatically precached. Iteration 10 remains planned for richer packs, saved runs, storage/revision management, and update warnings.
+Tour offline use is opt-in rather than automatic. The current Guided-only pack contains 31 validated resources totaling 485,129 bytes (about 474 KB) at content revision `2026-07-27`, including every station lesson and simulation. Installation is transactional, the included taxonomy provides a self-contained fallback, and `/` or `/saved` can install, refresh, inspect, or clear it. Generated Tour JSON is never automatically precached. Iteration 10 remains planned for richer packs, saved-run import/export and replay, migration/storage policy, and update warnings.
 
 ## Commands
 
@@ -118,7 +135,7 @@ npm run verify
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. It fails if the sibling EARTH corpus differs from `public/data/sources/earth-source-lock.json`. `npm run data:lock:earth` is the explicit acceptance path for a clean new EARTH revision. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; both update commands are intentionally excluded from routine verification so a source change cannot silently rewrite the corpus.
 
-UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour engines and instruments, formula and wall interaction, responsive navigation, strict EARTH adapters, provenance labeling, and worker lifecycles. Verification recorded on 2026-07-27: `npm run verify` passed with 53 Vitest files and 544 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 85 tests, and one production-preview Chromium PWA test passed. Independent scientific and UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
+UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour instruments, meaning-first Formula records, dependency/provenance audits, strict snapshots and saved runs, responsive navigation, strict EARTH adapters, and worker lifecycles. Verification recorded on 2026-07-27: `npm run verify` passed with 58 Vitest files and 600 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 91 tests, and one production-preview Chromium PWA test passed. Independent scientific and UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
 
 ## Static Deployment
 
@@ -145,16 +162,16 @@ Direct simulation provenance is limited to recovered Physics Monastery material:
 - `https://www.physicsmonastery.earth/288`
 - the 169-page Transform Dictionary
 - the recovered `288` and combinatorics PDFs
-- `constants.yaml`, `symbols.csv`, and the published evaluation output
+- `constants.yaml`, `symbols.csv`, and `sources/latest-output.txt`
 - `https://www.physicsmonastery.earth/number-walls/data/<file>.json`
 
-The generated recipe and wall registries are derived artifacts, not replacement source records. `public/data/sources/manifest.json` records acquisition date, URL, status, byte size, and SHA256 for wall payloads. `public/data/sources/earth-source-lock.json` pins the EARTH revision, declared license, paths, byte sizes, and SHA256 values. `public/data/generated/earth/manifest.json` records the parser policy and document inventory; its formula, claim, code, and simulation ledgers distinguish exact syntax from heuristic candidates and never execute source code. `public/data/generated/provenance.json` records source/context distinctions and local PDF metadata. The parent corpus `../INDEX.md` remains authoritative for local paths, page counts, byte sizes, hashes, source URLs/DOIs, and failed-access notes.
+The generated recipe and wall registries are derived artifacts, not replacement source records. Formula provenance separately identifies the recipe source (`constants.yaml`) and authoritative source-audit artifact (`sources/latest-output.txt`), with exact fetched-byte hashes recorded in `registry.json`. `public/data/sources/manifest.json` records acquisition date, URL, status, byte size, and SHA256 for wall payloads. `public/data/sources/earth-source-lock.json` pins the EARTH revision, declared license, paths, byte sizes, and SHA256 values. `public/data/generated/earth/manifest.json` records the parser policy and document inventory; its formula, claim, code, and simulation ledgers distinguish exact syntax from heuristic candidates and never execute source code. `public/data/generated/provenance.json` records source/context distinctions and local PDF metadata. The parent corpus `../INDEX.md` remains authoritative for local paths, page counts, byte sizes, hashes, source URLs/DOIs, and failed-access notes.
 
 The Curtis R. Horn Jr. and Nassim Haramein PDFs are contextual cross-links unless a registry case explicitly identifies a concept link. Contextual proximity is not direct formula provenance. No redistribution license is inferred from public accessibility; source rights remain with the relevant authors and publishers.
 
 ## Known Limitations and Data Issues
 
-- The preserved published run reports 70 exact entries (`68` passed, `2` failed) and 218 measured entries (`217` passed, `1` failed). The two exact failures are the molar volume of ideal gas and Loschmidt constant under differing standard-condition conventions. The measured failure is a Sackur-Tetrode case.
+- The preserved published run reports 70 source-labelled exact entries (68 meeting and 2 not meeting its digit criterion) and 218 source-labelled measured entries (217 within and 1 outside its 5.2-sigma criterion). The two exact non-matches concern molar volume and Loschmidt constant reference-condition differences; the measured outlier is a Sackur-Tetrode case. These source labels and criteria are not authoritative definitions or validation.
 - Source notation mixes SI definitions, measured constants, mathematical constants, model values, relationship symbols, and author-defined symbols. Unit strings and dimensions require typed audits rather than display-only comparison.
 - The current typed engine reports 68 recipe dimension declarations that do not match its resolved five-axis dimension vector. These are audit findings, not silently coerced units.
 - A z-score is not meaningful for an exact definition. For measured quantities, correlated CODATA inputs and shared formula dependencies mean displayed z-scores are not necessarily independent statistics.
@@ -163,5 +180,6 @@ The Curtis R. Horn Jr. and Nassim Haramein PDFs are contextual cross-links unles
 - Website content and number-wall JSON can drift after acquisition. Generated registries must be rebuilt and completion rerun when source hashes change.
 - Some related papers could not be acquired because of Akamai/Cloudflare protection, HTTP `403`/`429`, or timeout. The corpus records those failures and does not substitute reconstructed or placeholder PDFs.
 - The 134 runnable EARTH methods provide bounded technical execution, not blanket implementation of the 86 unavailable source models. Of the runnable methods, 37 reproduce source expressions and 97 are traditional analytic/numerical baselines or source-contract validators. No external dataset has been acquired or frozen, none has passed G0b, assignments are not method-frozen, and aggregate scientific validation remains false.
-- Offline Tour use currently covers only the explicit Guided pack. Richer packs, saved runs, storage/revision management, and update warnings remain Iteration 10 work; final performance, forced-colors, and editorial review remain Iteration 11 work. Clearing site storage removes cached shell, data, progress, and packs.
+- Offline Tour use currently covers only the explicit Guided pack. Richer packs, saved-run import/export and replay, migration/storage policy, and update warnings remain Iteration 10 work; final performance, forced-colors, and editorial review remain Iteration 11 work. Clearing site storage removes cached shell, data, progress, and packs.
 - Tour generation currently enforces strict summary counts for 20 chapters, 8 content-ready stations, 9 lessons, 9 simulations, 27 glossary entries, and 10 references; those contracts must be updated deliberately when future content expands.
+- Formula saved runs are local snapshots, not revision replay or a reproducibility guarantee. Import/export, migration, storage quotas beyond the 512 KiB per-run cap, and revision-aware replay remain Iteration 10 work.

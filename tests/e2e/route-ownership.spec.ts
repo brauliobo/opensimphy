@@ -8,6 +8,7 @@ const rootOwnerArtifacts = [
   '/data/generated/taxonomy.json',
   '/data/generated/walls.json',
   '/data/generated/completion.json',
+  '/data/generated/registry.json',
 ] as const
 
 type WorkerOwner = 'formula' | 'core' | 'wall' | 'earth'
@@ -138,7 +139,7 @@ const tourRoutes = [
   {
     path: '/saved',
     expected: ['/data/generated/tour/manifest.json', '/data/generated/taxonomy.json'],
-    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Saved Tour Progress' })).toBeVisible(),
+    ready: async (page: Page) => expect(page.getByRole('heading', { name: 'Local Notebook' })).toBeVisible(),
   },
   {
     path: '/evidence',
@@ -221,6 +222,7 @@ for (const route of [
       '/data/generated/recipes.json',
       '/data/generated/symbols.json',
       '/data/generated/taxonomy.json',
+      '/data/generated/registry.json',
     ])
     expect(workerOwners(activity)).toEqual(['formula'])
   })
@@ -264,6 +266,7 @@ test('warm Atlas to Tour to EARTH navigation keeps owner activity route-bound an
     '/data/generated/recipes.json',
     '/data/generated/symbols.json',
     '/data/generated/taxonomy.json',
+    '/data/generated/registry.json',
   ])
   expect(workerOwners(activity)).toEqual(['formula'])
 

@@ -1,4 +1,7 @@
 import { vi } from 'vitest'
+import recipesText from '../../public/data/generated/recipes.json?raw'
+import registryText from '../../public/data/generated/registry.json?raw'
+import symbolsText from '../../public/data/generated/symbols.json?raw'
 
 type Listener = (event: { message?: string; data?: unknown }) => void
 interface WorkerRecord {
@@ -67,7 +70,12 @@ function formulaFetch(): ReturnType<typeof vi.fn> {
     return {
       ok: true,
       status: 200,
-      json: async () => url.endsWith('/recipes.json') ? Array.from({ length: 288 }, () => ({})) : [{}],
+      text: async () => {
+        if (url.endsWith('/recipes.json')) return recipesText
+        if (url.endsWith('/symbols.json')) return symbolsText
+        if (url.endsWith('/registry.json')) return registryText
+        throw new Error(`Unexpected formula source ${url}`)
+      },
     }
   })
 }
