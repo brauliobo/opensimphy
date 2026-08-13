@@ -98,6 +98,10 @@ For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from 
 
 The target is current stable Chromium, Firefox, and Safari with ES2022 modules, Web Workers, service workers, canvas, dynamic imports, and BigInt support. Interactive 3D plots require WebGL. The layout supports narrow mobile viewports, keyboard focus, labeled controls, reduced-motion preferences, and touch navigation. A browser that blocks WebGL can still inspect formula/audit text, but graph readiness will not be represented as a successfully rendered Plotly panel.
 
+## Future Simulation Workbench
+
+The validated browser ONELAB/GetDP migration, meshStep-based renderer architecture, alternatives, and phased feature-parity plan are documented in [Browser ONELAB Roadmap](docs/browser-onelab-roadmap.md).
+
 ## Provenance
 
 Direct simulation provenance is limited to recovered Physics Monastery material:
