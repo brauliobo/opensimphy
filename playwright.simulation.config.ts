@@ -12,6 +12,7 @@ export default defineConfig({
     serviceWorkers: 'allow',
     trace: 'retain-on-failure',
   },
+  workers: 1,
   projects: [{ name: 'chromium-production', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: 'npm run simulation:verify && VITE_ONELAB_ENABLED=true nice npm run build && nice npm run preview -- --host 127.0.0.1 --port 4183',

@@ -15,10 +15,11 @@ const fixtureRoot = join(root, 'tools/wasm/.cache/src/getdp/tutorials/01-Electro
 const expectedFiles = [
   ...Object.entries(lock.outputs).map(([path, metadata]) => ({ path: `${lock.contentVersion}/${path}`, ...metadata })),
   { path: `${lock.contentVersion}/getdp/runtime.mjs`, bytes: runtimeBytes.length, sha256: lock.patches['getdp/runtime.mjs'] },
-  ...await Promise.all(Object.entries(lock.fixtures).map(async ([name, sha256]) => ({
-    path: `${lock.contentVersion}/fixtures/microstrip/${name}`,
-    bytes: (await readFile(join(fixtureRoot, name))).length,
-    sha256,
+  ...await Promise.all(Object.entries(lock.fixtures).filter(([name]) => !name.startsWith('cube.')).map(async ([name, sha256]) => ({
+    path: `${lock.contentVersion}/fixtures/microstrip/${name}`, bytes: (await readFile(join(fixtureRoot, name))).length, sha256,
+  }))),
+  ...await Promise.all(Object.entries(lock.fixtures).filter(([name]) => name.startsWith('cube.')).map(async ([name, sha256]) => ({
+    path: `${lock.contentVersion}/fixtures/cube/${name}`, bytes: (await readFile(join(root, 'tools/wasm/fixtures', name))).length, sha256,
   }))),
 ]
 if (JSON.stringify(manifest.files.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 }))) !== JSON.stringify(expectedFiles.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256: String(sha256) })))) {

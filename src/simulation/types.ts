@@ -42,9 +42,12 @@ export interface FieldSample {
 export type OnelabWorkerRequest =
   | { type: 'warm'; requestId: string }
   | { type: 'run-microstrip'; requestId: string }
+  | { type: 'get-cube-scene'; requestId: string }
 
 export type OnelabWorkerResponse =
   | { type: 'warmed'; requestId: string; manifest: SimulationAssetManifest }
   | { type: 'entered-native'; requestId: string; workerId: string; operation: 'gmsh-mesh' | 'getdp-solve' }
   | { type: 'result'; requestId: string; result: MicrostripResult }
+  | { type: 'scene'; requestId: string; scene: SimulationScene }
   | { type: 'error'; requestId: string; error: string }
+import type { SimulationScene } from './scene'

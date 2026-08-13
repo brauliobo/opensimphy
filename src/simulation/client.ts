@@ -1,4 +1,6 @@
 import type { MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, SimulationAssetManifest } from './types'
+import type { SimulationScene } from './scene'
+import { terminateWorker, trackWorker } from './diagnostics'
 
 export class OnelabClient {
   private worker = this.createWorker()
@@ -8,7 +10,7 @@ export class OnelabClient {
   private events = new EventTarget()
 
   private createWorker() {
-    const worker = new Worker(new URL('../workers/onelab.worker.ts', import.meta.url), { type: 'module' })
+    const worker = trackWorker(new Worker(new URL('../workers/onelab.worker.ts', import.meta.url), { type: 'module' }))
     worker.addEventListener('message', (event: MessageEvent<OnelabWorkerResponse>) => {
       const pending = this.pending.get(event.data.requestId)
       if (!pending) return
@@ -19,7 +21,9 @@ export class OnelabClient {
       }
       this.pending.delete(event.data.requestId)
       if (event.data.type === 'error') pending.reject(new Error(event.data.error))
-      else pending.resolve(event.data.type === 'result' ? event.data.result : event.data.manifest)
+       else if (event.data.type === 'result') pending.resolve(event.data.result)
+       else if (event.data.type === 'scene') pending.resolve(event.data.scene)
+       else pending.resolve(event.data.manifest)
     })
     worker.addEventListener('error', (event) => {
       const error = new Error(event.message || 'ONELAB worker failed')
@@ -45,6 +49,8 @@ export class OnelabClient {
     return this.request<MicrostripResult>({ type: 'run-microstrip' }, enteredNative)
   }
 
+  getCubeScene() { return this.request<SimulationScene>({ type: 'get-cube-scene' }).promise }
+
   onEnteredNative(listener: (event: CustomEvent<Extract<OnelabWorkerResponse, { type: 'entered-native' }>>) => void) {
     this.events.addEventListener('entered-native', listener as EventListener)
     return () => this.events.removeEventListener('entered-native', listener as EventListener)
@@ -52,7 +58,7 @@ export class OnelabClient {
 
   cancel(requestId: string) {
     if (!this.pending.has(requestId)) return false
-    this.worker.terminate()
+    terminateWorker(this.worker)
     this.pending.forEach(({ reject }, pendingRequestId) => {
       const message = pendingRequestId === requestId
         ? `Simulation request ${requestId} cancelled by worker termination`
@@ -67,7 +73,7 @@ export class OnelabClient {
   dispose() {
     if (this.disposed) return
     this.disposed = true
-    this.worker.terminate()
+    terminateWorker(this.worker)
     const error = new Error('ONELAB client disposed')
     this.pending.forEach(({ reject }) => reject(error))
     this.pending.clear()

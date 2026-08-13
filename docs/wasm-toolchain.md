@@ -2,6 +2,10 @@
 
 Phase 0 builds two independent, serial Emscripten modules and loads them in one long-lived worker. Generated binaries are staged under ignored `public/simulation/`; they are deliberately excluded from the PWA precache and lazily stored in a content-addressed `opensimphy-onelab-<version>` cache.
 
+Phase 1 adds exact runtime pins for `meshstep@0.1.1`, `three@0.180.0`, and `three-mesh-bvh@0.9.2`. meshStep requires Node 22.18 or newer, so the package engine and CI Node profile deliberately use that floor. The locked cube STEP is byte-identical to `CNCKitchen/meshStep@a1a2841633bdb56a54cb91235800d87124af4091:cube.step`; `tools/wasm/fixtures/cube.provenance.json` records its URL, revision, byte count, hash, and geometry. Both files pass through the same content-addressed artifact lock as the Phase 0 modules.
+
+The STEP worker performs a real meshStep conversion. The serial no-OCC Gmsh worker independently opens the locked `cube.geo` built-in-kernel fixture and meshes it. The neutral scene contract carries every 0D-3D entity and element block, each node's lowest-dimensional Gmsh classification, and each rendered surface triangle's entity, element, and adjacent volume-entity region tag; physical groups remain a separate named grouping layer. STEP remains preview-only: arbitrary STEP simulation is unavailable until an OCC Gmsh profile exists. Preview selection handoff fails closed unless geometric area/centroid/normal signatures produce one complete unique face bijection, then stores the matched Gmsh entity key.
+
 ## Reproducibility
 
 `tools/wasm/versions.env` pins the Emscripten image by digest, canonical source URLs/commits/Git trees, and the f2cblaslapack archive by URL and SHA256. `wasm:acquire` fetches and verifies all inputs before compilation; PETSc receives the pre-staged archive through a `file://` URL and cannot silently select a changing network payload. The Docker hostname, source epoch, image, source paths, and Binaryen stripping are fixed so linked bytes do not contain run-specific container identity.

@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 
 import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, SimulationAssetManifest, ViewBlock } from '../simulation/types'
+import { sceneTransferables, surfaceSignatures, type ElementBlock, type ModelEntity, type PhysicalGroup, type SimulationScene } from '../simulation/scene'
 import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
 
@@ -293,11 +294,104 @@ async function runMicrostrip(requestId: string): Promise<MicrostripResult> {
   }
 }
 
+function pairs(values: number[]) {
+  const result: Array<[number, number]> = []
+  for (let index = 0; index < values.length; index += 2) result.push([values[index]!, values[index + 1]!])
+  return result
+}
+
+async function getCubeScene(): Promise<SimulationScene> {
+  await initialize()
+  gmsh.clear()
+  writeFile(gmsh.FS, '/cube.geo', await fetchBytes('fixtures/cube/cube.geo'))
+  gmsh.open('/cube.geo')
+  const surfaces = pairs(gmsh.model.getEntities(2).dimTags as number[]).map(([, tag]) => tag)
+  if (surfaces.length !== 6) throw new Error(`built-in cube has ${surfaces.length} surfaces instead of 6`)
+  gmsh.model.mesh.generate(3)
+
+  const allNodes = gmsh.model.mesh.getNodes()
+  const nodeIndex = new Map<number, number>()
+  allNodes.nodeTags.forEach((tag: number, index: number) => nodeIndex.set(tag, index))
+  const nodeClassification = new Map<number, [number, number]>()
+  const entities: ModelEntity[] = []
+  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const bounds = gmsh.model.getBoundingBox(dimension, entityTag)
+    entities.push({
+      dimension: dimension as 0 | 1 | 2 | 3,
+      tag: entityTag,
+      bounds: [bounds.xmin, bounds.ymin, bounds.zmin, bounds.xmax, bounds.ymax, bounds.zmax],
+      physicalTags: Uint32Array.from(gmsh.model.getPhysicalGroupsForEntity(dimension, entityTag).physicalTags),
+    })
+    for (const tag of gmsh.model.mesh.getNodes(dimension, entityTag).nodeTags as number[]) {
+      const current = nodeClassification.get(tag)
+      if (!current || dimension < current[0]) nodeClassification.set(tag, [dimension, entityTag])
+    }
+  }
+  const triangles: number[] = []
+  const triangleEntities: number[] = []
+  const triangleElements: bigint[] = []
+  const triangleRegions: number[] = []
+  for (const surfaceTag of surfaces) {
+    const adjacentVolumes = gmsh.model.getAdjacencies(2, surfaceTag).upward as number[]
+    if (adjacentVolumes.length !== 1) throw new Error(`surface ${surfaceTag} has ${adjacentVolumes.length} adjacent volumes`)
+    const blocks = gmsh.model.mesh.getElements(2, surfaceTag)
+    blocks.elementTypes.forEach((type: number, block: number) => {
+      const properties = gmsh.model.mesh.getElementProperties(type)
+      if (properties.numPrimaryNodes !== 3) return
+      const tags = blocks.elementTags[block] as number[]
+      const connectivity = blocks.nodeTags[block] as number[]
+      tags.forEach((elementTag, element) => {
+        for (let corner = 0; corner < 3; corner++) triangles.push(nodeIndex.get(connectivity[element * properties.numNodes + corner]!)!)
+        triangleEntities.push(surfaceTag)
+        triangleElements.push(BigInt(elementTag))
+        triangleRegions.push(adjacentVolumes[0]!)
+      })
+    })
+  }
+  const elementBlocks: ElementBlock[] = []
+  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const blocks = gmsh.model.mesh.getElements(dimension, entityTag)
+    blocks.elementTypes.forEach((elementType: number, block: number) => elementBlocks.push({
+      dimension: dimension as 0 | 1 | 2 | 3,
+      entityTag,
+      elementType,
+      elementTags: BigUint64Array.from((blocks.elementTags[block] as number[]).map(BigInt)),
+      connectivity: BigUint64Array.from((blocks.nodeTags[block] as number[]).map(BigInt)),
+    }))
+  }
+  const groups: PhysicalGroup[] = pairs(gmsh.model.getPhysicalGroups().dimTags as number[]).map(([dimension, tag]) => ({
+    dimension: dimension as 0 | 1 | 2 | 3,
+    tag,
+    name: gmsh.model.getPhysicalName(dimension, tag).name,
+    entityTags: Uint32Array.from(gmsh.model.getEntitiesForPhysicalGroup(dimension, tag).tags),
+  }))
+  const scene: SimulationScene = {
+    source: 'gmsh-authoritative',
+    referencePositions: Float64Array.from(allNodes.coord),
+    surfaceTriangles: Uint32Array.from(triangles),
+    triangleEntityTags: Uint32Array.from(triangleEntities),
+    triangleElementTags: BigUint64Array.from(triangleElements),
+    triangleRegionTags: Uint32Array.from(triangleRegions),
+    nodeTags: BigUint64Array.from(allNodes.nodeTags.map(BigInt)),
+    nodeEntityDimensions: Uint8Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[0] ?? 255)),
+    nodeEntityTags: Uint32Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[1] ?? 0)),
+    entities,
+    elementBlocks,
+    groups,
+    fields: [],
+    surfaceSignatures: surfaceSignatures(allNodes.coord, triangles, triangleEntities),
+  }
+  return scene
+}
+
 async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
   const { requestId } = event.data
   try {
     if (event.data.type === 'warm') emit({ type: 'warmed', requestId, manifest: await initialize() })
-    else {
+    else if (event.data.type === 'get-cube-scene') {
+      const scene = await getCubeScene()
+      emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
+    } else {
       const result = await runMicrostrip(requestId)
       emit({ type: 'result', requestId, result }, [result.scalar.values.buffer, result.vector.values.buffer])
     }

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "generationDate": "2026-08-13T00:00:00Z",
-  "contentVersion": "fc20433c3f36ebbc3bc1",
+  "contentVersion": "0cb05fb9c4cf6a46c80e",
   "patches": {
     "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
     "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
@@ -10,6 +10,9 @@
     "getdp/runtime.mjs": "2ae3b5ffa605047142d5c7a18022bd8878fc1f38881c32e51375343252dd5418"
   },
   "fixtures": {
+    "cube.geo": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2",
+    "cube.step": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180",
+    "cube.provenance.json": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2",
     "microstrip.geo": "66dd5667670d4d471c2469bdad40ebfb48ee26140014a7fbbab65dd4d2b2541d",
     "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
   },

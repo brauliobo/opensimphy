@@ -61,7 +61,7 @@ The PWA precaches the app shell and generated registries. Per-wall JSON under `/
 
 ## Commands
 
-Node 20.19 or newer is required.
+Node 22.18 or newer is required.
 
 ```bash
 npm install

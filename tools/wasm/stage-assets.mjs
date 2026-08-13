@@ -29,6 +29,7 @@ for (const [name, expected] of Object.entries(lock.outputs)) {
 
 const fixtureSource = join(cacheRoot, 'src/getdp/tutorials/01-Electrostatics')
 const fixturePaths = ['microstrip.geo', 'microstrip.pro']
+const cubeFixturePaths = ['cube.geo', 'cube.step', 'cube.provenance.json']
 const assets = []
 for (const [path, metadata] of Object.entries(lock.outputs)) {
   const bytes = await readFile(join(outputRoot, path))
@@ -39,6 +40,10 @@ assets.push({ path: 'getdp/runtime.mjs', bytes: runtimeBytes, sha256: sha256(run
 for (const name of fixturePaths) {
   const bytes = await verify(join(fixtureSource, name), lock.fixtures[name], name)
   assets.push({ path: `fixtures/microstrip/${name}`, bytes, sha256: sha256(bytes) })
+}
+for (const name of cubeFixturePaths) {
+  const bytes = await verify(join(tools, 'fixtures', name), lock.fixtures[name], name)
+  assets.push({ path: `fixtures/cube/${name}`, bytes, sha256: sha256(bytes) })
 }
 
 const contentId = sha256(Buffer.from(JSON.stringify(assets.map(({ path, bytes, sha256 }) => ({ path, bytes: bytes.length, sha256 })))))
