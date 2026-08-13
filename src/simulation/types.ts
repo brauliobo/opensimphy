@@ -19,6 +19,8 @@ export interface ViewBlock {
 export interface MicrostripResult {
   nodes: number
   elements: number
+  meshSha256: string
+  degreesOfFreedom: number
   initialResidual: number
   residual: number
   mshBytes: number
@@ -29,6 +31,34 @@ export interface MicrostripResult {
   memoryBytes: number
   workerId: string
   samples: FieldSample[]
+}
+
+export interface ProjectFile {
+  path: string
+  bytes: Uint8Array
+}
+
+export interface ProjectEnvelope {
+  schema: 1
+  action: 'check' | 'compute' | 'reset'
+  projectId: string
+  revision: number
+  files: ProjectFile[]
+  database: string
+  defaults: string
+}
+
+export interface ProjectResponse {
+  action: ProjectEnvelope['action']
+  projectId: string
+  revision: number
+  database: string
+  result?: MicrostripResult
+}
+
+export interface ProjectBootstrap {
+  files: ProjectFile[]
+  defaults: string
 }
 
 export interface FieldSample {
@@ -42,12 +72,16 @@ export interface FieldSample {
 export type OnelabWorkerRequest =
   | { type: 'warm'; requestId: string }
   | { type: 'run-microstrip'; requestId: string }
+  | { type: 'open-microstrip'; requestId: string }
+  | { type: 'project'; requestId: string; envelope: ProjectEnvelope }
   | { type: 'get-cube-scene'; requestId: string }
 
 export type OnelabWorkerResponse =
   | { type: 'warmed'; requestId: string; manifest: SimulationAssetManifest }
-  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'gmsh-mesh' | 'getdp-solve' }
+  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'getdp-check' | 'gmsh-mesh' | 'getdp-solve' }
   | { type: 'result'; requestId: string; result: MicrostripResult }
+  | { type: 'project-opened'; requestId: string; project: ProjectBootstrap }
+  | { type: 'project-response'; requestId: string; response: ProjectResponse }
   | { type: 'scene'; requestId: string; scene: SimulationScene }
   | { type: 'error'; requestId: string; error: string }
 import type { SimulationScene } from './scene'

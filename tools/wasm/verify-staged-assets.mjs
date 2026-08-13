@@ -11,12 +11,13 @@ if (manifest.schema !== 2 || manifest.version !== lock.contentVersion || manifes
   throw new Error('staged simulation manifest does not match the tracked artifact lock')
 }
 const runtimeBytes = await readFile(join(root, 'tools/wasm/getdp/runtime.mjs'))
-const fixtureRoot = join(root, 'tools/wasm/.cache/src/getdp/tutorials/01-Electrostatics')
+const fixtureRoot = join(root, 'tools/wasm/.cache/fixtures/microstrip')
+const fixturePath = (name) => name === 'microstrip.json' ? join(root, 'tools/wasm/fixtures', name) : join(fixtureRoot, name)
 const expectedFiles = [
   ...Object.entries(lock.outputs).map(([path, metadata]) => ({ path: `${lock.contentVersion}/${path}`, ...metadata })),
   { path: `${lock.contentVersion}/getdp/runtime.mjs`, bytes: runtimeBytes.length, sha256: lock.patches['getdp/runtime.mjs'] },
   ...await Promise.all(Object.entries(lock.fixtures).filter(([name]) => !name.startsWith('cube.')).map(async ([name, sha256]) => ({
-    path: `${lock.contentVersion}/fixtures/microstrip/${name}`, bytes: (await readFile(join(fixtureRoot, name))).length, sha256,
+    path: `${lock.contentVersion}/fixtures/microstrip/${name}`, bytes: (await readFile(fixturePath(name))).length, sha256,
   }))),
   ...await Promise.all(Object.entries(lock.fixtures).filter(([name]) => name.startsWith('cube.')).map(async ([name, sha256]) => ({
     path: `${lock.contentVersion}/fixtures/cube/${name}`, bytes: (await readFile(join(root, 'tools/wasm/fixtures', name))).length, sha256,

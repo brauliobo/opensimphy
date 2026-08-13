@@ -1,5 +1,5 @@
 {
-  "schema": 2,
+  "schema": 3,
   "provenance": {
     "generation": {
       "command": "JOBS=4 nice npm run wasm:reference",
@@ -37,81 +37,174 @@
     "patches": {
       "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
       "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
-      "getdp/bridge.cpp": "6c75a47256645417d120a05aa8f4b31f971d9fdbf22782302436400ba3341454",
-      "getdp/CMakeLists.append.txt": "c16650efbcc8d8da8e6f90e95454db1bdca4c73343ddc2ddcaf3a3b3579d7bca",
-      "getdp/runtime.mjs": "2ae3b5ffa605047142d5c7a18022bd8878fc1f38881c32e51375343252dd5418"
+      "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
+      "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
+      "getdp/CMakeLists.append.txt": "a7024dc787ce10f4a846c741def3f00e033c5651556463d686b75e70be36936f",
+      "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b"
     },
     "fixtures": {
-      "microstrip.geo": "66dd5667670d4d471c2469bdad40ebfb48ee26140014a7fbbab65dd4d2b2541d",
-      "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+      "cube.geo": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2",
+      "cube.step": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180",
+      "cube.provenance.json": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2",
+      "microstrip.geo": "6b6e881d25575e8250a111a7715afba0cdc86bacdf4f14a85ed8e6caadf132fc",
+      "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58",
+      "microstrip.json": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083"
     },
     "outputs": {
-      "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
-      "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+      "1": {
+        "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
+        "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+      },
+      "2": {
+        "v.pos": "347ccca33f4d9b00efdac524ceb33a57ccdc3decf02172a7c9e168093ec005d2",
+        "e.pos": "e05f35198f9cee7cac6c2dd5c43aba323eea439d76775228f3f5f2841c5ad296"
+      }
     }
   },
-  "nodes": 727,
-  "elements": 1428,
-  "initialResidual": 4.99605494016e-13,
-  "residual": 4.503046812882e-28,
-  "convergenceRatio": 9.013205152499361e-16,
-  "scalar": {
-    "min": 0,
-    "max": 0.001,
-    "mean": 0.00040308882893143094,
-    "samples": 4011
-  },
-  "vector": {
-    "min": 0.0001061256691573193,
-    "max": 4.597184906290814,
-    "mean": 0.4476392714302638,
-    "samples": 4011
-  },
-  "samples": [
+  "runs": [
     {
-      "key": "ground-near",
-      "coordinate": [
-        0.0004030899034343237,
-        0.0001378576869545549,
-        0
+      "meshSizeFactor": 1,
+      "nodes": 727,
+      "elements": 1428,
+      "meshSha256": "54aad440720d0dd28f0f76ee6e162b23c92288a1ada311f2c6792ea6255af935",
+      "degreesOfFreedom": 634,
+      "initialResidual": 4.99605494016e-13,
+      "residual": 4.503046812882e-28,
+      "scalar": {
+        "min": 0,
+        "max": 0.001,
+        "mean": 0.00040308882893143094,
+        "samples": 4011
+      },
+      "vector": {
+        "min": 0.0001061256691573193,
+        "max": 4.597184906290814,
+        "mean": 0.4476392714302638,
+        "samples": 4011
+      },
+      "samples": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0004030899034343237,
+            0.0001378576869545549,
+            0
+          ],
+          "scalar": 0.0001377134268606462,
+          "vector": [
+            0.0007914287551726851,
+            -0.9991287961796949,
+            0
+          ],
+          "magnitude": 0.9991291096324642
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.00123608771272033,
+            0.0006350812492402686,
+            0
+          ],
+          "scalar": 0.0006311123968681924,
+          "vector": [
+            0.01527740140514011,
+            -1.011959759856491,
+            0
+          ],
+          "magnitude": 1.012075073580266
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.003191894433968417,
+            0.0005736175644244714,
+            0
+          ],
+          "scalar": 0.0001509865472837525,
+          "vector": [
+            0.1296027187386902,
+            -0.2282312954668196,
+            0
+          ],
+          "magnitude": 0.26246216667345174
+        }
       ],
-      "scalar": 0.0001377134268606462,
-      "vector": [
-        0.0007914287551726851,
-        -0.9991287961796949,
-        0
-      ],
-      "magnitude": 0.9991291096324642
+      "outputSha256": {
+        "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
+        "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+      }
     },
     {
-      "key": "substrate",
-      "coordinate": [
-        0.00123608771272033,
-        0.0006350812492402686,
-        0
+      "meshSizeFactor": 2,
+      "nodes": 233,
+      "elements": 451,
+      "meshSha256": "b7fe870c1cc5dee19489b81c77778d26a2332f4c7bfd5ff84ea3483f0511a524",
+      "degreesOfFreedom": 183,
+      "initialResidual": 3.783610381091e-13,
+      "residual": 1.976636391401e-28,
+      "scalar": {
+        "min": 0,
+        "max": 0.001,
+        "mean": 0.00040869329221405917,
+        "samples": 1209
+      },
+      "vector": {
+        "min": 0.0001109736376839275,
+        "max": 2.934663851243454,
+        "mean": 0.4538436132200118,
+        "samples": 1209
+      },
+      "samples": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0003362114520776277,
+            0.0001807653081030408,
+            0
+          ],
+          "scalar": 0.0001806035407379527,
+          "vector": [
+            0.0004709126397492991,
+            -0.9993159424718594,
+            0
+          ],
+          "magnitude": 0.9993160534271102
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.001343652620070134,
+            0.00058014896611791,
+            0
+          ],
+          "scalar": 0.0005741727515742077,
+          "vector": [
+            0.02250394655170113,
+            -1.004783249863728,
+            0
+          ],
+          "magnitude": 1.0050352266548257
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.003220798545418045,
+            0.0004802553158908154,
+            0
+          ],
+          "scalar": 0.000133961499528771,
+          "vector": [
+            0.1488622901269367,
+            -0.2398452349088491,
+            0
+          ],
+          "magnitude": 0.2822865886476318
+        }
       ],
-      "scalar": 0.0006311123968681924,
-      "vector": [
-        0.01527740140514011,
-        -1.011959759856491,
-        0
-      ],
-      "magnitude": 1.012075073580266
-    },
-    {
-      "key": "air",
-      "coordinate": [
-        0.003191894433968417,
-        0.0005736175644244714,
-        0
-      ],
-      "scalar": 0.0001509865472837525,
-      "vector": [
-        0.1296027187386902,
-        -0.2282312954668196,
-        0
-      ],
-      "magnitude": 0.26246216667345174
+      "outputSha256": {
+        "v.pos": "347ccca33f4d9b00efdac524ceb33a57ccdc3decf02172a7c9e168093ec005d2",
+        "e.pos": "e05f35198f9cee7cac6c2dd5c43aba323eea439d76775228f3f5f2841c5ad296"
+      }
     }
   ],
   "tolerance": {

@@ -21,7 +21,9 @@ const patches = {}
 for (const name of Object.keys(previous.patches)) patches[name] = sha256(await readFile(join(tools, name)))
 const fixtures = {}
 for (const name of Object.keys(previous.fixtures)) {
-  const path = name.startsWith('cube.') ? join(tools, 'fixtures', name) : join(cacheRoot, 'src/getdp/tutorials/01-Electrostatics', name)
+  const path = name.startsWith('cube.') || name === 'microstrip.json'
+    ? join(tools, 'fixtures', name)
+    : join(cacheRoot, 'fixtures/microstrip', name)
   fixtures[name] = sha256(await readFile(path))
 }
 const outputs = {}
@@ -32,7 +34,7 @@ const runtime = await metadata(join(tools, 'getdp/runtime.mjs'))
 assets.push({ path: 'getdp/runtime.mjs', ...runtime })
 for (const cube of [false, true]) {
   for (const [name, hash] of Object.entries(fixtures).filter(([name]) => name.startsWith('cube.') === cube)) {
-    const bytes = await readFile(cube ? join(tools, 'fixtures', name) : join(cacheRoot, 'src/getdp/tutorials/01-Electrostatics', name))
+    const bytes = await readFile(cube || name === 'microstrip.json' ? join(tools, 'fixtures', name) : join(cacheRoot, 'fixtures/microstrip', name))
     assets.push({ path: `fixtures/${cube ? 'cube' : 'microstrip'}/${name}`, bytes: bytes.length, sha256: hash })
   }
 }

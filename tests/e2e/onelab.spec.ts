@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test'
 import reference from '../../tools/wasm/fixtures/microstrip-reference.json' with { type: 'json' }
 import artifactLock from '../../tools/wasm/artifacts.lock.json' with { type: 'json' }
 
+const defaultReference = reference.runs[0]
+
 function expectVectorClose(actual: number, expected: number) {
   expect(Math.abs(actual - expected)).toBeLessThanOrEqual(
     reference.tolerance.vectorAbsolute + reference.tolerance.relative * Math.abs(expected),
@@ -75,22 +77,23 @@ test('warms online then meshes, solves and extracts views fully offline across r
     return state
   }).toBe('complete')
   await expect(page.getByTestId('onelab-runs')).toHaveText('1')
-  await expect(page.getByTestId('onelab-mesh')).toContainText(`${reference.nodes} nodes / ${reference.elements} elements`)
-  expectResidualClose(Number(await page.getByTestId('onelab-initial-residual').innerText()), reference.initialResidual)
-  expectResidualClose(Number(await page.getByTestId('onelab-residual').innerText()), reference.residual)
+  await expect(page.getByTestId('onelab-mesh')).toContainText(`${defaultReference.nodes} nodes / ${defaultReference.elements} elements`)
+  await expect(page.getByTestId('onelab-dofs')).toHaveText(String(defaultReference.degreesOfFreedom))
+  expectResidualClose(Number(await page.getByTestId('onelab-initial-residual').innerText()), defaultReference.initialResidual)
+  expectResidualClose(Number(await page.getByTestId('onelab-residual').innerText()), defaultReference.residual)
   expect(Number(await page.getByTestId('onelab-residual').innerText())).toBeLessThan(Number(await page.getByTestId('onelab-initial-residual').innerText()) * 1e-12)
   await expect(page.getByTestId('onelab-scalar')).toContainText('samples')
   await expect(page.getByTestId('onelab-vector')).toContainText('samples')
-  const scalar = JSON.parse(await page.getByTestId('onelab-scalar').innerText()) as typeof reference.scalar
-  const vector = JSON.parse(await page.getByTestId('onelab-vector').innerText()) as typeof reference.vector
-  expect(scalar.samples).toBe(reference.scalar.samples)
-  expect(vector.samples).toBe(reference.vector.samples)
-  for (const key of ['min', 'max', 'mean'] as const) expectScalarAggregateClose(scalar[key], reference.scalar[key])
-  for (const key of ['min', 'max', 'mean'] as const) expectVectorClose(vector[key], reference.vector[key])
-  const samples = JSON.parse(await page.getByTestId('onelab-samples').innerText()) as typeof reference.samples
-  expect(samples.map(({ key }) => key)).toEqual(reference.samples.map(({ key }) => key))
+  const scalar = JSON.parse(await page.getByTestId('onelab-scalar').innerText()) as typeof defaultReference.scalar
+  const vector = JSON.parse(await page.getByTestId('onelab-vector').innerText()) as typeof defaultReference.vector
+  expect(scalar.samples).toBe(defaultReference.scalar.samples)
+  expect(vector.samples).toBe(defaultReference.vector.samples)
+  for (const key of ['min', 'max', 'mean'] as const) expectScalarAggregateClose(scalar[key], defaultReference.scalar[key])
+  for (const key of ['min', 'max', 'mean'] as const) expectVectorClose(vector[key], defaultReference.vector[key])
+  const samples = JSON.parse(await page.getByTestId('onelab-samples').innerText()) as typeof defaultReference.samples
+  expect(samples.map(({ key }) => key)).toEqual(defaultReference.samples.map(({ key }) => key))
   samples.forEach((sample, index) => {
-    const expected = reference.samples[index]
+    const expected = defaultReference.samples[index]
     sample.coordinate.forEach((value, component) => expect(Math.abs(value - expected.coordinate[component])).toBeLessThanOrEqual(reference.tolerance.coordinateAbsolute))
     expectScalarSampleClose(sample.scalar, expected.scalar)
     sample.vector.forEach((value, component) => expectVectorClose(value, expected.vector[component]))
@@ -124,6 +127,86 @@ test('warms online then meshes, solves and extracts views fully offline across r
   const newWorker = await page.getByTestId('onelab-worker').getAttribute('data-worker-id')
   expect(newWorker).toBeTruthy()
   expect(newWorker).not.toBe(oldWorker)
+})
+
+test('checks parser metadata, computes two native meshes, preserves edits through cancellation and resets defaults', async ({ page }) => {
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+
+  const meshSize = page.getByTestId('parameter-global-mesh-size-factor').locator('input')
+  const workflow = page.getByTestId('parameter-workflow').locator('select')
+  const label = page.getByTestId('parameter-label')
+  const derived = page.getByTestId('parameter-derived-substrate-target-[m]')
+  await expect(meshSize).toHaveAttribute('min', '0.5')
+  await expect(meshSize).toHaveAttribute('max', '2')
+  await expect(meshSize).toHaveAttribute('step', '0.5')
+  await expect(derived.locator('input')).toHaveAttribute('readonly', '')
+  await expect(label.locator('select')).toHaveValue('upstream tutorial')
+
+  await workflow.selectOption('1')
+  await page.getByTestId('onelab-check').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  await expect(page.getByTestId('onelab-runs')).toHaveCount(0)
+  await expect(label).toBeHidden()
+  await expect(derived).toBeHidden()
+
+  await workflow.selectOption('0')
+  await meshSize.fill('1')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-runs')).toHaveText('1')
+  const firstMesh = await page.getByTestId('onelab-mesh').innerText()
+  const firstSamples = await page.getByTestId('onelab-samples').innerText()
+  const firstMeshHash = firstMesh.split(' / ').at(-1)
+  expect(firstMeshHash).toBe(defaultReference.meshSha256)
+
+  await meshSize.fill('2')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-runs')).toHaveText('2')
+  const secondReference = reference.runs[1]
+  const secondMesh = await page.getByTestId('onelab-mesh').innerText()
+  expect(secondMesh).toContain(`${secondReference.nodes} nodes / ${secondReference.elements} elements`)
+  expect(secondMesh).not.toBe(firstMesh)
+  expect(secondMesh.split(' / ').at(-1)).toBe(secondReference.meshSha256)
+  await expect(page.getByTestId('onelab-dofs')).toHaveText(String(secondReference.degreesOfFreedom))
+  expectResidualClose(Number(await page.getByTestId('onelab-initial-residual').innerText()), secondReference.initialResidual)
+  expectResidualClose(Number(await page.getByTestId('onelab-residual').innerText()), secondReference.residual)
+  const secondSamples = JSON.parse(await page.getByTestId('onelab-samples').innerText()) as typeof secondReference.samples
+  expect(JSON.stringify(secondSamples)).not.toBe(firstSamples)
+  secondSamples.forEach((sample, index) => {
+    const expected = secondReference.samples[index]
+    sample.coordinate.forEach((value, component) => expect(Math.abs(value - expected.coordinate[component])).toBeLessThanOrEqual(reference.tolerance.coordinateAbsolute))
+    expectScalarSampleClose(sample.scalar, expected.scalar)
+    sample.vector.forEach((value, component) => expectVectorClose(value, expected.vector[component]))
+    expectVectorClose(sample.magnitude, expected.magnitude)
+  })
+
+  const oldWorker = await page.getByTestId('onelab-worker').getAttribute('data-worker-id')
+  await meshSize.fill('0.5')
+  await page.getByTestId('onelab-solve').click()
+  await page.evaluate(() => {
+    const button = document.querySelector<HTMLButtonElement>('[data-testid="onelab-cancel"]')!
+    button.disabled = false
+    button.click()
+  })
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'cancelled')
+  await expect(meshSize).toHaveValue('0.5')
+  await expect(page.getByTestId('onelab-result')).toHaveCount(0)
+  await meshSize.fill('2')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-runs')).toHaveText('3')
+  const newWorker = await page.getByTestId('onelab-worker').getAttribute('data-worker-id')
+  expect(newWorker).not.toBe(oldWorker)
+  await expect(meshSize).toHaveValue('2')
+
+  await page.getByTestId('onelab-reset').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  await expect(meshSize).toHaveValue('1')
+  await expect(page.getByTestId('onelab-result')).toHaveCount(0)
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-runs')).toHaveText('4')
+  await expect(page.getByTestId('onelab-mesh')).toContainText(`${defaultReference.nodes} nodes / ${defaultReference.elements} elements`)
+  expect((await page.getByTestId('onelab-mesh').innerText()).split(' / ').at(-1)).toBe(defaultReference.meshSha256)
 })
 
 test('converts the committed STEP in a worker and hands a uniquely matched face to live Gmsh authority', async ({ page }) => {

@@ -8,37 +8,37 @@
   "outputs": [
     {
       "path": "getdp/getdp.mjs",
-      "bytes": 100018,
-      "sha256": "18892d7ef6f67daf4ea08c57ac3b981a2d39748503436450be52958e91c6a34a"
+      "bytes": 100713,
+      "sha256": "04e0e443c84f6b05634eb47d37a49cb787c03f7e89dcd85dba8db27db9c495d5"
     },
     {
       "path": "getdp/getdp.wasm",
-      "bytes": 31136382,
-      "sha256": "6ccb028f00a648ea4ba534642848949526983c6591eac915a0ae1d7ae0f71770",
+      "bytes": 31154827,
+      "sha256": "e6acc07a554b36478432b13e7ca679b45d8558a037879159e040049cc8af72f9",
       "sections": [
         {
           "id": 1,
           "name": "type",
           "bytes": 2645,
-          "sha256": "eff06e145c222e8052cef7623738224ef9e9a5a4c84f7cef2be03969bf7a8c2d"
+          "sha256": "7330bcd1f857f8f5ee15e60f54f055ef2a38550926f524265c39a471bf26a812"
         },
         {
           "id": 2,
           "name": "import",
           "bytes": 699,
-          "sha256": "698aa1ac5b961e40e386f31b54ae37def79b0f08b0eee9698622056947ecfb17"
+          "sha256": "a1f8d5bde62006c0dce2c8ce761e78d8968e1f91a93b860833aa01ad5fceabe2"
         },
         {
           "id": 3,
           "name": "function",
-          "bytes": 13032,
-          "sha256": "6af168beb0e935056915f0b6cbf373adef3566f1ec8394f197787abf5f12d412"
+          "bytes": 13054,
+          "sha256": "6d2de6107603586b33c08101047e1d7cba862685ed8935722987cd610381b59d"
         },
         {
           "id": 4,
           "name": "table",
           "bytes": 7,
-          "sha256": "cb41256d41ac2e7620a608ac158cfa04da732b71654e61b12ce35ec5de3b2f0c"
+          "sha256": "5926c2b52d0234aa97a132c5c916ad80227912afde6e554f828d813bf7a2bdae"
         },
         {
           "id": 5,
@@ -50,19 +50,19 @@
           "id": 6,
           "name": "global",
           "bytes": 24,
-          "sha256": "87e868407e339d560af7dd96fba05604eb40909450deaf9cfefc71d703bcebe5"
+          "sha256": "5a9afdaec40c8f74180d1e89530bd0754d799b85b729474fcd7a16aa2fc5190f"
         },
         {
           "id": 7,
           "name": "export",
-          "bytes": 100,
-          "sha256": "d09f5c78df0bede04d403b165ff21b0fc2280b3c634054abf3c52ccc92da97f1"
+          "bytes": 130,
+          "sha256": "344760b3ee2925ca11ce63f0002a36a373bbc24788591e95da02d69a683ee6fc"
         },
         {
           "id": 9,
           "name": "element",
-          "bytes": 16184,
-          "sha256": "50f83d659d48c7858750b3d29df412f45499c8d7df39ef453b56e89262160056"
+          "bytes": 16217,
+          "sha256": "4a9889f866ec4d4de316c74bb1690a8d454300f1eda81c19b8b1f98def4af0f7"
         },
         {
           "id": 12,
@@ -73,14 +73,14 @@
         {
           "id": 10,
           "name": "code",
-          "bytes": 29588759,
-          "sha256": "7b480e13f6ad3013673ecc263e439e3e7d2e8947f2b2197e66237533bcd53ef3"
+          "bytes": 29606692,
+          "sha256": "ddead2c40c20dbe6264ad1472a8c585898f89dfa15009c6ffb013bc99dba33cb"
         },
         {
           "id": 11,
           "name": "data",
-          "bytes": 1514884,
-          "sha256": "aeb07d5632e9518d604037465fd451af715b115145f3b7bd5a54ca929f0b8993"
+          "bytes": 1515310,
+          "sha256": "e94f8ca71aed99e585a473e77e47c655a8734a28e01545b6173466f918eff823"
         }
       ]
     },

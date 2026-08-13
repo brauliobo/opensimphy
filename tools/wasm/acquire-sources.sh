@@ -49,3 +49,9 @@ actual_f2c_hash=$(sha256sum "$f2cblaslapack" | cut -d' ' -f1)
   exit 1
 }
 printf 'f2cblaslapack %s %s\n' "$F2CBLASLAPACK_SHA256" "$f2cblaslapack"
+
+fixture="$CACHE/fixtures/microstrip"
+rm -rf "$fixture"
+mkdir -p "$fixture"
+cp "$CACHE/src/getdp/tutorials/01-Electrostatics/"microstrip.{geo,pro} "$fixture/"
+patch -d "$fixture" -p1 < "$ROOT/tools/wasm/fixtures/microstrip-onelab.patch"

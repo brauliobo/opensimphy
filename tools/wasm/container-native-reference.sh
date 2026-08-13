@@ -42,29 +42,41 @@ grep -q '^#define HAVE_LAPACK' "$config"
 ! grep -q '^#define HAVE_SPARSKIT' "$config"
 nice cmake --build "$BUILD/getdp" --target getdp --parallel "$JOBS"
 
-cp "$SRC/getdp/tutorials/01-Electrostatics/"microstrip.{geo,pro} "$OUT/"
+cp /workspace/native/fixtures/microstrip.{geo,pro} "$OUT/"
 pushd "$OUT" >/dev/null
-"$BUILD/gmsh/gmsh" microstrip.geo -format msh2 -2 -o microstrip.msh
-"$BUILD/getdp/getdp" microstrip.pro -msh microstrip.msh -solve Ele -pos Map 2>&1 | tee getdp.log
+for mesh_size in 1 2; do
+  suffix=${mesh_size//./_}
+  "$BUILD/gmsh/gmsh" microstrip.geo -setnumber "Parameters/Mesh/Global mesh size factor" "$mesh_size" -format msh2 -2 -o "microstrip-$suffix.msh"
+  "$BUILD/getdp/getdp" microstrip.pro -msh "microstrip-$suffix.msh" -solve Ele -pos Map 2>&1 | tee "getdp-$suffix.log"
+  mv v.pos "v-$suffix.pos"
+  mv e.pos "e-$suffix.pos"
+done
 popd >/dev/null
 
-nodes=$(awk '/\$Nodes/{getline; print; exit}' "$OUT/microstrip.msh")
-elements=$(awk '/\$Elements/{getline; print; exit}' "$OUT/microstrip.msh")
-initial_residual_line=$(grep 'Residual' "$OUT/getdp.log" | head -1)
-initial_residual=${initial_residual_line##* }
-residual_line=$(grep 'Residual' "$OUT/getdp.log" | tail -1)
-residual=${residual_line##* }
 compiler=$(gcc --version | head -1)
 compiler_sha256=$(sha256sum "$(command -v gcc)" | cut -d' ' -f1)
 petsc_config_sha256=$(sha256sum "$petsc_config" | cut -d' ' -f1)
 getdp_config_sha256=$(sha256sum "$config" | cut -d' ' -f1)
 cat > "$OUT/metadata.env" <<EOF
-nodes=$nodes
-elements=$elements
-initial_residual=$initial_residual
-residual=$residual
 compiler=$compiler
 compiler_sha256=$compiler_sha256
 petsc_config_sha256=$petsc_config_sha256
 getdp_config_sha256=$getdp_config_sha256
 EOF
+for mesh_size in 1 2; do
+  suffix=${mesh_size//./_}
+  nodes=$(awk '/\$Nodes/{getline; print; exit}' "$OUT/microstrip-$suffix.msh")
+  elements=$(awk '/\$Elements/{getline; print; exit}' "$OUT/microstrip-$suffix.msh")
+  mesh_sha256=$(node /workspace/tools/canonical-msh-hash.mjs "$OUT/microstrip-$suffix.msh")
+  initial_residual_line=$(grep 'Residual' "$OUT/getdp-$suffix.log" | head -1)
+  residual_line=$(grep 'Residual' "$OUT/getdp-$suffix.log" | tail -1)
+  dofs=$(grep -Eo 'System [0-9]+/[0-9]+: [0-9]+ Dofs' "$OUT/getdp-$suffix.log" | tail -1 | grep -Eo '[0-9]+ Dofs' | grep -Eo '[0-9]+' || true)
+  cat >> "$OUT/metadata.env" <<EOF
+nodes_$suffix=$nodes
+elements_$suffix=$elements
+mesh_sha256_$suffix=$mesh_sha256
+dofs_$suffix=$dofs
+initial_residual_$suffix=${initial_residual_line##* }
+residual_$suffix=${residual_line##* }
+EOF
+done

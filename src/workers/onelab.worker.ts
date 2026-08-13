@@ -1,6 +1,8 @@
 /// <reference lib="webworker" />
 
-import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, SimulationAssetManifest, ViewBlock } from '../simulation/types'
+import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, ViewBlock } from '../simulation/types'
+import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, validateReadOnlyValues } from '../simulation/onelab-db'
+import { canonicalMshRecords } from '../simulation/msh'
 import { sceneTransferables, surfaceSignatures, type ElementBlock, type ModelEntity, type PhysicalGroup, type SimulationScene } from '../simulation/scene'
 import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
@@ -23,6 +25,10 @@ function emit(message: OnelabWorkerResponse, transfer: Transferable[] = []) {
 async function digest(bytes: Uint8Array) {
   const hash = await crypto.subtle.digest('SHA-256', bytes)
   return [...new Uint8Array(hash)].map((value) => value.toString(16).padStart(2, '0')).join('')
+}
+
+function canonicalNativeDatabase(json: string) {
+  return canonicalizeOnelab(json)
 }
 
 async function verifiedResponse(response: Response, file: { path: string; bytes: number; sha256: string }) {
@@ -250,22 +256,48 @@ function deterministicSamples(scalar: ReturnType<typeof extractView>, vector: Re
   })
 }
 
-async function runMicrostrip(requestId: string): Promise<MicrostripResult> {
-  await initialize()
-  logs.length = 0
-  const [geo, pro] = await Promise.all([fetchBytes('fixtures/microstrip/microstrip.geo'), fetchBytes('fixtures/microstrip/microstrip.pro')])
+function projectFile(files: ProjectFile[], path: string) {
+  const file = files.find((candidate) => candidate.path === path)
+  if (!file) throw new Error(`project envelope is missing ${path}`)
+  return file.bytes
+}
+
+function writeProjectFiles(envelope: ProjectEnvelope) {
+  if (envelope.schema !== 1) throw new Error(`unsupported project envelope schema ${envelope.schema}`)
   gmsh.clear()
+  gmsh.onelab.clear()
+  getdp.onelab.clear()
+  const geo = projectFile(envelope.files, '/microstrip.geo')
+  const pro = projectFile(envelope.files, '/microstrip.pro')
   writeFile(gmsh.FS, '/microstrip.geo', geo)
+  writeFile(getdp.FS, '/microstrip.pro', pro)
+}
+
+function parseGmshDatabase(database = '') {
+  gmsh.clear()
+  gmsh.onelab.clear()
+  if (database) gmsh.onelab.set(database, 'json')
   gmsh.open('/microstrip.geo')
+  return canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+}
+
+function importGmshDatabase(database: string) {
+  gmsh.onelab.clear()
+  gmsh.onelab.set(database, 'json')
+  return canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+}
+
+async function solvePreparedMicrostrip(requestId: string): Promise<MicrostripResult> {
+  logs.length = 0
   gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
   emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
   gmsh.model.mesh.generate(2)
   const nodes = gmsh.model.mesh.getNodes().nodeTags.length
   gmsh.write('/microstrip.msh')
   const msh = gmsh.FS.readFile('/microstrip.msh') as Uint8Array
+  const meshSha256 = await digest(new TextEncoder().encode(canonicalMshRecords(new TextDecoder().decode(msh))))
   const elements = Number(/\$Elements\s+(\d+)/.exec(new TextDecoder().decode(msh))?.[1])
   if (!Number.isInteger(elements)) throw new Error('could not read MSH2 element count')
-  writeFile(getdp.FS, '/microstrip.pro', pro)
   writeFile(getdp.FS, '/microstrip.msh', msh)
   for (const output of ['/microstrip.res', '/v.pos', '/e.pos', '/d.pos', '/e_cut.pos']) try { getdp.FS.unlink(output) } catch { /* absent */ }
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-solve' })
@@ -275,6 +307,8 @@ async function runMicrostrip(requestId: string): Promise<MicrostripResult> {
   const initialResidual = residuals[0]
   const residual = residuals.at(-1)
   if (!Number.isFinite(initialResidual) || !Number.isFinite(residual) || residual >= initialResidual) throw new Error('PETSc residual did not converge')
+  const degreesOfFreedom = Number(logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => match[1])).at(-1))
+  if (!Number.isInteger(degreesOfFreedom) || degreesOfFreedom <= 0) throw new Error('could not read GetDP system dimension')
   const posBytes: Record<string, number> = {}
   for (const name of ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']) {
     const bytes = getdp.FS.readFile(`/${name}`) as Uint8Array
@@ -288,10 +322,59 @@ async function runMicrostrip(requestId: string): Promise<MicrostripResult> {
   const scalar = extractView('v', gmsh.view.getListData(views[0]), 1)
   const vector = extractView('e', gmsh.view.getListData(views[1]), 3)
   return {
-    nodes, elements, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
+    nodes, elements, meshSha256, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
     scalar: scalar.block, vector: vector.block, samples: deterministicSamples(scalar, vector),
     logs: [...logs], memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength, workerId,
   }
+}
+
+async function openMicrostrip(): Promise<ProjectBootstrap> {
+  await initialize()
+  const files = await Promise.all(['/microstrip.geo', '/microstrip.pro'].map(async (path) => ({
+    path,
+    bytes: await fetchBytes(`fixtures/microstrip${path}`),
+  })))
+  const envelope: ProjectEnvelope = { schema: 1, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '' }
+  writeProjectFiles(envelope)
+  const gmshDefaults = parseGmshDatabase()
+  const checked = callGetdpWithDatabase(getdp.onelab, gmshDefaults, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  if (checked.status !== 0) throw new Error(`GetDP default check exited with status ${checked.status}`)
+  return { files, defaults: checked.database }
+}
+
+async function runProject(requestId: string, envelope: ProjectEnvelope): Promise<ProjectResponse> {
+  await initialize()
+  logs.length = 0
+  writeProjectFiles(envelope)
+  const gmshDefaults = parseGmshDatabase()
+  emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
+  const declarations = callGetdpWithDatabase(getdp.onelab, gmshDefaults, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
+  if (envelope.action !== 'reset') validateReadOnlyValues(declarations.database, envelope.database, envelope.defaults)
+  const requested = envelope.action === 'reset' ? declarations.database : mergeValidatedValues(declarations.database, envelope.database)
+  let database = parseGmshDatabase(requested)
+  emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
+  const checked = callGetdpWithDatabase(getdp.onelab, database, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  if (checked.status !== 0) throw new Error(`GetDP check exited with status ${checked.status}`)
+  database = importGmshDatabase(checked.database)
+  if (envelope.action === 'compute') {
+    const imported = canonicalNativeDatabase(getdp.onelab.get())
+    if (imported !== checked.database) throw new Error('GetDP database changed after check export')
+    const result = await solvePreparedMicrostrip(requestId)
+    database = importGmshDatabase(canonicalNativeDatabase(getdp.onelab.get()))
+    return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database, result }
+  }
+  return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
+}
+
+async function runMicrostrip(requestId: string) {
+  const project = await openMicrostrip()
+  const response = await runProject(requestId, {
+    schema: 1, action: 'compute', projectId: 'legacy', revision: 0,
+    files: project.files, database: project.defaults, defaults: project.defaults,
+  })
+  if (!response.result) throw new Error('legacy microstrip computation returned no result')
+  return response.result
 }
 
 function pairs(values: number[]) {
@@ -388,6 +471,12 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
   const { requestId } = event.data
   try {
     if (event.data.type === 'warm') emit({ type: 'warmed', requestId, manifest: await initialize() })
+    else if (event.data.type === 'open-microstrip') emit({ type: 'project-opened', requestId, project: await openMicrostrip() })
+    else if (event.data.type === 'project') {
+      const response = await runProject(requestId, event.data.envelope)
+      const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer] : []
+      emit({ type: 'project-response', requestId, response }, transfers)
+    }
     else if (event.data.type === 'get-cube-scene') {
       const scene = await getCubeScene()
       emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))

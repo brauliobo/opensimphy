@@ -129,7 +129,7 @@ Start with separate Gmsh and GetDP modules in one long-lived worker:
 
 This is simpler than immediately linking Gmsh and GetDP into one binary. It duplicates the small ONELAB database and copies files, but establishes the numerical and rendering contracts first.
 
-Move to a monolithic module when ONELAB check/compute loops are implemented. The mobile application already demonstrates the desired in-process flow: run the Gmsh client, set `GetDP/Action`, and call `getdp(args, onelab::server::instance())`. A combined build must use one canonical ONELAB implementation and exactly one `onelab::server::_server` singleton.
+Phase 2 implements check/compute with separate modules and explicit canonical JSON synchronization; it does not claim a shared-server loop. Revisit a monolithic module only when a representative workflow requires tighter in-process client semantics. The mobile application demonstrates that future path: run the Gmsh client, set `GetDP/Action`, and call `getdp(args, onelab::server::instance())`. A combined build must use one canonical ONELAB implementation and exactly one `onelab::server::_server` singleton.
 
 ### Worker protocol
 

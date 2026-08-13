@@ -1,20 +1,22 @@
 {
   "schema": 1,
   "generationDate": "2026-08-13T00:00:00Z",
-  "contentVersion": "0cb05fb9c4cf6a46c80e",
+  "contentVersion": "760e216251e626b27f1c",
   "patches": {
     "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
     "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
-    "getdp/bridge.cpp": "6c75a47256645417d120a05aa8f4b31f971d9fdbf22782302436400ba3341454",
-    "getdp/CMakeLists.append.txt": "c16650efbcc8d8da8e6f90e95454db1bdca4c73343ddc2ddcaf3a3b3579d7bca",
-    "getdp/runtime.mjs": "2ae3b5ffa605047142d5c7a18022bd8878fc1f38881c32e51375343252dd5418"
+    "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
+    "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
+    "getdp/CMakeLists.append.txt": "a7024dc787ce10f4a846c741def3f00e033c5651556463d686b75e70be36936f",
+    "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b"
   },
   "fixtures": {
     "cube.geo": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2",
     "cube.step": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180",
     "cube.provenance.json": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2",
-    "microstrip.geo": "66dd5667670d4d471c2469bdad40ebfb48ee26140014a7fbbab65dd4d2b2541d",
-    "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+    "microstrip.geo": "6b6e881d25575e8250a111a7715afba0cdc86bacdf4f14a85ed8e6caadf132fc",
+    "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58",
+    "microstrip.json": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083"
   },
   "outputs": {
     "gmsh/gmsh.mjs": {
@@ -38,12 +40,12 @@
       "sha256": "23aadc073a207cb6f97f631a6123a26f5379bea63af9ada0f2e02a0927703a05"
     },
     "getdp/getdp.mjs": {
-      "bytes": 100018,
-      "sha256": "18892d7ef6f67daf4ea08c57ac3b981a2d39748503436450be52958e91c6a34a"
+      "bytes": 100713,
+      "sha256": "04e0e443c84f6b05634eb47d37a49cb787c03f7e89dcd85dba8db27db9c495d5"
     },
     "getdp/getdp.wasm": {
-      "bytes": 31136382,
-      "sha256": "6ccb028f00a648ea4ba534642848949526983c6591eac915a0ae1d7ae0f71770"
+      "bytes": 31154827,
+      "sha256": "e6acc07a554b36478432b13e7ca679b45d8558a037879159e040049cc8af72f9"
     }
   }
 }

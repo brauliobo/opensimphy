@@ -23,3 +23,31 @@ extern "C" int opensimphy_getdp_run(int argc, const char *const *argv)
     return 70;
   }
 }
+
+extern "C" int opensimphy_getdp_onelab_set_json(const char *json)
+{
+  if(!json) return 64;
+  return onelab::server::instance()->fromJSON(json) ? 0 : 65;
+}
+
+extern "C" const char *opensimphy_getdp_onelab_get_json()
+{
+  static std::string json;
+  return onelab::server::instance()->toJSON(json, "OpenSimPhy/GetDP") ?
+           json.c_str() : nullptr;
+}
+
+extern "C" void opensimphy_getdp_onelab_clear()
+{
+  onelab::server::instance()->clear();
+}
+
+extern "C" int opensimphy_getdp_onelab_get_changed()
+{
+  return onelab::server::instance()->getChanged();
+}
+
+extern "C" void opensimphy_getdp_onelab_set_changed(int value)
+{
+  onelab::server::instance()->setChanged(value);
+}

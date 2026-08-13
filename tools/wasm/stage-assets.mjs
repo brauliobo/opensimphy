@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -12,6 +12,7 @@ const versions = Object.fromEntries(
   (await readFile(join(tools, 'versions.env'), 'utf8')).trim().split('\n').map((line) => line.split('=', 2)),
 )
 const lock = JSON.parse(await readFile(join(tools, 'artifacts.lock.json'), 'utf8'))
+const fixtureProvenance = JSON.parse(await readFile(join(tools, 'fixtures/microstrip.json'), 'utf8'))
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')
 
 async function verify(path, expected, label = path) {
@@ -27,7 +28,7 @@ for (const [name, expected] of Object.entries(lock.outputs)) {
   if (bytes.length !== expected.bytes) throw new Error(`${name} byte length mismatch: expected ${expected.bytes}, got ${bytes.length}`)
 }
 
-const fixtureSource = join(cacheRoot, 'src/getdp/tutorials/01-Electrostatics')
+const fixtureSource = join(cacheRoot, 'fixtures/microstrip')
 const fixturePaths = ['microstrip.geo', 'microstrip.pro']
 const cubeFixturePaths = ['cube.geo', 'cube.step', 'cube.provenance.json']
 const assets = []
@@ -41,6 +42,12 @@ for (const name of fixturePaths) {
   const bytes = await verify(join(fixtureSource, name), lock.fixtures[name], name)
   assets.push({ path: `fixtures/microstrip/${name}`, bytes, sha256: sha256(bytes) })
 }
+const provenanceBytes = await verify(join(tools, 'fixtures/microstrip.json'), lock.fixtures['microstrip.json'], 'microstrip.json')
+if (fixtureProvenance.derivation.patchSha256 !== lock.patches['fixtures/microstrip-onelab.patch']) throw new Error('microstrip provenance patch hash does not match artifact lock')
+for (const name of fixturePaths) {
+  if (fixtureProvenance.derivation.resultFiles[name] !== lock.fixtures[name]) throw new Error(`microstrip provenance result hash does not match ${name}`)
+}
+assets.push({ path: 'fixtures/microstrip/microstrip.json', bytes: provenanceBytes, sha256: sha256(provenanceBytes) })
 for (const name of cubeFixturePaths) {
   const bytes = await verify(join(tools, 'fixtures', name), lock.fixtures[name], name)
   assets.push({ path: `fixtures/cube/${name}`, bytes, sha256: sha256(bytes) })

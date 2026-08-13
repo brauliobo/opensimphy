@@ -3,8 +3,8 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const [scalarPath, vectorPath, outputPath, metadataPath] = process.argv.slice(2)
-if (!metadataPath) throw new Error('usage: summarize-pos.mjs v.pos e.pos output.json metadata.env')
+const [resultsPath, outputPath, metadataPath] = process.argv.slice(2)
+if (!metadataPath) throw new Error('usage: summarize-pos.mjs results-directory output.json metadata.env')
 const root = fileURLToPath(new URL('../..', import.meta.url))
 const versions = Object.fromEntries((await readFile(join(root, 'tools/wasm/versions.env'), 'utf8')).trim().split('\n').map((line) => line.split('=', 2)))
 const lock = JSON.parse(await readFile(join(root, 'tools/wasm/artifacts.lock.json'), 'utf8'))
@@ -41,19 +41,37 @@ function nearest(records, coordinate) {
   }, { record: records[0], distance: Infinity }).record
 }
 
-const scalarBytes = await readFile(scalarPath)
-const vectorBytes = await readFile(vectorPath)
-const scalarRecords = records(scalarPath, 1, scalarBytes.toString())
-const vectorRecords = records(vectorPath, 3, vectorBytes.toString())
 const targets = [['ground-near', [0.0004, 0.0002, 0]], ['substrate', [0.0013, 0.0007, 0]], ['air', [0.0032, 0.00055, 0]]]
-const samples = targets.map(([key, target]) => {
-  const scalar = nearest(scalarRecords, target)
-  const vector = nearest(vectorRecords, scalar.coordinate)
-  return { key, coordinate: scalar.coordinate, scalar: scalar.value[0], vector: vector.value, magnitude: Math.hypot(...vector.value) }
-})
 const metadata = Object.fromEntries((await readFile(metadataPath, 'utf8')).trim().split('\n').map((line) => line.split('=', 2)))
+async function referenceRun(value, suffix) {
+  const scalarPath = join(resultsPath, `v-${suffix}.pos`)
+  const vectorPath = join(resultsPath, `e-${suffix}.pos`)
+  const scalarBytes = await readFile(scalarPath)
+  const vectorBytes = await readFile(vectorPath)
+  const scalarRecords = records(scalarPath, 1, scalarBytes.toString())
+  const vectorRecords = records(vectorPath, 3, vectorBytes.toString())
+  const samples = targets.map(([key, target]) => {
+    const scalar = nearest(scalarRecords, target)
+    const vector = nearest(vectorRecords, scalar.coordinate)
+    return { key, coordinate: scalar.coordinate, scalar: scalar.value[0], vector: vector.value, magnitude: Math.hypot(...vector.value) }
+  })
+  const run = {
+    meshSizeFactor: value,
+    nodes: Number(metadata[`nodes_${suffix}`]),
+    elements: Number(metadata[`elements_${suffix}`]),
+    meshSha256: metadata[`mesh_sha256_${suffix}`],
+    degreesOfFreedom: Number(metadata[`dofs_${suffix}`]),
+    initialResidual: Number(metadata[`initial_residual_${suffix}`]),
+    residual: Number(metadata[`residual_${suffix}`]),
+    scalar: summary(scalarRecords, 1), vector: summary(vectorRecords, 3), samples,
+    outputSha256: { 'v.pos': hash(scalarBytes), 'e.pos': hash(vectorBytes) },
+  }
+  if (!(run.initialResidual > 0 && run.residual >= 0 && run.residual / run.initialResidual < 1e-12 && run.degreesOfFreedom > 0)) throw new Error(`native PETSc solve ${value} did not converge sufficiently`)
+  return run
+}
+const runs = [await referenceRun(1, '1'), await referenceRun(2, '2')]
 const reference = {
-  schema: 2,
+  schema: 3,
   provenance: {
     generation: { command: 'JOBS=4 nice npm run wasm:reference', date: lock.generationDate },
     compiler: {
@@ -72,12 +90,9 @@ const reference = {
     },
     patches: lock.patches,
     fixtures: lock.fixtures,
-    outputs: { 'v.pos': hash(scalarBytes), 'e.pos': hash(vectorBytes) },
+    outputs: Object.fromEntries(runs.map((run) => [String(run.meshSizeFactor), run.outputSha256])),
   },
-  nodes: Number(metadata.nodes), elements: Number(metadata.elements),
-  initialResidual: Number(metadata.initial_residual), residual: Number(metadata.residual),
-  convergenceRatio: Number(metadata.residual) / Number(metadata.initial_residual),
-  scalar: summary(scalarRecords, 1), vector: summary(vectorRecords, 3), samples,
+  runs,
   tolerance: {
     residualAbsolute: 2e-29,
     residualRelative: 1e-10,
@@ -88,6 +103,5 @@ const reference = {
     coordinateAbsolute: 1e-15,
   },
 }
-if (!(reference.initialResidual > 0 && reference.residual >= 0 && reference.convergenceRatio < 1e-12)) throw new Error('native PETSc solve did not converge sufficiently')
 await writeFile(outputPath, `${JSON.stringify(reference, null, 2)}\n`)
 console.log(JSON.stringify(reference, null, 2))
