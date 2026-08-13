@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+const onelabRoutes = import.meta.env.VITE_ONELAB_ENABLED === 'true'
+  ? [{ path: '/labs/onelab', name: 'onelab', component: () => import('../views/OnelabLabView.vue') }]
+  : []
+
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -15,6 +19,7 @@ export const router = createRouter({
     { path: '/labs', name: 'labs', component: () => import('../views/LabsView.vue') },
     { path: '/labs/core', alias: '/core', name: 'core', component: () => import('../views/CoreLabView.vue') },
     { path: '/labs/walls', alias: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue') },
+    ...onelabRoutes,
     { path: '/sources', name: 'sources', component: () => import('../views/SourcesView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],

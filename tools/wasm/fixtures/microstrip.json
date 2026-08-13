@@ -1,0 +1,11 @@
+{
+  "name": "GetDP tutorial 01 electrostatic microstrip",
+  "upstream": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/01-Electrostatics",
+  "revision": "8850e98c4aa6d96468c76ba5ee0feb881953f853",
+  "files": {
+    "microstrip.geo": "66dd5667670d4d471c2469bdad40ebfb48ee26140014a7fbbab65dd4d2b2541d",
+    "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+  },
+  "license": "GPL-2.0-or-later",
+  "note": "Files are staged byte-for-byte from the pinned GetDP revision; they are not modified copies."
+}

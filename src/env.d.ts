@@ -1,6 +1,14 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-pwa/client" />
 
+interface ImportMetaEnv {
+  readonly VITE_ONELAB_ENABLED?: 'true' | 'false'
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 declare module 'plotly.js-dist-min' {
   import Plotly from 'plotly.js'
   export default Plotly

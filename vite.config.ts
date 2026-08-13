@@ -32,7 +32,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,json,txt}'],
-        globIgnores: ['data/number-walls/**/*.json', 'assets/plotly-*.js'],
+        globIgnores: ['data/number-walls/**/*.json', 'assets/plotly-*.js', 'simulation/**'],
         navigateFallback: 'index.html',
         runtimeCaching: [
           {

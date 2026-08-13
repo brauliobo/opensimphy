@@ -1,0 +1,9 @@
+diff --git a/scripts/gen_js.py b/scripts/gen_js.py
+--- a/scripts/gen_js.py
++++ b/scripts/gen_js.py
+@@ -15 +15 @@ We do NOT hand-marshal per function: the runtime interprets the descriptor.
+-GUI/visualization modules (fltk, graphics, view) are filtered out.
++GUI modules (fltk, graphics) are filtered out; headless views are exported.
+@@ -27 +27 @@ OUT_DIR = os.path.join(ROOT, "generated")
+-GUI_MODULES = {"fltk", "graphics", "view"}
++GUI_MODULES = {"fltk", "graphics"}

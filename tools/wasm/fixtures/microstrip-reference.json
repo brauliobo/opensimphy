@@ -1,0 +1,126 @@
+{
+  "schema": 2,
+  "provenance": {
+    "generation": {
+      "command": "JOBS=4 nice npm run wasm:reference",
+      "date": "2026-08-13T00:00:00Z"
+    },
+    "compiler": {
+      "image": "emscripten/emsdk@sha256:90b757eb11fa9a0e3ce4d2d9f76d932a56018e4accc37b5a28b2783751e60eb7",
+      "native": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+      "executableSha256": "fb60c5945ce785d0cb2ef0303dac5249f25bd0d0324317a0734aae6aa24f609b",
+      "scalarType": "real-double",
+      "petscConfigSha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
+      "getdpConfigSha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "blasLapack": {
+        "url": "https://web.cels.anl.gov/projects/petsc/download/externalpackages/f2cblaslapack-3.8.0.q2.tar.gz",
+        "sha256": "12fa8d5001e313aeeea22eb2054883f59e3e3c656f11129f31abb02ddbf8ad60"
+      }
+    },
+    "sources": {
+      "gmsh": {
+        "url": "https://gitlab.onelab.info/gmsh/gmsh.git",
+        "commit": "29726e7237db13ff77ef3f2db2d7fb9499c4e65c",
+        "tree": "e25f712811bbf9147f58863b2ef8fc07e057fb86"
+      },
+      "getdp": {
+        "url": "https://gitlab.onelab.info/getdp/getdp.git",
+        "commit": "8850e98c4aa6d96468c76ba5ee0feb881953f853",
+        "tree": "d80a7ed3922572b72e5ec4c39d8694b2dbbdd189"
+      },
+      "petsc": {
+        "url": "https://gitlab.com/petsc/petsc.git",
+        "commit": "d2a0018167bbba9fbc1f09828039a44e18cc4d99",
+        "tree": "7e9e0e1716177e4cc19d23519fd22eb9b2c02472"
+      }
+    },
+    "patches": {
+      "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
+      "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
+      "getdp/bridge.cpp": "6c75a47256645417d120a05aa8f4b31f971d9fdbf22782302436400ba3341454",
+      "getdp/CMakeLists.append.txt": "c16650efbcc8d8da8e6f90e95454db1bdca4c73343ddc2ddcaf3a3b3579d7bca",
+      "getdp/runtime.mjs": "2ae3b5ffa605047142d5c7a18022bd8878fc1f38881c32e51375343252dd5418"
+    },
+    "fixtures": {
+      "microstrip.geo": "66dd5667670d4d471c2469bdad40ebfb48ee26140014a7fbbab65dd4d2b2541d",
+      "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+    },
+    "outputs": {
+      "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
+      "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+    }
+  },
+  "nodes": 727,
+  "elements": 1428,
+  "initialResidual": 4.99605494016e-13,
+  "residual": 4.503046812882e-28,
+  "convergenceRatio": 9.013205152499361e-16,
+  "scalar": {
+    "min": 0,
+    "max": 0.001,
+    "mean": 0.00040308882893143094,
+    "samples": 4011
+  },
+  "vector": {
+    "min": 0.0001061256691573193,
+    "max": 4.597184906290814,
+    "mean": 0.4476392714302638,
+    "samples": 4011
+  },
+  "samples": [
+    {
+      "key": "ground-near",
+      "coordinate": [
+        0.0004030899034343237,
+        0.0001378576869545549,
+        0
+      ],
+      "scalar": 0.0001377134268606462,
+      "vector": [
+        0.0007914287551726851,
+        -0.9991287961796949,
+        0
+      ],
+      "magnitude": 0.9991291096324642
+    },
+    {
+      "key": "substrate",
+      "coordinate": [
+        0.00123608771272033,
+        0.0006350812492402686,
+        0
+      ],
+      "scalar": 0.0006311123968681924,
+      "vector": [
+        0.01527740140514011,
+        -1.011959759856491,
+        0
+      ],
+      "magnitude": 1.012075073580266
+    },
+    {
+      "key": "air",
+      "coordinate": [
+        0.003191894433968417,
+        0.0005736175644244714,
+        0
+      ],
+      "scalar": 0.0001509865472837525,
+      "vector": [
+        0.1296027187386902,
+        -0.2282312954668196,
+        0
+      ],
+      "magnitude": 0.26246216667345174
+    }
+  ],
+  "tolerance": {
+    "residualAbsolute": 2e-29,
+    "residualRelative": 1e-10,
+    "scalarSampleAbsolute": 1e-12,
+    "scalarAggregateAbsolute": 1e-13,
+    "vectorAbsolute": 1e-10,
+    "relative": 1e-9,
+    "coordinateAbsolute": 1e-15
+  }
+}

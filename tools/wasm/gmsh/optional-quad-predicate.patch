@@ -1,0 +1,11 @@
+diff --git a/src/mesh/meshQuadQuasiStructured.cpp b/src/mesh/meshQuadQuasiStructured.cpp
+--- a/src/mesh/meshQuadQuasiStructured.cpp
++++ b/src/mesh/meshQuadQuasiStructured.cpp
+@@ -2103,7 +2103,5 @@ int BuildBackgroundMeshAndGuidingField(GModel *gm, bool overwriteGModelMesh,
+ bool backgroundMeshAndGuidingFieldExists(GModel *gm)
+ {
+-  Msg::Error("Module QUADMESHINGTOOLS required for function "
+-             "backgroundMeshAndGuidingFieldExists");
+-  return -10;
++  return false;
+ }

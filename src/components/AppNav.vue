@@ -10,7 +10,7 @@ watch(() => route.fullPath, () => { open.value = false })
 const links = [
   { to: '/', label: 'Tour', code: '00', routes: ['overview', 'topic'] },
   { to: '/atlas', label: 'Formula atlas', code: '01', routes: ['atlas', 'formula'] },
-  { to: '/labs', label: 'Labs', code: '02', routes: ['labs', 'core', 'walls'] },
+  { to: '/labs', label: 'Labs', code: '02', routes: import.meta.env.VITE_ONELAB_ENABLED === 'true' ? ['labs', 'core', 'walls', 'onelab'] : ['labs', 'core', 'walls'] },
   { to: '/sources', label: 'Sources', code: '03', routes: ['sources'] },
 ]
 </script>

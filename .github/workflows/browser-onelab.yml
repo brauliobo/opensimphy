@@ -1,0 +1,27 @@
+name: Browser ONELAB
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  clean-build-and-e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Independent native reference drift
+        run: JOBS=4 nice npm run wasm:reference
+      - name: Clean deployment build
+        run: JOBS=4 nice npm run build:deploy
+      - name: Unit and type checks
+        run: nice npm run typecheck && nice npm test
+      - name: Clean-deployment production E2E
+        run: nice npx playwright test --config playwright.simulation.config.ts

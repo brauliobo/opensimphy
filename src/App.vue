@@ -7,7 +7,10 @@ import { useAtlasEngine } from './composables/atlasEngine'
 
 const atlas = useAtlasEngine()
 const route = useRoute()
-const fullCoverageRoutes = new Set(['labs', 'core', 'walls', 'sources'])
+const fullCoverageRoutes = new Set([
+  'labs', 'core', 'walls', 'sources',
+  ...(import.meta.env.VITE_ONELAB_ENABLED === 'true' ? ['onelab'] : []),
+])
 const compactCoverageRoutes = new Set(['atlas', 'formula'])
 const showFullCoverage = computed(() => fullCoverageRoutes.has(String(route.name)))
 const showCompactCoverage = computed(() => compactCoverageRoutes.has(String(route.name)))

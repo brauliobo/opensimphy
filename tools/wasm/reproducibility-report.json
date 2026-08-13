@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "canonical": {
+    "jobs": 4,
+    "isolatedCaches": 2
+  },
+  "byteIdentical": true,
+  "outputs": [
+    {
+      "path": "getdp/getdp.mjs",
+      "bytes": 100018,
+      "sha256": "18892d7ef6f67daf4ea08c57ac3b981a2d39748503436450be52958e91c6a34a"
+    },
+    {
+      "path": "getdp/getdp.wasm",
+      "bytes": 31136382,
+      "sha256": "6ccb028f00a648ea4ba534642848949526983c6591eac915a0ae1d7ae0f71770",
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "bytes": 2645,
+          "sha256": "eff06e145c222e8052cef7623738224ef9e9a5a4c84f7cef2be03969bf7a8c2d"
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "bytes": 699,
+          "sha256": "698aa1ac5b961e40e386f31b54ae37def79b0f08b0eee9698622056947ecfb17"
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "bytes": 13032,
+          "sha256": "6af168beb0e935056915f0b6cbf373adef3566f1ec8394f197787abf5f12d412"
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "bytes": 7,
+          "sha256": "cb41256d41ac2e7620a608ac158cfa04da732b71654e61b12ce35ec5de3b2f0c"
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "bytes": 7,
+          "sha256": "3bf52aa217ba36dafde2bff1a0eb13906cd1ed0db867e87dc13287bb8fb6139e"
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "bytes": 24,
+          "sha256": "87e868407e339d560af7dd96fba05604eb40909450deaf9cfefc71d703bcebe5"
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "bytes": 100,
+          "sha256": "d09f5c78df0bede04d403b165ff21b0fc2280b3c634054abf3c52ccc92da97f1"
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "bytes": 16184,
+          "sha256": "50f83d659d48c7858750b3d29df412f45499c8d7df39ef453b56e89262160056"
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "bytes": 2,
+          "sha256": "42a55ec4a30ceea4257287b35eca400bdaa786888bbb9802d28b34693c674f4e"
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "bytes": 29588759,
+          "sha256": "7b480e13f6ad3013673ecc263e439e3e7d2e8947f2b2197e66237533bcd53ef3"
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "bytes": 1514884,
+          "sha256": "aeb07d5632e9518d604037465fd451af715b115145f3b7bd5a54ca929f0b8993"
+        }
+      ]
+    },
+    {
+      "path": "gmsh/gmsh-core.mjs",
+      "bytes": 176598,
+      "sha256": "4ee69022b3ed13c2c420e62a03af6220f666622ebf8409dcf409194bdf241be8"
+    },
+    {
+      "path": "gmsh/gmsh-core.wasm",
+      "bytes": 6986754,
+      "sha256": "f15b6c774ff2c2ff911216fd6652a54319e52ae24d816442e4e8d3966fd6061b",
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "bytes": 4886,
+          "sha256": "e2532f2ac05feb1dda665b1be133f30d2f971626ba392b361fc09bb84f977399"
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "bytes": 1789,
+          "sha256": "89ee24b638219c10e60b1e22287d23747c86f4f51f5ad634a1f988fc5e25554d"
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "bytes": 7392,
+          "sha256": "a0aeff5ac80b4778f4cb9ab82ef966121f9cd1e075055768f65d4d69ce20e93e"
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "bytes": 7,
+          "sha256": "70dab4722f7b79eb96d7e7c4491f7bf2520615fe229480963befa8baa791b59c"
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "bytes": 7,
+          "sha256": "3bf52aa217ba36dafde2bff1a0eb13906cd1ed0db867e87dc13287bb8fb6139e"
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "bytes": 24,
+          "sha256": "7cf201b73fedcb11af519930c1d1ec45b52360116c45d5380e89eefc32be7cd1"
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "bytes": 2310,
+          "sha256": "aebe6d5495bfcb06509a560dcc7ba061c017aac6de2540db7935ef8da8c20581"
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "bytes": 14097,
+          "sha256": "4ee1910edf3415342e082345c41ce1384a8a906eec6b5e0ac0274c039e1f9c9d"
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "bytes": 2,
+          "sha256": "15ad36cf56fc23a0cb58eaba01cad41650977fb7a1ffd40b05b1ca301d52becf"
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "bytes": 6270584,
+          "sha256": "91594b0e19d894adc081c26e64ae07e781d59516647de57bf610979fb8e221c9"
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "bytes": 685616,
+          "sha256": "07b5ab0f58ea1846f73c4e6b2fcdf2fa84892a51bf362d3d5a9da12a6aefb018"
+        }
+      ]
+    },
+    {
+      "path": "gmsh/gmsh-descriptor.mjs",
+      "bytes": 301611,
+      "sha256": "23aadc073a207cb6f97f631a6123a26f5379bea63af9ada0f2e02a0927703a05"
+    },
+    {
+      "path": "gmsh/gmsh.d.ts",
+      "bytes": 134944,
+      "sha256": "0ecd459d3346f45719be311767d019a7ac76e42749bf6e90a0739b52ea23feee"
+    },
+    {
+      "path": "gmsh/gmsh.mjs",
+      "bytes": 514,
+      "sha256": "5b23a7f238b091ce328d2adbbf862f728fbb54d06cc0b9b5929c7b3eb8e60099"
+    },
+    {
+      "path": "gmsh/runtime.mjs",
+      "bytes": 12854,
+      "sha256": "1b8f9edaf63f1440d6d1d0e048c382488faae96dd886ce7e60b09e68a5a12a06"
+    }
+  ],
+  "drift": []
+}

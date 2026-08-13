@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { simulateNumberWall } from '../../src/engine/numberWall'
 
 async function waitForAudit(page: import('@playwright/test').Page) {
   await page.goto('/')
@@ -98,32 +99,26 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   expect(audit?.walls).toHaveLength(351)
   const wallCoverage = audit?.coverage.find((row) => row.key === 'walls')
 
-  const smallSimulationAudit = await page.evaluate(async () => {
-    const { simulateNumberWall } = await import('/src/engine/numberWall.ts')
-    const registry = await fetch('/data/generated/walls.json').then((response) => response.json()) as Array<{ id: string; filename: string }>
-    const failures: Array<{ id: string; error: string }> = []
-    let cursor = 0
-    async function run(): Promise<void> {
-      while (cursor < registry.length) {
-        const entry = registry[cursor++]
-        if (!entry) continue
-        try {
-          const payload = await fetch(`/data/number-walls/${encodeURIComponent(entry.filename)}`).then((response) => response.json()) as { sequence?: unknown[] }
-          const simulation = simulateNumberWall(payload, {
-            terms: Math.min(6, payload.sequence?.length ?? 0),
-            depth: 2,
-            mode: 'mod',
-            modulus: 7,
-          })
-          if (simulation.id !== entry.id || simulation.cells.length === 0) failures.push({ id: entry.id, error: 'empty or mismatched simulation' })
-        } catch (reason) {
-          failures.push({ id: entry.id, error: reason instanceof Error ? reason.message : String(reason) })
-        }
+  const registry = await page.request.get('/data/generated/walls.json').then((response) => response.json()) as Array<{ id: string; filename: string }>
+  const failures: Array<{ id: string; error: string }> = []
+  let cursor = 0
+  async function run(): Promise<void> {
+    while (cursor < registry.length) {
+      const entry = registry[cursor++]
+      if (!entry) continue
+      try {
+        const payload = await page.request.get(`/data/number-walls/${encodeURIComponent(entry.filename)}`).then((response) => response.json()) as { sequence?: unknown[] }
+        const simulation = simulateNumberWall(payload, {
+          terms: Math.min(6, payload.sequence?.length ?? 0), depth: 2, mode: 'mod', modulus: 7,
+        })
+        if (simulation.id !== entry.id || simulation.cells.length === 0) failures.push({ id: entry.id, error: 'empty or mismatched simulation' })
+      } catch (reason) {
+        failures.push({ id: entry.id, error: reason instanceof Error ? reason.message : String(reason) })
       }
     }
-    await Promise.all(Array.from({ length: 12 }, run))
-    return { tested: registry.length, failures }
-  })
+  }
+  await Promise.all(Array.from({ length: 12 }, run))
+  const smallSimulationAudit = { tested: registry.length, failures }
   expect(smallSimulationAudit.tested).toBe(351)
   expect(smallSimulationAudit.failures).toEqual([])
 
