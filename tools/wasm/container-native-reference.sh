@@ -12,9 +12,10 @@ rm -rf "$BUILD/gmsh" "$BUILD/getdp" "$OUT"
 mkdir -p "$BUILD/gmsh" "$BUILD/getdp" "$OUT"
 patch -d "$SRC/gmsh" -p1 < /workspace/tools/gmsh/optional-quad-predicate.patch
 cmake -S "$SRC/gmsh" -B "$BUILD/gmsh" \
-  -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF -DENABLE_MESH=ON \
+  -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF -DENABLE_MESH=ON -DENABLE_BUILD_LIB=ON \
   -DENABLE_PARSER=ON -DENABLE_POST=ON -DENABLE_ONELAB=ON -DENABLE_EIGEN=ON
-nice cmake --build "$BUILD/gmsh" --target gmsh --parallel "$JOBS"
+nice cmake --build "$BUILD/gmsh" --target gmsh lib --parallel "$JOBS"
+g++ -std=c++17 -O2 -I"$SRC/gmsh/api" /workspace/tools/native-probe.cpp "$BUILD/gmsh/libgmsh.a" -o "$BUILD/gmsh/native-probe" -ldl -lpthread
 
 pushd "$SRC/petsc" >/dev/null
 ./configure PETSC_ARCH="$PETSC_ARCH" --with-debugging=0 \
@@ -50,6 +51,12 @@ for mesh_size in 1 2; do
   "$BUILD/getdp/getdp" microstrip.pro -msh "microstrip-$suffix.msh" -solve Ele -pos Map 2>&1 | tee "getdp-$suffix.log"
   mv v.pos "v-$suffix.pos"
   mv e.pos "e-$suffix.pos"
+  for field in v e; do
+    for probe in "ground:0.0004:0.0002:0" "substrate:0.0013:0.0007:0" "air:0.0032:0.00055:0"; do
+      IFS=: read -r key x y z <<< "$probe"
+      "$BUILD/gmsh/native-probe" "$field-$suffix.pos" "$x" "$y" "$z" >> "probe-$suffix-$field.txt"
+    done
+  done
 done
 popd >/dev/null
 

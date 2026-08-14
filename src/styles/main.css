@@ -1806,6 +1806,47 @@ main {
   font-size: 0.67rem;
 }
 
+.result-controls {
+  display: grid;
+  padding: 0.75rem;
+  grid-template-columns: repeat(3, minmax(130px, 1fr)) auto auto;
+  gap: 0.65rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  border-top: 1px solid var(--rule-bright);
+  background: var(--ink-1);
+}
+
+.result-controls label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.result-controls select,
+.result-controls input,
+.result-controls button {
+  min-height: 42px;
+  padding: 0.55rem;
+  color: var(--paper);
+  font: inherit;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-0);
+}
+
+.result-legend {
+  display: grid;
+  min-width: 150px;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.result-legend i {
+  height: 12px;
+  background: linear-gradient(90deg, #004cff, #20d9a3, #ffd23f, #ff3200);
+}
+
 .viewer-workbench {
   padding: 2rem 0;
   border-bottom: 1px solid var(--rule-bright);
@@ -2045,6 +2086,14 @@ main {
   }
 
   .scene-mobile-controls label {
+    grid-column: 1 / -1;
+  }
+
+  .result-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .result-legend {
     grid-column: 1 / -1;
   }
 

@@ -8,7 +8,8 @@
     "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
     "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
     "getdp/CMakeLists.append.txt": "a7024dc787ce10f4a846c741def3f00e033c5651556463d686b75e70be36936f",
-    "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b"
+    "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b",
+    "native-probe.cpp": "bf86f077e775ae0e789a56209a860e0ff792abfb90fefbc8948bae18bd2bd72a"
   },
   "fixtures": {
     "cube.geo": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2",
@@ -16,7 +17,9 @@
     "cube.provenance.json": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2",
     "microstrip.geo": "6b6e881d25575e8250a111a7715afba0cdc86bacdf4f14a85ed8e6caadf132fc",
     "microstrip.pro": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58",
-    "microstrip.json": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083"
+    "microstrip.json": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083",
+    "view2.pos": "d6c5cc6b10b5ad12673e10644072399ea6a819c09482d771e2cccd92bbc76f1f",
+    "view2.provenance.json": "dec4cad869be093e250189dbfaf42ac98e43b346deaeb039bd621687e840116c"
   },
   "outputs": {
     "gmsh/gmsh.mjs": {

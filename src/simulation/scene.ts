@@ -20,14 +20,33 @@ export interface PhysicalGroup {
   entityTags: Uint32Array
 }
 
+export interface FieldProvenance {
+  representation: 'list' | 'model'
+  sourceFile: string
+  viewName: string
+  dataTypes: string[]
+  originalRecords: number
+  modelName?: string
+}
+
 export interface ResultField {
   id: string
   name: string
-  association: 'node' | 'element' | 'element-node' | 'integration-point'
+  association: 'node' | 'element' | 'element-node' | 'integration-point' | 'independent'
   components: 1 | 2 | 3 | 6 | 9
+  /** Step-major values, ordered by `tags` (or `coordinates` for independent data). */
   values: Float32Array | Float64Array
-  time: number
-  step: number
+  steps: Int32Array
+  times: Float64Array
+  /** Per-step [min, max] pairs followed by no padding. */
+  ranges: Float64Array
+  globalRange: [number, number]
+  tags?: BigUint64Array
+  /** Source mesh connectivity for element-node values. */
+  connectivity?: BigUint64Array
+  /** Coordinates are only present for data independent from the authoritative mesh. */
+  coordinates?: Float64Array
+  provenance: FieldProvenance
   units?: string
   complexPart?: 'real' | 'imaginary' | 'magnitude' | 'phase'
 }
@@ -148,7 +167,10 @@ export function sceneTransferables(scene: SimulationScene): Transferable[] {
   for (const entity of scene.entities) add(entity.physicalTags)
   for (const block of scene.elementBlocks) { add(block.elementTags); add(block.connectivity) }
   for (const group of scene.groups) add(group.entityTags)
-  for (const field of scene.fields) add(field.values)
+  for (const field of scene.fields) {
+    add(field.values); add(field.steps); add(field.times); add(field.ranges)
+    add(field.tags); add(field.connectivity); add(field.coordinates)
+  }
   return [...buffers]
 }
 

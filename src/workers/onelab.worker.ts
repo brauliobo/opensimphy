@@ -4,6 +4,7 @@ import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerRe
 import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, validateReadOnlyValues } from '../simulation/onelab-db'
 import { canonicalMshRecords } from '../simulation/msh'
 import { sceneTransferables, surfaceSignatures, type ElementBlock, type ModelEntity, type PhysicalGroup, type SimulationScene } from '../simulation/scene'
+import { expandHomogeneousModelStep, parsePosTimes, normalizeListView, normalizeModelView, type ModelViewStep } from '../simulation/view-normalizer'
 import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
 
@@ -256,6 +257,77 @@ function deterministicSamples(scalar: ReturnType<typeof extractView>, vector: Re
   })
 }
 
+function authoritativeScene(): SimulationScene {
+  const allNodes = gmsh.model.mesh.getNodes()
+  const nodeIndex = new Map<number, number>()
+  allNodes.nodeTags.forEach((tag: number, index: number) => nodeIndex.set(tag, index))
+  const nodeClassification = new Map<number, [number, number]>()
+  const entities: ModelEntity[] = []
+  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const bounds = gmsh.model.getBoundingBox(dimension, entityTag)
+    entities.push({
+      dimension: dimension as 0 | 1 | 2 | 3,
+      tag: entityTag,
+      bounds: [bounds.xmin, bounds.ymin, bounds.zmin, bounds.xmax, bounds.ymax, bounds.zmax],
+      physicalTags: Uint32Array.from(gmsh.model.getPhysicalGroupsForEntity(dimension, entityTag).physicalTags),
+    })
+    for (const tag of gmsh.model.mesh.getNodes(dimension, entityTag).nodeTags as number[]) {
+      const current = nodeClassification.get(tag)
+      if (!current || dimension < current[0]) nodeClassification.set(tag, [dimension, entityTag])
+    }
+  }
+  const triangles: number[] = []
+  const triangleEntities: number[] = []
+  const triangleElements: bigint[] = []
+  const triangleRegions: number[] = []
+  for (const [, surfaceTag] of pairs(gmsh.model.getEntities(2).dimTags as number[])) {
+    const adjacentVolumes = gmsh.model.getAdjacencies(2, surfaceTag).upward as number[]
+    const blocks = gmsh.model.mesh.getElements(2, surfaceTag)
+    blocks.elementTypes.forEach((type: number, block: number) => {
+      const properties = gmsh.model.mesh.getElementProperties(type)
+      if (properties.numPrimaryNodes !== 3) return
+      const tags = blocks.elementTags[block] as number[]
+      const connectivity = blocks.nodeTags[block] as number[]
+      tags.forEach((elementTag, element) => {
+        for (let corner = 0; corner < 3; corner++) triangles.push(nodeIndex.get(connectivity[element * properties.numNodes + corner]!)!)
+        triangleEntities.push(surfaceTag)
+        triangleElements.push(BigInt(elementTag))
+        triangleRegions.push(adjacentVolumes[0] ?? 0)
+      })
+    })
+  }
+  const elementBlocks: ElementBlock[] = []
+  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const blocks = gmsh.model.mesh.getElements(dimension, entityTag)
+    blocks.elementTypes.forEach((elementType: number, block: number) => elementBlocks.push({
+      dimension: dimension as 0 | 1 | 2 | 3,
+      entityTag,
+      elementType,
+      elementTags: BigUint64Array.from((blocks.elementTags[block] as number[]).map(BigInt)),
+      connectivity: BigUint64Array.from((blocks.nodeTags[block] as number[]).map(BigInt)),
+    }))
+  }
+  const groups: PhysicalGroup[] = pairs(gmsh.model.getPhysicalGroups().dimTags as number[]).map(([dimension, tag]) => ({
+    dimension: dimension as 0 | 1 | 2 | 3,
+    tag,
+    name: gmsh.model.getPhysicalName(dimension, tag).name,
+    entityTags: Uint32Array.from(gmsh.model.getEntitiesForPhysicalGroup(dimension, tag).tags),
+  }))
+  return {
+    source: 'gmsh-authoritative',
+    referencePositions: Float64Array.from(allNodes.coord),
+    surfaceTriangles: Uint32Array.from(triangles),
+    triangleEntityTags: Uint32Array.from(triangleEntities),
+    triangleElementTags: BigUint64Array.from(triangleElements),
+    triangleRegionTags: Uint32Array.from(triangleRegions),
+    nodeTags: BigUint64Array.from(allNodes.nodeTags.map(BigInt)),
+    nodeEntityDimensions: Uint8Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[0] ?? 255)),
+    nodeEntityTags: Uint32Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[1] ?? 0)),
+    entities, elementBlocks, groups, fields: [],
+    surfaceSignatures: surfaceSignatures(allNodes.coord, triangles, triangleEntities),
+  }
+}
+
 function projectFile(files: ProjectFile[], path: string) {
   const file = files.find((candidate) => candidate.path === path)
   if (!file) throw new Error(`project envelope is missing ${path}`)
@@ -310,21 +382,58 @@ async function solvePreparedMicrostrip(requestId: string): Promise<MicrostripRes
   const degreesOfFreedom = Number(logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => match[1])).at(-1))
   if (!Number.isInteger(degreesOfFreedom) || degreesOfFreedom <= 0) throw new Error('could not read GetDP system dimension')
   const posBytes: Record<string, number> = {}
+  const posSources = new Map<string, string>()
   for (const name of ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']) {
     const bytes = getdp.FS.readFile(`/${name}`) as Uint8Array
     posBytes[name] = bytes.byteLength
+    posSources.set(name, new TextDecoder().decode(bytes))
     writeFile(gmsh.FS, `/${name}`, bytes)
   }
   for (const tag of gmsh.view.getTags().tags as number[]) gmsh.view.remove(tag)
-  gmsh.merge('/v.pos'); gmsh.merge('/e.pos')
+  for (const name of ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']) gmsh.merge(`/${name}`)
   const views = gmsh.view.getTags().tags as number[]
-  if (views.length < 2) throw new Error('Gmsh did not load scalar and vector views')
+  if (views.length !== 4) throw new Error(`Gmsh loaded ${views.length} result views instead of 4`)
   const scalar = extractView('v', gmsh.view.getListData(views[0]), 1)
   const vector = extractView('e', gmsh.view.getListData(views[1]), 3)
+  const scene = authoritativeScene()
+  const names = ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']
+  const mesh = { positions: scene.referencePositions, nodeTags: scene.nodeTags!, elementBlocks: scene.elementBlocks }
+  scene.fields = views.flatMap((tag, index) => {
+    const name = names[index]!.slice(0, -4)
+    const sourceFile = names[index]!
+    const modelSteps: ModelViewStep[] = []
+    const stepCount = gmsh.view.option.getNumber(tag, 'NbTimeStep').value
+    for (let step = 0; step < stepCount; step++) {
+      let modelStep: ModelViewStep | undefined
+      try {
+        const homogeneous = gmsh.view.getHomogeneousModelData(tag, step)
+        if (homogeneous.dataType) {
+          try { modelStep = expandHomogeneousModelStep(mesh, homogeneous) } catch { /* heterogeneous or padded model data */ }
+        }
+      } catch { /* list representation or heterogeneous model data */ }
+      if (!modelStep) {
+        try {
+          const heterogeneous = gmsh.view.getModelData(tag, step)
+          if (heterogeneous.dataType) modelStep = heterogeneous
+        } catch { /* list representation */ }
+      }
+      if (!modelStep) break
+      modelSteps.push(modelStep)
+    }
+    if (modelSteps.length) {
+      if (modelSteps.length !== stepCount) throw new Error(`model view ${name} exposed ${modelSteps.length} of ${stepCount} steps`)
+      return [normalizeModelView(mesh, { name, sourceFile, modelName: gmsh.model.getCurrent().name, steps: modelSteps })]
+    }
+    return normalizeListView(mesh, { name, sourceFile, ...gmsh.view.getListData(tag), times: parsePosTimes(posSources.get(sourceFile)!) })
+  })
+  const potential = scene.fields.find((field) => field.name === 'v')
+  const electric = scene.fields.find((field) => field.name === 'e')
+  if (potential?.association !== 'node' || potential.tags?.length !== nodes) throw new Error('potential did not collapse losslessly to the authoritative nodes')
+  if (electric?.association !== 'element') throw new Error('electric field did not collapse losslessly to authoritative elements')
   return {
     nodes, elements, meshSha256, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
     scalar: scalar.block, vector: vector.block, samples: deterministicSamples(scalar, vector),
-    logs: [...logs], memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength, workerId,
+    scene, logs: [...logs], memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength, workerId,
   }
 }
 
@@ -392,79 +501,7 @@ async function getCubeScene(): Promise<SimulationScene> {
   if (surfaces.length !== 6) throw new Error(`built-in cube has ${surfaces.length} surfaces instead of 6`)
   gmsh.model.mesh.generate(3)
 
-  const allNodes = gmsh.model.mesh.getNodes()
-  const nodeIndex = new Map<number, number>()
-  allNodes.nodeTags.forEach((tag: number, index: number) => nodeIndex.set(tag, index))
-  const nodeClassification = new Map<number, [number, number]>()
-  const entities: ModelEntity[] = []
-  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
-    const bounds = gmsh.model.getBoundingBox(dimension, entityTag)
-    entities.push({
-      dimension: dimension as 0 | 1 | 2 | 3,
-      tag: entityTag,
-      bounds: [bounds.xmin, bounds.ymin, bounds.zmin, bounds.xmax, bounds.ymax, bounds.zmax],
-      physicalTags: Uint32Array.from(gmsh.model.getPhysicalGroupsForEntity(dimension, entityTag).physicalTags),
-    })
-    for (const tag of gmsh.model.mesh.getNodes(dimension, entityTag).nodeTags as number[]) {
-      const current = nodeClassification.get(tag)
-      if (!current || dimension < current[0]) nodeClassification.set(tag, [dimension, entityTag])
-    }
-  }
-  const triangles: number[] = []
-  const triangleEntities: number[] = []
-  const triangleElements: bigint[] = []
-  const triangleRegions: number[] = []
-  for (const surfaceTag of surfaces) {
-    const adjacentVolumes = gmsh.model.getAdjacencies(2, surfaceTag).upward as number[]
-    if (adjacentVolumes.length !== 1) throw new Error(`surface ${surfaceTag} has ${adjacentVolumes.length} adjacent volumes`)
-    const blocks = gmsh.model.mesh.getElements(2, surfaceTag)
-    blocks.elementTypes.forEach((type: number, block: number) => {
-      const properties = gmsh.model.mesh.getElementProperties(type)
-      if (properties.numPrimaryNodes !== 3) return
-      const tags = blocks.elementTags[block] as number[]
-      const connectivity = blocks.nodeTags[block] as number[]
-      tags.forEach((elementTag, element) => {
-        for (let corner = 0; corner < 3; corner++) triangles.push(nodeIndex.get(connectivity[element * properties.numNodes + corner]!)!)
-        triangleEntities.push(surfaceTag)
-        triangleElements.push(BigInt(elementTag))
-        triangleRegions.push(adjacentVolumes[0]!)
-      })
-    })
-  }
-  const elementBlocks: ElementBlock[] = []
-  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
-    const blocks = gmsh.model.mesh.getElements(dimension, entityTag)
-    blocks.elementTypes.forEach((elementType: number, block: number) => elementBlocks.push({
-      dimension: dimension as 0 | 1 | 2 | 3,
-      entityTag,
-      elementType,
-      elementTags: BigUint64Array.from((blocks.elementTags[block] as number[]).map(BigInt)),
-      connectivity: BigUint64Array.from((blocks.nodeTags[block] as number[]).map(BigInt)),
-    }))
-  }
-  const groups: PhysicalGroup[] = pairs(gmsh.model.getPhysicalGroups().dimTags as number[]).map(([dimension, tag]) => ({
-    dimension: dimension as 0 | 1 | 2 | 3,
-    tag,
-    name: gmsh.model.getPhysicalName(dimension, tag).name,
-    entityTags: Uint32Array.from(gmsh.model.getEntitiesForPhysicalGroup(dimension, tag).tags),
-  }))
-  const scene: SimulationScene = {
-    source: 'gmsh-authoritative',
-    referencePositions: Float64Array.from(allNodes.coord),
-    surfaceTriangles: Uint32Array.from(triangles),
-    triangleEntityTags: Uint32Array.from(triangleEntities),
-    triangleElementTags: BigUint64Array.from(triangleElements),
-    triangleRegionTags: Uint32Array.from(triangleRegions),
-    nodeTags: BigUint64Array.from(allNodes.nodeTags.map(BigInt)),
-    nodeEntityDimensions: Uint8Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[0] ?? 255)),
-    nodeEntityTags: Uint32Array.from(allNodes.nodeTags.map((tag: number) => nodeClassification.get(tag)?.[1] ?? 0)),
-    entities,
-    elementBlocks,
-    groups,
-    fields: [],
-    surfaceSignatures: surfaceSignatures(allNodes.coord, triangles, triangleEntities),
-  }
-  return scene
+  return authoritativeScene()
 }
 
 async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
@@ -474,7 +511,7 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
     else if (event.data.type === 'open-microstrip') emit({ type: 'project-opened', requestId, project: await openMicrostrip() })
     else if (event.data.type === 'project') {
       const response = await runProject(requestId, event.data.envelope)
-      const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer] : []
+      const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer, ...sceneTransferables(response.result.scene)] : []
       emit({ type: 'project-response', requestId, response }, transfers)
     }
     else if (event.data.type === 'get-cube-scene') {
@@ -482,7 +519,7 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
       emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
     } else {
       const result = await runMicrostrip(requestId)
-      emit({ type: 'result', requestId, result }, [result.scalar.values.buffer, result.vector.values.buffer])
+      emit({ type: 'result', requestId, result }, [result.scalar.values.buffer, result.vector.values.buffer, ...sceneTransferables(result.scene)])
     }
   } catch (error) {
     emit({ type: 'error', requestId, error: error instanceof Error ? error.stack ?? error.message : String(error) })

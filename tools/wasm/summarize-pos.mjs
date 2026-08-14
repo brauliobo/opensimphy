@@ -55,6 +55,14 @@ async function referenceRun(value, suffix) {
     const vector = nearest(vectorRecords, scalar.coordinate)
     return { key, coordinate: scalar.coordinate, scalar: scalar.value[0], vector: vector.value, magnitude: Math.hypot(...vector.value) }
   })
+  const scalarProbeLines = (await readFile(join(resultsPath, `probe-${suffix}-v.txt`), 'utf8')).trim().split('\n').filter((line) => /^[-+0-9]/.test(line))
+  const vectorProbeLines = (await readFile(join(resultsPath, `probe-${suffix}-e.txt`), 'utf8')).trim().split('\n').filter((line) => /^[-+0-9]/.test(line))
+  const probes = targets.map(([key, coordinate], index) => {
+    const scalar = scalarProbeLines[index].trim().split(/\s+/).map(Number)
+    const vector = vectorProbeLines[index].trim().split(/\s+/).map(Number)
+    if (scalar[0] !== 0 || vector[0] !== 0 || scalar.length !== 2 || vector.length !== 4) throw new Error(`strict native Gmsh probe ${key} did not return an exact interior value`)
+    return { key, coordinate, scalar: scalar[1], vector: vector.slice(1), magnitude: Math.hypot(...vector.slice(1)) }
+  })
   const run = {
     meshSizeFactor: value,
     nodes: Number(metadata[`nodes_${suffix}`]),
@@ -63,7 +71,7 @@ async function referenceRun(value, suffix) {
     degreesOfFreedom: Number(metadata[`dofs_${suffix}`]),
     initialResidual: Number(metadata[`initial_residual_${suffix}`]),
     residual: Number(metadata[`residual_${suffix}`]),
-    scalar: summary(scalarRecords, 1), vector: summary(vectorRecords, 3), samples,
+    scalar: summary(scalarRecords, 1), vector: summary(vectorRecords, 3), samples, probes,
     outputSha256: { 'v.pos': hash(scalarBytes), 'e.pos': hash(vectorBytes) },
   }
   if (!(run.initialResidual > 0 && run.residual >= 0 && run.residual / run.initialResidual < 1e-12 && run.degreesOfFreedom > 0)) throw new Error(`native PETSc solve ${value} did not converge sufficiently`)

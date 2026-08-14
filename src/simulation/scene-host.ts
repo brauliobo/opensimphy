@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh'
 import { diagnostics } from './diagnostics'
 import { displayGeometry, type SimulationScene } from './scene'
+import { ResultLayer } from './result-layer'
+import type { FieldRangeMode } from './results'
 
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree
@@ -25,6 +27,7 @@ export class SceneHost {
   private edges?: THREE.LineSegments
   private source?: SimulationScene
   private display?: ReturnType<typeof displayGeometry>
+  private results?: ResultLayer
   private explosion = 0
   private raycaster = new THREE.Raycaster()
   private pointer = new THREE.Vector2()
@@ -114,6 +117,7 @@ export class SceneHost {
     diagnostics().geometries += 2
     diagnostics().materials += 2
     this.world.add(this.mesh)
+    if (source.fields.length) this.results = new ResultLayer(this.world, this.mesh, source, this.display)
     const edges = new THREE.EdgesGeometry(geometry, 18)
     this.edges = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x101416, transparent: true, opacity: 0.82 }))
     this.world.add(this.edges)
@@ -165,6 +169,11 @@ export class SceneHost {
     this.invalidate()
   }
 
+  setResult(fieldId: string | undefined, step = 0, rangeMode: FieldRangeMode = 'global', customRange?: [number, number]) {
+    this.results?.set(this.source?.fields.find(({ id }) => id === fieldId), step, rangeMode, customRange)
+    this.invalidate()
+  }
+
   renderState() {
     const position = this.mesh?.geometry.getAttribute('position') as THREE.BufferAttribute | undefined
     return {
@@ -173,6 +182,7 @@ export class SceneHost {
       positionSample: position ? Array.from(position.array.slice(0, 12)) : [],
       sourceSample: this.source ? Array.from(this.source.referencePositions.slice(0, 12)) : [],
       measurements: this.measurePoints.length,
+      result: this.results?.getState(),
     }
   }
 
@@ -208,6 +218,8 @@ export class SceneHost {
   }
 
   private removeGeometry() {
+    this.results?.dispose()
+    this.results = undefined
     if (this.mesh) {
       this.world.remove(this.mesh)
       this.mesh.geometry.disposeBoundsTree()

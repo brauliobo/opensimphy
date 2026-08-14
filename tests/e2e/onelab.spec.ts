@@ -84,6 +84,56 @@ test('warms online then meshes, solves and extracts views fully offline across r
   expect(Number(await page.getByTestId('onelab-residual').innerText())).toBeLessThan(Number(await page.getByTestId('onelab-initial-residual').innerText()) * 1e-12)
   await expect(page.getByTestId('onelab-scalar')).toContainText('samples')
   await expect(page.getByTestId('onelab-vector')).toContainText('samples')
+  await expect(page.getByTestId('result-viewer')).toBeVisible()
+  const solvedScene = await page.evaluate(() => {
+    const fields = [...document.querySelectorAll<HTMLOptionElement>('[data-testid="result-field"] option')].map((option) => option.textContent)
+    const summary = JSON.parse(document.querySelector<HTMLOutputElement>('[data-testid="result-viewer"] [data-testid="viewer-render-summary"]')!.value)
+    return { fields, summary }
+  })
+  expect(solvedScene.fields).toContain('v / node')
+  expect(solvedScene.fields).toContain('e / element')
+  expect(solvedScene.summary.result.deformationScale).toBe(0)
+  await page.getByTestId('result-field').selectOption({ label: 'e / element' })
+  await expect.poll(async () => JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText()).result.glyphs).toBe(768)
+  const glyphMetadata = JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText()).result
+  expect(glyphMetadata.sceneDiagonal).toBeGreaterThan(0)
+  for (const length of glyphMetadata.glyphLengthRange) {
+    expect(length / glyphMetadata.sceneDiagonal).toBeGreaterThanOrEqual(0.003)
+    expect(length / glyphMetadata.sceneDiagonal).toBeLessThanOrEqual(0.04)
+  }
+  expect(glyphMetadata.glyphRadiusRange[0] / glyphMetadata.glyphLengthRange[0]).toBeCloseTo(0.12)
+  expect(glyphMetadata.glyphRadiusRange[1] / glyphMetadata.glyphLengthRange[1]).toBeCloseTo(0.12)
+  const mapped = await page.evaluate(() => {
+    const host = document.querySelector('[data-testid="result-viewer"]')!
+    return {
+      fields: [...host.querySelectorAll<HTMLOptionElement>('[data-testid="result-field"] option')].map((option) => option.textContent),
+      legend: [...host.querySelectorAll('[data-testid="result-legend"] span')].map((span) => Number(span.textContent)),
+    }
+  })
+  expect(mapped.fields).toEqual(expect.arrayContaining(['v / node', 'e / element', 'd / element', 'e_cut / independent']))
+  expectVectorClose(mapped.legend[0]!, defaultReference.vector.min)
+  expectVectorClose(mapped.legend[1]!, defaultReference.vector.max)
+  const mappedFields = JSON.parse(await page.getByTestId('mapped-field-summary').innerText())
+  expect(mappedFields.find(({ name }: { name: string }) => name === 'v')).toMatchObject({ association: 'node', samples: 727, globalRange: [0, 0.001] })
+  expect(mappedFields.find(({ name }: { name: string }) => name === 'e')).toMatchObject({ association: 'element', samples: 1337 })
+  const resultSceneSummary = await page.evaluate(() => {
+    const text = document.querySelector<HTMLOutputElement>('[data-testid="mapped-field-summary"]')!.value
+    const viewer = document.querySelector('[data-testid="result-viewer"]')!
+    return { fields: JSON.parse(text), controls: viewer.querySelectorAll('[data-testid^="result-"]').length }
+  })
+  expect(resultSceneSummary.controls).toBeGreaterThanOrEqual(5)
+  const sceneTags = await page.evaluate(() => JSON.parse(document.querySelector<HTMLOutputElement>('[data-testid="mapped-scene-summary"]')!.value))
+  expect(sceneTags).toMatchObject({ nodes: 727, nodeTagsUnique: true, elementTagsUnique: true, connectivityValid: true, nodeClassificationComplete: true })
+  expect(sceneTags.physicalGroups).toEqual(expect.arrayContaining([
+    expect.objectContaining({ dimension: 2, tag: 1, name: 'Air', entityTags: [15] }),
+    expect.objectContaining({ dimension: 2, tag: 2, name: 'Dielectric', entityTags: [13] }),
+  ]))
+  const spatialProbes = JSON.parse(await page.getByTestId('mapped-spatial-probes').innerText()) as typeof defaultReference.probes
+  spatialProbes.forEach((probe, index) => {
+    const expected = defaultReference.probes[index]
+    expectScalarSampleClose(probe.scalar, expected.scalar)
+    probe.vector.forEach((value, component) => expectVectorClose(value, expected.vector[component]))
+  })
   const scalar = JSON.parse(await page.getByTestId('onelab-scalar').innerText()) as typeof defaultReference.scalar
   const vector = JSON.parse(await page.getByTestId('onelab-vector').innerText()) as typeof defaultReference.vector
   expect(scalar.samples).toBe(defaultReference.scalar.samples)
@@ -168,6 +218,28 @@ test('checks parser metadata, computes two native meshes, preserves edits throug
   expect(secondMesh).toContain(`${secondReference.nodes} nodes / ${secondReference.elements} elements`)
   expect(secondMesh).not.toBe(firstMesh)
   expect(secondMesh.split(' / ').at(-1)).toBe(secondReference.meshSha256)
+  await expect(page.getByTestId('result-field').locator('option', { hasText: 'v / node' })).toHaveCount(1)
+  await expect(page.getByTestId('result-field').locator('option', { hasText: 'e / element' })).toHaveCount(1)
+  const remappedFields = JSON.parse(await page.getByTestId('mapped-field-summary').innerText())
+  expect(remappedFields.find(({ name }: { name: string }) => name === 'v')).toMatchObject({ association: 'node', samples: 233, globalRange: [0, 0.001], provenance: { representation: 'list', sourceFile: 'v.pos' } })
+  const remappedVector = remappedFields.find(({ name }: { name: string }) => name === 'e')
+  expect(remappedVector).toMatchObject({ association: 'element', samples: 403, provenance: { representation: 'list', sourceFile: 'e.pos' } })
+  expectVectorClose(remappedVector.globalRange[0], secondReference.vector.min)
+  expectVectorClose(remappedVector.globalRange[1], secondReference.vector.max)
+  const remappedScene = JSON.parse(await page.getByTestId('mapped-scene-summary').innerText())
+  expect(remappedScene).toMatchObject({ nodes: 233, nodeTagsUnique: true, elementTagsUnique: true, connectivityValid: true, regionTags: [0] })
+  expect(remappedScene.physicalGroups).toEqual(expect.arrayContaining([
+    expect.objectContaining({ dimension: 2, tag: 1, name: 'Air' }), expect.objectContaining({ dimension: 2, tag: 2, name: 'Dielectric' }),
+  ]))
+  const remappedProbes = JSON.parse(await page.getByTestId('mapped-spatial-probes').innerText()) as typeof secondReference.probes
+  remappedProbes.forEach((probe, index) => {
+    expectScalarSampleClose(probe.scalar, secondReference.probes[index].scalar)
+    probe.vector.forEach((value, component) => expectVectorClose(value, secondReference.probes[index].vector[component]))
+  })
+  const exports = JSON.parse(await page.getByTestId('mapped-export-summary').innerText())
+  expect(exports.find(({ id }: { id: string }) => id.startsWith('v-'))).toMatchObject({ csvRows: 234, posRecords: 233, hasTime: true })
+  expect(exports.find(({ id }: { id: string }) => id.startsWith('e-'))).toMatchObject({ csvRows: 404, posRecords: 403, hasTime: true })
+  expect(exports.find(({ id }: { id: string }) => id.startsWith('e_cut-'))).toMatchObject({ csvRows: 62, posRecords: 61, hasTime: true })
   await expect(page.getByTestId('onelab-dofs')).toHaveText(String(secondReference.degreesOfFreedom))
   expectResidualClose(Number(await page.getByTestId('onelab-initial-residual').innerText()), secondReference.initialResidual)
   expectResidualClose(Number(await page.getByTestId('onelab-residual').innerText()), secondReference.residual)

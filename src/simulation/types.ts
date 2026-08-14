@@ -31,6 +31,7 @@ export interface MicrostripResult {
   memoryBytes: number
   workerId: string
   samples: FieldSample[]
+  scene: SimulationScene
 }
 
 export interface ProjectFile {

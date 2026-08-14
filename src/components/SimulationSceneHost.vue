@@ -3,14 +3,21 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { diagnostics } from '../simulation/diagnostics'
 import { SceneHost, type SceneSelection } from '../simulation/scene-host'
 import type { SimulationScene } from '../simulation/scene'
+import { fieldCsv, fieldPos, fieldRange, probeField, type FieldProbe, type FieldRangeMode } from '../simulation/results'
 
 const props = defineProps<{ scene?: SimulationScene }>()
-const emit = defineEmits<{ select: [selection: SceneSelection] }>()
+const emit = defineEmits<{ select: [selection: SceneSelection]; probe: [probe: FieldProbe] }>()
 const target = ref<HTMLElement>()
 const clipped = ref(false)
 const explosion = ref(0)
 const measurement = ref<number>()
 const renderRevision = ref(0)
+const fieldId = ref('')
+const step = ref(0)
+const rangeMode = ref<FieldRangeMode>('global')
+const customMin = ref(0)
+const customMax = ref(1)
+const probe = ref<FieldProbe>()
 let host: SceneHost | undefined
 
 function applyScene(scene: SimulationScene) {
@@ -20,6 +27,12 @@ function applyScene(scene: SimulationScene) {
   host?.setScene(scene)
   host?.setClipping(false)
   host?.setExplosion(0)
+  fieldId.value = scene.fields[0]?.id ?? ''
+  step.value = 0
+  rangeMode.value = 'global'
+  const range = scene.fields[0]?.globalRange
+  if (range) [customMin.value, customMax.value] = range
+  applyResult()
 }
 
 function setClipping() {
@@ -30,16 +43,53 @@ function setClipping() {
 
 function clearMeasurement() { host?.clearMeasurement() }
 function sceneDebug() { return host?.renderState() }
+const activeField = () => props.scene?.fields.find(({ id }) => id === fieldId.value)
+function applyResult() {
+  const custom: [number, number] | undefined = rangeMode.value === 'custom' ? [customMin.value, customMax.value] : undefined
+  host?.setResult(fieldId.value || undefined, step.value, rangeMode.value, custom)
+  renderRevision.value++
+}
+function selectResult() {
+  step.value = 0
+  const range = activeField()?.globalRange
+  if (range) [customMin.value, customMax.value] = range
+  applyResult()
+}
+function selectStep(event: Event) { step.value = Number((event.target as HTMLSelectElement).value) }
+function activeRange() {
+  const field = activeField()
+  return field ? fieldRange(field, step.value, rangeMode.value, rangeMode.value === 'custom' ? [customMin.value, customMax.value] : undefined) : undefined
+}
+function activeTimes() { return Array.from(activeField()?.times ?? []) }
+function download(extension: 'csv' | 'pos') {
+  const scene = props.scene, field = activeField()
+  if (!scene || !field) return
+  const text = extension === 'csv' ? fieldCsv(scene, field) : fieldPos(scene, field)
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(new Blob([text], { type: extension === 'csv' ? 'text/csv' : 'text/plain' }))
+  link.download = `${field.id}.${extension}`
+  link.click()
+  URL.revokeObjectURL(link.href)
+}
 
 onMounted(() => {
   host = new SceneHost(target.value!)
-  host.onSelection = (selection) => emit('select', selection)
+  host.onSelection = (selection) => {
+    emit('select', selection)
+    const scene = props.scene, field = activeField()
+    if (!scene || !field) return
+    try {
+      probe.value = probeField(scene, field, step.value, selection.sourceTriangle, selection.point)
+      emit('probe', probe.value)
+    } catch { probe.value = undefined }
+  }
   host.onMeasurement = (distance) => { measurement.value = distance }
   if (props.scene) applyScene(props.scene)
   diagnostics().overlays++
 })
 watch(() => props.scene, (scene) => { if (scene) applyScene(scene) })
 watch(explosion, (amount) => { host?.setExplosion(amount); renderRevision.value++ })
+watch([step, rangeMode, customMin, customMax], applyResult)
 onBeforeUnmount(() => {
   diagnostics().overlays--
   host?.dispose()
@@ -53,6 +103,31 @@ onBeforeUnmount(() => {
     span Orbit / pan / zoom / tap faces
     strong(v-if="measurement !== undefined" data-testid="measurement-readout") {{ measurement.toFixed(3) }} mm
     output.sr-only(data-testid="viewer-render-summary" :data-revision="renderRevision") {{ JSON.stringify(sceneDebug()) }}
+    strong(v-if="probe" data-testid="result-probe") {{ probe.values.map(value => value.toPrecision(6)).join(', ') }} @ t={{ probe.time }}
+  .result-controls(v-if="scene?.fields.length" aria-label="Result controls")
+    label
+      span Field
+      select(v-model="fieldId" data-testid="result-field" @change="selectResult")
+        option(v-for="field in scene.fields" :key="field.id" :value="field.id") {{ field.name }} / {{ field.association }}
+    label
+      span Timestep
+      select(:value="step" data-testid="result-step" @change="selectStep")
+        option(v-for="(time, index) in activeTimes()" :key="index" :value="index") {{ activeField()?.steps[index] }} / t={{ time }}
+    label
+      span Range
+      select(v-model="rangeMode" data-testid="result-range-mode")
+        option(value="global") Global
+        option(value="step") Per step
+        option(value="custom") Custom
+    template(v-if="rangeMode === 'custom'")
+      input(v-model.number="customMin" data-testid="result-range-min" type="number")
+      input(v-model.number="customMax" data-testid="result-range-max" type="number")
+    output.result-legend(data-testid="result-legend")
+      span {{ activeRange()?.[0] ?? '' }}
+      i
+      span {{ activeRange()?.[1] ?? '' }}
+    button(type="button" data-testid="result-export-csv" @click="download('csv')") CSV
+    button(type="button" data-testid="result-export-pos" @click="download('pos')") POS
   .scene-mobile-controls(aria-label="Scene controls")
     button(type="button" data-testid="scene-fit" @click="host?.fit()") Fit
     button(type="button" data-testid="scene-clip" :aria-pressed="clipped" @click="setClipping") Section

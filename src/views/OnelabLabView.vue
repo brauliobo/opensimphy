@@ -8,6 +8,7 @@ import { ProjectSession } from '../simulation/project-session'
 import SimulationSceneHost from '../components/SimulationSceneHost.vue'
 import { matchSurfaceSignatures, summarizeScene, type SimulationScene, type SurfaceMatch } from '../simulation/scene'
 import type { SceneSelection } from '../simulation/scene-host'
+import { fieldCsv, fieldPos, probeScenePoint } from '../simulation/results'
 import { MeshstepClient } from '../simulation/viewer-client'
 
 const client = new OnelabClient()
@@ -36,6 +37,32 @@ const parameters = computed(() => {
   return session.ready ? parseOnelab(session.database).onelab.parameters.filter(({ name }) => name.startsWith('Parameters/')) : []
 })
 const displayedResult = computed(() => committedResultRevision.value === session.revision ? session.lastResult : undefined)
+const mappedSummary = computed(() => displayedResult.value?.scene.fields.map((field) => ({
+  id: field.id, name: field.name, association: field.association, components: field.components,
+  samples: field.values.length / field.steps.length / field.components, steps: [...field.steps], times: [...field.times], ranges: [...field.ranges], globalRange: field.globalRange,
+  provenance: field.provenance,
+})))
+const spatialProbes = computed(() => {
+  const solved = displayedResult.value?.scene
+  if (!solved) return []
+  const scalar = solved.fields.find((field) => field.name === 'v')
+  const vector = solved.fields.find((field) => field.name === 'e')
+  if (!scalar || !vector) return []
+  return [['ground', 0.0004, 0.0002], ['substrate', 0.0013, 0.0007], ['air', 0.0032, 0.00055]].map(([key, x, y]) => {
+    const point: [number, number, number] = [Number(x), Number(y), 0]
+    const scalarProbe = probeScenePoint(solved, scalar, 0, point)
+    const vectorProbe = probeScenePoint(solved, vector, 0, point)
+    return { key, coordinate: point, scalar: scalarProbe.values[0], vector: vectorProbe.values, magnitude: vectorProbe.magnitude }
+  })
+})
+const exportSummary = computed(() => {
+  const solved = displayedResult.value?.scene
+  if (!solved) return []
+  return solved.fields.map((field) => {
+    const csv = fieldCsv(solved, field), pos = fieldPos(solved, field)
+    return { id: field.id, csvRows: csv.trim().split('\n').length, csvHeader: csv.split('\n')[0], posRecords: (pos.match(/\b[SVT][PTQLSHIY]\(/g) ?? []).length, hasTime: /TIME\{/.test(pos) }
+  })
+})
 const removeNativeListener = client.onEnteredNative((event) => {
   if (event.detail.requestId !== activeRequestId.value) return
   workerId.value = event.detail.workerId
@@ -166,7 +193,7 @@ onBeforeUnmount(() => { disposed = true; removeNativeListener(); meshstep.dispos
 <template lang="pug">
 section.onelab-lab.view
   header.section-heading
-    p.eyebrow LAB / ONELAB PHASE 2
+    p.eyebrow LAB / ONELAB PHASE 3
     h1 Browser ONELAB workbench
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
   .simulation-caveat(role="note")
@@ -246,6 +273,17 @@ section.onelab-lab.view
   p(data-testid="onelab-state" :data-state="state") State: {{ state }}
   p(data-testid="onelab-worker" :data-worker-id="workerId" :data-request-id="activeRequestId" :data-native-operation="nativeOperation") Worker: {{ workerId }} / request {{ activeRequestId }} / {{ nativeOperation }}
   p.system-error(v-if="error" role="alert") {{ error }}
+  section.viewer-workbench(v-if="displayedResult?.scene" data-testid="result-viewer")
+    .viewer-heading
+      div
+        p.eyebrow PHASE 3 / MAPPED RESULTS
+        h2 Potential / electric field
+      span {{ displayedResult.scene.fields.length }} mapped fields
+    SimulationSceneHost(:scene="displayedResult.scene")
+    output.sr-only(data-testid="mapped-field-summary") {{ JSON.stringify(mappedSummary) }}
+    output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(displayedResult.scene)) }}
+    output.sr-only(data-testid="mapped-spatial-probes") {{ JSON.stringify(spatialProbes) }}
+    output.sr-only(data-testid="mapped-export-summary") {{ JSON.stringify(exportSummary) }}
   dl.onelab-result(v-if="displayedResult" data-testid="onelab-result")
     dt Runs
     dd(data-testid="onelab-runs") {{ runs }}

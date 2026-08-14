@@ -21,7 +21,7 @@ const patches = {}
 for (const name of Object.keys(previous.patches)) patches[name] = sha256(await readFile(join(tools, name)))
 const fixtures = {}
 for (const name of Object.keys(previous.fixtures)) {
-  const path = name.startsWith('cube.') || name === 'microstrip.json'
+  const path = name.startsWith('cube.') || name.startsWith('view2.') || name === 'microstrip.json'
     ? join(tools, 'fixtures', name)
     : join(cacheRoot, 'fixtures/microstrip', name)
   fixtures[name] = sha256(await readFile(path))
@@ -32,10 +32,10 @@ for (const name of Object.keys(previous.outputs)) outputs[name] = await metadata
 const assets = Object.entries(outputs).map(([path, value]) => ({ path, ...value }))
 const runtime = await metadata(join(tools, 'getdp/runtime.mjs'))
 assets.push({ path: 'getdp/runtime.mjs', ...runtime })
-for (const cube of [false, true]) {
-  for (const [name, hash] of Object.entries(fixtures).filter(([name]) => name.startsWith('cube.') === cube)) {
-    const bytes = await readFile(cube || name === 'microstrip.json' ? join(tools, 'fixtures', name) : join(cacheRoot, 'fixtures/microstrip', name))
-    assets.push({ path: `fixtures/${cube ? 'cube' : 'microstrip'}/${name}`, bytes: bytes.length, sha256: hash })
+for (const family of ['microstrip', 'cube']) {
+  for (const [name, hash] of Object.entries(fixtures).filter(([name]) => family === 'cube' ? name.startsWith('cube.') : !name.startsWith('cube.') && !name.startsWith('view2.'))) {
+    const bytes = await readFile(family !== 'microstrip' || name === 'microstrip.json' ? join(tools, 'fixtures', name) : join(cacheRoot, 'fixtures/microstrip', name))
+    assets.push({ path: `fixtures/${family}/${name}`, bytes: bytes.length, sha256: hash })
   }
 }
 const contentVersion = sha256(Buffer.from(JSON.stringify(assets))).slice(0, 20)
