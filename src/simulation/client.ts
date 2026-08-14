@@ -53,11 +53,14 @@ export class OnelabClient {
 
   openMicrostrip() { return this.request<ProjectBootstrap>({ type: 'open-microstrip' }).promise }
 
+  openProject(projectId: string) { return this.request<ProjectBootstrap>({ type: 'open-project', projectId }).promise }
+
   startProject(envelope: ProjectEnvelope, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
     return this.request<ProjectResponse>({ type: 'project', envelope }, enteredNative)
   }
 
   getCubeScene() { return this.request<SimulationScene>({ type: 'get-cube-scene' }).promise }
+  getRenderingScene() { return this.request<SimulationScene>({ type: 'get-rendering-scene' }).promise }
 
   onEnteredNative(listener: (event: CustomEvent<Extract<OnelabWorkerResponse, { type: 'entered-native' }>>) => void) {
     this.events.addEventListener('entered-native', listener as EventListener)

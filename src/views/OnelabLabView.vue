@@ -10,6 +10,8 @@ import { matchSurfaceSignatures, summarizeScene, type SimulationScene, type Surf
 import type { SceneSelection } from '../simulation/scene-host'
 import { fieldCsv, fieldPos, probeScenePoint } from '../simulation/results'
 import { MeshstepClient } from '../simulation/viewer-client'
+import { projectCatalog } from '../simulation/project-catalog'
+import { PhysicalGroupEditor } from '../simulation/physical-groups'
 
 const client = new OnelabClient()
 const session = new ProjectSession()
@@ -30,18 +32,30 @@ const authoritative = ref<SimulationScene>()
 const matches = ref<SurfaceMatch[]>()
 const selectedPreviewKey = ref<number>()
 const authoritativeSelection = ref<number>()
+const authoritativeSelectionDimension = ref<2 | 3>(2)
+const lastSelection = ref<SceneSelection>()
 const viewerError = ref('')
 let disposed = false
+const solverProjects = projectCatalog.filter(({ kind }) => kind === 'solve')
+const selectedProjectId = ref('microstrip')
+const groupName = ref('selection')
+const selectedGroupId = ref('')
+const authoredGroups = ref<ReturnType<PhysicalGroupEditor['sidecar']>['groups']>([])
+let groupEditor = new PhysicalGroupEditor(selectedProjectId.value)
 const parameters = computed(() => {
   sessionVersion.value
   return session.ready ? parseOnelab(session.database).onelab.parameters.filter(({ name }) => name.startsWith('Parameters/')) : []
 })
-const displayedResult = computed(() => committedResultRevision.value === session.revision ? session.lastResult : undefined)
+const displayedResult = computed(() => {
+  sessionVersion.value
+  return committedResultRevision.value === session.revision ? session.lastResult : undefined
+})
 const mappedSummary = computed(() => displayedResult.value?.scene.fields.map((field) => ({
   id: field.id, name: field.name, association: field.association, components: field.components,
   samples: field.values.length / field.steps.length / field.components, steps: [...field.steps], times: [...field.times], ranges: [...field.ranges], globalRange: field.globalRange,
-  provenance: field.provenance,
+  provenance: field.provenance, complexPart: field.complexPart,
 })))
+const selectableEntities = computed(() => displayedResult.value?.scene.entities.filter(({ dimension }) => dimension >= 2) ?? [])
 const spatialProbes = computed(() => {
   const solved = displayedResult.value?.scene
   if (!solved) return []
@@ -73,11 +87,12 @@ async function warm() {
   state.value = 'warming'
   error.value = ''
   try {
+    if (!authoredGroups.value.length) restoreGroups(selectedProjectId.value)
     await navigator.serviceWorker?.ready
     await client.warm()
     if (!session.ready) {
-      const project = await client.openMicrostrip()
-      session.open(project.files, project.defaults)
+      const project = await client.openProject(selectedProjectId.value)
+      session.open(project.files, project.defaults, project.descriptor)
       sessionVersion.value++
     }
     state.value = 'ready'
@@ -86,6 +101,54 @@ async function warm() {
     state.value = 'error'
   }
 }
+
+async function selectProject(event: Event) {
+  selectedProjectId.value = (event.target as HTMLSelectElement).value
+  state.value = 'warming'
+  try {
+    const project = await client.openProject(selectedProjectId.value)
+    session.open(project.files, project.defaults, project.descriptor)
+    committedResultRevision.value = -1
+    result.value = undefined
+    authoritativeSelection.value = undefined
+    restoreGroups(selectedProjectId.value)
+    sessionVersion.value++
+    state.value = 'ready'
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : String(reason)
+    state.value = 'error'
+  }
+}
+
+function restoreGroups(projectId: string) {
+  const saved = localStorage.getItem(`opensimphy-physical-groups:${projectId}`)
+  groupEditor = saved ? PhysicalGroupEditor.load(saved, projectId) : new PhysicalGroupEditor(projectId)
+  authoredGroups.value = groupEditor.sidecar().groups
+  selectedGroupId.value = authoredGroups.value[0]?.id ?? ''
+}
+
+function persistGroups() {
+  const sidecar = groupEditor.sidecar()
+  authoredGroups.value = sidecar.groups
+  localStorage.setItem(`opensimphy-physical-groups:${sidecar.projectId}`, JSON.stringify(sidecar))
+}
+
+function addPhysicalGroup() {
+  if (authoritativeSelection.value === undefined) return
+  selectedGroupId.value = groupEditor.add(authoritativeSelectionDimension.value, groupName.value, [authoritativeSelection.value])
+  persistGroups()
+}
+
+function renamePhysicalGroup() { if (selectedGroupId.value) { groupEditor.rename(selectedGroupId.value, groupName.value); persistGroups() } }
+function replacePhysicalGroupMembership() { if (selectedGroupId.value && authoritativeSelection.value !== undefined) { groupEditor.setMembership(selectedGroupId.value, [authoritativeSelection.value]); persistGroups() } }
+function selectAuthoritativeEntity(event: Event) {
+  const [dimension, tag] = (event.target as HTMLSelectElement).value.split(':').map(Number)
+  if ((dimension !== 2 && dimension !== 3) || !Number.isInteger(tag)) return
+  authoritativeSelectionDimension.value = dimension
+  authoritativeSelection.value = tag
+}
+function deletePhysicalGroup() { if (selectedGroupId.value) { groupEditor.delete(selectedGroupId.value); selectedGroupId.value = ''; persistGroups() } }
+function resetPhysicalGroups() { groupEditor.reset(); selectedGroupId.value = ''; persistGroups() }
 
 async function solve() {
   await execute('compute')
@@ -97,7 +160,7 @@ async function execute(action: 'check' | 'compute' | 'reset') {
   state.value = 'running'
   error.value = ''
   nativeOperation.value = ''
-  const request = client.startProject(session.envelope(action))
+  const request = client.startProject(session.envelope(action, groupEditor.sidecar()))
   activeRequestId.value = request.requestId
   try {
     const response = await request.promise
@@ -108,7 +171,6 @@ async function execute(action: 'check' | 'compute' | 'reset') {
       state.value = 'stale'
       return
     }
-    sessionVersion.value++
     if (response.result) {
       result.value = response.result
       workerId.value = response.result.workerId
@@ -118,6 +180,7 @@ async function execute(action: 'check' | 'compute' | 'reset') {
       committedResultRevision.value = -1
       result.value = undefined
     }
+    sessionVersion.value++
     state.value = 'complete'
   } catch (reason) {
     if (activeRequestId.value !== request.requestId || state.value === 'cancelled') return
@@ -167,12 +230,29 @@ async function loadViewer() {
   }
 }
 
+async function loadRenderingTruth() {
+  viewerState.value = 'loading'
+  viewerError.value = ''
+  try {
+    scene.value = await client.getRenderingScene()
+    preview.value = undefined
+    authoritative.value = scene.value
+    matches.value = undefined
+    viewerState.value = 'ready'
+  } catch (reason) {
+    viewerError.value = reason instanceof Error ? reason.message : String(reason)
+    viewerState.value = 'error'
+  }
+}
+
 function selectSurface(selection: SceneSelection) {
+  lastSelection.value = selection
   if (scene.value?.source === 'meshstep-preview') {
     selectedPreviewKey.value = selection.sourceKey
     authoritativeSelection.value = undefined
   } else {
     authoritativeSelection.value = selection.sourceKey
+    authoritativeSelectionDimension.value = selection.sourceDimension
   }
 }
 
@@ -193,18 +273,20 @@ onBeforeUnmount(() => { disposed = true; removeNativeListener(); meshstep.dispos
 <template lang="pug">
 section.onelab-lab.view
   header.section-heading
-    p.eyebrow LAB / ONELAB PHASE 3
+    p.eyebrow LAB / ONELAB PHASE 4
     h1 Browser ONELAB workbench
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
   .simulation-caveat(role="note")
-    strong Arbitrary STEP simulation unavailable until OCC.
-    span STEP is a meshStep preview only. Simulation-bound selections always switch to the authoritative built-in-kernel Gmsh surface.
+    strong Arbitrary STEP projects are not yet wired to solver execution.
+    span STEP remains a meshStep preview. Simulation-bound selections use the separately meshed authoritative Gmsh surface.
   section.viewer-workbench
     .viewer-heading
       div
         p.eyebrow PHASE 1 / ENGINEERING VIEWER
         h2 STEP preview / Gmsh authority
-      button.text-button(type="button" data-testid="viewer-load" @click="loadViewer" :disabled="viewerState === 'loading'") Load locked cube pair
+      .onelab-actions
+        button.text-button(type="button" data-testid="viewer-load" @click="loadViewer" :disabled="viewerState === 'loading'") Load locked cube pair
+        button.text-button(type="button" data-testid="rendering-truth-load" @click="loadRenderingTruth" :disabled="viewerState === 'loading'") Load Gmsh field/displacement truth
     p(data-testid="viewer-state" :data-state="viewerState") Viewer: {{ viewerState }}
     p.inline-error(v-if="viewerError" role="alert") {{ viewerError }}
     template(v-if="scene")
@@ -215,10 +297,15 @@ section.onelab-lab.view
       output.sr-only(data-testid="viewer-preview-summary") {{ preview ? JSON.stringify(summarizeScene(preview)) : '' }}
       output.sr-only(data-testid="viewer-authoritative-summary") {{ authoritative ? JSON.stringify(summarizeScene(authoritative)) : '' }}
       output.sr-only(data-testid="viewer-correspondence") {{ JSON.stringify(matches?.map(match => ({ match, preview: preview?.surfaceSignatures.find(signature => signature.sourceKey === match.previewKey), authoritative: authoritative?.surfaceSignatures.find(signature => signature.sourceKey === match.authoritativeKey) }))) }}
+      output.sr-only(data-testid="viewer-selection-detail") {{ JSON.stringify(lastSelection) }}
       SimulationSceneHost(:scene="scene" @select="selectSurface")
       .viewer-handoff
         button.text-button(type="button" data-testid="viewer-preview" @click="showPreview" :disabled="!preview") Show STEP preview
         button.text-button(type="button" data-testid="viewer-handoff" @click="handoffSelection" :disabled="selectedPreviewKey === undefined || !matches") Use selected Gmsh surface
+  label.onelab-project
+    span Project fixture
+    select(data-testid="onelab-project" :value="selectedProjectId" @change="selectProject" :disabled="state === 'running' || state === 'warming'")
+      option(v-for="project in solverProjects" :key="project.id" :value="project.id") {{ project.title }}
   .onelab-actions
     button(type="button" data-testid="onelab-warm" @click="warm" :disabled="state === 'warming' || state === 'running'") Warm simulation assets
     button(type="button" data-testid="onelab-check" @click="execute('check')" :disabled="state === 'warming' || state === 'running'") Check metadata
@@ -279,22 +366,52 @@ section.onelab-lab.view
         p.eyebrow PHASE 3 / MAPPED RESULTS
         h2 Potential / electric field
       span {{ displayedResult.scene.fields.length }} mapped fields
-    SimulationSceneHost(:scene="displayedResult.scene")
+    SimulationSceneHost(:scene="displayedResult.scene" @select="selectSurface")
+    .physical-group-editor(data-testid="physical-group-editor")
+      output.sr-only(data-testid="physical-group-selection") {{ authoritativeSelection ?? '' }}
+      select(data-testid="physical-group-entity" aria-label="Authoritative entity" @change="selectAuthoritativeEntity")
+        option(value="") Select entity
+        option(v-for="entity in selectableEntities" :key="`${entity.dimension}:${entity.tag}`" :value="`${entity.dimension}:${entity.tag}`") {{ entity.dimension }}D / {{ entity.tag }}
+      input(v-model="groupName" data-testid="physical-group-name" aria-label="Physical group name")
+      select(v-model="selectedGroupId" data-testid="physical-group-select" aria-label="Authored physical group")
+        option(value="") Select group
+        option(v-for="group in authoredGroups" :key="group.id" :value="group.id") {{ group.name }} / {{ group.entityTags.join(',') }}
+      button(type="button" data-testid="physical-group-add" @click="addPhysicalGroup" :disabled="authoritativeSelection === undefined") Add
+      button(type="button" data-testid="physical-group-rename" @click="renamePhysicalGroup" :disabled="!selectedGroupId") Rename
+      button(type="button" data-testid="physical-group-membership" @click="replacePhysicalGroupMembership" :disabled="!selectedGroupId || authoritativeSelection === undefined") Replace membership
+      button(type="button" data-testid="physical-group-delete" @click="deletePhysicalGroup" :disabled="!selectedGroupId") Delete
+      button(type="button" data-testid="physical-group-reset" @click="resetPhysicalGroups") Reset
+      output.sr-only(data-testid="physical-group-sidecar") {{ JSON.stringify(groupEditor.sidecar()) }}
     output.sr-only(data-testid="mapped-field-summary") {{ JSON.stringify(mappedSummary) }}
     output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(displayedResult.scene)) }}
     output.sr-only(data-testid="mapped-spatial-probes") {{ JSON.stringify(spatialProbes) }}
     output.sr-only(data-testid="mapped-export-summary") {{ JSON.stringify(exportSummary) }}
+    output.sr-only(data-testid="mapped-selection-detail") {{ JSON.stringify(lastSelection) }}
   dl.onelab-result(v-if="displayedResult" data-testid="onelab-result")
     dt Runs
     dd(data-testid="onelab-runs") {{ runs }}
     dt Mesh
     dd(data-testid="onelab-mesh") {{ displayedResult?.nodes }} nodes / {{ displayedResult?.elements }} elements / {{ displayedResult?.mshBytes }} bytes / {{ displayedResult?.meshSha256 }}
+    dt MSH physical groups
+    dd(data-testid="onelab-msh-groups") {{ JSON.stringify({ names: displayedResult?.meshPhysicalNames, tags: displayedResult?.meshPhysicalTags }) }}
     dt Degrees of freedom
     dd(data-testid="onelab-dofs") {{ displayedResult?.degreesOfFreedom }}
     dt Final PETSc residual
     dd(data-testid="onelab-residual") {{ displayedResult?.residual }}
     dt Initial PETSc residual
     dd(data-testid="onelab-initial-residual") {{ displayedResult?.initialResidual }}
+    dt Structured convergence
+    dd(data-testid="onelab-convergence") {{ JSON.stringify(displayedResult?.convergence) }}
+    dt Dynamic outputs
+    dd(data-testid="onelab-outputs") {{ JSON.stringify(displayedResult?.outputs) }}
+    dt Resource footprint
+    dd(data-testid="onelab-resources") {{ JSON.stringify({ memoryBytes: displayedResult?.memoryBytes, snapshotBytes: displayedResult?.snapshotBytes, loadedPartitions: displayedResult?.loadedPartitions }) }}
+    dt Native view probes
+    dd(data-testid="onelab-native-probes") {{ JSON.stringify(displayedResult?.nativeProbes) }}
+    dt Complex representation probes
+    dd(data-testid="onelab-complex-probes") {{ JSON.stringify(displayedResult?.complexProbes) }}
+    dt Solver parameters
+    dd(data-testid="onelab-solver-parameters") {{ JSON.stringify(displayedResult?.parameters) }}
     dt Deterministic samples
     dd(data-testid="onelab-samples") {{ JSON.stringify(displayedResult?.samples) }}
     dt Potential

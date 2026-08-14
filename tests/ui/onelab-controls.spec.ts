@@ -15,6 +15,7 @@ vi.mock('../../src/simulation/client', () => ({
   OnelabClient: class {
     warm = vi.fn(async () => ({}))
     openMicrostrip = openMicrostrip
+    openProject = openMicrostrip
     startProject = startProject
     onEnteredNative() { return () => {} }
     dispose() {}

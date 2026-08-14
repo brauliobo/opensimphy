@@ -1,10 +1,18 @@
 import { createHash } from 'node:crypto'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const [leftRoot, rightRoot, reportPath] = process.argv.slice(2)
 if (!reportPath) throw new Error('usage: compare-builds.mjs left-output right-output report.json')
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex')
+const tools = fileURLToPath(new URL('.', import.meta.url))
+const versions = Object.fromEntries((await readFile(join(tools, 'versions.env'), 'utf8')).trim().split('\n').map((line) => line.split('=', 2)))
+const patches = Object.fromEntries(await Promise.all([
+  'gmsh/view-bindings.patch',
+  'gmsh/optional-quad-predicate.patch',
+  'gmsh/persistent-parser-number.patch',
+].map(async (path) => [path, hash(await readFile(join(tools, path)))])))
 
 async function filesUnder(root, directory = root) {
   const files = []
@@ -60,7 +68,25 @@ for (const path of leftFiles) {
     drift.push(mismatch)
   }
 }
-const report = { schema: 1, canonical: { jobs: 4, isolatedCaches: 2 }, byteIdentical: drift.length === 0, outputs, drift }
+const report = {
+  schema: 1,
+  canonical: {
+    jobs: 4,
+    isolatedCaches: 2,
+    gmshProfile: process.env.GMSH_PROFILE ?? 'occ',
+    scalarTypes: ['real-double', 'complex-double'],
+    image: versions.EMSDK_IMAGE,
+    sources: Object.fromEntries(['GMSH_JS', 'GMSH', 'OCCT', 'GETDP', 'PETSC'].map((name) => [name.toLowerCase().replace('_', '-'), {
+      revision: versions[`${name}_REVISION`],
+      tree: versions[`${name}_TREE`],
+    }])),
+    f2cblaslapackSha256: versions.F2CBLASLAPACK_SHA256,
+    patches,
+  },
+  byteIdentical: drift.length === 0,
+  outputs,
+  drift,
+}
 await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`)
 if (drift.length) throw new Error(`canonical build drift in ${drift.map(({ path }) => path).join(', ')}; see ${reportPath}`)
 console.log(`verified ${outputs.length} byte-identical outputs; report: ${reportPath}`)

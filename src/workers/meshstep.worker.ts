@@ -13,9 +13,10 @@ async function sha256(bytes: Uint8Array) {
 async function loadFixture() {
   const root = new URL(`${import.meta.env.BASE_URL}simulation/`, worker.location.origin)
   const manifest = await fetch(new URL('manifest.json', root), { cache: 'no-store' }).then((response) => response.json()) as {
-    files: Array<{ path: string; bytes: number; sha256: string }>
+    schema: 4
+    partitions: { core: { files: Array<{ path: string; bytes: number; sha256: string }> } }
   }
-  const file = manifest.files.find(({ path }) => path.endsWith('/fixtures/cube/cube.step'))
+  const file = manifest.partitions.core.files.find(({ path }) => path.endsWith('/fixtures/cube/cube.step'))
   if (!file) throw new Error('locked STEP cube fixture is absent')
   const bytes = new Uint8Array(await fetch(new URL(file.path, root), { cache: 'no-store' }).then((response) => response.arrayBuffer()))
   if (bytes.byteLength !== file.bytes || await sha256(bytes) !== file.sha256) throw new Error('STEP cube fixture failed lock verification')

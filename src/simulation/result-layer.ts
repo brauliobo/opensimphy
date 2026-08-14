@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { deterministicGlyphIndices, fieldMagnitudes, fieldRange, fieldSampleCount, uniqueTagMap, type FieldRangeMode } from './results'
 import type { DisplayGeometry, ResultField, SimulationScene } from './scene'
+import { surfaceContours, tetraIsosurface, tetraVolumeSections, type ClipPlane } from './derived-geometry'
 
 export function turbo(value: number) {
   const x = Math.min(1, Math.max(0, value))
@@ -17,7 +18,13 @@ export interface ResultLayerState {
   time?: number
   range?: [number, number]
   glyphs: number
-  deformationScale: 0
+  deformationScale: number
+  contours?: number
+  isosurfaceTriangles?: number
+  sectionTriangles?: number
+  sectionSourceElementTags?: string[]
+  sectionSourceEntityTags?: number[]
+  clipPlaneCounts?: { scalar: number; glyphs: number; contours: number; isosurface: number; sections: number[] }
   colorSample?: number[]
   glyphMatrices?: number[][]
   glyphColors?: number[][]
@@ -37,6 +44,10 @@ export class ResultLayer {
   private elementCenters: Map<bigint, THREE.Vector3>
   private elementScales: Map<bigint, number>
   private sceneDiagonal: number
+  private contours?: THREE.LineSegments
+  private isosurface?: THREE.Mesh
+  private sections: THREE.Mesh[] = []
+  private clipPlanes: THREE.Plane[] = []
 
   constructor(
     private world: THREE.Scene,
@@ -80,6 +91,8 @@ export class ResultLayer {
     this.rangeMode = rangeMode
     this.customRange = customRange
     this.removeGlyphs()
+    this.removeContours()
+    this.removeIsosurface()
     this.mesh.geometry.deleteAttribute('color')
     this.mesh.material.vertexColors = false
     this.mesh.material.color.set(this.scene.source === 'gmsh-authoritative' ? 0x63cbd1 : 0xe6b85c)
@@ -90,7 +103,7 @@ export class ResultLayer {
     }
     const range = fieldRange(field, step, rangeMode, customRange)
     this.state = { fieldId: field.id, step: field.steps[step]!, time: field.times[step]!, range, glyphs: 0, deformationScale: 0 }
-    if (field.components === 1) this.applyScalar(field, range)
+    if (field.components === 1) { this.applyScalar(field, range); this.applyContours(field, range); this.applyIsosurface(field, range) }
     if (field.components === 3) this.applyVectors(field, range)
     this.state.glyphs = this.glyphs?.count ?? 0
   }
@@ -132,7 +145,7 @@ export class ResultLayer {
     const geometry = new THREE.ConeGeometry(1, 1, 6)
     geometry.rotateX(Math.PI / 2)
     geometry.translate(0, 0, 0.5)
-    const material = new THREE.MeshBasicMaterial({ vertexColors: false })
+    const material = new THREE.MeshBasicMaterial({ vertexColors: false, clippingPlanes: this.clipPlanes })
     this.glyphs = new THREE.InstancedMesh(geometry, material, selected.length)
     uniqueTagMap(field.tags, `field ${field.id}`)
     const dummy = new THREE.Object3D()
@@ -173,8 +186,54 @@ export class ResultLayer {
 
   getState() { return this.state }
 
+  setDeformationScale(scale: number) { this.state.deformationScale = scale }
+
+  setClipPlanes(planes: THREE.Plane[], definitions: readonly ClipPlane[]) {
+    this.clipPlanes = planes
+    this.mesh.material.clippingPlanes = planes
+    if (this.glyphs) (this.glyphs.material as THREE.Material).clippingPlanes = planes
+    if (this.contours) (this.contours.material as THREE.Material).clippingPlanes = planes
+    if (this.isosurface) (this.isosurface.material as THREE.Material).clippingPlanes = planes
+    this.removeSections()
+    let triangles = 0
+    const sourceElementTags: string[] = [], sourceEntityTags: number[] = []
+    for (const section of tetraVolumeSections(this.scene, definitions)) {
+      if (!section.triangles.length) continue
+      const geometry = new THREE.BufferGeometry()
+        .setAttribute('position', new THREE.BufferAttribute(Float32Array.from(section.positions), 3))
+        .setIndex(new THREE.BufferAttribute(section.triangles, 1))
+      geometry.computeVertexNormals(); geometry.computeBoundsTree()
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0xffb45f, opacity: 0.82, transparent: true, side: THREE.DoubleSide, clippingPlanes: planes }))
+      mesh.userData.derived = { kind: 'section', sourceElementTags: section.sourceElementTags, sourceEntityTags: section.sourceEntityTags }
+      this.sections.push(mesh); this.world.add(mesh); triangles += section.triangles.length / 3
+      sourceElementTags.push(...Array.from(section.sourceElementTags, String))
+      sourceEntityTags.push(...section.sourceEntityTags)
+    }
+    this.state.sectionTriangles = triangles
+    this.state.sectionSourceElementTags = sourceElementTags
+    this.state.sectionSourceEntityTags = sourceEntityTags
+    this.state.clipPlaneCounts = {
+      scalar: this.mesh.material.clippingPlanes.length,
+      glyphs: (this.glyphs?.material as THREE.Material | undefined)?.clippingPlanes?.length ?? 0,
+      contours: (this.contours?.material as THREE.Material | undefined)?.clippingPlanes?.length ?? 0,
+      isosurface: (this.isosurface?.material as THREE.Material | undefined)?.clippingPlanes?.length ?? 0,
+      sections: this.sections.map(({ material }) => (material as THREE.Material).clippingPlanes?.length ?? 0),
+    }
+  }
+
+  pick(raycaster: THREE.Raycaster) {
+    const objects = [...this.sections, ...(this.isosurface ? [this.isosurface] : [])]
+    const hit = raycaster.intersectObjects(objects)[0]
+    if (!hit || hit.faceIndex === undefined) return
+    const derived = hit.object.userData.derived as { kind: 'section' | 'isosurface'; sourceElementTags: BigUint64Array; sourceEntityTags: Uint32Array }
+    return { hit, kind: derived.kind, sourceElementTag: derived.sourceElementTags[hit.faceIndex], sourceEntityTag: derived.sourceEntityTags[hit.faceIndex] }
+  }
+
   dispose() {
     this.removeGlyphs()
+    this.removeContours()
+    this.removeIsosurface()
+    this.removeSections()
     this.mesh.geometry.deleteAttribute('color')
   }
 
@@ -184,5 +243,54 @@ export class ResultLayer {
     this.glyphs.geometry.dispose()
     ;(this.glyphs.material as THREE.Material).dispose()
     this.glyphs = undefined
+  }
+
+  private applyContours(field: ResultField, range: [number, number]) {
+    if (field.association !== 'node' || range[0] === range[1]) return
+    const levels = Array.from({ length: 9 }, (_, index) => range[0] + (index + 1) * (range[1] - range[0]) / 10)
+    const contours = surfaceContours(this.scene, field, this.step, levels)
+    if (!contours.positions.length) return
+    const geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(Float32Array.from(contours.positions), 3))
+    this.contours = new THREE.LineSegments(geometry, new THREE.LineBasicMaterial({ color: 0x101010, clippingPlanes: this.clipPlanes }))
+    this.world.add(this.contours)
+    this.state.contours = contours.positions.length / 6
+  }
+
+  private removeContours() {
+    if (!this.contours) return
+    this.world.remove(this.contours)
+    this.contours.geometry.dispose()
+    ;(this.contours.material as THREE.Material).dispose()
+    this.contours = undefined
+  }
+
+  private applyIsosurface(field: ResultField, range: [number, number]) {
+    if (!['node', 'element-node'].includes(field.association) || range[0] === range[1] || !this.scene.elementBlocks.some(({ dimension }) => dimension === 3)) return
+    const surface = tetraIsosurface(this.scene, field, this.step, (range[0] + range[1]) / 2)
+    if (!surface.triangles.length) return
+    const geometry = new THREE.BufferGeometry()
+      .setAttribute('position', new THREE.BufferAttribute(Float32Array.from(surface.positions), 3))
+      .setIndex(new THREE.BufferAttribute(surface.triangles, 1))
+    geometry.computeVertexNormals()
+    this.isosurface = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0xf7f2df, opacity: 0.72, transparent: true, side: THREE.DoubleSide, clippingPlanes: this.clipPlanes }))
+    this.isosurface.userData.derived = { kind: 'isosurface', sourceElementTags: surface.sourceElementTags, sourceEntityTags: surface.sourceEntityTags }
+    geometry.computeBoundsTree()
+    this.world.add(this.isosurface)
+    this.state.isosurfaceTriangles = surface.triangles.length / 3
+  }
+
+  private removeIsosurface() {
+    if (!this.isosurface) return
+    this.world.remove(this.isosurface)
+    this.isosurface.geometry.dispose()
+    ;(this.isosurface.material as THREE.Material).dispose()
+    this.isosurface = undefined
+  }
+
+  private removeSections() {
+    for (const section of this.sections) {
+      this.world.remove(section); section.geometry.disposeBoundsTree(); section.geometry.dispose(); (section.material as THREE.Material).dispose()
+    }
+    this.sections = []
   }
 }

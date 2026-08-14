@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import reference from '../../tools/wasm/fixtures/microstrip-reference.json' with { type: 'json' }
+import phase4Reference from '../../tools/wasm/fixtures/phase4-reference.json' with { type: 'json' }
 import artifactLock from '../../tools/wasm/artifacts.lock.json' with { type: 'json' }
 
 const defaultReference = reference.runs[0]
@@ -22,6 +23,42 @@ function expectResidualClose(actual: number, expected: number) {
   expect(Math.abs(actual - expected)).toBeLessThanOrEqual(reference.tolerance.residualAbsolute + reference.tolerance.residualRelative * Math.abs(expected))
 }
 
+function expectPhase4ValueClose(actual: number, expected: number, relative = phase4Reference.tolerance.numericRelative) {
+  expect(Math.abs(actual - expected)).toBeLessThanOrEqual(
+    phase4Reference.tolerance.numericAbsolute + relative * Math.abs(expected),
+  )
+}
+
+interface Phase4ConvergenceGroup {
+  system: number
+  systemName: string
+  solve: number
+  kind: 'linear' | 'nonlinear'
+  boundary: 'solve' | 'nonlinear-iteration'
+  timeStep?: number
+  time?: number
+  nonlinearIteration?: number
+  relativeResidual?: number
+  residuals: number[]
+  converged: boolean
+}
+
+function expectPhase4Convergence(actual: Phase4ConvergenceGroup[], expected: Phase4ConvergenceGroup[]) {
+  expect(actual).toHaveLength(expected.length)
+  actual.forEach((group, index) => {
+    const referenceGroup = expected[index]!
+    const { residuals, relativeResidual, ...metadata } = group
+    const { residuals: referenceResiduals, relativeResidual: referenceRelativeResidual, ...referenceMetadata } = referenceGroup
+    expect(metadata).toEqual(referenceMetadata)
+    expect(residuals).toHaveLength(referenceResiduals.length)
+    residuals.forEach((value, residual) => {
+      const absolute = group.kind === 'linear' && residual === residuals.length - 1 ? phase4Reference.tolerance.finalResidualAbsolute : phase4Reference.tolerance.numericAbsolute
+      expect(Math.abs(value - referenceResiduals[residual]!)).toBeLessThanOrEqual(absolute + phase4Reference.tolerance.numericRelative * Math.abs(referenceResiduals[residual]!))
+    })
+    if (referenceRelativeResidual !== undefined) expectPhase4ValueClose(relativeResidual!, referenceRelativeResidual)
+  })
+}
+
 test('warms online then meshes, solves and extracts views fully offline across repeat and recreation', async ({ page, context }) => {
   await page.goto('/labs')
   await expect(page.getByTestId('app-ready')).toBeVisible()
@@ -37,23 +74,27 @@ test('warms online then meshes, solves and extracts views fully offline across r
 
   const cacheState = await page.evaluate(async () => {
     const names = await caches.keys()
-    const current = names.find((name) => name.startsWith('opensimphy-onelab-') && !name.includes('-staging-'))!
-    const cache = await caches.open(current)
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { version: string; files: Array<{ path: string }> }
-    const expected = ['/simulation/manifest.json', `/simulation/${manifest.version}/complete.json`, ...manifest.files.map(({ path }) => `/simulation/${path}`)].sort()
-    return { names, current, expected, assets: (await cache.keys()).map((request) => new URL(request.url).pathname).sort() }
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { version: string; partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ path: string }> }> }
+    const loaded = Object.fromEntries(await Promise.all((['core', 'real'] as const).map(async (name) => {
+      const partition = manifest.partitions[name], cache = await caches.open(partition.cacheName)
+      const expected = ['/simulation/manifest.json', `/simulation/${manifest.version}/${name}.complete.json`, ...partition.files.map(({ path }) => `/simulation/${path}`)].sort()
+      return [name, { cacheName: partition.cacheName, expected, assets: (await cache.keys()).map((request) => new URL(request.url).pathname).sort() }]
+    })))
+    return { names, manifest, loaded }
   })
-  expect(cacheState.current).toBe(`opensimphy-onelab-${artifactLock.contentVersion}`)
-  expect(cacheState.names.filter((name) => name.startsWith('opensimphy-onelab-'))).toEqual([cacheState.current])
-  expect(cacheState.assets).toEqual(cacheState.expected)
-  expect(cacheState.assets.some((path) => path.endsWith('/gmsh/gmsh-core.wasm'))).toBe(true)
-  expect(cacheState.assets.some((path) => path.endsWith('/getdp/getdp.wasm'))).toBe(true)
-  expect(cacheState.assets.some((path) => path.endsWith('/complete.json'))).toBe(true)
+  expect(cacheState.names.filter((name) => name.startsWith('opensimphy-onelab-')).sort()).toEqual([
+    `opensimphy-onelab-${artifactLock.contentVersion}-core`, `opensimphy-onelab-${artifactLock.contentVersion}-real`,
+  ])
+  expect(cacheState.loaded.core.assets).toEqual(cacheState.loaded.core.expected)
+  expect(cacheState.loaded.real.assets).toEqual(cacheState.loaded.real.expected)
+  expect(cacheState.loaded.core.assets.some((path) => path.endsWith('/gmsh/gmsh-core.wasm'))).toBe(true)
+  expect(cacheState.loaded.real.assets.some((path) => path.endsWith('/getdp/getdp.wasm'))).toBe(true)
+  expect(cacheState.names).not.toContain(cacheState.manifest.partitions.complex.cacheName)
 
   const repaired = await page.evaluate(async () => {
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { cacheName: string; files: Array<{ path: string; sha256: string }> }
-    const file = manifest.files.find(({ path }) => path.endsWith('/fixtures/microstrip/microstrip.geo'))!
-    const cache = await caches.open(manifest.cacheName)
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { core: { cacheName: string; files: Array<{ path: string; sha256: string }> } } }
+    const file = manifest.partitions.core.files.find(({ path }) => path.endsWith('/fixtures/microstrip/microstrip.geo'))!
+    const cache = await caches.open(manifest.partitions.core.cacheName)
     await cache.put(`/simulation/${file.path}`, new Response('corrupt'))
     return file
   })
@@ -61,9 +102,12 @@ test('warms online then meshes, solves and extracts views fully offline across r
   await expect(page.getByTestId('app-ready')).toBeVisible()
   await page.getByTestId('onelab-warm').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ bytes: number }> }> }
+  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions.complex.cacheName)
+  expect(await page.evaluate(() => performance.getEntriesByType('resource').some(({ name }) => name.includes('/getdp-complex/')))).toBe(false)
   const repairedHash = await page.evaluate(async ({ path }) => {
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { cacheName: string }
-    const bytes = await (await (await caches.open(manifest.cacheName)).match(`/simulation/${path}`))!.arrayBuffer()
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { core: { cacheName: string } } }
+    const bytes = await (await (await caches.open(manifest.partitions.core.cacheName)).match(`/simulation/${path}`))!.arrayBuffer()
     const hash = await crypto.subtle.digest('SHA-256', bytes)
     return [...new Uint8Array(hash)].map((value) => value.toString(16).padStart(2, '0')).join('')
   }, repaired)
@@ -379,6 +423,301 @@ test('mobile controls remain usable and ten route cycles release all viewer reso
       canvases: 0,
       overlays: 0,
     })
+  }
+})
+
+test('executes every Phase 4 fixture with native convergence, dynamic outputs and complex representations', async ({ page }) => {
+  test.setTimeout(360_000)
+  const complexTransfers: string[] = []
+  page.on('request', (request) => { if (request.url().includes('/getdp-complex/')) complexTransfers.push(request.url()) })
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ bytes: number }> }> }
+  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions.complex.cacheName)
+  expect(complexTransfers).toEqual([])
+  for (const native of phase4Reference.projects) {
+    const id = native.id
+    await page.getByTestId('onelab-project').selectOption(id)
+    await expect.poll(async () => {
+      const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+      if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+      return state
+    }).toBe('ready')
+    await page.getByTestId('onelab-solve').click()
+    await expect.poll(async () => {
+      const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+      if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+      return state
+    }, { timeout: 180_000 }).toBe('complete')
+    const outputs = JSON.parse(await page.getByTestId('onelab-outputs').innerText()) as Array<{ path: string; bytes: number; sha256: string; records: number }>
+    expect(outputs.map(({ path, records }) => ({ path, records }))).toEqual(Object.entries(native.outputs).map(([path, output]) => ({ path, records: output.records })))
+    expect(outputs.every(({ bytes, sha256 }) => bytes > 0 && /^[0-9a-f]{64}$/.test(sha256))).toBe(true)
+    expect(await page.getByTestId('onelab-solver-parameters').innerText()).toBe(JSON.stringify(native.parameters))
+    const [nodes, elements, , meshSha256] = (await page.getByTestId('onelab-mesh').innerText()).split(' / ')
+    expect(Number(nodes!.split(' ')[0])).toBe(native.topology.nodes)
+    expect(Number(elements!.split(' ')[0])).toBe(native.topology.elements)
+    expect(meshSha256).toBe(native.topology.canonicalSha256)
+    expect(Number(await page.getByTestId('onelab-dofs').innerText())).toBe(native.degreesOfFreedom)
+    const convergence = JSON.parse(await page.getByTestId('onelab-convergence').innerText()) as Phase4ConvergenceGroup[]
+    expect(convergence.every(({ residuals, converged }) => residuals.length > 0 && converged)).toBe(true)
+    expectPhase4Convergence(convergence, native.convergence.groups as Phase4ConvergenceGroup[])
+    const probes = JSON.parse(await page.getByTestId('onelab-native-probes').innerText()) as Array<{ file: string; coordinate: number[]; values: number[] }>
+    expect(probes.map(({ file, coordinate }) => ({ file, coordinate }))).toEqual(native.probes.map(({ file, coordinate }) => ({ file, coordinate })))
+    probes.forEach((probe, probeIndex) => {
+      expect(probe.values).toHaveLength(native.probes[probeIndex]!.values.length)
+      probe.values.forEach((value, valueIndex) => expectPhase4ValueClose(value, native.probes[probeIndex]!.values[valueIndex]!, native.referenceRelative))
+    })
+    const fields = JSON.parse(await page.getByTestId('mapped-field-summary').innerText()) as Array<{ complexPart?: string; steps: number[]; provenance: { sourceFile: string; complexSourceSteps?: number[][]; complexSourceTimes?: number[][] } }>
+    const resources = JSON.parse(await page.getByTestId('onelab-resources').innerText()) as { memoryBytes: number; snapshotBytes: number; loadedPartitions: string[] }
+    const loaded = id === 'full-wave-2d-edge-complex' ? ['complex', 'core', 'real'] : ['core', 'real']
+    expect(resources.loadedPartitions).toEqual(loaded)
+    expect(resources.snapshotBytes).toBe(loaded.reduce((sum, name) => sum + manifest.partitions[name as keyof typeof manifest.partitions].files.reduce((total, file) => total + file.bytes, 0), 0))
+    if (id === 'radiator-3d-transient') {
+      await page.getByTestId('result-viewer').getByTestId('result-step').selectOption('2')
+      await expect.poll(async () => JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText()).result.isosurfaceTriangles).toBeGreaterThan(0)
+      await page.getByTestId('result-viewer').getByTestId('scene-clip').click()
+      await page.getByTestId('result-viewer').getByTestId('scene-clip').click()
+      await expect.poll(async () => JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText()).result.sectionTriangles).toBeGreaterThan(0)
+      const clipped = JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText())
+      expect(clipped.clippingPlanes).toBe(2)
+      expect(clipped.edgeClippingPlanes).toBe(2)
+      expect(clipped.result.clipPlaneCounts).toMatchObject({ scalar: 2, contours: 2, isosurface: 2 })
+      expect(clipped.result.clipPlaneCounts.sections.every((count: number) => count === 2)).toBe(true)
+      expect(clipped.result.sectionSourceElementTags).toHaveLength(clipped.result.sectionTriangles)
+      expect(clipped.result.sectionSourceEntityTags.every((tag: number) => tag > 0)).toBe(true)
+    }
+    if (id === 'full-wave-2d-edge-complex') {
+      expect(await page.evaluate(() => caches.keys())).toContain(manifest.partitions.complex.cacheName)
+      expect(complexTransfers.length).toBeGreaterThan(0)
+      expect(new Set(fields.map(({ complexPart }) => complexPart))).toEqual(new Set(['real', 'imaginary', 'magnitude', 'phase']))
+      expect(fields.every(({ steps }) => steps.length === 1)).toBe(true)
+      for (const field of fields) {
+        const times = native.outputs[field.provenance.sourceFile as keyof typeof native.outputs].times
+        expect(field.provenance.complexSourceSteps).toEqual([[0, 1]])
+        expect(field.provenance.complexSourceTimes).toEqual([times])
+      }
+      const complex = JSON.parse(await page.getByTestId('onelab-complex-probes').innerText()) as typeof native.complexProbes
+      expect(complex.map(({ file, coordinate, representation, time, sourceTimes }) => ({ file, coordinate, representation, time, sourceTimes }))).toEqual(
+        native.complexProbes.map(({ file, coordinate, representation, time, sourceTimes }) => ({ file, coordinate, representation, time, sourceTimes })),
+      )
+      complex.forEach((probe, probeIndex) => {
+        expect(probe.values).toHaveLength(native.complexProbes[probeIndex]!.values.length)
+        probe.values.forEach((value, valueIndex) => expectPhase4ValueClose(value, native.complexProbes[probeIndex]!.values[valueIndex]!, native.referenceRelative))
+      })
+    }
+  }
+})
+
+test('uses descriptor numbers only as defaults and solves edited native values', async ({ page }) => {
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  const solve = async () => {
+    await page.getByTestId('onelab-solve').click()
+    await expect.poll(async () => {
+      const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+      if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+      return state
+    }, { timeout: 180_000 }).toBe('complete')
+    return {
+      parameters: JSON.parse(await page.getByTestId('onelab-solver-parameters').innerText()) as Record<string, number>,
+      outputs: JSON.parse(await page.getByTestId('onelab-outputs').innerText()) as Array<{ path: string; sha256: string }>,
+      fields: JSON.parse(await page.getByTestId('mapped-field-summary').innerText()) as Array<{ name: string; times: number[] }>,
+      mesh: await page.getByTestId('onelab-mesh').innerText(),
+      probes: await page.getByTestId('onelab-native-probes').innerText(),
+    }
+  }
+  const edit = async (testId: string, value: string) => {
+    const input = page.getByTestId(testId).locator('input')
+    await input.fill(value)
+    await input.press('Tab')
+  }
+
+  await page.getByTestId('onelab-project').selectOption('radiator-3d-transient')
+  const radiatorDefault = await solve()
+  await edit('parameter-simulation-time-[s]', '6')
+  await edit('parameter-time-step-[s]', '2')
+  const radiatorEdited = await solve()
+  expect(radiatorEdited.parameters).toMatchObject({ tmax: 6, dt: 2 })
+  expect(radiatorEdited.fields.find(({ name }) => name === 'T')?.times).toEqual([0, 2, 4, 6])
+  expect(radiatorEdited.outputs).not.toEqual(radiatorDefault.outputs)
+
+  await page.getByTestId('onelab-project').selectOption('electromagnet-2d-nonlinear')
+  const electromagnetDefault = await solve()
+  await edit('parameter-current-[a]', '50')
+  const electromagnetEdited = await solve()
+  expect(electromagnetEdited.parameters.Current).toBe(50)
+  expect(electromagnetEdited.outputs).not.toEqual(electromagnetDefault.outputs)
+  expect(electromagnetEdited.probes).not.toBe(electromagnetDefault.probes)
+
+  await page.getByTestId('onelab-project').selectOption('full-wave-2d-edge-complex')
+  const waveDefault = await solve()
+  await edit('parameter-mesh-size-[cm]', '2')
+  const waveEdited = await solve()
+  expect(waveEdited.parameters.res).toBe(2)
+  expect(waveEdited.mesh).not.toBe(waveDefault.mesh)
+  expect(waveEdited.outputs).not.toEqual(waveDefault.outputs)
+})
+
+test('renders pinned Gmsh field and true-displacement truth with deformed picking and contours', async ({ page }) => {
+  await page.goto('/labs/onelab')
+  await page.getByTestId('rendering-truth-load').click()
+  await expect.poll(async () => {
+    const state = await page.getByTestId('viewer-state').getAttribute('data-state')
+    if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+    return state
+  }).toBe('ready')
+  await expect(page.getByTestId('result-field').locator('option')).toContainText(['test field / node', 'true displacement / node'])
+  const scalar = JSON.parse(await page.getByTestId('viewer-render-summary').innerText())
+  expect(scalar.result.contours).toBeGreaterThan(0)
+  await page.getByTestId('scene-clip').click()
+  await page.getByTestId('scene-clip').click()
+    const clippedScalar = JSON.parse(await page.getByTestId('viewer-render-summary').innerText())
+    expect(clippedScalar.result.clipPlaneCounts).toMatchObject({ scalar: 2, contours: 2 })
+  await page.getByTestId('scene-clip').click()
+  await page.getByTestId('scene-clip').click()
+  await page.getByTestId('result-field').selectOption({ label: 'true displacement / node' })
+  await page.getByTestId('result-deformation').fill('1')
+  const deformed = JSON.parse(await page.getByTestId('viewer-render-summary').innerText())
+  expect(deformed.result.deformationScale).toBe(1)
+  expect(deformed.positionSample).not.toEqual(deformed.sourceSample)
+  const canvas = page.getByTestId('scene-canvas')
+  const box = await canvas.boundingBox()
+  await canvas.click({ position: { x: box!.width / 2, y: box!.height / 2 } })
+  await expect(page.getByTestId('result-probe')).toBeVisible()
+  const selection = JSON.parse(await page.getByTestId('viewer-selection-detail').innerText())
+  expect(selection.barycentric).toHaveLength(3)
+  expect(selection.barycentric.every((value: number) => value >= -1e-12 && value <= 1 + 1e-12)).toBe(true)
+  expect(selection.barycentric.reduce((sum: number, value: number) => sum + value, 0)).toBeCloseTo(1, 12)
+  expect(selection.referencePoint).not.toEqual(selection.point)
+  await page.getByTestId('scene-clip').click()
+  await page.getByTestId('scene-clip').click()
+    const clipped = JSON.parse(await page.getByTestId('viewer-render-summary').innerText())
+  expect(clipped.clippingPlanes).toBe(2)
+  expect(clipped.edgeClippingPlanes).toBe(2)
+    expect(clipped.result.clipPlaneCounts).toMatchObject({ scalar: 2, contours: 0 })
+})
+
+test('persists authored physical groups and reapplies stable membership after remesh', async ({ page }) => {
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+
+  const canvas = page.getByTestId('result-viewer').getByTestId('scene-canvas')
+  const box = await canvas.boundingBox()
+  expect(box).toBeTruthy()
+  await canvas.click({ position: { x: box!.width / 2, y: box!.height / 2 } })
+  await expect(page.getByTestId('physical-group-add')).toBeEnabled()
+  await page.getByTestId('physical-group-name').fill('authored boundary')
+  await page.getByTestId('physical-group-add').click()
+  const created = JSON.parse(await page.getByTestId('physical-group-sidecar').innerText())
+  expect(created.groups).toHaveLength(1)
+  expect(created.groups[0]).toMatchObject({ dimension: 2, name: 'authored boundary' })
+
+  await page.getByTestId('parameter-global-mesh-size-factor').locator('input').fill('2')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-runs')).toHaveText('2')
+  await expect.poll(async () => JSON.parse(await page.getByTestId('mapped-scene-summary').innerText()).physicalGroups).toEqual(
+    expect.arrayContaining([expect.objectContaining({ name: 'authored boundary', entityTags: created.groups[0].entityTags })]),
+  )
+  let mshGroups = JSON.parse(await page.getByTestId('onelab-msh-groups').innerText())
+  expect(mshGroups.names).toContainEqual({ dimension: 2, tag: created.groups[0].tag, name: 'authored boundary' })
+  expect(mshGroups.tags).toContain(created.groups[0].tag)
+  expect(Number(await page.getByTestId('onelab-dofs').innerText())).toBeGreaterThan(0)
+  expect(JSON.parse(await page.getByTestId('onelab-outputs').innerText())).not.toHaveLength(0)
+  expect(JSON.parse(await page.getByTestId('physical-group-sidecar').innerText()).groups[0].id).toBe(created.groups[0].id)
+
+  await page.getByTestId('physical-group-name').fill('renamed boundary')
+  await page.getByTestId('physical-group-rename').click()
+  await page.reload()
+  await page.getByTestId('onelab-warm').click()
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  await expect(page.getByTestId('physical-group-select').locator('option', { hasText: 'renamed boundary' })).toHaveCount(1)
+  await expect.poll(async () => JSON.parse(await page.getByTestId('mapped-scene-summary').innerText()).physicalGroups).toEqual(
+    expect.arrayContaining([expect.objectContaining({ name: 'renamed boundary', entityTags: created.groups[0].entityTags })]),
+  )
+  mshGroups = JSON.parse(await page.getByTestId('onelab-msh-groups').innerText())
+  expect(mshGroups.names).toContainEqual({ dimension: 2, tag: created.groups[0].tag, name: 'renamed boundary' })
+
+  const firstEntity = created.groups[0].entityTags[0]
+  const replacement = firstEntity === 13 ? 15 : 13
+  await page.getByTestId('physical-group-entity').selectOption(`2:${replacement}`)
+  await page.getByTestId('physical-group-membership').click()
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  await expect.poll(async () => JSON.parse(await page.getByTestId('mapped-scene-summary').innerText()).physicalGroups).toEqual(
+    expect.arrayContaining([expect.objectContaining({ name: 'renamed boundary', entityTags: [replacement] })]),
+  )
+  mshGroups = JSON.parse(await page.getByTestId('onelab-msh-groups').innerText())
+  expect(mshGroups.tags).toContain(created.groups[0].tag)
+
+  await page.getByTestId('physical-group-delete').click()
+  expect(JSON.parse(await page.getByTestId('physical-group-sidecar').innerText()).groups).toEqual([])
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  mshGroups = JSON.parse(await page.getByTestId('onelab-msh-groups').innerText())
+  expect(mshGroups.tags).not.toContain(created.groups[0].tag)
+  await canvas.click({ position: { x: box!.width / 2, y: box!.height / 2 } })
+  await page.getByTestId('physical-group-add').click()
+  await page.getByTestId('physical-group-reset').click()
+  expect(JSON.parse(await page.getByTestId('physical-group-sidecar').innerText()).groups).toEqual([])
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
+  expect(JSON.parse(await page.getByTestId('onelab-msh-groups').innerText()).tags).not.toContain(created.groups[0].tag)
+})
+
+test('bounds retained WASM, snapshot, cache and JS growth across real, complex and cancellation cycles', async ({ page, context }) => {
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  const solve = async (project: string) => {
+    await page.getByTestId('onelab-project').selectOption(project)
+    await page.getByTestId('onelab-solve').click()
+    await expect.poll(async () => {
+      const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+      if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+      return state
+    }).toBe('complete')
+    return JSON.parse(await page.getByTestId('onelab-resources').innerText()) as { memoryBytes: number; snapshotBytes: number; loadedPartitions: string[] }
+  }
+  await solve('microstrip')
+  const baseline = await solve('full-wave-2d-edge-complex')
+  const cacheBytes = () => page.evaluate(async () => {
+    let bytes = 0
+    for (const name of await caches.keys()) for (const request of await (await caches.open(name)).keys()) bytes += (await (await caches.open(name)).match(request))?.clone().arrayBuffer().then((value) => value.byteLength) ?? 0
+    return bytes
+  })
+  const baselineCache = await cacheBytes()
+  const cdp = await context.newCDPSession(page).catch(() => undefined)
+  if (cdp) { await cdp.send('Performance.enable'); await cdp.send('HeapProfiler.collectGarbage') }
+  const baselineHeap = cdp ? (await cdp.send('Performance.getMetrics')).metrics.find(({ name }) => name === 'JSHeapUsedSize')?.value : undefined
+  for (let cycle = 0; cycle < 5; cycle++) {
+    const real = await solve('microstrip'), complex = await solve('full-wave-2d-edge-complex')
+    expect(real).toEqual(baseline)
+    expect(complex).toEqual(baseline)
+    expect(await cacheBytes()).toBe(baselineCache)
+  }
+  await page.getByTestId('onelab-project').selectOption('microstrip')
+  await page.getByTestId('parameter-global-mesh-size-factor').locator('input').fill('0.5')
+  const previousRequest = await page.getByTestId('onelab-worker').getAttribute('data-request-id')
+  await page.getByTestId('onelab-solve').click()
+  await expect(page.getByTestId('onelab-worker')).not.toHaveAttribute('data-request-id', previousRequest!)
+  await expect(page.getByTestId('onelab-worker')).toHaveAttribute('data-native-operation', 'getdp-solve')
+  await expect(page.getByTestId('onelab-cancel')).toBeEnabled()
+  await page.getByTestId('onelab-cancel').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'cancelled')
+  expect(await solve('full-wave-2d-edge-complex')).toEqual(baseline)
+  expect(await cacheBytes()).toBe(baselineCache)
+  if (cdp && baselineHeap !== undefined) {
+    await cdp.send('HeapProfiler.collectGarbage')
+    const finalHeap = (await cdp.send('Performance.getMetrics')).metrics.find(({ name }) => name === 'JSHeapUsedSize')!.value
+    expect(finalHeap - baselineHeap).toBeLessThanOrEqual(16 * 1024 * 1024)
   }
 })
 

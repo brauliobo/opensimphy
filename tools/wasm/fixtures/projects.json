@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "revisions": {
+    "getdp": "8850e98c4aa6d96468c76ba5ee0feb881953f853",
+    "gmsh": "29726e7237db13ff77ef3f2db2d7fb9499c4e65c"
+  },
+  "projects": [
+    {
+      "id": "microstrip",
+      "title": "Electrostatic microstrip",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/01-Electrostatics",
+      "directory": "microstrip",
+      "files": ["microstrip.geo", "microstrip.pro", "microstrip.json"],
+      "geometry": "microstrip.geo",
+      "problem": "microstrip.pro",
+      "dimension": 2,
+      "scalarType": "real-double",
+      "resolution": "Ele",
+      "postOperations": ["Map"],
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-20, "relativeTolerance": 1e-12, "residualCount": 2},
+        "structure": {"kind": "fixed", "groups": [{"kind": "linear", "systemName": "Sys_Ele"}]}
+      },
+      "setNumbers": {},
+      "parameterNames": {},
+      "probes": [[0.0004, 0.0002, 0], [0.0013, 0.0007, 0], [0.0032, 0.00055, 0]]
+    },
+    {
+      "id": "radiator-3d-transient",
+      "title": "Radiator 3D transient",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/02-Thermal",
+      "directory": "radiator",
+      "files": ["radiator.geo", "radiator.pro", "radiator_common.pro", "README.md", "reference.msh"],
+      "geometry": "radiator.geo",
+      "referenceMesh": "reference.msh",
+      "problem": "radiator.pro",
+      "dimension": 3,
+      "scalarType": "real-double",
+      "resolution": "The",
+      "postOperations": ["Map"],
+      "referenceField": "T.pos",
+      "referenceRelative": 0.005,
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-10, "relativeTolerance": 1e-10, "residualCount": 2},
+        "structure": {"kind": "transient", "systemName": "Sys_The", "endParameter": "tmax", "stepParameter": "dt", "activation": {"parameter": "AnalysisType", "value": 1}}
+      },
+      "setNumbers": {"dim": 3, "s": 4, "zh": 0.01, "AnalysisType": 1, "tmax": 10, "dt": 5},
+      "parameterNames": {"dim": "Parameters/0Model dimension", "s": "Parameters/Global mesh size factor", "zh": "Parameters/Fin thickness [m]", "AnalysisType": "Parameters/Analysis", "tmax": "Parameters/Simulation time [s]", "dt": "Parameters/Time step [s]"},
+      "probes": [[0.004, 0.005, 0.005], [0.004, 0.03, 0.005]]
+    },
+    {
+      "id": "electromagnet-2d-nonlinear",
+      "title": "Electromagnet 2D nonlinear",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/03-Magnetostatics",
+      "directory": "electromagnet",
+      "files": ["electromagnet.geo", "electromagnet.pro", "electromagnet_common.pro", "README.md", "reference.msh"],
+      "geometry": "electromagnet.geo",
+      "referenceMesh": "reference.msh",
+      "problem": "electromagnet.pro",
+      "dimension": 2,
+      "scalarType": "real-double",
+      "resolution": "Mag",
+      "postOperations": ["Map"],
+      "referenceField": "az.pos",
+      "referenceRelative": 0.005,
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-8, "relativeTolerance": 1e-12, "residualCount": 2},
+        "nonlinear": {"absoluteTolerance": 1e-6, "relativeTolerance": 1e-6, "minIterations": 2, "maxIterations": 20},
+        "structure": {"kind": "nonlinear", "systemName": "Sys_Mag", "activation": {"parameter": "NonlinearCore", "value": 1}}
+      },
+      "setNumbers": {"SymmetryType": 3, "s": 4, "NonlinearCore": 1, "NewtonRaphson": 1, "Current": 100},
+      "parameterNames": {"SymmetryType": "Parameters/0Symmetry", "s": "Parameters/}Global mesh size factor", "NonlinearCore": "Parameters/Nonlinear core", "NewtonRaphson": "Parameters/Linearization method", "Current": "Parameters/Current [A]"},
+      "probes": [[0.025, 0.05, 0], [0.125, 0.05, 0]]
+    },
+    {
+      "id": "full-wave-2d-edge-complex",
+      "title": "Full wave 2D edge complex",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/05-Full_wave",
+      "directory": "full-wave",
+      "files": ["full_wave.geo", "full_wave.pro", "full_wave_common.pro", "README.md", "reference.msh"],
+      "geometry": "full_wave.geo",
+      "referenceMesh": "reference.msh",
+      "problem": "full_wave.pro",
+      "dimension": 2,
+      "scalarType": "complex-double",
+      "resolution": "Wav",
+      "postOperations": ["Map"],
+      "referenceField": "eNorm.pos",
+      "referenceRelative": 0.12,
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-6, "relativeTolerance": 1.2e-14, "residualCount": 2},
+        "structure": {"kind": "fixed", "groups": [{"kind": "linear", "systemName": "Sys_Proj"}, {"kind": "linear", "systemName": "Sys_Wav"}]}
+      },
+      "setNumbers": {"dim": 2, "L": 4, "airRadius": 5, "res": 1.5},
+      "parameterNames": {"dim": "Parameters/0Model dimension", "L": "Parameters/Waveguide length [cm]", "airRadius": "Parameters/Air radius [cm]", "res": "Parameters/Mesh size [cm]"},
+      "probes": [[0, -0.02, 0], [0.03, 0.01, 0]]
+    },
+    {
+      "id": "gmsh-field-displacement",
+      "title": "Gmsh field and true displacement",
+      "kind": "render",
+      "source": "https://gitlab.onelab.info/gmsh/gmsh/-/tree/29726e7237db13ff77ef3f2db2d7fb9499c4e65c/benchmarks/misc",
+      "directory": "gmsh-rendering",
+      "files": ["test_field.pos", "test_displ.pos", "test_displ.geo"],
+      "geometry": "test_displ.geo",
+      "dimension": 3,
+      "scalarType": "real-double",
+      "setNumbers": {},
+      "parameterNames": {},
+      "fieldView": "test_field.pos",
+      "displacementView": "test_displ.pos"
+    }
+  ]
+}

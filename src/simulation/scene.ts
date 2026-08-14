@@ -27,6 +27,8 @@ export interface FieldProvenance {
   dataTypes: string[]
   originalRecords: number
   modelName?: string
+  complexSourceSteps?: Array<[number, number]>
+  complexSourceTimes?: Array<[number, number]>
 }
 
 export interface ResultField {
@@ -49,6 +51,7 @@ export interface ResultField {
   provenance: FieldProvenance
   units?: string
   complexPart?: 'real' | 'imaginary' | 'magnitude' | 'phase'
+  role?: 'field' | 'displacement'
 }
 
 export interface SurfaceSignature {

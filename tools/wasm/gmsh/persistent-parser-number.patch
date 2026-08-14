@@ -1,0 +1,27 @@
+diff --git a/src/common/gmsh.cpp b/src/common/gmsh.cpp
+--- a/src/common/gmsh.cpp
++++ b/src/common/gmsh.cpp
+@@ -8970,6 +8970,7 @@ GMSH_API void gmsh::parser::setNumber(const std::string &name,
+   gmsh_yysymbol &s(gmsh_yysymbols[name]);
+   s.list = (value.size() != 1);
+   s.value = value;
++  Msg::GetCommandLineNumbers()[name] = value;
+ #else
+   Msg::Error("Parser not available");
+ #endif
+@@ -9016,12 +9017,15 @@ GMSH_API void gmsh::parser::clear(const std::string &name)
+ #if defined(HAVE_PARSER)
+   if(name.empty()) {
+     gmsh_yysymbols.clear();
+     gmsh_yystringsymbols.clear();
++    Msg::GetCommandLineNumbers().clear();
+   }
+   else {
+     {
+       auto it = gmsh_yysymbols.find(name);
+       if(it != gmsh_yysymbols.end()) gmsh_yysymbols.erase(it);
++      auto commandLine = Msg::GetCommandLineNumbers().find(name);
++      if(commandLine != Msg::GetCommandLineNumbers().end()) Msg::GetCommandLineNumbers().erase(commandLine);
+     }
+     {
+       auto it = gmsh_yystringsymbols.find(name);

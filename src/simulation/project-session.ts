@@ -1,5 +1,6 @@
 import { canonicalizeOnelab, restoreReadOnlyValues, setParameterValue } from './onelab-db'
-import type { MicrostripResult, ProjectEnvelope, ProjectFile, ProjectResponse } from './types'
+import type { MicrostripResult, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse } from './types'
+import type { PhysicalGroupSidecar } from './physical-groups'
 
 export class ProjectSession {
   readonly projectId: string
@@ -8,6 +9,7 @@ export class ProjectSession {
   private _database = ''
   private _revision = 0
   private _lastResult?: MicrostripResult
+  private _descriptor?: ProjectDescriptor
 
   constructor(projectId = crypto.randomUUID()) { this.projectId = projectId }
 
@@ -18,12 +20,13 @@ export class ProjectSession {
   get lastResult() { return this._lastResult }
   get ready() { return Boolean(this._database) }
 
-  open(files: ProjectFile[], defaults: string) {
+  open(files: ProjectFile[], defaults: string, descriptor?: ProjectDescriptor) {
     this._files = files.map(({ path, bytes }) => ({ path, bytes: bytes.slice() }))
     this._defaults = canonicalizeOnelab(defaults)
     this._database = this._defaults
     this._revision = 0
     this._lastResult = undefined
+    this._descriptor = descriptor
   }
 
   edit(name: string, value: number | string) {
@@ -31,16 +34,22 @@ export class ProjectSession {
     this._revision++
   }
 
-  envelope(action: ProjectEnvelope['action']): ProjectEnvelope {
+  envelope(action: ProjectEnvelope['action'], sidecar?: PhysicalGroupSidecar): ProjectEnvelope {
     if (!this.ready) throw new Error('project session is not open')
     return {
-      schema: 1,
+      schema: 3,
       action,
       projectId: this.projectId,
       revision: this._revision,
       files: this.files,
       database: action === 'reset' ? '' : restoreReadOnlyValues(this._database, this._defaults),
       defaults: this._defaults,
+      descriptor: this._descriptor ?? {
+        id: 'microstrip', title: 'Electrostatic microstrip', kind: 'solve', source: '', directory: 'microstrip',
+        files: ['microstrip.geo', 'microstrip.pro'], geometry: 'microstrip.geo', problem: 'microstrip.pro', dimension: 2,
+        scalarType: 'real-double', resolution: 'Ele', postOperations: ['Map'], setNumbers: {}, parameterNames: {},
+      },
+      sidecar: sidecar ?? { schema: 1, projectId: this._descriptor?.id ?? 'microstrip', groups: [] },
     }
   }
 

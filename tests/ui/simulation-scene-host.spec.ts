@@ -5,7 +5,9 @@ import type { SimulationScene } from '../../src/simulation/scene'
 const dispose = vi.fn()
 const setScene = vi.fn()
 const setClipping = vi.fn()
+const setClipPlanes = vi.fn()
 const setExplosion = vi.fn()
+const setDeformation = vi.fn()
 const fit = vi.fn()
 const clearMeasurement = vi.fn()
 const setResult = vi.fn()
@@ -18,7 +20,9 @@ vi.mock('../../src/simulation/scene-host', () => ({
     dispose = dispose
     setScene = setScene
     setClipping = setClipping
+    setClipPlanes = setClipPlanes
     setExplosion = setExplosion
+    setDeformation = setDeformation
     fit = fit
     clearMeasurement = clearMeasurement
     setResult = setResult
@@ -50,7 +54,7 @@ describe('SimulationSceneHost', () => {
     await wrapper.get('[data-testid="scene-clip"]').trigger('click')
     await wrapper.get('[data-testid="scene-explode"]').setValue('3')
     expect(fit).toHaveBeenCalled()
-    expect(setClipping).toHaveBeenCalledWith(true)
+    expect(setClipPlanes).toHaveBeenCalledWith([{ normal: [1, 0, 0], constant: 0 }])
     expect(setExplosion).toHaveBeenCalledWith(3)
     await wrapper.setProps({ scene: { ...scene, source: 'gmsh-authoritative' } })
     expect(setClipping).toHaveBeenLastCalledWith(false)

@@ -96,7 +96,7 @@ const reference = {
       getdp: { url: versions.GETDP_URL, commit: versions.GETDP_REVISION, tree: versions.GETDP_TREE },
       petsc: { url: versions.PETSC_URL, commit: versions.PETSC_REVISION, tree: versions.PETSC_TREE },
     },
-    patches: lock.patches,
+    inputs: lock.inputs,
     fixtures: lock.fixtures,
     outputs: Object.fromEntries(runs.map((run) => [String(run.meshSizeFactor), run.outputSha256])),
   },

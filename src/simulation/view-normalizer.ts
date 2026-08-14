@@ -174,14 +174,15 @@ export function normalizeListView(mesh: AuthoritativeMesh, view: ListViewData): 
       continue
     }
     const byNode = new Map<number, number[][]>()
+    let nodalConsistent = true
     for (let record = 0; record < records; record++) for (let node = 0; node < nodes; node++) {
       const index = nodeIndices[record]![node]!
       const candidate = Array.from({ length: stepCount }, (_, step) => recordValues[record]![step]!.slice(node * components, (node + 1) * components))
       const existing = byNode.get(index)
-      if (existing && existing.some((values, step) => values.some((value, component) => value !== candidate[step]![component]))) throw new Error(`view ${view.name} has inconsistent duplicate values for node ${mesh.nodeTags[index]}`)
+      if (existing && existing.some((values, step) => values.some((value, component) => value !== candidate[step]![component]))) nodalConsistent = false
       byNode.set(index, candidate)
     }
-    if (byNode.size === mesh.nodeTags.length) {
+    if (nodalConsistent && byNode.size === mesh.nodeTags.length) {
       const values = new Float64Array(stepCount * mesh.nodeTags.length * components)
       for (let step = 0; step < stepCount; step++) for (let node = 0; node < mesh.nodeTags.length; node++) values.set(byNode.get(node)![step]!, (step * mesh.nodeTags.length + node) * components)
       fields.push(finish({ id: `${view.name}-${blockIndex}`, name: view.name, association: 'node', components, values, tags: mesh.nodeTags.slice(), provenance }, Array.from({ length: stepCount }, (_, step) => step), times))
@@ -278,4 +279,35 @@ export function parsePosTimes(source: string) {
   const times = matches[0]![1]!.split(',').map((value) => Number(value.trim()))
   if (!times.length || times.some((value) => !Number.isFinite(value))) throw new Error('POS view has invalid TIME values')
   return times
+}
+
+/** GetDP stores complex harmonics as adjacent real/imaginary slots in POS. */
+export function complexFieldRepresentations(field: ResultField): ResultField[] {
+  if (field.steps.length < 2 || field.steps.length % 2) throw new Error(`complex field ${field.name} does not contain real/imaginary harmonic pairs`)
+  const sourceSamples = field.values.length / field.steps.length / field.components
+  if (!Number.isInteger(sourceSamples)) throw new Error(`complex field ${field.name} has an invalid layout`)
+  const pairCount = field.steps.length / 2
+  const sourcePairs = Array.from({ length: pairCount }, (_, pair) => ({
+    steps: [field.steps[pair * 2]!, field.steps[pair * 2 + 1]!] as [number, number],
+    times: [field.times[pair * 2]!, field.times[pair * 2 + 1]!] as [number, number],
+  }))
+  const harmonicTimes = sourcePairs.map(({ times }, pair) => times[0] === times[1] ? times[0] : pair)
+  const representations = ['real', 'imaginary', 'magnitude', 'phase'] as const
+  return representations.map((complexPart) => {
+    const values = new Float64Array(pairCount * sourceSamples * field.components)
+    for (let pair = 0; pair < pairCount; pair++) for (let sample = 0; sample < sourceSamples; sample++) for (let component = 0; component < field.components; component++) {
+      const real = field.values[((pair * 2) * sourceSamples + sample) * field.components + component]!
+      const imaginary = field.values[((pair * 2 + 1) * sourceSamples + sample) * field.components + component]!
+      const target = (pair * sourceSamples + sample) * field.components + component
+      values[target] = complexPart === 'real' ? real : complexPart === 'imaginary' ? imaginary : complexPart === 'magnitude' ? Math.hypot(real, imaginary) : Math.atan2(imaginary, real)
+    }
+    return finish({
+      ...field,
+      id: `${field.id}-${complexPart}`,
+      name: `${field.name} (${complexPart})`,
+      values,
+      complexPart,
+      provenance: { ...field.provenance, complexSourceSteps: sourcePairs.map(({ steps }) => steps), complexSourceTimes: sourcePairs.map(({ times }) => times) },
+    }, Array.from({ length: pairCount }, (_, pair) => pair), harmonicTimes)
+  })
 }

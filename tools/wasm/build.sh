@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 source "$ROOT/tools/wasm/versions.env"
 
-PROFILE=${GMSH_PROFILE:-baseline}
+PROFILE=${GMSH_PROFILE:-occ}
 TARGET=${1:-all}
 JOBS=${JOBS:-4}
 CACHE=${WASM_CACHE:-"$ROOT/tools/wasm/.cache"}
@@ -28,7 +28,8 @@ docker run --rm \
   -e HOME=/tmp/home \
   -e JOBS="$JOBS" \
   -e GMSH_PROFILE="$PROFILE" \
-  -e PETSC_ARCH="$PETSC_ARCH" \
+  -e PETSC_ARCH_REAL="$PETSC_ARCH_REAL" \
+  -e PETSC_ARCH_COMPLEX="$PETSC_ARCH_COMPLEX" \
   -e SOURCE_DATE_EPOCH=1784116593 \
   -v "$CACHE:/workspace/cache" \
   -v "$OUT:/workspace/out" \

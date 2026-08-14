@@ -154,7 +154,7 @@ test('shows source caveat and PWA manifest/service-worker evidence', async ({ pa
 
   const manifestLink = await page.locator('link[rel="manifest"]').getAttribute('href')
   expect(manifestLink).toBeTruthy()
-  const manifest = await request.get(new URL(manifestLink!, 'http://127.0.0.1:5173').href)
+  const manifest = await request.get(new URL(manifestLink!, page.url()).href)
   expect(manifest.ok()).toBe(true)
   const registration = await page.evaluate(async () => {
     await navigator.serviceWorker?.ready

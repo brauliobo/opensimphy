@@ -1,0 +1,1316 @@
+{
+  "schema": 1,
+  "tolerance": {
+    "numericAbsolute": 1e-8,
+    "numericRelative": 0.005,
+    "finalResidualAbsolute": 0.000001
+  },
+  "provenance": {
+    "command": "JOBS=4 UPDATE_REFERENCE=1 nice npm run wasm:reference",
+    "compiler": {
+      "compiler": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+      "compiler_sha256": "fb60c5945ce785d0cb2ef0303dac5249f25bd0d0324317a0734aae6aa24f609b",
+      "gmsh_sha256": "b85082145892a8e29fb9fb56c7e4ba95e081f94eb10708cd038c8701b0847c23",
+      "petsc_real_config_sha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
+      "petsc_complex_config_sha256": "1f00acdcbf6e9b71ae2f3f80ec747e72fc6de5577eb7db71079cace660501e25",
+      "getdp_real_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "getdp_complex_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "petsc_config_sha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
+      "getdp_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "nodes_1": "727",
+      "elements_1": "1428",
+      "mesh_sha256_1": "54aad440720d0dd28f0f76ee6e162b23c92288a1ada311f2c6792ea6255af935",
+      "dofs_1": "634",
+      "initial_residual_1": "4.996054940160e-13",
+      "residual_1": "4.503046812882e-28",
+      "nodes_2": "233",
+      "elements_2": "451",
+      "mesh_sha256_2": "b7fe870c1cc5dee19489b81c77778d26a2332f4c7bfd5ff84ea3483f0511a524",
+      "dofs_2": "183",
+      "initial_residual_2": "3.783610381091e-13",
+      "residual_2": "1.976636391401e-28"
+    },
+    "sources": {
+      "gmsh": {
+        "revision": "29726e7237db13ff77ef3f2db2d7fb9499c4e65c",
+        "tree": "e25f712811bbf9147f58863b2ef8fc07e057fb86"
+      },
+      "occt": {
+        "revision": "bd2a789f15235755ce4d1a3b07379a2e062fdc2e",
+        "tree": "07299973f0ac5ce6e563023f06704d77a715cc7e"
+      },
+      "getdp": {
+        "revision": "8850e98c4aa6d96468c76ba5ee0feb881953f853",
+        "tree": "d80a7ed3922572b72e5ec4c39d8694b2dbbdd189"
+      },
+      "petsc": {
+        "revision": "d2a0018167bbba9fbc1f09828039a44e18cc4d99",
+        "tree": "7e9e0e1716177e4cc19d23519fd22eb9b2c02472"
+      }
+    }
+  },
+  "projects": [
+    {
+      "id": "radiator-3d-transient",
+      "parameters": {
+        "dim": 3,
+        "s": 4,
+        "zh": 0.01,
+        "AnalysisType": 1,
+        "tmax": 10,
+        "dt": 5
+      },
+      "scalarType": "real-double",
+      "referenceField": "T.pos",
+      "referenceRelative": 0.005,
+      "topology": {
+        "nodes": 328,
+        "elements": 1498,
+        "canonicalSha256": "05b087664dd8ee3e6e46b43ae0821cf30e4f68a9a39fde45d5d8f0c560034180"
+      },
+      "degreesOfFreedom": 328,
+      "convergence": {
+        "linearResiduals": [
+          1.456314441478,
+          1.361517335936e-13,
+          1.660349003352,
+          1.659303845717e-13
+        ],
+        "nonlinear": [],
+        "groups": [
+          {
+            "system": 1,
+            "systemName": "Sys_The",
+            "solve": 1,
+            "kind": "linear",
+            "boundary": "solve",
+            "timeStep": 1,
+            "time": 5,
+            "residuals": [
+              1.456314441478,
+              1.361517335936e-13
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_The",
+            "solve": 2,
+            "kind": "linear",
+            "boundary": "solve",
+            "timeStep": 2,
+            "time": 10,
+            "residuals": [
+              1.660349003352,
+              1.659303845717e-13
+            ],
+            "converged": true
+          }
+        ]
+      },
+      "outputs": {
+        "T.pos": {
+          "bytes": 283498,
+          "sha256": "cbb9d3e3ecafd63409fd4db57b5e20a1f8a8803daa176803d19f41c88e5f6bbe",
+          "records": 864,
+          "components": 1,
+          "times": [
+            0,
+            5,
+            10
+          ]
+        },
+        "q.pos": {
+          "bytes": 639891,
+          "sha256": "14f2b20c4015143971d42d721ca3184fad9ed0333a6b403c1daff3025f52d859",
+          "records": 864,
+          "components": 3,
+          "times": [
+            0,
+            5,
+            10
+          ]
+        }
+      },
+      "probes": [
+        {
+          "file": "T.pos",
+          "coordinate": [
+            0.004,
+            0.005,
+            0.005
+          ],
+          "values": [
+            20,
+            24.1694716477269,
+            27.545918547785604
+          ]
+        },
+        {
+          "file": "q.pos",
+          "coordinate": [
+            0.004,
+            0.005,
+            0.005
+          ],
+          "values": [
+            -1.546140993013978e-10,
+            7.73070496506989e-11,
+            -1.546140993013978e-10,
+            -1426.564388991228,
+            19875.69380428531,
+            145.5465908937822,
+            -1162.195169714632,
+            22233.01105234827,
+            173.4555863977539
+          ]
+        },
+        {
+          "file": "T.pos",
+          "coordinate": [
+            0.004,
+            0.03,
+            0.005
+          ],
+          "values": [
+            20,
+            21.280377671621743,
+            23.13878312248214
+          ]
+        },
+        {
+          "file": "q.pos",
+          "coordinate": [
+            0.004,
+            0.03,
+            0.005
+          ],
+          "values": [
+            0,
+            -1.932676241267473e-11,
+            0,
+            157.810321623765,
+            10092.67691832426,
+            -158.5183883906302,
+            265.3551312487434,
+            18358.93579765783,
+            -254.155585038352
+          ]
+        }
+      ],
+      "complexProbes": []
+    },
+    {
+      "id": "electromagnet-2d-nonlinear",
+      "parameters": {
+        "SymmetryType": 3,
+        "s": 4,
+        "NonlinearCore": 1,
+        "NewtonRaphson": 1,
+        "Current": 100
+      },
+      "scalarType": "real-double",
+      "referenceField": "az.pos",
+      "referenceRelative": 0.005,
+      "topology": {
+        "nodes": 136,
+        "elements": 270,
+        "canonicalSha256": "4d596475e939479ac5faafa9958eab812ecbbc3ac9fb811becb0809ae4725cd8"
+      },
+      "degreesOfFreedom": 115,
+      "convergence": {
+        "linearResiduals": [
+          15343.30162698,
+          2.061106941489e-10,
+          15343.86903622,
+          2.220872239186e-10,
+          15343.44915433,
+          2.514462515348e-10,
+          15343.40715234,
+          2.419659252509e-10,
+          15343.40571577,
+          2.126799826683e-10
+        ],
+        "nonlinear": [
+          {
+            "iteration": 0,
+            "absolute": 16.66615458855,
+            "relative": 1
+          },
+          {
+            "iteration": 1,
+            "absolute": 2.271813527669,
+            "relative": 0.1363129998344
+          },
+          {
+            "iteration": 2,
+            "absolute": 0.09431750357544,
+            "relative": 0.005659224092414
+          },
+          {
+            "iteration": 3,
+            "absolute": 0.0001857075321455,
+            "relative": 0.0000111427942876
+          },
+          {
+            "iteration": 4,
+            "absolute": 8.520952191537e-10,
+            "relative": 5.112728401901e-11
+          }
+        ],
+        "groups": [
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 1,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              15343.30162698,
+              2.061106941489e-10
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 2,
+            "kind": "nonlinear",
+            "boundary": "nonlinear-iteration",
+            "nonlinearIteration": 0,
+            "relativeResidual": 1,
+            "residuals": [
+              16.66615458855
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 3,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              15343.86903622,
+              2.220872239186e-10
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 4,
+            "kind": "nonlinear",
+            "boundary": "nonlinear-iteration",
+            "nonlinearIteration": 1,
+            "relativeResidual": 0.1363129998344,
+            "residuals": [
+              2.271813527669
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 5,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              15343.44915433,
+              2.514462515348e-10
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 6,
+            "kind": "nonlinear",
+            "boundary": "nonlinear-iteration",
+            "nonlinearIteration": 2,
+            "relativeResidual": 0.005659224092414,
+            "residuals": [
+              0.09431750357544
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 7,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              15343.40715234,
+              2.419659252509e-10
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 8,
+            "kind": "nonlinear",
+            "boundary": "nonlinear-iteration",
+            "nonlinearIteration": 3,
+            "relativeResidual": 0.0000111427942876,
+            "residuals": [
+              0.0001857075321455
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 9,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              15343.40571577,
+              2.126799826683e-10
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Mag",
+            "solve": 10,
+            "kind": "nonlinear",
+            "boundary": "nonlinear-iteration",
+            "nonlinearIteration": 4,
+            "relativeResidual": 5.112728401901e-11,
+            "residuals": [
+              8.520952191537e-10
+            ],
+            "converged": true
+          }
+        ]
+      },
+      "outputs": {
+        "a.pos": {
+          "bytes": 43712,
+          "sha256": "e57d30e5ba269c85b9152533f0f2f62985121cb7f0630874577d1726bcc7a3b8",
+          "records": 237,
+          "components": 3,
+          "times": []
+        },
+        "az.pos": {
+          "bytes": 40869,
+          "sha256": "aade860666aee6274bd5d00195a6c0c280c7cb049ee83dd5a161088e23f71ac9",
+          "records": 237,
+          "components": 1,
+          "times": []
+        },
+        "b.pos": {
+          "bytes": 55370,
+          "sha256": "4b9b35d6a072f318dd1510a027cd13520b61a1d7ad6f4a724b34092f2b9367ec",
+          "records": 237,
+          "components": 3,
+          "times": []
+        },
+        "cutb.pos": {
+          "bytes": 3313,
+          "sha256": "59cac4e5fa3d7d7fcbc48dfc58611213639e93631b31e337b237edb702bb0d3f",
+          "records": 51,
+          "components": 3,
+          "times": []
+        },
+        "js.pos": {
+          "bytes": 2331,
+          "sha256": "e244493e98f45dacb274c555690ab46cee4096690d0a02b9911c80c7883bf5c7",
+          "records": 14,
+          "components": 3,
+          "times": []
+        }
+      },
+      "probes": [
+        {
+          "file": "a.pos",
+          "coordinate": [
+            0.025,
+            0.05,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            -0.028228321454147717
+          ]
+        },
+        {
+          "file": "az.pos",
+          "coordinate": [
+            0.025,
+            0.05,
+            0
+          ],
+          "values": [
+            -0.028228321454147717
+          ]
+        },
+        {
+          "file": "b.pos",
+          "coordinate": [
+            0.025,
+            0.05,
+            0
+          ],
+          "values": [
+            0.23247201899274522,
+            1.1197882114193802,
+            0
+          ]
+        },
+        {
+          "file": "a.pos",
+          "coordinate": [
+            0.125,
+            0.05,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            -0.04543518837822658
+          ]
+        },
+        {
+          "file": "az.pos",
+          "coordinate": [
+            0.125,
+            0.05,
+            0
+          ],
+          "values": [
+            -0.04543518837822658
+          ]
+        },
+        {
+          "file": "b.pos",
+          "coordinate": [
+            0.125,
+            0.05,
+            0
+          ],
+          "values": [
+            0.271775633099403,
+            -0.24540132585433566,
+            0
+          ]
+        }
+      ],
+      "complexProbes": []
+    },
+    {
+      "id": "full-wave-2d-edge-complex",
+      "parameters": {
+        "dim": 2,
+        "L": 4,
+        "airRadius": 5,
+        "res": 1.5
+      },
+      "scalarType": "complex-double",
+      "referenceField": "eNorm.pos",
+      "referenceRelative": 0.12,
+      "topology": {
+        "nodes": 89,
+        "elements": 178,
+        "canonicalSha256": "44f1675834778a8b02c9ee70c8cb67012ae6b06b1dd71bd92dc5e793f99b5ba4"
+      },
+      "degreesOfFreedom": 206,
+      "convergence": {
+        "linearResiduals": [
+          2.20589204517,
+          0,
+          549572032.9836,
+          0.000007067558860295
+        ],
+        "nonlinear": [],
+        "groups": [
+          {
+            "system": 1,
+            "systemName": "Sys_Proj",
+            "solve": 1,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              2.20589204517,
+              0
+            ],
+            "converged": true
+          },
+          {
+            "system": 1,
+            "systemName": "Sys_Wav",
+            "solve": 2,
+            "kind": "linear",
+            "boundary": "solve",
+            "residuals": [
+              549572032.9836,
+              0.000007067558860295
+            ],
+            "converged": true
+          }
+        ]
+      },
+      "outputs": {
+        "e.pos": {
+          "bytes": 49220,
+          "sha256": "06022f8b9d9ea5e360752d7f2b768e8e262f149ed256127090d47275dc471eef",
+          "records": 137,
+          "components": 3,
+          "times": [
+            0,
+            1
+          ]
+        },
+        "eNorm.pos": {
+          "bytes": 25177,
+          "sha256": "2999e060d57955a75afd5c33746bdf27b44e70fe94aff9f01873d5735f130039",
+          "records": 137,
+          "components": 1,
+          "times": [
+            0,
+            1
+          ]
+        },
+        "h.pos": {
+          "bytes": 38075,
+          "sha256": "1a8e72938010d50c983b9ac0e7a8776e560b914e5a46987c2a623934c69c8589",
+          "records": 137,
+          "components": 3,
+          "times": [
+            0,
+            1
+          ]
+        },
+        "s.pos": {
+          "bytes": 53393,
+          "sha256": "0567d61f56b2611af123cb73f390197e9601081d6805afc646bcce575e4af932",
+          "records": 137,
+          "components": 3,
+          "times": [
+            0,
+            1
+          ]
+        }
+      },
+      "probes": [
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "values": [
+            0.1855328349466075,
+            0.743150726137903,
+            0,
+            -0.7396452277057098,
+            0.7708429130065031,
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "values": [
+            1.3773154112153976,
+            0
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            -0.001109744260790072,
+            0,
+            0,
+            0.001215502180273355
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "values": [
+            0.00005612699408707813,
+            0.0005524671928375908,
+            0,
+            -0.0008793699132860079,
+            -0.00029765074053863963,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "values": [
+            -0.2989066598413893,
+            0.6344271690131689,
+            0,
+            0.1309537152941862,
+            -0.27507408293953944,
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "values": [
+            0.8400283643471096,
+            0
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            0.001926159042127629,
+            0,
+            0,
+            -0.0008922555809607299
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "values": [
+            0.0007337220069233037,
+            0.0003462929744622198,
+            0,
+            0.00001811737507807838,
+            0.000007231726307853066,
+            0
+          ]
+        }
+      ],
+      "complexProbes": [
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.1855328349466075,
+            0.743150726137903,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            -0.7396452277057098,
+            0.7708429130065031,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.7625598309058487,
+            1.0707342332678282,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            -1.3250269443227387,
+            0.803686945195387,
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            1.3773154112153976
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            1.3773154112153976
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            -0.001109744260790072
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            0.001215502180273355
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            0.0016458972855575718
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            2.3107433575770076
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.00005612699408707813,
+            0.0005524671928375908,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            -0.0008793699132860079,
+            -0.00029765074053863963,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.0008811592840445433,
+            0.0006275475778815884,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0,
+            -0.02,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            -1.5070564123816204,
+            -0.4941776483099528,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            -0.2989066598413893,
+            0.6344271690131689,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.1309537152941862,
+            -0.27507408293953944,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.32633428696183125,
+            0.691493733801755,
+            0
+          ]
+        },
+        {
+          "file": "e.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            2.7286711166676554,
+            -0.40911435452775713,
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.8400283643471096
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.8400283643471096
+          ]
+        },
+        {
+          "file": "eNorm.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            0.001926159042127629
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            -0.0008922555809607299
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            0.0021227832384220473
+          ]
+        },
+        {
+          "file": "h.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0,
+            0,
+            -0.43380176216112903
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "real",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.0007337220069233037,
+            0.0003462929744622198,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "imaginary",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.00001811737507807838,
+            0.000007231726307853066,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "magnitude",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.0007339456537941214,
+            0.00034636847724249287,
+            0
+          ]
+        },
+        {
+          "file": "s.pos",
+          "coordinate": [
+            0.03,
+            0.01,
+            0
+          ],
+          "representation": "phase",
+          "time": 0,
+          "sourceTimes": [
+            0,
+            1
+          ],
+          "values": [
+            0.024687407633371797,
+            0.020880225238991246,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

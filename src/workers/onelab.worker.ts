@@ -1,10 +1,12 @@
 /// <reference lib="webworker" />
 
-import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, ViewBlock } from '../simulation/types'
-import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, validateReadOnlyValues } from '../simulation/onelab-db'
+import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
+import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, parseOnelab, setParameterValue, validateReadOnlyValues } from '../simulation/onelab-db'
+import { certifyConvergence } from '../simulation/convergence'
 import { canonicalMshRecords } from '../simulation/msh'
 import { sceneTransferables, surfaceSignatures, type ElementBlock, type ModelEntity, type PhysicalGroup, type SimulationScene } from '../simulation/scene'
-import { expandHomogeneousModelStep, parsePosTimes, normalizeListView, normalizeModelView, type ModelViewStep } from '../simulation/view-normalizer'
+import { complexFieldRepresentations, expandHomogeneousModelStep, parsePosTimes, normalizeListView, normalizeModelView, type ModelViewStep } from '../simulation/view-normalizer'
+import { projectDescriptor } from '../simulation/project-catalog'
 import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
 
@@ -15,9 +17,10 @@ const publicationLock = 'opensimphy-onelab-publication'
 const scheduler = new OnelabWorkerScheduler()
 const logs: string[] = []
 let manifest: SimulationAssetManifest | undefined
-let assets: Map<string, Uint8Array> | undefined
+const partitionAssets = new Map<SimulationAssetPartitionName, Map<string, Uint8Array>>()
 let gmsh: any
 let getdp: any
+let complexGetdp: any
 
 function emit(message: OnelabWorkerResponse, transfer: Transferable[] = []) {
   worker.postMessage(message, transfer)
@@ -41,23 +44,23 @@ async function verifiedResponse(response: Response, file: { path: string; bytes:
   return new Response(bytes, { headers: response.headers, status: 200 })
 }
 
-function cacheIdentity(next: SimulationAssetManifest) {
-  return { version: next.version, cacheName: next.cacheName, fileMapDigest: next.fileMapDigest, files: next.files }
+function cacheIdentity(next: SimulationAssetManifest, partition: SimulationAssetPartition) {
+  return { version: next.version, name: partition.name, cacheName: partition.cacheName, fileMapDigest: partition.fileMapDigest, files: partition.files }
 }
 
-async function completeCache(next: SimulationAssetManifest, cache: Cache) {
-  const markerUrl = new URL(`${next.version}/complete.json`, root).href
+async function completeCache(next: SimulationAssetManifest, partition: SimulationAssetPartition, cache: Cache) {
+  const markerUrl = new URL(`${next.version}/${partition.name}.complete.json`, root).href
   const manifestUrl = new URL('manifest.json', root).href
   const marker = await cache.match(markerUrl)
   if (!marker) return false
   try {
-    if (JSON.stringify(await marker.json()) !== JSON.stringify(cacheIdentity(next))) return false
-    const expectedUrls = [manifestUrl, markerUrl, ...next.files.map((file) => new URL(file.path, root).href)].sort()
+    if (JSON.stringify(await marker.json()) !== JSON.stringify(cacheIdentity(next, partition))) return false
+    const expectedUrls = [manifestUrl, markerUrl, ...partition.files.map((file) => new URL(file.path, root).href)].sort()
     const actualUrls = (await cache.keys()).map((request) => request.url).sort()
     if (JSON.stringify(actualUrls) !== JSON.stringify(expectedUrls)) return false
     const cachedManifest = await cache.match(manifestUrl)
     if (!cachedManifest || JSON.stringify(await cachedManifest.json()) !== JSON.stringify(next)) return false
-    for (const file of next.files) {
+    for (const file of partition.files) {
       const response = await cache.match(new URL(file.path, root).href)
       if (!response) return false
       await verifiedResponse(response, file)
@@ -68,11 +71,11 @@ async function completeCache(next: SimulationAssetManifest, cache: Cache) {
   }
 }
 
-async function cacheSnapshot(next: SimulationAssetManifest) {
-  const cache = await caches.open(next.cacheName)
-  if (!await completeCache(next, cache)) return undefined
+async function cacheSnapshot(next: SimulationAssetManifest, partition: SimulationAssetPartition) {
+  const cache = await caches.open(partition.cacheName)
+  if (!await completeCache(next, partition, cache)) return undefined
   const snapshot = new Map<string, Uint8Array>()
-  for (const file of next.files) {
+  for (const file of partition.files) {
     const response = await cache.match(new URL(file.path, root).href)
     if (!response) return undefined
     snapshot.set(file.path, new Uint8Array(await (await verifiedResponse(response, file)).arrayBuffer()))
@@ -80,14 +83,14 @@ async function cacheSnapshot(next: SimulationAssetManifest) {
   return snapshot
 }
 
-async function populateCache(next: SimulationAssetManifest) {
-  const finalName = next.cacheName
+async function populateCache(next: SimulationAssetManifest, partition: SimulationAssetPartition) {
+  const finalName = partition.cacheName
   const stagingName = `${finalName}-staging-${workerId}`
-  const existing = await navigator.locks.request(publicationLock, { mode: 'shared' }, () => cacheSnapshot(next))
+  const existing = await navigator.locks.request(publicationLock, { mode: 'shared' }, () => cacheSnapshot(next, partition))
   if (existing) return existing
   const staging = await caches.open(stagingName)
   try {
-    for (const file of next.files) {
+    for (const file of partition.files) {
       const url = new URL(file.path, root).href
       const stagingUrl = new URL(url)
       stagingUrl.searchParams.set('stage', workerId)
@@ -95,23 +98,23 @@ async function populateCache(next: SimulationAssetManifest) {
       await staging.put(url, response)
     }
     const publish = async () => {
-      const current = await cacheSnapshot(next)
+      const current = await cacheSnapshot(next, partition)
       if (current) return current
       await caches.delete(finalName)
       const final = await caches.open(finalName)
       try {
-        for (const file of next.files) {
+        for (const file of partition.files) {
           const url = new URL(file.path, root).href
           const response = await staging.match(url)
           if (!response) throw new Error(`staging cache lost ${url}`)
           await final.put(url, response)
         }
         await final.put(new URL('manifest.json', root).href, new Response(JSON.stringify(next), { headers: { 'Content-Type': 'application/json' } }))
-        await final.put(new URL(`${next.version}/complete.json`, root).href, new Response(JSON.stringify(cacheIdentity(next))))
-        const published = await cacheSnapshot(next)
+        await final.put(new URL(`${next.version}/${partition.name}.complete.json`, root).href, new Response(JSON.stringify(cacheIdentity(next, partition))))
+        const published = await cacheSnapshot(next, partition)
         if (!published) throw new Error(`published cache ${finalName} is incomplete`)
         for (const name of await caches.keys()) {
-          if (name.startsWith('opensimphy-onelab-') && !name.includes('-staging-') && name !== finalName) await caches.delete(name)
+          if (name.startsWith('opensimphy-onelab-') && !name.includes('-staging-') && !name.startsWith(`opensimphy-onelab-${next.version}-`)) await caches.delete(name)
         }
         return published
       } catch (error) {
@@ -126,10 +129,11 @@ async function populateCache(next: SimulationAssetManifest) {
 }
 
 async function fetchAsset(path: string) {
-  if (!manifest || !assets) throw new Error('simulation asset snapshot is not loaded')
-  const file = manifest.files.find((entry) => entry.path.endsWith(`/${path}`))
+  if (!manifest) throw new Error('simulation manifest is not loaded')
+  const partition = Object.values(manifest.partitions).find(({ files }) => files.some((entry) => entry.path.endsWith(`/${path}`)))
+  const file = partition?.files.find((entry) => entry.path.endsWith(`/${path}`))
   if (!file) throw new Error(`asset ${path} is absent from the manifest`)
-  const bytes = assets.get(file.path)
+  const bytes = partitionAssets.get(partition!.name)?.get(file.path)
   if (!bytes) throw new Error(`verified asset ${path} is absent from the initialized snapshot`)
   return new Response(bytes)
 }
@@ -139,9 +143,8 @@ async function fetchBytes(path: string) {
 }
 
 async function initializeModules() {
-  if (gmsh && getdp && manifest && assets) return
+  if (gmsh && getdp && manifest && partitionAssets.has('core') && partitionAssets.has('real')) return
   let response: Response | undefined
-  let offlineSnapshot: Map<string, Uint8Array> | undefined
   try { response = await fetch(new URL('manifest.json', root), { cache: 'no-store' }) } catch { /* offline recreation */ }
   if (!response) {
     const offline = await navigator.locks.request(publicationLock, { mode: 'shared' }, async () => {
@@ -150,19 +153,28 @@ async function initializeModules() {
         const candidate = await (await caches.open(name)).match(new URL('manifest.json', root).href)
         if (!candidate) continue
         const candidateManifest = await candidate.clone().json() as SimulationAssetManifest
-        const snapshot = await cacheSnapshot(candidateManifest)
-        if (snapshot) return { response: candidate, snapshot }
+        if (candidateManifest.schema !== 4) continue
+        const [core, real] = await Promise.all([cacheSnapshot(candidateManifest, candidateManifest.partitions.core), cacheSnapshot(candidateManifest, candidateManifest.partitions.real)])
+        if (core && real) return { response: candidate, snapshots: { core, real } }
       }
     })
     response = offline?.response
-    offlineSnapshot = offline?.snapshot
+    if (offline?.snapshots) {
+      partitionAssets.set('core', offline.snapshots.core)
+      partitionAssets.set('real', offline.snapshots.real)
+    }
   }
   if (!response) throw new Error('simulation manifest is unavailable online and no complete cache exists')
   if (!response.ok) throw new Error(`simulation manifest: HTTP ${response.status}`)
   const next = await response.json() as SimulationAssetManifest
-  const expectedDigest = await digest(new TextEncoder().encode(JSON.stringify(next.files.map(({ path, bytes, sha256 }) => ({ path: path.slice(next.version.length + 1), bytes, sha256 })))))
-  if (next.schema !== 2 || next.version !== artifactLock.contentVersion || next.cacheName !== `opensimphy-onelab-${next.version}` || next.fileMapDigest !== expectedDigest) throw new Error('invalid simulation manifest identity')
-  assets = offlineSnapshot ?? await populateCache(next)
+  if (next.schema !== 4 || next.version !== artifactLock.contentVersion) throw new Error('invalid simulation manifest identity')
+  for (const name of ['core', 'real', 'complex'] as const) {
+    const partition = next.partitions[name]
+    const expectedDigest = await digest(new TextEncoder().encode(JSON.stringify(partition.files)))
+    if (partition.name !== name || partition.cacheName !== `opensimphy-onelab-${next.version}-${name}` || partition.fileMapDigest !== expectedDigest) throw new Error(`invalid ${name} simulation partition identity`)
+  }
+  if (!partitionAssets.has('core')) partitionAssets.set('core', await populateCache(next, next.partitions.core))
+  if (!partitionAssets.has('real')) partitionAssets.set('real', await populateCache(next, next.partitions.real))
   manifest = next
 
   const moduleUrl = (source: string) => URL.createObjectURL(new Blob([source], { type: 'text/javascript' }))
@@ -203,6 +215,29 @@ async function initialize() {
   return manifest
 }
 
+async function solverFor(scalarType: ProjectDescriptor['scalarType']) {
+  await initialize()
+  if (scalarType === 'real-double') return getdp
+  if (complexGetdp) return complexGetdp
+  if (!manifest) throw new Error('simulation manifest is not loaded')
+  if (!partitionAssets.has('complex')) partitionAssets.set('complex', await populateCache(manifest, manifest.partitions.complex))
+  const moduleUrl = (source: string) => URL.createObjectURL(new Blob([source], { type: 'text/javascript' }))
+  const entryUrl = moduleUrl(await (await fetchAsset('getdp-complex/getdp.mjs')).text())
+  const runtimeUrl = moduleUrl(await (await fetchAsset('getdp/runtime.mjs')).text())
+  const [{ default: createGetdpModule }, { createGetdpRuntime }] = await Promise.all([
+    import(/* @vite-ignore */ entryUrl),
+    import(/* @vite-ignore */ runtimeUrl),
+  ])
+  const module = await createGetdpModule({
+    wasmBinary: await fetchBytes('getdp-complex/getdp.wasm'),
+    locateFile: () => new URL('unused.wasm', root).href,
+    print: (line: string) => logs.push(`[getdp-complex] ${line}`),
+    printErr: (line: string) => logs.push(`[getdp-complex:err] ${line}`),
+  })
+  complexGetdp = createGetdpRuntime(module)
+  return complexGetdp
+}
+
 function writeFile(fs: any, path: string, bytes: Uint8Array) {
   try { fs.unlink(path) } catch { /* absent */ }
   fs.writeFile(path, bytes)
@@ -236,13 +271,12 @@ function extractView(name: string, list: { dataType: string[]; numElements: numb
   return { block: { name, dataType: components === 1 ? 'scalar' : 'vector', numElements: elements, components, values: new Float64Array(values) } satisfies ViewBlock, points }
 }
 
-function deterministicSamples(scalar: ReturnType<typeof extractView>, vector: ReturnType<typeof extractView>): FieldSample[] {
-  const targets: Array<[string, number, number]> = [['ground-near', 0.0004, 0.0002], ['substrate', 0.0013, 0.0007], ['air', 0.0032, 0.00055]]
-  return targets.map(([key, x, y]) => {
+function deterministicSamples(scalar: ReturnType<typeof extractView>, vector: ReturnType<typeof extractView>, targets: Array<[number, number, number]>, projectId: string): FieldSample[] {
+  return targets.map(([x, y, z], target) => {
     let index = 0
     let distance = Infinity
     scalar.points.forEach((point, candidate) => {
-      const current = Math.hypot(point[0] - x, point[1] - y)
+      const current = Math.hypot(point[0] - x, point[1] - y, point[2] - z)
       if (current < distance) { index = candidate; distance = current }
     })
     const coordinate = scalar.points[index] ?? [0, 0, 0]
@@ -253,7 +287,8 @@ function deterministicSamples(scalar: ReturnType<typeof extractView>, vector: Re
       if (current < vectorDistance) { vectorIndex = candidate; vectorDistance = current }
     })
     const vectorValue: [number, number, number] = [vector.block.values[vectorIndex * 3] ?? 0, vector.block.values[vectorIndex * 3 + 1] ?? 0, vector.block.values[vectorIndex * 3 + 2] ?? 0]
-    return { key, coordinate, scalar: scalar.block.values[index] ?? 0, vector: vectorValue, magnitude: Math.hypot(...vectorValue) }
+    const legacyKeys = ['ground-near', 'substrate', 'air']
+    return { key: projectId === 'microstrip' ? legacyKeys[target]! : `probe-${target + 1}`, coordinate, scalar: scalar.block.values[index] ?? 0, vector: vectorValue, magnitude: Math.hypot(...vectorValue) }
   })
 }
 
@@ -329,27 +364,46 @@ function authoritativeScene(): SimulationScene {
 }
 
 function projectFile(files: ProjectFile[], path: string) {
-  const file = files.find((candidate) => candidate.path === path)
+  const normalized = path.replace(/^\/+/, '')
+  const file = files.find((candidate) => candidate.path.replace(/^\/+/, '') === normalized)
   if (!file) throw new Error(`project envelope is missing ${path}`)
   return file.bytes
 }
 
-function writeProjectFiles(envelope: ProjectEnvelope) {
-  if (envelope.schema !== 1) throw new Error(`unsupported project envelope schema ${envelope.schema}`)
-  gmsh.clear()
-  gmsh.onelab.clear()
-  getdp.onelab.clear()
-  const geo = projectFile(envelope.files, '/microstrip.geo')
-  const pro = projectFile(envelope.files, '/microstrip.pro')
-  writeFile(gmsh.FS, '/microstrip.geo', geo)
-  writeFile(getdp.FS, '/microstrip.pro', pro)
+function safeProjectPath(rootPath: string, path: string) {
+  const normalized = path.replace(/^\/+/, '')
+  if (!normalized || normalized.split('/').includes('..')) throw new Error(`unsafe project path ${path}`)
+  return `${rootPath}/${normalized}`
 }
 
-function parseGmshDatabase(database = '') {
+function writeProjectFiles(envelope: ProjectEnvelope, solver: any) {
+  if (envelope.schema !== 3) throw new Error(`unsupported project envelope schema ${envelope.schema}`)
   gmsh.clear()
   gmsh.onelab.clear()
+  gmsh.parser.clear()
+  solver.onelab.clear()
+  const rootPath = `/projects/${envelope.descriptor.id}`
+  gmsh.FS.mkdirTree(rootPath)
+  solver.FS.mkdirTree(rootPath)
+  for (const file of envelope.files) {
+    const path = safeProjectPath(rootPath, file.path)
+    const directory = path.slice(0, path.lastIndexOf('/'))
+    gmsh.FS.mkdirTree(directory)
+    solver.FS.mkdirTree(directory)
+    writeFile(gmsh.FS, path, file.bytes)
+    writeFile(solver.FS, path, file.bytes)
+  }
+  gmsh.FS.chdir(rootPath)
+  solver.FS.chdir(rootPath)
+  return rootPath
+}
+
+function parseGmshDatabase(descriptor: ProjectDescriptor, database = '') {
+  gmsh.clear()
+  gmsh.onelab.clear()
+  gmsh.parser.clear()
   if (database) gmsh.onelab.set(database, 'json')
-  gmsh.open('/microstrip.geo')
+  gmsh.open(descriptor.geometry)
   return canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
 }
 
@@ -359,44 +413,112 @@ function importGmshDatabase(database: string) {
   return canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
 }
 
-async function solvePreparedMicrostrip(requestId: string): Promise<MicrostripResult> {
+function effectiveNumbers(descriptor: ProjectDescriptor, database: string) {
+  const parameters = new Map(parseOnelab(database).onelab.parameters.map((parameter) => [parameter.name, parameter]))
+  return Object.fromEntries(Object.entries(descriptor.parameterNames).map(([constant, name]) => {
+    const parameter = parameters.get(name)
+    const value = parameter?.type === 'number' && parameter.values.length === 1 ? parameter.values[0] : undefined
+    if (!Number.isFinite(value)) throw new Error(`effective native number ${constant} is absent from ${name}`)
+    return [constant, value]
+  }))
+}
+
+function seedInitialNumbers(descriptor: ProjectDescriptor, database: string) {
+  let seeded = database
+  for (const [constant, value] of Object.entries(descriptor.setNumbers)) {
+    const name = descriptor.parameterNames[constant]
+    if (!name) throw new Error(`descriptor ${descriptor.id} has no native parameter name for ${constant}`)
+    seeded = setParameterValue(seeded, name, value)
+  }
+  return seeded
+}
+
+function numberArguments(parameters: Record<string, number>) {
+  return Object.entries(parameters).flatMap(([name, value]) => ['-setnumber', name, String(value)])
+}
+
+function applyPhysicalGroups(envelope: ProjectEnvelope) {
+  const { sidecar, descriptor } = envelope
+  if (sidecar.schema !== 1 || sidecar.projectId !== descriptor.id || !Array.isArray(sidecar.groups)) throw new Error('physical-group sidecar identity is invalid')
+  const entities = new Set(pairs(gmsh.model.getEntities().dimTags as number[]).map(([dimension, tag]) => `${dimension}:${tag}`))
+  const nativeGroups = pairs(gmsh.model.getPhysicalGroups().dimTags as number[]).map(([dimension, tag]) => ({ dimension, tag, name: gmsh.model.getPhysicalName(dimension, tag).name }))
+  const ids = new Set<string>(), keys = new Set<string>(), names = new Set<string>()
+  for (const group of sidecar.groups) {
+    const name = group.name.trim(), key = `${group.dimension}:${group.tag}`, nameKey = `${group.dimension}:${name}`
+    if (!group.id || ids.has(group.id) || ![0, 1, 2, 3].includes(group.dimension) || !Number.isInteger(group.tag) || group.tag <= 0 || !name || !group.entityTags.length || group.entityTags.some((tag) => !Number.isInteger(tag) || tag <= 0 || !entities.has(`${group.dimension}:${tag}`))) throw new Error(`invalid physical group ${group.id || name}`)
+    if (keys.has(key) || names.has(nameKey) || nativeGroups.some((native) => native.dimension === group.dimension && (native.tag === group.tag || native.name === name))) throw new Error(`physical group conflict in dimension ${group.dimension}: ${name}`)
+    ids.add(group.id); keys.add(key); names.add(nameKey)
+    gmsh.model.addPhysicalGroup(group.dimension, group.entityTags, group.tag)
+    gmsh.model.setPhysicalName(group.dimension, group.tag, name)
+  }
+}
+
+async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope, solver: any, parameters: Record<string, number>): Promise<MicrostripResult> {
+  const descriptor = envelope.descriptor
   logs.length = 0
   gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
   emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
-  gmsh.model.mesh.generate(2)
+  const useReferenceMesh = descriptor.referenceMesh && Object.entries(descriptor.setNumbers).every(([name, value]) => parameters[name] === value)
+  if (useReferenceMesh) {
+    gmsh.clear(); gmsh.open(descriptor.referenceMesh!)
+    applyPhysicalGroups(envelope)
+  } else {
+    gmsh.model.mesh.generate(descriptor.dimension)
+  }
   const nodes = gmsh.model.mesh.getNodes().nodeTags.length
-  gmsh.write('/microstrip.msh')
-  const msh = gmsh.FS.readFile('/microstrip.msh') as Uint8Array
-  const meshSha256 = await digest(new TextEncoder().encode(canonicalMshRecords(new TextDecoder().decode(msh))))
-  const elements = Number(/\$Elements\s+(\d+)/.exec(new TextDecoder().decode(msh))?.[1])
+  const meshPath = `${descriptor.id}.msh`
+  gmsh.write(meshPath)
+  const msh = gmsh.FS.readFile(meshPath) as Uint8Array
+  const mshSource = new TextDecoder().decode(msh)
+  const meshSha256 = await digest(new TextEncoder().encode(canonicalMshRecords(mshSource)))
+  const elements = Number(/\$Elements\s+(\d+)/.exec(mshSource)?.[1])
   if (!Number.isInteger(elements)) throw new Error('could not read MSH2 element count')
-  writeFile(getdp.FS, '/microstrip.msh', msh)
-  for (const output of ['/microstrip.res', '/v.pos', '/e.pos', '/d.pos', '/e_cut.pos']) try { getdp.FS.unlink(output) } catch { /* absent */ }
+  const meshPhysicalNames = [...mshSource.matchAll(/^(\d+)\s+(\d+)\s+"([^"]+)"$/gm)].map((match) => ({ dimension: Number(match[1]), tag: Number(match[2]), name: match[3]! }))
+  const elementSection = /\$Elements\s+\d+\s+([\s\S]*?)\$EndElements/.exec(mshSource)?.[1] ?? ''
+  const meshPhysicalTags = [...new Set(elementSection.trim().split('\n').filter(Boolean).flatMap((line) => {
+    const values = line.trim().split(/\s+/).map(Number), count = values[2] ?? 0
+    return count > 0 && (values[3] ?? 0) > 0 ? [values[3]!] : []
+  }))].sort((a, b) => a - b)
+  writeFile(solver.FS, meshPath, msh)
+  for (const output of solver.FS.readdir('.').filter((name: string) => /\.(?:pos|res)$/.test(name))) solver.FS.unlink(output)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-solve' })
-  const status = getdp.run(['getdp', '/microstrip.pro', '-msh', '/microstrip.msh', '-solve', 'Ele', '-pos', 'Map'])
+  const status = solver.run([
+    'getdp', descriptor.problem!, '-msh', meshPath, ...numberArguments(parameters),
+    '-solve', descriptor.resolution!, ...descriptor.postOperations!.flatMap((operation) => ['-pos', operation]),
+  ])
   if (status !== 0) throw new Error(`GetDP exited with status ${status}`)
-  const residuals = logs.flatMap((line) => [...line.matchAll(/KSP Residual norm\s+([0-9.eE+-]+)/g)].map((match) => Number(match[1])))
+  if (!descriptor.convergence) throw new Error(`project ${descriptor.id} has no convergence certification criteria`)
+  const certification = certifyConvergence(logs, descriptor.convergence, parameters)
+  const convergence = certification.groups
+  const residuals = convergence.filter(({ kind }) => kind === 'linear').flatMap(({ residuals }) => residuals)
   const initialResidual = residuals[0]
   const residual = residuals.at(-1)
-  if (!Number.isFinite(initialResidual) || !Number.isFinite(residual) || residual >= initialResidual) throw new Error('PETSc residual did not converge')
-  const degreesOfFreedom = Number(logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => match[1])).at(-1))
-  if (!Number.isInteger(degreesOfFreedom) || degreesOfFreedom <= 0) throw new Error('could not read GetDP system dimension')
+  if (!certification.converged || !Number.isFinite(initialResidual) || !Number.isFinite(residual)) throw new Error(`PETSc convergence certification failed: ${JSON.stringify(certification)}`)
+  const degreesOfFreedom = Math.max(...logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => Number(match[1]))))
+  if (!Number.isInteger(degreesOfFreedom) || degreesOfFreedom <= 0) throw new Error(`could not read GetDP system dimension: ${JSON.stringify(logs.filter((line) => line.includes('System')).slice(-10))}`)
   const posBytes: Record<string, number> = {}
   const posSources = new Map<string, string>()
-  for (const name of ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']) {
-    const bytes = getdp.FS.readFile(`/${name}`) as Uint8Array
+  const outputNames = (solver.FS.readdir('.') as string[]).filter((name) => name.endsWith('.pos')).sort()
+  if (!outputNames.length) throw new Error(`project ${descriptor.id} produced no POS outputs`)
+  const outputs: Array<{ path: string; bytes: number; sha256: string; records: number }> = []
+  for (const name of outputNames) {
+    const bytes = solver.FS.readFile(name) as Uint8Array
     posBytes[name] = bytes.byteLength
-    posSources.set(name, new TextDecoder().decode(bytes))
-    writeFile(gmsh.FS, `/${name}`, bytes)
+    const source = new TextDecoder().decode(bytes)
+    posSources.set(name, source)
+    writeFile(gmsh.FS, name, bytes)
+    outputs.push({ path: name, bytes: bytes.byteLength, sha256: await digest(bytes), records: (source.match(/\b[SVT][PTQLSHIY]\(/g) ?? []).length })
   }
   for (const tag of gmsh.view.getTags().tags as number[]) gmsh.view.remove(tag)
-  for (const name of ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']) gmsh.merge(`/${name}`)
+  for (const name of outputNames) gmsh.merge(name)
   const views = gmsh.view.getTags().tags as number[]
-  if (views.length !== 4) throw new Error(`Gmsh loaded ${views.length} result views instead of 4`)
-  const scalar = extractView('v', gmsh.view.getListData(views[0]), 1)
-  const vector = extractView('e', gmsh.view.getListData(views[1]), 3)
+  if (views.length !== outputNames.length) throw new Error(`Gmsh loaded ${views.length} result views for ${outputNames.length} POS files`)
+  const nativeProbes = (descriptor.probes ?? []).flatMap((coordinate) => views.flatMap((tag, index) => {
+    const probe = gmsh.view.probe(tag, ...coordinate)
+    return probe.distance === 0 && probe.values.length ? [{ file: outputNames[index]!, coordinate, values: probe.values }] : []
+  }))
   const scene = authoritativeScene()
-  const names = ['v.pos', 'e.pos', 'd.pos', 'e_cut.pos']
+  const names = outputNames
   const mesh = { positions: scene.referencePositions, nodeTags: scene.nodeTags!, elementBlocks: scene.elementBlocks }
   scene.fields = views.flatMap((tag, index) => {
     const name = names[index]!.slice(0, -4)
@@ -422,55 +544,91 @@ async function solvePreparedMicrostrip(requestId: string): Promise<MicrostripRes
     }
     if (modelSteps.length) {
       if (modelSteps.length !== stepCount) throw new Error(`model view ${name} exposed ${modelSteps.length} of ${stepCount} steps`)
-      return [normalizeModelView(mesh, { name, sourceFile, modelName: gmsh.model.getCurrent().name, steps: modelSteps })]
+      const field = normalizeModelView(mesh, { name, sourceFile, modelName: gmsh.model.getCurrent().name, steps: modelSteps })
+      return descriptor.scalarType === 'complex-double' ? complexFieldRepresentations(field) : [field]
     }
-    return normalizeListView(mesh, { name, sourceFile, ...gmsh.view.getListData(tag), times: parsePosTimes(posSources.get(sourceFile)!) })
+    const fields = normalizeListView(mesh, { name, sourceFile, ...gmsh.view.getListData(tag), times: parsePosTimes(posSources.get(sourceFile)!) })
+    return descriptor.scalarType === 'complex-double' ? fields.flatMap(complexFieldRepresentations) : fields
   })
-  const potential = scene.fields.find((field) => field.name === 'v')
-  const electric = scene.fields.find((field) => field.name === 'e')
-  if (potential?.association !== 'node' || potential.tags?.length !== nodes) throw new Error('potential did not collapse losslessly to the authoritative nodes')
-  if (electric?.association !== 'element') throw new Error('electric field did not collapse losslessly to authoritative elements')
+  const complexProbes = descriptor.scalarType === 'complex-double' ? nativeProbes.flatMap((probe) => {
+    const source = scene.fields.find((field) => field.provenance.sourceFile === probe.file && field.complexPart === 'real')
+    if (!source) throw new Error(`complex probe ${probe.file} has no normalized source field`)
+    const pairs = source.provenance.complexSourceTimes
+    if (!pairs || probe.values.length !== pairs.length * source.components * 2) throw new Error(`complex probe ${probe.file} does not match harmonic metadata`)
+    return pairs.flatMap((times, pair) => {
+      const offset = pair * source.components * 2
+      const real = probe.values.slice(offset, offset + source.components)
+      const imaginary = probe.values.slice(offset + source.components, offset + source.components * 2)
+      return (['real', 'imaginary', 'magnitude', 'phase'] as const).map((representation) => ({
+        file: probe.file, coordinate: probe.coordinate, representation, time: times[0],
+        sourceTimes: times,
+        values: real.map((value, component) => representation === 'real' ? value : representation === 'imaginary' ? imaginary[component]! : representation === 'magnitude' ? Math.hypot(value, imaginary[component]!) : Math.atan2(imaginary[component]!, value)),
+      }))
+    })
+  }) : []
+  const scalarField = scene.fields.find((field) => descriptor.id === 'microstrip' && field.provenance.sourceFile === 'v.pos') ?? scene.fields.find((field) => field.components === 1)
+  const vectorField = scene.fields.find((field) => descriptor.id === 'microstrip' && field.provenance.sourceFile === 'e.pos') ?? scene.fields.find((field) => field.components === 3)
+  if (!scalarField || !vectorField) throw new Error(`project ${descriptor.id} must expose scalar and vector result fields`)
+  const scalarSource = extractView(scalarField.name, gmsh.view.getListData(views[names.indexOf(scalarField.provenance.sourceFile)]!), 1)
+  const vectorSource = extractView(vectorField.name, gmsh.view.getListData(views[names.indexOf(vectorField.provenance.sourceFile)]!), 3)
   return {
-    nodes, elements, meshSha256, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
-    scalar: scalar.block, vector: vector.block, samples: deterministicSamples(scalar, vector),
-    scene, logs: [...logs], memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength, workerId,
+    projectId: descriptor.id, parameters,
+    nodes, elements, meshSha256, meshPhysicalNames, meshPhysicalTags, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
+    scalar: scalarSource.block, vector: vectorSource.block, samples: deterministicSamples(scalarSource, vectorSource, descriptor.probes ?? [], descriptor.id),
+    scene, logs: [...logs],
+    memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength + (complexGetdp?.module.wasmMemory.buffer.byteLength ?? 0),
+    snapshotBytes: [...partitionAssets.values()].flatMap((snapshot) => [...snapshot.values()]).reduce((sum, bytes) => sum + bytes.byteLength, 0),
+    loadedPartitions: [...partitionAssets.keys()].sort(), workerId,
+    outputs, convergence, nativeProbes, complexProbes,
   }
 }
 
-async function openMicrostrip(): Promise<ProjectBootstrap> {
+async function openProject(projectId: string): Promise<ProjectBootstrap> {
   await initialize()
-  const files = await Promise.all(['/microstrip.geo', '/microstrip.pro'].map(async (path) => ({
+  const descriptor = projectDescriptor(projectId)
+  if (descriptor.kind !== 'solve' || !descriptor.problem || !descriptor.resolution || !descriptor.postOperations?.length) throw new Error(`project ${projectId} is not a solver project`)
+  const solver = await solverFor(descriptor.scalarType)
+  const files = await Promise.all(descriptor.files.map(async (path) => ({
     path,
-    bytes: await fetchBytes(`fixtures/microstrip${path}`),
+    bytes: await fetchBytes(`fixtures/${descriptor.directory}/${path}`),
   })))
-  const envelope: ProjectEnvelope = { schema: 1, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '' }
-  writeProjectFiles(envelope)
-  const gmshDefaults = parseGmshDatabase()
-  const checked = callGetdpWithDatabase(getdp.onelab, gmshDefaults, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
+  writeProjectFiles(envelope, solver)
+  const gmshDeclarations = parseGmshDatabase(descriptor)
+  const declarations = callGetdpWithDatabase(solver.onelab, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
+  if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
+  const gmshDefaults = parseGmshDatabase(descriptor, seedInitialNumbers(descriptor, declarations.database))
+  const checked = callGetdpWithDatabase(solver.onelab, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, gmshDefaults)), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP default check exited with status ${checked.status}`)
-  return { files, defaults: checked.database }
+  return { files, defaults: checked.database, descriptor }
 }
+
+async function openMicrostrip() { return openProject('microstrip') }
 
 async function runProject(requestId: string, envelope: ProjectEnvelope): Promise<ProjectResponse> {
   await initialize()
+  const descriptor = envelope.descriptor
+  const solver = await solverFor(descriptor.scalarType)
   logs.length = 0
-  writeProjectFiles(envelope)
-  const gmshDefaults = parseGmshDatabase()
+  writeProjectFiles(envelope, solver)
+  const gmshDefaults = parseGmshDatabase(descriptor, envelope.defaults)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const declarations = callGetdpWithDatabase(getdp.onelab, gmshDefaults, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  const declarations = callGetdpWithDatabase(solver.onelab, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
   if (envelope.action !== 'reset') validateReadOnlyValues(declarations.database, envelope.database, envelope.defaults)
   const requested = envelope.action === 'reset' ? declarations.database : mergeValidatedValues(declarations.database, envelope.database)
-  let database = parseGmshDatabase(requested)
+  let database = parseGmshDatabase(descriptor, requested)
+  applyPhysicalGroups(envelope)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const checked = callGetdpWithDatabase(getdp.onelab, database, () => getdp.run(['getdp', '/microstrip.pro', '-check']))
+  const parameters = effectiveNumbers(descriptor, database)
+  const checked = callGetdpWithDatabase(solver.onelab, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(parameters), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP check exited with status ${checked.status}`)
   database = importGmshDatabase(checked.database)
   if (envelope.action === 'compute') {
-    const imported = canonicalNativeDatabase(getdp.onelab.get())
+    const imported = canonicalNativeDatabase(solver.onelab.get())
     if (imported !== checked.database) throw new Error('GetDP database changed after check export')
-    const result = await solvePreparedMicrostrip(requestId)
-    database = importGmshDatabase(canonicalNativeDatabase(getdp.onelab.get()))
+    const result = await solvePreparedProject(requestId, envelope, solver, parameters)
+    database = importGmshDatabase(canonicalNativeDatabase(solver.onelab.get()))
     return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database, result }
   }
   return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
@@ -479,8 +637,8 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
 async function runMicrostrip(requestId: string) {
   const project = await openMicrostrip()
   const response = await runProject(requestId, {
-    schema: 1, action: 'compute', projectId: 'legacy', revision: 0,
-    files: project.files, database: project.defaults, defaults: project.defaults,
+    schema: 3, action: 'compute', projectId: 'legacy', revision: 0,
+    files: project.files, database: project.defaults, defaults: project.defaults, descriptor: project.descriptor, sidecar: { schema: 1, projectId: project.descriptor.id, groups: [] },
   })
   if (!response.result) throw new Error('legacy microstrip computation returned no result')
   return response.result
@@ -504,11 +662,73 @@ async function getCubeScene(): Promise<SimulationScene> {
   return authoritativeScene()
 }
 
+async function getRenderingScene(): Promise<SimulationScene> {
+  await initialize()
+  gmsh.clear()
+  for (const name of ['test_field.pos', 'test_displ.pos']) {
+    writeFile(gmsh.FS, `/${name}`, await fetchBytes(`fixtures/gmsh-rendering/${name}`))
+    gmsh.merge(`/${name}`)
+  }
+  const tags = gmsh.view.getTags().tags as number[]
+  if (tags.length !== 2) throw new Error(`rendering fixture exposed ${tags.length} views instead of 2`)
+  const scalarList = gmsh.view.getListData(tags[0])
+  const block = scalarList.dataType.findIndex((type: string) => type === 'SS')
+  if (block < 0) throw new Error('test_field.pos has no scalar quadrangle block')
+  const records = scalarList.numElements[block] as number
+  const data = scalarList.data[block] as number[]
+  const stride = data.length / records
+  const positions: number[] = [], nodeTags: bigint[] = [], connectivity: bigint[] = [], elementTags: bigint[] = []
+  const nodeByCoordinate = new Map<string, number>()
+  for (let record = 0; record < records; record++) {
+    const start = record * stride
+    for (let corner = 0; corner < 4; corner++) {
+      const point = [data[start + corner]!, data[start + 4 + corner]!, data[start + 8 + corner]!]
+      const key = point.map((value) => value.toPrecision(14)).join(',')
+      let node = nodeByCoordinate.get(key)
+      if (node === undefined) {
+        node = nodeTags.length
+        nodeByCoordinate.set(key, node)
+        positions.push(...point)
+        nodeTags.push(BigInt(node + 1))
+      }
+      connectivity.push(nodeTags[node]!)
+    }
+    elementTags.push(BigInt(record + 1))
+  }
+  const elementBlocks: ElementBlock[] = [{ dimension: 2, entityTag: 1, elementType: 3, elementTags: BigUint64Array.from(elementTags), connectivity: BigUint64Array.from(connectivity) }]
+  const mesh = { positions: Float64Array.from(positions), nodeTags: BigUint64Array.from(nodeTags), elementBlocks }
+  const triangles: number[] = [], triangleElements: bigint[] = []
+  for (let record = 0; record < records; record++) {
+    const nodes = Array.from(connectivity.slice(record * 4, record * 4 + 4), (tag) => Number(tag - 1n))
+    triangles.push(nodes[0]!, nodes[1]!, nodes[2]!, nodes[0]!, nodes[2]!, nodes[3]!)
+    triangleElements.push(elementTags[record]!, elementTags[record]!)
+  }
+  const fields = [
+    ...normalizeListView(mesh, { name: 'test field', sourceFile: 'test_field.pos', ...scalarList }),
+    ...normalizeListView(mesh, { name: 'true displacement', sourceFile: 'test_displ.pos', ...gmsh.view.getListData(tags[1]) }),
+  ]
+  const displacement = fields.find(({ provenance }) => provenance.sourceFile === 'test_displ.pos')
+  if (!displacement || displacement.association !== 'node' || displacement.components !== 3) throw new Error('test_displ.pos did not normalize to a nodal vector')
+  displacement.role = 'displacement'
+  const referencePositions = mesh.positions
+  const surfaceTriangles = Uint32Array.from(triangles)
+  const triangleEntityTags = Uint32Array.from({ length: records * 2 }, () => 1)
+  return {
+    source: 'gmsh-authoritative', referencePositions, surfaceTriangles, triangleEntityTags,
+    triangleElementTags: BigUint64Array.from(triangleElements), triangleRegionTags: new Uint32Array(records * 2),
+    nodeTags: mesh.nodeTags, nodeEntityDimensions: Uint8Array.from({ length: nodeTags.length }, () => 2),
+    nodeEntityTags: Uint32Array.from({ length: nodeTags.length }, () => 1),
+    entities: [{ dimension: 2, tag: 1, bounds: [-0.5, -0.5, -0.5, 0.5, 0.5, 0.5], physicalTags: new Uint32Array() }],
+    elementBlocks, groups: [], fields, surfaceSignatures: surfaceSignatures(referencePositions, surfaceTriangles, triangleEntityTags),
+  }
+}
+
 async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
   const { requestId } = event.data
   try {
     if (event.data.type === 'warm') emit({ type: 'warmed', requestId, manifest: await initialize() })
     else if (event.data.type === 'open-microstrip') emit({ type: 'project-opened', requestId, project: await openMicrostrip() })
+    else if (event.data.type === 'open-project') emit({ type: 'project-opened', requestId, project: await openProject(event.data.projectId) })
     else if (event.data.type === 'project') {
       const response = await runProject(requestId, event.data.envelope)
       const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer, ...sceneTransferables(response.result.scene)] : []
@@ -516,6 +736,9 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
     }
     else if (event.data.type === 'get-cube-scene') {
       const scene = await getCubeScene()
+      emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
+    } else if (event.data.type === 'get-rendering-scene') {
+      const scene = await getRenderingScene()
       emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
     } else {
       const result = await runMicrostrip(requestId)

@@ -9,6 +9,7 @@ const props = defineProps<{ scene?: SimulationScene }>()
 const emit = defineEmits<{ select: [selection: SceneSelection]; probe: [probe: FieldProbe] }>()
 const target = ref<HTMLElement>()
 const clipped = ref(false)
+const clipCount = ref(0)
 const explosion = ref(0)
 const measurement = ref<number>()
 const renderRevision = ref(0)
@@ -18,10 +19,12 @@ const rangeMode = ref<FieldRangeMode>('global')
 const customMin = ref(0)
 const customMax = ref(1)
 const probe = ref<FieldProbe>()
+const deformationScale = ref(0)
 let host: SceneHost | undefined
 
 function applyScene(scene: SimulationScene) {
   clipped.value = false
+  clipCount.value = 0
   explosion.value = 0
   measurement.value = undefined
   host?.setScene(scene)
@@ -33,11 +36,18 @@ function applyScene(scene: SimulationScene) {
   const range = scene.fields[0]?.globalRange
   if (range) [customMin.value, customMax.value] = range
   applyResult()
+  applyDeformation()
 }
 
 function setClipping() {
-  clipped.value = !clipped.value
-  host?.setClipping(clipped.value)
+  clipCount.value = (clipCount.value + 1) % 4
+  clipped.value = clipCount.value > 0
+  const planes = [
+    { normal: [1, 0, 0] as [number, number, number], constant: 0 },
+    { normal: [0, 1, 0] as [number, number, number], constant: 0 },
+    { normal: [0, 0, 1] as [number, number, number], constant: 0 },
+  ].slice(0, clipCount.value)
+  host?.setClipPlanes(planes)
   renderRevision.value++
 }
 
@@ -54,6 +64,7 @@ function selectResult() {
   const range = activeField()?.globalRange
   if (range) [customMin.value, customMax.value] = range
   applyResult()
+  applyDeformation()
 }
 function selectStep(event: Event) { step.value = Number((event.target as HTMLSelectElement).value) }
 function activeRange() {
@@ -61,6 +72,12 @@ function activeRange() {
   return field ? fieldRange(field, step.value, rangeMode.value, rangeMode.value === 'custom' ? [customMin.value, customMax.value] : undefined) : undefined
 }
 function activeTimes() { return Array.from(activeField()?.times ?? []) }
+function displacementFields() { return props.scene?.fields.filter(({ role, components, association }) => role === 'displacement' && components === 3 && association === 'node') ?? [] }
+function applyDeformation() {
+  const field = displacementFields().find(({ id }) => id === fieldId.value)
+  host?.setDeformation(field?.id, step.value, field ? deformationScale.value : 0)
+  renderRevision.value++
+}
 function download(extension: 'csv' | 'pos') {
   const scene = props.scene, field = activeField()
   if (!scene || !field) return
@@ -79,7 +96,8 @@ onMounted(() => {
     const scene = props.scene, field = activeField()
     if (!scene || !field) return
     try {
-      probe.value = probeField(scene, field, step.value, selection.sourceTriangle, selection.point)
+      if (selection.sourceTriangle < 0) return
+      probe.value = probeField(scene, field, step.value, selection.sourceTriangle, selection.referencePoint)
       emit('probe', probe.value)
     } catch { probe.value = undefined }
   }
@@ -89,7 +107,8 @@ onMounted(() => {
 })
 watch(() => props.scene, (scene) => { if (scene) applyScene(scene) })
 watch(explosion, (amount) => { host?.setExplosion(amount); renderRevision.value++ })
-watch([step, rangeMode, customMin, customMax], applyResult)
+watch([step, rangeMode, customMin, customMax], () => { applyResult(); applyDeformation() })
+watch(deformationScale, applyDeformation)
 onBeforeUnmount(() => {
   diagnostics().overlays--
   host?.dispose()
@@ -128,9 +147,12 @@ onBeforeUnmount(() => {
       span {{ activeRange()?.[1] ?? '' }}
     button(type="button" data-testid="result-export-csv" @click="download('csv')") CSV
     button(type="button" data-testid="result-export-pos" @click="download('pos')") POS
+    label(v-if="displacementFields().some(({ id }) => id === fieldId)")
+      span Deformation
+      input(v-model.number="deformationScale" data-testid="result-deformation" type="range" min="0" max="5" step="0.25")
   .scene-mobile-controls(aria-label="Scene controls")
     button(type="button" data-testid="scene-fit" @click="host?.fit()") Fit
-    button(type="button" data-testid="scene-clip" :aria-pressed="clipped" @click="setClipping") Section
+    button(type="button" data-testid="scene-clip" :aria-pressed="clipped" @click="setClipping") Sections {{ clipCount }}
     button(type="button" data-testid="scene-measure-clear" @click="clearMeasurement") Clear measure
     label
       span Explode

@@ -13,10 +13,10 @@ fi
 rm -rf "$WORK"
 mkdir -p "$WORK/build-1" "$WORK/build-2"
 for run in 1 2; do
-  WASM_CACHE="$WORK/build-$run/cache" WASM_OUT="$WORK/build-$run/out" STAGE_ASSETS=0 \
+  WASM_CACHE="$WORK/build-$run/cache" WASM_OUT="$WORK/build-$run/out" STAGE_ASSETS=0 GMSH_PROFILE=occ \
     JOBS="$JOBS" nice "$ROOT/tools/wasm/build.sh" all
 done
-node "$ROOT/tools/wasm/compare-builds.mjs" "$WORK/build-1/out" "$WORK/build-2/out" "$REPORT"
+GMSH_PROFILE=occ node "$ROOT/tools/wasm/compare-builds.mjs" "$WORK/build-1/out" "$WORK/build-2/out" "$REPORT"
 rm -rf "$ROOT/tools/wasm/out"
 cp -a "$WORK/build-1/out" "$ROOT/tools/wasm/out"
 echo "canonical output installed from verified build 1"

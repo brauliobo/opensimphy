@@ -1,6 +1,11 @@
 import * as THREE from 'three'
+import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh'
 import { ResultLayer, turbo } from '../../src/simulation/result-layer'
 import { displayGeometry, type ResultField, type SimulationScene } from '../../src/simulation/scene'
+
+THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree
+THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree
+THREE.Mesh.prototype.raycast = acceleratedRaycast
 
 const scene = {
   source: 'gmsh-authoritative', referencePositions: new Float64Array([0, 0, 0, 2, 0, 0, 0, 2, 0]),
@@ -59,6 +64,9 @@ describe('ResultLayer', () => {
     expect(first.glyphLengthRange![0] / first.sceneDiagonal!).toBeGreaterThanOrEqual(0.003)
     expect(first.glyphLengthRange![1] / first.sceneDiagonal!).toBeLessThanOrEqual(0.04)
     expect(first.glyphColors![0]).toEqual(turbo(0).toArray())
+    const planes = [new THREE.Plane(new THREE.Vector3(1, 0, 0), 0), new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)]
+    result.setClipPlanes(planes, [{ normal: [1, 0, 0], constant: 0 }, { normal: [0, 1, 0], constant: 0 }])
+    expect(result.getState().clipPlaneCounts).toMatchObject({ scalar: 2, glyphs: 2 })
     result.set(vectorField, 1, 'global')
     const second = result.getState()
     expect(second).toMatchObject({ step: 1, time: 3, glyphs: 1 })
@@ -100,5 +108,23 @@ describe('ResultLayer', () => {
     expect(metrics[3]!.center.y - metrics[0]!.center.y).toBeCloseTo(1e6)
     expect(metrics[3]!.center.z - metrics[0]!.center.z).toBeCloseTo(1e6)
     vi.unstubAllGlobals()
+  })
+
+  it('clips and ray-picks tagged tetra section geometry', () => {
+    const tetra = {
+      ...scene,
+      referencePositions: new Float64Array([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1]),
+      nodeTags: new BigUint64Array([1n, 2n, 3n, 4n]),
+      nodeEntityDimensions: new Uint8Array([0, 0, 0, 0]), nodeEntityTags: new Uint32Array([1, 2, 3, 4]),
+      elementBlocks: [{ dimension: 3, entityTag: 8, elementType: 4, elementTags: new BigUint64Array([20n]), connectivity: new BigUint64Array([1n, 2n, 3n, 4n]) }],
+    } satisfies SimulationScene
+    const { result } = layer(tetra)
+    const planes = [new THREE.Plane(new THREE.Vector3(1, 0, 0), -0.2), new THREE.Plane(new THREE.Vector3(0, 1, 0), -0.1)]
+    result.setClipPlanes(planes, [{ normal: [1, 0, 0], constant: -0.2 }, { normal: [0, 1, 0], constant: -0.1 }])
+    expect(result.getState()).toMatchObject({ sectionTriangles: 2, sectionSourceElementTags: ['20', '20'], sectionSourceEntityTags: [8, 8], clipPlaneCounts: { sections: [2, 2] } })
+    const raycaster = new THREE.Raycaster(new THREE.Vector3(2, 0.2, 0.2), new THREE.Vector3(-1, 0, 0))
+    raycaster.firstHitOnly = true
+    expect(result.pick(raycaster)).toMatchObject({ kind: 'section', sourceElementTag: 20n, sourceEntityTag: 8 })
+    result.dispose()
   })
 })

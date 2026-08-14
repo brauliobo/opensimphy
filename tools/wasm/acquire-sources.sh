@@ -35,6 +35,7 @@ acquire() {
 
 acquire gmsh-js "$GMSH_JS_URL" "$GMSH_JS_REVISION" "$GMSH_JS_TREE"
 acquire gmsh "$GMSH_URL" "$GMSH_REVISION" "$GMSH_TREE"
+acquire occt "$OCCT_URL" "$OCCT_REVISION" "$OCCT_TREE"
 acquire getdp "$GETDP_URL" "$GETDP_REVISION" "$GETDP_TREE"
 acquire petsc "$PETSC_URL" "$PETSC_REVISION" "$PETSC_TREE"
 
@@ -55,3 +56,21 @@ rm -rf "$fixture"
 mkdir -p "$fixture"
 cp "$CACHE/src/getdp/tutorials/01-Electrostatics/"microstrip.{geo,pro} "$fixture/"
 patch -d "$fixture" -p1 < "$ROOT/tools/wasm/fixtures/microstrip-onelab.patch"
+
+stage_upstream_fixture() {
+  local name=$1 source=$2
+  rm -rf "$CACHE/fixtures/$name"
+  mkdir -p "$CACHE/fixtures/$name"
+  cp "$CACHE/src/$source"/* "$CACHE/fixtures/$name/"
+}
+
+stage_upstream_fixture radiator getdp/tutorials/02-Thermal
+stage_upstream_fixture electromagnet getdp/tutorials/03-Magnetostatics
+stage_upstream_fixture full-wave getdp/tutorials/05-Full_wave
+patch -d "$CACHE/fixtures" -p1 < "$ROOT/tools/wasm/fixtures/phase4-onelab.patch"
+for fixture in radiator electromagnet full-wave; do
+  if [[ -f "$ROOT/tools/wasm/fixtures/native-meshes/$fixture.msh" ]]; then cp "$ROOT/tools/wasm/fixtures/native-meshes/$fixture.msh" "$CACHE/fixtures/$fixture/reference.msh"; fi
+done
+rm -rf "$CACHE/fixtures/gmsh-rendering"
+mkdir -p "$CACHE/fixtures/gmsh-rendering"
+cp "$CACHE/src/gmsh/benchmarks/misc/"test_{field.pos,displ.geo,displ.pos} "$CACHE/fixtures/gmsh-rendering/"

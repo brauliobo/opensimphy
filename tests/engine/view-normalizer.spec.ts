@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
-import { expandHomogeneousModelStep, parseParsedPosView, parsePosTimes, normalizeListView, normalizeModelView } from '../../src/simulation/view-normalizer'
+import { complexFieldRepresentations, expandHomogeneousModelStep, parseParsedPosView, parsePosTimes, normalizeListView, normalizeModelView } from '../../src/simulation/view-normalizer'
 import x4 from '../../tools/wasm/fixtures/gmsh-x4-model-data.json'
 import view2Provenance from '../../tools/wasm/fixtures/view2.provenance.json'
 
@@ -48,12 +48,12 @@ describe('strict Gmsh list view normalization', () => {
     expect([...cut.coordinates!]).toEqual([0.2, 0.2, 0, 0.4, 0.2, 0])
   })
 
-  it('rejects malformed strides, ambiguous mesh coordinates and inconsistent nodal duplicates', () => {
+  it('rejects malformed strides and ambiguous coordinates while preserving discontinuous duplicates', () => {
     expect(() => normalizeListView(triangleMesh, { name: 'bad', sourceFile: 'bad.pos', dataType: ['ST'], numElements: [2], data: [[1, 2, 3]] })).toThrow('invalid full-timestep stride')
     const ambiguous = { ...triangleMesh, positions: new Float64Array([0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0]) }
     expect(() => normalizeListView(ambiguous, { name: 'bad', sourceFile: 'bad.pos', dataType: ['ST'], numElements: [1], data: [triangleRecord([[0, 0, 0], [1, 0, 0], [0, 1, 0]], [[1, 2, 3]])] })).toThrow('maps to 2 authoritative nodes')
     const first = [[0, 0, 0], [1, 0, 0], [0, 1, 0]], second = [[1, 0, 0], [1, 1, 0], [0, 1, 0]]
-    expect(() => normalizeListView(triangleMesh, { name: 'bad', sourceFile: 'bad.pos', dataType: ['ST'], numElements: [2], data: [[...triangleRecord(first, [[1, 2, 3]]), ...triangleRecord(second, [[99, 4, 3]])]] })).toThrow('inconsistent duplicate values')
+    expect(normalizeListView(triangleMesh, { name: 'discontinuous', sourceFile: 'discontinuous.pos', dataType: ['ST'], numElements: [2], data: [[...triangleRecord(first, [[1, 2, 3]]), ...triangleRecord(second, [[99, 4, 3]])]] })[0]!.association).toBe('element-node')
   })
 
   it('pins authentic upstream five-step Gmsh coverage without claiming GetDP transience', () => {
@@ -137,5 +137,27 @@ describe('strict Gmsh list view normalization', () => {
     expect(() => normalizeListView(duplicateElement, {
       name: 'ambiguous', sourceFile: 'ambiguous.pos', dataType: ['ST'], numElements: [1], data: [triangleRecord([[0, 0, 0], [1, 0, 0], [0, 1, 0]], [[1, 2, 3]])],
     })).toThrow('maps to 2 authoritative elements')
+  })
+
+  it('models complex harmonics as representations instead of timesteps', () => {
+    const source = normalizeModelView(triangleMesh, {
+      name: 'e', sourceFile: 'e.pos', modelName: 'complex',
+      steps: [
+        { dataType: 'NodeData', tags: [10, 20, 30, 40], data: [[3], [0], [-3], [1]], time: 0, numComponents: 1 },
+        { dataType: 'NodeData', tags: [10, 20, 30, 40], data: [[4], [2], [4], [-1]], time: 0, numComponents: 1 },
+      ],
+    })
+    const [real, imaginary, magnitude, phase] = complexFieldRepresentations(source)
+    expect([...real!.steps]).toEqual([0])
+    expect([...real!.values]).toEqual([3, 0, -3, 1])
+    expect([...imaginary!.values]).toEqual([4, 2, 4, -1])
+    expect([...magnitude!.values]).toEqual([5, 2, 5, Math.SQRT2])
+    expect(phase!.values[0]).toBeCloseTo(Math.atan2(4, 3))
+    expect([real!.complexPart, imaginary!.complexPart, magnitude!.complexPart, phase!.complexPart]).toEqual(['real', 'imaginary', 'magnitude', 'phase'])
+    expect(real!.provenance).toMatchObject({ complexSourceSteps: [[0, 1]], complexSourceTimes: [[0, 0]] })
+    source.times[1] = 1
+    const [indexed] = complexFieldRepresentations(source)
+    expect([...indexed!.times]).toEqual([0])
+    expect(indexed!.provenance.complexSourceTimes).toEqual([[0, 1]])
   })
 })
