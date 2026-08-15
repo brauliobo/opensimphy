@@ -113,219 +113,149 @@ const clearCompareDisabledReason = computed(() => {
 })
 </script>
 
-<template>
-  <article
-    class="workbench-shell"
-    :aria-busy="running"
-    :data-execution-mode="executionMode"
-    :data-execution-status="status"
-  >
-    <header class="workbench-header">
-      <div class="workbench-title-block">
-        <p class="eyebrow">Shared workbench</p>
-        <component :is="headingLevel" class="workbench-instrument-title">{{ title }}</component>
-      </div>
-      <section class="workbench-identity" aria-label="Instrument identity">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Identity</component>
-        <slot name="identity">
-          <p>{{ identity || 'Identity not supplied.' }}</p>
-        </slot>
-      </section>
-      <section class="workbench-provenance" aria-label="Provenance summary">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Provenance</component>
-        <slot name="provenance" :provenance="provenance">
-          <dl v-if="provenance">
-            <div>
-              <dt>Source revision</dt>
-              <dd>{{ provenance.sourceRevision }}</dd>
-            </div>
-            <div>
-              <dt>Method relationship</dt>
-              <dd>{{ provenance.methodRelationship }}</dd>
-            </div>
-            <div>
-              <dt>Result status</dt>
-              <dd>{{ provenance.resultStatus }}</dd>
-            </div>
-          </dl>
-          <p v-else>Provenance not supplied.</p>
-        </slot>
-      </section>
-      <section class="workbench-conclusion" aria-label="Conclusion boundary" data-testid="workbench-conclusion">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Conclusion boundary</component>
-        <slot name="conclusion">
-          <p>{{ conclusion || 'No scientific conclusion has been supplied.' }}</p>
-        </slot>
-      </section>
-    </header>
+<template lang="pug">
+article.workbench-shell(
+  :aria-busy="running"
+  :data-execution-mode="executionMode"
+  :data-execution-status="status"
+)
+  header.workbench-header
+    .workbench-title-block
+      p.eyebrow Shared workbench
+      component.workbench-instrument-title(:is="headingLevel") {{ title }}
+    section.workbench-identity(aria-label="Instrument identity")
+      component.workbench-section-title(:is="sectionHeadingLevel") Identity
+      slot(name="identity")
+        p {{ identity || 'Identity not supplied.' }}
+    section.workbench-provenance(aria-label="Provenance summary")
+      component.workbench-section-title(:is="sectionHeadingLevel") Provenance
+      slot(name="provenance" :provenance="provenance")
+        dl(v-if="provenance")
+          div
+            dt Source revision
+            dd {{ provenance.sourceRevision }}
+          div
+            dt Method relationship
+            dd {{ provenance.methodRelationship }}
+          div
+            dt Result status
+            dd {{ provenance.resultStatus }}
+        p(v-else) Provenance not supplied.
+    section.workbench-conclusion(aria-label="Conclusion boundary" data-testid="workbench-conclusion")
+      component.workbench-section-title(:is="sectionHeadingLevel") Conclusion boundary
+      slot(name="conclusion")
+        p {{ conclusion || 'No scientific conclusion has been supplied.' }}
 
-    <p
-      v-if="stateWarning"
-      class="workbench-state-warning inline-error"
-      role="alert"
-      data-testid="workbench-url-state-warning"
-    >
-      {{ stateWarning }}
-    </p>
+  p.workbench-state-warning.inline-error(
+    v-if="stateWarning"
+    role="alert"
+    data-testid="workbench-url-state-warning"
+  ) {{ stateWarning }}
 
-    <div class="workbench-grid">
-      <section class="workbench-region workbench-region-stage" aria-label="Scientific stage">
-        <slot name="stage">
-          <p class="workbench-empty">No scientific stage supplied.</p>
-        </slot>
-      </section>
+  .workbench-grid
+    section.workbench-region.workbench-region-stage(aria-label="Scientific stage")
+      slot(name="stage")
+        p.workbench-empty No scientific stage supplied.
 
-      <section class="workbench-region workbench-region-essential" aria-label="Essential controls">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Essential controls</component>
-        <slot name="essential-controls">
-          <p class="workbench-empty">No essential controls supplied.</p>
-        </slot>
-      </section>
+    section.workbench-region.workbench-region-essential(aria-label="Essential controls")
+      component.workbench-section-title(:is="sectionHeadingLevel") Essential controls
+      slot(name="essential-controls")
+        p.workbench-empty No essential controls supplied.
 
-      <section class="workbench-region workbench-region-actions" aria-label="Execution and snapshot actions">
-        <div class="workbench-execution-actions">
-          <button
-            v-if="executionMode === 'manual' && status !== 'running' && status !== 'unavailable'"
-            class="workbench-primary-action"
+    section.workbench-region.workbench-region-actions(aria-label="Execution and snapshot actions")
+      .workbench-execution-actions
+        button.workbench-primary-action(
+          v-if="executionMode === 'manual' && status !== 'running' && status !== 'unavailable'"
+          type="button"
+          data-testid="workbench-run"
+          @click="emit('run')"
+        ) {{ labels.run }}
+        button(
+          v-if="executionMode === 'manual' && status === 'running'"
+          type="button"
+          data-testid="workbench-cancel"
+          @click="emit('cancel')"
+        ) {{ labels.cancel }}
+        p.workbench-mode-status(
+          v-if="executionMode !== 'manual'"
+          data-testid="workbench-mode-status"
+        ) {{ executionStatus }}
+        button(type="button" data-testid="workbench-reset" @click="emit('reset')") {{ labels.reset }}
+
+      .workbench-snapshot-actions
+        div
+          button(
             type="button"
-            data-testid="workbench-run"
-            @click="emit('run')"
-          >
-            {{ labels.run }}
-          </button>
-          <button
-            v-if="executionMode === 'manual' && status === 'running'"
+            data-testid="workbench-save"
+            :disabled="saveDisabled"
+            :aria-describedby="saveDisabled ? `${shellId}-save-reason` : undefined"
+            @click="emit('save')"
+          ) {{ labels.save }}
+          small(v-if="saveDisabled" :id="`${shellId}-save-reason`") {{ saveDisabledReason }}
+        div
+          button(
             type="button"
-            data-testid="workbench-cancel"
-            @click="emit('cancel')"
-          >
-            {{ labels.cancel }}
-          </button>
-          <p
-            v-if="executionMode !== 'manual'"
-            class="workbench-mode-status"
-            data-testid="workbench-mode-status"
-          >
-            {{ executionStatus }}
-          </p>
-          <button type="button" data-testid="workbench-reset" @click="emit('reset')">
-            {{ labels.reset }}
-          </button>
-        </div>
+            data-testid="workbench-freeze"
+            :disabled="freezeDisabled"
+            :aria-describedby="freezeDisabled ? `${shellId}-freeze-reason` : undefined"
+            @click="emit('freeze')"
+          ) {{ labels.freeze }}
+          small(v-if="freezeDisabled" :id="`${shellId}-freeze-reason`") {{ freezeDisabledReason }}
+        div
+          button(
+            type="button"
+            data-testid="workbench-clear-compare"
+            :disabled="clearCompareDisabled"
+            :aria-describedby="clearCompareDisabled ? `${shellId}-clear-reason` : undefined"
+            @click="emit('clear-compare')"
+          ) {{ labels['clear-compare'] }}
+          small(v-if="clearCompareDisabled" :id="`${shellId}-clear-reason`") {{ clearCompareDisabledReason }}
 
-        <div class="workbench-snapshot-actions">
-          <div>
-            <button
-              type="button"
-              data-testid="workbench-save"
-              :disabled="saveDisabled"
-              :aria-describedby="saveDisabled ? `${shellId}-save-reason` : undefined"
-              @click="emit('save')"
-            >
-              {{ labels.save }}
-            </button>
-            <small v-if="saveDisabled" :id="`${shellId}-save-reason`">{{ saveDisabledReason }}</small>
-          </div>
-          <div>
-            <button
-              type="button"
-              data-testid="workbench-freeze"
-              :disabled="freezeDisabled"
-              :aria-describedby="freezeDisabled ? `${shellId}-freeze-reason` : undefined"
-              @click="emit('freeze')"
-            >
-              {{ labels.freeze }}
-            </button>
-            <small v-if="freezeDisabled" :id="`${shellId}-freeze-reason`">{{ freezeDisabledReason }}</small>
-          </div>
-          <div>
-            <button
-              type="button"
-              data-testid="workbench-clear-compare"
-              :disabled="clearCompareDisabled"
-              :aria-describedby="clearCompareDisabled ? `${shellId}-clear-reason` : undefined"
-              @click="emit('clear-compare')"
-            >
-              {{ labels['clear-compare'] }}
-            </button>
-            <small v-if="clearCompareDisabled" :id="`${shellId}-clear-reason`">
-              {{ clearCompareDisabledReason }}
-            </small>
-          </div>
-        </div>
+      .workbench-execution-state
+        p.workbench-live-status(role="status" aria-live="polite" aria-atomic="true") {{ executionStatus }}
+        .workbench-progress(
+          v-if="running"
+          role="progressbar"
+          aria-label="Execution progress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          :aria-valuenow="progress"
+        )
+          i(:style="{ width: `${progress}%` }")
 
-        <div class="workbench-execution-state">
-          <p class="workbench-live-status" role="status" aria-live="polite" aria-atomic="true">
-            {{ executionStatus }}
-          </p>
-          <div
-            v-if="running"
-            class="workbench-progress"
-            role="progressbar"
-            aria-label="Execution progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            :aria-valuenow="progress"
-          >
-            <i :style="{ width: `${progress}%` }" />
-          </div>
-        </div>
+      .workbench-action-errors(
+        v-if="Object.keys(actionErrors).length"
+        role="alert"
+        aria-live="assertive"
+      )
+        p(v-for="(error, action) in actionErrors" :key="action" :data-action-error="action") {{ error }}
 
-        <div
-          v-if="Object.keys(actionErrors).length"
-          class="workbench-action-errors"
-          role="alert"
-          aria-live="assertive"
-        >
-          <p v-for="(error, action) in actionErrors" :key="action" :data-action-error="action">
-            {{ error }}
-          </p>
-        </div>
-      </section>
+    section.workbench-region.workbench-region-findings(aria-label="Findings")
+      component.workbench-section-title(:is="sectionHeadingLevel") Findings
+      slot(name="findings")
+        p.workbench-empty No finding has been evaluated.
 
-      <section class="workbench-region workbench-region-findings" aria-label="Findings">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Findings</component>
-        <slot name="findings">
-          <p class="workbench-empty">No finding has been evaluated.</p>
-        </slot>
-      </section>
+    section.workbench-region.workbench-region-controls(aria-label="Full controls and method")
+      component.workbench-section-title(:is="sectionHeadingLevel") Full controls
+      slot(name="controls")
+        p.workbench-empty No additional controls supplied.
+      details.workbench-disclosure.workbench-method-disclosure
+        summary Method details
+        .workbench-disclosure-body
+          slot(name="method")
+            p.workbench-empty No additional method detail supplied.
 
-      <section class="workbench-region workbench-region-controls" aria-label="Full controls and method">
-        <component :is="sectionHeadingLevel" class="workbench-section-title">Full controls</component>
-        <slot name="controls">
-          <p class="workbench-empty">No additional controls supplied.</p>
-        </slot>
-        <details class="workbench-disclosure workbench-method-disclosure">
-          <summary>Method details</summary>
-          <div class="workbench-disclosure-body">
-            <slot name="method">
-              <p class="workbench-empty">No additional method detail supplied.</p>
-            </slot>
-          </div>
-        </details>
-      </section>
+    section.workbench-region.workbench-region-evidence(aria-label="Evidence details")
+      details.workbench-disclosure
+        summary Evidence and data
+        .workbench-disclosure-body
+          slot(name="evidence")
+            p.workbench-empty No additional evidence supplied.
 
-      <section class="workbench-region workbench-region-evidence" aria-label="Evidence details">
-        <details class="workbench-disclosure">
-          <summary>Evidence and data</summary>
-          <div class="workbench-disclosure-body">
-            <slot name="evidence">
-              <p class="workbench-empty">No additional evidence supplied.</p>
-            </slot>
-          </div>
-        </details>
-      </section>
-
-      <section class="workbench-region workbench-region-raw" aria-label="Raw result">
-        <details class="workbench-disclosure">
-          <summary>Raw result</summary>
-          <div class="workbench-disclosure-body">
-            <slot name="raw">
-              <p class="workbench-empty">No raw result supplied.</p>
-            </slot>
-          </div>
-        </details>
-      </section>
-    </div>
-  </article>
+    section.workbench-region.workbench-region-raw(aria-label="Raw result")
+      details.workbench-disclosure
+        summary Raw result
+        .workbench-disclosure-body
+          slot(name="raw")
+            p.workbench-empty No raw result supplied.
 </template>
