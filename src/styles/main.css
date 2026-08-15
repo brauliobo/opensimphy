@@ -1157,6 +1157,10 @@ main {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.author-collection-grid {
+  grid-template-columns: 1fr;
+}
+
 .topic-featured-grid code {
   color: var(--cyan);
   overflow-wrap: anywhere;

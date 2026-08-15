@@ -164,8 +164,8 @@ for (const route of tourRoutes) {
   })
 }
 
-test('/labs/simulations owns only the Fiddle source archive and no workers', async ({ page }) => {
-  const activity = await gotoColdRoute(page, '/labs/simulations')
+test('/labs/authors/chenopdodium owns only the Fiddle source archive and no workers', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/authors/chenopdodium')
   await expect(page.getByTestId('fiddle-archive-ready')).toBeVisible()
 
   expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
@@ -174,14 +174,22 @@ test('/labs/simulations owns only the Fiddle source archive and no workers', asy
   await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
 })
 
-test('/labs/simulations/:slug owns only the Fiddle source archive and keeps live execution opt-in', async ({ page }) => {
-  const activity = await gotoColdRoute(page, '/labs/simulations/wqoycabp')
+test('/labs/authors/chenopdodium/:slug owns only the Fiddle source archive and keeps live execution opt-in', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/authors/chenopdodium/wqoycabp')
   await expect(page.getByTestId('fiddle-record-ready')).toBeVisible()
 
   expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
   expect(workerOwners(activity)).toEqual([])
   await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
 })
+
+test('legacy Fiddle routes redirect to the canonical author collection', async ({ page }) => {
+  await page.goto('/labs/simulations/wqoycabp?q=spin&page=3')
+
+  await expect(page).toHaveURL(/\/labs\/authors\/chenopdodium\/wqoycabp\?q=spin&page=3$/)
+  await expect(page.getByTestId('fiddle-record-ready')).toBeVisible()
+})
+
 const earthDocumentSlug = 'for-your-understanding--ab8c1d3e7b71'
 const earthRoutes = [
   {
@@ -284,9 +292,11 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(4)
-  await expect(page.locator('.lab-choice-grid a[href="/labs/simulations"]')).toContainText('Fiddle source archive')
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
+  await expect(page.locator('.lab-choice-grid a[href*="chenopdodium"]')).toHaveCount(0)
+  await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('Chenopdodium / Chantal Roth')
+  await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('780 external source records / 16 profile pages')
   await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')
 })
 

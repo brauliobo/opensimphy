@@ -41,10 +41,17 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
       strong EARTH method workbench
       p Run one bounded method for the representative atmospheric scale-height program without entering the evidence registry.
       small Open EARTH-PLAN-008 →
-    RouterLink(to="/labs/simulations")
-      span 04 / SOURCE ARCHIVE
-      strong Fiddle source archive
-      p Browse all 780 preserved JSFiddle records across the 16 captured profile pages without executing their source in OpenSimPhy.
-      small Open the source archive ->
   p.lab-intro Choose another EARTH program from the full canonical #[RouterLink.text-link(to="/earth/programs") Program Registry].
+  section.source-section.author-collection-section(v-if="registryReady")
+    .section-heading
+      div
+        p.eyebrow External authors and sources
+        h2 Author collections
+      p Preserved external-source indexes are separated from OpenSimPhy-owned laboratories and do not imply local execution or scientific validation.
+    .topic-featured-grid.author-collection-grid
+      RouterLink(:to="{ name: 'fiddle-archive' }")
+        span Chenopdodium / Chantal Roth
+        strong Fiddle source archive
+        p 780 external source records / 16 profile pages. External runtime status pending.
+        small Open the author collection ->
 </template>

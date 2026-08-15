@@ -103,7 +103,7 @@ onMounted(async () => {
         p.eyebrow Source archive / Workbench 04
         h2 JSFiddle archive
       p The captured registry exposes 780 JSFiddle metadata records across 16 source profile pages. It is a provenance index, not a local simulation or validation result.
-    RouterLink.button-link(to="/labs/simulations") Browse the Fiddle source archive
+    RouterLink.button-link(:to="{ name: 'fiddle-archive' }") Browse the Fiddle source archive
 
   section.source-section.two-column-section
     article.audit-note

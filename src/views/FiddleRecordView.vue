@@ -15,7 +15,7 @@ const error = ref('')
 const SAFE_SLUG = /^[A-Za-z0-9_-]{1,128}$/
 const archiveQueryKeys = ['q', 'viz', 'page'] as const
 const backToArchive = computed(() => ({
-  path: '/labs/simulations',
+  name: 'fiddle-archive',
   query: Object.fromEntries(archiveQueryKeys.flatMap((key) => typeof route.query[key] === 'string' ? [[key, route.query[key]]] : [])),
 }))
 const source = computed(() => fiddleRegistry.source.value)
@@ -98,7 +98,7 @@ function formatFlagValue(key: keyof FiddleFlags): string {
   template(v-else-if="record")
     header.fiddle-record-header
       .fiddle-record-index
-        p.eyebrow Archived record
+        p.eyebrow Chenopdodium / external source record
         strong Record {{ record.position }} / {{ source?.recordCount }}
         span Profile page {{ record.page }} / {{ source?.profilePages }}
       .fiddle-record-title
@@ -107,13 +107,15 @@ function formatFlagValue(key: keyof FiddleFlags): string {
         p
           code {{ record.slug }} / version {{ record.version }}
       .fiddle-record-status
+        span CHENOPDODIUM
         span ARCHIVED METADATA
+        span EXTERNAL RUNTIME STATUS PENDING
         span {{ record.documentType }}
         span {{ record.library }}
 
     section.caveat-banner(data-testid="fiddle-record-boundary")
       strong METADATA FIRST / PREVIEW OPT-IN
-      p This detail page is usable with JSFiddle blocked. The record below is preserved metadata; the external live preview is a separate third-party network request and is not a local OpenSimPhy reproduction. Reproduction is not validation.
+      p Archive integrity: verified within the 780-record / 16-page collection; source hash checked. External runtime: browser verification pending and reported separately; this record does not imply successful execution. Scientific validation: not performed / false.
 
     section.fiddle-record-section
       .section-heading

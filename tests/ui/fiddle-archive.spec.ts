@@ -16,8 +16,8 @@ function createTestRouter() {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/labs/simulations', name: 'fiddle-archive', component: FiddleArchiveView },
-      { path: '/labs/simulations/:slug', name: 'fiddle-record', component: FiddleRecordView, props: true },
+      { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: FiddleArchiveView },
+      { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: FiddleRecordView, props: true },
     ],
   })
 }
@@ -35,7 +35,7 @@ describe('Fiddle archive and detail surfaces', () => {
 
   it('loads the full 780-record archive with 16 actual source pages and one page of cards', async () => {
     const router = createTestRouter()
-    await router.push('/labs/simulations')
+    await router.push('/labs/authors/chenopdodium')
     const wrapper = mount(FiddleArchiveView, { global: { plugins: [router] } })
     await flushPromises()
 
@@ -45,11 +45,14 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(wrapper.get('.fiddle-results-header h2').text()).toBe('Records 1-50')
     expect(wrapper.get('button[aria-label="Source profile page 16, records 750-780"]').text()).toContain('750-780')
     expect(wrapper.get('.fiddle-page-footer a').attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Archive integrity: verified 780 records / 16 pages / source hash checked')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Scientific validation: not performed / false')
+    expect(wrapper.get('[data-testid="fiddle-card-1"]').text()).toContain('External runtime status pending')
   })
 
   it('links the selected archive and record pages to their captured profile pages', async () => {
     const archiveRouter = createTestRouter()
-    await archiveRouter.push('/labs/simulations')
+    await archiveRouter.push('/labs/authors/chenopdodium')
     const archiveWrapper = mount(FiddleArchiveView, { global: { plugins: [archiveRouter] } })
     await flushPromises()
 
@@ -59,7 +62,7 @@ describe('Fiddle archive and detail surfaces', () => {
 
     const record = registry.records.find(({ page }) => page === 16)!
     const recordRouter = createTestRouter()
-    await recordRouter.push(`/labs/simulations/${record.slug}`)
+    await recordRouter.push(`/labs/authors/chenopdodium/${record.slug}`)
     const recordWrapper = mount(FiddleRecordView, { props: { slug: record.slug }, global: { plugins: [recordRouter] } })
     await flushPromises()
 
@@ -70,7 +73,7 @@ describe('Fiddle archive and detail surfaces', () => {
 
   it('owns search, visualization, and source page state in the URL and rejects an arbitrary page', async () => {
     const router = createTestRouter()
-    await router.push('/labs/simulations?q=spin&viz=3D%20WebGL%2Fcanvas&page=999')
+    await router.push('/labs/authors/chenopdodium?q=spin&viz=3D%20WebGL%2Fcanvas&page=999')
     const wrapper = mount(FiddleArchiveView, { global: { plugins: [router] } })
     await flushPromises()
 
@@ -87,12 +90,12 @@ describe('Fiddle archive and detail surfaces', () => {
 
   it('fails closed for an unknown record without creating a live frame', async () => {
     const router = createTestRouter()
-    await router.push('/labs/simulations/not-in-the-archive')
+    await router.push('/labs/authors/chenopdodium/not-in-the-archive')
     const wrapper = mount(FiddleRecordView, { props: { slug: 'not-in-the-archive' }, global: { plugins: [router] } })
     await flushPromises()
 
     expect(wrapper.get('[data-testid="fiddle-record-error"]').text()).toContain('not present')
-    expect(wrapper.get('[data-testid="fiddle-record-error"] a').attributes('href')).toBe('/labs/simulations')
+    expect(wrapper.get('[data-testid="fiddle-record-error"] a').attributes('href')).toBe('/labs/authors/chenopdodium')
     expect(wrapper.find('iframe').exists()).toBe(false)
   })
 
@@ -102,11 +105,13 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(record.sourceUrl).toBe('https://jsfiddle.net/Chenopdodium/wqoycabp/')
     expect(record.embedUrl).toBe('https://jsfiddle.net/Chenopdodium/wqoycabp/show/')
     const router = createTestRouter()
-    await router.push(`/labs/simulations/${record.slug}`)
+    await router.push(`/labs/authors/chenopdodium/${record.slug}`)
     const wrapper = mount(FiddleRecordView, { props: { slug: record.slug }, global: { plugins: [router] } })
     await flushPromises()
 
     expect(wrapper.find('[data-testid="fiddle-live-iframe"]').exists()).toBe(false)
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('External runtime: browser verification pending')
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('Scientific validation: not performed / false')
     await wrapper.get('[data-testid="fiddle-live-activate"]').trigger('click')
 
     const iframe = wrapper.get<HTMLIFrameElement>('[data-testid="fiddle-live-iframe"]')
@@ -123,7 +128,7 @@ describe('Fiddle archive and detail surfaces', () => {
     const firstRecord = registry.records[0]!
     const secondRecord = registry.records[1]!
     const router = createTestRouter()
-    await router.push(`/labs/simulations/${firstRecord.slug}`)
+    await router.push(`/labs/authors/chenopdodium/${firstRecord.slug}`)
     const wrapper = mount(FiddleRecordView, { props: { slug: firstRecord.slug }, global: { plugins: [router] } })
     await flushPromises()
 

@@ -18,7 +18,7 @@ const detailLocation = computed(() => ({
 <template lang="pug">
 article.fiddle-card(:data-testid="`fiddle-card-${record.position}`")
   .fiddle-card-index
-    span Fiddle {{ record.position }} / source page {{ record.page }}
+    span Chenopdodium / Fiddle {{ record.position }} / source page {{ record.page }}
     span {{ record.position.toString().padStart(4, '0') }}
   h3
     RouterLink.fiddle-card-title(:to="detailLocation") {{ record.title }}
@@ -35,6 +35,6 @@ article.fiddle-card(:data-testid="`fiddle-card-${record.position}`")
       dt Source panels
       dd {{ record.panelBytes.html.toLocaleString('en-US') }} HTML / {{ record.panelBytes.js.toLocaleString('en-US') }} JS / {{ record.panelBytes.css.toLocaleString('en-US') }} CSS
   .fiddle-card-footer
-    span {{ record.controls.length }} recorded controls
+    span External runtime status pending
     RouterLink.text-link(:to="detailLocation") View metadata ->
 </template>

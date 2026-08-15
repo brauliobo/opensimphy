@@ -18,8 +18,8 @@ const routes = [
   { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' } },
   { path: '/atlas', name: 'atlas', component: { template: '<div />' } },
   { path: '/labs', name: 'labs', component: { template: '<div />' } },
-  { path: '/labs/simulations', name: 'fiddle-archive', component: { template: '<div />' } },
-  { path: '/labs/simulations/:slug', name: 'fiddle-record', component: { template: '<div />' } },
+  { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: { template: '<div />' } },
+  { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: { template: '<div />' } },
   { path: '/labs/core', name: 'core', component: { template: '<div />' } },
   { path: '/labs/walls', name: 'walls', component: { template: '<div />' } },
   { path: '/labs/earth/:programId', name: 'earth-workbench', component: { template: '<div />' } },
@@ -261,8 +261,8 @@ describe('responsive navigation state', () => {
 
   it.each([
     '/labs',
-    '/labs/simulations',
-    '/labs/simulations/source-record',
+    '/labs/authors/chenopdodium',
+    '/labs/authors/chenopdodium/source-record',
     '/labs/core',
     '/labs/walls',
     '/labs/earth/EARTH-PLAN-008',
@@ -293,8 +293,19 @@ describe('responsive navigation state', () => {
     expect(appRouter.resolve('/walls').name).toBe('walls')
     expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').name).toBe('earth-workbench')
     expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').params.programId).toBe('EARTH-PLAN-008')
-    expect(appRouter.resolve('/labs/simulations').name).toBe('fiddle-archive')
-    expect(appRouter.resolve('/labs/simulations/source-record').name).toBe('fiddle-record')
+    expect(appRouter.resolve('/labs/authors/chenopdodium').name).toBe('fiddle-archive')
+    expect(appRouter.resolve('/labs/authors/chenopdodium/source-record').name).toBe('fiddle-record')
+    expect(appRouter.resolve('/labs/simulations').name).toBe('legacy-fiddle-archive')
+    expect(appRouter.resolve('/labs/simulations/source-record').name).toBe('legacy-fiddle-record')
+  })
+
+  it('redirects legacy Fiddle URLs to the author collection with slug and query intact', async () => {
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    await appRouter.push('/labs/simulations/source-record?q=spin&page=3')
+    await appRouter.isReady()
+
+    expect(appRouter.currentRoute.value.name).toBe('fiddle-record')
+    expect(appRouter.currentRoute.value.fullPath).toBe('/labs/authors/chenopdodium/source-record?q=spin&page=3')
   })
 
   it('updates the document title from route metadata', async () => {

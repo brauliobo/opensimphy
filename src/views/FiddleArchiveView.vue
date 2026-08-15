@@ -114,7 +114,7 @@ function hydrateFromRoute(): void {
   }
   if (!sameRouteQuery(nextQuery)) {
     preservingNotice = true
-    void router.replace({ path: '/labs/simulations', query: nextQuery }).finally(() => {
+    void router.replace({ name: 'fiddle-archive', query: nextQuery }).finally(() => {
       preservingNotice = false
     })
   } else {
@@ -124,14 +124,14 @@ function hydrateFromRoute(): void {
 
 function commitFilters(): void {
   page.value = 1
-  void router.replace({ path: '/labs/simulations', query: archiveQuery.value })
+  void router.replace({ name: 'fiddle-archive', query: archiveQuery.value })
 }
 
 function changePage(nextPage: number): void {
   const maximum = source.value?.profilePages ?? 1
   page.value = Math.min(Math.max(nextPage, 1), maximum)
   routeNotice.value = ''
-  void router.replace({ path: '/labs/simulations', query: archiveQuery.value })
+  void router.replace({ name: 'fiddle-archive', query: archiveQuery.value })
 }
 
 function recordRange(pageRecords: readonly FiddleRecord[]): { first: number; last: number; count: number } {
@@ -161,9 +161,9 @@ function sourcePageLabel(pageNumber: number): string {
 .view.fiddle-archive-view(:data-testid="archiveReady ? 'fiddle-archive-ready' : undefined")
   header.view-header
     div
-      p.eyebrow Workbench 04 / source archive
+      p.eyebrow Author collection / Chenopdodium
       h1 Fiddle source archive
-      p Archive metadata for a preserved JSFiddle profile. It is a source index, not a local simulation catalogue.
+      p Archive metadata for the Chenopdodium / Chantal Roth JSFiddle profile. It is an external source index, not a local OpenSimPhy simulation catalogue.
     .header-stat(v-if="archiveReady")
       strong {{ source?.recordCount }}
       span archived records
@@ -172,7 +172,7 @@ function sourcePageLabel(pageNumber: number): string {
 
   section.caveat-banner(data-testid="fiddle-source-boundary")
     strong ARCHIVED METADATA / EXTERNAL EXECUTION
-    p This page reads only the checked-in source archive. An external live preview is optional third-party network execution; reproduction is not validation and no Fiddle source runs in the OpenSimPhy origin.
+    p Archive integrity: verified 780 records / 16 pages / source hash checked. External runtime: browser verification pending and reported separately; archive presence does not imply successful execution. Scientific validation: not performed / false.
 
   .loading-plate(v-if="registryLoading" data-testid="fiddle-archive-loading" aria-live="polite") Loading Fiddle source archive metadata...
   .empty-state(v-else-if="registryError" role="alert" data-testid="fiddle-archive-error")
