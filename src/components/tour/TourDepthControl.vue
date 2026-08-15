@@ -16,51 +16,38 @@ function selectDepth(depth: ReadingDepth): void {
 }
 </script>
 
-<template>
-  <fieldset
-    class="tour-depth-control"
-    data-testid="depth-control"
-    :aria-describedby="descriptionId"
-  >
-    <legend>Reading depth</legend>
-    <p :id="descriptionId" class="tour-depth-introduction">
-      Change how much scientific detail is shown without changing your place in the Tour.
-    </p>
+<template lang="pug">
+fieldset.tour-depth-control(data-testid="depth-control" :aria-describedby="descriptionId")
+  legend Reading depth
+  p.tour-depth-introduction(:id="descriptionId") Change how much scientific detail is shown without changing your place in the Tour.
 
-    <label class="tour-depth-option tour-touch-target">
-      <input
-        :name="radioName"
-        type="radio"
-        value="guided"
-        data-testid="reading-depth-guided"
-        :checked="progress.depth.value === 'guided'"
-        :aria-describedby="guidedDescriptionId"
-        @change="selectDepth('guided')"
-      >
-      <span class="tour-depth-option-copy">
-        <strong>Guided</strong>
-        <span :id="guidedDescriptionId">Essential controls and plain-language findings.</span>
-      </span>
-    </label>
+  label.tour-depth-option.tour-touch-target
+    input(
+      :name="radioName"
+      type="radio"
+      value="guided"
+      data-testid="reading-depth-guided"
+      :checked="progress.depth.value === 'guided'"
+      :aria-describedby="guidedDescriptionId"
+      @change="selectDepth('guided')"
+    )
+    span.tour-depth-option-copy
+      strong Guided
+      span(:id="guidedDescriptionId") Essential controls and plain-language findings.
 
-    <label class="tour-depth-option tour-touch-target">
-      <input
-        :name="radioName"
-        type="radio"
-        value="technical"
-        data-testid="reading-depth-technical"
-        :checked="progress.depth.value === 'technical'"
-        :aria-describedby="technicalDescriptionId"
-        @change="selectDepth('technical')"
-      >
-      <span class="tour-depth-option-copy">
-        <strong>Technical</strong>
-        <span :id="technicalDescriptionId">Guided material plus numerical inputs, assumptions, and the full dimension basis.</span>
-      </span>
-    </label>
+  label.tour-depth-option.tour-touch-target
+    input(
+      :name="radioName"
+      type="radio"
+      value="technical"
+      data-testid="reading-depth-technical"
+      :checked="progress.depth.value === 'technical'"
+      :aria-describedby="technicalDescriptionId"
+      @change="selectDepth('technical')"
+    )
+    span.tour-depth-option-copy
+      strong Technical
+      span(:id="technicalDescriptionId") Guided material plus numerical inputs, assumptions, and the full dimension basis.
 
-    <p v-if="progress.persistenceError.value" class="tour-depth-persistence-error" role="alert">
-      Your reading depth changed for this visit, but it could not be saved in this browser.
-    </p>
-  </fieldset>
+  p.tour-depth-persistence-error(v-if="progress.persistenceError.value" role="alert") Your reading depth changed for this visit, but it could not be saved in this browser.
 </template>

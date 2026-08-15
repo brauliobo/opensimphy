@@ -387,271 +387,209 @@ onUnmounted(() => {
 })
 </script>
 
-<template>
-  <div
-    class="view tour-lesson-view"
-    :data-testid="!loading && lessonRecord ? 'tour-lesson-ready' : undefined"
-  >
-    <p v-if="loading" class="tour-loading" role="status">Loading Tour lesson...</p>
+<template lang="pug">
+.view.tour-lesson-view(:data-testid="!loading && lessonRecord ? 'tour-lesson-ready' : undefined")
+  p.tour-loading(v-if="loading" role="status") Loading Tour lesson...
 
-    <div v-else-if="loadError" class="empty-state" role="alert" data-testid="tour-lesson-error">
-      <h1>Lesson unavailable</h1>
-      <p>{{ loadError }}</p>
-      <RouterLink to="/tour">Return to the Tour</RouterLink>
-    </div>
+  .empty-state(v-else-if="loadError" role="alert" data-testid="tour-lesson-error")
+    h1 Lesson unavailable
+    p {{ loadError }}
+    RouterLink(to="/tour") Return to the Tour
 
-    <div v-else-if="notFound" class="empty-state" data-testid="tour-lesson-not-found">
-      <h1>Lesson not found</h1>
-      <p>The requested chapter and lesson are not declared together.</p>
-      <RouterLink to="/tour">Return to the Tour</RouterLink>
-    </div>
+  .empty-state(v-else-if="notFound" data-testid="tour-lesson-not-found")
+    h1 Lesson not found
+    p The requested chapter and lesson are not declared together.
+    RouterLink(to="/tour") Return to the Tour
 
-    <template v-else-if="lessonRecord && chapterRecord">
-      <header class="tour-lesson-header">
-        <div>
-          <RouterLink :to="`/tour/${encodeURIComponent(chapterRecord.id)}`">{{ chapterRecord.title }}</RouterLink>
-          <p class="eyebrow">{{ contextLabel }}</p>
-          <p v-if="isQuickPath && progress.depth.value === 'technical'" data-testid="quick-technical-estimate">
-            The time shown is the Guided quick estimate; Technical depth adds extension material.
-          </p>
-        </div>
-        <div class="tour-lesson-title">
-          <h1>{{ lessonRecord.title }}</h1>
-          <p>{{ lessonRecord.answerPreview }}</p>
-        </div>
-        <div class="tour-lesson-controls">
-          <TourDepthControl />
-          <RouterLink v-if="isQuickPath" :to="fullLessonLocation" data-testid="full-lesson-link">Open full lesson</RouterLink>
-          <span v-if="currentComplete" class="status-chip" data-testid="lesson-completed-state">
-            {{ isQuickPath ? 'Station completed' : 'Lesson completed' }}
-          </span>
-        </div>
-        <details class="tour-metadata lesson-attribution">
-          <summary>Lesson attribution</summary>
-          <dl>
-            <dt>Claim class</dt>
-            <dd>{{ lessonRecord.attribution.claimClass }}</dd>
-            <dt>Evidence</dt>
-            <dd>{{ attributionEvidence(lessonRecord.attribution) }}</dd>
-            <dt>Source revision</dt>
-            <dd>{{ lessonRecord.attribution.sourceRevision }}</dd>
-            <dt>Source locator</dt>
-            <dd>{{ lessonRecord.attribution.sourceLocator }}</dd>
-          </dl>
-        </details>
-      </header>
+  template(v-else-if="lessonRecord && chapterRecord")
+    header.tour-lesson-header
+      div
+        RouterLink(:to="`/tour/${encodeURIComponent(chapterRecord.id)}`") {{ chapterRecord.title }}
+        p.eyebrow {{ contextLabel }}
+        p(v-if="isQuickPath && progress.depth.value === 'technical'" data-testid="quick-technical-estimate") The time shown is the Guided quick estimate; Technical depth adds extension material.
+      .tour-lesson-title
+        h1 {{ lessonRecord.title }}
+        p {{ lessonRecord.answerPreview }}
+      .tour-lesson-controls
+        TourDepthControl
+        RouterLink(v-if="isQuickPath" :to="fullLessonLocation" data-testid="full-lesson-link") Open full lesson
+        span.status-chip(v-if="currentComplete" data-testid="lesson-completed-state") {{ isQuickPath ? 'Station completed' : 'Lesson completed' }}
+      details.tour-metadata.lesson-attribution
+        summary Lesson attribution
+        dl
+          dt Claim class
+          dd {{ lessonRecord.attribution.claimClass }}
+          dt Evidence
+          dd {{ attributionEvidence(lessonRecord.attribution) }}
+          dt Source revision
+          dd {{ lessonRecord.attribution.sourceRevision }}
+          dt Source locator
+          dd {{ lessonRecord.attribution.sourceLocator }}
 
-      <div
-        ref="lessonSections"
-        class="tour-lesson-sections"
-        @click="recordEventSection"
-        @focusin="recordEventSection"
-      >
-        <section id="question" tabindex="-1" data-tour-section="question" aria-labelledby="question-heading">
-          <p class="eyebrow">01 / Question</p>
-          <h2 id="question-heading">Question</h2>
-          <p class="tour-question">{{ lessonRecord.question }}</p>
-        </section>
+    .tour-lesson-sections(ref="lessonSections" @click="recordEventSection" @focusin="recordEventSection")
+      section#question(tabindex="-1" data-tour-section="question" aria-labelledby="question-heading")
+        p.eyebrow 01 / Question
+        h2#question-heading Question
+        p.tour-question {{ lessonRecord.question }}
 
-        <section id="observe" tabindex="-1" data-tour-section="observe" aria-labelledby="observe-heading">
-          <p class="eyebrow">02 / Observe</p>
-          <h2 id="observe-heading">Observe</h2>
-          <article class="tour-block" data-testid="observation-stage">
-            <h3>{{ lessonRecord.observationStage.title }}</h3>
-            <p>{{ lessonRecord.observationStage.question }}</p>
-            <ol>
-              <li
-                v-for="item in lessonRecord.observationStage.items"
-                :key="item.id"
-                :data-observation-id="item.id"
-              >
-                <strong>{{ item.label }}</strong>
-                <p>{{ item.value }} {{ item.unit }}</p>
-                <p>Role: {{ observationRole(item.role) }}</p>
-                <p>{{ item.explanation }}</p>
-                <p>Evidence: {{ item.evidenceRefs.join(', ') }}</p>
-              </li>
-            </ol>
-            <p><strong>Observation conclusion:</strong> {{ lessonRecord.observationStage.conclusion }}</p>
-            <details class="tour-metadata">
-              <summary>Observation attribution</summary>
-              <dl>
-                <dt>Claim class</dt>
-                <dd>{{ lessonRecord.observationStage.attribution.claimClass }}</dd>
-                <dt>Method relationship</dt>
-                <dd>{{ lessonRecord.observationStage.attribution.methodRelationship }}</dd>
-                <dt>Source revision</dt>
-                <dd>{{ lessonRecord.observationStage.attribution.sourceRevision }}</dd>
-                <dt>Source locator</dt>
-                <dd>{{ lessonRecord.observationStage.attribution.sourceLocator }}</dd>
-                <dt>Evidence</dt>
-                <dd>{{ attributionEvidence(lessonRecord.observationStage.attribution) }}</dd>
-              </dl>
-              <ul v-if="lessonRecord.observationStage.attribution.caveats.length">
-                <li v-for="caveat in lessonRecord.observationStage.attribution.caveats" :key="caveat">{{ caveat }}</li>
-              </ul>
-            </details>
-          </article>
-        </section>
+      section#observe(tabindex="-1" data-tour-section="observe" aria-labelledby="observe-heading")
+        p.eyebrow 02 / Observe
+        h2#observe-heading Observe
+        article.tour-block(data-testid="observation-stage")
+          h3 {{ lessonRecord.observationStage.title }}
+          p {{ lessonRecord.observationStage.question }}
+          ol
+            li(
+              v-for="item in lessonRecord.observationStage.items"
+              :key="item.id"
+              :data-observation-id="item.id"
+            )
+              strong {{ item.label }}
+              p {{ item.value }} {{ item.unit }}
+              p Role: {{ observationRole(item.role) }}
+              p {{ item.explanation }}
+              p Evidence: {{ item.evidenceRefs.join(', ') }}
+          p #[strong Observation conclusion:] {{ lessonRecord.observationStage.conclusion }}
+          details.tour-metadata
+            summary Observation attribution
+            dl
+              dt Claim class
+              dd {{ lessonRecord.observationStage.attribution.claimClass }}
+              dt Method relationship
+              dd {{ lessonRecord.observationStage.attribution.methodRelationship }}
+              dt Source revision
+              dd {{ lessonRecord.observationStage.attribution.sourceRevision }}
+              dt Source locator
+              dd {{ lessonRecord.observationStage.attribution.sourceLocator }}
+              dt Evidence
+              dd {{ attributionEvidence(lessonRecord.observationStage.attribution) }}
+            ul(v-if="lessonRecord.observationStage.attribution.caveats.length")
+              li(v-for="caveat in lessonRecord.observationStage.attribution.caveats" :key="caveat") {{ caveat }}
 
-        <section id="explain" tabindex="-1" data-tour-section="explain" aria-labelledby="explain-heading">
-          <p class="eyebrow">03 / Explain</p>
-          <h2 id="explain-heading">Explain</h2>
-          <article v-for="block in explainBlocks" :key="block.id" class="tour-block" :data-block-id="block.id">
-            <p class="tour-block-kind">{{ block.kind }}</p>
-            <h3>{{ block.title }}</h3>
-            <p v-for="line in block.body" :key="line">{{ line }}</p>
-            <details class="tour-metadata">
-              <summary>Source and caveats</summary>
-              <dl>
-                <dt>Claim class</dt>
-                <dd>{{ block.claimClass }}</dd>
-                <dt>Method relationship</dt>
-                <dd>{{ block.methodRelationship }}</dd>
-                <dt>Source revision</dt>
-                <dd>{{ block.sourceRevision }}</dd>
-                <dt>Source locator</dt>
-                <dd>{{ block.sourceLocator }}</dd>
-                <dt>Evidence</dt>
-                <dd>{{ attributionEvidence(block) }}</dd>
-              </dl>
-              <ul v-if="block.caveats.length">
-                <li v-for="caveat in block.caveats" :key="caveat">{{ caveat }}</li>
-              </ul>
-            </details>
-          </article>
-        </section>
+      section#explain(tabindex="-1" data-tour-section="explain" aria-labelledby="explain-heading")
+        p.eyebrow 03 / Explain
+        h2#explain-heading Explain
+        article.tour-block(v-for="block in explainBlocks" :key="block.id" :data-block-id="block.id")
+          p.tour-block-kind {{ block.kind }}
+          h3 {{ block.title }}
+          p(v-for="line in block.body" :key="line") {{ line }}
+          details.tour-metadata
+            summary Source and caveats
+            dl
+              dt Claim class
+              dd {{ block.claimClass }}
+              dt Method relationship
+              dd {{ block.methodRelationship }}
+              dt Source revision
+              dd {{ block.sourceRevision }}
+              dt Source locator
+              dd {{ block.sourceLocator }}
+              dt Evidence
+              dd {{ attributionEvidence(block) }}
+            ul(v-if="block.caveats.length")
+              li(v-for="caveat in block.caveats" :key="caveat") {{ caveat }}
 
-        <section id="equation-ladder" tabindex="-1" data-tour-section="equation-ladder" aria-labelledby="equation-ladder-heading">
-          <p class="eyebrow">04 / Equation ladder</p>
-          <h2 id="equation-ladder-heading">Equation ladder</h2>
-          <EquationLadder :steps="equationSteps" />
-        </section>
+      section#equation-ladder(tabindex="-1" data-tour-section="equation-ladder" aria-labelledby="equation-ladder-heading")
+        p.eyebrow 04 / Equation ladder
+        h2#equation-ladder-heading Equation ladder
+        EquationLadder(:steps="equationSteps")
 
-        <section id="try" tabindex="-1" data-tour-section="try" aria-labelledby="try-heading">
-          <p class="eyebrow">05 / Try</p>
-          <h2 id="try-heading">Try</h2>
-          <TourSimulationStage
-            v-if="simulation"
-            :simulation="simulation"
-            :depth="progress.depth.value"
-            :initial-preset-id="initialPresetId"
-          />
+      section#try(tabindex="-1" data-tour-section="try" aria-labelledby="try-heading")
+        p.eyebrow 05 / Try
+        h2#try-heading Try
+        TourSimulationStage(
+          v-if="simulation"
+          :simulation="simulation"
+          :depth="progress.depth.value"
+          :initial-preset-id="initialPresetId"
+        )
 
-          <div class="tour-checkpoints" data-testid="tour-checkpoints">
-            <article v-for="checkpoint in checkpoints" :key="checkpoint.id" :data-checkpoint-id="checkpoint.id">
-              <fieldset>
-                <legend>{{ checkpoint.prompt }}</legend>
-                <label v-for="choice in checkpoint.choices" :key="choice.id">
-                  <input
-                    type="radio"
-                    :name="`checkpoint-${checkpoint.id}`"
-                    :value="choice.id"
-                    :checked="checkpointSelections[checkpoint.id] === choice.id"
-                    @change="selectCheckpoint(checkpoint.id, choice.id)"
-                  >
-                  <span>{{ choice.label }}</span>
-                </label>
-              </fieldset>
-              <button
-                type="button"
-                :disabled="!checkpointSelections[checkpoint.id]"
-                :data-testid="`checkpoint-reveal-${checkpoint.id}`"
-                @click="revealCheckpoint(checkpoint.id)"
-              >
-                Reveal explanation
-              </button>
-              <div
-                v-if="revealedCheckpoints.has(checkpoint.id)"
-                class="checkpoint-explanation"
-                :data-testid="`checkpoint-explanation-${checkpoint.id}`"
-              >
-                <p>{{ checkpoint.explanation }}</p>
-                <details class="tour-metadata">
-                  <summary>Explanation attribution</summary>
-                  <p>{{ checkpoint.attribution.sourceRevision }}</p>
-                  <p>{{ checkpoint.attribution.sourceLocator }}</p>
-                  <p>{{ attributionEvidence(checkpoint.attribution) }}</p>
-                </details>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section id="interpret" tabindex="-1" data-tour-section="interpret" aria-labelledby="interpret-heading">
-          <p class="eyebrow">06 / Interpret</p>
-          <h2 id="interpret-heading">Interpret</h2>
-          <p class="tour-summary">{{ lessonRecord.summary }}</p>
-          <ConclusionBoundary
-            :seen-in-activity="lessonRecord.seenInActivity"
-            :computed-here="lessonRecord.computedHere"
-            :reproduced-from-source="lessonRecord.reproducedFromSource"
-            :compared-with-evidence="lessonRecord.comparedWithEvidence"
-            :establishes="lessonRecord.establishes"
-            :does-not-establish="lessonRecord.doesNotEstablish"
-          />
-
-          <details v-if="lessonGlossary.length" class="tour-resource-disclosure">
-            <summary>Glossary</summary>
-            <dl>
-              <template v-for="entry in lessonGlossary" :key="entry.id">
-                <dt>{{ entry.term }}</dt>
-                <dd>
-                  <p>{{ entry.guidedDefinition }}</p>
-                  <p v-if="progress.depth.value === 'technical'">{{ entry.technicalDefinition }}</p>
-                </dd>
-              </template>
-            </dl>
-          </details>
-
-          <div class="tour-resource-links">
-            <RouterLink
-              v-for="formulaId in lessonRecord.formulaIds"
-              :key="formulaId"
-              :to="formulaLocation(formulaId)"
-              :aria-label="`Formula ${formulaId}, opens Formula record`"
-            >
-              {{ formulaId }}
-            </RouterLink>
-            <RouterLink to="/evidence">Evidence</RouterLink>
-          </div>
-
-          <details class="tour-resource-disclosure">
-            <summary>Source references</summary>
-            <ul>
-              <li v-for="reference in lessonReferences" :id="`reference-${reference.id}`" :key="reference.id">
-                <a
-                  :href="reference.url"
-                  target="_blank"
-                  rel="noreferrer"
-                  :aria-label="`${reference.title} (opens in new tab)`"
-                >{{ reference.title }} (opens in new tab)</a>
-                <span>{{ reference.revision }} / {{ reference.sourceLocator }}</span>
-              </li>
-            </ul>
-          </details>
-
-          <div class="tour-completion">
-            <button
+        .tour-checkpoints(data-testid="tour-checkpoints")
+          article(v-for="checkpoint in checkpoints" :key="checkpoint.id" :data-checkpoint-id="checkpoint.id")
+            fieldset
+              legend {{ checkpoint.prompt }}
+              label(v-for="choice in checkpoint.choices" :key="choice.id")
+                input(
+                  type="radio"
+                  :name="`checkpoint-${checkpoint.id}`"
+                  :value="choice.id"
+                  :checked="checkpointSelections[checkpoint.id] === choice.id"
+                  @change="selectCheckpoint(checkpoint.id, choice.id)"
+                )
+                span {{ choice.label }}
+            button(
               type="button"
-              :disabled="currentComplete"
-              data-testid="mark-lesson-complete"
-              @click="completeCurrentLesson"
-            >
-              {{ currentComplete ? (isQuickPath ? 'Station complete' : 'Lesson complete') : 'Mark complete' }}
-            </button>
-            <p aria-live="polite" data-testid="completion-announcement">{{ completionAnnouncement }}</p>
-          </div>
-        </section>
-      </div>
+              :disabled="!checkpointSelections[checkpoint.id]"
+              :data-testid="`checkpoint-reveal-${checkpoint.id}`"
+              @click="revealCheckpoint(checkpoint.id)"
+            ) Reveal explanation
+            .checkpoint-explanation(
+              v-if="revealedCheckpoints.has(checkpoint.id)"
+              :data-testid="`checkpoint-explanation-${checkpoint.id}`"
+            )
+              p {{ checkpoint.explanation }}
+              details.tour-metadata
+                summary Explanation attribution
+                p {{ checkpoint.attribution.sourceRevision }}
+                p {{ checkpoint.attribution.sourceLocator }}
+                p {{ attributionEvidence(checkpoint.attribution) }}
 
-      <nav class="tour-lesson-navigation" aria-label="Tour lesson navigation">
-        <RouterLink v-if="previousNavigation" :to="previousNavigation.to">{{ previousNavigation.label }}</RouterLink>
-        <RouterLink :to="`/tour/${encodeURIComponent(chapterRecord.id)}`">Chapter overview</RouterLink>
-        <RouterLink v-if="nextNavigation" :to="nextNavigation.to">{{ nextNavigation.label }}</RouterLink>
-      </nav>
-    </template>
-  </div>
+      section#interpret(tabindex="-1" data-tour-section="interpret" aria-labelledby="interpret-heading")
+        p.eyebrow 06 / Interpret
+        h2#interpret-heading Interpret
+        p.tour-summary {{ lessonRecord.summary }}
+        ConclusionBoundary(
+          :seen-in-activity="lessonRecord.seenInActivity"
+          :computed-here="lessonRecord.computedHere"
+          :reproduced-from-source="lessonRecord.reproducedFromSource"
+          :compared-with-evidence="lessonRecord.comparedWithEvidence"
+          :establishes="lessonRecord.establishes"
+          :does-not-establish="lessonRecord.doesNotEstablish"
+        )
+
+        details.tour-resource-disclosure(v-if="lessonGlossary.length")
+          summary Glossary
+          dl
+            template(v-for="entry in lessonGlossary" :key="entry.id")
+              dt {{ entry.term }}
+              dd
+                p {{ entry.guidedDefinition }}
+                p(v-if="progress.depth.value === 'technical'") {{ entry.technicalDefinition }}
+
+        .tour-resource-links
+          RouterLink(
+            v-for="formulaId in lessonRecord.formulaIds"
+            :key="formulaId"
+            :to="formulaLocation(formulaId)"
+            :aria-label="`Formula ${formulaId}, opens Formula record`"
+          ) {{ formulaId }}
+          RouterLink(to="/evidence") Evidence
+
+        details.tour-resource-disclosure
+          summary Source references
+          ul
+            li(v-for="reference in lessonReferences" :id="`reference-${reference.id}`" :key="reference.id")
+              a(
+                :href="reference.url"
+                target="_blank"
+                rel="noreferrer"
+                :aria-label="`${reference.title} (opens in new tab)`"
+              ) {{ reference.title }} (opens in new tab)
+              span {{ reference.revision }} / {{ reference.sourceLocator }}
+
+        .tour-completion
+          button(
+            type="button"
+            :disabled="currentComplete"
+            data-testid="mark-lesson-complete"
+            @click="completeCurrentLesson"
+          ) {{ currentComplete ? (isQuickPath ? 'Station complete' : 'Lesson complete') : 'Mark complete' }}
+          p(aria-live="polite" data-testid="completion-announcement") {{ completionAnnouncement }}
+
+    nav.tour-lesson-navigation(aria-label="Tour lesson navigation")
+      RouterLink(v-if="previousNavigation" :to="previousNavigation.to") {{ previousNavigation.label }}
+      RouterLink(:to="`/tour/${encodeURIComponent(chapterRecord.id)}`") Chapter overview
+      RouterLink(v-if="nextNavigation" :to="nextNavigation.to") {{ nextNavigation.label }}
 </template>
 
 <style src="../styles/tour.css"></style>

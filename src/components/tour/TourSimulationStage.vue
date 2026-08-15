@@ -69,18 +69,17 @@ const simulationInstanceKey = computed(() => [
 ].join(':'))
 </script>
 
-<template>
-  <component
-    :is="simulationComponent"
-    v-if="simulationComponent"
-    :key="simulationInstanceKey"
-    :simulation="simulation"
-    :depth="depth"
-    :initial-preset-id="initialPresetId"
-    @evaluated="emit('evaluated', $event)"
-  />
-  <div v-else role="alert" data-testid="tour-simulation-unknown">
-    <p>The requested interactive simulation is unavailable.</p>
-    <p>Simulation ID: <code>{{ simulation.id }}</code></p>
-  </div>
+<template lang="pug">
+component(
+  :is="simulationComponent"
+  v-if="simulationComponent"
+  :key="simulationInstanceKey"
+  :simulation="simulation"
+  :depth="depth"
+  :initial-preset-id="initialPresetId"
+  @evaluated="emit('evaluated', $event)"
+)
+div(v-else role="alert" data-testid="tour-simulation-unknown")
+  p The requested interactive simulation is unavailable.
+  p Simulation ID: #[code {{ simulation.id }}]
 </template>

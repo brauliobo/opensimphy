@@ -32,53 +32,42 @@ function evidenceHref(evidenceRef: string): string {
 }
 </script>
 
-<template>
-  <div class="conclusion-boundary" data-testid="conclusion-boundary">
-    <article
-      v-for="group in groups"
-      :key="group.key"
-      class="conclusion-group"
-      :data-conclusion-group="group.key"
-      :data-scope="group.scope"
-    >
-      <h3>{{ group.label }}</h3>
-      <ul>
-        <li v-for="statement in group.statements" :key="`${statement.scope}:${statement.text}`">
-          <p>{{ statement.text }}</p>
-          <details class="tour-metadata">
-            <summary>Scope and attribution</summary>
-            <dl>
-              <dt>Scope</dt>
-              <dd>{{ statement.scope }}</dd>
-              <dt>Claim class</dt>
-              <dd>{{ statement.attribution.claimClass }}</dd>
-              <dt>Method relationship</dt>
-              <dd>{{ statement.attribution.methodRelationship }}</dd>
-              <dt>Model origin</dt>
-              <dd>{{ statement.attribution.modelOrigin }}</dd>
-              <dt>Result status</dt>
-              <dd data-testid="conclusion-result-status">{{ statement.attribution.resultStatus }}</dd>
-              <dt>Evidence references</dt>
-              <dd>
-                <ul data-testid="conclusion-evidence-refs">
-                  <li v-for="evidenceRef in statement.attribution.evidenceRefs" :key="evidenceRef">
-                    <a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a>
-                  </li>
-                </ul>
-              </dd>
-              <dt>Source revision</dt>
-              <dd>{{ statement.attribution.sourceRevision }}</dd>
-              <dt>Source locator</dt>
-              <dd>{{ statement.attribution.sourceLocator }}</dd>
-            </dl>
-            <ul v-if="statement.attribution.caveats.length">
-              <li v-for="caveat in statement.attribution.caveats" :key="caveat">{{ caveat }}</li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </article>
-  </div>
+<template lang="pug">
+.conclusion-boundary(data-testid="conclusion-boundary")
+  article.conclusion-group(
+    v-for="group in groups"
+    :key="group.key"
+    :data-conclusion-group="group.key"
+    :data-scope="group.scope"
+  )
+    h3 {{ group.label }}
+    ul
+      li(v-for="statement in group.statements" :key="`${statement.scope}:${statement.text}`")
+        p {{ statement.text }}
+        details.tour-metadata
+          summary Scope and attribution
+          dl
+            dt Scope
+            dd {{ statement.scope }}
+            dt Claim class
+            dd {{ statement.attribution.claimClass }}
+            dt Method relationship
+            dd {{ statement.attribution.methodRelationship }}
+            dt Model origin
+            dd {{ statement.attribution.modelOrigin }}
+            dt Result status
+            dd(data-testid="conclusion-result-status") {{ statement.attribution.resultStatus }}
+            dt Evidence references
+            dd
+              ul(data-testid="conclusion-evidence-refs")
+                li(v-for="evidenceRef in statement.attribution.evidenceRefs" :key="evidenceRef")
+                  a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+            dt Source revision
+            dd {{ statement.attribution.sourceRevision }}
+            dt Source locator
+            dd {{ statement.attribution.sourceLocator }}
+          ul(v-if="statement.attribution.caveats.length")
+            li(v-for="caveat in statement.attribution.caveats" :key="caveat") {{ caveat }}
 </template>
 
 <style scoped>
