@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensimphy.local/edwin-gray/motor-fem-lut.schema.json",
+  "title": "Edwin Gray FEM browser lookup table",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "contractVersion",
+    "lutContract",
+    "caseId",
+    "status",
+    "entries",
+    "provenance"
+  ],
+  "properties": {
+    "contract": {
+      "const": "edwin-gray-browser-result"
+    },
+    "contractVersion": {
+      "const": 1
+    },
+    "lutContract": {
+      "const": "motor-fem-lut-v1"
+    },
+    "caseId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["complete", "pending", "failed", "not-run"]
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "numberValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entryId", "status", "parameters", "observables", "provenance"],
+      "properties": {
+        "entryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["complete", "pending", "failed", "not-run"]
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rotorAngleDeg", "meshSizeM", "driveCurrentA"],
+          "properties": {
+            "rotorAngleDeg": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 360
+            },
+            "meshSizeM": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "driveCurrentA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "observables": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["magneticEnergyJ", "coEnergyJ", "inductanceH"],
+          "properties": {
+            "magneticEnergyJ": {
+              "$ref": "#/$defs/numberValue"
+            },
+            "coEnergyJ": {
+              "$ref": "#/$defs/numberValue"
+            },
+            "inductanceH": {
+              "$ref": "#/$defs/numberValue"
+            }
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/entryProvenance"
+        }
+      }
+    },
+    "entryProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "sourceFormat", "inputHash", "solver", "backend", "symmetryApplied", "artifacts"],
+      "properties": {
+        "synthetic": {
+          "const": false
+        },
+        "sourceFormat": {
+          "enum": ["getdp-table", "solver-json"]
+        },
+        "inputHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "solver": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backend": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symmetryApplied": {
+          "type": "boolean"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "limitations", "source"],
+      "properties": {
+        "synthetic": {
+          "const": false
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

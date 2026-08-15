@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensimphy.local/edwin-gray/motor-case.schema.json",
+  "title": "Edwin Gray illustrative FEM case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "caseId",
+    "source",
+    "model",
+    "geometry",
+    "materials",
+    "excitation",
+    "sweep",
+    "results",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "motor-case-v1"
+    },
+    "caseId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]+$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["patent", "scope", "status"],
+      "properties": {
+        "patent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "publicationNumber",
+            "title",
+            "inventor",
+            "filingDate",
+            "publicationDate",
+            "url",
+            "pdfUrl"
+          ],
+          "properties": {
+            "publicationNumber": {
+              "const": "US3890548A"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inventor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "filingDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "publicationDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "pdfUrl": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "scope": {
+          "enum": ["illustrative-topology-not-replica"]
+        },
+        "status": {
+          "enum": ["source-described-with-assumptions"]
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "physics", "solverNeutral", "rotorStatorLayout", "sequence"],
+      "properties": {
+        "domain": {
+          "const": "full-3d"
+        },
+        "physics": {
+          "const": "magnetostatic-linear"
+        },
+        "solverNeutral": {
+          "const": true
+        },
+        "rotorStatorLayout": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "statorPairStations",
+            "rotorPairStations",
+            "statorAngularPitchDeg",
+            "rotorAngularPitchDeg",
+            "majorMinorPerStation",
+            "frontBackPlanes",
+            "expectedAssemblyPhysicalGroups"
+          ],
+          "properties": {
+            "statorPairStations": {
+              "const": 9
+            },
+            "rotorPairStations": {
+              "const": 3
+            },
+            "statorAngularPitchDeg": {
+              "const": 40
+            },
+            "rotorAngularPitchDeg": {
+              "const": 120
+            },
+            "majorMinorPerStation": {
+              "const": 2
+            },
+            "frontBackPlanes": {
+              "const": 2
+            },
+            "expectedAssemblyPhysicalGroups": {
+              "const": 48
+            }
+          }
+        },
+        "sequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dischargeStepDeg", "dischargesPerRevolution", "sourceClass"],
+          "properties": {
+            "dischargeStepDeg": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "dischargesPerRevolution": {
+              "const": 27
+            },
+            "sourceClass": {
+              "enum": ["patent-described", "patent-derived"]
+            }
+          }
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "units",
+        "axis",
+        "rotorAngleDeg",
+        "pairOffsetDeg",
+        "statorPhaseDeg",
+        "rotorPhaseDeg",
+        "airOuterRadiusM",
+        "airZMinM",
+        "airZMaxM",
+        "frontPlaneZM",
+        "backPlaneZM",
+        "rotorCoreInnerRadiusM",
+        "rotorCoreRadialDepthM",
+        "statorCoreInnerRadiusM",
+        "statorCoreRadialDepthM",
+        "coilRadialDepthM",
+        "minorTangentialWidthM",
+        "majorTangentialWidthM",
+        "electromagnetAxialLengthM",
+        "coilRadialMarginM",
+        "coilTangentialMarginM",
+        "coilAxialMarginM",
+        "meshSizeM"
+      ],
+      "properties": {
+        "units": {
+          "const": "m"
+        },
+        "axis": {
+          "const": "z"
+        },
+        "rotorAngleDeg": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 360
+        },
+        "pairOffsetDeg": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 40
+        },
+        "statorPhaseDeg": {
+          "type": "number",
+          "minimum": -360,
+          "maximum": 360
+        },
+        "rotorPhaseDeg": {
+          "type": "number",
+          "minimum": -360,
+          "maximum": 360
+        },
+        "airOuterRadiusM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "airZMinM": {
+          "type": "number"
+        },
+        "airZMaxM": {
+          "type": "number"
+        },
+        "frontPlaneZM": {
+          "type": "number"
+        },
+        "backPlaneZM": {
+          "type": "number"
+        },
+        "rotorCoreInnerRadiusM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rotorCoreRadialDepthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "statorCoreInnerRadiusM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "statorCoreRadialDepthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "coilRadialDepthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "minorTangentialWidthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "majorTangentialWidthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "electromagnetAxialLengthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "coilRadialMarginM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "coilTangentialMarginM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "coilAxialMarginM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "meshSizeM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["air", "core", "coil"],
+      "properties": {
+        "air": {
+          "$ref": "#/$defs/material"
+        },
+        "core": {
+          "$ref": "#/$defs/material"
+        },
+        "coil": {
+          "$ref": "#/$defs/material"
+        }
+      }
+    },
+    "excitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "driveCurrentA",
+        "turns",
+        "currentDensityModel",
+        "effectiveCoilCrossSectionM2",
+        "sourceDirection",
+        "sourceClass"
+      ],
+      "properties": {
+        "kind": {
+          "const": "impressed-current-magnetostatic"
+        },
+        "driveCurrentA": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "turns": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentDensityModel": {
+          "const": "uniform-homogenized-global-z"
+        },
+        "effectiveCoilCrossSectionM2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sourceDirection": {
+          "const": [0, 0, 1]
+        },
+        "sourceClass": {
+          "const": "assumption"
+        }
+      }
+    },
+    "sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "anglesDeg", "meshSizesM", "driveCurrentA", "symmetry"],
+      "properties": {
+        "kind": {
+          "const": "coarse-full-3d"
+        },
+        "anglesDeg": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 360
+          }
+        },
+        "meshSizesM": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "driveCurrentA": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "symmetry": {
+          "$ref": "#/$defs/symmetry"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract", "contractVersion", "observables", "noSyntheticOutput"],
+      "properties": {
+        "contract": {
+          "const": "edwin-gray-browser-result"
+        },
+        "contractVersion": {
+          "const": 1
+        },
+        "observables": {
+          "const": [
+            "magneticEnergyJ",
+            "coEnergyJ",
+            "inductanceH"
+          ]
+        },
+        "noSyntheticOutput": {
+          "const": true
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ledgerVersion", "fieldEntries"],
+      "properties": {
+        "ledgerVersion": {
+          "const": "source-ledger-v1"
+        },
+        "fieldEntries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/provenanceEntry"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relativePermeability", "linear", "sourceClass"],
+      "properties": {
+        "relativePermeability": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "linear": {
+          "type": "boolean"
+        },
+        "sourceClass": {
+          "enum": ["assumption", "patent-described"]
+        }
+      }
+    },
+    "symmetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared", "order", "axis", "justification"],
+      "properties": {
+        "declared": {
+          "type": "boolean"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 360
+        },
+        "axis": {
+          "const": "z"
+        },
+        "justification": {
+          "type": "string"
+        }
+      }
+    },
+    "provenanceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status", "evidenceRefs", "note"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "patent-described",
+            "patent-derived",
+            "assumption",
+            "derived",
+            "solver-derived",
+            "not-run"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

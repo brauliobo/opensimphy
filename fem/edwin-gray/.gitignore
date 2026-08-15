@@ -1,0 +1,7 @@
+runs/
+*.msh
+getdp/*.dat
+getdp/*.log
+getdp/*.pos
+getdp/*.pre
+getdp/*.res

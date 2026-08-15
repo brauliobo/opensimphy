@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "motor-case-v1",
+  "caseId": "patent-3890548-illustrative",
+  "source": {
+    "patent": {
+      "publicationNumber": "US3890548A",
+      "title": "Pulsed capacitor discharge electric engine",
+      "inventor": "Edwin V Gray",
+      "filingDate": "1973-11-02",
+      "publicationDate": "1975-06-17",
+      "url": "https://patents.google.com/patent/US3890548A/en",
+      "pdfUrl": "https://patentimages.storage.googleapis.com/25/6b/42/7b56253608f313/US3890548.pdf"
+    },
+    "scope": "illustrative-topology-not-replica",
+    "status": "source-described-with-assumptions"
+  },
+  "model": {
+    "domain": "full-3d",
+    "physics": "magnetostatic-linear",
+    "solverNeutral": true,
+    "rotorStatorLayout": {
+      "statorPairStations": 9,
+      "rotorPairStations": 3,
+      "statorAngularPitchDeg": 40,
+      "rotorAngularPitchDeg": 120,
+      "majorMinorPerStation": 2,
+      "frontBackPlanes": 2,
+      "expectedAssemblyPhysicalGroups": 48
+    },
+    "sequence": {
+      "dischargeStepDeg": 13.3333333333,
+      "dischargesPerRevolution": 27,
+      "sourceClass": "patent-derived"
+    }
+  },
+  "geometry": {
+    "units": "m",
+    "axis": "z",
+    "rotorAngleDeg": 0,
+    "pairOffsetDeg": 13.3333333333,
+    "statorPhaseDeg": 0,
+    "rotorPhaseDeg": 0,
+    "airOuterRadiusM": 0.14,
+    "airZMinM": -0.12,
+    "airZMaxM": 0.12,
+    "frontPlaneZM": 0.035,
+    "backPlaneZM": -0.035,
+    "rotorCoreInnerRadiusM": 0.048,
+    "rotorCoreRadialDepthM": 0.02,
+    "statorCoreInnerRadiusM": 0.078,
+    "statorCoreRadialDepthM": 0.022,
+    "coilRadialDepthM": 0.008,
+    "coilRadialMarginM": 0.001,
+    "minorTangentialWidthM": 0.01,
+    "majorTangentialWidthM": 0.016,
+    "electromagnetAxialLengthM": 0.03,
+    "coilTangentialMarginM": 0.003,
+    "coilAxialMarginM": 0.004,
+    "meshSizeM": 0.025
+  },
+  "materials": {
+    "air": {
+      "relativePermeability": 1,
+      "linear": true,
+      "sourceClass": "assumption"
+    },
+    "core": {
+      "relativePermeability": 1000,
+      "linear": true,
+      "sourceClass": "assumption"
+    },
+    "coil": {
+      "relativePermeability": 1,
+      "linear": true,
+      "sourceClass": "assumption"
+    }
+  },
+  "excitation": {
+    "kind": "impressed-current-magnetostatic",
+    "driveCurrentA": 1,
+    "turns": 100,
+    "currentDensityModel": "uniform-homogenized-global-z",
+    "effectiveCoilCrossSectionM2": 0.0001,
+    "sourceDirection": [0, 0, 1],
+    "sourceClass": "assumption"
+  },
+  "sweep": {
+    "kind": "coarse-full-3d",
+    "anglesDeg": [
+      0,
+      13.3333333333,
+      26.6666666667,
+      40,
+      53.3333333333,
+      66.6666666667,
+      80,
+      93.3333333333,
+      106.6666666667,
+      120,
+      133.3333333333,
+      146.6666666667,
+      160,
+      173.3333333333,
+      186.6666666667,
+      200,
+      213.3333333333,
+      226.6666666667,
+      240,
+      253.3333333333,
+      266.6666666667,
+      280,
+      293.3333333333,
+      306.6666666667,
+      320,
+      333.3333333333,
+      346.6666666667
+    ],
+    "meshSizesM": [0.025, 0.04],
+    "driveCurrentA": [1, 10],
+    "symmetry": {
+      "declared": false,
+      "order": 1,
+      "axis": "z",
+      "justification": "Full 3D reference sweep; no exact symmetry reduction is authorized by this case."
+    }
+  },
+  "results": {
+    "contract": "edwin-gray-browser-result",
+    "contractVersion": 1,
+    "observables": [
+      "magneticEnergyJ",
+      "coEnergyJ",
+      "inductanceH"
+    ],
+    "noSyntheticOutput": true
+  },
+  "provenance": {
+    "ledgerVersion": "source-ledger-v1",
+    "fieldEntries": [
+      {
+        "path": "model.rotorStatorLayout.statorPairStations",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:stator-pairs-40-deg"],
+        "note": "The patent describes nine stator electromagnet pairs distributed around the housing."
+      },
+      {
+        "path": "model.rotorStatorLayout.rotorPairStations",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:three-rotor-pairs"],
+        "note": "The patent describes three rotor pair assemblies."
+      },
+      {
+        "path": "model.rotorStatorLayout.statorAngularPitchDeg",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:stator-pairs-40-deg"],
+        "note": "The stated stator spacing is 40 degrees."
+      },
+      {
+        "path": "model.rotorStatorLayout.rotorAngularPitchDeg",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:rotor-120-deg"],
+        "note": "The stated rotor spacing is 120 degrees."
+      },
+      {
+        "path": "model.rotorStatorLayout.frontBackPlanes",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:front-back-pairs"],
+        "note": "Front and back electromagnet units are described as axial pairs."
+      },
+      {
+        "path": "geometry.pairOffsetDeg",
+        "status": "patent-derived",
+        "evidenceRefs": ["US3890548A:description:major-minor-13-1-3"],
+        "note": "The OCR rendering of the patent describes a 13 1/3 degree major/minor separation."
+      },
+      {
+        "path": "model.rotorStatorLayout.expectedAssemblyPhysicalGroups",
+        "status": "patent-derived",
+        "evidenceRefs": ["US3890548A:description:front-back-pairs", "US3890548A:description:three-rotor-pairs"],
+        "note": "The assembly count is 9 x 2 x 2 plus 3 x 2 x 2."
+      },
+      {
+        "path": "model.sequence.dischargeStepDeg",
+        "status": "patent-described",
+        "evidenceRefs": ["US3890548A:description:27-steps"],
+        "note": "The illustrative sequence advances by 13 1/3 degrees per step."
+      },
+      {
+        "path": "geometry.airOuterRadiusM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:interpretation-boundary"],
+        "note": "A finite outer air boundary is required for the FEM domain."
+      },
+      {
+        "path": "geometry.rotorCoreInnerRadiusM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Illustrative scale; no patent manufacturing dimension is claimed."
+      },
+      {
+        "path": "geometry.statorCoreInnerRadiusM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Illustrative scale; no patent manufacturing dimension is claimed."
+      },
+      {
+        "path": "geometry.minorTangentialWidthM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Chosen to keep neighboring 40 degree stations separated in the coarse mesh."
+      },
+      {
+        "path": "geometry.majorTangentialWidthM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Chosen illustrative scale; major/minor size ordering is retained."
+      },
+      {
+        "path": "geometry.frontPlaneZM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Axial placement is illustrative because the patent is not dimensioned for this case."
+      },
+      {
+        "path": "materials.core.relativePermeability",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "A constant linear permeability is used only to keep the basic solve reproducible."
+      },
+      {
+        "path": "excitation.currentDensityModel",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "The source is homogenized and does not resolve turns, commutators, or capacitor pulses."
+      },
+      {
+        "path": "excitation.effectiveCoilCrossSectionM2",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "This proxy converts current and turns into a uniform source density."
+      },
+      {
+        "path": "sweep.symmetry.declared",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "Exact symmetry reduction is intentionally disabled for the reference sweep."
+      },
+      {
+        "path": "results",
+        "status": "not-run",
+        "evidenceRefs": ["source/README.md:interpretation-boundary"],
+        "note": "No solver output is bundled with the workspace."
+      }
+    ]
+  }
+}
