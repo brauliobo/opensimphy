@@ -1,64 +1,76 @@
 import { createHash } from 'node:crypto'
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { aggregateNormalizedResults, normalizeResults } from '../../fem/edwin-gray/scripts/normalize-results.mjs'
-import { buildGrayMagneticLookup } from '../../src/edwin-gray/edwinGrayFem'
-import { parseGrayFemLookupDocument } from '../../src/edwin-gray/edwinGrayFem'
+import { buildGrayMagneticLookup, parseGrayFemLookupDocument } from '../../src/edwin-gray/edwinGrayFem'
 
-const caseData = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/cases/patent-3890548-illustrative.json'), 'utf8'))
+const sourceCase = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/cases/patent-3890548-illustrative.json'), 'utf8'))
 const resultSchema = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/schema/motor-fem-lut.schema.json'), 'utf8'))
-const inputHash = 'a'.repeat(64)
-const parameters = { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 }
+const anglesDeg = [0, 13.3333333333]
+const caseData = structuredClone(sourceCase)
+caseData.sweep.anglesDeg = anglesDeg
+caseData.sweep.meshSizesM = [0.025]
+caseData.sweep.driveCurrentA = [1]
+const modelInputHash = 'b'.repeat(64)
+const firstJobInputHash = 'a'.repeat(64)
+const secondJobInputHash = 'c'.repeat(64)
 
 function sha256(path: string): string {
   return createHash('sha256').update(readFileSync(path)).digest('hex')
 }
 
 describe('Edwin Gray FEM result provenance', () => {
-  let jobDir: string
+  let runDir: string
 
   beforeEach(() => {
-    jobDir = mkdtempSync(join(tmpdir(), 'edwin-gray-fem-'))
-    for (const [name, value] of Object.entries({
-      'observables.dat': '0.1\n',
-      'coenergy.dat': '0.1\n',
-      'inductance.dat': '0.2\n',
-    })) {
-      writeFileSync(join(jobDir, name), value)
-    }
+    runDir = mkdtempSync(join(tmpdir(), 'edwin-gray-fem-'))
   })
 
   afterEach(() => {
-    rmSync(jobDir, { recursive: true, force: true })
+    rmSync(runDir, { recursive: true, force: true })
   })
 
-  function addCheckpoint(): void {
+  function prepareJob(
+    name: string,
+    parameters: { rotorAngleDeg: number; meshSizeM: number; driveCurrentA: number },
+    jobInputHash: string,
+    outputs: Record<string, string> = {
+      'observables.dat': '0.1\n',
+      'coenergy.dat': '0.1\n',
+      'inductance.dat': '0.2\n',
+    },
+  ): string {
+    const jobDir = join(runDir, name)
+    mkdirSync(jobDir)
+    for (const [fileName, value] of Object.entries(outputs)) writeFileSync(join(jobDir, fileName), value)
     writeFileSync(join(jobDir, 'checkpoint.json'), JSON.stringify({
       checkpointVersion: 'fem-checkpoint-v4',
-      jobId: 'test-job',
-      inputHash,
+      jobId: name,
+      modelInputHash,
+      jobInputHash,
+      inputHash: jobInputHash,
       parameters,
       backend: 'host',
       resultContract: 'edwin-gray-browser-result@1',
       meshQuality: 'passed',
       phases: { mesh: 'complete', solve: 'complete', normalize: 'pending' },
       artifacts: {
-        outputs: {
-          'observables.dat': sha256(join(jobDir, 'observables.dat')),
-          'coenergy.dat': sha256(join(jobDir, 'coenergy.dat')),
-          'inductance.dat': sha256(join(jobDir, 'inductance.dat')),
-        },
+        outputs: Object.fromEntries(Object.keys(outputs).map((fileName) => [fileName, sha256(join(jobDir, fileName))])),
       },
     }))
+    return jobDir
   }
 
-  function normalize(): ReturnType<typeof normalizeResults> {
+  function normalizeJob(angle: number, jobInputHash: string, name = `angle-${angle}`) {
+    const parameters = { rotorAngleDeg: angle, meshSizeM: 0.025, driveCurrentA: 1 }
+    const jobDir = prepareJob(name, parameters, jobInputHash)
     return normalizeResults({
       caseData,
       jobDir,
       parameters,
-      inputHash,
+      inputHash: jobInputHash,
+      modelInputHash,
       solver: 'getdp',
       backend: 'host',
       artifacts: [
@@ -70,81 +82,150 @@ describe('Edwin Gray FEM result provenance', () => {
     })
   }
 
+  function completeLookup() {
+    return aggregateNormalizedResults([
+      normalizeJob(anglesDeg[0]!, firstJobInputHash, 'first'),
+      normalizeJob(anglesDeg[1]!, secondJobInputHash, 'second'),
+    ], { resultSchema })
+  }
+
   it('rejects solver tables without a completed runner checkpoint', () => {
-    expect(() => normalize()).toThrow(/runner checkpoint/)
+    const parameters = { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 }
+    const jobDir = join(runDir, 'untrusted')
+    mkdirSync(jobDir)
+    for (const name of ['observables.dat', 'coenergy.dat', 'inductance.dat']) writeFileSync(join(jobDir, name), '0.1\n')
+
+    expect(() => normalizeResults({
+      caseData,
+      jobDir,
+      parameters,
+      inputHash: firstJobInputHash,
+      modelInputHash,
+      artifacts: [join(jobDir, 'observables.dat')],
+      resultSchema,
+    })).toThrow(/runner checkpoint/)
+  })
+
+  it('preserves model, job, and artifact hashes from checkpoint-attested output', () => {
+    const result = normalizeJob(0, firstJobInputHash)
+    const provenance = result.entries[0]!.provenance
+
+    expect(provenance.modelInputHash).toBe(modelInputHash)
+    expect(provenance.jobInputHash).toBe(firstJobInputHash)
+    expect(provenance.inputHash).toBe(firstJobInputHash)
+    expect(provenance.artifacts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ path: 'inductance.dat', sha256: expect.stringMatching(/^[a-f0-9]{64}$/) }),
+    ]))
   })
 
   it('accepts only output bytes recorded by the checkpoint', () => {
-    addCheckpoint()
+    normalizeJob(0, firstJobInputHash, 'attested')
+    writeFileSync(join(runDir, 'attested', 'inductance.dat'), '999\n')
 
-    const result = normalize()
-
-    expect(result.entries[0]!.provenance.inputHash).toBe(inputHash)
-    expect(result.entries[0]!.observables.inductanceH.value).toBe(0.2)
-
-    writeFileSync(join(jobDir, 'inductance.dat'), '999\n')
-    expect(() => normalize()).toThrow(/output hash/)
+    expect(() => normalizeResults({
+      caseData,
+      jobDir: join(runDir, 'attested'),
+      parameters: { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 },
+      inputHash: firstJobInputHash,
+      modelInputHash,
+      artifacts: [join(runDir, 'attested', 'inductance.dat')],
+      resultSchema,
+    })).toThrow(/output hash/)
   })
 
-  it('rejects browser LUT documents with incomplete entry provenance', () => {
-    const entry = {
-      entryId: 'angle-0-mesh-0.025-current-1',
-      status: 'complete',
-      parameters: { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 },
+  it('rejects raw JSON without exact checkpoint hash evidence', () => {
+    const parameters = { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 }
+    const raw = {
+      synthetic: false,
+      parameters,
+      provenance: { modelInputHash, jobInputHash: firstJobInputHash, solver: 'getdp', backend: 'host' },
       observables: {
         magneticEnergyJ: { value: 0.1, unit: 'J' },
         coEnergyJ: { value: 0.1, unit: 'J' },
         inductanceH: { value: 0.2, unit: 'H' },
       },
-      provenance: {
-        synthetic: false,
-        sourceFormat: 'getdp-table',
-        solver: 'getdp',
-        backend: 'host',
-        inputHash,
-        symmetryApplied: false,
-        artifacts: ['observables.dat'],
-      },
     }
-    const document = {
-      contract: 'edwin-gray-browser-result',
-      contractVersion: 1,
-      lutContract: 'motor-fem-lut-v1',
-      caseId: caseData.caseId,
-      status: 'complete',
-      entries: [entry, { ...entry, entryId: 'angle-1-mesh-0.025-current-1', parameters: { ...entry.parameters, rotorAngleDeg: 1 } }],
-      provenance: { synthetic: false, limitations: ['smoke'], source: 'test' },
-    }
+    const jobDir = prepareJob('raw', parameters, firstJobInputHash, { 'result.raw.json': `${JSON.stringify(raw)}\n` })
+    const rawPath = join(jobDir, 'result.raw.json')
+    const checkpoint = JSON.parse(readFileSync(join(jobDir, 'checkpoint.json'), 'utf8'))
+    checkpoint.artifacts.outputs['result.raw.json'] = 'd'.repeat(64)
+    writeFileSync(join(jobDir, 'checkpoint.json'), JSON.stringify(checkpoint))
 
-    expect(() => parseGrayFemLookupDocument({
-      ...document,
-      entries: document.entries.map(({ provenance: _provenance, ...rest }) => rest),
-    })).toThrow(/synthetic|provenance/)
-    expect(parseGrayFemLookupDocument(document).entries).toHaveLength(2)
+    expect(() => normalizeResults({
+      caseData,
+      jobDir,
+      parameters,
+      inputHash: firstJobInputHash,
+      modelInputHash,
+      rawPath,
+      artifacts: [rawPath],
+      resultSchema,
+    })).toThrow(/Raw solver JSON hash/)
   })
 
-  it('aggregates completed job documents into one single-current angle LUT', () => {
-    addCheckpoint()
-    const first = normalize()
-    const second = structuredClone(first)
-    second.entries[0]!.entryId = 'angle-13.3333333333-mesh-0.025-current-1'
-    second.entries[0]!.parameters.rotorAngleDeg = 13.3333333333
+  it('aggregates genuinely distinct jobs into the exact declared angle LUT', () => {
+    const result = completeLookup()
 
-    const result = aggregateNormalizedResults([first, second], { resultSchema })
+    expect(result.entries.map((entry) => entry.provenance.jobInputHash)).toEqual([firstJobInputHash, secondJobInputHash])
+    expect(result.entries.map((entry) => entry.parameters.rotorAngleDeg)).toEqual(anglesDeg)
+    expect(result.expectedAnglesDeg).toEqual(anglesDeg)
+    expect(buildGrayMagneticLookup(result).provenance.inputHash).toBe(modelInputHash)
 
-    expect(result.status).toBe('complete')
-    expect(result.entries).toHaveLength(2)
-    expect(result.entries.map((entry) => entry.parameters.rotorAngleDeg)).toEqual([0, 13.3333333333])
-    expect(result.provenance.synthetic).toBe(false)
-    expect(result.provenance.source).toContain('aggregated over 2 rotor angles')
-    expect(buildGrayMagneticLookup(result).anglesDeg).toEqual([0, 13.3333333333])
+    const browserContract = structuredClone(result)
+    for (const entry of browserContract.entries) delete entry.provenance.inputHash
+    expect(parseGrayFemLookupDocument(browserContract).entries).toHaveLength(2)
   })
 
-  it('rejects aggregation of duplicate angles', () => {
-    addCheckpoint()
-    const first = normalize()
-    const second = structuredClone(first)
+  it('rejects duplicate, missing, and extra angles against the declared sweep', () => {
+    const result = completeLookup()
+    const extra = structuredClone(result.entries[1]!)
+    extra.entryId = 'angle-20-mesh-0.025-current-1'
+    extra.parameters.rotorAngleDeg = 20
+    extra.provenance.jobInputHash = 'd'.repeat(64)
+    extra.provenance.inputHash = extra.provenance.jobInputHash
 
-    expect(() => aggregateNormalizedResults([first, second], { resultSchema })).toThrow(/unique angles/)
+    expect(() => aggregateNormalizedResults([normalizeJob(0, firstJobInputHash, 'duplicate-a'), normalizeJob(0, secondJobInputHash, 'duplicate-b')], { resultSchema })).toThrow(/unique angles/)
+    expect(() => parseGrayFemLookupDocument({ ...result, entries: result.entries.slice(0, 1) })).toThrow(/exactly match/)
+    expect(() => parseGrayFemLookupDocument({ ...result, entries: [...result.entries, extra] })).toThrow(/exactly match/)
+  })
+
+  it('rejects mixed model, case, mesh, and current provenance', () => {
+    const first = normalizeJob(0, firstJobInputHash, 'mixed-first')
+    const second = normalizeJob(anglesDeg[1]!, secondJobInputHash, 'mixed-second')
+
+    const mixedModel = structuredClone(second)
+    mixedModel.entries[0]!.provenance.modelInputHash = 'e'.repeat(64)
+    expect(() => aggregateNormalizedResults([first, mixedModel], { resultSchema })).toThrow(/model input hash/)
+
+    const mixedCase = structuredClone(second)
+    mixedCase.caseId = 'other-case'
+    expect(() => aggregateNormalizedResults([first, mixedCase], { resultSchema })).toThrow(/case ID/)
+
+    const mixedMesh = structuredClone(second)
+    mixedMesh.entries[0]!.parameters.meshSizeM = 0.04
+    expect(() => aggregateNormalizedResults([first, mixedMesh], { resultSchema })).toThrow(/mesh size/)
+
+    const mixedCurrent = structuredClone(second)
+    mixedCurrent.entries[0]!.parameters.driveCurrentA = 10
+    expect(() => aggregateNormalizedResults([first, mixedCurrent], { resultSchema })).toThrow(/drive current/)
+
+    const browserMixedCurrent = completeLookup()
+    browserMixedCurrent.entries[1]!.parameters.driveCurrentA = 10
+    expect(() => parseGrayFemLookupDocument(browserMixedCurrent)).toThrow(/reference current/)
+  })
+
+  it('rejects incomplete, synthetic, and unhashed browser entries', () => {
+    const result = completeLookup()
+    const incomplete = structuredClone(result)
+    incomplete.entries[0]!.status = 'pending'
+    expect(() => parseGrayFemLookupDocument(incomplete)).toThrow(/not complete/)
+
+    const synthetic = structuredClone(result)
+    synthetic.entries[0]!.provenance.synthetic = true
+    expect(() => parseGrayFemLookupDocument(synthetic)).toThrow(/synthetic/)
+
+    const unhashed = structuredClone(result)
+    unhashed.entries[0]!.provenance.artifacts = ['observables.dat']
+    expect(() => parseGrayFemLookupDocument(unhashed)).toThrow(/artifact hashes/)
   })
 })

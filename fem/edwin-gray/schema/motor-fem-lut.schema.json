@@ -10,6 +10,7 @@
     "lutContract",
     "caseId",
     "status",
+    "expectedAnglesDeg",
     "entries",
     "provenance"
   ],
@@ -29,6 +30,16 @@
     },
     "status": {
       "enum": ["complete", "pending", "failed", "not-run"]
+    },
+    "expectedAnglesDeg": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "number",
+        "minimum": 0,
+        "exclusiveMaximum": 360
+      }
     },
     "entries": {
       "type": "array",
@@ -112,13 +123,21 @@
     "entryProvenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["synthetic", "sourceFormat", "inputHash", "solver", "backend", "symmetryApplied", "artifacts"],
+      "required": ["synthetic", "sourceFormat", "modelInputHash", "jobInputHash", "solver", "backend", "symmetryApplied", "artifacts"],
       "properties": {
         "synthetic": {
           "const": false
         },
         "sourceFormat": {
           "enum": ["getdp-table", "solver-json"]
+        },
+        "modelInputHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "jobInputHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
         },
         "inputHash": {
           "type": "string",
@@ -137,10 +156,26 @@
         },
         "artifacts": {
           "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
           "items": {
-            "type": "string",
-            "minLength": 1
+            "$ref": "#/$defs/artifact"
           }
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
         }
       }
     },
