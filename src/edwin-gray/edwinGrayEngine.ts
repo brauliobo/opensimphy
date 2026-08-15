@@ -1710,3 +1710,792 @@ export function evaluateGrayMotor(input: GrayMotorInput): GrayMotorResult {
 export function evaluateGrayFamily(shared: Omit<GrayMotorInput, 'motorId'>): GrayMotorResult[] {
   return GRAY_MOTOR_IDS.map((motorId) => evaluateGrayMotor({ ...shared, motorId }))
 }
+
+export type GrayFullMotorMode = 'prescribed-diagnostic' | 'dynamic'
+export type GrayFullMotorMachineMode = 'original-500rpm-contact-v1' | 'modified-electronic-v1'
+export type GrayFullMotorSwitchState = 'open' | 'contact-closed' | 'electronic-conducting'
+export type GrayFullMotorArcState = 'none' | 'quenched' | 'sustained'
+
+export interface GrayFullMotorInput {
+  motorId: GrayMotorId
+  revolutions: number
+  chargeVoltageV: number
+  capacitanceF: number
+  startRpm: number
+  quenchDeg: number
+  turns: number
+  mode: GrayFullMotorMode
+  machineMode: GrayFullMotorMachineMode
+  rotorInertiaKgM2?: number
+  loadTorqueNm?: number
+  initialAngleDeg?: number
+  dumpCapacitanceF?: number
+  recoveryCapacitanceF?: number
+  initialRecoveryVoltageV?: number
+  sourceResistanceOhm?: number
+  integrationStepsPerEvent?: number
+  magneticLookup?: GrayMagneticLookup
+}
+
+export interface GrayFullMotorResolvedInput {
+  motorId: GrayMotorId
+  revolutions: number
+  chargeVoltageV: number
+  capacitanceF: number
+  startRpm: number
+  quenchDeg: number
+  turns: number
+  mode: GrayFullMotorMode
+  machineMode: GrayFullMotorMachineMode
+  rotorInertiaKgM2: number
+  loadTorqueNm: number
+  initialAngleDeg: number
+  dumpCapacitanceF: number
+  recoveryCapacitanceF: number
+  initialRecoveryVoltageV: number
+  sourceResistanceOhm: number
+  integrationStepsPerEvent: number
+}
+
+export interface GrayFullMotorStoredState {
+  holdingCapacitorJ: number
+  holdingCapacitorVoltageV: number
+  dumpBankJ: number
+  activeCoilMagneticJ: number
+  activeCoilCurrentA: number
+  recoveryStorageJ: number
+  recoveryVoltageV: number
+  kineticEnergyJ: number
+  absoluteAngleDeg: number
+  omegaRadPerSecond: number
+  rpm: number
+  switchState: GrayFullMotorSwitchState
+  arcState: GrayFullMotorArcState
+}
+
+export interface GrayFullMotorEventLedger {
+  holdingDeliveredJ: number
+  dumpBankPeakJ: number
+  magneticPeakJ: number
+  electromagneticWorkJ: number
+  copperLossJ: number
+  switchLossJ: number
+  arcLossJ: number
+  recoveredJ: number
+  residualCoilJ: number
+  accountedJ: number
+  numericalResidualJ: number
+  normalizedResidual: number
+}
+
+export interface GrayFullMotorEventResult {
+  eventIndex: number
+  revolution: number
+  eventInRevolution: number
+  scheduledAbsoluteAngleDeg: number
+  timeSeconds: number
+  intervalSeconds: number
+  quenchTimeSeconds: number
+  sectors: readonly GrayEventSector[]
+  phase: GrayPhase
+  phaseLabel: 'A' | 'B' | 'C'
+  majorMinor: GrayMajorMinorElement
+  contactRuleSatisfied: boolean
+  quenchSucceeded: boolean
+  recharge: {
+    sourceJ: number
+    holdingAddedJ: number
+    sourceLossJ: number
+    recoveryReleasedJ: number
+    recoveryReturnedJ: number
+    recoveryReturnLossJ: number
+    priorCoilArcLossJ: number
+  }
+  recoveryBranch: {
+    solved: boolean
+    topology: 'series-rlc-quarter-cycle' | 'unavailable'
+    transferTimeSeconds: number | null
+    availableMagneticJ: number
+    storageHeadroomJ: number
+    transferredJ: number
+  }
+  before: GrayFullMotorStoredState
+  after: GrayFullMotorStoredState
+  ledger: GrayFullMotorEventLedger
+}
+
+export interface GrayFullMotorRunLedger {
+  boundaryComplete: true
+  initialStoredElectricalJ: number
+  initialKineticJ: number
+  externalRechargeJ: number
+  prescribedDriveInputJ: number
+  totalDeclaredInputJ: number
+  loadWorkJ: number
+  electromagneticWorkJ: number
+  kineticEnergyChangeJ: number
+  copperLossJ: number
+  switchLossJ: number
+  arcLossJ: number
+  rechargeLossJ: number
+  recoveryReturnLossJ: number
+  totalLossesJ: number
+  finalHoldingCapacitorJ: number
+  finalDumpBankJ: number
+  finalActiveCoilMagneticJ: number
+  finalRecoveryStorageJ: number
+  finalKineticJ: number
+  finalStoredResidualsJ: number
+  accountedJ: number
+  numericalResidualJ: number
+  normalizedResidual: number
+  wholeSystemCop: number
+  wholeSystemEfficiency: number
+  copScope: 'complete-declared-source-and-stored-energy-boundary'
+  claimDeficitInjectedJ: 0
+}
+
+export interface GrayFullMotorFinding {
+  code: 'bounded-model' | 'quench-rule' | 'magnetic-scope' | 'energy-boundary' | 'stall'
+  statement: string
+}
+
+export interface GrayFullMotorResult {
+  modelStatus: GrayModelStatus
+  input: GrayFullMotorResolvedInput
+  motor: GrayMotorCatalogEntry
+  topology: GrayTopologyContract
+  magneticScope: 'illustrative-lumped-surrogate' | 'hybrid-fem-magnetic-lumped-circuit'
+  numericalMethod: 'closed-form-event-map-v1'
+  quenchRule: {
+    id: GrayFullMotorMachineMode
+    version: 1
+    referenceMinimumRpm: number | null
+    provenance: 'presenter-reported' | 'illustrative-modification'
+  }
+  scheduledEventCount: number
+  completedEventCount: number
+  completedRevolutions: number
+  events: readonly GrayFullMotorEventResult[]
+  initialState: GrayFullMotorStoredState
+  finalState: GrayFullMotorStoredState
+  simulatedDurationSeconds: number
+  targetFinalAngleDeg: number
+  finalAngleDeg: number
+  finalRpm: number
+  stalled: boolean
+  stallTimeSeconds: number | null
+  stallAngleDeg: number | null
+  ledger: GrayFullMotorRunLedger
+  provenance: {
+    model: GrayModelProvenance
+    eventSchedule: 'US3890548A patent-described / patent-derived canonical 27-event schedule'
+    originalContactRule: 'Motor Edwin Gray.txt presenter-reported 500 rpm condition, version 1'
+    modifiedMachineRule: 'illustrative electronic switching modification, version 1'
+    recoveryModel: 'bounded series-RLC quarter-cycle solution'
+  }
+  findings: readonly GrayFullMotorFinding[]
+  validatesTheory: false
+}
+
+interface GrayFullMotorMutableState {
+  holdingJ: number
+  dumpJ: number
+  coilJ: number
+  coilCurrentA: number
+  recoveryJ: number
+  kineticJ: number
+  angleDeg: number
+  omega: number
+  switchState: GrayFullMotorSwitchState
+  arcState: GrayFullMotorArcState
+}
+
+interface GrayFullMotorTotals {
+  sourceJ: number
+  prescribedDriveJ: number
+  loadWorkJ: number
+  electromagneticWorkJ: number
+  copperLossJ: number
+  switchLossJ: number
+  arcLossJ: number
+  rechargeLossJ: number
+  recoveryReturnLossJ: number
+}
+
+const GRAY_FULL_MOTOR_MAX_REVOLUTIONS = 100
+const GRAY_FULL_MOTOR_RECOVERY_VOLTAGE_MULTIPLIER = 2
+
+function grayFullMotorStoredState(
+  state: GrayFullMotorMutableState,
+  input: GrayFullMotorResolvedInput,
+): GrayFullMotorStoredState {
+  return {
+    holdingCapacitorJ: state.holdingJ,
+    holdingCapacitorVoltageV: Math.sqrt(2 * state.holdingJ / input.capacitanceF),
+    dumpBankJ: state.dumpJ,
+    activeCoilMagneticJ: state.coilJ,
+    activeCoilCurrentA: state.coilCurrentA,
+    recoveryStorageJ: state.recoveryJ,
+    recoveryVoltageV: Math.sqrt(2 * state.recoveryJ / input.recoveryCapacitanceF),
+    kineticEnergyJ: state.kineticJ,
+    absoluteAngleDeg: state.angleDeg,
+    omegaRadPerSecond: state.omega,
+    rpm: state.omega * 60 / (2 * Math.PI),
+    switchState: state.switchState,
+    arcState: state.arcState,
+  }
+}
+
+function grayFullMotorRecoveryTransfer(
+  magneticJ: number,
+  inductanceH: number,
+  coupling: number,
+  branchResistanceOhm: number,
+  dumpCapacitanceF: number,
+  recoveryCapacitanceF: number,
+  storageHeadroomJ: number,
+): { transferredJ: number; transferTimeSeconds: number } {
+  if (magneticJ <= 0 || coupling <= 0 || storageHeadroomJ <= 0) {
+    return { transferredJ: 0, transferTimeSeconds: 0 }
+  }
+  const equivalentCapacitanceF = dumpCapacitanceF * recoveryCapacitanceF
+    / (dumpCapacitanceF + recoveryCapacitanceF)
+  const couplingSquared = Math.max(1e-6, coupling * coupling)
+  const branchInductanceH = inductanceH / couplingSquared
+  const reflectedResistanceOhm = branchResistanceOhm / couplingSquared
+  const alpha = reflectedResistanceOhm / (2 * branchInductanceH)
+  const omega0 = 1 / Math.sqrt(branchInductanceH * equivalentCapacitanceF)
+  const initialCurrentA = Math.sqrt(2 * magneticJ / branchInductanceH)
+  let peakChargeC: number
+  let transferTimeSeconds: number
+
+  if (alpha < omega0) {
+    const omegaD = Math.sqrt(omega0 * omega0 - alpha * alpha)
+    transferTimeSeconds = Math.atan2(omegaD, alpha) / omegaD
+    peakChargeC = initialCurrentA / omegaD * Math.exp(-alpha * transferTimeSeconds)
+      * Math.sin(omegaD * transferTimeSeconds)
+  } else {
+    const beta = Math.sqrt(Math.max(0, alpha * alpha - omega0 * omega0))
+    if (beta === 0) {
+      transferTimeSeconds = 1 / alpha
+      peakChargeC = initialCurrentA * transferTimeSeconds * Math.exp(-alpha * transferTimeSeconds)
+    } else {
+      transferTimeSeconds = Math.atanh(beta / alpha) / beta
+      peakChargeC = initialCurrentA / beta * Math.exp(-alpha * transferTimeSeconds)
+        * Math.sinh(beta * transferTimeSeconds)
+    }
+  }
+
+  const solvedTransferJ = 0.5 * peakChargeC * peakChargeC / equivalentCapacitanceF
+  return {
+    transferredJ: Math.min(magneticJ, storageHeadroomJ, Math.max(0, solvedTransferJ)),
+    transferTimeSeconds,
+  }
+}
+
+function grayFullMotorRecharge(
+  state: GrayFullMotorMutableState,
+  intervalSeconds: number,
+  input: GrayFullMotorResolvedInput,
+): GrayFullMotorEventResult['recharge'] {
+  const priorCoilArcLossJ = state.coilJ
+  state.coilJ = 0
+  state.coilCurrentA = 0
+  if (priorCoilArcLossJ > 0) {
+    state.arcState = 'quenched'
+    state.switchState = 'open'
+  }
+
+  const holdingMaximumJ = 0.5 * input.capacitanceF * input.chargeVoltageV ** 2
+  const holdingHeadroomJ = Math.max(0, holdingMaximumJ - state.holdingJ)
+  const recoveryTimeConstantSeconds = input.sourceResistanceOhm * input.recoveryCapacitanceF
+  const recoveryReleasedJ = Math.min(
+    state.recoveryJ,
+    state.recoveryJ * (1 - Math.exp(-intervalSeconds / recoveryTimeConstantSeconds)),
+  )
+  const recoveryReturnEfficiency = input.machineMode === 'modified-electronic-v1' ? 0.94 : 0.88
+  const recoveryReturnedJ = Math.min(holdingHeadroomJ, recoveryReleasedJ * recoveryReturnEfficiency)
+  const actualRecoveryReleasedJ = recoveryReturnedJ === recoveryReleasedJ * recoveryReturnEfficiency
+    ? recoveryReleasedJ
+    : recoveryReturnedJ / recoveryReturnEfficiency
+  const recoveryReturnLossJ = actualRecoveryReleasedJ - recoveryReturnedJ
+  state.recoveryJ -= actualRecoveryReleasedJ
+  state.holdingJ += recoveryReturnedJ
+
+  const voltageBeforeV = Math.sqrt(2 * state.holdingJ / input.capacitanceF)
+  const rechargeTimeConstantSeconds = input.sourceResistanceOhm * input.capacitanceF
+  const voltageAfterV = input.chargeVoltageV - (input.chargeVoltageV - voltageBeforeV)
+    * Math.exp(-intervalSeconds / rechargeTimeConstantSeconds)
+  const sourceJ = input.chargeVoltageV * input.capacitanceF * (voltageAfterV - voltageBeforeV)
+  const holdingAfterJ = 0.5 * input.capacitanceF * voltageAfterV * voltageAfterV
+  const holdingAddedJ = holdingAfterJ - state.holdingJ
+  const sourceLossJ = Math.max(0, sourceJ - holdingAddedJ)
+  state.holdingJ = holdingAfterJ
+
+  return {
+    sourceJ,
+    holdingAddedJ,
+    sourceLossJ,
+    recoveryReleasedJ: actualRecoveryReleasedJ,
+    recoveryReturnedJ,
+    recoveryReturnLossJ,
+    priorCoilArcLossJ,
+  }
+}
+
+function grayFullMotorAdvanceAngle(
+  state: GrayFullMotorMutableState,
+  targetAngleDeg: number,
+  input: GrayFullMotorResolvedInput,
+  totals: GrayFullMotorTotals,
+): { reached: boolean; intervalSeconds: number } {
+  const deltaRad = (targetAngleDeg - state.angleDeg) * Math.PI / 180
+  if (deltaRad <= 0) return { reached: true, intervalSeconds: 0 }
+  if (input.mode === 'prescribed-diagnostic') {
+    if (state.omega <= 0) return { reached: false, intervalSeconds: 0 }
+    const intervalSeconds = deltaRad / state.omega
+    const loadWorkJ = input.loadTorqueNm * deltaRad
+    totals.loadWorkJ += loadWorkJ
+    totals.prescribedDriveJ += loadWorkJ
+    state.angleDeg = targetAngleDeg
+    return { reached: true, intervalSeconds }
+  }
+  if (state.omega <= 0) return { reached: false, intervalSeconds: 0 }
+  if (input.loadTorqueNm === 0) {
+    const intervalSeconds = deltaRad / state.omega
+    state.angleDeg = targetAngleDeg
+    return { reached: true, intervalSeconds }
+  }
+
+  const requiredLoadWorkJ = input.loadTorqueNm * deltaRad
+  if (requiredLoadWorkJ >= state.kineticJ) {
+    const reachableRad = state.kineticJ / input.loadTorqueNm
+    const decelerationRadPerSecond2 = input.loadTorqueNm / input.rotorInertiaKgM2
+    const intervalSeconds = state.omega / decelerationRadPerSecond2
+    totals.loadWorkJ += state.kineticJ
+    state.angleDeg += reachableRad * 180 / Math.PI
+    state.kineticJ = 0
+    state.omega = 0
+    return { reached: false, intervalSeconds }
+  }
+
+  const finalKineticJ = state.kineticJ - requiredLoadWorkJ
+  const finalOmega = Math.sqrt(2 * finalKineticJ / input.rotorInertiaKgM2)
+  const intervalSeconds = 2 * deltaRad / (state.omega + finalOmega)
+  totals.loadWorkJ += requiredLoadWorkJ
+  state.kineticJ = finalKineticJ
+  state.omega = finalOmega
+  state.angleDeg = targetAngleDeg
+  return { reached: true, intervalSeconds }
+}
+
+/**
+ * Runs the canonical event train as a bounded teaching model. It is deliberately
+ * separate from the historical single-pulse API and contains no claim-power term.
+ */
+export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorResult {
+  const motor = GRAY_MOTORS[input.motorId]
+  if (!motor) throw new Error(`Unknown Gray motor: ${String(input.motorId)}`)
+  const revolutions = positiveInteger(input.revolutions, 'revolutions')
+  if (revolutions < 1 || revolutions > GRAY_FULL_MOTOR_MAX_REVOLUTIONS) {
+    throw new Error(`revolutions must be in [1, ${GRAY_FULL_MOTOR_MAX_REVOLUTIONS}]`)
+  }
+  const chargeVoltageV = finiteInRange(input.chargeVoltageV, 'chargeVoltageV', 0, 2e5)
+  const capacitanceF = finiteInRange(input.capacitanceF, 'capacitanceF', 1e-12, 1e-2)
+  const startRpm = finiteInRange(input.startRpm, 'startRpm', 0, 2e4)
+  const quenchDeg = finiteInRange(input.quenchDeg, 'quenchDeg', 0, 40)
+  const turns = finiteInRange(input.turns, 'turns', 1, 2e3)
+  if (input.mode !== 'prescribed-diagnostic' && input.mode !== 'dynamic') {
+    throw new Error('mode must be prescribed-diagnostic or dynamic')
+  }
+  if (input.machineMode !== 'original-500rpm-contact-v1'
+    && input.machineMode !== 'modified-electronic-v1') {
+    throw new Error('machineMode must be original-500rpm-contact-v1 or modified-electronic-v1')
+  }
+  if (input.magneticLookup) validateGrayMagneticLookup(input.magneticLookup)
+  const rotorInertiaKgM2 = finiteInRange(
+    input.rotorInertiaKgM2 ?? DEFAULT_ROTOR_INERTIA_KG_M2,
+    'rotorInertiaKgM2',
+    1e-12,
+    1e3,
+  )
+  const loadTorqueNm = finiteInRange(input.loadTorqueNm ?? 0, 'loadTorqueNm', 0, 1e6)
+  const initialAngleDeg = finiteInRange(input.initialAngleDeg ?? 0, 'initialAngleDeg', -1e9, 1e9)
+  const dumpCapacitanceF = finiteInRange(
+    input.dumpCapacitanceF ?? capacitanceF / 2,
+    'dumpCapacitanceF',
+    1e-12,
+    1e-2,
+  )
+  const recoveryCapacitanceF = finiteInRange(
+    input.recoveryCapacitanceF ?? capacitanceF * 4,
+    'recoveryCapacitanceF',
+    1e-12,
+    1e-1,
+  )
+  const initialRecoveryVoltageV = finiteInRange(
+    input.initialRecoveryVoltageV ?? 0,
+    'initialRecoveryVoltageV',
+    0,
+    chargeVoltageV * GRAY_FULL_MOTOR_RECOVERY_VOLTAGE_MULTIPLIER,
+  )
+  const sourceResistanceOhm = finiteInRange(
+    input.sourceResistanceOhm ?? 40,
+    'sourceResistanceOhm',
+    1e-6,
+    1e9,
+  )
+  const integrationStepsPerEvent = positiveInteger(
+    input.integrationStepsPerEvent ?? 1,
+    'integrationStepsPerEvent',
+  )
+  if (integrationStepsPerEvent < 1 || integrationStepsPerEvent > 10_000) {
+    throw new Error('integrationStepsPerEvent must be in [1, 10000]')
+  }
+  const resolved: GrayFullMotorResolvedInput = {
+    motorId: input.motorId,
+    revolutions,
+    chargeVoltageV,
+    capacitanceF,
+    startRpm,
+    quenchDeg,
+    turns,
+    mode: input.mode,
+    machineMode: input.machineMode,
+    rotorInertiaKgM2,
+    loadTorqueNm,
+    initialAngleDeg,
+    dumpCapacitanceF,
+    recoveryCapacitanceF,
+    initialRecoveryVoltageV,
+    sourceResistanceOhm,
+    integrationStepsPerEvent,
+  }
+  const sectorCount = Math.max(1, Math.min(GRAY_TOPOLOGY.simultaneousSectors, motor.statorPoles))
+  const omega0 = startRpm * 2 * Math.PI / 60
+  const initialHoldingJ = 0.5 * capacitanceF * chargeVoltageV * chargeVoltageV
+  const initialRecoveryJ = 0.5 * recoveryCapacitanceF * initialRecoveryVoltageV ** 2
+  const initialKineticJ = 0.5 * rotorInertiaKgM2 * omega0 * omega0
+  const state: GrayFullMotorMutableState = {
+    holdingJ: initialHoldingJ,
+    dumpJ: 0,
+    coilJ: 0,
+    coilCurrentA: 0,
+    recoveryJ: initialRecoveryJ,
+    kineticJ: initialKineticJ,
+    angleDeg: initialAngleDeg,
+    omega: omega0,
+    switchState: 'open',
+    arcState: 'none',
+  }
+  const initialState = grayFullMotorStoredState(state, resolved)
+  const totals: GrayFullMotorTotals = {
+    sourceJ: 0,
+    prescribedDriveJ: 0,
+    loadWorkJ: 0,
+    electromagneticWorkJ: 0,
+    copperLossJ: 0,
+    switchLossJ: 0,
+    arcLossJ: 0,
+    rechargeLossJ: 0,
+    recoveryReturnLossJ: 0,
+  }
+  const schedule = buildGrayEventSchedule(revolutions)
+  const events: GrayFullMotorEventResult[] = []
+  let timeSeconds = 0
+  let stalled = false
+  let stallTimeSeconds: number | null = null
+  let stallAngleDeg: number | null = null
+  let priorEventTimeSeconds = 0
+
+  for (const scheduled of schedule) {
+    const scheduledAbsoluteAngleDeg = initialAngleDeg + scheduled.angleDeg
+    const advance = grayFullMotorAdvanceAngle(state, scheduledAbsoluteAngleDeg, resolved, totals)
+    timeSeconds += advance.intervalSeconds
+    if (!advance.reached) {
+      stalled = true
+      stallTimeSeconds = timeSeconds
+      stallAngleDeg = state.angleDeg
+      break
+    }
+    const recharge = grayFullMotorRecharge(state, advance.intervalSeconds, resolved)
+    totals.sourceJ += recharge.sourceJ
+    totals.rechargeLossJ += recharge.sourceLossJ
+    totals.recoveryReturnLossJ += recharge.recoveryReturnLossJ
+    totals.arcLossJ += recharge.priorCoilArcLossJ
+    const before = grayFullMotorStoredState(state, resolved)
+    const rpmAtEvent = before.rpm
+    const contactRuleSatisfied = input.machineMode === 'modified-electronic-v1'
+      || rpmAtEvent + 1e-9 >= GRAY_QUENCH_REFERENCE.minimumRpm
+    const switchState: GrayFullMotorSwitchState = !contactRuleSatisfied
+      ? 'open'
+      : (input.machineMode === 'modified-electronic-v1' ? 'electronic-conducting' : 'contact-closed')
+    state.switchState = switchState
+    state.arcState = 'none'
+    const inductanceH = input.magneticLookup
+      ? grayLookupInductanceAtAngle(input.magneticLookup, scheduledAbsoluteAngleDeg)
+      : grayInductanceAtAngle(scheduledAbsoluteAngleDeg, turns, motor.leakageCoupling, sectorCount)
+    const slopeHPerRad = input.magneticLookup
+      ? grayLookupInductanceSlopePerRadian(input.magneticLookup, scheduledAbsoluteAngleDeg + quenchDeg / 2)
+      : grayInductanceSlopePerRadian(
+          scheduledAbsoluteAngleDeg + quenchDeg / 2,
+          turns,
+          motor.leakageCoupling,
+          sectorCount,
+        )
+    const quenchTime = state.omega > 0 ? quenchDeg * Math.PI / 180 / state.omega : 0
+    const electricalQuarterCycleSeconds = Math.PI / 2 * Math.sqrt(inductanceH * capacitanceF)
+    const dischargeFraction = contactRuleSatisfied && quenchTime > 0
+      ? 1 - Math.exp(-quenchTime / electricalQuarterCycleSeconds)
+      : 0
+    const holdingDeliveredJ = Math.min(state.holdingJ, state.holdingJ * dischargeFraction)
+    state.holdingJ -= holdingDeliveredJ
+    state.dumpJ = holdingDeliveredJ
+    const coilResistanceOhm = 0.12 * turns / 140 / sectorCount + 0.01
+    const switchResistanceOhm = input.machineMode === 'modified-electronic-v1' ? 0.008 : 0.025
+    const dampingLossFraction = 1 - Math.exp(
+      -Math.PI / 2 * (coilResistanceOhm + switchResistanceOhm) * Math.sqrt(capacitanceF / inductanceH),
+    )
+    const conductionLossJ = holdingDeliveredJ * Math.min(1, dampingLossFraction)
+    const copperLossJ = conductionLossJ * coilResistanceOhm
+      / (coilResistanceOhm + switchResistanceOhm)
+    const conductionSwitchLossJ = conductionLossJ - copperLossJ
+    const afterConductionJ = holdingDeliveredJ - conductionLossJ
+    const conversionFraction = Math.min(
+      0.35,
+      Math.abs(slopeHPerRad / inductanceH) * quenchDeg * Math.PI / 360,
+    )
+    const electromagneticWorkJ = afterConductionJ * conversionFraction
+    const magneticPeakJ = afterConductionJ - electromagneticWorkJ
+    state.dumpJ = magneticPeakJ
+    state.coilJ = magneticPeakJ
+    state.coilCurrentA = Math.sqrt(2 * magneticPeakJ / inductanceH)
+    totals.copperLossJ += copperLossJ
+    totals.electromagneticWorkJ += electromagneticWorkJ
+    if (resolved.mode === 'dynamic') {
+      state.kineticJ += electromagneticWorkJ
+      state.omega = Math.sqrt(2 * state.kineticJ / rotorInertiaKgM2)
+    } else {
+      totals.loadWorkJ += electromagneticWorkJ
+    }
+
+    const recoveryMaximumJ = 0.5 * recoveryCapacitanceF
+      * (chargeVoltageV * GRAY_FULL_MOTOR_RECOVERY_VOLTAGE_MULTIPLIER) ** 2
+    const recoveryHeadroomJ = Math.max(0, recoveryMaximumJ - state.recoveryJ)
+    const recoveryEnabled = contactRuleSatisfied && motor.hasRecovery
+    const recoverySolve = recoveryEnabled
+      ? grayFullMotorRecoveryTransfer(
+          magneticPeakJ,
+          inductanceH,
+          motor.recoveryCoupling,
+          coilResistanceOhm + switchResistanceOhm,
+          dumpCapacitanceF,
+          recoveryCapacitanceF,
+          recoveryHeadroomJ,
+        )
+      : { transferredJ: 0, transferTimeSeconds: 0 }
+    const recoveredJ = recoverySolve.transferredJ
+    state.recoveryJ += recoveredJ
+    const quenchSucceeded = contactRuleSatisfied && quenchDeg > 0
+    const dumpRemainderJ = quenchSucceeded ? magneticPeakJ - recoveredJ : 0
+    const arcLossJ = input.machineMode === 'original-500rpm-contact-v1' ? dumpRemainderJ : 0
+    const switchLossJ = conductionSwitchLossJ
+      + (input.machineMode === 'modified-electronic-v1' ? dumpRemainderJ : 0)
+    const residualCoilJ = quenchSucceeded ? 0 : magneticPeakJ
+    totals.arcLossJ += arcLossJ
+    totals.switchLossJ += switchLossJ
+    state.dumpJ = 0
+    state.coilJ = residualCoilJ
+    state.coilCurrentA = residualCoilJ > 0 ? Math.sqrt(2 * residualCoilJ / inductanceH) : 0
+    state.switchState = quenchSucceeded ? 'open' : switchState
+    state.arcState = quenchSucceeded && input.machineMode === 'original-500rpm-contact-v1'
+      ? 'quenched'
+      : (holdingDeliveredJ > 0 && !quenchSucceeded ? 'sustained' : 'none')
+    const accountedJ = electromagneticWorkJ + copperLossJ + switchLossJ + arcLossJ
+      + recoveredJ + residualCoilJ
+    const numericalResidualJ = holdingDeliveredJ - accountedJ
+    const ledger: GrayFullMotorEventLedger = {
+      holdingDeliveredJ,
+      dumpBankPeakJ: holdingDeliveredJ,
+      magneticPeakJ,
+      electromagneticWorkJ,
+      copperLossJ,
+      switchLossJ,
+      arcLossJ,
+      recoveredJ,
+      residualCoilJ,
+      accountedJ,
+      numericalResidualJ,
+      normalizedResidual: holdingDeliveredJ === 0 ? numericalResidualJ : numericalResidualJ / holdingDeliveredJ,
+    }
+    const event: GrayFullMotorEventResult = {
+      eventIndex: scheduled.stepIndex,
+      revolution: scheduled.revolution,
+      eventInRevolution: scheduled.stepIndex % GRAY_TOPOLOGY.dischargesPerRevolution,
+      scheduledAbsoluteAngleDeg,
+      timeSeconds,
+      intervalSeconds: timeSeconds - priorEventTimeSeconds,
+      quenchTimeSeconds: quenchTime,
+      sectors: scheduled.sectors,
+      phase: scheduled.phase,
+      phaseLabel: scheduled.phaseLabel,
+      majorMinor: scheduled.majorMinor,
+      contactRuleSatisfied,
+      quenchSucceeded,
+      recharge,
+      recoveryBranch: {
+        solved: recoveryEnabled,
+        topology: recoveryEnabled ? 'series-rlc-quarter-cycle' : 'unavailable',
+        transferTimeSeconds: recoveryEnabled ? recoverySolve.transferTimeSeconds : null,
+        availableMagneticJ: magneticPeakJ,
+        storageHeadroomJ: recoveryHeadroomJ,
+        transferredJ: recoveredJ,
+      },
+      before,
+      after: grayFullMotorStoredState(state, resolved),
+      ledger,
+    }
+    events.push(event)
+    priorEventTimeSeconds = timeSeconds
+  }
+
+  const targetFinalAngleDeg = initialAngleDeg + revolutions * 360
+  if (!stalled && events.length === schedule.length) {
+    const finalAdvance = grayFullMotorAdvanceAngle(state, targetFinalAngleDeg, resolved, totals)
+    timeSeconds += finalAdvance.intervalSeconds
+    const finalRecharge = grayFullMotorRecharge(state, finalAdvance.intervalSeconds, resolved)
+    totals.sourceJ += finalRecharge.sourceJ
+    totals.rechargeLossJ += finalRecharge.sourceLossJ
+    totals.recoveryReturnLossJ += finalRecharge.recoveryReturnLossJ
+    totals.arcLossJ += finalRecharge.priorCoilArcLossJ
+    if (!finalAdvance.reached) {
+      stalled = true
+      stallTimeSeconds = timeSeconds
+      stallAngleDeg = state.angleDeg
+    }
+  }
+
+  const finalState = grayFullMotorStoredState(state, resolved)
+  const initialStoredElectricalJ = initialHoldingJ + initialRecoveryJ
+  const totalDeclaredInputJ = initialStoredElectricalJ + initialKineticJ + totals.sourceJ
+    + totals.prescribedDriveJ
+  const totalLossesJ = totals.copperLossJ + totals.switchLossJ + totals.arcLossJ
+    + totals.rechargeLossJ + totals.recoveryReturnLossJ
+  const finalStoredResidualsJ = state.holdingJ + state.dumpJ + state.coilJ + state.recoveryJ
+  const accountedJ = totals.loadWorkJ + totalLossesJ + finalStoredResidualsJ + state.kineticJ
+  const numericalResidualJ = totalDeclaredInputJ - accountedJ
+  const normalizedResidual = totalDeclaredInputJ === 0
+    ? numericalResidualJ
+    : numericalResidualJ / totalDeclaredInputJ
+  const wholeSystemCop = totalDeclaredInputJ === 0 ? 0 : totals.loadWorkJ / totalDeclaredInputJ
+  const ledger: GrayFullMotorRunLedger = {
+    boundaryComplete: true,
+    initialStoredElectricalJ,
+    initialKineticJ,
+    externalRechargeJ: totals.sourceJ,
+    prescribedDriveInputJ: totals.prescribedDriveJ,
+    totalDeclaredInputJ,
+    loadWorkJ: totals.loadWorkJ,
+    electromagneticWorkJ: totals.electromagneticWorkJ,
+    kineticEnergyChangeJ: state.kineticJ - initialKineticJ,
+    copperLossJ: totals.copperLossJ,
+    switchLossJ: totals.switchLossJ,
+    arcLossJ: totals.arcLossJ,
+    rechargeLossJ: totals.rechargeLossJ,
+    recoveryReturnLossJ: totals.recoveryReturnLossJ,
+    totalLossesJ,
+    finalHoldingCapacitorJ: state.holdingJ,
+    finalDumpBankJ: state.dumpJ,
+    finalActiveCoilMagneticJ: state.coilJ,
+    finalRecoveryStorageJ: state.recoveryJ,
+    finalKineticJ: state.kineticJ,
+    finalStoredResidualsJ,
+    accountedJ,
+    numericalResidualJ,
+    normalizedResidual,
+    wholeSystemCop,
+    wholeSystemEfficiency: wholeSystemCop,
+    copScope: 'complete-declared-source-and-stored-energy-boundary',
+    claimDeficitInjectedJ: 0,
+  }
+  const findings: GrayFullMotorFinding[] = [
+    {
+      code: 'bounded-model',
+      statement: 'This is a bounded classical lumped teaching model, not a machine-performance prediction.',
+    },
+    {
+      code: 'quench-rule',
+      statement: input.machineMode === 'original-500rpm-contact-v1'
+        ? 'Version 1 applies the presenter-reported 500 rpm contact/quench condition; it is not universal.'
+        : 'Version 1 modified mode uses an explicitly illustrative electronic switch without the 500 rpm gate.',
+    },
+    {
+      code: 'magnetic-scope',
+      statement: input.magneticLookup
+        ? 'FEM lookup values cover only the magnetic relation; circuit, switching, recovery, and mechanics remain lumped and illustrative.'
+        : 'Magnetic, circuit, switching, recovery, and mechanics are illustrative lumped surrogates.',
+    },
+    {
+      code: 'energy-boundary',
+      statement: 'Whole-system COP uses only declared external recharge and initial stored electrical/kinetic energy; no claim deficit is injected.',
+    },
+  ]
+  if (stalled) {
+    findings.push({
+      code: 'stall',
+      statement: 'The rotor stalled before the next scheduled angle, so later event times were not fabricated or executed.',
+    })
+  }
+  if (wholeSystemCop > 1 + 1e-10 || Math.abs(normalizedResidual) > 1e-8) {
+    throw new Error('Gray full motor energy boundary failed to close')
+  }
+
+  return {
+    modelStatus: GRAY_MODEL_STATUS,
+    input: resolved,
+    motor,
+    topology: GRAY_TOPOLOGY,
+    magneticScope: input.magneticLookup
+      ? 'hybrid-fem-magnetic-lumped-circuit'
+      : 'illustrative-lumped-surrogate',
+    numericalMethod: 'closed-form-event-map-v1',
+    quenchRule: {
+      id: input.machineMode,
+      version: 1,
+      referenceMinimumRpm: input.machineMode === 'original-500rpm-contact-v1'
+        ? GRAY_QUENCH_REFERENCE.minimumRpm
+        : null,
+      provenance: input.machineMode === 'original-500rpm-contact-v1'
+        ? 'presenter-reported'
+        : 'illustrative-modification',
+    },
+    scheduledEventCount: schedule.length,
+    completedEventCount: events.length,
+    completedRevolutions: Math.floor(
+      (state.angleDeg - initialAngleDeg + QUENCH_ANGLE_TOLERANCE_DEG) / 360,
+    ),
+    events,
+    initialState,
+    finalState,
+    simulatedDurationSeconds: timeSeconds,
+    targetFinalAngleDeg,
+    finalAngleDeg: state.angleDeg,
+    finalRpm: state.omega * 60 / (2 * Math.PI),
+    stalled,
+    stallTimeSeconds,
+    stallAngleDeg,
+    ledger,
+    provenance: {
+      model: GRAY_MODEL_PROVENANCE,
+      eventSchedule: 'US3890548A patent-described / patent-derived canonical 27-event schedule',
+      originalContactRule: 'Motor Edwin Gray.txt presenter-reported 500 rpm condition, version 1',
+      modifiedMachineRule: 'illustrative electronic switching modification, version 1',
+      recoveryModel: 'bounded series-RLC quarter-cycle solution',
+    },
+    findings,
+    validatesTheory: false,
+  }
+}
+
+export const runGrayFullMotor = evaluateGrayFullMotor
