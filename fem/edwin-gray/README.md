@@ -83,7 +83,10 @@ node scripts/run.mjs --sweep --manifest /tmp/edwin-gray-sweep.json
 
 After every selected angle has a completed normalized result, aggregate one
 mesh/current slice into the browser LUT. Aggregation rejects mixed mesh sizes,
-currents, cases, duplicate angles, and incomplete results:
+currents, cases, duplicate angles, incomplete manifest jobs, artifact hash
+mismatches, and any angle set that differs from the case's exact declared
+coverage. `--mesh-size` and `--drive-current` are required when the manifest
+declares more than one value for either parameter:
 
 ```sh
 node scripts/run.mjs --aggregate \
@@ -133,12 +136,18 @@ engineering guess is not treated as an exact symmetry declaration.
 
 The runner hashes the case bytes, geometry bytes, GetDP bytes, and run
 parameters with SHA-256. A job is stored under a hash-named directory beneath
-`runs/`. Its checkpoint records the completed phases and the exact input hash.
-`--resume` reuses only matching completed artifacts; missing artifacts cause
-the relevant phase to run again. Results are normalized only from files
-produced by GetDP in a completed runner job, with output hashes recorded by
-that job, or from an explicitly supplied raw solver JSON document carrying
-matching parameters and provenance.
+`runs/`. Its checkpoint records the completed phases, the shared model input
+hash, the parameter-point job input hash, and exact mesh, solver-output, and
+normalized-result hashes. `--resume` does not trust a manifest's `complete`
+status: it revalidates the content-addressed result path, checkpoint identity,
+all phase statuses, every artifact hash, normalized parameters, and both
+provenance hashes. A mismatch reruns the invalid phase and its dependents.
+Before a mesh or solve attempt, the runner removes that phase's prior outputs,
+so a successful process that produces nothing cannot satisfy the checkpoint
+with stale files. Results are normalized only from files produced by GetDP in
+a completed runner job, with output hashes recorded by that job, or from an
+explicitly supplied raw solver JSON document carrying matching parameters and
+provenance.
 The runner never invents FEM values.
 
 Each normalized job result uses `contract: "edwin-gray-browser-result"` and
@@ -148,6 +157,13 @@ browser can reject an unknown contract version instead of guessing at field
 meanings. The browser-facing LUT is not bundled by this workspace while the
 source ledger marks `results` as `not-run`; the current mesh-quality failure
 prevents a normalized result from being generated.
+
+Run the runner integrity integration tests with deterministic local solver
+stubs:
+
+```sh
+node --test scripts/run.integrity.test.mjs
+```
 
 ## Solver limitations
 

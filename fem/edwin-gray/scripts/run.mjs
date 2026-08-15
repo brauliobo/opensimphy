@@ -6,6 +6,7 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  rmSync,
   statSync,
   writeFileSync,
   renameSync
@@ -28,6 +29,7 @@ const RESULT_CONTRACT = "edwin-gray-browser-result";
 const RESULT_CONTRACT_VERSION = 1;
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
 const RESULT_OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
+const MESH_QUALITY_WARNING = "Gmsh passed the runner's fatal log-pattern gate; this is not a mesh-quality certification";
 const MESH_QUALITY_FAILURES = [
   "No elements in volume",
   "WARNING: Intersecting elements",
@@ -218,10 +220,23 @@ function validateLutResultSchema(result, schema) {
 function validateNormalizedProvenance(result, job) {
   assert(result.entries.length === 1, "normalized solver result must contain exactly one job entry");
   const entry = result.entries[0];
-  assert(entry.provenance.inputHash === job.hash, "normalized result input hash does not match the job");
+  assert(entry.provenance.modelInputHash === job.modelInputHash, "normalized result model input hash does not match the job");
+  assert(entry.provenance.jobInputHash === job.hash, "normalized result job input hash does not match the job");
   assert(entry.provenance.solver === "getdp", "normalized result solver is invalid");
   assert(entry.provenance.backend === job.plan.kind, "normalized result backend does not match the job");
   assert(entry.parameters && stableJson(entry.parameters) === stableJson(job.parameters), "normalized result parameters do not match the job");
+  const expectedArtifacts = [
+    job.meshPath,
+    join(job.jobDir, "getdp.log"),
+    ...commandOutputs(job)
+  ].map((path) => relative(job.jobDir, path));
+  assert(Array.isArray(entry.provenance.artifacts), "normalized result artifact provenance is missing");
+  assert(stableJson(entry.provenance.artifacts.map((artifact) => artifact.path).sort()) === stableJson(expectedArtifacts.sort()), "normalized result artifact paths do not match the job");
+  for (const artifact of entry.provenance.artifacts) {
+    const path = resolve(job.jobDir, artifact.path);
+    assert(pathWithin(path, job.jobDir), `normalized result artifact escapes the job directory: ${artifact.path}`);
+    assert(artifactMatches(path, artifact.sha256), `normalized result artifact hash is invalid: ${artifact.path}`);
+  }
 }
 
 function sha256Bytes(bytes) {
@@ -692,14 +707,6 @@ function outputsComplete(job) {
   return commandOutputs(job).every((path) => existsSync(path) && statSync(path).size > 0);
 }
 
-function artifactHashes(job) {
-  return {
-    mesh: sha256File(job.meshPath),
-    outputs: Object.fromEntries(commandOutputs(job).map((path) => [relative(job.jobDir, path), sha256File(path)])),
-    result: sha256File(join(job.jobDir, "result.json"))
-  };
-}
-
 function artifactMatches(path, expectedHash) {
   return Boolean(expectedHash && existsSync(path) && sha256File(path) === expectedHash);
 }
@@ -707,29 +714,46 @@ function artifactMatches(path, expectedHash) {
 function meshCheckpointValid(job, checkpoint) {
   return checkpoint.phases.mesh === "complete"
     && checkpoint.meshQuality === "passed"
-    && artifactMatches(job.meshPath, checkpoint.artifacts?.mesh);
+    && artifactMatches(job.meshPath, checkpoint.artifacts?.mesh)
+    && artifactMatches(join(job.jobDir, "gmsh.log"), checkpoint.artifacts?.logs?.gmsh);
 }
 
 function solveCheckpointValid(job, checkpoint) {
   if (checkpoint.phases.solve !== "complete" || !outputsComplete(job)) {
     return false;
   }
-  return commandOutputs(job).every((path) => artifactMatches(path, checkpoint.artifacts?.outputs?.[relative(job.jobDir, path)]));
+  return artifactMatches(join(job.jobDir, "getdp.log"), checkpoint.artifacts?.logs?.getdp)
+    && commandOutputs(job).every((path) => artifactMatches(path, checkpoint.artifacts?.outputs?.[relative(job.jobDir, path)]));
 }
 
 function normalizeCheckpointValid(job, checkpoint) {
-  return checkpoint.phases.normalize === "complete"
-    && artifactMatches(join(job.jobDir, "result.json"), checkpoint.artifacts?.result);
+  if (checkpoint.phases.normalize !== "complete"
+    || !artifactMatches(join(job.jobDir, "result.json"), checkpoint.artifacts?.result)) {
+    return false;
+  }
+  try {
+    const result = readJson(join(job.jobDir, "result.json"), "normalized FEM result");
+    validateNormalizedProvenance(result, job);
+    validateLutResultSchema(result, job.inputs.lutSchemaData);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function checkpointMatches(checkpoint, job) {
   return checkpoint
     && checkpoint.checkpointVersion === CHECKPOINT_VERSION
     && checkpoint.inputHash === job.hash
+    && checkpoint.modelInputHash === job.modelInputHash
+    && checkpoint.jobInputHash === job.hash
     && checkpoint.jobId === job.jobId
     && stableJson(checkpoint.parameters) === stableJson(job.parameters)
     && checkpoint.backend === job.plan.kind
-    && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`;
+    && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`
+    && checkpoint.phases && typeof checkpoint.phases === "object"
+    && checkpoint.artifacts && typeof checkpoint.artifacts === "object"
+    && checkpoint.artifacts.logs && typeof checkpoint.artifacts.logs === "object";
 }
 
 function resetPhase(checkpoint, phase) {
@@ -738,7 +762,31 @@ function resetPhase(checkpoint, phase) {
   for (const name of phases.slice(start)) {
     checkpoint.phases[name] = "pending";
   }
+  if (phase === "mesh") {
+    checkpoint.meshQuality = null;
+    checkpoint.artifacts.mesh = null;
+    checkpoint.artifacts.logs.gmsh = null;
+  }
+  if (phase === "mesh" || phase === "solve") {
+    checkpoint.artifacts.outputs = {};
+    checkpoint.artifacts.logs.getdp = null;
+  }
+  checkpoint.artifacts.result = null;
   checkpoint.result = null;
+}
+
+function removePhaseArtifacts(job, phase) {
+  if (phase === "mesh") {
+    rmSync(job.meshPath, { force: true });
+    rmSync(join(job.jobDir, "gmsh.log"), { force: true });
+  }
+  if (phase === "mesh" || phase === "solve") {
+    for (const path of commandOutputs(job)) {
+      rmSync(path, { force: true });
+    }
+    rmSync(join(job.jobDir, "getdp.log"), { force: true });
+  }
+  rmSync(join(job.jobDir, "result.json"), { force: true });
 }
 
 function commandPlan(job) {
@@ -784,13 +832,13 @@ function saveCheckpoint(jobDir, checkpoint) {
 
 function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = false) {
   const hash = inputHash(inputs, inputs.caseData, parameters);
-  const baseHash = baseInputHash(inputs, inputs.caseData);
-  const jobId = sha256Bytes(Buffer.from(stableJson({ inputHash: baseHash, parameters }))).slice(0, 24);
+  const modelInputHash = baseInputHash(inputs, inputs.caseData);
+  const jobId = sha256Bytes(Buffer.from(stableJson({ inputHash: modelInputHash, parameters }))).slice(0, 24);
   const jobDir = resolve(runRoot, jobId);
   const meshPath = join(jobDir, "motor.msh");
   const parametersPath = join(jobDir, "parameters.json");
   const checkpoint = readCheckpoint(jobDir);
-  return { hash, jobId, jobDir, meshPath, parametersPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
+  return { hash, modelInputHash, jobId, jobDir, meshPath, parametersPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
 }
 
 function runJob(job) {
@@ -803,12 +851,14 @@ function runJob(job) {
       checkpointVersion: CHECKPOINT_VERSION,
       jobId: job.jobId,
       inputHash: hash,
+      modelInputHash: job.modelInputHash,
+      jobInputHash: hash,
       parameters,
       backend: plan.kind,
       resultContract: `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`,
       meshQuality: null,
       phases: { mesh: "pending", solve: "pending", normalize: "pending" },
-      artifacts: { mesh: null, outputs: {}, result: null },
+      artifacts: { mesh: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
       result: null
     };
     saveCheckpoint(jobDir, checkpoint);
@@ -816,6 +866,8 @@ function runJob(job) {
 
   if (!meshCheckpointValid(job, checkpoint)) {
     resetPhase(checkpoint, "mesh");
+    removePhaseArtifacts(job, "mesh");
+    saveCheckpoint(jobDir, checkpoint);
     const commands = commandPlan(job);
     const meshRun = runCommand({
       plan,
@@ -832,13 +884,16 @@ function runJob(job) {
     checkpoint.phases.mesh = "complete";
     checkpoint.meshQuality = "passed";
     checkpoint.artifacts.mesh = sha256File(job.meshPath);
+    checkpoint.artifacts.logs.gmsh = sha256File(meshRun.log);
     saveCheckpoint(jobDir, checkpoint);
   }
 
   if (!solveCheckpointValid(job, checkpoint)) {
     resetPhase(checkpoint, "solve");
+    removePhaseArtifacts(job, "solve");
+    saveCheckpoint(jobDir, checkpoint);
     const commands = commandPlan(job);
-    runCommand({
+    const solveRun = runCommand({
       plan,
       root: ROOT,
       cwd: jobDir,
@@ -850,17 +905,22 @@ function runJob(job) {
     });
     assert(outputsComplete(job), "GetDP completed without producing all declared table outputs");
     checkpoint.phases.solve = "complete";
+    checkpoint.artifacts.logs.getdp = sha256File(solveRun.log);
     checkpoint.artifacts.outputs = Object.fromEntries(commandOutputs(job).map((path) => [relative(job.jobDir, path), sha256File(path)]));
     saveCheckpoint(jobDir, checkpoint);
   }
 
   if (!normalizeCheckpointValid(job, checkpoint)) {
     resetPhase(checkpoint, "normalize");
+    removePhaseArtifacts(job, "normalize");
+    saveCheckpoint(jobDir, checkpoint);
     const result = normalizeResults({
       caseData: inputs.caseData,
       jobDir,
       parameters,
       inputHash: hash,
+      modelInputHash: job.modelInputHash,
+      jobInputHash: hash,
       solver: "getdp",
       backend: plan.kind,
       artifacts: [job.meshPath, join(jobDir, "getdp.log"), ...commandOutputs(job)],
@@ -922,6 +982,52 @@ function writeSweep(inputs, manifestPath) {
   console.log(JSON.stringify({ status: "manifest-written", path: manifestPath, jobs: manifest.jobs.length, inputHash: hash, noSyntheticOutput: true }));
 }
 
+function validateSweepManifest(inputs, manifest) {
+  assert(manifest.manifestVersion === SWEEP_MANIFEST_VERSION, "Unsupported sweep manifest version");
+  assert(baseInputHash(inputs, inputs.caseData) === manifest.inputHash, "Sweep manifest input hash does not match current inputs");
+  assert(manifest.caseId === inputs.caseData.caseId, "Sweep manifest case ID does not match current inputs");
+  assert(manifest.resultContract?.contract === RESULT_CONTRACT && manifest.resultContract.contractVersion === RESULT_CONTRACT_VERSION, "Sweep result contract does not match current inputs");
+  assert(Array.isArray(manifest.jobs) && manifest.jobs.length > 0, "Sweep manifest jobs are required");
+
+  const declaredJobs = buildSweep(inputs.caseData, manifest.inputHash).jobs;
+  const declaredById = new Map(declaredJobs.map((job) => [job.jobId, job]));
+  assert(declaredById.size === declaredJobs.length, "Declared sweep contains duplicate job IDs");
+  assert(manifest.jobs.length === declaredJobs.length, "Sweep manifest does not contain the exact declared parameter coverage");
+  assert(new Set(manifest.jobs.map((job) => job.jobId)).size === manifest.jobs.length, "Sweep manifest contains duplicate job IDs");
+  for (const job of manifest.jobs) {
+    const declared = declaredById.get(job.jobId);
+    assert(declared, `Sweep manifest contains an undeclared job: ${job.jobId}`);
+    assert(stableJson(job.parameters) === stableJson(declared.parameters), `Sweep manifest parameters do not match job ID ${job.jobId}`);
+    assert(job.symmetryApplied === declared.symmetryApplied, `Sweep manifest symmetry does not match job ID ${job.jobId}`);
+  }
+  return declaredJobs;
+}
+
+function validateCompleteJob(job, manifestPath, resultReference) {
+  assert(typeof resultReference === "string", `Completed manifest job ${job.jobId} has no result path`);
+  const expectedResultPath = join(job.jobDir, "result.json");
+  assert(resolve(dirname(manifestPath), resultReference) === expectedResultPath, `Manifest result path is not the content-addressed result for ${job.jobId}`);
+  const checkpoint = readCheckpoint(job.jobDir);
+  assert(checkpointMatches(checkpoint, job), `Runner checkpoint does not match completed job ${job.jobId}`);
+  assert(checkpoint.result === "result.json", `Runner checkpoint result path is invalid for ${job.jobId}`);
+  assert(meshCheckpointValid(job, checkpoint), `Mesh checkpoint or artifact hash is invalid for ${job.jobId}`);
+  assert(solveCheckpointValid(job, checkpoint), `Solver checkpoint or artifact hashes are invalid for ${job.jobId}`);
+  assert(normalizeCheckpointValid(job, checkpoint), `Normalized result checkpoint or artifact hash is invalid for ${job.jobId}`);
+  const result = readJson(expectedResultPath, "normalized FEM result");
+  validateNormalizedProvenance(result, job);
+  validateLutResultSchema(result, job.inputs.lutSchemaData);
+  return result;
+}
+
+function completedManifestJobValid(job, manifestPath, resultReference) {
+  try {
+    validateCompleteJob(job, manifestPath, resultReference);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function optionalPositiveNumber(value, label) {
   if (value === undefined) return undefined;
   const parsed = Number(value);
@@ -929,18 +1035,49 @@ function optionalPositiveNumber(value, label) {
   return parsed;
 }
 
+function selectedSweepValue(declaredJobs, key, requested, label) {
+  const values = [...new Set(declaredJobs.map((job) => job.parameters[key]))];
+  if (requested !== undefined) {
+    assert(values.includes(requested), `${label} is not declared by the sweep manifest`);
+    return requested;
+  }
+  assert(values.length === 1, `${label} is required when the sweep declares multiple values`);
+  return values[0];
+}
+
 function aggregateManifest(inputs, manifestPath, options) {
   const manifest = readJson(manifestPath, "sweep manifest");
-  assert(manifest.manifestVersion === SWEEP_MANIFEST_VERSION, "Unsupported sweep manifest version");
-  assert(baseInputHash(inputs, inputs.caseData) === manifest.inputHash, "Sweep manifest input hash does not match current inputs");
-  assert(manifest.resultContract?.contract === RESULT_CONTRACT && manifest.resultContract.contractVersion === RESULT_CONTRACT_VERSION, "Sweep result contract does not match current inputs");
-  assert(Array.isArray(manifest.jobs), "Sweep manifest jobs are required");
-  const completed = manifest.jobs.filter((job) => job.status === "complete" && typeof job.result === "string");
-  assert(completed.length > 0, "Sweep manifest has no completed result entries");
-  const documents = completed.map((job) => readJson(resolve(dirname(manifestPath), job.result), "normalized FEM result"));
+  const declaredJobs = validateSweepManifest(inputs, manifest);
+  const meshSizeM = selectedSweepValue(
+    declaredJobs,
+    "meshSizeM",
+    optionalPositiveNumber(options["mesh-size"], "--mesh-size"),
+    "--mesh-size"
+  );
+  const driveCurrentA = selectedSweepValue(
+    declaredJobs,
+    "driveCurrentA",
+    optionalPositiveNumber(options["drive-current"], "--drive-current"),
+    "--drive-current"
+  );
+  const selectedDeclared = declaredJobs.filter((job) => (
+    job.parameters.meshSizeM === meshSizeM && job.parameters.driveCurrentA === driveCurrentA
+  ));
+  const manifestById = new Map(manifest.jobs.map((job) => [job.jobId, job]));
+  const runRoot = resolve(options["run-dir"] || DEFAULT_RUNS);
+  const documents = selectedDeclared.map((declared) => {
+    const item = manifestById.get(declared.jobId);
+    assert(item.status === "complete", `Declared aggregation job is not complete: ${declared.jobId}`);
+    const checkpoint = readCheckpoint(resolve(runRoot, item.jobId));
+    const job = planJob(inputs, item.parameters, options, { kind: checkpoint?.backend }, runRoot, item.symmetryApplied === true);
+    return validateCompleteJob(job, manifestPath, item.result);
+  });
+  const resultAngles = documents.map((document) => document.entries[0].parameters.rotorAngleDeg.toFixed(10));
+  const declaredAngles = selectedDeclared.map((job) => job.parameters.rotorAngleDeg.toFixed(10));
+  assert(stableJson([...resultAngles].sort()) === stableJson([...declaredAngles].sort()), "Completed results do not provide exact declared angle coverage");
   const result = aggregateNormalizedResults(documents, {
-    meshSizeM: optionalPositiveNumber(options["mesh-size"], "--mesh-size"),
-    driveCurrentA: optionalPositiveNumber(options["drive-current"], "--drive-current"),
+    meshSizeM,
+    driveCurrentA,
     resultSchema: inputs.lutSchemaData
   });
   const out = resolve(options.out || resolve(ROOT, "../../public/data/generated/edwin-gray/motor-fem-lut-v1.json"));
@@ -951,24 +1088,25 @@ function aggregateManifest(inputs, manifestPath, options) {
 
 function runManifest(inputs, manifestPath, options, plan) {
   const manifest = readJson(manifestPath, "sweep manifest");
-  assert(manifest.manifestVersion === SWEEP_MANIFEST_VERSION, "Unsupported sweep manifest version");
-  assert(manifest.inputHash, "Sweep manifest inputHash is required");
-  assert(baseInputHash(inputs, inputs.caseData) === manifest.inputHash, "Sweep manifest input hash does not match current inputs");
-  assert(manifest.resultContract?.contract === RESULT_CONTRACT && manifest.resultContract.contractVersion === RESULT_CONTRACT_VERSION, "Sweep result contract does not match current inputs");
-  assert(Array.isArray(manifest.jobs) && manifest.jobs.length > 0, "Sweep manifest jobs are required");
+  validateSweepManifest(inputs, manifest);
   const runRoot = resolve(options["run-dir"] || DEFAULT_RUNS);
   mkdirSync(runRoot, { recursive: true });
   const results = [];
   for (const item of manifest.jobs) {
-    if (item.status === "complete" && options.resume) {
+    const job = planJob(inputs, item.parameters, options, plan, runRoot, item.symmetryApplied === true);
+    assert(job.jobId === item.jobId, `Manifest job ID does not match content address for ${item.jobId}`);
+    if (item.status === "complete" && options.resume && completedManifestJobValid(job, manifestPath, item.result)) {
       results.push({ jobId: item.jobId, status: "complete", skipped: true });
       continue;
     }
-    const job = planJob(inputs, item.parameters, options, plan, runRoot, item.symmetryApplied === true);
-    assert(job.jobId === item.jobId, `Manifest job ID does not match content address for ${item.jobId}`);
+    item.status = "pending";
+    item.result = null;
+    manifest.status = "pending";
+    writeAtomic(manifestPath, manifest);
     const result = runJob(job);
     item.status = result.status;
     item.result = relative(dirname(manifestPath), join(result.jobDir, "result.json"));
+    validateCompleteJob(job, manifestPath, item.result);
     manifest.status = manifest.jobs.every((jobItem) => jobItem.status === "complete") ? "complete" : "pending";
     results.push(result);
     writeAtomic(manifestPath, manifest);
