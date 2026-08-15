@@ -1,4 +1,7 @@
+import { createHash } from 'node:crypto'
+import scanInput from '../../data/fiddles/chenopdodium-profile-scan.jsonl?raw'
 import registryJson from '../../public/data/generated/fiddles/registry.json'
+import { buildFiddleRegistry } from '../../scripts/generate-fiddle-registry.mjs'
 import { parseFiddleRegistry } from '../../src/registries/fiddleRegistry'
 import type { FiddleRegistry } from '../../src/types/fiddle'
 
@@ -22,6 +25,15 @@ describe('JSFiddle archive registry', () => {
     })
     expect(registry.records).toHaveLength(780)
     expect(new Set(registry.records.map(({ page }) => page))).toEqual(new Set(Array.from({ length: 16 }, (_, index) => index + 1)))
+  })
+
+  it('regenerates the checked-in artifact from the committed scan input', () => {
+    const sourceRevision = createHash('sha256').update(scanInput).digest('hex')
+    const regenerated = parseFiddleRegistry(buildFiddleRegistry(scanInput, sourceRevision))
+
+    expect(regenerated.source.sourceRevision).toBe(registry.source.sourceRevision)
+    expect(regenerated.source).toMatchObject({ recordCount: 780, profilePages: 16 })
+    expect(regenerated.records).toHaveLength(780)
   })
 
   it('keeps pastie IDs, slugs, and JSFiddle URLs canonical and unique', () => {

@@ -10,6 +10,7 @@
     "dev": "vite",
     "data:acquire": "node scripts/acquire-sources.mjs",
     "data:generate": "node scripts/generate-data.mjs",
+    "data:generate:fiddles": "node scripts/generate-fiddle-registry.mjs --input data/fiddles/chenopdodium-profile-scan.jsonl --output public/data/generated/fiddles/registry.json",
     "data:lock:earth": "node scripts/generate-data.mjs --update-earth-lock",
     "build": "vue-tsc --noEmit && vite build",
     "build:pages": "npm run build && node scripts/create-pages-fallback.mjs",
