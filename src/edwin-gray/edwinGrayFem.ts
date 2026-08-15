@@ -2,6 +2,11 @@ import {
   validateGrayMagneticLookup,
   type GrayMagneticLookup,
 } from './edwinGrayEngine'
+import {
+  GRAY_MACHINE_CONTRACTS,
+  type GrayMachineContract,
+  type GrayMachineContractId,
+} from './edwinGrayMachines'
 
 export interface GrayFemNumberValue {
   value: number
@@ -45,11 +50,26 @@ export interface GrayFemLookupDocument {
   status: 'complete'
   expectedAnglesDeg: readonly number[]
   entries: readonly GrayFemLookupEntry[]
+  compatibility?: GrayFemCompatibility
   provenance: {
     synthetic: false
     limitations: readonly string[]
     source: string
   }
+}
+
+export interface GrayFemCompatibility {
+  machineContractId: GrayMachineContractId
+  machineRevision: number
+  modelRevision: number
+  topologyIdentity: string
+  turns: number
+  excitation: string
+  modelInputHash: string
+}
+
+export interface CompatibleGrayFemLookupDocument extends GrayFemLookupDocument {
+  compatibility: GrayFemCompatibility
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -62,6 +82,21 @@ function numberValue(value: unknown, unit: string, label: string): number {
   assert(typeof candidate.value === 'number' && Number.isFinite(candidate.value), `${label}.value must be finite`)
   assert(candidate.unit === unit, `${label}.unit must be ${unit}`)
   return candidate.value
+}
+
+function parseCompatibility(value: unknown): GrayFemCompatibility {
+  assert(value && typeof value === 'object', 'FEM compatibility metadata must be an object')
+  const compatibility = value as Partial<GrayFemCompatibility>
+  assert(typeof compatibility.machineContractId === 'string'
+    && compatibility.machineContractId in GRAY_MACHINE_CONTRACTS, 'FEM machine contract ID is invalid')
+  assert(Number.isInteger(compatibility.machineRevision) && compatibility.machineRevision! > 0, 'FEM machine revision is invalid')
+  assert(Number.isInteger(compatibility.modelRevision) && compatibility.modelRevision! > 0, 'FEM model revision is invalid')
+  assert(typeof compatibility.topologyIdentity === 'string' && compatibility.topologyIdentity.length > 0, 'FEM topology identity is missing')
+  assert(Number.isInteger(compatibility.turns) && compatibility.turns! > 0, 'FEM turns compatibility is invalid')
+  assert(typeof compatibility.excitation === 'string' && compatibility.excitation.length > 0, 'FEM excitation compatibility is missing')
+  assert(typeof compatibility.modelInputHash === 'string'
+    && /^[a-f0-9]{64}$/.test(compatibility.modelInputHash), 'FEM compatibility model input hash is invalid')
+  return compatibility as GrayFemCompatibility
 }
 
 function parseEntry(value: unknown, index: number): GrayFemLookupEntry {
@@ -110,6 +145,9 @@ export function parseGrayFemLookupDocument(value: unknown): GrayFemLookupDocumen
   assert(Array.isArray(document.provenance.limitations) && document.provenance.limitations.length > 0, 'FEM document limitations are missing')
   assert(typeof document.provenance.source === 'string' && document.provenance.source.length > 0, 'FEM document source provenance is missing')
   const entries = document.entries.map(parseEntry)
+  const compatibility = document.compatibility === undefined
+    ? undefined
+    : parseCompatibility(document.compatibility)
   const first = entries[0]!
   assert(entries.every((entry) => entry.parameters.meshSizeM === first.parameters.meshSizeM), 'FEM lookup entries must share one mesh size')
   assert(entries.every((entry) => entry.parameters.driveCurrentA === first.parameters.driveCurrentA), 'FEM lookup entries must share one reference current')
@@ -129,8 +167,34 @@ export function parseGrayFemLookupDocument(value: unknown): GrayFemLookupDocumen
     status: document.status,
     expectedAnglesDeg: document.expectedAnglesDeg,
     entries,
+    ...(compatibility ? { compatibility } : {}),
     provenance: document.provenance,
   }
+}
+
+function compatibilityMismatch(field: string): never {
+  throw new Error(`FEM lookup is incompatible with the machine contract: ${field} mismatch`)
+}
+
+export function requireCompatibleGrayFemLookup(
+  document: GrayFemLookupDocument,
+  machine: GrayMachineContract | GrayMachineContractId,
+): CompatibleGrayFemLookupDocument {
+  const contract = typeof machine === 'string' ? GRAY_MACHINE_CONTRACTS[machine] : machine
+  const compatibility = document.compatibility
+  assert(compatibility, 'FEM lookup compatibility metadata is required')
+  if (compatibility.machineContractId !== contract.machineContractId) compatibilityMismatch('machine contract ID')
+  if (compatibility.machineRevision !== contract.machineRevision) compatibilityMismatch('machine revision')
+  if (compatibility.modelRevision !== contract.modelRevision) compatibilityMismatch('model revision')
+  if (compatibility.topologyIdentity !== contract.topologyIdentity) compatibilityMismatch('topology identity')
+  if (compatibility.turns !== contract.compatibleTurns) compatibilityMismatch('turns')
+  if (compatibility.excitation !== contract.compatibleExcitation) compatibilityMismatch('excitation')
+  if (contract.modelInputHash === null) compatibilityMismatch('model input hash')
+  if (compatibility.modelInputHash !== contract.modelInputHash) compatibilityMismatch('model input hash')
+  if (!document.entries.every((entry) => entry.provenance.modelInputHash === compatibility.modelInputHash)) {
+    compatibilityMismatch('model input hash provenance')
+  }
+  return document as CompatibleGrayFemLookupDocument
 }
 
 export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
