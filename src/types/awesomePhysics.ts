@@ -156,7 +156,7 @@ export interface AwesomePhysicsSimulationDescriptorV1 {
   execution: AwesomePhysicsExecutionKind
   executionOptions: AwesomePhysicsExecutionKind[]
   availability: AwesomePhysicsAvailability
-  runnable: false
+  runnable: boolean
   priority: AwesomePhysicsPriority
   modelOrigin: AwesomePhysicsModelOrigin
   adapterId?: string
@@ -176,6 +176,27 @@ export interface AwesomePhysicsSimulationDescriptorV1 {
   contentRevision: string
   outputRevision: string
 }
+
+export type AwesomePhysicsAdapterProtocolV1 = 'awesome-physics-adapter-v1'
+
+export interface AwesomePhysicsAdapterCompatibilityV1 {
+  contentRevision: string
+  modelRevision: string
+  implementationRevision: string
+  outputRevision: string
+}
+
+export interface AwesomePhysicsAdapterV1<TInput = unknown, TOutput = unknown> {
+  adapterId: string
+  protocol: AwesomePhysicsAdapterProtocolV1
+  compatibility: AwesomePhysicsAdapterCompatibilityV1
+  run: (input: TInput, signal?: AbortSignal) => TOutput | Promise<TOutput>
+}
+
+export type AwesomePhysicsAdapterFactoryV1<TInput = unknown, TOutput = unknown> = (
+  descriptor: AwesomePhysicsSimulationDescriptorV1,
+  signal: AbortSignal,
+) => AwesomePhysicsAdapterV1<TInput, TOutput> | Promise<AwesomePhysicsAdapterV1<TInput, TOutput>>
 
 export interface AwesomePhysicsSimulationArtifactV1 {
   schemaVersion: 1
