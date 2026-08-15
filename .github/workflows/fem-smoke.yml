@@ -1,0 +1,42 @@
+name: FEM validation and smoke
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
+  MAKEFLAGS: -j4
+
+concurrency:
+  group: fem-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Validate FEM contracts
+        run: nice -n 10 npm run fem:validate
+      - name: Test runner integrity
+        run: nice -n 10 npm run fem:test:runner
+      - name: Build solver smoke image
+        run: nice -n 10 docker build --pull --tag opensimphy-fem-smoke:ci --file fem/edwin-gray/container/Dockerfile fem/edwin-gray
+      - name: Probe solver image
+        run: docker run --rm --entrypoint /bin/sh opensimphy-fem-smoke:ci -eu -c 'gmsh -version && getdp -version'
