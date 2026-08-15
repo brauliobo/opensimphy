@@ -1,0 +1,93 @@
+{
+  "contract": "edwin-gray-convergence-spec",
+  "contractVersion": 1,
+  "caseId": "patent-3890548-illustrative",
+  "evidenceContract": "edwin-gray-convergence-evidence@1",
+  "reportContract": "edwin-gray-convergence-report@1",
+  "resultContract": "edwin-gray-browser-result@1",
+  "checkpointVersion": "fem-checkpoint-v4",
+  "production": {
+    "ciSmoke": false,
+    "meshLevels": [
+      {
+        "id": "coarse",
+        "meshSizeM": 0.025
+      },
+      {
+        "id": "medium",
+        "meshSizeM": 0.01875
+      },
+      {
+        "id": "fine",
+        "meshSizeM": 0.0125
+      }
+    ],
+    "domains": [
+      {
+        "id": "base",
+        "outerRadiusM": 0.14
+      },
+      {
+        "id": "expanded",
+        "outerRadiusM": 0.175
+      },
+      {
+        "id": "far",
+        "outerRadiusM": 0.21
+      }
+    ],
+    "baseDomainId": "base",
+    "productionCurrentA": 10,
+    "linearityAuditCurrentA": 1,
+    "representativeAngles": [
+      {
+        "role": "aligned",
+        "angleDeg": 0
+      },
+      {
+        "role": "transition",
+        "angleDeg": 6.6666666667
+      },
+      {
+        "role": "unaligned",
+        "angleDeg": 13.3333333333
+      }
+    ],
+    "torqueAnglesDeg": [
+      0,
+      3.3333333333,
+      6.6666666667,
+      10,
+      13.3333333333
+    ],
+    "periodicityPairsDeg": [
+      [0, 120],
+      [6.6666666667, 126.6666666667],
+      [13.3333333333, 133.3333333333]
+    ]
+  },
+  "tolerances": {
+    "meshMetrics": {
+      "outerRadiusRelative": 0.005,
+      "minimumNodeGrowthRatio": 1.05,
+      "minimumElementGrowthRatio": 1.05,
+      "maximumElementNodeRatioDrift": 0.35
+    },
+    "energyCoEnergyRelative": 0.01,
+    "meshObservableRelative": {
+      "coarseToFine": 0.02,
+      "mediumToFine": 0.01
+    },
+    "outerDomainObservableRelative": {
+      "baseToFar": 0.015,
+      "expandedToFar": 0.005
+    },
+    "inductanceCurrentRelative": 0.01,
+    "energyCurrentSquaredRelative": 0.01,
+    "anglePeriodicityRelative": 0.01,
+    "torqueDerivative": {
+      "normalizedLinf": 0.08,
+      "absoluteFloorNm": 1e-9
+    }
+  }
+}
