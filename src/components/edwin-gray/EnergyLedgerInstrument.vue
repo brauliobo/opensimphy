@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import {
+  evaluateGrayCopClaim,
   evaluateGrayMotor,
+  GRAY_COP_CLAIM_SCENARIOS,
   GRAY_MOTOR_IDS,
   GRAY_MOTORS,
   GRAY_PRESETS,
@@ -15,6 +17,11 @@ const motorId = ref<GrayMotorId>('ema4')
 const chargeVoltageV = ref(1500)
 const capacitanceF = ref(2.3e-6)
 const error = ref('')
+const claimAudit = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282)
+const observedDeficitW = claimAudit.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
+const closedClaimAudit = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282, {
+  explicitExternalInputPowerW: observedDeficitW,
+})
 
 const result = computed(() => {
   try {
@@ -94,5 +101,34 @@ article.quantum-instrument(data-testid="gray-energy-instrument")
           tr
             th(scope="row") Claimed COP
             td(data-testid="gray-claimed-cop") {{ result.ledger.claimedCop ?? 'none in this source row' }}
+          tr
+            th(scope="row") Whole-system COP
+            td(data-testid="gray-system-cop") Unavailable / inconclusive
     p.quantum-boundary {{ result.finding }} Reproduction is not validation. validatesTheory remains false.
+
+  section.gray-claim-panel(aria-labelledby="gray-claim-title" data-testid="gray-claim-reproduction")
+    .gray-claim-panel__heading
+      p.quantum-kicker Claim reproduction / separate evidence boundary
+      h4#gray-claim-title User-provided diagram and presenter claim
+      p This arithmetic audit reproduces the supplied 26.8 W input, 7,460 W output, and displayed COP 282. It is not computed motor performance, simulation output, or validation.
+    dl.gray-claim-metrics
+      div
+        dt Diagram values
+        dd 26.8 W in / 7,460 W out / displayed COP 282
+      div
+        dt Arithmetic COP
+        dd(data-testid="gray-claim-arithmetic-cop") {{ claimAudit.claim.arithmeticCop?.toFixed(2) }}
+      div
+        dt Display mismatch
+        dd(data-testid="gray-claim-mismatch") +{{ claimAudit.claim.displayedCopMismatch?.toFixed(2) }} COP
+      div
+        dt Required unaccounted power
+        dd(data-testid="gray-claim-deficit") {{ observedDeficitW.toFixed(1) }} W
+      div
+        dt Output needed for COP 282
+        dd(data-testid="gray-claim-target-output") {{ claimAudit.claim.outputPowerNeededForDisplayedCopW?.toFixed(1) }} W
+      div
+        dt Closed-boundary COP after explicit deficit input
+        dd(data-testid="gray-claim-closed-cop") {{ closedClaimAudit.conservationClosure.observedOutput?.closedSystemCop?.toFixed(2) }}
+    p.gray-claim-panel__boundary The explicit {{ observedDeficitW.toFixed(1) }} W deficit closes the attributed-output boundary at COP 1.00. It does not explain where that power came from. Whole-system COP therefore remains unavailable and inconclusive.
 </template>

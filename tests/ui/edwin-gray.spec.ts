@@ -54,6 +54,14 @@ describe('Edwin Gray lab instruments', () => {
     const cop = Number(wrapper.get('[data-testid="gray-classical-cop"]').text().replace('%', ''))
     expect(cop).toBeGreaterThanOrEqual(0)
     expect(cop).toBeLessThan(100)
+    expect(wrapper.get('[data-testid="gray-system-cop"]').text()).toBe('Unavailable / inconclusive')
+    const claim = wrapper.get('[data-testid="gray-claim-reproduction"]')
+    expect(claim.text()).toContain('not computed motor performance')
+    expect(claim.get('[data-testid="gray-claim-arithmetic-cop"]').text()).toBe('278.36')
+    expect(claim.get('[data-testid="gray-claim-mismatch"]').text()).toBe('+3.64 COP')
+    expect(claim.get('[data-testid="gray-claim-deficit"]').text()).toBe('7433.2 W')
+    expect(claim.get('[data-testid="gray-claim-target-output"]').text()).toBe('7557.6 W')
+    expect(claim.get('[data-testid="gray-claim-closed-cop"]').text()).toBe('1.00')
   })
 
   it('lists six machines and zero recovery on gold', () => {

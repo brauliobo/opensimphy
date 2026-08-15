@@ -16,6 +16,7 @@ import {
   GRAY_VIDEO,
   GRAY_VIDEO_TIMELINE,
 } from '../edwin-gray/edwinGrayGuide'
+import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
 import type { ReadingDepth } from '../types/tour'
 
 const progress = useTourProgress()
@@ -23,6 +24,10 @@ if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
 const videoActivated = ref(false)
+const originalStarterEvidence = grayEvidenceRecord('gray-caption-original-500-rpm-starter')
+const modifiedWindingEvidence = grayEvidenceRecord('gray-caption-schloff-awg14-rewind')
+const modifiedPowerEvidence = grayEvidenceRecord('gray-caption-schloff-ten-kw-no-load')
+const recoveryEvidence = grayEvidenceRecord('gray-caption-purple-recovery-coils')
 const instrumentComponents = {
   geometry: GeometryInstrument,
   circuit: CircuitInstrument,
@@ -30,6 +35,11 @@ const instrumentComponents = {
   energy: EnergyLedgerInstrument,
   family: FamilyInstrument,
 } as const
+
+function instrumentComponent(moduleId: string | undefined) {
+  if (!moduleId) return undefined
+  return instrumentComponents[moduleId as keyof typeof instrumentComponents]
+}
 
 const shortcutSteps = Object.freeze([
   Object.freeze({ label: 'Name', title: 'Topology', body: 'Start with the patent-described 9 stator / 3 rotor station layout.' }),
@@ -119,10 +129,33 @@ onMounted(() => {
             p.quantum-lab-section__equation
               code {{ section.equation }}
         component(
-          :is="section.moduleId ? instrumentComponents[section.moduleId as keyof typeof instrumentComponents] : undefined"
+          :is="instrumentComponent(section.moduleId)"
           v-if="section.moduleId"
           :depth="depth"
         )
+
+      section.gray-machine-evidence(aria-labelledby="gray-machine-evidence-title" data-testid="gray-machine-evidence")
+        .gray-machine-evidence__heading
+          p.eyebrow Transcript evidence / do not merge states
+          h2#gray-machine-evidence-title Original and modified machine reports
+          p These exported evidence records describe different machine states. They are source and presenter reports, not measured performance validation or simulation inputs.
+        .gray-machine-evidence__grid
+          article(data-testid="gray-original-evidence")
+            span Original configuration / {{ originalStarterEvidence.validationStatus }}
+            h3 500 RPM starter claim
+            p {{ originalStarterEvidence.text }}
+            small {{ originalStarterEvidence.implications[0] }}
+          article(data-testid="gray-modified-evidence")
+            span Modified configuration / {{ modifiedWindingEvidence.validationStatus }}
+            h3 AWG 14 rewind and 10 kW report
+            p {{ modifiedWindingEvidence.text }}
+            p {{ modifiedPowerEvidence.text }}
+            small These secondhand reports characterize the modified state only, not original-machine efficiency.
+          article(data-testid="gray-recovery-evidence")
+            span Recovery boundary / {{ recoveryEvidence.validationStatus }}
+            h3 Recovery remains unknown
+            p {{ recoveryEvidence.text }}
+            small {{ recoveryEvidence.implications[1] }}
 
       section#gray-source-map.quantum-source-map(aria-labelledby="gray-source-map-title")
         .quantum-source-map__heading

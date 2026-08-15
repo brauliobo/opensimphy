@@ -19,6 +19,21 @@ test.describe('Edwin Gray Motor Lab', () => {
     await expect(page.getByTestId('gray-fem-status')).toContainText('FEAScript is not a magnetic solver')
     await expect(page.getByTestId('gray-fem-status').getByRole('link', { name: /fem\/edwin-gray provenance/i })).toHaveAttribute('href', 'https://github.com/brauliobo/opensimphy/blob/main/fem/edwin-gray/README.md')
 
+    const claim = page.getByTestId('gray-claim-reproduction')
+    await expect(claim).toContainText('26.8 W in / 7,460 W out / displayed COP 282')
+    await expect(claim.getByTestId('gray-claim-arithmetic-cop')).toHaveText('278.36')
+    await expect(claim.getByTestId('gray-claim-mismatch')).toHaveText('+3.64 COP')
+    await expect(claim.getByTestId('gray-claim-deficit')).toHaveText('7433.2 W')
+    await expect(claim.getByTestId('gray-claim-target-output')).toHaveText('7557.6 W')
+    await expect(claim.getByTestId('gray-claim-closed-cop')).toHaveText('1.00')
+    await expect(page.getByTestId('gray-system-cop')).toHaveText('Unavailable / inconclusive')
+
+    await expect(page.getByTestId('gray-original-evidence')).toContainText('minimum of 500 RPM')
+    await expect(page.getByTestId('gray-modified-evidence')).toContainText('AWG 14 wire')
+    await expect(page.getByTestId('gray-modified-evidence')).toContainText('10 kilowatts')
+    await expect(page.getByTestId('gray-recovery-evidence')).toContainText('Recovery remains unknown')
+    await expect(page.getByTestId('gray-recovery-evidence')).toContainText('values remain unknown')
+
     await page.getByTestId('gray-geometry-motor').selectOption('black')
     await expect(page.getByTestId('gray-geometry-result')).toContainText('1 stator')
 
