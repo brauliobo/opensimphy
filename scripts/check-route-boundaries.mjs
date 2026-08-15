@@ -17,6 +17,7 @@ const runtimeRegistryFiles = [
   'data/generated/walls.json',
   'data/generated/completion.json',
   'data/generated/registry.json',
+  'data/generated/fiddles/registry.json',
 ]
 
 const routes = {
@@ -24,6 +25,8 @@ const routes = {
   tourMap: 'src/views/TourMapView.vue',
   tourChapter: 'src/views/TourChapterView.vue',
   tourLesson: 'src/views/TourLessonView.vue',
+  fiddleArchive: 'src/views/FiddleArchiveView.vue',
+  fiddleRecord: 'src/views/FiddleRecordView.vue',
   evidence: 'src/views/EvidenceView.vue',
   saved: 'src/views/SavedView.vue',
   notFound: 'src/views/NotFoundView.vue',
@@ -43,6 +46,7 @@ const routes = {
 const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
 const nonNumericalRoutes = [...tourRoutes, 'evidence', 'saved', 'notFound']
 const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthWorkbench', 'earthDatasets']
+const fiddleRoutes = ['fiddleArchive', 'fiddleRecord']
 
 const ownershipMarkers = {
   formula: [
@@ -67,6 +71,9 @@ const ownershipMarkers = {
     ['number-wall worker request', /simulate-wall/],
     ['number-wall evaluator identifier', /simulateNumberWall|bareissDeterminant/],
     ['number-wall evaluator diagnostic', /Bareiss determinant requires a square matrix|Number-wall simulation cancelled/],
+  ],
+  earth: [
+    ['earth worker asset', /earthSimulation\.worker-[A-Za-z0-9_-]+\.js/],
   ],
   plotly: [
     ['Plotly asset', /^assets\/plotly-[A-Za-z0-9_-]+\.js$/],
@@ -341,6 +348,7 @@ function assertRuntimeRegistryPolicies(sw, revision) {
     { prefix: 'opensimphy-wall-index', marker: 'walls\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-completion', marker: 'completion\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-registry', marker: 'registry\\.json$', maxEntries: 1 },
+    { prefix: 'opensimphy-fiddles', marker: 'fiddles\\/registry\\.json$', maxEntries: 1 },
   ]
 
   for (const policy of policies) {
@@ -405,6 +413,7 @@ if (manifest) {
   assertNoOwnership('NumberWallsView route closure', closures.numberWalls, ['formula', 'core'])
 
   for (const route of earthRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall'])
+  for (const route of fiddleRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'earth', 'plotly'])
 }
 
 const allFiles = await listFiles(distRoot)
@@ -484,6 +493,7 @@ const excludedPrecacheUrls = [
   'data/generated/walls.json',
   'data/generated/completion.json',
   'data/generated/registry.json',
+  'data/generated/fiddles/registry.json',
   ...tourJsonUrls,
 ]
 for (const url of excludedPrecacheUrls) {

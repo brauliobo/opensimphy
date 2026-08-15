@@ -41,5 +41,10 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
       strong EARTH method workbench
       p Run one bounded method for the representative atmospheric scale-height program without entering the evidence registry.
       small Open EARTH-PLAN-008 →
+    RouterLink(to="/labs/simulations")
+      span 04 / SOURCE ARCHIVE
+      strong Fiddle source archive
+      p Browse all 780 preserved JSFiddle records across the 16 captured profile pages without executing their source in OpenSimPhy.
+      small Open the source archive ->
   p.lab-intro Choose another EARTH program from the full canonical #[RouterLink.text-link(to="/earth/programs") Program Registry].
 </template>

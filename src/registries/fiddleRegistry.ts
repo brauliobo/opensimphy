@@ -8,6 +8,7 @@ const SHA256_PATTERN = /^[a-f0-9]{64}$/
 const FIDDLE_REGISTRY_PATH = `${import.meta.env.BASE_URL}data/generated/fiddles/registry.json`
 
 const records = shallowRef<FiddleRecord[]>([])
+const source = shallowRef<FiddleRegistrySource | null>(null)
 const ready = shallowRef(false)
 const loading = shallowRef(false)
 const error = shallowRef<Error | null>(null)
@@ -211,11 +212,13 @@ async function initialize(): Promise<void> {
       const next = parseFiddleRegistry(await response.json())
       if (attempt !== generation) return
       records.value = next.records
+      source.value = next.source
       ready.value = true
       successful = true
     } catch (reason) {
       if (attempt !== generation) return
       records.value = []
+      source.value = null
       if (attemptController.signal.aborted || (reason instanceof Error && reason.name === 'AbortError')) {
         ready.value = false
         error.value = null
@@ -242,6 +245,7 @@ function getBySlug(slug: string): FiddleRecord | null {
 export function useFiddleRegistry() {
   return {
     records: readonly(records),
+    source:  readonly(source),
     ready:   readonly(ready),
     loading: readonly(loading),
     error:   readonly(error),
@@ -256,6 +260,7 @@ export function resetFiddleRegistryForTests(): void {
   controller = null
   initialization = null
   records.value = []
+  source.value = null
   ready.value = false
   loading.value = false
   error.value = null

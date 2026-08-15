@@ -38,7 +38,7 @@ async function savedRuns(page: Page): Promise<Array<Record<string, unknown>>> {
   })
 }
 
-test('/labs presents three domain entries without eager domain data or workers', async ({ page }) => {
+test('/labs presents four domain entries without eager domain data or workers', async ({ page }) => {
   const requests: string[] = []
   const workers: string[] = []
   page.on('request', (request) => requests.push(new URL(request.url()).pathname))
@@ -46,11 +46,12 @@ test('/labs presents three domain entries without eager domain data or workers',
 
   await gotoReady(page, '/labs', 'completion-registry-ready')
 
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(4)
   expect(await page.locator('.lab-choice-grid a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))).toEqual([
     '/labs/core',
     '/labs/walls',
     '/labs/earth/EARTH-PLAN-008',
+    '/labs/simulations',
   ])
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')

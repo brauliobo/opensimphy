@@ -9,6 +9,7 @@ const rootOwnerArtifacts = [
   '/data/generated/walls.json',
   '/data/generated/completion.json',
   '/data/generated/registry.json',
+  '/data/generated/fiddles/registry.json',
 ] as const
 
 type WorkerOwner = 'formula' | 'core' | 'wall' | 'earth'
@@ -163,6 +164,24 @@ for (const route of tourRoutes) {
   })
 }
 
+test('/labs/simulations owns only the Fiddle source archive and no workers', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/simulations')
+  await expect(page.getByTestId('fiddle-archive-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.locator('#primary-navigation a[href="/labs"]')).toHaveAttribute('aria-current', 'location')
+  await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
+})
+
+test('/labs/simulations/:slug owns only the Fiddle source archive and keeps live execution opt-in', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/simulations/wqoycabp')
+  await expect(page.getByTestId('fiddle-record-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
+})
 const earthDocumentSlug = 'for-your-understanding--ab8c1d3e7b71'
 const earthRoutes = [
   {
@@ -265,7 +284,8 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(4)
+  await expect(page.locator('.lab-choice-grid a[href="/labs/simulations"]')).toContainText('Fiddle source archive')
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')
 })

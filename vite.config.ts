@@ -14,6 +14,7 @@ const runtimeRegistryFiles = [
   'data/generated/walls.json',
   'data/generated/completion.json',
   'data/generated/registry.json',
+  'data/generated/fiddles/registry.json',
 ]
 
 function computeRuntimeRegistryRevision(): string {
@@ -70,6 +71,7 @@ export default defineConfig({
           'data/generated/walls.json',
           'data/generated/completion.json',
           'data/generated/registry.json',
+          'data/generated/fiddles/registry.json',
           'data/generated/tour/**/*.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
@@ -126,6 +128,15 @@ export default defineConfig({
             handler: 'NetworkFirst',
             options: {
               cacheName: `opensimphy-registry-${runtimeRegistryRevision}`,
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/fiddles\/registry\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `opensimphy-fiddles-${runtimeRegistryRevision}`,
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },

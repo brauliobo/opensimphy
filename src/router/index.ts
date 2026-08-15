@@ -67,6 +67,8 @@ export const router = createRouter({
       meta: { title: 'Formula Record' },
     },
     { path: '/labs', name: 'labs', component: () => import('../views/LabsView.vue'), meta: { title: 'Labs' } },
+    { path: '/labs/simulations', name: 'fiddle-archive', component: () => import('../views/FiddleArchiveView.vue'), meta: { title: 'Fiddle Archive' } },
+    { path: '/labs/simulations/:slug', name: 'fiddle-record', component: () => import('../views/FiddleRecordView.vue'), props: true, meta: { title: 'Fiddle Record' } },
     { path: '/labs/core', alias: '/core', name: 'core', component: () => import('../views/CoreLabView.vue'), meta: { title: 'Core Lab' } },
     { path: '/labs/walls', alias: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue'), meta: { title: 'Number Walls' } },
     {
