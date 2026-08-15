@@ -1,0 +1,61 @@
+import registryJson from '../../public/data/generated/fiddles/registry.json'
+import { parseFiddleRegistry } from '../../src/registries/fiddleRegistry'
+import type { FiddleRegistry } from '../../src/types/fiddle'
+
+const registry = parseFiddleRegistry(registryJson)
+
+function copyRegistry(): FiddleRegistry {
+  return structuredClone(registry)
+}
+
+describe('JSFiddle archive registry', () => {
+  it('accepts the checked-in 780-record, 16-page artifact', () => {
+    expect(registry).toMatchObject({
+      schemaVersion: 1,
+      source: {
+        platform: 'jsfiddle',
+        author: 'Chenopdodium',
+        profileUrl: 'https://jsfiddle.net/u/Chenopdodium/fiddles/',
+        profilePages: 16,
+        recordCount: 780,
+      },
+    })
+    expect(registry.records).toHaveLength(780)
+    expect(new Set(registry.records.map(({ page }) => page))).toEqual(new Set(Array.from({ length: 16 }, (_, index) => index + 1)))
+  })
+
+  it('keeps pastie IDs, slugs, and JSFiddle URLs canonical and unique', () => {
+    expect(new Set(registry.records.map(({ pastieId }) => pastieId)).size).toBe(780)
+    expect(new Set(registry.records.map(({ slug }) => slug)).size).toBe(780)
+    for (const record of registry.records) {
+      expect(record.sourceUrl).toBe(`https://jsfiddle.net/Chenopdodium/${record.slug}/${record.version}/`)
+      expect(record.embedUrl).toBe(`https://jsfiddle.net/Chenopdodium/${record.slug}/${record.version}/embedded/`)
+    }
+  })
+
+  it('rejects count, identity, URL, and flag corruption', () => {
+    const badCount = copyRegistry()
+    badCount.source.recordCount -= 1
+    expect(() => parseFiddleRegistry(badCount)).toThrow(/recordCount/)
+
+    const duplicate = copyRegistry()
+    duplicate.records[1]!.pastieId = duplicate.records[0]!.pastieId
+    expect(() => parseFiddleRegistry(duplicate)).toThrow(/pastieId/)
+
+    const unsafeUrl = copyRegistry()
+    unsafeUrl.records[0]!.sourceUrl = 'http://jsfiddle.net/Chenopdodium/wqoycabp/0/'
+    expect(() => parseFiddleRegistry(unsafeUrl)).toThrow(/sourceUrl/)
+
+    const invalidPage = copyRegistry()
+    invalidPage.records[0]!.page = 17
+    expect(() => parseFiddleRegistry(invalidPage)).toThrow(/page/)
+
+    const invalidVersion = copyRegistry()
+    invalidVersion.records[0]!.version = -1
+    expect(() => parseFiddleRegistry(invalidVersion)).toThrow(/version/)
+
+    const invalidFlag = copyRegistry()
+    invalidFlag.records[0]!.flags.webgl = 1 as unknown as boolean
+    expect(() => parseFiddleRegistry(invalidFlag)).toThrow(/flags\.webgl/)
+  })
+})
