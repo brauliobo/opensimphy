@@ -92,7 +92,7 @@ npx vite preview --host 127.0.0.1
 
 Deploy the contents of `dist/`. `netlify.toml` supplies the build command, publish directory, and SPA history fallback. Other static hosts must route unknown navigation paths to `index.html` while serving asset and data URLs normally. No Node, Python, database, API process, or server-side rendering is used in production.
 
-For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from the deployment workflow and generates `dist/404.html` as an SPA deep-link fallback.
+For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from the deployment workflow, generates directory `index.html` copies for every concrete router path and alias, and retains `dist/404.html` as the SPA fallback for unknown paths. The route manifest shared by Vue Router and the Pages generator is `src/router/page-paths.json`; parameterized routes continue through the unknown-path fallback because they cannot be enumerated statically.
 
 ## Browser Support
 

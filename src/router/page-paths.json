@@ -1,0 +1,14 @@
+{
+  "overview": "/",
+  "topic": "/topics/:id",
+  "atlas": "/atlas",
+  "formula": "/atlas/:id",
+  "labs": "/labs",
+  "core": "/labs/core",
+  "coreAlias": "/core",
+  "walls": "/labs/walls",
+  "wallsAlias": "/walls",
+  "onelab": "/labs/onelab",
+  "sources": "/sources",
+  "fallback": "/:pathMatch(.*)*"
+}

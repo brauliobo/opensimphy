@@ -1,8 +1,6 @@
 name: Deploy GitHub Pages
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -13,50 +11,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  gate:
-    runs-on: ubuntu-24.04
-    outputs:
-      deploy: ${{ steps.release.outputs.deploy }}
-      target: ${{ steps.release.outputs.target }}
-    steps:
-      - name: Checkout current main lock
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-        with:
-          ref: main
-          fetch-depth: 0
-      - name: Gate exact release event
-        id: release
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          EVENT_TAG: ${{ github.event.release.tag_name }}
-          EVENT_TARGET: ${{ github.event.release.target_commitish }}
-          EVENT_DRAFT: ${{ github.event.release.draft }}
-          EVENT_PRERELEASE: ${{ github.event.release.prerelease }}
-        shell: bash
-        run: |
-          VERSION=$(node -p "require('./tools/wasm/artifacts.lock.json').contentVersion")
-          TAG="wasm-$VERSION"
-          if [[ "$EVENT_NAME" == release ]]; then
-            if [[ "$EVENT_TAG" != "$TAG" ]]; then
-              echo "deploy=false" >> "$GITHUB_OUTPUT"
-              echo "unrelated release $EVENT_TAG; expected $TAG"
-              exit 0
-            fi
-            [[ "$EVENT_DRAFT" == false && "$EVENT_PRERELEASE" == false && "$EVENT_TARGET" =~ ^[a-f0-9]{40}$ ]]
-            git fetch origin main --no-tags
-            git fetch origin "refs/tags/$TAG:refs/tags/$TAG"
-            test "$(git rev-list -n 1 "$TAG")" = "$EVENT_TARGET"
-            git merge-base --is-ancestor "$EVENT_TARGET" origin/main
-            TARGET="$EVENT_TARGET"
-          else
-            TARGET=$(git rev-parse HEAD)
-          fi
-          echo "deploy=true" >> "$GITHUB_OUTPUT"
-          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
-
   build:
-    needs: gate
-    if: ${{ needs.gate.outputs.deploy == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -65,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          ref: ${{ needs.gate.outputs.target }}
+          ref: ${{ github.sha }}
       - name: Set up Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:

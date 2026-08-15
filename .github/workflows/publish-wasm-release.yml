@@ -13,7 +13,7 @@ on:
         type: string
 
 permissions:
-  actions: read
+  actions: write
   attestations: read
   contents: write
 
@@ -127,6 +127,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           WASM_RELEASE_REPO: ${{ github.repository }}
         run: npm run simulation:fetch
+      - name: Dispatch Pages deployment from main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main
       - name: Clean up only this run's unpublished draft and tag
         if: ${{ failure() && steps.create.outputs.release_id != '' }}
         env:
