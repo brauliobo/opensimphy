@@ -30,58 +30,44 @@ const rows = computed(() => {
 })
 </script>
 
-<template>
-  <article class="quantum-instrument" data-testid="gray-family-instrument">
-    <header class="quantum-instrument__header">
-      <p class="quantum-kicker">Instrument 05 / family</p>
-      <h3>Compare later colored prototype evidence rows</h3>
-      <p>
-        Hold voltage, capacitance, speed, and turns fixed while comparing the source-described prototype rows. Recovery energy appears only on EMA4 and purple in this illustrative model; the comparison does not establish a universal Gray motor.
-      </p>
-    </header>
+<template lang="pug">
+article.quantum-instrument(data-testid="gray-family-instrument")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 05 / family
+    h3 Compare later colored prototype evidence rows
+    p Hold voltage, capacitance, speed, and turns fixed while comparing the source-described prototype rows. Recovery energy appears only on EMA4 and purple in this illustrative model; the comparison does not establish a universal Gray motor.
 
-    <div class="quantum-controls quantum-controls--two">
-      <label>
-        <span>Shared charge voltage</span>
-        <input v-model.number="chargeVoltageV" type="range" min="500" max="10000" step="100" data-testid="gray-family-voltage">
-        <output>{{ chargeVoltageV }} V</output>
-      </label>
-      <label>
-        <span>Shared speed</span>
-        <input v-model.number="startRpm" type="range" min="0" max="2000" step="10" data-testid="gray-family-rpm">
-        <output>{{ startRpm }} rpm</output>
-      </label>
-    </div>
+  .quantum-controls.quantum-controls--two
+    label
+      span Shared charge voltage
+      input(v-model.number="chargeVoltageV" type="range" min="500" max="10000" step="100" data-testid="gray-family-voltage")
+      output {{ chargeVoltageV }} V
+    label
+      span Shared speed
+      input(v-model.number="startRpm" type="range" min="0" max="2000" step="10" data-testid="gray-family-rpm")
+      output {{ startRpm }} rpm
 
-    <p v-if="error" class="quantum-boundary" role="alert">{{ error }}</p>
-    <div v-else class="quantum-result" data-testid="gray-family-result">
-      <p class="gray-status" role="status" aria-live="polite">Six later-prototype rows compared with shared inputs. Patent topology is not being redefined by these colors.</p>
-      <div class="gray-table-scroll gray-table-scroll--wide">
-        <table>
-          <caption>Later colored prototype evidence comparison; values are illustrative model outputs</caption>
-          <thead>
-            <tr>
-              <th scope="col">Machine</th>
-              <th scope="col">Stator pole sets</th>
-              <th scope="col">Recovery J</th>
-              <th scope="col">Mech J</th>
-              <th scope="col">COP %</th>
-              <th scope="col">Quenched</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="row in rows" :key="row.motor.id" :data-motor="row.motor.id">
-              <td>{{ row.motor.label }}</td>
-              <td>{{ row.motor.statorPoles }}</td>
-              <td>{{ row.ledger.recoveredJ.toExponential(2) }}</td>
-              <td>{{ row.ledger.mechanicalJ.toExponential(2) }}</td>
-              <td>{{ (row.ledger.classicalCop * 100).toFixed(3) }}</td>
-              <td>{{ row.arcQuenched ? 'yes' : 'no' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="quantum-boundary">Do not merge these rows into one Gray motor. Each prototype row contains source claims and illustrative assumptions, not validation.</p>
-    </div>
-  </article>
+  p.quantum-boundary(v-if="error" role="alert") {{ error }}
+  .quantum-result(v-else data-testid="gray-family-result")
+    p.gray-status(role="status" aria-live="polite") Six later-prototype rows compared with shared inputs. Patent topology is not being redefined by these colors.
+    .gray-table-scroll.gray-table-scroll--wide
+      table
+        caption Later colored prototype evidence comparison; values are illustrative model outputs
+        thead
+          tr
+            th(scope="col") Machine
+            th(scope="col") Stator pole sets
+            th(scope="col") Recovery J
+            th(scope="col") Mech J
+            th(scope="col") COP %
+            th(scope="col") Quenched
+        tbody
+          tr(v-for="row in rows" :key="row.motor.id" :data-motor="row.motor.id")
+            td {{ row.motor.label }}
+            td {{ row.motor.statorPoles }}
+            td {{ row.ledger.recoveredJ.toExponential(2) }}
+            td {{ row.ledger.mechanicalJ.toExponential(2) }}
+            td {{ (row.ledger.classicalCop * 100).toFixed(3) }}
+            td {{ row.arcQuenched ? 'yes' : 'no' }}
+    p.quantum-boundary Do not merge these rows into one Gray motor. Each prototype row contains source claims and illustrative assumptions, not validation.
 </template>

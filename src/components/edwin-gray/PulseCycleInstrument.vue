@@ -97,62 +97,51 @@ function reset(): void {
 onBeforeUnmount(stop)
 </script>
 
-<template>
-  <article class="quantum-instrument" data-testid="gray-pulse-instrument">
-    <header class="quantum-instrument__header">
-      <p class="quantum-kicker">Instrument 03 / pulse</p>
-      <h3>Stretch the arc until the current breaks</h3>
-      <p>
-        The presenter reports 500 rpm for one described setup. This model labels that reference condition without treating it as universal; raise speed and the quench time shortens with the 3 degree marks on the end bell.
-      </p>
-    </header>
+<template lang="pug">
+article.quantum-instrument(data-testid="gray-pulse-instrument")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 03 / pulse
+    h3 Stretch the arc until the current breaks
+    p The presenter reports 500 rpm for one described setup. This model labels that reference condition without treating it as universal; raise speed and the quench time shortens with the 3 degree marks on the end bell.
 
-    <div class="quantum-controls quantum-controls--three">
-      <label>
-        <span>Prototype</span>
-        <select v-model="motorId" data-testid="gray-pulse-motor">
-          <option v-for="id in GRAY_MOTOR_IDS" :key="id" :value="id">{{ GRAY_MOTORS[id].label }}</option>
-        </select>
-      </label>
-      <label>
-        <span>Start speed</span>
-        <input v-model.number="startRpm" type="range" min="0" max="4000" step="10" data-testid="gray-pulse-rpm">
-        <output>{{ startRpm }} rpm</output>
-      </label>
-      <label>
-        <span>Quench angle</span>
-        <input v-model.number="quenchDeg" type="range" min="1" max="18" step="1" data-testid="gray-pulse-quench">
-        <output>{{ quenchDeg }}°</output>
-      </label>
-    </div>
-    <div class="quantum-actions">
-      <button type="button" data-testid="gray-pulse-play" @click="togglePlaying">{{ playing ? 'Pause spin-up' : 'Spin up' }}</button>
-      <button type="button" @click="reset">Reset</button>
-      <span class="quantum-readout" role="status" aria-live="polite" data-testid="gray-pulse-status">{{ pulseStatus }}</span>
-    </div>
-    <p v-if="motionNotice" class="quantum-stale" role="status" aria-live="polite" data-testid="gray-pulse-motion-notice">{{ motionNotice }}</p>
+  .quantum-controls.quantum-controls--three
+    label
+      span Prototype
+      select(v-model="motorId" data-testid="gray-pulse-motor")
+        option(v-for="id in GRAY_MOTOR_IDS" :key="id" :value="id") {{ GRAY_MOTORS[id].label }}
+    label
+      span Start speed
+      input(v-model.number="startRpm" type="range" min="0" max="4000" step="10" data-testid="gray-pulse-rpm")
+      output {{ startRpm }} rpm
+    label
+      span Quench angle
+      input(v-model.number="quenchDeg" type="range" min="1" max="18" step="1" data-testid="gray-pulse-quench")
+      output {{ quenchDeg }}°
+  .quantum-actions
+    button(type="button" data-testid="gray-pulse-play" @click="togglePlaying") {{ playing ? 'Pause spin-up' : 'Spin up' }}
+    button(type="button" @click="reset") Reset
+    span.quantum-readout(role="status" aria-live="polite" data-testid="gray-pulse-status") {{ pulseStatus }}
+  p.quantum-stale(v-if="motionNotice" role="status" aria-live="polite" data-testid="gray-pulse-motion-notice") {{ motionNotice }}
 
-    <p v-if="error" class="quantum-boundary" role="alert">{{ error }}</p>
-    <div v-else-if="result" class="quantum-result" data-testid="gray-pulse-result">
-      <svg viewBox="0 0 720 200" role="img" aria-label="Dump current versus time">
-        <path :d="currentPath" fill="none" stroke="currentColor" stroke-width="2" />
-        <text x="40" y="24" fill="currentColor" font-size="13">I(t) to quench at {{ (result.quenchTimeSeconds * 1e3).toFixed(2) }} ms</text>
-      </svg>
-      <div class="gray-table-scroll gray-table-scroll--wide">
-        <table>
-          <caption>Classical pulse samples through the modeled quench window</caption>
-          <thead><tr><th scope="col">t / ms</th><th scope="col">I / A</th><th scope="col">angle / deg</th><th scope="col">arc / mm</th></tr></thead>
-          <tbody>
-            <tr v-for="row in result.table" :key="row.timeSeconds">
-              <td>{{ (row.timeSeconds * 1e3).toFixed(2) }}</td>
-              <td>{{ row.currentA.toFixed(1) }}</td>
-              <td>{{ row.angleDeg.toFixed(2) }}</td>
-              <td>{{ (row.arcLengthM * 1e3).toFixed(1) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="quantum-boundary">{{ result.finding }}</p>
-    </div>
-  </article>
+  p.quantum-boundary(v-if="error" role="alert") {{ error }}
+  .quantum-result(v-else-if="result" data-testid="gray-pulse-result")
+    svg(viewBox="0 0 720 200" role="img" aria-label="Dump current versus time")
+      path(:d="currentPath" fill="none" stroke="currentColor" stroke-width="2")
+      text(x="40" y="24" fill="currentColor" font-size="13") I(t) to quench at {{ (result.quenchTimeSeconds * 1e3).toFixed(2) }} ms
+    .gray-table-scroll.gray-table-scroll--wide
+      table
+        caption Classical pulse samples through the modeled quench window
+        thead
+          tr
+            th(scope="col") t / ms
+            th(scope="col") I / A
+            th(scope="col") angle / deg
+            th(scope="col") arc / mm
+        tbody
+          tr(v-for="row in result.table" :key="row.timeSeconds")
+            td {{ (row.timeSeconds * 1e3).toFixed(2) }}
+            td {{ row.currentA.toFixed(1) }}
+            td {{ row.angleDeg.toFixed(2) }}
+            td {{ (row.arcLengthM * 1e3).toFixed(1) }}
+    p.quantum-boundary {{ result.finding }}
 </template>
