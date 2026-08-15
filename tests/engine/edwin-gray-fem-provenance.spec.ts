@@ -8,8 +8,11 @@ import { buildGrayMagneticLookup, parseGrayFemLookupDocument } from '../../src/e
 const sourceCase = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/cases/patent-3890548-illustrative.json'), 'utf8'))
 const resultSchema = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/schema/motor-fem-lut.schema.json'), 'utf8'))
 const anglesDeg = [0, 13.3333333333]
+const eventIndices = [0, 1]
+const excitationContract = 'edwin-gray-fem-excitation-event-map/v1'
 const caseData = structuredClone(sourceCase)
 caseData.sweep.anglesDeg = anglesDeg
+caseData.sweep.eventIndices = eventIndices
 caseData.sweep.meshSizesM = [0.025]
 caseData.sweep.driveCurrentA = [1]
 const modelInputHash = 'b'.repeat(64)
@@ -33,7 +36,7 @@ describe('Edwin Gray FEM result provenance', () => {
 
   function prepareJob(
     name: string,
-    parameters: { rotorAngleDeg: number; meshSizeM: number; driveCurrentA: number },
+    parameters: { rotorAngleDeg: number; eventIndex: number; excitationContract: string; meshSizeM: number; driveCurrentA: number },
     jobInputHash: string,
     outputs: Record<string, string> = {
       'observables.dat': '0.1\n',
@@ -44,8 +47,9 @@ describe('Edwin Gray FEM result provenance', () => {
     const jobDir = join(runDir, name)
     mkdirSync(jobDir)
     for (const [fileName, value] of Object.entries(outputs)) writeFileSync(join(jobDir, fileName), value)
+    writeFileSync(join(jobDir, 'mesh-audit.json'), '{"valid":true}\n')
     writeFileSync(join(jobDir, 'checkpoint.json'), JSON.stringify({
-      checkpointVersion: 'fem-checkpoint-v4',
+      checkpointVersion: 'fem-checkpoint-v5',
       jobId: name,
       modelInputHash,
       jobInputHash,
@@ -53,9 +57,12 @@ describe('Edwin Gray FEM result provenance', () => {
       parameters,
       backend: 'host',
       resultContract: 'edwin-gray-browser-result@1',
+      excitationContract: parameters.excitationContract,
+      eventIndex: parameters.eventIndex,
       meshQuality: 'passed',
       phases: { mesh: 'complete', solve: 'complete', normalize: 'pending' },
       artifacts: {
+        audit: sha256(join(jobDir, 'mesh-audit.json')),
         outputs: Object.fromEntries(Object.keys(outputs).map((fileName) => [fileName, sha256(join(jobDir, fileName))])),
       },
     }))
@@ -63,7 +70,8 @@ describe('Edwin Gray FEM result provenance', () => {
   }
 
   function normalizeJob(angle: number, jobInputHash: string, name = `angle-${angle}`) {
-    const parameters = { rotorAngleDeg: angle, meshSizeM: 0.025, driveCurrentA: 1 }
+    const eventIndex = eventIndices[anglesDeg.indexOf(angle)] ?? 0
+    const parameters = { rotorAngleDeg: angle, eventIndex, excitationContract, meshSizeM: 0.025, driveCurrentA: 1 }
     const jobDir = prepareJob(name, parameters, jobInputHash)
     return normalizeResults({
       caseData,
@@ -77,6 +85,7 @@ describe('Edwin Gray FEM result provenance', () => {
         join(jobDir, 'observables.dat'),
         join(jobDir, 'coenergy.dat'),
         join(jobDir, 'inductance.dat'),
+        join(jobDir, 'mesh-audit.json'),
       ],
       resultSchema,
     })
@@ -90,7 +99,7 @@ describe('Edwin Gray FEM result provenance', () => {
   }
 
   it('rejects solver tables without a completed runner checkpoint', () => {
-    const parameters = { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 }
+    const parameters = { rotorAngleDeg: 0, eventIndex: 0, excitationContract, meshSizeM: 0.025, driveCurrentA: 1 }
     const jobDir = join(runDir, 'untrusted')
     mkdirSync(jobDir)
     for (const name of ['observables.dat', 'coenergy.dat', 'inductance.dat']) writeFileSync(join(jobDir, name), '0.1\n')
@@ -125,7 +134,7 @@ describe('Edwin Gray FEM result provenance', () => {
     expect(() => normalizeResults({
       caseData,
       jobDir: join(runDir, 'attested'),
-      parameters: { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 },
+      parameters: { rotorAngleDeg: 0, eventIndex: 0, excitationContract, meshSizeM: 0.025, driveCurrentA: 1 },
       inputHash: firstJobInputHash,
       modelInputHash,
       artifacts: [join(runDir, 'attested', 'inductance.dat')],
@@ -134,7 +143,7 @@ describe('Edwin Gray FEM result provenance', () => {
   })
 
   it('rejects raw JSON without exact checkpoint hash evidence', () => {
-    const parameters = { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 }
+    const parameters = { rotorAngleDeg: 0, eventIndex: 0, excitationContract, meshSizeM: 0.025, driveCurrentA: 1 }
     const raw = {
       synthetic: false,
       parameters,
@@ -179,7 +188,7 @@ describe('Edwin Gray FEM result provenance', () => {
   it('rejects duplicate, missing, and extra angles against the declared sweep', () => {
     const result = completeLookup()
     const extra = structuredClone(result.entries[1]!)
-    extra.entryId = 'angle-20-mesh-0.025-current-1'
+    extra.entryId = 'angle-20-event-1-mesh-0.025-current-1'
     extra.parameters.rotorAngleDeg = 20
     extra.provenance.jobInputHash = 'd'.repeat(64)
     extra.provenance.inputHash = extra.provenance.jobInputHash
