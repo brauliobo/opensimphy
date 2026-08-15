@@ -7,6 +7,14 @@ const FIDDLE_TOKEN_PATTERN = /^[A-Za-z0-9_-]+$/
 const SHA256_PATTERN = /^[a-f0-9]{64}$/
 const FIDDLE_REGISTRY_PATH = `${import.meta.env.BASE_URL}data/generated/fiddles/registry.json`
 
+export function fiddleProfileUrl(author: string, page: number): string {
+  return `https://${JSFIDDLE_HOST}/u/${author}/fiddles/${page === 1 ? '' : `${page}/`}`
+}
+
+function versionPath(slug: string, version: number): string {
+  return `${slug}/${version > 0 ? `${version}/` : ''}`
+}
+
 const records = shallowRef<FiddleRecord[]>([])
 const source = shallowRef<FiddleRegistrySource | null>(null)
 const ready = shallowRef(false)
@@ -101,7 +109,7 @@ function parseSource(value: unknown, path: string): FiddleRegistrySource {
   const author = safeAuthor(value.author, `${path}.author`)
   const profilePages = positiveInteger(value.profilePages, `${path}.profilePages`)
   const recordCount = positiveInteger(value.recordCount, `${path}.recordCount`)
-  jsFiddleUrl(value.profileUrl, `https://${JSFIDDLE_HOST}/u/${author}/fiddles/`, `${path}.profileUrl`)
+  jsFiddleUrl(value.profileUrl, fiddleProfileUrl(author, 1), `${path}.profileUrl`)
   const sourceRevision = nonEmptyString(value.sourceRevision, `${path}.sourceRevision`)
   if (!SHA256_PATTERN.test(sourceRevision)) fail(`${path}.sourceRevision`, 'must be a lowercase SHA-256 digest')
   const acquiredAt = isoTimestamp(value.acquiredAt, `${path}.acquiredAt`)
@@ -148,8 +156,9 @@ function parseRecord(value: unknown, index: number, source: FiddleRegistrySource
   const pastieId = safeToken(value.pastieId, `${path}.pastieId`)
   const slug = safeToken(value.slug, `${path}.slug`)
   const version = integer(value.version, `${path}.version`, 0)
-  const sourceUrl = `https://${JSFIDDLE_HOST}/${source.author}/${slug}/${version}/`
-  const embedUrl = `https://${JSFIDDLE_HOST}/${source.author}/${slug}/${version}/embedded/`
+  const fiddlePath = versionPath(slug, version)
+  const sourceUrl = `https://${JSFIDDLE_HOST}/${source.author}/${fiddlePath}`
+  const embedUrl = `https://${JSFIDDLE_HOST}/${source.author}/${fiddlePath}show/`
   return {
     position,
     page,
@@ -207,7 +216,7 @@ async function initialize(): Promise<void> {
   let successful = false
   const pending = Promise.resolve().then(async () => {
     try {
-      const response = await fetch(FIDDLE_REGISTRY_PATH, { signal: attemptController.signal, cache: 'no-store' })
+      const response = await fetch(FIDDLE_REGISTRY_PATH, { signal: attemptController.signal })
       if (!response.ok) throw new Error(`Fiddle registry failed to load (${response.status})`)
       const next = parseFiddleRegistry(await response.json())
       if (attempt !== generation) return

@@ -28,9 +28,15 @@ describe('JSFiddle archive registry', () => {
     expect(new Set(registry.records.map(({ pastieId }) => pastieId)).size).toBe(780)
     expect(new Set(registry.records.map(({ slug }) => slug)).size).toBe(780)
     for (const record of registry.records) {
-      expect(record.sourceUrl).toBe(`https://jsfiddle.net/Chenopdodium/${record.slug}/${record.version}/`)
-      expect(record.embedUrl).toBe(`https://jsfiddle.net/Chenopdodium/${record.slug}/${record.version}/embedded/`)
+      const path = `${record.slug}/${record.version > 0 ? `${record.version}/` : ''}`
+      expect(record.sourceUrl).toBe(`https://jsfiddle.net/Chenopdodium/${path}`)
+      expect(record.embedUrl).toBe(`https://jsfiddle.net/Chenopdodium/${path}show/`)
     }
+    expect(registry.records[0]).toMatchObject({
+      version: 0,
+      sourceUrl: 'https://jsfiddle.net/Chenopdodium/wqoycabp/',
+      embedUrl: 'https://jsfiddle.net/Chenopdodium/wqoycabp/show/',
+    })
   })
 
   it('rejects count, identity, URL, and flag corruption', () => {

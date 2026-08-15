@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import FiddleLiveFrame from '../components/fiddles/FiddleLiveFrame.vue'
-import { useFiddleRegistry } from '../registries/fiddleRegistry'
+import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
 import type { FiddleFlags, FiddleRecord } from '../types/fiddle'
 
 const props = defineProps<{ slug: string }>()
@@ -19,6 +19,9 @@ const backToArchive = computed(() => ({
   query: Object.fromEntries(archiveQueryKeys.flatMap((key) => typeof route.query[key] === 'string' ? [[key, route.query[key]]] : [])),
 }))
 const source = computed(() => fiddleRegistry.source.value)
+const recordProfileUrl = computed(() => record.value && source.value
+  ? fiddleProfileUrl(source.value.author, record.value.page)
+  : '')
 const records = computed(() => fiddleRegistry.records.value)
 const previousRecord = computed(() => adjacentRecord(-1))
 const nextRecord = computed(() => adjacentRecord(1))
@@ -124,7 +127,7 @@ function formatFlagValue(key: keyof FiddleFlags): string {
           a(:href="record.sourceUrl" target="_blank" rel="noreferrer") {{ record.sourceUrl }}
         article
           span Captured profile
-          a(:href="source?.profileUrl" target="_blank" rel="noreferrer") {{ source?.profileUrl }}
+          a(:href="recordProfileUrl" target="_blank" rel="noreferrer") {{ recordProfileUrl }}
         article
           span Acquisition
           strong {{ source?.acquiredAt }}

@@ -49,6 +49,10 @@ function token(value, label) {
   return result;
 }
 
+function versionPath(slug, version) {
+  return `${slug}/${version > 0 ? `${version}/` : ''}`;
+}
+
 function strings(value, label) {
   if (!Array.isArray(value)) fail(`${label} must be an array`);
   return value.map((entry, index) => text(entry, `${label}[${index}]`));
@@ -151,24 +155,27 @@ function parseInput(textValue) {
 export function buildFiddleRegistry(inputText, sourceRevision) {
   if (!/^[a-f0-9]{64}$/.test(sourceRevision)) fail("source revision must be a lowercase SHA-256 digest");
   const { summary, rows } = parseInput(inputText);
-  const records = rows.map((row) => ({
-    position: row.position,
-    page: row.page,
-    pastieId: row.pastieId,
-    slug: row.slug,
-    version: row.version,
-    title: row.title,
-    sourceUrl: `https://jsfiddle.net/${AUTHOR}/${row.slug}/${row.version}/`,
-    embedUrl: `https://jsfiddle.net/${AUTHOR}/${row.slug}/${row.version}/embedded/`,
-    panelBytes: row.panelBytes,
-    library: row.library,
-    documentType: row.documentType,
-    assets: row.assets,
-    controls: row.controls,
-    visualization: row.visualization,
-    risk: row.risk,
-    flags: row.flags,
-  }));
+  const records = rows.map((row) => {
+    const path = versionPath(row.slug, row.version);
+    return {
+      position: row.position,
+      page: row.page,
+      pastieId: row.pastieId,
+      slug: row.slug,
+      version: row.version,
+      title: row.title,
+      sourceUrl: `https://jsfiddle.net/${AUTHOR}/${path}`,
+      embedUrl: `https://jsfiddle.net/${AUTHOR}/${path}show/`,
+      panelBytes: row.panelBytes,
+      library: row.library,
+      documentType: row.documentType,
+      assets: row.assets,
+      controls: row.controls,
+      visualization: row.visualization,
+      risk: row.risk,
+      flags: row.flags,
+    };
+  });
   return {
     schemaVersion: 1,
     source: {

@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import FiddleCard from '../components/fiddles/FiddleCard.vue'
-import { useFiddleRegistry } from '../registries/fiddleRegistry'
+import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
 import type { FiddleRecord } from '../types/fiddle'
 
 const route = useRoute()
@@ -27,6 +27,7 @@ const archiveReady = computed(() => !registryLoading.value
   && fiddleRegistry.records.value.length > 0)
 const records = computed(() => fiddleRegistry.records.value)
 const source = computed(() => fiddleRegistry.source.value)
+const selectedProfileUrl = computed(() => source.value ? fiddleProfileUrl(source.value.author, page.value) : '')
 const visualizations = computed(() => [...new Set(records.value.map((record) => record.visualization))].sort((left, right) => left.localeCompare(right)))
 const sourcePages = computed(() => Array.from({ length: source.value?.profilePages ?? 0 }, (_, index) => index + 1))
 const filteredRecords = computed(() => {
@@ -245,5 +246,5 @@ function sourcePageLabel(pageNumber: number): string {
         p Use another source-page button or clear a filter. The archive is not executing the Fiddle source.
       footer.fiddle-page-footer
         span Profile page {{ page }} contains records {{ currentPageRange.first }}-{{ currentPageRange.last }} of {{ source?.recordCount }}.
-        a.text-link(:href="source?.profileUrl" target="_blank" rel="noreferrer") Open captured JSFiddle profile ->
+        a.text-link(:href="selectedProfileUrl" target="_blank" rel="noreferrer") Open captured JSFiddle profile ->
 </template>

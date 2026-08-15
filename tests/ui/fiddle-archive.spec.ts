@@ -44,6 +44,28 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(wrapper.findAll('[data-testid^="fiddle-card-"]')).toHaveLength(50)
     expect(wrapper.get('.fiddle-results-header h2').text()).toBe('Records 1-50')
     expect(wrapper.get('button[aria-label="Source profile page 16, records 750-780"]').text()).toContain('750-780')
+    expect(wrapper.get('.fiddle-page-footer a').attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/')
+  })
+
+  it('links the selected archive and record pages to their captured profile pages', async () => {
+    const archiveRouter = createTestRouter()
+    await archiveRouter.push('/labs/simulations')
+    const archiveWrapper = mount(FiddleArchiveView, { global: { plugins: [archiveRouter] } })
+    await flushPromises()
+
+    await archiveWrapper.get('button[aria-label="Source profile page 16, records 750-780"]').trigger('click')
+    await flushPromises()
+    expect(archiveWrapper.get('.fiddle-page-footer a').attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/16/')
+
+    const record = registry.records.find(({ page }) => page === 16)!
+    const recordRouter = createTestRouter()
+    await recordRouter.push(`/labs/simulations/${record.slug}`)
+    const recordWrapper = mount(FiddleRecordView, { props: { slug: record.slug }, global: { plugins: [recordRouter] } })
+    await flushPromises()
+
+    const provenanceLinks = recordWrapper.findAll('.fiddle-provenance-grid article a')
+    expect(provenanceLinks[0]!.attributes('href')).toBe(record.sourceUrl)
+    expect(provenanceLinks[1]!.attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/16/')
   })
 
   it('owns search, visualization, and source page state in the URL and rejects an arbitrary page', async () => {
@@ -76,6 +98,9 @@ describe('Fiddle archive and detail surfaces', () => {
 
   it('keeps the external preview opt-in and applies the narrow sandbox contract', async () => {
     const record = registry.records[0]!
+    expect(record.version).toBe(0)
+    expect(record.sourceUrl).toBe('https://jsfiddle.net/Chenopdodium/wqoycabp/')
+    expect(record.embedUrl).toBe('https://jsfiddle.net/Chenopdodium/wqoycabp/show/')
     const router = createTestRouter()
     await router.push(`/labs/simulations/${record.slug}`)
     const wrapper = mount(FiddleRecordView, { props: { slug: record.slug }, global: { plugins: [router] } })
