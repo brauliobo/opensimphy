@@ -23,48 +23,35 @@ function reset(): void {
 watch(() => props.steps, reset)
 </script>
 
-<template>
-  <div class="equation-ladder" data-testid="equation-ladder">
-    <ol v-if="steps.length" aria-label="Equation steps">
-      <li v-for="step in visibleSteps" :key="step.id" :data-equation-id="step.id">
-        <span class="equation-step-label">{{ step.label }}</span>
-        <code>{{ step.expression }}</code>
-        <p>{{ step.explanation }}</p>
-        <details class="tour-metadata">
-          <summary>Technical metadata</summary>
-          <dl>
-            <dt>Claim class</dt>
-            <dd>{{ step.claimClass }}</dd>
-            <dt>Method relationship</dt>
-            <dd>{{ step.methodRelationship }}</dd>
-            <dt>Model origin</dt>
-            <dd>{{ step.modelOrigin }}</dd>
-            <dt>Source revision</dt>
-            <dd>{{ step.sourceRevision }}</dd>
-            <dt>Source locator</dt>
-            <dd>{{ step.sourceLocator }}</dd>
-          </dl>
-          <ul v-if="step.caveats.length">
-            <li v-for="caveat in step.caveats" :key="caveat">{{ caveat }}</li>
-          </ul>
-        </details>
-      </li>
-    </ol>
-    <p v-else class="equation-empty">No equation steps are declared for this path.</p>
+<template lang="pug">
+.equation-ladder(data-testid="equation-ladder")
+  ol(v-if="steps.length" aria-label="Equation steps")
+    li(v-for="step in visibleSteps" :key="step.id" :data-equation-id="step.id")
+      span.equation-step-label {{ step.label }}
+      code {{ step.expression }}
+      p {{ step.explanation }}
+      details.tour-metadata
+        summary Technical metadata
+        dl
+          dt Claim class
+          dd {{ step.claimClass }}
+          dt Method relationship
+          dd {{ step.methodRelationship }}
+          dt Model origin
+          dd {{ step.modelOrigin }}
+          dt Source revision
+          dd {{ step.sourceRevision }}
+          dt Source locator
+          dd {{ step.sourceLocator }}
+        ul(v-if="step.caveats.length")
+          li(v-for="caveat in step.caveats" :key="caveat") {{ caveat }}
+  p.equation-empty(v-else) No equation steps are declared for this path.
 
-    <div v-if="steps.length" class="equation-controls" aria-label="Equation reveal controls">
-      <button type="button" :disabled="!hasHiddenSteps" data-testid="equation-reveal-next" @click="revealNext">
-        Reveal next
-      </button>
-      <button type="button" :disabled="!hasHiddenSteps" data-testid="equation-reveal-all" @click="revealAll">
-        Reveal all
-      </button>
-      <button type="button" :disabled="revealedCount <= 1" data-testid="equation-reset" @click="reset">
-        Reset ladder
-      </button>
-      <span aria-live="polite">{{ revealedCount }} of {{ steps.length }} steps shown</span>
-    </div>
-  </div>
+  .equation-controls(v-if="steps.length" aria-label="Equation reveal controls")
+    button(type="button" :disabled="!hasHiddenSteps" data-testid="equation-reveal-next" @click="revealNext") Reveal next
+    button(type="button" :disabled="!hasHiddenSteps" data-testid="equation-reveal-all" @click="revealAll") Reveal all
+    button(type="button" :disabled="revealedCount <= 1" data-testid="equation-reset" @click="reset") Reset ladder
+    span(aria-live="polite") {{ revealedCount }} of {{ steps.length }} steps shown
 </template>
 
 <style scoped>

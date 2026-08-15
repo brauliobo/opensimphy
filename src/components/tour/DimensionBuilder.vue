@@ -321,288 +321,213 @@ watch([target, expressionPreset, coordinateSystem, sampleSiMagnitude], () => {
 })
 </script>
 
-<template>
-  <section class="dimension-builder" data-testid="dimension-builder" :aria-labelledby="`${simulation.id}-title`">
-    <header class="dimension-builder-heading">
-      <p class="dimension-builder-kicker">Dimension workshop</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
+<template lang="pug">
+section.dimension-builder(data-testid="dimension-builder" :aria-labelledby="`${simulation.id}-title`")
+  header.dimension-builder-heading
+    p.dimension-builder-kicker Dimension workshop
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
 
-    <p v-if="contractError" class="dimension-builder-error" role="alert" data-testid="dimension-builder-error">
-      This activity cannot run because its generated contract and dimension engine do not agree. {{ contractError }}
-    </p>
+  p.dimension-builder-error(v-if="contractError" role="alert" data-testid="dimension-builder-error") This activity cannot run because its generated contract and dimension engine do not agree. {{ contractError }}
 
-    <template v-else>
-      <section class="dimension-builder-presets" aria-labelledby="dimension-builder-presets-title">
-        <h3 id="dimension-builder-presets-title">Try a setup</h3>
-        <ul class="dimension-builder-preset-list">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button
-              class="dimension-builder-preset tour-touch-target"
-              type="button"
-              :data-testid="`preset-${preset.id}`"
-              :aria-describedby="`preset-${preset.id}-description`"
-              @click="applyPreset(preset)"
-            >
-              {{ preset.label }}
-            </button>
-            <p :id="`preset-${preset.id}-description`">{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" class="dimension-builder-inspection-prompt" data-testid="preset-inspection-prompt">
-          {{ selectedPreset.inspectionPrompt }}
-        </p>
-      </section>
+  template(v-else)
+    section.dimension-builder-presets(aria-labelledby="dimension-builder-presets-title")
+      h3#dimension-builder-presets-title Try a setup
+      ul.dimension-builder-preset-list
+        li(v-for="preset in simulation.presets" :key="preset.id")
+          button.dimension-builder-preset.tour-touch-target(
+            type="button"
+            :data-testid="`preset-${preset.id}`"
+            :aria-describedby="`preset-${preset.id}-description`"
+            @click="applyPreset(preset)"
+          ) {{ preset.label }}
+          p(:id="`preset-${preset.id}-description`") {{ preset.description }}
+      p.dimension-builder-inspection-prompt(v-if="selectedPreset" data-testid="preset-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
 
-      <section class="dimension-builder-controls" aria-labelledby="dimension-builder-controls-title">
-        <h3 id="dimension-builder-controls-title">Build an expression</h3>
+    section.dimension-builder-controls(aria-labelledby="dimension-builder-controls-title")
+      h3#dimension-builder-controls-title Build an expression
 
-        <div v-if="targetControl" class="dimension-builder-control" data-testid="builder-control-target">
-          <label for="dimension-builder-target">{{ targetControl.label }}</label>
-          <select
-            id="dimension-builder-target"
-            v-model="target"
-            data-testid="dimension-target"
-            :aria-describedby="'dimension-builder-target-description'"
-          >
-            <option v-for="option in targetControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p id="dimension-builder-target-description">
-            {{ targetControl.description }}
-            {{ targetControl.options.find(({ value }) => value === target)?.description }}
-            <span v-if="targetControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ targetControl.playfulPrompt }}</span>
-          </p>
-        </div>
+      .dimension-builder-control(v-if="targetControl" data-testid="builder-control-target")
+        label(for="dimension-builder-target") {{ targetControl.label }}
+        select#dimension-builder-target(
+          v-model="target"
+          data-testid="dimension-target"
+          :aria-describedby="'dimension-builder-target-description'"
+        )
+          option(v-for="option in targetControl.options" :key="option.value" :value="option.value") {{ option.label }}
+        p#dimension-builder-target-description
+          | {{ targetControl.description }}
+          | {{ targetControl.options.find(({ value }) => value === target)?.description }}
+          span.dimension-builder-playful-prompt(v-if="targetControl.playfulPrompt") {{ targetControl.playfulPrompt }}
 
-        <div v-if="expressionControl" class="dimension-builder-control" data-testid="builder-control-expression">
-          <label for="dimension-builder-expression">{{ expressionControl.label }}</label>
-          <select
-            id="dimension-builder-expression"
-            v-model="expressionPreset"
-            data-testid="dimension-expression"
-            :aria-describedby="'dimension-builder-expression-description'"
-          >
-            <option v-for="option in expressionControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p id="dimension-builder-expression-description">
-            {{ expressionControl.description }}
-            {{ expressionControl.options.find(({ value }) => value === expressionPreset)?.description }}
-            <span v-if="expressionControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ expressionControl.playfulPrompt }}</span>
-          </p>
-        </div>
+      .dimension-builder-control(v-if="expressionControl" data-testid="builder-control-expression")
+        label(for="dimension-builder-expression") {{ expressionControl.label }}
+        select#dimension-builder-expression(
+          v-model="expressionPreset"
+          data-testid="dimension-expression"
+          :aria-describedby="'dimension-builder-expression-description'"
+        )
+          option(v-for="option in expressionControl.options" :key="option.value" :value="option.value") {{ option.label }}
+        p#dimension-builder-expression-description
+          | {{ expressionControl.description }}
+          | {{ expressionControl.options.find(({ value }) => value === expressionPreset)?.description }}
+          span.dimension-builder-playful-prompt(v-if="expressionControl.playfulPrompt") {{ expressionControl.playfulPrompt }}
 
-        <div v-if="coordinateControl" class="dimension-builder-control" data-testid="builder-control-coordinate">
-          <label for="dimension-builder-coordinate">{{ coordinateControl.label }}</label>
-          <select
-            id="dimension-builder-coordinate"
-            v-model="coordinateSystem"
-            data-testid="dimension-coordinate"
-            :aria-describedby="'dimension-builder-coordinate-description'"
-          >
-            <option v-for="option in coordinateControl.options" :key="option.value" :value="option.value">
-              {{ coordinateOptionLabel(option.value, option.label) }}
-            </option>
-          </select>
-          <p id="dimension-builder-coordinate-description">
-            {{ coordinateControl.description }}
-            {{ coordinateControl.options.find(({ value }) => value === coordinateSystem)?.description }}
-            <span v-if="coordinateControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ coordinateControl.playfulPrompt }}</span>
-          </p>
-        </div>
+      .dimension-builder-control(v-if="coordinateControl" data-testid="builder-control-coordinate")
+        label(for="dimension-builder-coordinate") {{ coordinateControl.label }}
+        select#dimension-builder-coordinate(
+          v-model="coordinateSystem"
+          data-testid="dimension-coordinate"
+          :aria-describedby="'dimension-builder-coordinate-description'"
+        )
+          option(v-for="option in coordinateControl.options" :key="option.value" :value="option.value") {{ coordinateOptionLabel(option.value, option.label) }}
+        p#dimension-builder-coordinate-description
+          | {{ coordinateControl.description }}
+          | {{ coordinateControl.options.find(({ value }) => value === coordinateSystem)?.description }}
+          span.dimension-builder-playful-prompt(v-if="coordinateControl.playfulPrompt") {{ coordinateControl.playfulPrompt }}
 
-        <p v-if="depth === 'guided'" class="dimension-builder-coordinate-disclosure" data-testid="guided-coordinate-disclosure">
-          The displayed coordinate uses the activity's fixed target-bound sample value of
-          {{ sampleSiMagnitude }} {{ selectedTargetCatalog?.coordinates.si.unit }} in the International System of Units (SI).
-          This supplied value is not produced from measurements of the expression operands. Technical depth exposes it as a parameter.
-        </p>
+      p.dimension-builder-coordinate-disclosure(v-if="depth === 'guided'" data-testid="guided-coordinate-disclosure")
+        | The displayed coordinate uses the activity's fixed target-bound sample value of
+        | {{ sampleSiMagnitude }} {{ selectedTargetCatalog?.coordinates.si.unit }} in the International System of Units (SI).
+        | This supplied value is not produced from measurements of the expression operands. Technical depth exposes it as a parameter.
 
-        <div
-          v-if="depth === 'technical' && magnitudeControl"
-          class="dimension-builder-control dimension-builder-control-technical"
-          data-testid="builder-control-magnitude"
-        >
-          <label for="dimension-builder-magnitude">{{ magnitudeControl.label }}</label>
-          <input
-            id="dimension-builder-magnitude"
-            v-model.number="sampleSiMagnitude"
-            data-testid="dimension-magnitude"
-            :type="magnitudeControl.type"
-            :min="magnitudeControl.min"
-            :max="magnitudeControl.max"
-            :step="magnitudeControl.step"
-            :aria-describedby="'dimension-builder-magnitude-description'"
-          >
-          <output for="dimension-builder-magnitude">{{ sampleSiMagnitude }}</output>
-          <p id="dimension-builder-magnitude-description">
-            {{ magnitudeControl.description }}
-            <span v-if="magnitudeControl.playfulPrompt" class="dimension-builder-playful-prompt">{{ magnitudeControl.playfulPrompt }}</span>
-          </p>
-        </div>
-      </section>
+      .dimension-builder-control.dimension-builder-control-technical(
+        v-if="depth === 'technical' && magnitudeControl"
+        data-testid="builder-control-magnitude"
+      )
+        label(for="dimension-builder-magnitude") {{ magnitudeControl.label }}
+        input#dimension-builder-magnitude(
+          v-model.number="sampleSiMagnitude"
+          data-testid="dimension-magnitude"
+          :type="magnitudeControl.type"
+          :min="magnitudeControl.min"
+          :max="magnitudeControl.max"
+          :step="magnitudeControl.step"
+          :aria-describedby="'dimension-builder-magnitude-description'"
+        )
+        output(for="dimension-builder-magnitude") {{ sampleSiMagnitude }}
+        p#dimension-builder-magnitude-description
+          | {{ magnitudeControl.description }}
+          span.dimension-builder-playful-prompt(v-if="magnitudeControl.playfulPrompt") {{ magnitudeControl.playfulPrompt }}
 
-      <fieldset class="dimension-builder-prediction" data-testid="prediction-gate">
-        <legend>Make a prediction before revealing the trace</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="dimension-builder-prediction-option tour-touch-target">
-          <input
-            v-model="prediction"
-            type="radio"
-            name="dimension-builder-prediction"
-            :value="option.value"
-            :data-testid="`prediction-${option.value}`"
-          >
-          <span>{{ option.label }}</span>
-        </label>
-      </fieldset>
+    fieldset.dimension-builder-prediction(data-testid="prediction-gate")
+      legend Make a prediction before revealing the trace
+      p {{ simulation.predictionPrompt }}
+      label.dimension-builder-prediction-option.tour-touch-target(v-for="option in predictionOptions" :key="option.value")
+        input(
+          v-model="prediction"
+          type="radio"
+          name="dimension-builder-prediction"
+          :value="option.value"
+          :data-testid="`prediction-${option.value}`"
+        )
+        span {{ option.label }}
 
-      <div class="dimension-builder-actions">
-        <button
-          class="dimension-builder-reveal tour-touch-target"
-          type="button"
-          data-testid="reveal-dimension-result"
-          :disabled="!prediction"
-          @click="revealResult"
-        >
-          Reveal result
-        </button>
-        <button class="dimension-builder-reset tour-touch-target" type="button" data-testid="reset-dimension-builder" @click="resetBuilder">
-          Reset
-        </button>
-      </div>
+    .dimension-builder-actions
+      button.dimension-builder-reveal.tour-touch-target(
+        type="button"
+        data-testid="reveal-dimension-result"
+        :disabled="!prediction"
+        @click="revealResult"
+      ) Reveal result
+      button.dimension-builder-reset.tour-touch-target(type="button" data-testid="reset-dimension-builder" @click="resetBuilder") Reset
 
-      <p v-if="evaluationError" class="dimension-builder-error" role="alert" data-testid="dimension-evaluation-error">
-        The dimension engine could not produce a result. {{ evaluationError }}
-      </p>
+    p.dimension-builder-error(v-if="evaluationError" role="alert" data-testid="dimension-evaluation-error") The dimension engine could not produce a result. {{ evaluationError }}
 
-      <p v-if="predictionStale" class="dimension-builder-prediction-stale" aria-live="polite" data-testid="prediction-stale">
-        The setup changed, so the previous prediction is not compared with this live result. Choose a new prediction and reveal it for the current setup.
-      </p>
+    p.dimension-builder-prediction-stale(v-if="predictionStale" aria-live="polite" data-testid="prediction-stale") The setup changed, so the previous prediction is not compared with this live result. Choose a new prediction and reveal it for the current setup.
 
-      <section v-if="revealed && result" class="dimension-builder-stage" data-testid="dimension-result" aria-labelledby="dimension-result-title">
-        <header>
-          <p>Selected expression</p>
-          <h3 id="dimension-result-title" data-testid="dimension-expression-stage">{{ selectedExpression?.label }}</h3>
-          <p v-if="selectedExpressionCatalog">
-            {{ selectedExpressionCatalog.left.label }}
-            {{ selectedExpressionCatalog.operation === 'multiply' ? 'multiplied by' : selectedExpressionCatalog.operation === 'divide' ? 'divided by' : 'added to' }}
-            {{ selectedExpressionCatalog.right.label }}
-          </p>
-        </header>
+    section.dimension-builder-stage(v-if="revealed && result" data-testid="dimension-result" aria-labelledby="dimension-result-title")
+      header
+        p Selected expression
+        h3#dimension-result-title(data-testid="dimension-expression-stage") {{ selectedExpression?.label }}
+        p(v-if="selectedExpressionCatalog")
+          | {{ selectedExpressionCatalog.left.label }}
+          | {{ selectedExpressionCatalog.operation === 'multiply' ? 'multiplied by' : selectedExpressionCatalog.operation === 'divide' ? 'divided by' : 'added to' }}
+          | {{ selectedExpressionCatalog.right.label }}
 
-        <dl class="dimension-builder-readout">
-          <dt>{{ outputLabel('operationStatus') }}</dt>
-          <dd data-testid="operation-status">{{ operationStatusText }}</dd>
-          <dt>{{ outputLabel('targetMatch') }}</dt>
-          <dd data-testid="target-match">{{ targetMatchText }}</dd>
-          <dt>Result dimension</dt>
-          <dd data-testid="result-dimension">{{ formatDimensionVector(result.resultDimension) }}</dd>
-          <dt>Target dimension</dt>
-          <dd data-testid="target-dimension">{{ formatDimensionVector(result.targetDimension) }}</dd>
-          <dt>{{ selectedCoordinate?.label }} coordinate</dt>
-          <dd data-testid="coordinate-value">{{ coordinateText }}</dd>
-        </dl>
+      dl.dimension-builder-readout
+        dt {{ outputLabel('operationStatus') }}
+        dd(data-testid="operation-status") {{ operationStatusText }}
+        dt {{ outputLabel('targetMatch') }}
+        dd(data-testid="target-match") {{ targetMatchText }}
+        dt Result dimension
+        dd(data-testid="result-dimension") {{ formatDimensionVector(result.resultDimension) }}
+        dt Target dimension
+        dd(data-testid="target-dimension") {{ formatDimensionVector(result.targetDimension) }}
+        dt {{ selectedCoordinate?.label }} coordinate
+        dd(data-testid="coordinate-value") {{ coordinateText }}
 
-        <p class="dimension-builder-comparison" data-testid="prediction-comparison">{{ predictionComparison }}</p>
-        <p class="dimension-builder-caveat" data-testid="quantity-kind-caveat">{{ result.quantityKindCaveat }}</p>
+      p.dimension-builder-comparison(data-testid="prediction-comparison") {{ predictionComparison }}
+      p.dimension-builder-caveat(data-testid="quantity-kind-caveat") {{ result.quantityKindCaveat }}
 
-        <div class="dimension-builder-table-wrap">
-          <table data-testid="dimension-axis-table">
-            <caption>Result and target exponents in the seven-axis International System of Quantities (ISQ) dimension basis</caption>
-            <thead>
-              <tr>
-                <th scope="col">Base quantity</th>
-                <th scope="col">Symbol</th>
-                <th scope="col">Result exponent</th>
-                <th scope="col">Target exponent</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="row in axisRows" :key="row.axisId">
-                <th scope="row">{{ row.axisLabel }}</th>
-                <td>{{ row.axisSymbol }}</td>
-                <td>{{ row.resultText }}</td>
-                <td>{{ row.targetText }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      .dimension-builder-table-wrap
+        table(data-testid="dimension-axis-table")
+          caption Result and target exponents in the seven-axis International System of Quantities (ISQ) dimension basis
+          thead
+            tr
+              th(scope="col") Base quantity
+              th(scope="col") Symbol
+              th(scope="col") Result exponent
+              th(scope="col") Target exponent
+          tbody
+            tr(v-for="row in axisRows" :key="row.axisId")
+              th(scope="row") {{ row.axisLabel }}
+              td {{ row.axisSymbol }}
+              td {{ row.resultText }}
+              td {{ row.targetText }}
 
-        <section class="dimension-builder-finding" data-testid="dimension-finding-panel" aria-labelledby="dimension-finding-title">
-          <h3 id="dimension-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite" data-testid="dimension-finding">{{ result.finding.establishes }}</p>
-          <dl class="dimension-builder-finding-summary">
-            <dt>Runtime result status</dt>
-            <dd data-testid="finding-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt>
-            <dd data-testid="finding-claim-class">{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt>
-            <dd data-testid="finding-model-origin">{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt>
-            <dd data-testid="finding-method-relationship">{{ result.finding.methodRelationship }}</dd>
-          </dl>
-          <section>
-            <h4>What changed</h4>
-            <p data-testid="finding-changed">{{ result.finding.changed }}</p>
-          </section>
-          <section>
-            <h4>Why</h4>
-            <p data-testid="finding-cause">{{ result.finding.cause }}</p>
-          </section>
-          <section>
-            <h4>Equation</h4>
-            <p data-testid="finding-equation"><code>{{ result.finding.equation }}</code></p>
-          </section>
-          <section>
-            <h4>Assumptions</h4>
-            <ul data-testid="finding-assumptions">
-              <li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li>
-            </ul>
-          </section>
-          <section>
-            <h4>Establishes</h4>
-            <p data-testid="finding-establishes">{{ result.finding.establishes }}</p>
-          </section>
-          <section>
-            <h4>Does not establish</h4>
-            <p data-testid="finding-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          </section>
-          <section>
-            <h4>Evidence references</h4>
-            <ul data-testid="finding-evidence-refs">
-              <li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef">
-                <a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a>
-              </li>
-            </ul>
-          </section>
-          <p data-testid="finding-validation-boundary">
-            No empirical comparison or theory validation is claimed by this dimension-contract result.
-          </p>
-        </section>
-      </section>
+      section.dimension-builder-finding(data-testid="dimension-finding-panel" aria-labelledby="dimension-finding-title")
+        h3#dimension-finding-title Live finding
+        p(role="status" aria-live="polite" data-testid="dimension-finding") {{ result.finding.establishes }}
+        dl.dimension-builder-finding-summary
+          dt Runtime result status
+          dd(data-testid="finding-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd(data-testid="finding-claim-class") {{ result.finding.claimClass }}
+          dt Model origin
+          dd(data-testid="finding-model-origin") {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd(data-testid="finding-method-relationship") {{ result.finding.methodRelationship }}
+        section
+          h4 What changed
+          p(data-testid="finding-changed") {{ result.finding.changed }}
+        section
+          h4 Why
+          p(data-testid="finding-cause") {{ result.finding.cause }}
+        section
+          h4 Equation
+          p(data-testid="finding-equation")
+            code {{ result.finding.equation }}
+        section
+          h4 Assumptions
+          ul(data-testid="finding-assumptions")
+            li(v-for="assumption in result.finding.assumptions" :key="assumption") {{ assumption }}
+        section
+          h4 Establishes
+          p(data-testid="finding-establishes") {{ result.finding.establishes }}
+        section
+          h4 Does not establish
+          p(data-testid="finding-does-not-establish") {{ result.finding.doesNotEstablish }}
+        section
+          h4 Evidence references
+          ul(data-testid="finding-evidence-refs")
+            li(v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef")
+              a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="finding-validation-boundary") No empirical comparison or theory validation is claimed by this dimension-contract result.
 
-      <section v-if="depth === 'technical'" class="dimension-builder-disclosure" data-testid="technical-disclosure">
-        <h3>Assumptions and dimension basis</h3>
-        <ul>
-          <li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li>
-        </ul>
-        <dl v-if="simulation.dimensionBasis">
-          <dt>System</dt>
-          <dd>International System of Quantities ({{ simulation.dimensionBasis.system }})</dd>
-          <dt>Exponent type</dt>
-          <dd>{{ simulation.dimensionBasis.exponentType }}</dd>
-          <dt>Activity exponent subset</dt>
-          <dd>{{ simulation.dimensionBasis.activityExponentSubset }}</dd>
-          <dt>Ordered axes</dt>
-          <dd>
-            <ol>
-              <li v-for="axis in simulation.dimensionBasis.axes" :key="axis.id">
-                {{ DIMENSION_AXES.find(({ id }) => id === axis.id)?.label }} ({{ axis.symbol }})
-              </li>
-            </ol>
-          </dd>
-        </dl>
-      </section>
-    </template>
-  </section>
+    section.dimension-builder-disclosure(v-if="depth === 'technical'" data-testid="technical-disclosure")
+      h3 Assumptions and dimension basis
+      ul
+        li(v-for="assumption in simulation.assumptions" :key="assumption") {{ assumption }}
+      dl(v-if="simulation.dimensionBasis")
+        dt System
+        dd International System of Quantities ({{ simulation.dimensionBasis.system }})
+        dt Exponent type
+        dd {{ simulation.dimensionBasis.exponentType }}
+        dt Activity exponent subset
+        dd {{ simulation.dimensionBasis.activityExponentSubset }}
+        dt Ordered axes
+        dd
+          ol
+            li(v-for="axis in simulation.dimensionBasis.axes" :key="axis.id") {{ DIMENSION_AXES.find(({ id }) => id === axis.id)?.label }} ({{ axis.symbol }})
 </template>
