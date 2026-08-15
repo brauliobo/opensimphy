@@ -6,7 +6,9 @@
      getdp magnetostatic.pro -msh motor.msh -pos MagnetostaticResults
 
    Limitations are intentional: this is a linear isotropic H(curl) solve with
-   a uniform impressed current density in homogenized coil volumes. It does
+   an event-selected impressed current density in homogenized coil envelopes.
+   Front/back envelope pairs carry equal and opposing axial contributions, so
+   this is a balanced source approximation, not a resolved winding. It does
    not solve the capacitor discharge transient, spark gaps, commutator,
    winding turns, motion, torque, mechanical load, saturation, hysteresis,
    lamination loss, eddy currents, thermal effects, or energy recovery. The
@@ -24,7 +26,6 @@ Group {
   OuterBoundary = Region[300];
 
   Domain = Region[{Air, AllCores, AllCoils}];
-  DomainWithSourceCurrentDensity = Region[AllCoils];
 }
 
 Function {
@@ -34,9 +35,17 @@ Function {
   Turns = DefineNumber[100., Name "Parameters/Turns"];
   EffectiveCoilCrossSectionM2 = DefineNumber[1.e-4, Name "Parameters/Effective coil cross-section (m^2)"];
 
+  EventIndex = DefineNumber[0, Name "Parameters/Excitation event index", Min 0, Max 26, Step 1];
+}
+
+Include "../excitation/v1/event-map-v1.pro";
+
+Function {
   nu[Region[{Air, AllCoils}]] = 1. / mu0;
   nu[AllCores] = 1. / (CoreRelativePermeability * mu0);
-  SourceCurrentDensity[AllCoils] = Vector[0., 0., Turns * DriveCurrentA / EffectiveCoilCrossSectionM2];
+  HomogenizedCurrentDensity = Turns * DriveCurrentA / EffectiveCoilCrossSectionM2;
+  SourceCurrentDensity[EventSourcePositive] = Vector[0., 0., HomogenizedCurrentDensity];
+  SourceCurrentDensity[EventSourceNegative] = Vector[0., 0., -HomogenizedCurrentDensity];
 }
 
 Constraint {
