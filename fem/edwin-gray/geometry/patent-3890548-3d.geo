@@ -9,6 +9,10 @@ SetFactory("OpenCASCADE");
 Geometry.OCCBooleanPreserveNumbering = 1;
 
 MeshSizeValue = DefineNumber[0.025, Name "Parameters/Mesh size (m)"];
+DefineConstant[
+  FeatureMeshSizeM = {0.002, Name "Meshing/Feature mesh size (m)"},
+  SmokeMesh = {0, Choices{0="Production", 1="Smoke"}, Name "Meshing/Mode"}
+];
 RotorAngleDeg = DefineNumber[0, Name "Parameters/Rotor angle (deg)"];
 PairOffsetDeg = DefineNumber[13.3333333333, Name "Parameters/Major-minor offset (deg)"];
 StatorPhaseDeg = DefineNumber[0, Name "Parameters/Stator phase (deg)"];
@@ -34,8 +38,10 @@ FrontZ = DefineNumber[0.035, Name "Parameters/Front plane z (m)"];
 BackZ = DefineNumber[-0.035, Name "Parameters/Back plane z (m)"];
 Eps = 1.e-6;
 
-// Record source-box tags and bounds before fragmentation. OCC may renumber or
-// split these boxes, so only the saved bounds are used after the boolean.
+// Record source-box bounds before fragmentation. The rotor major/minor boxes
+// overlap in this illustrative topology, so an input can map to several OCC
+// fragments and an overlap fragment can legitimately belong to two assembly
+// groups. The five base material groups below remain a disjoint partition.
 Cylinder(1) = {0, 0, AirZMinM, 0, 0, AirZMaxM - AirZMinM, AirOuterRadiusM};
 
 statorCoreVolumes[] = {};
@@ -158,7 +164,8 @@ For station In {0:2}
   EndFor
 EndFor
 
-// Fragment the air and material volumes into a conformal full 3D domain.
+// Partition the cylinder and every material solid in one OCC operation. This
+// removes material/air overlap and gives all regions the same interface faces.
 // Original elementary tags are not reused after Delete.
 fragmentedVolumes[] = BooleanFragments{ Volume{1}; Delete; }{ Volume{allToolVolumes[]}; Delete; };
 allPostVolumes[] = Volume{:};
@@ -262,6 +269,8 @@ For station In {0:2}
   EndFor
 EndFor
 
+// Repeated fragments from overlapping rotor assembly bounds are removed by
+// array subtraction from the complete OCC partition when Air is constructed.
 materialVolumes[] = statorCorePostVolumes[];
 materialVolumes[] += statorCoilPostVolumes[];
 materialVolumes[] += rotorCorePostVolumes[];
@@ -275,6 +284,28 @@ Physical Surface("OuterBoundary", 300) = {outerBoundary[]};
 Mesh.MeshSizeFromPoints = 0;
 Mesh.MeshSizeFromCurvature = 0;
 Mesh.MeshSizeExtendFromBoundary = 0;
-MeshSize{PointsOf{Volume{fragmentedVolumes[]};}} = MeshSizeValue;
-Mesh.Algorithm3D = 4;
+localFeatureSize = FeatureMeshSizeM;
+localAirSize = MeshSizeValue;
+If(SmokeMesh)
+  localFeatureSize = 0.005;
+  localAirSize = 0.04;
+EndIf
+
+// Resolve the 1 mm core/coil clearance and the 8 mm/10 mm material features
+// locally without paying that resolution throughout the far-field air.
+materialSurfaces[] = Boundary{ Volume{materialVolumes[]}; };
+Field[1] = Distance;
+Field[1].FacesList = {materialSurfaces[]};
+Field[2] = Threshold;
+Field[2].InField = 1;
+Field[2].SizeMin = localFeatureSize;
+Field[2].SizeMax = localAirSize;
+Field[2].DistMin = 0.006;
+Field[2].DistMax = 0.02;
+Background Field = 2;
+Mesh.MeshSizeMin = localFeatureSize;
+Mesh.MeshSizeMax = localAirSize;
+// Mesh.Algorithm3D = 4 requires Netgen, which is absent from the pinned build.
+Mesh.Algorithm3D = 1;
+Mesh.Optimize = 1;
 Mesh.MshFileVersion = 4.1;

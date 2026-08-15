@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "edwin-gray-mesh-audit-v1",
+  "model": "US3890548A illustrative topology",
+  "mode": "production",
+  "gmsh": {
+    "version": "4.8.4",
+    "command": "gmsh patent-3890548-3d.geo -3 -format msh4"
+  },
+  "source": {
+    "geometrySha256": "3825472ea52ae9ed7f123e3aae260a809330e06f19ddb11e416ae452ab3b6665",
+    "meshSha256": "abced7862f6870222abd3671612b4fdbe06d7d8319af2d8cd055a80a7b95c2f4"
+  },
+  "mesh": {
+    "format": "4.1 ASCII",
+    "nodes": 233639,
+    "elements": 1438676,
+    "elementsByType": {
+      "2": 1320,
+      "4": 1437356
+    },
+    "tetrahedra": 1437356,
+    "entityCountsByDimension": [
+      818,
+      1275,
+      651,
+      109
+    ]
+  },
+  "physicalGroups": {
+    "count": 56,
+    "assemblyCount": 48,
+    "expectedCount": 56,
+    "elements": {
+      "OuterBoundary": 1320,
+      "Air": 1004297,
+      "StatorCores": 191314,
+      "StatorCoils": 134106,
+      "RotorCores": 60474,
+      "RotorCoils": 47165,
+      "AllCores": 251788,
+      "AllCoils": 181271,
+      "Stator_1_Minor_Front_CoilCore": 7435,
+      "Stator_1_Minor_Back_CoilCore": 7439,
+      "Stator_1_Major_Front_CoilCore": 10715,
+      "Stator_1_Major_Back_CoilCore": 10734,
+      "Stator_2_Minor_Front_CoilCore": 7395,
+      "Stator_2_Minor_Back_CoilCore": 7452,
+      "Stator_2_Major_Front_CoilCore": 10620,
+      "Stator_2_Major_Back_CoilCore": 10666,
+      "Stator_3_Minor_Front_CoilCore": 7516,
+      "Stator_3_Minor_Back_CoilCore": 7436,
+      "Stator_3_Major_Front_CoilCore": 10593,
+      "Stator_3_Major_Back_CoilCore": 10709,
+      "Stator_4_Minor_Front_CoilCore": 7363,
+      "Stator_4_Minor_Back_CoilCore": 7400,
+      "Stator_4_Major_Front_CoilCore": 10691,
+      "Stator_4_Major_Back_CoilCore": 10663,
+      "Stator_5_Minor_Front_CoilCore": 7453,
+      "Stator_5_Minor_Back_CoilCore": 7495,
+      "Stator_5_Major_Front_CoilCore": 10632,
+      "Stator_5_Major_Back_CoilCore": 10561,
+      "Stator_6_Minor_Front_CoilCore": 7351,
+      "Stator_6_Minor_Back_CoilCore": 7392,
+      "Stator_6_Major_Front_CoilCore": 10560,
+      "Stator_6_Major_Back_CoilCore": 10677,
+      "Stator_7_Minor_Front_CoilCore": 7327,
+      "Stator_7_Minor_Back_CoilCore": 7417,
+      "Stator_7_Major_Front_CoilCore": 10709,
+      "Stator_7_Major_Back_CoilCore": 10729,
+      "Stator_8_Minor_Front_CoilCore": 7431,
+      "Stator_8_Minor_Back_CoilCore": 7406,
+      "Stator_8_Major_Front_CoilCore": 10716,
+      "Stator_8_Major_Back_CoilCore": 10662,
+      "Stator_9_Minor_Front_CoilCore": 7449,
+      "Stator_9_Minor_Back_CoilCore": 7404,
+      "Stator_9_Major_Front_CoilCore": 10621,
+      "Stator_9_Major_Back_CoilCore": 10601,
+      "Rotor_1_Minor_Front_CoilCore": 8069,
+      "Rotor_1_Minor_Back_CoilCore": 8074,
+      "Rotor_1_Major_Front_CoilCore": 10924,
+      "Rotor_1_Major_Back_CoilCore": 10997,
+      "Rotor_2_Minor_Front_CoilCore": 8062,
+      "Rotor_2_Minor_Back_CoilCore": 8031,
+      "Rotor_2_Major_Front_CoilCore": 11008,
+      "Rotor_2_Major_Back_CoilCore": 11022,
+      "Rotor_3_Minor_Front_CoilCore": 8129,
+      "Rotor_3_Minor_Back_CoilCore": 7980,
+      "Rotor_3_Major_Front_CoilCore": 10968,
+      "Rotor_3_Major_Back_CoilCore": 10995
+    },
+    "missing": [],
+    "empty": []
+  },
+  "materialPartition": {
+    "groups": [
+      "Air",
+      "StatorCores",
+      "StatorCoils",
+      "RotorCores",
+      "RotorCoils"
+    ],
+    "assignedTetrahedra": 1437356,
+    "multiplyOrUnassignedTetrahedra": 0
+  },
+  "connectivity": {
+    "tetrahedralComponents": 1,
+    "exteriorFaces": 1320,
+    "outerBoundaryTriangles": 1320,
+    "nonManifoldFaces": 0
+  },
+  "quality": {
+    "degenerateTetrahedra": 0,
+    "minimumSixTimesVolumeM3": 1.5825031186138255e-12,
+    "minimumEdgeM": 0.000015391853449647774,
+    "maximumEdgeM": 0.05413966781672546,
+    "maximumMaterialEdgeM": 0.005301848904827814,
+    "materialEdgeP99M": 0.003934062549261881,
+    "maximumEdgeRatio": 219.93620939886068,
+    "featureTargetM": 0.002,
+    "materialEdgeP99LimitM": 0.004,
+    "representedFeatureDimensionsM": [
+      0.001,
+      0.008,
+      0.01
+    ]
+  },
+  "checks": {
+    "expectedGroupsPresent": true,
+    "allPhysicalGroupsNonempty": true,
+    "canonicalAssemblyCount": true,
+    "materialPartitionExact": true,
+    "aggregateCoreCountExact": true,
+    "aggregateCoilCountExact": true,
+    "faceConformity": true,
+    "singleConnectedDomain": true,
+    "outerBoundaryComplete": true,
+    "positiveTetraVolumes": true,
+    "materialFeatureResolution": true
+  },
+  "valid": true
+}
