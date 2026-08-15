@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "motor-machine-contract-v1",
+  "contractVersion": 1,
+  "contractId": "black-v1",
+  "machineKind": "engine-prototype",
+  "identity": {
+    "machineId": { "value": "black", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.id"], "note": "Exact current engine catalog ID." },
+    "name": { "value": "Black 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.label"], "note": "Exact current engine catalog label." },
+    "source": { "value": "1979 Hackenberger / Gray black prototype row", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black"], "note": "This contract freezes the current engine row without upgrading it to measured machine evidence." },
+    "engineModel": { "value": { "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 1, "rotorPoles": 1, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.05, "recoveryCoupling": 0, "observationWindow": true, "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 9, "turns": 140 }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black", "src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.black"], "note": "Bounded surrogate parameters; they are not physical measurements or FEM identity values." }
+  },
+  "compatibilityIdentity": {
+    "topology": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black"], "note": "The single engine pole set is not the patent FEM assembly topology and lacks dimensioned placement." },
+    "geometryRevision": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black"], "note": "No dimensioned black-machine geometry revision is available." },
+    "windingTurns": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.black.turns"], "note": "The engine value 140 is calibrated; physical winding and turns evidence is unavailable." },
+    "excitationEventSchedule": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.black"], "note": "Preset voltage, speed, and quench are surrogate inputs, not a documented complete event schedule." },
+    "materials": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.housing"], "note": "The aluminum housing label does not specify open-core and conductor FEM material laws." },
+    "circuit": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.hasRecovery"], "note": "The engine row does not define a complete machine-specific switching circuit." },
+    "mechanicalLoad": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black"], "note": "No machine-specific inertia, friction, or load curve is available." },
+    "femAvailability": { "value": { "compatible": false, "caseId": null, "scope": "blocked-unavailable-identity", "runStatus": "not-applicable", "blockedBy": ["topology", "geometryRevision", "windingTurns", "excitationEventSchedule", "materials", "circuit", "mechanicalLoad"] }, "evidenceClass": "unavailable", "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:caseId"], "note": "Black 1979 must not inherit the patent case assumptions; a machine-specific contract and dimensions are required." }
+  },
+  "limitations": [
+    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." }
+  ]
+}

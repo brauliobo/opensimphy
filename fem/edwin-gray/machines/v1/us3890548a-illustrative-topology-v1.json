@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "motor-machine-contract-v1",
+  "contractVersion": 1,
+  "contractId": "us3890548a-illustrative-topology-v1",
+  "machineKind": "patent-illustrative-topology",
+  "identity": {
+    "machineId": {
+      "value": "us3890548a",
+      "evidenceClass": "patent-described",
+      "evidenceRefs": ["US3890548A:publication"],
+      "note": "Patent publication identity, not a surviving-machine identifier."
+    },
+    "name": {
+      "value": "US3890548A illustrative topology",
+      "evidenceClass": "patent-described",
+      "evidenceRefs": ["US3890548A:title"],
+      "note": "Contract name distinguishes the patent topology from every engine prototype."
+    },
+    "source": {
+      "value": "US3890548A Pulsed capacitor discharge electric engine",
+      "evidenceClass": "patent-described",
+      "evidenceRefs": ["US3890548A:description", "US3890548A:drawings"],
+      "note": "The publication describes topology and sequence but does not dimension a build replica."
+    },
+    "engineModel": {
+      "value": null,
+      "evidenceClass": "unavailable",
+      "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS"],
+      "note": "The patent topology is not one of the six engine prototype catalog rows."
+    }
+  },
+  "compatibilityIdentity": {
+    "topology": {
+      "value": {
+        "statorPairStations": 9,
+        "rotorPairStations": 3,
+        "statorAngularPitchDeg": 40,
+        "rotorAngularPitchDeg": 120,
+        "majorMinorPerStation": 2,
+        "frontBackPlanes": 2
+      },
+      "evidenceClass": "patent-described",
+      "evidenceRefs": ["US3890548A:description:stator-pairs-40-deg", "US3890548A:description:three-rotor-pairs"],
+      "note": "This is the publication topology represented by the illustrative FEM assembly."
+    },
+    "geometryRevision": {
+      "value": "patent-3890548-illustrative-v1",
+      "evidenceClass": "assumed",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:geometry"],
+      "note": "All dimensions are illustrative modeling assumptions, not patent manufacturing dimensions."
+    },
+    "windingTurns": {
+      "value": {
+        "turns": 100,
+        "currentDensityModel": "uniform-homogenized-global-z"
+      },
+      "evidenceClass": "assumed",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:excitation"],
+      "note": "The homogenized winding is a numerical source proxy and not a documented patent winding."
+    },
+    "excitationEventSchedule": {
+      "value": {
+        "dischargesPerRevolution": 27,
+        "dischargeStepDeg": 13.3333333333,
+        "femExcitation": "single-static-impressed-current-state"
+      },
+      "evidenceClass": "patent-derived",
+      "evidenceRefs": ["US3890548A:description:27-steps", "fem/edwin-gray/cases/patent-3890548-illustrative.json:model.sequence"],
+      "note": "The angular sequence follows the publication; the FEM case samples static states and does not simulate switching."
+    },
+    "materials": {
+      "value": {
+        "airRelativePermeability": 1,
+        "coreRelativePermeability": 1000,
+        "coilRelativePermeability": 1,
+        "linear": true
+      },
+      "evidenceClass": "assumed",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:materials"],
+      "note": "Constant linear material values are reproducibility assumptions only."
+    },
+    "circuit": {
+      "value": "not-resolved-by-magnetostatic-fem",
+      "evidenceClass": "unavailable",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:excitation.kind"],
+      "note": "The current FEM case contains no capacitor, commutator, conversion tube, or recovery circuit."
+    },
+    "mechanicalLoad": {
+      "value": null,
+      "evidenceClass": "unavailable",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:model.physics"],
+      "note": "No inertia, friction, shaft load, or dynamic rotor equation exists in the magnetostatic case."
+    },
+    "femAvailability": {
+      "value": {
+        "compatible": true,
+        "caseId": "patent-3890548-illustrative",
+        "scope": "illustrative-not-replica",
+        "runStatus": "not-run",
+        "blockedBy": []
+      },
+      "evidenceClass": "assumed",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json"],
+      "note": "Compatibility means this contract identifies the current illustrative case; it does not claim a replica, solver result, or historical validation."
+    }
+  },
+  "limitations": [
+    {
+      "value": "illustrative-not-replica",
+      "evidenceClass": "assumed",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:source.scope"],
+      "note": "Geometry scale, materials, winding, and excitation magnitude are modeling assumptions."
+    },
+    {
+      "value": "not-run",
+      "evidenceClass": "unavailable",
+      "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:provenance.fieldEntries.results"],
+      "note": "No solver output is bundled or claimed by this machine contract."
+    }
+  ]
+}

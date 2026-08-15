@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensimphy.local/edwin-gray/motor-machine.schema.json",
+  "title": "Versioned Edwin Gray machine scientific contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "contractVersion",
+    "contractId",
+    "machineKind",
+    "identity",
+    "compatibilityIdentity",
+    "limitations"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "motor-machine-contract-v1"
+    },
+    "contractVersion": {
+      "const": 1
+    },
+    "contractId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*-v[1-9][0-9]*$"
+    },
+    "machineKind": {
+      "enum": ["patent-illustrative-topology", "engine-prototype"]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["machineId", "name", "source", "engineModel"],
+      "properties": {
+        "machineId": { "$ref": "#/$defs/evidenceField" },
+        "name": { "$ref": "#/$defs/evidenceField" },
+        "source": { "$ref": "#/$defs/evidenceField" },
+        "engineModel": { "$ref": "#/$defs/evidenceField" }
+      }
+    },
+    "compatibilityIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topology",
+        "geometryRevision",
+        "windingTurns",
+        "excitationEventSchedule",
+        "materials",
+        "circuit",
+        "mechanicalLoad",
+        "femAvailability"
+      ],
+      "properties": {
+        "topology": { "$ref": "#/$defs/evidenceField" },
+        "geometryRevision": { "$ref": "#/$defs/evidenceField" },
+        "windingTurns": { "$ref": "#/$defs/evidenceField" },
+        "excitationEventSchedule": { "$ref": "#/$defs/evidenceField" },
+        "materials": { "$ref": "#/$defs/evidenceField" },
+        "circuit": { "$ref": "#/$defs/evidenceField" },
+        "mechanicalLoad": { "$ref": "#/$defs/evidenceField" },
+        "femAvailability": { "$ref": "#/$defs/evidenceField" }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/evidenceField" }
+    }
+  },
+  "$defs": {
+    "evidenceField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidenceClass", "evidenceRefs", "note"],
+      "properties": {
+        "value": {},
+        "evidenceClass": {
+          "enum": [
+            "measured",
+            "patent-described",
+            "patent-derived",
+            "assumed",
+            "calibrated",
+            "unavailable"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

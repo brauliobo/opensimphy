@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "motor-machine-contract-v1",
+  "contractVersion": 1,
+  "contractId": "gold-v1",
+  "machineKind": "engine-prototype",
+  "identity": {
+    "machineId": { "value": "gold", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.id"], "note": "Exact current engine catalog ID." },
+    "name": { "value": "Gold 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.label"], "note": "Exact current engine catalog label." },
+    "source": { "value": "1979 Hackenberger / Gray gold prototype row", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold"], "note": "This contract freezes the current engine row without upgrading it to measured machine evidence." },
+    "engineModel": { "value": { "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.05, "recoveryCoupling": 0, "observationWindow": false, "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 3, "turns": 140 }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold", "src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.gold"], "note": "Bounded surrogate parameters; they are not physical measurements or FEM identity values." }
+  },
+  "compatibilityIdentity": {
+    "topology": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold"], "note": "Pole counts alone do not establish the patent FEM assembly topology." },
+    "geometryRevision": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold"], "note": "No dimensioned gold-machine geometry revision is available." },
+    "windingTurns": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.gold.turns"], "note": "The engine value 140 is calibrated; physical winding and turns evidence is unavailable." },
+    "excitationEventSchedule": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.gold"], "note": "Preset voltage, speed, and quench are surrogate inputs, not a documented complete event schedule." },
+    "materials": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.housing"], "note": "The aluminum housing label does not specify FEM electromagnetic material laws." },
+    "circuit": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.hasRecovery"], "note": "Absence of modeled recovery does not define the commutator and ignitron circuit revision." },
+    "mechanicalLoad": { "value": null, "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold"], "note": "No machine-specific inertia, friction, or load curve is available." },
+    "femAvailability": { "value": { "compatible": false, "caseId": null, "scope": "blocked-unavailable-identity", "runStatus": "not-applicable", "blockedBy": ["topology", "geometryRevision", "windingTurns", "excitationEventSchedule", "materials", "circuit", "mechanicalLoad"] }, "evidenceClass": "unavailable", "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:caseId"], "note": "Gold 1979 must not inherit the patent case assumptions; a machine-specific contract and dimensions are required." }
+  },
+  "limitations": [
+    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." }
+  ]
+}
