@@ -353,169 +353,157 @@ watch([temperatureKelvin, wavelengthMinimumMetres, wavelengthMaximumMetres, samp
 })
 </script>
 
-<template>
-  <section class="blackbody" data-testid="blackbody-spectrum" :aria-labelledby="`${simulation.id}-title`">
-    <header class="blackbody__heading">
-      <p class="blackbody__kicker">Thermal instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" class="blackbody__error" role="alert" data-testid="blackbody-contract-error">
-      This activity cannot run because its generated contract and black-body engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section aria-labelledby="blackbody-presets-title">
-        <h3 id="blackbody-presets-title">Temperature presets</h3>
-        <ul class="blackbody__presets">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button type="button" :data-testid="`blackbody-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" data-testid="blackbody-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section class="blackbody__controls" aria-labelledby="blackbody-controls-title">
-        <h3 id="blackbody-controls-title">Model controls</h3>
-        <div v-if="temperatureControl" class="blackbody__control" data-testid="blackbody-control-temperatureKelvin">
-          <label for="blackbody-temperature">{{ temperatureControl.label }}</label>
-          <input id="blackbody-temperature" v-model.number="temperatureKelvin" data-testid="blackbody-temperature" :type="temperatureControl.type" :min="temperatureControl.min" :max="temperatureControl.max" :step="temperatureControl.step">
-          <output for="blackbody-temperature">{{ formatNumber(temperatureKelvin) }} {{ temperatureControl.unit }}</output>
-          <p>{{ temperatureControl.description }} <span v-if="temperatureControl.playfulPrompt">{{ temperatureControl.playfulPrompt }}</span></p>
-        </div>
-
-        <template v-if="depth === 'technical'">
-          <div v-if="minimumControl" class="blackbody__control" data-testid="blackbody-control-wavelengthMinimumMetres">
-            <label for="blackbody-minimum">{{ minimumControl.label }}</label>
-            <input id="blackbody-minimum" v-model.number="wavelengthMinimumMetres" data-testid="blackbody-wavelength-minimum" :type="minimumControl.type" :min="minimumControl.min" :max="minimumControl.max" :step="minimumControl.step">
-            <span>{{ minimumControl.unit }}</span><p>{{ minimumControl.description }}</p>
-          </div>
-          <div v-if="maximumControl" class="blackbody__control" data-testid="blackbody-control-wavelengthMaximumMetres">
-            <label for="blackbody-maximum">{{ maximumControl.label }}</label>
-            <input id="blackbody-maximum" v-model.number="wavelengthMaximumMetres" data-testid="blackbody-wavelength-maximum" :type="maximumControl.type" :min="maximumControl.min" :max="maximumControl.max" :step="maximumControl.step">
-            <span>{{ maximumControl.unit }}</span><p>{{ maximumControl.description }}</p>
-          </div>
-          <div v-if="sampleControl" class="blackbody__control" data-testid="blackbody-control-sampleCount">
-            <label for="blackbody-samples">{{ sampleControl.label }}</label>
-            <input id="blackbody-samples" v-model.number="sampleCount" data-testid="blackbody-sample-count" :type="sampleControl.type" :min="sampleControl.min" :max="sampleControl.max" :step="sampleControl.step">
-            <span>{{ sampleControl.unit }}</span><p>{{ sampleControl.description }}</p>
-          </div>
-        </template>
-      </section>
-
-      <fieldset class="blackbody__prediction" data-testid="blackbody-prediction-gate">
-        <legend>Predict the effect of the declared temperature increase</legend>
-        <p data-testid="blackbody-prediction-prompt">{{ simulation.predictionPrompt }}</p>
-        <p v-if="declaredTemperaturePair" data-testid="blackbody-temperature-declaration">
-          Compare {{ declaredTemperaturePair.referenceLabel }} at {{ formatNumber(declaredTemperaturePair.referenceInput.temperatureKelvin) }} K
-          with {{ declaredTemperaturePair.increasedLabel }} at {{ formatNumber(declaredTemperaturePair.increasedInput.temperatureKelvin) }} K.
-        </p>
-        <label v-for="option in predictionOptions" :key="option.value">
-          <input v-model="prediction" type="radio" name="blackbody-prediction" :value="option.value" :data-testid="`blackbody-prediction-${option.value}`">
-          {{ option.label }}
-        </label>
-      </fieldset>
-
-      <div class="blackbody__actions">
-        <button type="button" data-testid="reveal-blackbody-result" :disabled="!prediction" @click="revealResult">Reveal model result</button>
-        <button type="button" data-testid="reset-blackbody" @click="resetInstrument">Reset</button>
-      </div>
-
-      <p v-if="evaluationError" class="blackbody__error" role="alert" data-testid="blackbody-evaluation-error">{{ evaluationError }}</p>
-      <p v-if="predictionStale" class="blackbody__stale" aria-live="polite" data-testid="blackbody-prediction-stale">
-        The setup changed, so the previous prediction is not compared with this live result. Make a new prediction for the current setup.
-      </p>
-
-      <section v-if="revealed && result" class="blackbody__result" data-testid="blackbody-result" aria-labelledby="blackbody-result-title">
-        <h3 id="blackbody-result-title">Normalized wavelength spectrum</h3>
-        <figure class="blackbody__figure">
-          <svg viewBox="0 0 720 310" role="img" aria-labelledby="blackbody-plot-title blackbody-plot-description" data-testid="blackbody-spectrum-svg">
-            <title id="blackbody-plot-title">Normalized ideal black-body wavelength spectrum</title>
-            <desc id="blackbody-plot-description">A logarithmic wavelength plot normalized to its maximum. A vertical marker shows the analytic Wien wavelength peak when it lies inside the displayed interval.</desc>
-            <line class="blackbody__axis" x1="58" y1="258" x2="700" y2="258" />
-            <line class="blackbody__axis" x1="58" y1="20" x2="58" y2="258" />
-            <polyline class="blackbody__curve" :points="plotPoints" fill="none" data-testid="blackbody-spectrum-curve" />
-            <g v-if="peakMarkerX !== null" data-testid="blackbody-peak-marker">
-              <line class="blackbody__peak" :x1="peakMarkerX" y1="20" :x2="peakMarkerX" y2="258" />
-              <circle class="blackbody__peak-dot" :cx="peakMarkerX" cy="20" r="5" />
-            </g>
-            <text x="58" y="282">{{ formatNumber(wavelengthMinimumMetres) }} m</text>
-            <text x="700" y="282" text-anchor="end">{{ formatNumber(wavelengthMaximumMetres) }} m</text>
-            <text x="379" y="304" text-anchor="middle">Wavelength (logarithmic axis)</text>
-            <text x="16" y="140" text-anchor="middle" transform="rotate(-90 16 140)">Normalized B_lambda</text>
-          </svg>
-          <figcaption data-testid="blackbody-text-alternative">
-            At {{ formatNumber(result.temperatureKelvin) }} K with emissivity fixed at 1, the wavelength-form peak is
-            {{ formatNumber(result.wienPeakWavelengthMetres * 1e6) }} um, {{ wavelengthBand(result.wienPeakWavelengthMetres) }}, and ideal all-wavelength radiant exitance is
-            {{ formatNumber(result.stefanBoltzmannExitanceWattsPerSquareMetre) }} W/m^2. This is modeled output, not a measured spectrum or a color inference.
-          </figcaption>
-        </figure>
-
-        <dl class="blackbody__readout">
-          <dt>{{ outputLabel('temperatureKelvin') }}</dt><dd>{{ formatNumber(result.temperatureKelvin) }} K</dd>
-          <dt>{{ outputLabel('wienPeakWavelengthMetres') }}</dt><dd data-testid="blackbody-peak-value">{{ formatNumber(result.wienPeakWavelengthMetres) }} m</dd>
-          <dt>{{ outputLabel('stefanBoltzmannExitanceWattsPerSquareMetre') }}</dt><dd data-testid="blackbody-exitance-value">{{ formatNumber(result.stefanBoltzmannExitanceWattsPerSquareMetre) }} W/m^2</dd>
-        </dl>
-        <p data-testid="blackbody-prediction-comparison">{{ predictionComparison }}</p>
-
-        <div v-if="temperatureComparison" class="blackbody__table-wrap">
-          <table data-testid="blackbody-temperature-comparison-table">
-            <caption>Compatible temperature-increase comparison computed with the same engine revision and display grid</caption>
-            <thead><tr><th scope="col">Run</th><th scope="col">Temperature (K)</th><th scope="col">Peak wavelength (m)</th><th scope="col">Exitance (W/m^2)</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">{{ temperatureComparison.referenceLabel }}</th><td>{{ formatNumber(temperatureComparison.reference.temperatureKelvin) }}</td><td>{{ formatNumber(temperatureComparison.reference.wienPeakWavelengthMetres) }}</td><td>{{ formatNumber(temperatureComparison.reference.stefanBoltzmannExitanceWattsPerSquareMetre) }}</td></tr>
-              <tr><th scope="row">{{ temperatureComparison.increasedLabel }}</th><td>{{ formatNumber(temperatureComparison.increased.temperatureKelvin) }}</td><td>{{ formatNumber(temperatureComparison.increased.wienPeakWavelengthMetres) }}</td><td>{{ formatNumber(temperatureComparison.increased.stefanBoltzmannExitanceWattsPerSquareMetre) }}</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="blackbody__table-wrap">
-          <table data-testid="blackbody-spectrum-table">
-            <caption>Reduced numerical alternative for the modeled wavelength spectrum</caption>
-            <thead><tr><th scope="col">Wavelength (nm)</th><th scope="col">Spectral radiance (W sr^-1 m^-3)</th><th scope="col">Normalized radiance</th></tr></thead>
-            <tbody>
-              <tr v-for="row in result.table" :key="row.wavelengthNanometres">
-                <th scope="row">{{ formatNumber(row.wavelengthNanometres) }}</th>
-                <td>{{ formatNumber(row.spectralRadianceWattsPerSteradianCubicMetre) }}</td>
-                <td>{{ formatNumber(row.normalizedRadiance) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <section class="blackbody__finding" data-testid="blackbody-finding-panel" aria-labelledby="blackbody-finding-title">
-          <h3 id="blackbody-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite" data-testid="blackbody-finding">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="blackbody-finding-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Source revision</dt><dd data-testid="blackbody-provenance-revision">{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd data-testid="blackbody-provenance-locator">{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p data-testid="blackbody-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          <h4>Evidence references</h4>
-          <ul data-testid="blackbody-evidence-refs"><li v-for="reference in result.finding.evidenceRefs" :key="reference"><a :href="evidenceHref(reference)">{{ reference }}</a></li></ul>
-          <p data-testid="blackbody-validation-boundary">No empirical comparison or theory validation is claimed by this ideal-model calculation.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" class="blackbody__technical" data-testid="blackbody-technical-disclosure">
-        <h3>Grid, method, and assumptions</h3>
-        <p>{{ simulation.numericalMethod?.description }}</p>
-        <p>{{ simulation.visualization.reducedMotionBehavior }}</p>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(class="blackbody", data-testid="blackbody-spectrum", :aria-labelledby="`${simulation.id}-title`")
+  header(class="blackbody__heading")
+    p(class="blackbody__kicker") Thermal instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", class="blackbody__error", role="alert", data-testid="blackbody-contract-error")  This activity cannot run because its generated contract and black-body engine do not agree. {{ contractError }}
+  template(v-else)
+    section(aria-labelledby="blackbody-presets-title")
+      h3(id="blackbody-presets-title") Temperature presets
+      ul(class="blackbody__presets")
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(type="button", :data-testid="`blackbody-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", data-testid="blackbody-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(class="blackbody__controls", aria-labelledby="blackbody-controls-title")
+      h3(id="blackbody-controls-title") Model controls
+      div(v-if="temperatureControl", class="blackbody__control", data-testid="blackbody-control-temperatureKelvin")
+        label(for="blackbody-temperature") {{ temperatureControl.label }}
+        input(id="blackbody-temperature", v-model.number="temperatureKelvin", data-testid="blackbody-temperature", :type="temperatureControl.type", :min="temperatureControl.min", :max="temperatureControl.max", :step="temperatureControl.step")
+        output(for="blackbody-temperature") {{ formatNumber(temperatureKelvin) }} {{ temperatureControl.unit }}
+        p
+          | {{ temperatureControl.description }} 
+          span(v-if="temperatureControl.playfulPrompt") {{ temperatureControl.playfulPrompt }}
+      template(v-if="depth === 'technical'")
+        div(v-if="minimumControl", class="blackbody__control", data-testid="blackbody-control-wavelengthMinimumMetres")
+          label(for="blackbody-minimum") {{ minimumControl.label }}
+          input(id="blackbody-minimum", v-model.number="wavelengthMinimumMetres", data-testid="blackbody-wavelength-minimum", :type="minimumControl.type", :min="minimumControl.min", :max="minimumControl.max", :step="minimumControl.step")
+          span {{ minimumControl.unit }}
+          p {{ minimumControl.description }}
+        div(v-if="maximumControl", class="blackbody__control", data-testid="blackbody-control-wavelengthMaximumMetres")
+          label(for="blackbody-maximum") {{ maximumControl.label }}
+          input(id="blackbody-maximum", v-model.number="wavelengthMaximumMetres", data-testid="blackbody-wavelength-maximum", :type="maximumControl.type", :min="maximumControl.min", :max="maximumControl.max", :step="maximumControl.step")
+          span {{ maximumControl.unit }}
+          p {{ maximumControl.description }}
+        div(v-if="sampleControl", class="blackbody__control", data-testid="blackbody-control-sampleCount")
+          label(for="blackbody-samples") {{ sampleControl.label }}
+          input(id="blackbody-samples", v-model.number="sampleCount", data-testid="blackbody-sample-count", :type="sampleControl.type", :min="sampleControl.min", :max="sampleControl.max", :step="sampleControl.step")
+          span {{ sampleControl.unit }}
+          p {{ sampleControl.description }}
+    fieldset(class="blackbody__prediction", data-testid="blackbody-prediction-gate")
+      legend Predict the effect of the declared temperature increase
+      p(data-testid="blackbody-prediction-prompt") {{ simulation.predictionPrompt }}
+      p(v-if="declaredTemperaturePair", data-testid="blackbody-temperature-declaration")  Compare {{ declaredTemperaturePair.referenceLabel }} at {{ formatNumber(declaredTemperaturePair.referenceInput.temperatureKelvin) }} K with {{ declaredTemperaturePair.increasedLabel }} at {{ formatNumber(declaredTemperaturePair.increasedInput.temperatureKelvin) }} K. 
+      label(v-for="option in predictionOptions", :key="option.value")
+        input(v-model="prediction", type="radio", name="blackbody-prediction", :value="option.value", :data-testid="`blackbody-prediction-${option.value}`")
+        |  {{ option.label }}
+    div(class="blackbody__actions")
+      button(type="button", data-testid="reveal-blackbody-result", :disabled="!prediction", @click="revealResult") Reveal model result
+      button(type="button", data-testid="reset-blackbody", @click="resetInstrument") Reset
+    p(v-if="evaluationError", class="blackbody__error", role="alert", data-testid="blackbody-evaluation-error") {{ evaluationError }}
+    p(v-if="predictionStale", class="blackbody__stale", aria-live="polite", data-testid="blackbody-prediction-stale")  The setup changed, so the previous prediction is not compared with this live result. Make a new prediction for the current setup. 
+    section(v-if="revealed && result", class="blackbody__result", data-testid="blackbody-result", aria-labelledby="blackbody-result-title")
+      h3(id="blackbody-result-title") Normalized wavelength spectrum
+      figure(class="blackbody__figure")
+        svg(viewBox="0 0 720 310", role="img", aria-labelledby="blackbody-plot-title blackbody-plot-description", data-testid="blackbody-spectrum-svg")
+          title(id="blackbody-plot-title") Normalized ideal black-body wavelength spectrum
+          desc(id="blackbody-plot-description") A logarithmic wavelength plot normalized to its maximum. A vertical marker shows the analytic Wien wavelength peak when it lies inside the displayed interval.
+          line(class="blackbody__axis", x1="58", y1="258", x2="700", y2="258")
+          line(class="blackbody__axis", x1="58", y1="20", x2="58", y2="258")
+          polyline(class="blackbody__curve", :points="plotPoints", fill="none", data-testid="blackbody-spectrum-curve")
+          g(v-if="peakMarkerX !== null", data-testid="blackbody-peak-marker")
+            line(class="blackbody__peak", :x1="peakMarkerX", y1="20", :x2="peakMarkerX", y2="258")
+            circle(class="blackbody__peak-dot", :cx="peakMarkerX", cy="20", r="5")
+          text(x="58", y="282") {{ formatNumber(wavelengthMinimumMetres) }} m
+          text(x="700", y="282", text-anchor="end") {{ formatNumber(wavelengthMaximumMetres) }} m
+          text(x="379", y="304", text-anchor="middle") Wavelength (logarithmic axis)
+          text(x="16", y="140", text-anchor="middle", transform="rotate(-90 16 140)") Normalized B_lambda
+        figcaption(data-testid="blackbody-text-alternative")  At {{ formatNumber(result.temperatureKelvin) }} K with emissivity fixed at 1, the wavelength-form peak is {{ formatNumber(result.wienPeakWavelengthMetres * 1e6) }} um, {{ wavelengthBand(result.wienPeakWavelengthMetres) }}, and ideal all-wavelength radiant exitance is {{ formatNumber(result.stefanBoltzmannExitanceWattsPerSquareMetre) }} W/m^2. This is modeled output, not a measured spectrum or a color inference. 
+      dl(class="blackbody__readout")
+        dt {{ outputLabel('temperatureKelvin') }}
+        dd {{ formatNumber(result.temperatureKelvin) }} K
+        dt {{ outputLabel('wienPeakWavelengthMetres') }}
+        dd(data-testid="blackbody-peak-value") {{ formatNumber(result.wienPeakWavelengthMetres) }} m
+        dt {{ outputLabel('stefanBoltzmannExitanceWattsPerSquareMetre') }}
+        dd(data-testid="blackbody-exitance-value") {{ formatNumber(result.stefanBoltzmannExitanceWattsPerSquareMetre) }} W/m^2
+      p(data-testid="blackbody-prediction-comparison") {{ predictionComparison }}
+      div(v-if="temperatureComparison", class="blackbody__table-wrap")
+        table(data-testid="blackbody-temperature-comparison-table")
+          caption Compatible temperature-increase comparison computed with the same engine revision and display grid
+          thead
+            tr
+              th(scope="col") Run
+              th(scope="col") Temperature (K)
+              th(scope="col") Peak wavelength (m)
+              th(scope="col") Exitance (W/m^2)
+          tbody
+            tr
+              th(scope="row") {{ temperatureComparison.referenceLabel }}
+              td {{ formatNumber(temperatureComparison.reference.temperatureKelvin) }}
+              td {{ formatNumber(temperatureComparison.reference.wienPeakWavelengthMetres) }}
+              td {{ formatNumber(temperatureComparison.reference.stefanBoltzmannExitanceWattsPerSquareMetre) }}
+            tr
+              th(scope="row") {{ temperatureComparison.increasedLabel }}
+              td {{ formatNumber(temperatureComparison.increased.temperatureKelvin) }}
+              td {{ formatNumber(temperatureComparison.increased.wienPeakWavelengthMetres) }}
+              td {{ formatNumber(temperatureComparison.increased.stefanBoltzmannExitanceWattsPerSquareMetre) }}
+      div(class="blackbody__table-wrap")
+        table(data-testid="blackbody-spectrum-table")
+          caption Reduced numerical alternative for the modeled wavelength spectrum
+          thead
+            tr
+              th(scope="col") Wavelength (nm)
+              th(scope="col") Spectral radiance (W sr^-1 m^-3)
+              th(scope="col") Normalized radiance
+          tbody
+            tr(v-for="row in result.table", :key="row.wavelengthNanometres")
+              th(scope="row") {{ formatNumber(row.wavelengthNanometres) }}
+              td {{ formatNumber(row.spectralRadianceWattsPerSteradianCubicMetre) }}
+              td {{ formatNumber(row.normalizedRadiance) }}
+      section(class="blackbody__finding", data-testid="blackbody-finding-panel", aria-labelledby="blackbody-finding-title")
+        h3(id="blackbody-finding-title") Live finding
+        p(role="status", aria-live="polite", data-testid="blackbody-finding") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="blackbody-finding-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Source revision
+          dd(data-testid="blackbody-provenance-revision") {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd(data-testid="blackbody-provenance-locator") {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p(data-testid="blackbody-does-not-establish") {{ result.finding.doesNotEstablish }}
+        h4 Evidence references
+        ul(data-testid="blackbody-evidence-refs")
+          li(v-for="reference in result.finding.evidenceRefs", :key="reference")
+            a(:href="evidenceHref(reference)") {{ reference }}
+        p(data-testid="blackbody-validation-boundary") No empirical comparison or theory validation is claimed by this ideal-model calculation.
+    section(v-if="depth === 'technical'", class="blackbody__technical", data-testid="blackbody-technical-disclosure")
+      h3 Grid, method, and assumptions
+      p {{ simulation.numericalMethod?.description }}
+      p {{ simulation.visualization.reducedMotionBehavior }}
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
 </template>
 
 <style scoped>

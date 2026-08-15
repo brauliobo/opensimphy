@@ -326,154 +326,182 @@ watch([substancePreset, amountMol, gasModel, temperatureKelvin, pressurePascal, 
 })
 </script>
 
-<template>
-  <section class="molar" data-testid="molar-matter-scaler" :aria-labelledby="`${simulation.id}-title`">
-    <header class="molar__heading">
-      <p class="molar__kicker">Matter instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" class="molar__error" role="alert" data-testid="molar-contract-error">
-      This activity cannot run because its generated contract and molar-matter engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section aria-labelledby="molar-presets-title">
-        <h3 id="molar-presets-title">Scenario preset</h3>
-        <ul class="molar__presets">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button type="button" :data-testid="`molar-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" data-testid="molar-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section class="molar__controls" aria-labelledby="molar-controls-title">
-        <h3 id="molar-controls-title">Declared inputs</h3>
-        <div v-if="substanceControl" class="molar__control" data-testid="molar-control-substancePreset">
-          <label for="molar-substance">{{ substanceControl.label }}</label>
-          <select id="molar-substance" v-model="substancePreset" data-testid="molar-substance"><option v-for="option in substanceControl.options" :key="option.value" :value="option.value">{{ option.label }}</option></select>
-          <p>{{ substanceControl.description }} <span v-if="substanceControl.playfulPrompt">{{ substanceControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="amountControl" class="molar__control" data-testid="molar-control-amountMol">
-          <label for="molar-amount">{{ amountControl.label }}</label>
-          <input id="molar-amount" v-model.number="amountMol" data-testid="molar-amount" :type="amountControl.type" :min="amountControl.min" :max="amountControl.max" :step="amountControl.step">
-          <output for="molar-amount">{{ formatNumber(amountMol) }} {{ amountControl.unit }}</output>
-          <p>{{ amountControl.description }} <span v-if="amountControl.playfulPrompt">{{ amountControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="gasControl" class="molar__control" data-testid="molar-control-gasModel">
-          <label for="molar-gas-model">{{ gasControl.label }}</label>
-          <select id="molar-gas-model" v-model="gasModel" data-testid="molar-gas-model"><option v-for="option in gasControl.options" :key="option.value" :value="option.value">{{ option.label }}</option></select>
-          <p>{{ gasControl.description }} <span v-if="gasControl.playfulPrompt">{{ gasControl.playfulPrompt }}</span></p>
-        </div>
-
-        <template v-if="depth === 'technical'">
-          <div v-if="temperatureControl" class="molar__control" data-testid="molar-control-temperatureKelvin">
-            <label for="molar-temperature">{{ temperatureControl.label }}</label><input id="molar-temperature" v-model.number="temperatureKelvin" data-testid="molar-temperature" :type="temperatureControl.type" :min="temperatureControl.min" :max="temperatureControl.max" :step="temperatureControl.step"><span>{{ temperatureControl.unit }}</span><p>{{ temperatureControl.description }}</p>
-          </div>
-          <div v-if="pressureControl" class="molar__control" data-testid="molar-control-pressurePascal">
-            <label for="molar-pressure">{{ pressureControl.label }}</label><input id="molar-pressure" v-model.number="pressurePascal" data-testid="molar-pressure" :type="pressureControl.type" :min="pressureControl.min" :max="pressureControl.max" :step="pressureControl.step"><span>{{ pressureControl.unit }}</span><p>{{ pressureControl.description }}</p>
-          </div>
-          <div v-if="chargeControl" class="molar__control" data-testid="molar-control-chargeNumber">
-            <label for="molar-charge">{{ chargeControl.label }}</label><input id="molar-charge" v-model.number="chargeNumber" data-testid="molar-charge" :type="chargeControl.type" :min="chargeControl.min" :max="chargeControl.max" :step="chargeControl.step"><span>{{ chargeControl.unit }}</span><p>{{ chargeControl.description }}</p>
-          </div>
-          <div v-if="molarMassControl" class="molar__control" data-testid="molar-control-molarMassKgPerMol">
-            <label for="molar-mass">{{ molarMassControl.label }}</label><input id="molar-mass" v-model.number="molarMassKgPerMol" data-testid="molar-molar-mass" :type="molarMassControl.type" :min="molarMassControl.min" :max="molarMassControl.max" :step="molarMassControl.step"><span>{{ molarMassControl.unit }}</span><p>{{ molarMassControl.description }}</p>
-          </div>
-        </template>
-      </section>
-
-      <p v-if="depth === 'guided'" class="molar__guided-state" data-testid="molar-guided-state">
-        The Guided setup keeps the generated state fixed at {{ formatNumber(temperatureKelvin) }} K and {{ formatNumber(pressurePascal) }} Pa, with charge number {{ chargeNumber }} and declared molar mass {{ formatNumber(molarMassKgPerMol) }} kg/mol. Technical depth exposes these dependent-branch inputs.
-      </p>
-
-      <fieldset class="molar__prediction" data-testid="molar-prediction-gate">
-        <legend>Predict what changes when amount doubles</legend>
-        <p data-testid="molar-prediction-prompt">{{ simulation.predictionPrompt }}</p>
-        <p v-if="declaredDoublingAmounts" data-testid="molar-doubling-declaration">
-          Compare {{ formatNumber(declaredDoublingAmounts.base) }} mol with {{ formatNumber(declaredDoublingAmounts.doubled) }} mol while holding substance, molar mass, gas model, temperature, pressure, and charge number fixed.
-        </p>
-        <label v-for="option in predictionOptions" :key="option.value"><input v-model="prediction" type="radio" name="molar-prediction" :value="option.value" :data-testid="`molar-prediction-${option.value}`"> {{ option.label }}</label>
-      </fieldset>
-
-      <div class="molar__actions">
-        <button type="button" data-testid="reveal-molar-result" :disabled="!prediction" @click="revealResult">Reveal conversions</button>
-        <button type="button" data-testid="reset-molar" @click="resetInstrument">Reset</button>
-      </div>
-      <p v-if="evaluationError" class="molar__error" role="alert" data-testid="molar-evaluation-error">{{ evaluationError }}</p>
-      <p v-if="predictionStale" class="molar__stale" aria-live="polite" data-testid="molar-prediction-stale">The inputs changed, so the previous prediction is not compared with this live result. Make a new prediction for the current inputs.</p>
-
-      <section v-if="revealed && result" class="molar__result" data-testid="molar-result" aria-labelledby="molar-result-title">
-        <h3 id="molar-result-title">Particle-to-mole dependency flow</h3>
-        <figure class="molar__figure">
-          <svg viewBox="0 0 760 360" role="img" aria-labelledby="molar-flow-title molar-flow-description" data-testid="molar-flow-svg">
-            <title id="molar-flow-title">Amount of substance and its applicable dependent conversions</title>
-            <desc id="molar-flow-description">The selected amount of substance is the root. Lines lead to entity count, bulk mass, ideal-gas volume when selected, and signed Faraday charge.</desc>
-            <rect class="molar__node" x="25" y="128" width="205" height="96" rx="8" />
-            <text x="128" y="158" text-anchor="middle">Amount of substance</text><text x="128" y="190" text-anchor="middle">{{ formatNumber(result.amountOfSubstanceMol) }} mol</text>
-            <g v-for="(row, index) in flowRows" :key="row.quantity" :data-flow-quantity="row.quantity">
-              <line class="molar__link" x1="230" y1="176" x2="390" :y2="45 + index * 86" />
-              <rect class="molar__node" x="390" :y="10 + index * 86" width="340" height="70" rx="8" />
-              <text x="410" :y="37 + index * 86">{{ row.label }}</text><text x="410" :y="62 + index * 86">{{ formatNumber(row.value) }} {{ row.unit }}</text>
-            </g>
-          </svg>
-          <figcaption data-testid="molar-text-alternative">{{ formatNumber(result.amountOfSubstanceMol) }} mol of {{ result.substance.label }} maps to {{ formatNumber(result.entityCount) }} specified entities and {{ formatNumber(result.bulkMassKg) }} kg. Only branches selected by the declared inputs appear.</figcaption>
-        </figure>
-
-        <p data-testid="molar-prediction-comparison">{{ predictionComparison }}</p>
-        <div v-if="doublingComparison" class="molar__table-wrap">
-          <table data-testid="molar-doubling-table">
-            <caption>Compatible base and doubled-amount comparison with all other model inputs held fixed</caption>
-            <thead><tr><th scope="col">Quantity</th><th scope="col">At {{ formatNumber(doublingComparison.base.amountOfSubstanceMol) }} mol</th><th scope="col">At {{ formatNumber(doublingComparison.doubled.amountOfSubstanceMol) }} mol</th><th scope="col">Scaling statement</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Entity count</th><td>{{ formatNumber(doublingComparison.base.entityCount) }}</td><td>{{ formatNumber(doublingComparison.doubled.entityCount) }}</td><td>2x</td></tr>
-              <tr><th scope="row">Bulk mass (kg)</th><td>{{ formatNumber(doublingComparison.base.bulkMassKg) }}</td><td>{{ formatNumber(doublingComparison.doubled.bulkMassKg) }}</td><td>2x</td></tr>
-              <tr v-if="doublingComparison.base.idealGasVolumeCubicMetres !== null && doublingComparison.doubled.idealGasVolumeCubicMetres !== null"><th scope="row">Ideal-gas volume (m^3)</th><td>{{ formatNumber(doublingComparison.base.idealGasVolumeCubicMetres) }}</td><td>{{ formatNumber(doublingComparison.doubled.idealGasVolumeCubicMetres) }}</td><td>2x at the same T and p</td></tr>
-              <tr><th scope="row">Faraday charge (C)</th><td>{{ formatNumber(doublingComparison.base.faradayChargeCoulombs) }}</td><td>{{ formatNumber(doublingComparison.doubled.faradayChargeCoulombs) }}</td><td>{{ doublingComparison.base.faradayChargeCoulombs === 0 ? '0 to 0; linear identity with z = 0' : '2x' }}</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="molar__table-wrap">
-          <table data-testid="molar-output-table">
-            <caption>Applicable dependent conversions for the declared amount and model inputs</caption>
-            <thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Unit</th></tr></thead>
-            <tbody><tr v-for="row in result.table" :key="row.quantity" :data-quantity="row.quantity"><th scope="row">{{ row.label }}</th><td>{{ formatNumber(row.value) }}</td><td>{{ row.unit }}</td></tr></tbody>
-          </table>
-        </div>
-        <p data-testid="molar-substance-basis">{{ result.substance.wording }}</p>
-
-        <section class="molar__finding" data-testid="molar-finding-panel" aria-labelledby="molar-finding-title">
-          <h3 id="molar-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite" data-testid="molar-finding">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="molar-finding-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Source revision</dt><dd data-testid="molar-provenance-revision">{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd data-testid="molar-provenance-locator">{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p data-testid="molar-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          <h4>Runtime caveats</h4><ul data-testid="molar-runtime-caveats"><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="molar-evidence-refs"><li v-for="reference in result.finding.evidenceRefs" :key="reference"><a :href="evidenceHref(reference)">{{ reference }}</a></li></ul>
-          <p data-testid="molar-validation-boundary">No empirical comparison or theory validation is claimed by these dependent conversions.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" class="molar__technical" data-testid="molar-technical-disclosure">
-        <h3>State, ideal-gas, and SI caveats</h3>
-        <p>{{ simulation.numericalMethod?.description }}</p>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li><li v-for="caveat in simulation.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(class="molar", data-testid="molar-matter-scaler", :aria-labelledby="`${simulation.id}-title`")
+  header(class="molar__heading")
+    p(class="molar__kicker") Matter instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", class="molar__error", role="alert", data-testid="molar-contract-error")  This activity cannot run because its generated contract and molar-matter engine do not agree. {{ contractError }}
+  template(v-else)
+    section(aria-labelledby="molar-presets-title")
+      h3(id="molar-presets-title") Scenario preset
+      ul(class="molar__presets")
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(type="button", :data-testid="`molar-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", data-testid="molar-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(class="molar__controls", aria-labelledby="molar-controls-title")
+      h3(id="molar-controls-title") Declared inputs
+      div(v-if="substanceControl", class="molar__control", data-testid="molar-control-substancePreset")
+        label(for="molar-substance") {{ substanceControl.label }}
+        select(id="molar-substance", v-model="substancePreset", data-testid="molar-substance")
+          option(v-for="option in substanceControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p
+          | {{ substanceControl.description }} 
+          span(v-if="substanceControl.playfulPrompt") {{ substanceControl.playfulPrompt }}
+      div(v-if="amountControl", class="molar__control", data-testid="molar-control-amountMol")
+        label(for="molar-amount") {{ amountControl.label }}
+        input(id="molar-amount", v-model.number="amountMol", data-testid="molar-amount", :type="amountControl.type", :min="amountControl.min", :max="amountControl.max", :step="amountControl.step")
+        output(for="molar-amount") {{ formatNumber(amountMol) }} {{ amountControl.unit }}
+        p
+          | {{ amountControl.description }} 
+          span(v-if="amountControl.playfulPrompt") {{ amountControl.playfulPrompt }}
+      div(v-if="gasControl", class="molar__control", data-testid="molar-control-gasModel")
+        label(for="molar-gas-model") {{ gasControl.label }}
+        select(id="molar-gas-model", v-model="gasModel", data-testid="molar-gas-model")
+          option(v-for="option in gasControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p
+          | {{ gasControl.description }} 
+          span(v-if="gasControl.playfulPrompt") {{ gasControl.playfulPrompt }}
+      template(v-if="depth === 'technical'")
+        div(v-if="temperatureControl", class="molar__control", data-testid="molar-control-temperatureKelvin")
+          label(for="molar-temperature") {{ temperatureControl.label }}
+          input(id="molar-temperature", v-model.number="temperatureKelvin", data-testid="molar-temperature", :type="temperatureControl.type", :min="temperatureControl.min", :max="temperatureControl.max", :step="temperatureControl.step")
+          span {{ temperatureControl.unit }}
+          p {{ temperatureControl.description }}
+        div(v-if="pressureControl", class="molar__control", data-testid="molar-control-pressurePascal")
+          label(for="molar-pressure") {{ pressureControl.label }}
+          input(id="molar-pressure", v-model.number="pressurePascal", data-testid="molar-pressure", :type="pressureControl.type", :min="pressureControl.min", :max="pressureControl.max", :step="pressureControl.step")
+          span {{ pressureControl.unit }}
+          p {{ pressureControl.description }}
+        div(v-if="chargeControl", class="molar__control", data-testid="molar-control-chargeNumber")
+          label(for="molar-charge") {{ chargeControl.label }}
+          input(id="molar-charge", v-model.number="chargeNumber", data-testid="molar-charge", :type="chargeControl.type", :min="chargeControl.min", :max="chargeControl.max", :step="chargeControl.step")
+          span {{ chargeControl.unit }}
+          p {{ chargeControl.description }}
+        div(v-if="molarMassControl", class="molar__control", data-testid="molar-control-molarMassKgPerMol")
+          label(for="molar-mass") {{ molarMassControl.label }}
+          input(id="molar-mass", v-model.number="molarMassKgPerMol", data-testid="molar-molar-mass", :type="molarMassControl.type", :min="molarMassControl.min", :max="molarMassControl.max", :step="molarMassControl.step")
+          span {{ molarMassControl.unit }}
+          p {{ molarMassControl.description }}
+    p(v-if="depth === 'guided'", class="molar__guided-state", data-testid="molar-guided-state")  The Guided setup keeps the generated state fixed at {{ formatNumber(temperatureKelvin) }} K and {{ formatNumber(pressurePascal) }} Pa, with charge number {{ chargeNumber }} and declared molar mass {{ formatNumber(molarMassKgPerMol) }} kg/mol. Technical depth exposes these dependent-branch inputs. 
+    fieldset(class="molar__prediction", data-testid="molar-prediction-gate")
+      legend Predict what changes when amount doubles
+      p(data-testid="molar-prediction-prompt") {{ simulation.predictionPrompt }}
+      p(v-if="declaredDoublingAmounts", data-testid="molar-doubling-declaration")  Compare {{ formatNumber(declaredDoublingAmounts.base) }} mol with {{ formatNumber(declaredDoublingAmounts.doubled) }} mol while holding substance, molar mass, gas model, temperature, pressure, and charge number fixed. 
+      label(v-for="option in predictionOptions", :key="option.value")
+        input(v-model="prediction", type="radio", name="molar-prediction", :value="option.value", :data-testid="`molar-prediction-${option.value}`")
+        |  {{ option.label }}
+    div(class="molar__actions")
+      button(type="button", data-testid="reveal-molar-result", :disabled="!prediction", @click="revealResult") Reveal conversions
+      button(type="button", data-testid="reset-molar", @click="resetInstrument") Reset
+    p(v-if="evaluationError", class="molar__error", role="alert", data-testid="molar-evaluation-error") {{ evaluationError }}
+    p(v-if="predictionStale", class="molar__stale", aria-live="polite", data-testid="molar-prediction-stale") The inputs changed, so the previous prediction is not compared with this live result. Make a new prediction for the current inputs.
+    section(v-if="revealed && result", class="molar__result", data-testid="molar-result", aria-labelledby="molar-result-title")
+      h3(id="molar-result-title") Particle-to-mole dependency flow
+      figure(class="molar__figure")
+        svg(viewBox="0 0 760 360", role="img", aria-labelledby="molar-flow-title molar-flow-description", data-testid="molar-flow-svg")
+          title(id="molar-flow-title") Amount of substance and its applicable dependent conversions
+          desc(id="molar-flow-description") The selected amount of substance is the root. Lines lead to entity count, bulk mass, ideal-gas volume when selected, and signed Faraday charge.
+          rect(class="molar__node", x="25", y="128", width="205", height="96", rx="8")
+          text(x="128", y="158", text-anchor="middle") Amount of substance
+          text(x="128", y="190", text-anchor="middle") {{ formatNumber(result.amountOfSubstanceMol) }} mol
+          g(v-for="(row, index) in flowRows", :key="row.quantity", :data-flow-quantity="row.quantity")
+            line(class="molar__link", x1="230", y1="176", x2="390", :y2="45 + index * 86")
+            rect(class="molar__node", x="390", :y="10 + index * 86", width="340", height="70", rx="8")
+            text(x="410", :y="37 + index * 86") {{ row.label }}
+            text(x="410", :y="62 + index * 86") {{ formatNumber(row.value) }} {{ row.unit }}
+        figcaption(data-testid="molar-text-alternative") {{ formatNumber(result.amountOfSubstanceMol) }} mol of {{ result.substance.label }} maps to {{ formatNumber(result.entityCount) }} specified entities and {{ formatNumber(result.bulkMassKg) }} kg. Only branches selected by the declared inputs appear.
+      p(data-testid="molar-prediction-comparison") {{ predictionComparison }}
+      div(v-if="doublingComparison", class="molar__table-wrap")
+        table(data-testid="molar-doubling-table")
+          caption Compatible base and doubled-amount comparison with all other model inputs held fixed
+          thead
+            tr
+              th(scope="col") Quantity
+              th(scope="col") At {{ formatNumber(doublingComparison.base.amountOfSubstanceMol) }} mol
+              th(scope="col") At {{ formatNumber(doublingComparison.doubled.amountOfSubstanceMol) }} mol
+              th(scope="col") Scaling statement
+          tbody
+            tr
+              th(scope="row") Entity count
+              td {{ formatNumber(doublingComparison.base.entityCount) }}
+              td {{ formatNumber(doublingComparison.doubled.entityCount) }}
+              td 2x
+            tr
+              th(scope="row") Bulk mass (kg)
+              td {{ formatNumber(doublingComparison.base.bulkMassKg) }}
+              td {{ formatNumber(doublingComparison.doubled.bulkMassKg) }}
+              td 2x
+            tr(v-if="doublingComparison.base.idealGasVolumeCubicMetres !== null && doublingComparison.doubled.idealGasVolumeCubicMetres !== null")
+              th(scope="row") Ideal-gas volume (m^3)
+              td {{ formatNumber(doublingComparison.base.idealGasVolumeCubicMetres) }}
+              td {{ formatNumber(doublingComparison.doubled.idealGasVolumeCubicMetres) }}
+              td 2x at the same T and p
+            tr
+              th(scope="row") Faraday charge (C)
+              td {{ formatNumber(doublingComparison.base.faradayChargeCoulombs) }}
+              td {{ formatNumber(doublingComparison.doubled.faradayChargeCoulombs) }}
+              td {{ doublingComparison.base.faradayChargeCoulombs === 0 ? '0 to 0; linear identity with z = 0' : '2x' }}
+      div(class="molar__table-wrap")
+        table(data-testid="molar-output-table")
+          caption Applicable dependent conversions for the declared amount and model inputs
+          thead
+            tr
+              th(scope="col") Quantity
+              th(scope="col") Value
+              th(scope="col") Unit
+          tbody
+            tr(v-for="row in result.table", :key="row.quantity", :data-quantity="row.quantity")
+              th(scope="row") {{ row.label }}
+              td {{ formatNumber(row.value) }}
+              td {{ row.unit }}
+      p(data-testid="molar-substance-basis") {{ result.substance.wording }}
+      section(class="molar__finding", data-testid="molar-finding-panel", aria-labelledby="molar-finding-title")
+        h3(id="molar-finding-title") Live finding
+        p(role="status", aria-live="polite", data-testid="molar-finding") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="molar-finding-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Source revision
+          dd(data-testid="molar-provenance-revision") {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd(data-testid="molar-provenance-locator") {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p(data-testid="molar-does-not-establish") {{ result.finding.doesNotEstablish }}
+        h4 Runtime caveats
+        ul(data-testid="molar-runtime-caveats")
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="molar-evidence-refs")
+          li(v-for="reference in result.finding.evidenceRefs", :key="reference")
+            a(:href="evidenceHref(reference)") {{ reference }}
+        p(data-testid="molar-validation-boundary") No empirical comparison or theory validation is claimed by these dependent conversions.
+    section(v-if="depth === 'technical'", class="molar__technical", data-testid="molar-technical-disclosure")
+      h3 State, ideal-gas, and SI caveats
+      p {{ simulation.numericalMethod?.description }}
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+        li(v-for="caveat in simulation.finding.caveats", :key="caveat") {{ caveat }}
 </template>
 
 <style scoped>

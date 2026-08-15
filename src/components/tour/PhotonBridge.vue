@@ -220,129 +220,126 @@ watch(frequencyHz, () => {
 })
 </script>
 
-<template>
-  <section class="dimension-builder photon-bridge" data-testid="photon-bridge" :aria-labelledby="`${simulation.id}-title`">
-    <header class="dimension-builder-heading">
-      <p class="dimension-builder-kicker">Photon identity bridge</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" class="dimension-builder-error" role="alert" data-testid="photon-bridge-error">
-      This activity cannot run because its generated contract and photon engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section class="dimension-builder-presets" aria-labelledby="photon-presets-title">
-        <h3 id="photon-presets-title">Illustrative sources</h3>
-        <ul class="dimension-builder-preset-list">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="dimension-builder-preset tour-touch-target" type="button" :data-testid="`photon-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" class="photon-bridge-inspection" data-testid="photon-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section class="dimension-builder-controls" aria-labelledby="photon-controls-title">
-        <h3 id="photon-controls-title">Set one frequency</h3>
-        <div v-if="frequencyControl" class="dimension-builder-control photon-bridge-frequency-control" data-testid="photon-control-frequency">
-          <label for="photon-frequency">{{ frequencyControl.label }}</label>
-          <output for="photon-frequency">{{ frequencyHz.toExponential(6) }} Hz</output>
-          <input id="photon-frequency" v-model.number="frequencyHz" data-testid="photon-frequency" :type="frequencyControl.type" :min="frequencyControl.min" :max="frequencyControl.max" :step="frequencyControl.step">
-          <p>{{ frequencyControl.description }} <span>{{ frequencyControl.playfulPrompt }}</span></p>
-        </div>
-      </section>
-
-      <fieldset class="dimension-builder-prediction" data-testid="photon-prediction-gate">
-        <legend>Predict before revealing the bridge</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="dimension-builder-prediction-option tour-touch-target">
-          <input v-model="prediction" type="radio" name="photon-bridge-prediction" :value="option.value" :data-testid="`photon-prediction-${option.value}`">
-          <span>{{ option.label }}</span>
-        </label>
-      </fieldset>
-
-      <div class="dimension-builder-actions">
-        <button class="dimension-builder-reveal tour-touch-target" type="button" data-testid="reveal-photon-bridge" :disabled="!prediction" @click="revealResult">Reveal bridge</button>
-        <button class="tour-touch-target" type="button" data-testid="reset-photon-bridge" @click="resetBridge">Reset</button>
-      </div>
-
-      <p v-if="evaluationError" class="dimension-builder-error" role="alert">{{ evaluationError }}</p>
-      <p v-if="predictionStale" class="dimension-builder-caveat" aria-live="polite" data-testid="photon-prediction-stale">
-        The frequency changed. The live identities have updated, but the previous prediction is stale and is not compared with this result.
-      </p>
-
-      <section v-if="revealed && result" class="dimension-builder-stage photon-bridge-stage" data-testid="photon-bridge-result" aria-labelledby="photon-result-title">
-        <header>
-          <p>Stated frequency</p>
-          <h3 id="photon-result-title" data-testid="photon-frequency-result">{{ result.frequencyHz.toExponential(6) }} Hz</h3>
-          <p>{{ result.relationStatus }}</p>
-        </header>
-
-        <svg class="photon-bridge-graphic" viewBox="0 0 100 62" role="img" aria-labelledby="photon-svg-title photon-svg-description" data-testid="photon-bridge-svg">
-          <title id="photon-svg-title">Linked photon scale map</title>
-          <desc id="photon-svg-description">Five logarithmic lanes show algebraically dependent representations linked to one stated frequency: photon energy, vacuum wavelength, equivalent mass, and equivalent temperature. They are equation outputs, not separate measurements, and no correlation is estimated.</desc>
-          <g v-for="(point, index) in series" :key="point.id" class="photon-bridge-lane">
-            <text x="2" :y="9 + index * 12">{{ point.label }}</text>
-            <line x1="39" :y1="7 + index * 12" x2="94" :y2="7 + index * 12" />
-            <circle :cx="bridgeX(point.id, point.log10Value)" :cy="7 + index * 12" r="2.2"><title>{{ point.accessibleLabel }}; log10 value {{ point.log10Value.toFixed(6) }}</title></circle>
-            <text x="39" :y="11 + index * 12">10^{{ LOG_BOUNDS[point.id][0] }}</text>
-            <text x="94" :y="11 + index * 12" text-anchor="end">10^{{ LOG_BOUNDS[point.id][1] }} {{ point.unit }}</text>
-          </g>
-        </svg>
-
-        <p class="dimension-builder-comparison" data-testid="photon-prediction-comparison">{{ predictionComparison }}</p>
-        <p class="dimension-builder-caveat" data-testid="photon-equivalence-caveat">
-          These are algebraically dependent linked representations of one stated frequency, not separate measurements; no correlation is estimated. Equivalent mass is not photon rest mass. Equivalent temperature is not a thermodynamic state. The wavelength is in vacuum, and no source-frequency uncertainty is propagated.
-        </p>
-
-        <div class="dimension-builder-table-wrap">
-          <table data-testid="photon-bridge-table">
-            <caption>Accessible numerical alternative to the five logarithmic lanes</caption>
-            <thead><tr><th scope="col">Representation</th><th scope="col">Value</th><th scope="col">Equation</th><th scope="col">Interpretation</th></tr></thead>
-            <tbody>
-              <tr v-for="row in tableRows" :key="row.id">
-                <th scope="row">{{ row.label }}</th><td>{{ row.value.toExponential(6) }} {{ row.unit }}</td><td><code>{{ row.equation }}</code></td><td>{{ row.interpretation }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <section class="dimension-builder-finding photon-bridge-finding" aria-labelledby="photon-finding-title" data-testid="photon-bridge-finding">
-          <h3 id="photon-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="photon-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Validates theory</dt><dd>{{ result.finding.validatesTheory ? 'Yes' : 'No' }}</dd>
-            <dt>Source revision</dt><dd>{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p>{{ result.finding.doesNotEstablish }}</p>
-          <h4>Definition notes</h4><ul><li v-for="note in result.definitionNotes" :key="note">{{ note }}</li></ul>
-          <h4>Uncertainty notes</h4><ul><li v-for="note in result.uncertaintyNotes" :key="note">{{ note }}</li></ul>
-          <h4>Caveats</h4><ul><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="photon-evidence-refs"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="photon-validation-boundary">No empirical comparison, residual test, source measurement validation, or theory validation is claimed by this identity conversion.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" class="dimension-builder-disclosure" data-testid="photon-technical-disclosure">
-        <h3>Technical assumptions and method</h3>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <p>{{ simulation.numericalMethod?.description }}</p>
-        <p>{{ simulation.visualization.reducedMotionBehavior }}</p>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(class="dimension-builder photon-bridge", data-testid="photon-bridge", :aria-labelledby="`${simulation.id}-title`")
+  header(class="dimension-builder-heading")
+    p(class="dimension-builder-kicker") Photon identity bridge
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", class="dimension-builder-error", role="alert", data-testid="photon-bridge-error")  This activity cannot run because its generated contract and photon engine do not agree. {{ contractError }}
+  template(v-else)
+    section(class="dimension-builder-presets", aria-labelledby="photon-presets-title")
+      h3(id="photon-presets-title") Illustrative sources
+      ul(class="dimension-builder-preset-list")
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="dimension-builder-preset tour-touch-target", type="button", :data-testid="`photon-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", class="photon-bridge-inspection", data-testid="photon-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(class="dimension-builder-controls", aria-labelledby="photon-controls-title")
+      h3(id="photon-controls-title") Set one frequency
+      div(v-if="frequencyControl", class="dimension-builder-control photon-bridge-frequency-control", data-testid="photon-control-frequency")
+        label(for="photon-frequency") {{ frequencyControl.label }}
+        output(for="photon-frequency") {{ frequencyHz.toExponential(6) }} Hz
+        input(id="photon-frequency", v-model.number="frequencyHz", data-testid="photon-frequency", :type="frequencyControl.type", :min="frequencyControl.min", :max="frequencyControl.max", :step="frequencyControl.step")
+        p
+          | {{ frequencyControl.description }} 
+          span {{ frequencyControl.playfulPrompt }}
+    fieldset(class="dimension-builder-prediction", data-testid="photon-prediction-gate")
+      legend Predict before revealing the bridge
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="dimension-builder-prediction-option tour-touch-target")
+        input(v-model="prediction", type="radio", name="photon-bridge-prediction", :value="option.value", :data-testid="`photon-prediction-${option.value}`")
+        span {{ option.label }}
+    div(class="dimension-builder-actions")
+      button(class="dimension-builder-reveal tour-touch-target", type="button", data-testid="reveal-photon-bridge", :disabled="!prediction", @click="revealResult") Reveal bridge
+      button(class="tour-touch-target", type="button", data-testid="reset-photon-bridge", @click="resetBridge") Reset
+    p(v-if="evaluationError", class="dimension-builder-error", role="alert") {{ evaluationError }}
+    p(v-if="predictionStale", class="dimension-builder-caveat", aria-live="polite", data-testid="photon-prediction-stale")  The frequency changed. The live identities have updated, but the previous prediction is stale and is not compared with this result. 
+    section(v-if="revealed && result", class="dimension-builder-stage photon-bridge-stage", data-testid="photon-bridge-result", aria-labelledby="photon-result-title")
+      header
+        p Stated frequency
+        h3(id="photon-result-title", data-testid="photon-frequency-result") {{ result.frequencyHz.toExponential(6) }} Hz
+        p {{ result.relationStatus }}
+      svg(class="photon-bridge-graphic", viewBox="0 0 100 62", role="img", aria-labelledby="photon-svg-title photon-svg-description", data-testid="photon-bridge-svg")
+        title(id="photon-svg-title") Linked photon scale map
+        desc(id="photon-svg-description") Five logarithmic lanes show algebraically dependent representations linked to one stated frequency: photon energy, vacuum wavelength, equivalent mass, and equivalent temperature. They are equation outputs, not separate measurements, and no correlation is estimated.
+        g(v-for="(point, index) in series", :key="point.id", class="photon-bridge-lane")
+          text(x="2", :y="9 + index * 12") {{ point.label }}
+          line(x1="39", :y1="7 + index * 12", x2="94", :y2="7 + index * 12")
+          circle(:cx="bridgeX(point.id, point.log10Value)", :cy="7 + index * 12", r="2.2")
+            title {{ point.accessibleLabel }}; log10 value {{ point.log10Value.toFixed(6) }}
+          text(x="39", :y="11 + index * 12") 10^{{ LOG_BOUNDS[point.id][0] }}
+          text(x="94", :y="11 + index * 12", text-anchor="end") 10^{{ LOG_BOUNDS[point.id][1] }} {{ point.unit }}
+      p(class="dimension-builder-comparison", data-testid="photon-prediction-comparison") {{ predictionComparison }}
+      p(class="dimension-builder-caveat", data-testid="photon-equivalence-caveat")  These are algebraically dependent linked representations of one stated frequency, not separate measurements; no correlation is estimated. Equivalent mass is not photon rest mass. Equivalent temperature is not a thermodynamic state. The wavelength is in vacuum, and no source-frequency uncertainty is propagated. 
+      div(class="dimension-builder-table-wrap")
+        table(data-testid="photon-bridge-table")
+          caption Accessible numerical alternative to the five logarithmic lanes
+          thead
+            tr
+              th(scope="col") Representation
+              th(scope="col") Value
+              th(scope="col") Equation
+              th(scope="col") Interpretation
+          tbody
+            tr(v-for="row in tableRows", :key="row.id")
+              th(scope="row") {{ row.label }}
+              td {{ row.value.toExponential(6) }} {{ row.unit }}
+              td
+                code {{ row.equation }}
+              td {{ row.interpretation }}
+      section(class="dimension-builder-finding photon-bridge-finding", aria-labelledby="photon-finding-title", data-testid="photon-bridge-finding")
+        h3(id="photon-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="photon-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Validates theory
+          dd {{ result.finding.validatesTheory ? 'Yes' : 'No' }}
+          dt Source revision
+          dd {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p {{ result.finding.doesNotEstablish }}
+        h4 Definition notes
+        ul
+          li(v-for="note in result.definitionNotes", :key="note") {{ note }}
+        h4 Uncertainty notes
+        ul
+          li(v-for="note in result.uncertaintyNotes", :key="note") {{ note }}
+        h4 Caveats
+        ul
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="photon-evidence-refs")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="photon-validation-boundary") No empirical comparison, residual test, source measurement validation, or theory validation is claimed by this identity conversion.
+    section(v-if="depth === 'technical'", class="dimension-builder-disclosure", data-testid="photon-technical-disclosure")
+      h3 Technical assumptions and method
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      p {{ simulation.numericalMethod?.description }}
+      p {{ simulation.visualization.reducedMotionBehavior }}
 </template>
 
 <style scoped>

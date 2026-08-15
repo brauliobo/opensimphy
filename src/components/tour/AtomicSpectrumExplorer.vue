@@ -315,160 +315,183 @@ watch([atomicNumber, nUpper, nLower, nucleusModel], () => {
 })
 </script>
 
-<template>
-  <section data-testid="atomic-spectrum-explorer" :aria-labelledby="`${simulation.id}-title`">
-    <header>
-      <p>Atomic spectrum instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" role="alert" data-testid="atomic-contract-error">
-      This activity cannot run because its generated contract and atomic-spectrum engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section aria-labelledby="atomic-presets-title">
-        <h3 id="atomic-presets-title">Try a generated setup</h3>
-        <ul>
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="atomic-hit-target" type="button" :data-testid="`atomic-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" data-testid="atomic-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section aria-labelledby="atomic-controls-title">
-        <h3 id="atomic-controls-title">Set the model transition</h3>
-        <div v-if="depth === 'technical' && atomicNumberControl" data-testid="atomic-control-atomicNumber">
-          <label for="atomic-number">{{ atomicNumberControl.label }}</label>
-          <input id="atomic-number" v-model.number="atomicNumber" class="atomic-hit-target" data-testid="atomic-number" :type="atomicNumberControl.type" :min="atomicNumberControl.min" :max="atomicNumberControl.max" :step="atomicNumberControl.step" aria-describedby="atomic-number-description">
-          <output for="atomic-number">{{ atomicNumber }}</output>
-          <p id="atomic-number-description">{{ atomicNumberControl.description }} {{ atomicNumberControl.playfulPrompt }}</p>
-        </div>
-        <p v-if="depth === 'guided'" data-testid="atomic-guided-z-disclosure">
-          Atomic number Z remains fixed at {{ atomicNumber }} in Guided depth. Technical depth exposes this bounded hydrogen-like-ion parameter.
-        </p>
-        <div v-if="upperControl" data-testid="atomic-control-nUpper">
-          <label for="atomic-upper">{{ upperControl.label }}</label>
-          <input id="atomic-upper" v-model.number="nUpper" class="atomic-hit-target" data-testid="atomic-upper" :type="upperControl.type" :min="Math.max(upperControl.min, nLower + 1)" :max="upperControl.max" :step="upperControl.step" aria-describedby="atomic-upper-description">
-          <output for="atomic-upper">{{ nUpper }}</output>
-          <p id="atomic-upper-description">{{ upperControl.description }} {{ upperControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="lowerControl" data-testid="atomic-control-nLower">
-          <label for="atomic-lower">{{ lowerControl.label }}</label>
-          <input id="atomic-lower" v-model.number="nLower" class="atomic-hit-target" data-testid="atomic-lower" :type="lowerControl.type" :min="lowerControl.min" :max="Math.min(lowerControl.max, nUpper - 1)" :step="lowerControl.step" aria-describedby="atomic-lower-description">
-          <output for="atomic-lower">{{ nLower }}</output>
-          <p id="atomic-lower-description">{{ lowerControl.description }} {{ lowerControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="nucleusControl" data-testid="atomic-control-nucleusModel">
-          <label for="atomic-nucleus">{{ nucleusControl.label }}</label>
-          <select id="atomic-nucleus" v-model="nucleusModel" class="atomic-hit-target" data-testid="atomic-nucleus" aria-describedby="atomic-nucleus-description">
-            <option v-for="option in nucleusControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p id="atomic-nucleus-description">{{ nucleusControl.description }} {{ nucleusControl.options.find(({ value }) => value === nucleusModel)?.description }} {{ nucleusControl.playfulPrompt }}</p>
-        </div>
-      </section>
-
-      <fieldset data-testid="atomic-prediction-gate">
-        <legend>Make a prediction before revealing the spectrum</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="atomic-prediction-target">
-          <input v-model="prediction" type="radio" name="atomic-prediction" :value="option.value" :data-testid="`atomic-prediction-${option.value}`">
-          {{ option.label }}
-        </label>
-      </fieldset>
-      <button class="atomic-hit-target" type="button" data-testid="reveal-atomic-result" :disabled="!prediction" @click="revealResult">Reveal result</button>
-      <button class="atomic-hit-target" type="button" data-testid="reset-atomic-explorer" @click="resetExplorer">Reset</button>
-
-      <p v-if="evaluationError" role="alert" data-testid="atomic-evaluation-error">The atomic-spectrum engine could not produce a result. {{ evaluationError }}</p>
-      <p v-if="predictionStale" aria-live="polite" data-testid="atomic-prediction-stale">The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.</p>
-
-      <section v-if="revealed && result" data-testid="atomic-result" aria-labelledby="atomic-result-title">
-        <h3 id="atomic-result-title">Energy levels and selected transition</h3>
-        <svg class="atomic-level-stage" viewBox="0 0 640 250" role="img" aria-labelledby="atomic-svg-title atomic-svg-description" data-testid="atomic-svg">
-          <title id="atomic-svg-title">Hydrogen-like energy levels and transition</title>
-          <desc id="atomic-svg-description">Atomic number {{ result.atomicNumber }}, downward transition from n={{ result.nUpper }} to n={{ result.nLower }}, {{ result.vacuumWavelengthNm }} nanometres in vacuum.</desc>
-          <g v-for="level in levelNumbers" :key="level">
-            <line class="atomic-level" x1="52" x2="286" :y1="levelY(level)" :y2="levelY(level)" />
-            <text x="18" :y="levelY(level) + 4">n={{ level }}</text>
-          </g>
-          <line class="atomic-transition" :x1="transitionX" :x2="transitionX" :y1="levelY(result.nUpper)" :y2="levelY(result.nLower)" marker-end="url(#atomic-arrow)" />
-          <defs><marker id="atomic-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" /></marker></defs>
-          <line class="atomic-spectrum-axis" x1="350" x2="606" y1="174" y2="174" />
-          <line class="atomic-spectrum-marker" x1="478" x2="478" y1="142" y2="192" />
-          <text x="350" y="214">{{ formatNumber(result.vacuumWavelengthNm, 6) }} nm, {{ result.spectralRegion }}</text>
-          <text x="350" y="235">{{ result.label }}</text>
-        </svg>
-        <p data-testid="atomic-text-alternative">
-          Z={{ result.atomicNumber }}, n={{ result.nUpper }} to n={{ result.nLower }}, {{ result.nucleusModel }} nuclear-mass model: {{ result.label }}, {{ formatNumber(result.energyEv) }} eV, {{ formatNumber(result.frequencyHz) }} Hz, {{ formatNumber(result.vacuumWavelengthNm) }} nm in vacuum, {{ result.spectralRegion }} region.
-        </p>
-        <dl>
-          <dt>{{ outputLabel('reducedMassFactor') }}</dt><dd data-testid="atomic-reduced-mass">{{ formatNumber(result.reducedMassFactor, 10) }}</dd>
-          <dt>{{ outputLabel('energyEv') }}</dt><dd data-testid="atomic-energy-ev">{{ formatNumber(result.energyEv) }} eV</dd>
-          <dt>{{ outputLabel('frequencyHz') }}</dt><dd data-testid="atomic-frequency">{{ formatNumber(result.frequencyHz) }} Hz</dd>
-          <dt>{{ outputLabel('vacuumWavelengthNm') }}</dt><dd data-testid="atomic-wavelength">{{ formatNumber(result.vacuumWavelengthNm) }} nm</dd>
-          <dt>{{ outputLabel('series') }}</dt><dd>{{ result.series ?? 'No named Lyman, Balmer, or Paschen series' }}</dd>
-          <dt>{{ outputLabel('spectralRegion') }}</dt><dd>{{ result.spectralRegion }}</dd>
-        </dl>
-        <p data-testid="atomic-prediction-comparison">{{ predictionComparison }}</p>
-
-        <table v-if="massComparison" data-testid="atomic-mass-comparison-table">
-          <caption>Compatible finite-proton and infinite-nuclear-mass evaluations for the same Z and principal-level transition</caption>
-          <thead><tr><th scope="col">Nuclear-mass model</th><th scope="col">Reduced-mass factor</th><th scope="col">Energy (eV)</th><th scope="col">Cyclic frequency (Hz)</th><th scope="col">Vacuum wavelength (nm)</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Finite proton mass</th><td>{{ formatNumber(massComparison.proton.reducedMassFactor, 10) }}</td><td>{{ formatNumber(massComparison.proton.energyEv) }}</td><td>{{ formatNumber(massComparison.proton.frequencyHz) }}</td><td data-testid="atomic-proton-comparison-wavelength">{{ formatNumber(massComparison.proton.vacuumWavelengthNm) }}</td></tr>
-            <tr><th scope="row">Infinite nuclear mass</th><td>{{ formatNumber(massComparison.infinite.reducedMassFactor, 10) }}</td><td>{{ formatNumber(massComparison.infinite.energyEv) }}</td><td>{{ formatNumber(massComparison.infinite.frequencyHz) }}</td><td data-testid="atomic-infinite-comparison-wavelength">{{ formatNumber(massComparison.infinite.vacuumWavelengthNm) }}</td></tr>
-          </tbody>
-        </table>
-
-        <table data-testid="atomic-series-table">
-          <caption>Bounded same-lower-level hydrogen-like series; listed energy differences are not transition-strength or observation claims</caption>
-          <thead><tr><th scope="col">Transition</th><th scope="col">Series</th><th scope="col">Energy (eV)</th><th scope="col">Cyclic frequency (Hz)</th><th scope="col">Vacuum wavelength (nm)</th><th scope="col">Region</th><th scope="col">Visible</th></tr></thead>
-          <tbody>
-            <tr v-for="row in seriesRows" :key="row.transition">
-              <th scope="row">{{ row.transition }}</th><td>{{ row.series }}</td><td>{{ formatNumber(row.energyEv) }}</td><td>{{ formatNumber(row.frequencyHz) }}</td><td>{{ formatNumber(row.vacuumWavelengthNm) }}</td><td>{{ row.spectralRegion }}</td><td>{{ row.visible ? 'yes' : 'no' }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <section data-testid="atomic-finding-panel" aria-labelledby="atomic-finding-title">
-          <h3 id="atomic-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="atomic-finding-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Source revision</dt><dd data-testid="atomic-source-revision">{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <dl v-if="massComparison" data-testid="atomic-comparison-finding">
-            <dt>Finite-proton wavelength</dt><dd>{{ formatNumber(massComparison.proton.vacuumWavelengthNm) }} nm</dd>
-            <dt>Infinite-mass wavelength</dt><dd>{{ formatNumber(massComparison.infinite.vacuumWavelengthNm) }} nm</dd>
-            <dt>Computed comparison</dt><dd>Finite-proton wavelength is {{ massComparison.outcome }}.</dd>
-          </dl>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p data-testid="atomic-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          <h4>Scientific caveats</h4><ul data-testid="atomic-caveats"><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="atomic-evidence"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="atomic-validation-boundary">No empirical spectrum comparison or theory validation is claimed; <code>validatesTheory</code> is {{ result.finding.validatesTheory }}.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" data-testid="atomic-technical-disclosure">
-        <h3>Technical model boundary</h3>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <h4>Generated model components</h4>
-        <dl v-for="component in simulation.modelComponents" :key="component.id"><dt>{{ component.label }}</dt><dd>{{ component.description }} Source: {{ component.attribution.sourceLocator }}</dd></dl>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(data-testid="atomic-spectrum-explorer", :aria-labelledby="`${simulation.id}-title`")
+  header
+    p Atomic spectrum instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", role="alert", data-testid="atomic-contract-error")  This activity cannot run because its generated contract and atomic-spectrum engine do not agree. {{ contractError }}
+  template(v-else)
+    section(aria-labelledby="atomic-presets-title")
+      h3(id="atomic-presets-title") Try a generated setup
+      ul
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="atomic-hit-target", type="button", :data-testid="`atomic-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", data-testid="atomic-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(aria-labelledby="atomic-controls-title")
+      h3(id="atomic-controls-title") Set the model transition
+      div(v-if="depth === 'technical' && atomicNumberControl", data-testid="atomic-control-atomicNumber")
+        label(for="atomic-number") {{ atomicNumberControl.label }}
+        input(id="atomic-number", v-model.number="atomicNumber", class="atomic-hit-target", data-testid="atomic-number", :type="atomicNumberControl.type", :min="atomicNumberControl.min", :max="atomicNumberControl.max", :step="atomicNumberControl.step", aria-describedby="atomic-number-description")
+        output(for="atomic-number") {{ atomicNumber }}
+        p(id="atomic-number-description") {{ atomicNumberControl.description }} {{ atomicNumberControl.playfulPrompt }}
+      p(v-if="depth === 'guided'", data-testid="atomic-guided-z-disclosure")  Atomic number Z remains fixed at {{ atomicNumber }} in Guided depth. Technical depth exposes this bounded hydrogen-like-ion parameter. 
+      div(v-if="upperControl", data-testid="atomic-control-nUpper")
+        label(for="atomic-upper") {{ upperControl.label }}
+        input(id="atomic-upper", v-model.number="nUpper", class="atomic-hit-target", data-testid="atomic-upper", :type="upperControl.type", :min="Math.max(upperControl.min, nLower + 1)", :max="upperControl.max", :step="upperControl.step", aria-describedby="atomic-upper-description")
+        output(for="atomic-upper") {{ nUpper }}
+        p(id="atomic-upper-description") {{ upperControl.description }} {{ upperControl.playfulPrompt }}
+      div(v-if="lowerControl", data-testid="atomic-control-nLower")
+        label(for="atomic-lower") {{ lowerControl.label }}
+        input(id="atomic-lower", v-model.number="nLower", class="atomic-hit-target", data-testid="atomic-lower", :type="lowerControl.type", :min="lowerControl.min", :max="Math.min(lowerControl.max, nUpper - 1)", :step="lowerControl.step", aria-describedby="atomic-lower-description")
+        output(for="atomic-lower") {{ nLower }}
+        p(id="atomic-lower-description") {{ lowerControl.description }} {{ lowerControl.playfulPrompt }}
+      div(v-if="nucleusControl", data-testid="atomic-control-nucleusModel")
+        label(for="atomic-nucleus") {{ nucleusControl.label }}
+        select(id="atomic-nucleus", v-model="nucleusModel", class="atomic-hit-target", data-testid="atomic-nucleus", aria-describedby="atomic-nucleus-description")
+          option(v-for="option in nucleusControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p(id="atomic-nucleus-description") {{ nucleusControl.description }} {{ nucleusControl.options.find(({ value }) => value === nucleusModel)?.description }} {{ nucleusControl.playfulPrompt }}
+    fieldset(data-testid="atomic-prediction-gate")
+      legend Make a prediction before revealing the spectrum
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="atomic-prediction-target")
+        input(v-model="prediction", type="radio", name="atomic-prediction", :value="option.value", :data-testid="`atomic-prediction-${option.value}`")
+        |  {{ option.label }}
+    button(class="atomic-hit-target", type="button", data-testid="reveal-atomic-result", :disabled="!prediction", @click="revealResult") Reveal result
+    button(class="atomic-hit-target", type="button", data-testid="reset-atomic-explorer", @click="resetExplorer") Reset
+    p(v-if="evaluationError", role="alert", data-testid="atomic-evaluation-error") The atomic-spectrum engine could not produce a result. {{ evaluationError }}
+    p(v-if="predictionStale", aria-live="polite", data-testid="atomic-prediction-stale") The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.
+    section(v-if="revealed && result", data-testid="atomic-result", aria-labelledby="atomic-result-title")
+      h3(id="atomic-result-title") Energy levels and selected transition
+      svg(class="atomic-level-stage", viewBox="0 0 640 250", role="img", aria-labelledby="atomic-svg-title atomic-svg-description", data-testid="atomic-svg")
+        title(id="atomic-svg-title") Hydrogen-like energy levels and transition
+        desc(id="atomic-svg-description") Atomic number {{ result.atomicNumber }}, downward transition from n={{ result.nUpper }} to n={{ result.nLower }}, {{ result.vacuumWavelengthNm }} nanometres in vacuum.
+        g(v-for="level in levelNumbers", :key="level")
+          line(class="atomic-level", x1="52", x2="286", :y1="levelY(level)", :y2="levelY(level)")
+          text(x="18", :y="levelY(level) + 4") n={{ level }}
+        line(class="atomic-transition", :x1="transitionX", :x2="transitionX", :y1="levelY(result.nUpper)", :y2="levelY(result.nLower)", marker-end="url(#atomic-arrow)")
+        defs
+          marker(id="atomic-arrow", markerWidth="8", markerHeight="8", refX="4", refY="4", orient="auto")
+            path(d="M0,0 L8,4 L0,8 z")
+        line(class="atomic-spectrum-axis", x1="350", x2="606", y1="174", y2="174")
+        line(class="atomic-spectrum-marker", x1="478", x2="478", y1="142", y2="192")
+        text(x="350", y="214") {{ formatNumber(result.vacuumWavelengthNm, 6) }} nm, {{ result.spectralRegion }}
+        text(x="350", y="235") {{ result.label }}
+      p(data-testid="atomic-text-alternative")  Z={{ result.atomicNumber }}, n={{ result.nUpper }} to n={{ result.nLower }}, {{ result.nucleusModel }} nuclear-mass model: {{ result.label }}, {{ formatNumber(result.energyEv) }} eV, {{ formatNumber(result.frequencyHz) }} Hz, {{ formatNumber(result.vacuumWavelengthNm) }} nm in vacuum, {{ result.spectralRegion }} region. 
+      dl
+        dt {{ outputLabel('reducedMassFactor') }}
+        dd(data-testid="atomic-reduced-mass") {{ formatNumber(result.reducedMassFactor, 10) }}
+        dt {{ outputLabel('energyEv') }}
+        dd(data-testid="atomic-energy-ev") {{ formatNumber(result.energyEv) }} eV
+        dt {{ outputLabel('frequencyHz') }}
+        dd(data-testid="atomic-frequency") {{ formatNumber(result.frequencyHz) }} Hz
+        dt {{ outputLabel('vacuumWavelengthNm') }}
+        dd(data-testid="atomic-wavelength") {{ formatNumber(result.vacuumWavelengthNm) }} nm
+        dt {{ outputLabel('series') }}
+        dd {{ result.series ?? 'No named Lyman, Balmer, or Paschen series' }}
+        dt {{ outputLabel('spectralRegion') }}
+        dd {{ result.spectralRegion }}
+      p(data-testid="atomic-prediction-comparison") {{ predictionComparison }}
+      table(v-if="massComparison", data-testid="atomic-mass-comparison-table")
+        caption Compatible finite-proton and infinite-nuclear-mass evaluations for the same Z and principal-level transition
+        thead
+          tr
+            th(scope="col") Nuclear-mass model
+            th(scope="col") Reduced-mass factor
+            th(scope="col") Energy (eV)
+            th(scope="col") Cyclic frequency (Hz)
+            th(scope="col") Vacuum wavelength (nm)
+        tbody
+          tr
+            th(scope="row") Finite proton mass
+            td {{ formatNumber(massComparison.proton.reducedMassFactor, 10) }}
+            td {{ formatNumber(massComparison.proton.energyEv) }}
+            td {{ formatNumber(massComparison.proton.frequencyHz) }}
+            td(data-testid="atomic-proton-comparison-wavelength") {{ formatNumber(massComparison.proton.vacuumWavelengthNm) }}
+          tr
+            th(scope="row") Infinite nuclear mass
+            td {{ formatNumber(massComparison.infinite.reducedMassFactor, 10) }}
+            td {{ formatNumber(massComparison.infinite.energyEv) }}
+            td {{ formatNumber(massComparison.infinite.frequencyHz) }}
+            td(data-testid="atomic-infinite-comparison-wavelength") {{ formatNumber(massComparison.infinite.vacuumWavelengthNm) }}
+      table(data-testid="atomic-series-table")
+        caption Bounded same-lower-level hydrogen-like series; listed energy differences are not transition-strength or observation claims
+        thead
+          tr
+            th(scope="col") Transition
+            th(scope="col") Series
+            th(scope="col") Energy (eV)
+            th(scope="col") Cyclic frequency (Hz)
+            th(scope="col") Vacuum wavelength (nm)
+            th(scope="col") Region
+            th(scope="col") Visible
+        tbody
+          tr(v-for="row in seriesRows", :key="row.transition")
+            th(scope="row") {{ row.transition }}
+            td {{ row.series }}
+            td {{ formatNumber(row.energyEv) }}
+            td {{ formatNumber(row.frequencyHz) }}
+            td {{ formatNumber(row.vacuumWavelengthNm) }}
+            td {{ row.spectralRegion }}
+            td {{ row.visible ? 'yes' : 'no' }}
+      section(data-testid="atomic-finding-panel", aria-labelledby="atomic-finding-title")
+        h3(id="atomic-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="atomic-finding-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Source revision
+          dd(data-testid="atomic-source-revision") {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        dl(v-if="massComparison", data-testid="atomic-comparison-finding")
+          dt Finite-proton wavelength
+          dd {{ formatNumber(massComparison.proton.vacuumWavelengthNm) }} nm
+          dt Infinite-mass wavelength
+          dd {{ formatNumber(massComparison.infinite.vacuumWavelengthNm) }} nm
+          dt Computed comparison
+          dd Finite-proton wavelength is {{ massComparison.outcome }}.
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p(data-testid="atomic-does-not-establish") {{ result.finding.doesNotEstablish }}
+        h4 Scientific caveats
+        ul(data-testid="atomic-caveats")
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="atomic-evidence")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="atomic-validation-boundary")
+          | No empirical spectrum comparison or theory validation is claimed; 
+          code validatesTheory
+          |  is {{ result.finding.validatesTheory }}.
+    section(v-if="depth === 'technical'", data-testid="atomic-technical-disclosure")
+      h3 Technical model boundary
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      h4 Generated model components
+      dl(v-for="component in simulation.modelComponents", :key="component.id")
+        dt {{ component.label }}
+        dd {{ component.description }} Source: {{ component.attribution.sourceLocator }}
 </template>
 
 <style scoped>

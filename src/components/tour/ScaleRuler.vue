@@ -274,147 +274,151 @@ watch([quantityFamily, presetId], () => {
 })
 </script>
 
-<template>
-  <section class="dimension-builder scale-ruler" data-testid="scale-ruler" :aria-labelledby="`${simulation.id}-title`">
-    <header class="dimension-builder-heading scale-ruler-heading">
-      <p class="dimension-builder-kicker">Logarithmic scale instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" class="dimension-builder-error" role="alert" data-testid="scale-ruler-error">
-      This activity cannot run because its generated contract and scale-ruler engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section class="dimension-builder-presets" aria-labelledby="scale-ruler-presets-title">
-        <h3 id="scale-ruler-presets-title">Try a scale</h3>
-        <ul class="dimension-builder-preset-list">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="dimension-builder-preset tour-touch-target" type="button" :data-testid="`scale-preset-${preset.id}`" @click="applyPreset(preset)">
-              {{ preset.label }}
-            </button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" class="scale-ruler-inspection" data-testid="scale-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section class="dimension-builder-controls" aria-labelledby="scale-ruler-controls-title">
-        <h3 id="scale-ruler-controls-title">Choose the ruler</h3>
-        <div v-if="familyControl" class="dimension-builder-control" data-testid="scale-control-family">
-          <label for="scale-ruler-family">{{ familyControl.label }}</label>
-          <select id="scale-ruler-family" v-model="quantityFamily" data-testid="scale-family">
-            <option v-for="option in familyControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p>{{ familyControl.description }} <span>{{ familyControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="presetControl" class="dimension-builder-control" data-testid="scale-control-preset">
-          <label for="scale-ruler-preset">{{ presetControl.label }}</label>
-          <select id="scale-ruler-preset" v-model="presetId" data-testid="scale-selection">
-            <option v-for="option in familyOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p>{{ presetControl.description }} <span>{{ presetControl.playfulPrompt }}</span></p>
-        </div>
-      </section>
-
-      <fieldset class="dimension-builder-prediction" data-testid="scale-prediction-gate">
-        <legend>Predict before revealing the ruler</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="dimension-builder-prediction-option tour-touch-target">
-          <input v-model="prediction" type="radio" name="scale-ruler-prediction" :value="option.value" :data-testid="`scale-prediction-${option.value}`">
-          <span>{{ option.label }}</span>
-        </label>
-      </fieldset>
-
-      <div class="dimension-builder-actions">
-        <button class="dimension-builder-reveal tour-touch-target" type="button" data-testid="reveal-scale-ruler" :disabled="!prediction" @click="revealResult">Reveal ruler</button>
-        <button class="tour-touch-target" type="button" data-testid="reset-scale-ruler" @click="resetRuler">Reset</button>
-      </div>
-
-      <p v-if="evaluationError" class="dimension-builder-error" role="alert">{{ evaluationError }}</p>
-      <p v-if="predictionStale" class="dimension-builder-caveat" aria-live="polite" data-testid="scale-prediction-stale">
-        The scale changed. The live ruler has updated, but the previous prediction is stale and is not compared with this result.
-      </p>
-
-      <section v-if="revealed && result" class="dimension-builder-stage scale-ruler-stage" data-testid="scale-ruler-result" aria-labelledby="scale-ruler-result-title">
-        <header>
-          <p>Selected scale</p>
-          <h3 id="scale-ruler-result-title">{{ result.selected.label }}</h3>
-          <p data-testid="scale-selected-value">{{ result.selectedSiDisplay }} at {{ result.selectedLog10.toFixed(6) }} on {{ result.axis.label }}</p>
-        </header>
-
-        <svg class="scale-ruler-graphic" viewBox="0 0 100 34" role="img" aria-labelledby="scale-ruler-svg-title scale-ruler-svg-description" data-testid="scale-ruler-svg">
-          <title id="scale-ruler-svg-title">{{ result.quantityFamily }} logarithmic ruler</title>
-          <desc id="scale-ruler-svg-description">Every {{ result.quantityFamily }} catalog marker is placed at its computed base-10 SI logarithm. {{ result.selected.label }} is selected.</desc>
-          <line class="scale-ruler-axis" x1="6" y1="17" x2="94" y2="17" />
-          <g v-for="point in series" :key="point.id" :class="['scale-ruler-marker', `scale-ruler-marker-${result.entries.find(({ id }) => id === point.id)?.status}`, { 'is-selected': point.selected }]">
-            <line :x1="rulerX(point.xLog10Si)" y1="12" :x2="rulerX(point.xLog10Si)" y2="22" />
-            <circle :cx="rulerX(point.xLog10Si)" cy="17" :r="point.selected ? 2.5 : 1.35"><title>{{ point.accessibleLabel }}</title></circle>
-          </g>
-          <text x="6" y="30">10^{{ result.axis.minimumExponent }}</text>
-          <text x="94" y="30" text-anchor="end">10^{{ result.axis.maximumExponent }} {{ result.unit }}</text>
-        </svg>
-
-        <ul class="scale-ruler-legend" aria-label="Scale evidence status legend">
-          <li><span class="scale-ruler-key is-exact-defined"></span>Exact defined reference</li>
-          <li><span class="scale-ruler-key is-exact-derived"></span>Exact derived value</li>
-          <li><span class="scale-ruler-key is-measured"></span>Measured or adjusted</li>
-          <li><span class="scale-ruler-key is-derived-from-measured"></span>Derived from measured value</li>
-          <li><span class="scale-ruler-key is-illustrative"></span>Illustrative scale</li>
-        </ul>
-
-        <p class="dimension-builder-comparison" data-testid="scale-prediction-comparison">{{ predictionComparison }}</p>
-        <p class="dimension-builder-caveat" data-testid="scale-normalization-caveat">
-          The coordinate is normalized to 1 {{ result.unit }}. Changing that reference unit shifts every coordinate; proximity and normalization are not predictions or physical relationships.
-        </p>
-
-        <div class="dimension-builder-table-wrap">
-          <table data-testid="scale-ruler-table">
-            <caption>Accessible {{ result.quantityFamily }} scale catalog corresponding to the logarithmic ruler</caption>
-            <thead><tr><th scope="col">Scale</th><th scope="col">SI value</th><th scope="col">log10</th><th scope="col">Status</th><th scope="col">Source</th><th scope="col">Evidence</th></tr></thead>
-            <tbody>
-              <tr v-for="row in tableRows" :key="row.id" :aria-current="row.selected ? 'true' : undefined">
-                <th scope="row">{{ row.label }}<span v-if="row.selected"> (selected)</span></th>
-                <td>{{ row.siDisplay }}</td><td>{{ row.log10Si.toFixed(6) }}</td><td>{{ row.statusLabel }}</td><td>{{ sourceLabel(row) }}</td>
-                <td><ul class="scale-ruler-row-evidence"><li v-for="evidenceRef in row.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <section class="dimension-builder-finding scale-ruler-finding" aria-labelledby="scale-ruler-finding-title" data-testid="scale-ruler-finding">
-          <h3 id="scale-ruler-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="scale-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Validates theory</dt><dd>{{ result.finding.validatesTheory ? 'Yes' : 'No' }}</dd>
-            <dt>Source revision</dt><dd>{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p>{{ result.finding.doesNotEstablish }}</p>
-          <h4>Caveats</h4><ul><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="scale-evidence-refs"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="scale-validation-boundary">No empirical comparison, inferred residual, or theory validation is claimed by this catalog projection.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" class="dimension-builder-disclosure" data-testid="scale-technical-disclosure">
-        <h3>Technical assumptions and source boundary</h3>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <p>{{ simulation.numericalMethod?.description }}</p>
-        <p>{{ simulation.visualization.reducedMotionBehavior }}</p>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(class="dimension-builder scale-ruler", data-testid="scale-ruler", :aria-labelledby="`${simulation.id}-title`")
+  header(class="dimension-builder-heading scale-ruler-heading")
+    p(class="dimension-builder-kicker") Logarithmic scale instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", class="dimension-builder-error", role="alert", data-testid="scale-ruler-error")  This activity cannot run because its generated contract and scale-ruler engine do not agree. {{ contractError }}
+  template(v-else)
+    section(class="dimension-builder-presets", aria-labelledby="scale-ruler-presets-title")
+      h3(id="scale-ruler-presets-title") Try a scale
+      ul(class="dimension-builder-preset-list")
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="dimension-builder-preset tour-touch-target", type="button", :data-testid="`scale-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", class="scale-ruler-inspection", data-testid="scale-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(class="dimension-builder-controls", aria-labelledby="scale-ruler-controls-title")
+      h3(id="scale-ruler-controls-title") Choose the ruler
+      div(v-if="familyControl", class="dimension-builder-control", data-testid="scale-control-family")
+        label(for="scale-ruler-family") {{ familyControl.label }}
+        select(id="scale-ruler-family", v-model="quantityFamily", data-testid="scale-family")
+          option(v-for="option in familyControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p
+          | {{ familyControl.description }} 
+          span {{ familyControl.playfulPrompt }}
+      div(v-if="presetControl", class="dimension-builder-control", data-testid="scale-control-preset")
+        label(for="scale-ruler-preset") {{ presetControl.label }}
+        select(id="scale-ruler-preset", v-model="presetId", data-testid="scale-selection")
+          option(v-for="option in familyOptions", :key="option.value", :value="option.value") {{ option.label }}
+        p
+          | {{ presetControl.description }} 
+          span {{ presetControl.playfulPrompt }}
+    fieldset(class="dimension-builder-prediction", data-testid="scale-prediction-gate")
+      legend Predict before revealing the ruler
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="dimension-builder-prediction-option tour-touch-target")
+        input(v-model="prediction", type="radio", name="scale-ruler-prediction", :value="option.value", :data-testid="`scale-prediction-${option.value}`")
+        span {{ option.label }}
+    div(class="dimension-builder-actions")
+      button(class="dimension-builder-reveal tour-touch-target", type="button", data-testid="reveal-scale-ruler", :disabled="!prediction", @click="revealResult") Reveal ruler
+      button(class="tour-touch-target", type="button", data-testid="reset-scale-ruler", @click="resetRuler") Reset
+    p(v-if="evaluationError", class="dimension-builder-error", role="alert") {{ evaluationError }}
+    p(v-if="predictionStale", class="dimension-builder-caveat", aria-live="polite", data-testid="scale-prediction-stale")  The scale changed. The live ruler has updated, but the previous prediction is stale and is not compared with this result. 
+    section(v-if="revealed && result", class="dimension-builder-stage scale-ruler-stage", data-testid="scale-ruler-result", aria-labelledby="scale-ruler-result-title")
+      header
+        p Selected scale
+        h3(id="scale-ruler-result-title") {{ result.selected.label }}
+        p(data-testid="scale-selected-value") {{ result.selectedSiDisplay }} at {{ result.selectedLog10.toFixed(6) }} on {{ result.axis.label }}
+      svg(class="scale-ruler-graphic", viewBox="0 0 100 34", role="img", aria-labelledby="scale-ruler-svg-title scale-ruler-svg-description", data-testid="scale-ruler-svg")
+        title(id="scale-ruler-svg-title") {{ result.quantityFamily }} logarithmic ruler
+        desc(id="scale-ruler-svg-description") Every {{ result.quantityFamily }} catalog marker is placed at its computed base-10 SI logarithm. {{ result.selected.label }} is selected.
+        line(class="scale-ruler-axis", x1="6", y1="17", x2="94", y2="17")
+        g(v-for="point in series", :key="point.id", :class="['scale-ruler-marker', `scale-ruler-marker-${result.entries.find(({ id }) => id === point.id)?.status}`, { 'is-selected': point.selected }]")
+          line(:x1="rulerX(point.xLog10Si)", y1="12", :x2="rulerX(point.xLog10Si)", y2="22")
+          circle(:cx="rulerX(point.xLog10Si)", cy="17", :r="point.selected ? 2.5 : 1.35")
+            title {{ point.accessibleLabel }}
+        text(x="6", y="30") 10^{{ result.axis.minimumExponent }}
+        text(x="94", y="30", text-anchor="end") 10^{{ result.axis.maximumExponent }} {{ result.unit }}
+      ul(class="scale-ruler-legend", aria-label="Scale evidence status legend")
+        li
+          span(class="scale-ruler-key is-exact-defined")
+          | Exact defined reference
+        li
+          span(class="scale-ruler-key is-exact-derived")
+          | Exact derived value
+        li
+          span(class="scale-ruler-key is-measured")
+          | Measured or adjusted
+        li
+          span(class="scale-ruler-key is-derived-from-measured")
+          | Derived from measured value
+        li
+          span(class="scale-ruler-key is-illustrative")
+          | Illustrative scale
+      p(class="dimension-builder-comparison", data-testid="scale-prediction-comparison") {{ predictionComparison }}
+      p(class="dimension-builder-caveat", data-testid="scale-normalization-caveat")  The coordinate is normalized to 1 {{ result.unit }}. Changing that reference unit shifts every coordinate; proximity and normalization are not predictions or physical relationships. 
+      div(class="dimension-builder-table-wrap")
+        table(data-testid="scale-ruler-table")
+          caption Accessible {{ result.quantityFamily }} scale catalog corresponding to the logarithmic ruler
+          thead
+            tr
+              th(scope="col") Scale
+              th(scope="col") SI value
+              th(scope="col") log10
+              th(scope="col") Status
+              th(scope="col") Source
+              th(scope="col") Evidence
+          tbody
+            tr(v-for="row in tableRows", :key="row.id", :aria-current="row.selected ? 'true' : undefined")
+              th(scope="row")
+                | {{ row.label }}
+                span(v-if="row.selected")  (selected)
+              td {{ row.siDisplay }}
+              td {{ row.log10Si.toFixed(6) }}
+              td {{ row.statusLabel }}
+              td {{ sourceLabel(row) }}
+              td
+                ul(class="scale-ruler-row-evidence")
+                  li(v-for="evidenceRef in row.evidenceRefs", :key="evidenceRef")
+                    a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+      section(class="dimension-builder-finding scale-ruler-finding", aria-labelledby="scale-ruler-finding-title", data-testid="scale-ruler-finding")
+        h3(id="scale-ruler-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="scale-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Validates theory
+          dd {{ result.finding.validatesTheory ? 'Yes' : 'No' }}
+          dt Source revision
+          dd {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p {{ result.finding.doesNotEstablish }}
+        h4 Caveats
+        ul
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="scale-evidence-refs")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="scale-validation-boundary") No empirical comparison, inferred residual, or theory validation is claimed by this catalog projection.
+    section(v-if="depth === 'technical'", class="dimension-builder-disclosure", data-testid="scale-technical-disclosure")
+      h3 Technical assumptions and source boundary
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      p {{ simulation.numericalMethod?.description }}
+      p {{ simulation.visualization.reducedMotionBehavior }}
 </template>
 
 <style scoped>

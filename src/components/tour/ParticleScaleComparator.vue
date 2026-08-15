@@ -286,130 +286,143 @@ watch([particle, momentumMultiplier], () => {
 })
 </script>
 
-<template>
-  <section data-testid="particle-scale-comparator" :aria-labelledby="`${simulation.id}-title`">
-    <header>
-      <p>Particle scale instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" role="alert" data-testid="particle-contract-error">
-      This activity cannot run because its generated contract and particle-scale engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section aria-labelledby="particle-presets-title">
-        <h3 id="particle-presets-title">Try a generated setup</h3>
-        <ul>
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="particle-hit-target" type="button" :data-testid="`particle-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" data-testid="particle-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section aria-labelledby="particle-controls-title">
-        <h3 id="particle-controls-title">Select a particle and momentum state</h3>
-        <div v-if="particleControl" data-testid="particle-control-particle">
-          <label for="particle-choice">{{ particleControl.label }}</label>
-          <select id="particle-choice" v-model="particle" class="particle-hit-target" data-testid="particle-choice" aria-describedby="particle-choice-description">
-            <option v-for="option in particleControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p id="particle-choice-description">{{ particleControl.description }} {{ particleControl.options.find(({ value }) => value === particle)?.description }} {{ particleControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="momentumControl" data-testid="particle-control-momentumMultiplier">
-          <label for="particle-momentum">{{ momentumControl.label }}</label>
-          <input id="particle-momentum" v-model.number="momentumMultiplier" class="particle-hit-target" data-testid="particle-momentum" :type="momentumControl.type" :min="momentumControl.min" :max="momentumControl.max" :step="momentumControl.step" aria-describedby="particle-momentum-description">
-          <output for="particle-momentum">{{ momentumMultiplier }}</output>
-          <p id="particle-momentum-description">{{ momentumControl.description }} {{ momentumControl.playfulPrompt }}</p>
-        </div>
-      </section>
-
-      <fieldset data-testid="particle-prediction-gate">
-        <legend>Make a prediction before revealing the linked scales</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="particle-prediction-target">
-          <input v-model="prediction" type="radio" name="particle-prediction" :value="option.value" :data-testid="`particle-prediction-${option.value}`">
-          {{ option.label }}
-        </label>
-      </fieldset>
-      <button class="particle-hit-target" type="button" data-testid="reveal-particle-result" :disabled="!prediction" @click="revealResult">Reveal result</button>
-      <button class="particle-hit-target" type="button" data-testid="reset-particle-comparator" @click="resetComparator">Reset</button>
-
-      <p v-if="evaluationError" role="alert" data-testid="particle-evaluation-error">The particle-scale engine could not produce a result. {{ evaluationError }}</p>
-      <p v-if="predictionStale" aria-live="polite" data-testid="particle-prediction-stale">The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.</p>
-
-      <section v-if="revealed && result" data-testid="particle-result" aria-labelledby="particle-result-title">
-        <h3 id="particle-result-title">Linked logarithmic particle scales</h3>
-        <svg class="particle-scale-stage" viewBox="0 0 680 300" role="img" aria-labelledby="particle-svg-title particle-svg-description" data-testid="particle-svg">
-          <title id="particle-svg-title">Linked logarithmic mass, energy, and wavelength axes</title>
-          <desc id="particle-svg-description">{{ result.particleLabel }} catalog mass links the mass, rest-energy, and Compton axes. The separately selected momentum state sets the de Broglie wavelength marker.</desc>
-          <g class="particle-mass-linked">
-            <line x1="154" x2="574" y1="58" y2="58" /><text x="18" y="63">mass (kg, log)</text>
-            <line x1="154" x2="574" y1="112" y2="112" /><text x="18" y="117">rest energy (J, log)</text>
-            <line x1="154" x2="574" y1="166" y2="166" /><text x="18" y="171">Compton λ (m, inverse log)</text>
-            <line class="particle-linked-marker" :x1="linkedMassX" :x2="linkedMassX" y1="40" y2="184" />
-          </g>
-          <g class="particle-state-axis">
-            <line x1="154" x2="574" y1="238" y2="238" /><text x="18" y="243">de Broglie λ (m, log)</text>
-            <circle class="particle-state-marker" :cx="stateWavelengthX" cy="238" r="8" />
-          </g>
-          <text x="154" y="284">catalog / mass-derived marker</text>
-          <text x="410" y="284">momentum-state marker</text>
-        </svg>
-        <p data-testid="particle-text-alternative">
-          {{ result.particleLabel }} ({{ selectedCatalogParticle?.composition }}): invariant mass {{ formatNumber(result.massKg) }} kg links rest energy {{ formatNumber(result.restEnergyJ) }} J and Compton wavelength {{ formatNumber(result.comptonWavelengthM) }} m. The selected p={{ formatNumber(result.momentumMultiplier) }} m c state gives de Broglie wavelength {{ formatNumber(result.deBroglieWavelengthM) }} m.
-        </p>
-        <dl>
-          <dt>{{ outputLabel('massKg') }}</dt><dd data-testid="particle-mass">{{ formatNumber(result.massKg) }} kg</dd>
-          <dt>{{ outputLabel('restEnergyEv') }}</dt><dd data-testid="particle-rest-energy">{{ formatNumber(result.restEnergyEv) }} eV</dd>
-          <dt>{{ outputLabel('comptonWavelengthM') }}</dt><dd data-testid="particle-compton">{{ formatNumber(result.comptonWavelengthM) }} m</dd>
-          <dt>{{ outputLabel('momentumKgMPerS') }}</dt><dd>{{ formatNumber(result.momentumKgMPerS) }} kg m s^-1</dd>
-          <dt>{{ outputLabel('deBroglieWavelengthM') }}</dt><dd data-testid="particle-de-broglie">{{ formatNumber(result.deBroglieWavelengthM) }} m</dd>
-          <dt>{{ outputLabel('relativisticTotalEnergyJ') }}</dt><dd>{{ formatNumber(result.relativisticTotalEnergyJ) }} J</dd>
-        </dl>
-        <p data-testid="particle-prediction-comparison">{{ predictionComparison }}</p>
-
-        <table data-testid="particle-scale-table">
-          <caption>Linked catalog, mass-derived, and momentum-state-derived quantities; rows are dependent representations, not independent observations</caption>
-          <thead><tr><th scope="col">Quantity</th><th scope="col">Symbol</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Dependency</th></tr></thead>
-          <tbody><tr v-for="row in scaleRows" :key="row.quantity"><th scope="row">{{ row.quantity }}</th><td>{{ row.symbol }}</td><td>{{ formatNumber(row.value) }}</td><td>{{ row.unit }}</td><td>{{ row.dependency }}</td></tr></tbody>
-        </table>
-
-        <section data-testid="particle-finding-panel" aria-labelledby="particle-finding-title">
-          <h3 id="particle-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="particle-finding-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Source revision</dt><dd data-testid="particle-source-revision">{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p data-testid="particle-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          <h4>Scientific caveats</h4><ul data-testid="particle-caveats"><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="particle-evidence"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="particle-validation-boundary">No empirical particle-scale comparison or theory validation is claimed; <code>validatesTheory</code> is {{ result.finding.validatesTheory }}.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" data-testid="particle-technical-disclosure">
-        <h3>Technical dependency and model boundary</h3>
-        <p>The ordinary and reduced Compton values, and joule and electron-volt energies, are dependent representations. Proton and neutron entries are composite particles represented only by total catalog invariant mass.</p>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <h4>Generated model components</h4>
-        <dl v-for="component in simulation.modelComponents" :key="component.id"><dt>{{ component.label }}</dt><dd>{{ component.description }} Source: {{ component.attribution.sourceLocator }}</dd></dl>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(data-testid="particle-scale-comparator", :aria-labelledby="`${simulation.id}-title`")
+  header
+    p Particle scale instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", role="alert", data-testid="particle-contract-error")  This activity cannot run because its generated contract and particle-scale engine do not agree. {{ contractError }}
+  template(v-else)
+    section(aria-labelledby="particle-presets-title")
+      h3(id="particle-presets-title") Try a generated setup
+      ul
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="particle-hit-target", type="button", :data-testid="`particle-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", data-testid="particle-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(aria-labelledby="particle-controls-title")
+      h3(id="particle-controls-title") Select a particle and momentum state
+      div(v-if="particleControl", data-testid="particle-control-particle")
+        label(for="particle-choice") {{ particleControl.label }}
+        select(id="particle-choice", v-model="particle", class="particle-hit-target", data-testid="particle-choice", aria-describedby="particle-choice-description")
+          option(v-for="option in particleControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p(id="particle-choice-description") {{ particleControl.description }} {{ particleControl.options.find(({ value }) => value === particle)?.description }} {{ particleControl.playfulPrompt }}
+      div(v-if="momentumControl", data-testid="particle-control-momentumMultiplier")
+        label(for="particle-momentum") {{ momentumControl.label }}
+        input(id="particle-momentum", v-model.number="momentumMultiplier", class="particle-hit-target", data-testid="particle-momentum", :type="momentumControl.type", :min="momentumControl.min", :max="momentumControl.max", :step="momentumControl.step", aria-describedby="particle-momentum-description")
+        output(for="particle-momentum") {{ momentumMultiplier }}
+        p(id="particle-momentum-description") {{ momentumControl.description }} {{ momentumControl.playfulPrompt }}
+    fieldset(data-testid="particle-prediction-gate")
+      legend Make a prediction before revealing the linked scales
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="particle-prediction-target")
+        input(v-model="prediction", type="radio", name="particle-prediction", :value="option.value", :data-testid="`particle-prediction-${option.value}`")
+        |  {{ option.label }}
+    button(class="particle-hit-target", type="button", data-testid="reveal-particle-result", :disabled="!prediction", @click="revealResult") Reveal result
+    button(class="particle-hit-target", type="button", data-testid="reset-particle-comparator", @click="resetComparator") Reset
+    p(v-if="evaluationError", role="alert", data-testid="particle-evaluation-error") The particle-scale engine could not produce a result. {{ evaluationError }}
+    p(v-if="predictionStale", aria-live="polite", data-testid="particle-prediction-stale") The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.
+    section(v-if="revealed && result", data-testid="particle-result", aria-labelledby="particle-result-title")
+      h3(id="particle-result-title") Linked logarithmic particle scales
+      svg(class="particle-scale-stage", viewBox="0 0 680 300", role="img", aria-labelledby="particle-svg-title particle-svg-description", data-testid="particle-svg")
+        title(id="particle-svg-title") Linked logarithmic mass, energy, and wavelength axes
+        desc(id="particle-svg-description") {{ result.particleLabel }} catalog mass links the mass, rest-energy, and Compton axes. The separately selected momentum state sets the de Broglie wavelength marker.
+        g(class="particle-mass-linked")
+          line(x1="154", x2="574", y1="58", y2="58")
+          text(x="18", y="63") mass (kg, log)
+          line(x1="154", x2="574", y1="112", y2="112")
+          text(x="18", y="117") rest energy (J, log)
+          line(x1="154", x2="574", y1="166", y2="166")
+          text(x="18", y="171") Compton λ (m, inverse log)
+          line(class="particle-linked-marker", :x1="linkedMassX", :x2="linkedMassX", y1="40", y2="184")
+        g(class="particle-state-axis")
+          line(x1="154", x2="574", y1="238", y2="238")
+          text(x="18", y="243") de Broglie λ (m, log)
+          circle(class="particle-state-marker", :cx="stateWavelengthX", cy="238", r="8")
+        text(x="154", y="284") catalog / mass-derived marker
+        text(x="410", y="284") momentum-state marker
+      p(data-testid="particle-text-alternative") {{ result.particleLabel }} ({{ selectedCatalogParticle?.composition }}): invariant mass {{ formatNumber(result.massKg) }} kg links rest energy {{ formatNumber(result.restEnergyJ) }} J and Compton wavelength {{ formatNumber(result.comptonWavelengthM) }} m. The selected p={{ formatNumber(result.momentumMultiplier) }} m c state gives de Broglie wavelength {{ formatNumber(result.deBroglieWavelengthM) }} m. 
+      dl
+        dt {{ outputLabel('massKg') }}
+        dd(data-testid="particle-mass") {{ formatNumber(result.massKg) }} kg
+        dt {{ outputLabel('restEnergyEv') }}
+        dd(data-testid="particle-rest-energy") {{ formatNumber(result.restEnergyEv) }} eV
+        dt {{ outputLabel('comptonWavelengthM') }}
+        dd(data-testid="particle-compton") {{ formatNumber(result.comptonWavelengthM) }} m
+        dt {{ outputLabel('momentumKgMPerS') }}
+        dd {{ formatNumber(result.momentumKgMPerS) }} kg m s^-1
+        dt {{ outputLabel('deBroglieWavelengthM') }}
+        dd(data-testid="particle-de-broglie") {{ formatNumber(result.deBroglieWavelengthM) }} m
+        dt {{ outputLabel('relativisticTotalEnergyJ') }}
+        dd {{ formatNumber(result.relativisticTotalEnergyJ) }} J
+      p(data-testid="particle-prediction-comparison") {{ predictionComparison }}
+      table(data-testid="particle-scale-table")
+        caption Linked catalog, mass-derived, and momentum-state-derived quantities; rows are dependent representations, not independent observations
+        thead
+          tr
+            th(scope="col") Quantity
+            th(scope="col") Symbol
+            th(scope="col") Value
+            th(scope="col") Unit
+            th(scope="col") Dependency
+        tbody
+          tr(v-for="row in scaleRows", :key="row.quantity")
+            th(scope="row") {{ row.quantity }}
+            td {{ row.symbol }}
+            td {{ formatNumber(row.value) }}
+            td {{ row.unit }}
+            td {{ row.dependency }}
+      section(data-testid="particle-finding-panel", aria-labelledby="particle-finding-title")
+        h3(id="particle-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="particle-finding-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Source revision
+          dd(data-testid="particle-source-revision") {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p(data-testid="particle-does-not-establish") {{ result.finding.doesNotEstablish }}
+        h4 Scientific caveats
+        ul(data-testid="particle-caveats")
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="particle-evidence")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="particle-validation-boundary")
+          | No empirical particle-scale comparison or theory validation is claimed; 
+          code validatesTheory
+          |  is {{ result.finding.validatesTheory }}.
+    section(v-if="depth === 'technical'", data-testid="particle-technical-disclosure")
+      h3 Technical dependency and model boundary
+      p The ordinary and reduced Compton values, and joule and electron-volt energies, are dependent representations. Proton and neutron entries are composite particles represented only by total catalog invariant mass.
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      h4 Generated model components
+      dl(v-for="component in simulation.modelComponents", :key="component.id")
+        dt {{ component.label }}
+        dd {{ component.description }} Source: {{ component.attribution.sourceLocator }}
 </template>
 
 <style scoped>

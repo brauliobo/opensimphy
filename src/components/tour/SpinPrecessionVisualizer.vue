@@ -295,143 +295,154 @@ watch([particle, magneticFieldTesla, timeSeconds, sampleCount], () => {
 })
 </script>
 
-<template>
-  <section data-testid="spin-precession-visualizer" :aria-labelledby="`${simulation.id}-title`">
-    <header>
-      <p>Spin phase instrument</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" role="alert" data-testid="spin-contract-error">
-      This activity cannot run because its generated contract and spin-precession engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section aria-labelledby="spin-presets-title">
-        <h3 id="spin-presets-title">Try a generated setup</h3>
-        <ul>
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="spin-hit-target" type="button" :data-testid="`spin-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" data-testid="spin-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section aria-labelledby="spin-controls-title">
-        <h3 id="spin-controls-title">Set the signed phase model</h3>
-        <div v-if="particleControl" data-testid="spin-control-particle">
-          <label for="spin-particle">{{ particleControl.label }}</label>
-          <select id="spin-particle" v-model="particle" class="spin-hit-target" data-testid="spin-particle" aria-describedby="spin-particle-description">
-            <option v-for="option in particleControl.options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-          <p id="spin-particle-description">{{ particleControl.description }} {{ particleControl.options.find(({ value }) => value === particle)?.description }} {{ particleControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="fieldControl" data-testid="spin-control-magneticFieldTesla">
-          <label for="spin-field">{{ fieldControl.label }}</label>
-          <input id="spin-field" v-model.number="magneticFieldTesla" class="spin-hit-target" data-testid="spin-field" :type="fieldControl.type" :min="fieldControl.min" :max="fieldControl.max" :step="fieldControl.step" aria-describedby="spin-field-description">
-          <output for="spin-field">{{ magneticFieldTesla }} {{ fieldControl.unit }}</output>
-          <p id="spin-field-description">{{ fieldControl.description }} {{ fieldControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="timeControl" data-testid="spin-control-timeSeconds">
-          <label for="spin-time">{{ timeControl.label }}</label>
-          <input id="spin-time" v-model.number="timeSeconds" class="spin-hit-target" data-testid="spin-time" :type="timeControl.type" :min="timeControl.min" :max="timeControl.max" :step="timeControl.step" aria-describedby="spin-time-description">
-          <output for="spin-time">{{ timeSeconds }} {{ timeControl.unit }}</output>
-          <p id="spin-time-description">{{ timeControl.description }} {{ timeControl.playfulPrompt }}</p>
-        </div>
-        <div v-if="depth === 'technical' && sampleControl" data-testid="spin-control-sampleCount">
-          <label for="spin-samples">{{ sampleControl.label }}</label>
-          <input id="spin-samples" v-model.number="sampleCount" class="spin-hit-target" data-testid="spin-samples" :type="sampleControl.type" :min="sampleControl.min" :max="sampleControl.max" :step="sampleControl.step" aria-describedby="spin-samples-description">
-          <output for="spin-samples">{{ sampleCount }}</output>
-          <p id="spin-samples-description">{{ sampleControl.description }} {{ sampleControl.playfulPrompt }}</p>
-        </div>
-        <p v-if="depth === 'guided'" data-testid="spin-guided-sample-disclosure">The static visualization and accessible table use {{ sampleCount }} deterministic phase samples. Technical depth exposes this display-resolution control; it does not change the endpoint phase.</p>
-      </section>
-
-      <fieldset data-testid="spin-prediction-gate">
-        <legend>Make a prediction before revealing the phase vector</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="spin-prediction-target">
-          <input v-model="prediction" type="radio" name="spin-prediction" :value="option.value" :data-testid="`spin-prediction-${option.value}`">
-          {{ option.label }}
-        </label>
-      </fieldset>
-      <button class="spin-hit-target" type="button" data-testid="reveal-spin-result" :disabled="!prediction" @click="revealResult">Reveal result</button>
-      <button class="spin-hit-target" type="button" data-testid="reset-spin-visualizer" @click="resetVisualizer">Reset</button>
-
-      <p v-if="evaluationError" role="alert" data-testid="spin-evaluation-error">The spin-precession engine could not produce a result. {{ evaluationError }}</p>
-      <p v-if="predictionStale" aria-live="polite" data-testid="spin-prediction-stale">The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.</p>
-
-      <section v-if="revealed && result" data-testid="spin-result" aria-labelledby="spin-result-title">
-        <h3 id="spin-result-title">Static endpoint phase vector</h3>
-        <svg class="spin-phase-stage" viewBox="0 0 640 270" role="img" aria-labelledby="spin-svg-title spin-svg-description" data-testid="spin-svg">
-          <title id="spin-svg-title">Signed unit-circle endpoint phase</title>
-          <desc id="spin-svg-description">Static final unit vector for {{ result.particleLabel }} at {{ result.magneticFieldTesla }} tesla and {{ result.timeSeconds }} seconds. Rotation sense is {{ result.rotationSense }} under the declared phase convention.</desc>
-          <circle class="spin-unit-circle" cx="160" cy="130" r="92" />
-          <line class="spin-axis" x1="52" x2="268" y1="130" y2="130" />
-          <line class="spin-axis" x1="160" x2="160" y1="22" y2="238" />
-          <line class="spin-vector" x1="160" y1="130" :x2="vectorX" :y2="vectorY" marker-end="url(#spin-arrow)" />
-          <circle class="spin-endpoint" :cx="vectorX" :cy="vectorY" r="7" />
-          <defs><marker id="spin-arrow" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" /></marker></defs>
-          <text x="306" y="66">signed cyclic f = {{ formatNumber(result.signedCyclicFrequencyHz) }} Hz</text>
-          <text x="306" y="102">signed angular ω = {{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1</text>
-          <text x="306" y="138">T = {{ formatNumber(result.periodSeconds) }} s</text>
-          <text x="306" y="174">φ = {{ formatNumber(result.phaseRadians) }} rad</text>
-          <text x="306" y="210">{{ result.rotationSense }}</text>
-        </svg>
-        <p data-testid="spin-text-alternative">
-          Static final vector for {{ result.particleLabel }}: signed cyclic frequency {{ formatNumber(result.signedCyclicFrequencyHz) }} Hz, signed angular frequency {{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1, positive period {{ formatNumber(result.periodSeconds) }} s, and signed endpoint phase {{ formatNumber(result.phaseRadians) }} rad. This is model phase, not a measured spin trajectory or detector signal.
-        </p>
-        <dl>
-          <dt>{{ outputLabel('signedCyclicGammaHzPerTesla') }}</dt><dd data-testid="spin-gamma">{{ formatNumber(result.signedCyclicGammaHzPerTesla) }} Hz T^-1</dd>
-          <dt>{{ outputLabel('signedCyclicFrequencyHz') }}</dt><dd data-testid="spin-cyclic-frequency">{{ formatNumber(result.signedCyclicFrequencyHz) }} Hz</dd>
-          <dt>{{ outputLabel('angularFrequencyRadPerSecond') }}</dt><dd data-testid="spin-angular-frequency">{{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1</dd>
-          <dt>{{ outputLabel('periodSeconds') }}</dt><dd data-testid="spin-period">{{ formatNumber(result.periodSeconds) }} s</dd>
-          <dt>{{ outputLabel('phaseRadians') }}</dt><dd>{{ formatNumber(result.phaseRadians) }} rad</dd>
-          <dt>{{ outputLabel('rotationSense') }}</dt><dd>{{ result.rotationSense }}</dd>
-        </dl>
-        <p data-testid="spin-frequency-distinction">Signed cyclic frequency f is in cycles per second (Hz). Signed angular frequency omega is in radians per second and equals exactly 2 pi f. Coordinate phase is phi = -omega t, so its rotation direction has the opposite sign; the positive period is 1/|f|.</p>
-        <p data-testid="spin-prediction-comparison">{{ predictionComparison }}</p>
-
-        <table data-testid="spin-sample-table">
-          <caption>Bounded deterministic phase-model samples including both endpoints; coordinates are visualization state, not measurements</caption>
-          <thead><tr><th scope="col">Sample</th><th scope="col">Model time (s)</th><th scope="col">Signed phase (rad)</th><th scope="col">x</th><th scope="col">y</th></tr></thead>
-          <tbody><tr v-for="row in sampleRows" :key="row.sample"><th scope="row">{{ row.sample }}</th><td>{{ formatNumber(row.timeSeconds) }}</td><td>{{ formatNumber(row.phaseRadians) }}</td><td>{{ formatNumber(row.x) }}</td><td>{{ formatNumber(row.y) }}</td></tr></tbody>
-        </table>
-
-        <section data-testid="spin-finding-panel" aria-labelledby="spin-finding-title">
-          <h3 id="spin-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="spin-finding-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Source revision</dt><dd data-testid="spin-source-revision">{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p data-testid="spin-does-not-establish">{{ result.finding.doesNotEstablish }}</p>
-          <h4>Scientific caveats</h4><ul data-testid="spin-caveats"><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="spin-evidence"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="spin-validation-boundary">No resonance measurement, relaxation fit, material response, detector comparison, or theory validation is claimed; <code>validatesTheory</code> is {{ result.finding.validatesTheory }}.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" data-testid="spin-technical-disclosure">
-        <h3>Technical sign and model boundary</h3>
-        <p>The catalog input is signed cyclic gamma/(2 pi), not angular gamma. The coordinate convention is phi = -omega t, so signed frequency and coordinate-phase direction must not be conflated. The vector is rendered directly at its final bounded phase with no animated motion.</p>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <h4>Generated model components</h4>
-        <dl v-for="component in simulation.modelComponents" :key="component.id"><dt>{{ component.label }}</dt><dd>{{ component.description }} Source: {{ component.attribution.sourceLocator }}</dd></dl>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(data-testid="spin-precession-visualizer", :aria-labelledby="`${simulation.id}-title`")
+  header
+    p Spin phase instrument
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", role="alert", data-testid="spin-contract-error")  This activity cannot run because its generated contract and spin-precession engine do not agree. {{ contractError }}
+  template(v-else)
+    section(aria-labelledby="spin-presets-title")
+      h3(id="spin-presets-title") Try a generated setup
+      ul
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="spin-hit-target", type="button", :data-testid="`spin-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", data-testid="spin-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(aria-labelledby="spin-controls-title")
+      h3(id="spin-controls-title") Set the signed phase model
+      div(v-if="particleControl", data-testid="spin-control-particle")
+        label(for="spin-particle") {{ particleControl.label }}
+        select(id="spin-particle", v-model="particle", class="spin-hit-target", data-testid="spin-particle", aria-describedby="spin-particle-description")
+          option(v-for="option in particleControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p(id="spin-particle-description") {{ particleControl.description }} {{ particleControl.options.find(({ value }) => value === particle)?.description }} {{ particleControl.playfulPrompt }}
+      div(v-if="fieldControl", data-testid="spin-control-magneticFieldTesla")
+        label(for="spin-field") {{ fieldControl.label }}
+        input(id="spin-field", v-model.number="magneticFieldTesla", class="spin-hit-target", data-testid="spin-field", :type="fieldControl.type", :min="fieldControl.min", :max="fieldControl.max", :step="fieldControl.step", aria-describedby="spin-field-description")
+        output(for="spin-field") {{ magneticFieldTesla }} {{ fieldControl.unit }}
+        p(id="spin-field-description") {{ fieldControl.description }} {{ fieldControl.playfulPrompt }}
+      div(v-if="timeControl", data-testid="spin-control-timeSeconds")
+        label(for="spin-time") {{ timeControl.label }}
+        input(id="spin-time", v-model.number="timeSeconds", class="spin-hit-target", data-testid="spin-time", :type="timeControl.type", :min="timeControl.min", :max="timeControl.max", :step="timeControl.step", aria-describedby="spin-time-description")
+        output(for="spin-time") {{ timeSeconds }} {{ timeControl.unit }}
+        p(id="spin-time-description") {{ timeControl.description }} {{ timeControl.playfulPrompt }}
+      div(v-if="depth === 'technical' && sampleControl", data-testid="spin-control-sampleCount")
+        label(for="spin-samples") {{ sampleControl.label }}
+        input(id="spin-samples", v-model.number="sampleCount", class="spin-hit-target", data-testid="spin-samples", :type="sampleControl.type", :min="sampleControl.min", :max="sampleControl.max", :step="sampleControl.step", aria-describedby="spin-samples-description")
+        output(for="spin-samples") {{ sampleCount }}
+        p(id="spin-samples-description") {{ sampleControl.description }} {{ sampleControl.playfulPrompt }}
+      p(v-if="depth === 'guided'", data-testid="spin-guided-sample-disclosure") The static visualization and accessible table use {{ sampleCount }} deterministic phase samples. Technical depth exposes this display-resolution control; it does not change the endpoint phase.
+    fieldset(data-testid="spin-prediction-gate")
+      legend Make a prediction before revealing the phase vector
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="spin-prediction-target")
+        input(v-model="prediction", type="radio", name="spin-prediction", :value="option.value", :data-testid="`spin-prediction-${option.value}`")
+        |  {{ option.label }}
+    button(class="spin-hit-target", type="button", data-testid="reveal-spin-result", :disabled="!prediction", @click="revealResult") Reveal result
+    button(class="spin-hit-target", type="button", data-testid="reset-spin-visualizer", @click="resetVisualizer") Reset
+    p(v-if="evaluationError", role="alert", data-testid="spin-evaluation-error") The spin-precession engine could not produce a result. {{ evaluationError }}
+    p(v-if="predictionStale", aria-live="polite", data-testid="spin-prediction-stale") The setup changed, so the previous prediction is not compared with this live result. Make a fresh prediction for the current setup.
+    section(v-if="revealed && result", data-testid="spin-result", aria-labelledby="spin-result-title")
+      h3(id="spin-result-title") Static endpoint phase vector
+      svg(class="spin-phase-stage", viewBox="0 0 640 270", role="img", aria-labelledby="spin-svg-title spin-svg-description", data-testid="spin-svg")
+        title(id="spin-svg-title") Signed unit-circle endpoint phase
+        desc(id="spin-svg-description") Static final unit vector for {{ result.particleLabel }} at {{ result.magneticFieldTesla }} tesla and {{ result.timeSeconds }} seconds. Rotation sense is {{ result.rotationSense }} under the declared phase convention.
+        circle(class="spin-unit-circle", cx="160", cy="130", r="92")
+        line(class="spin-axis", x1="52", x2="268", y1="130", y2="130")
+        line(class="spin-axis", x1="160", x2="160", y1="22", y2="238")
+        line(class="spin-vector", x1="160", y1="130", :x2="vectorX", :y2="vectorY", marker-end="url(#spin-arrow)")
+        circle(class="spin-endpoint", :cx="vectorX", :cy="vectorY", r="7")
+        defs
+          marker(id="spin-arrow", markerWidth="8", markerHeight="8", refX="5", refY="4", orient="auto")
+            path(d="M0,0 L8,4 L0,8 z")
+        text(x="306", y="66") signed cyclic f = {{ formatNumber(result.signedCyclicFrequencyHz) }} Hz
+        text(x="306", y="102") signed angular ω = {{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1
+        text(x="306", y="138") T = {{ formatNumber(result.periodSeconds) }} s
+        text(x="306", y="174") φ = {{ formatNumber(result.phaseRadians) }} rad
+        text(x="306", y="210") {{ result.rotationSense }}
+      p(data-testid="spin-text-alternative")  Static final vector for {{ result.particleLabel }}: signed cyclic frequency {{ formatNumber(result.signedCyclicFrequencyHz) }} Hz, signed angular frequency {{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1, positive period {{ formatNumber(result.periodSeconds) }} s, and signed endpoint phase {{ formatNumber(result.phaseRadians) }} rad. This is model phase, not a measured spin trajectory or detector signal. 
+      dl
+        dt {{ outputLabel('signedCyclicGammaHzPerTesla') }}
+        dd(data-testid="spin-gamma") {{ formatNumber(result.signedCyclicGammaHzPerTesla) }} Hz T^-1
+        dt {{ outputLabel('signedCyclicFrequencyHz') }}
+        dd(data-testid="spin-cyclic-frequency") {{ formatNumber(result.signedCyclicFrequencyHz) }} Hz
+        dt {{ outputLabel('angularFrequencyRadPerSecond') }}
+        dd(data-testid="spin-angular-frequency") {{ formatNumber(result.angularFrequencyRadPerSecond) }} rad s^-1
+        dt {{ outputLabel('periodSeconds') }}
+        dd(data-testid="spin-period") {{ formatNumber(result.periodSeconds) }} s
+        dt {{ outputLabel('phaseRadians') }}
+        dd {{ formatNumber(result.phaseRadians) }} rad
+        dt {{ outputLabel('rotationSense') }}
+        dd {{ result.rotationSense }}
+      p(data-testid="spin-frequency-distinction") Signed cyclic frequency f is in cycles per second (Hz). Signed angular frequency omega is in radians per second and equals exactly 2 pi f. Coordinate phase is phi = -omega t, so its rotation direction has the opposite sign; the positive period is 1/|f|.
+      p(data-testid="spin-prediction-comparison") {{ predictionComparison }}
+      table(data-testid="spin-sample-table")
+        caption Bounded deterministic phase-model samples including both endpoints; coordinates are visualization state, not measurements
+        thead
+          tr
+            th(scope="col") Sample
+            th(scope="col") Model time (s)
+            th(scope="col") Signed phase (rad)
+            th(scope="col") x
+            th(scope="col") y
+        tbody
+          tr(v-for="row in sampleRows", :key="row.sample")
+            th(scope="row") {{ row.sample }}
+            td {{ formatNumber(row.timeSeconds) }}
+            td {{ formatNumber(row.phaseRadians) }}
+            td {{ formatNumber(row.x) }}
+            td {{ formatNumber(row.y) }}
+      section(data-testid="spin-finding-panel", aria-labelledby="spin-finding-title")
+        h3(id="spin-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="spin-finding-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Source revision
+          dd(data-testid="spin-source-revision") {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p(data-testid="spin-does-not-establish") {{ result.finding.doesNotEstablish }}
+        h4 Scientific caveats
+        ul(data-testid="spin-caveats")
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="spin-evidence")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="spin-validation-boundary")
+          | No resonance measurement, relaxation fit, material response, detector comparison, or theory validation is claimed; 
+          code validatesTheory
+          |  is {{ result.finding.validatesTheory }}.
+    section(v-if="depth === 'technical'", data-testid="spin-technical-disclosure")
+      h3 Technical sign and model boundary
+      p The catalog input is signed cyclic gamma/(2 pi), not angular gamma. The coordinate convention is phi = -omega t, so signed frequency and coordinate-phase direction must not be conflated. The vector is rendered directly at its final bounded phase with no animated motion.
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      h4 Generated model components
+      dl(v-for="component in simulation.modelComponents", :key="component.id")
+        dt {{ component.label }}
+        dd {{ component.description }} Source: {{ component.attribution.sourceLocator }}
 </template>
 
 <style scoped>

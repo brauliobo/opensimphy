@@ -342,154 +342,150 @@ watch([presetId, chargeCarriers, voltageV, frequencyHz], () => {
 })
 </script>
 
-<template>
-  <section class="dimension-builder electrical-standards" data-testid="electrical-standards-network" :aria-labelledby="`${simulation.id}-title`">
-    <header class="dimension-builder-heading">
-      <p class="dimension-builder-kicker">Quantum standards network</p>
-      <h2 :id="`${simulation.id}-title`">{{ simulation.title }}</h2>
-      <p>{{ simulation.question }}</p>
-    </header>
-
-    <p v-if="contractError" class="dimension-builder-error" role="alert" data-testid="electrical-standards-error">
-      This activity cannot run because its generated contract and electrical standards engine do not agree. {{ contractError }}
-    </p>
-
-    <template v-else>
-      <section class="dimension-builder-presets" aria-labelledby="electrical-presets-title">
-        <h3 id="electrical-presets-title">Standards paths</h3>
-        <ul class="dimension-builder-preset-list">
-          <li v-for="preset in simulation.presets" :key="preset.id">
-            <button class="dimension-builder-preset tour-touch-target" type="button" :data-testid="`electrical-preset-${preset.id}`" @click="applyPreset(preset)">{{ preset.label }}</button>
-            <p>{{ preset.description }}</p>
-          </li>
-        </ul>
-        <p v-if="selectedPreset" class="electrical-standards-inspection" data-testid="electrical-inspection-prompt">{{ selectedPreset.inspectionPrompt }}</p>
-      </section>
-
-      <section class="dimension-builder-controls" aria-labelledby="electrical-controls-title">
-        <h3 id="electrical-controls-title">Trace bounded inputs</h3>
-        <div v-if="presetControl" class="dimension-builder-control" data-testid="electrical-control-preset">
-          <label for="electrical-view">{{ presetControl.label }}</label>
-          <select id="electrical-view" v-model="presetId" data-testid="electrical-view"><option v-for="option in presetControl.options" :key="option.value" :value="option.value">{{ option.label }}</option></select>
-          <p>{{ presetControl.description }} <span>{{ presetControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="carrierControl" class="dimension-builder-control" data-testid="electrical-control-carriers">
-          <label for="electrical-carriers">{{ carrierControl.label }}</label><output for="electrical-carriers">{{ chargeCarriers }}</output>
-          <input id="electrical-carriers" v-model.number="chargeCarriers" data-testid="electrical-carriers" :type="carrierControl.type" :min="carrierControl.min" :max="carrierControl.max" :step="carrierControl.step">
-          <p>{{ carrierControl.description }} <span>{{ carrierControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="voltageControl" class="dimension-builder-control" data-testid="electrical-control-voltage">
-          <label for="electrical-voltage">{{ voltageControl.label }}</label><output for="electrical-voltage">{{ voltageV }} V</output>
-          <input id="electrical-voltage" v-model.number="voltageV" data-testid="electrical-voltage" :type="voltageControl.type" :min="voltageControl.min" :max="voltageControl.max" :step="voltageControl.step">
-          <p>{{ voltageControl.description }} <span>{{ voltageControl.playfulPrompt }}</span></p>
-        </div>
-        <div v-if="depth === 'technical' && frequencyControl" class="dimension-builder-control electrical-frequency-control" data-testid="electrical-control-frequency">
-          <label for="electrical-frequency">{{ frequencyControl.label }}</label>
-          <output for="electrical-frequency">{{ presetId === 'josephson' ? `${frequencyHz.toExponential(6)} Hz` : '0 Hz (inactive)' }}</output>
-          <input id="electrical-frequency" v-model.number="frequencyHz" data-testid="electrical-frequency" :type="frequencyControl.type" :min="frequencyControl.min" :max="frequencyControl.max" :step="frequencyControl.step" :disabled="presetId !== 'josephson'">
-          <p>{{ frequencyControl.description }} <span v-if="presetId !== 'josephson'">This complete input is currently inactive and fixed at zero.</span></p>
-        </div>
-      </section>
-
-      <fieldset class="dimension-builder-prediction" data-testid="electrical-prediction-gate">
-        <legend>Predict before revealing the network</legend>
-        <p>{{ simulation.predictionPrompt }}</p>
-        <label v-for="option in predictionOptions" :key="option.value" class="dimension-builder-prediction-option tour-touch-target">
-          <input v-model="prediction" type="radio" name="electrical-standards-prediction" :value="option.value" :data-testid="`electrical-prediction-${option.value}`">
-          <span>{{ option.label }}</span>
-        </label>
-      </fieldset>
-
-      <div class="dimension-builder-actions">
-        <button class="dimension-builder-reveal tour-touch-target" type="button" data-testid="reveal-electrical-standards" :disabled="!prediction" @click="revealResult">Reveal network</button>
-        <button class="tour-touch-target" type="button" data-testid="reset-electrical-standards" @click="resetNetwork">Reset</button>
-      </div>
-
-      <p v-if="evaluationError" class="dimension-builder-error" role="alert">{{ evaluationError }}</p>
-      <p v-if="predictionStale" class="dimension-builder-caveat" aria-live="polite" data-testid="electrical-prediction-stale">
-        The standards inputs changed. The live network has updated, but the previous prediction is stale and is not compared with this result.
-      </p>
-
-      <section v-if="revealed && result" class="dimension-builder-stage electrical-standards-stage" data-testid="electrical-standards-result" aria-labelledby="electrical-result-title">
-        <header>
-          <p>Selected path</p>
-          <h3 id="electrical-result-title">{{ presetControl?.options.find(({ value }) => value === result.presetId)?.label }}</h3>
-          <p data-testid="electrical-charge-result">q = {{ result.totalChargeC.toExponential(6) }} C for {{ result.chargeCarriers }} carrier{{ result.chargeCarriers === 1 ? '' : 's' }}</p>
-        </header>
-
-        <svg class="electrical-network-graphic" viewBox="0 0 90 66" role="img" aria-labelledby="electrical-svg-title electrical-svg-description" data-testid="electrical-standards-svg">
-          <title id="electrical-svg-title">Electrical standards identity network</title>
-          <desc id="electrical-svg-description">Planck constant h and elementary charge e feed current exact derived SI nodes, bounded input calculations, and separately styled historical 1990 conventional comparison nodes.</desc>
-          <g class="electrical-network-edges">
-            <template v-for="edge in result.edges" :key="edge.id">
-              <line v-for="from in edge.from" :key="`${edge.id}-${from}`" :x1="position(from)[0]" :y1="position(from)[1]" :x2="position(edge.to)[0]" :y2="position(edge.to)[1]"><title>{{ edge.equation }}. {{ edge.note }}</title></line>
-            </template>
-          </g>
-          <g v-for="node in result.nodes" :key="node.id" :class="['electrical-network-node', nodeClass(node)]" :transform="`translate(${position(node.id)[0]} ${position(node.id)[1]})`">
-            <rect x="-7" y="-3.4" width="14" height="6.8" rx="1" />
-            <text text-anchor="middle" y=".8">{{ node.symbol }}</text>
-            <title>{{ node.label }}: {{ node.value.toExponential(6) }} {{ node.unit }}. {{ node.statusLabel }}. {{ node.note }}</title>
-          </g>
-        </svg>
-
-        <p class="dimension-builder-comparison" data-testid="electrical-prediction-comparison">{{ predictionComparison }}</p>
-        <p class="dimension-builder-caveat" data-testid="electrical-realization-caveat">
-          Exact h/e identities do not make a practical Josephson or quantum Hall realization uncertainty-free. No device state, calibration certificate, plateau, filling factor, or channel count is inferred.
-        </p>
-
-        <dl class="dimension-builder-readout" data-testid="electrical-direction-results">
-          <dt>{{ simulation.outputSchema.find(({ id }) => id === 'josephsonFrequencyFromVoltageHz')?.label }}</dt>
-          <dd>{{ result.josephsonFrequencyFromVoltageHz === null ? 'Not computed outside the Josephson view' : `${result.josephsonFrequencyFromVoltageHz.toExponential(6)} Hz` }}</dd>
-          <dt>{{ simulation.outputSchema.find(({ id }) => id === 'josephsonVoltageFromFrequencyV')?.label }}</dt>
-          <dd>{{ result.josephsonVoltageFromFrequencyV === null ? 'Not computed outside the Josephson view' : `${result.josephsonVoltageFromFrequencyV.toExponential(6)} V` }}</dd>
-          <dt>{{ simulation.outputSchema.find(({ id }) => id === 'networkStatus')?.label }}</dt>
-          <dd data-testid="electrical-network-status">{{ result.networkStatus }}</dd>
-        </dl>
-
-        <div class="dimension-builder-table-wrap">
-          <table data-testid="electrical-standards-table">
-            <caption>Accessible electrical network nodes, including current exact SI and historical 1990 comparisons</caption>
-            <thead><tr><th scope="col">Node</th><th scope="col">Value</th><th scope="col">Status</th><th scope="col">Historical comparison</th><th scope="col">Boundary note</th></tr></thead>
-            <tbody>
-              <tr v-for="row in tableRows" :key="row.id">
-                <th scope="row">{{ row.label }} ({{ row.symbol }})</th><td>{{ row.value.toExponential(6) }} {{ row.unit }}</td><td>{{ row.statusLabel }}</td><td>{{ comparisonText(row.id) || 'Not applicable' }}</td><td>{{ row.note }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <section class="dimension-builder-finding electrical-standards-finding" aria-labelledby="electrical-finding-title" data-testid="electrical-standards-finding">
-          <h3 id="electrical-finding-title">Live finding</h3>
-          <p role="status" aria-live="polite">{{ result.finding.establishes }}</p>
-          <dl>
-            <dt>Runtime result status</dt><dd data-testid="electrical-result-status">{{ result.finding.resultStatus.toUpperCase() }}</dd>
-            <dt>Claim class</dt><dd>{{ result.finding.claimClass }}</dd>
-            <dt>Model origin</dt><dd>{{ result.finding.modelOrigin }}</dd>
-            <dt>Method relationship</dt><dd>{{ result.finding.methodRelationship }}</dd>
-            <dt>Validates theory</dt><dd>{{ result.finding.validatesTheory ? 'Yes' : 'No' }}</dd>
-            <dt>Source revision</dt><dd>{{ result.finding.sourceRevision }}</dd>
-            <dt>Source locator</dt><dd>{{ result.finding.sourceLocator }}</dd>
-          </dl>
-          <h4>What changed</h4><p>{{ result.finding.changed }}</p>
-          <h4>Why</h4><p>{{ result.finding.cause }}</p>
-          <h4>Equation</h4><p><code>{{ result.finding.equation }}</code></p>
-          <h4>Assumptions</h4><ul><li v-for="assumption in result.finding.assumptions" :key="assumption">{{ assumption }}</li></ul>
-          <h4>Establishes</h4><p>{{ result.finding.establishes }}</p>
-          <h4>Does not establish</h4><p>{{ result.finding.doesNotEstablish }}</p>
-          <h4>Caveats</h4><ul><li v-for="caveat in result.finding.caveats" :key="caveat">{{ caveat }}</li></ul>
-          <h4>Evidence references</h4><ul data-testid="electrical-evidence-refs"><li v-for="evidenceRef in result.finding.evidenceRefs" :key="evidenceRef"><a :href="evidenceHref(evidenceRef)">{{ evidenceRef }}</a></li></ul>
-          <p data-testid="electrical-validation-boundary">No inferred residual, empirical device comparison, practical-realization validation, or theory validation is claimed by this identity network.</p>
-        </section>
-      </section>
-
-      <section v-if="depth === 'technical'" class="dimension-builder-disclosure" data-testid="electrical-technical-disclosure">
-        <h3>Technical assumptions and realization boundary</h3>
-        <ul><li v-for="assumption in simulation.assumptions" :key="assumption">{{ assumption }}</li></ul>
-        <p>{{ simulation.numericalMethod?.description }}</p>
-        <p>{{ simulation.visualization.reducedMotionBehavior }}</p>
-      </section>
-    </template>
-  </section>
+<template lang="pug">
+section(class="dimension-builder electrical-standards", data-testid="electrical-standards-network", :aria-labelledby="`${simulation.id}-title`")
+  header(class="dimension-builder-heading")
+    p(class="dimension-builder-kicker") Quantum standards network
+    h2(:id="`${simulation.id}-title`") {{ simulation.title }}
+    p {{ simulation.question }}
+  p(v-if="contractError", class="dimension-builder-error", role="alert", data-testid="electrical-standards-error")  This activity cannot run because its generated contract and electrical standards engine do not agree. {{ contractError }}
+  template(v-else)
+    section(class="dimension-builder-presets", aria-labelledby="electrical-presets-title")
+      h3(id="electrical-presets-title") Standards paths
+      ul(class="dimension-builder-preset-list")
+        li(v-for="preset in simulation.presets", :key="preset.id")
+          button(class="dimension-builder-preset tour-touch-target", type="button", :data-testid="`electrical-preset-${preset.id}`", @click="applyPreset(preset)") {{ preset.label }}
+          p {{ preset.description }}
+      p(v-if="selectedPreset", class="electrical-standards-inspection", data-testid="electrical-inspection-prompt") {{ selectedPreset.inspectionPrompt }}
+    section(class="dimension-builder-controls", aria-labelledby="electrical-controls-title")
+      h3(id="electrical-controls-title") Trace bounded inputs
+      div(v-if="presetControl", class="dimension-builder-control", data-testid="electrical-control-preset")
+        label(for="electrical-view") {{ presetControl.label }}
+        select(id="electrical-view", v-model="presetId", data-testid="electrical-view")
+          option(v-for="option in presetControl.options", :key="option.value", :value="option.value") {{ option.label }}
+        p
+          | {{ presetControl.description }} 
+          span {{ presetControl.playfulPrompt }}
+      div(v-if="carrierControl", class="dimension-builder-control", data-testid="electrical-control-carriers")
+        label(for="electrical-carriers") {{ carrierControl.label }}
+        output(for="electrical-carriers") {{ chargeCarriers }}
+        input(id="electrical-carriers", v-model.number="chargeCarriers", data-testid="electrical-carriers", :type="carrierControl.type", :min="carrierControl.min", :max="carrierControl.max", :step="carrierControl.step")
+        p
+          | {{ carrierControl.description }} 
+          span {{ carrierControl.playfulPrompt }}
+      div(v-if="voltageControl", class="dimension-builder-control", data-testid="electrical-control-voltage")
+        label(for="electrical-voltage") {{ voltageControl.label }}
+        output(for="electrical-voltage") {{ voltageV }} V
+        input(id="electrical-voltage", v-model.number="voltageV", data-testid="electrical-voltage", :type="voltageControl.type", :min="voltageControl.min", :max="voltageControl.max", :step="voltageControl.step")
+        p
+          | {{ voltageControl.description }} 
+          span {{ voltageControl.playfulPrompt }}
+      div(v-if="depth === 'technical' && frequencyControl", class="dimension-builder-control electrical-frequency-control", data-testid="electrical-control-frequency")
+        label(for="electrical-frequency") {{ frequencyControl.label }}
+        output(for="electrical-frequency") {{ presetId === 'josephson' ? `${frequencyHz.toExponential(6)} Hz` : '0 Hz (inactive)' }}
+        input(id="electrical-frequency", v-model.number="frequencyHz", data-testid="electrical-frequency", :type="frequencyControl.type", :min="frequencyControl.min", :max="frequencyControl.max", :step="frequencyControl.step", :disabled="presetId !== 'josephson'")
+        p
+          | {{ frequencyControl.description }} 
+          span(v-if="presetId !== 'josephson'") This complete input is currently inactive and fixed at zero.
+    fieldset(class="dimension-builder-prediction", data-testid="electrical-prediction-gate")
+      legend Predict before revealing the network
+      p {{ simulation.predictionPrompt }}
+      label(v-for="option in predictionOptions", :key="option.value", class="dimension-builder-prediction-option tour-touch-target")
+        input(v-model="prediction", type="radio", name="electrical-standards-prediction", :value="option.value", :data-testid="`electrical-prediction-${option.value}`")
+        span {{ option.label }}
+    div(class="dimension-builder-actions")
+      button(class="dimension-builder-reveal tour-touch-target", type="button", data-testid="reveal-electrical-standards", :disabled="!prediction", @click="revealResult") Reveal network
+      button(class="tour-touch-target", type="button", data-testid="reset-electrical-standards", @click="resetNetwork") Reset
+    p(v-if="evaluationError", class="dimension-builder-error", role="alert") {{ evaluationError }}
+    p(v-if="predictionStale", class="dimension-builder-caveat", aria-live="polite", data-testid="electrical-prediction-stale")  The standards inputs changed. The live network has updated, but the previous prediction is stale and is not compared with this result. 
+    section(v-if="revealed && result", class="dimension-builder-stage electrical-standards-stage", data-testid="electrical-standards-result", aria-labelledby="electrical-result-title")
+      header
+        p Selected path
+        h3(id="electrical-result-title") {{ presetControl?.options.find(({ value }) => value === result.presetId)?.label }}
+        p(data-testid="electrical-charge-result") q = {{ result.totalChargeC.toExponential(6) }} C for {{ result.chargeCarriers }} carrier{{ result.chargeCarriers === 1 ? '' : 's' }}
+      svg(class="electrical-network-graphic", viewBox="0 0 90 66", role="img", aria-labelledby="electrical-svg-title electrical-svg-description", data-testid="electrical-standards-svg")
+        title(id="electrical-svg-title") Electrical standards identity network
+        desc(id="electrical-svg-description") Planck constant h and elementary charge e feed current exact derived SI nodes, bounded input calculations, and separately styled historical 1990 conventional comparison nodes.
+        g(class="electrical-network-edges")
+          template(v-for="edge in result.edges", :key="edge.id")
+            line(v-for="from in edge.from", :key="`${edge.id}-${from}`", :x1="position(from)[0]", :y1="position(from)[1]", :x2="position(edge.to)[0]", :y2="position(edge.to)[1]")
+              title {{ edge.equation }}. {{ edge.note }}
+        g(v-for="node in result.nodes", :key="node.id", :class="['electrical-network-node', nodeClass(node)]", :transform="`translate(${position(node.id)[0]} ${position(node.id)[1]})`")
+          rect(x="-7", y="-3.4", width="14", height="6.8", rx="1")
+          text(text-anchor="middle", y=".8") {{ node.symbol }}
+          title {{ node.label }}: {{ node.value.toExponential(6) }} {{ node.unit }}. {{ node.statusLabel }}. {{ node.note }}
+      p(class="dimension-builder-comparison", data-testid="electrical-prediction-comparison") {{ predictionComparison }}
+      p(class="dimension-builder-caveat", data-testid="electrical-realization-caveat")  Exact h/e identities do not make a practical Josephson or quantum Hall realization uncertainty-free. No device state, calibration certificate, plateau, filling factor, or channel count is inferred. 
+      dl(class="dimension-builder-readout", data-testid="electrical-direction-results")
+        dt {{ simulation.outputSchema.find(({ id }) => id === 'josephsonFrequencyFromVoltageHz')?.label }}
+        dd {{ result.josephsonFrequencyFromVoltageHz === null ? 'Not computed outside the Josephson view' : `${result.josephsonFrequencyFromVoltageHz.toExponential(6)} Hz` }}
+        dt {{ simulation.outputSchema.find(({ id }) => id === 'josephsonVoltageFromFrequencyV')?.label }}
+        dd {{ result.josephsonVoltageFromFrequencyV === null ? 'Not computed outside the Josephson view' : `${result.josephsonVoltageFromFrequencyV.toExponential(6)} V` }}
+        dt {{ simulation.outputSchema.find(({ id }) => id === 'networkStatus')?.label }}
+        dd(data-testid="electrical-network-status") {{ result.networkStatus }}
+      div(class="dimension-builder-table-wrap")
+        table(data-testid="electrical-standards-table")
+          caption Accessible electrical network nodes, including current exact SI and historical 1990 comparisons
+          thead
+            tr
+              th(scope="col") Node
+              th(scope="col") Value
+              th(scope="col") Status
+              th(scope="col") Historical comparison
+              th(scope="col") Boundary note
+          tbody
+            tr(v-for="row in tableRows", :key="row.id")
+              th(scope="row") {{ row.label }} ({{ row.symbol }})
+              td {{ row.value.toExponential(6) }} {{ row.unit }}
+              td {{ row.statusLabel }}
+              td {{ comparisonText(row.id) || 'Not applicable' }}
+              td {{ row.note }}
+      section(class="dimension-builder-finding electrical-standards-finding", aria-labelledby="electrical-finding-title", data-testid="electrical-standards-finding")
+        h3(id="electrical-finding-title") Live finding
+        p(role="status", aria-live="polite") {{ result.finding.establishes }}
+        dl
+          dt Runtime result status
+          dd(data-testid="electrical-result-status") {{ result.finding.resultStatus.toUpperCase() }}
+          dt Claim class
+          dd {{ result.finding.claimClass }}
+          dt Model origin
+          dd {{ result.finding.modelOrigin }}
+          dt Method relationship
+          dd {{ result.finding.methodRelationship }}
+          dt Validates theory
+          dd {{ result.finding.validatesTheory ? 'Yes' : 'No' }}
+          dt Source revision
+          dd {{ result.finding.sourceRevision }}
+          dt Source locator
+          dd {{ result.finding.sourceLocator }}
+        h4 What changed
+        p {{ result.finding.changed }}
+        h4 Why
+        p {{ result.finding.cause }}
+        h4 Equation
+        p
+          code {{ result.finding.equation }}
+        h4 Assumptions
+        ul
+          li(v-for="assumption in result.finding.assumptions", :key="assumption") {{ assumption }}
+        h4 Establishes
+        p {{ result.finding.establishes }}
+        h4 Does not establish
+        p {{ result.finding.doesNotEstablish }}
+        h4 Caveats
+        ul
+          li(v-for="caveat in result.finding.caveats", :key="caveat") {{ caveat }}
+        h4 Evidence references
+        ul(data-testid="electrical-evidence-refs")
+          li(v-for="evidenceRef in result.finding.evidenceRefs", :key="evidenceRef")
+            a(:href="evidenceHref(evidenceRef)") {{ evidenceRef }}
+        p(data-testid="electrical-validation-boundary") No inferred residual, empirical device comparison, practical-realization validation, or theory validation is claimed by this identity network.
+    section(v-if="depth === 'technical'", class="dimension-builder-disclosure", data-testid="electrical-technical-disclosure")
+      h3 Technical assumptions and realization boundary
+      ul
+        li(v-for="assumption in simulation.assumptions", :key="assumption") {{ assumption }}
+      p {{ simulation.numericalMethod?.description }}
+      p {{ simulation.visualization.reducedMotionBehavior }}
 </template>
 
 <style scoped>
