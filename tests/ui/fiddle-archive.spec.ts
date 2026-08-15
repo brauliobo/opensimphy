@@ -118,4 +118,25 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(iframe.attributes('allow-same-origin')).toBeUndefined()
     expect(wrapper.get('.fiddle-editor-link').attributes('href')).toBe(record.sourceUrl)
   })
+
+  it('resets external preview activation when the record changes', async () => {
+    const firstRecord = registry.records[0]!
+    const secondRecord = registry.records[1]!
+    const router = createTestRouter()
+    await router.push(`/labs/simulations/${firstRecord.slug}`)
+    const wrapper = mount(FiddleRecordView, { props: { slug: firstRecord.slug }, global: { plugins: [router] } })
+    await flushPromises()
+
+    await wrapper.get('[data-testid="fiddle-live-activate"]').trigger('click')
+    expect(wrapper.get('[data-testid="fiddle-live-iframe"]').attributes('src')).toBe(firstRecord.embedUrl)
+
+    await wrapper.setProps({ slug: secondRecord.slug })
+    await flushPromises()
+
+    expect(wrapper.find('[data-testid="fiddle-live-iframe"]').exists()).toBe(false)
+    expect(wrapper.get('[data-testid="fiddle-live-activate"]').exists()).toBe(true)
+
+    await wrapper.get('[data-testid="fiddle-live-activate"]').trigger('click')
+    expect(wrapper.get('[data-testid="fiddle-live-iframe"]').attributes('src')).toBe(secondRecord.embedUrl)
+  })
 })

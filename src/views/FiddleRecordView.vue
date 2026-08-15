@@ -192,7 +192,7 @@ function formatFlagValue(key: keyof FiddleFlags): string {
           strong(:class="{ 'is-flagged': flagEnabled(flag.key) }") {{ formatFlagValue(flag.key) }}
       p.fiddle-active-flags(v-if="activeFlags.length") Active annotations: {{ activeFlags.map(({ label }) => label).join(', ') }}.
 
-    FiddleLiveFrame(:record="record")
+    FiddleLiveFrame(:key="record.slug" :record="record")
 
     nav.fiddle-record-navigation(aria-label="Adjacent archived Fiddle records")
       RouterLink.fiddle-adjacent(v-if="previousRecord" :to="recordLocation(previousRecord)")
