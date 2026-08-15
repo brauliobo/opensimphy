@@ -1,12 +1,12 @@
 export interface SimulationAssetManifest {
-  schema: 4
+  schema: 5
   version: string
   scalarTypes: Array<'real-double' | 'complex-double'>
   revisions: Record<string, { url: string; commit: string; tree: string }>
   partitions: Record<SimulationAssetPartitionName, SimulationAssetPartition>
 }
 
-export type SimulationAssetPartitionName = 'core' | 'real' | 'complex'
+export type SimulationAssetPartitionName = 'shared' | 'gmsh' | 'separate-real' | 'separate-complex' | 'combined-real' | 'combined-complex'
 export interface SimulationAssetPartition {
   name: SimulationAssetPartitionName
   cacheName: string
@@ -39,6 +39,7 @@ export interface MicrostripResult {
   vector: ViewBlock
   logs: string[]
   memoryBytes: number
+  resourceAudit: ResourceAudit
   snapshotBytes: number
   loadedPartitions: SimulationAssetPartitionName[]
   workerId: string
@@ -48,6 +49,42 @@ export interface MicrostripResult {
   convergence: ConvergenceGroup[]
   nativeProbes: NativeProbe[]
   complexProbes: ComplexProbe[]
+}
+
+export interface NativeBridgeAudit {
+  serverIdentity: number
+  lastGetdpServerIdentity: number
+  sharedServer: boolean
+  getdpCalls: number
+  loopInitializeCalls: number
+  loopIncrementCalls: number
+  jsonImportCalls: number
+  jsonExportCalls: number
+}
+
+export interface ResourceAudit {
+  profile: 'combined' | 'separate'
+  scalarType: ProjectDescriptor['scalarType']
+  startupMilliseconds: number
+  moduleStartupMilliseconds: Record<string, number>
+  moduleWasmMemoryBytes: Record<string, number>
+  wasmMemoryBytes: number
+  memfsFiles: number
+  memfsBytes: number
+  cachedPartitionBytes: number
+  repeatRunGrowthBytes: number
+  modelEntities: number
+  views: number
+  nativeBridge?: NativeBridgeAudit
+}
+
+export interface LoopControlResponse {
+  projectId: string
+  revision: number
+  database: string
+  hasNext: boolean
+  total?: number
+  nativeBridge: NativeBridgeAudit
 }
 
 export interface NativeProbe {
@@ -141,6 +178,7 @@ export interface ProjectEnvelope {
   defaults: string
   descriptor: ProjectDescriptor
   sidecar: PhysicalGroupSidecar
+  loopIndex?: number
 }
 
 export interface ProjectResponse {
@@ -171,6 +209,7 @@ export type OnelabWorkerRequest =
   | { type: 'open-microstrip'; requestId: string }
   | { type: 'open-project'; requestId: string; projectId: string }
   | { type: 'project'; requestId: string; envelope: ProjectEnvelope }
+  | { type: 'loop-control'; requestId: string; operation: 'initialize' | 'increment'; envelope: ProjectEnvelope }
   | { type: 'get-cube-scene'; requestId: string }
   | { type: 'get-rendering-scene'; requestId: string }
 
@@ -180,6 +219,7 @@ export type OnelabWorkerResponse =
   | { type: 'result'; requestId: string; result: MicrostripResult }
   | { type: 'project-opened'; requestId: string; project: ProjectBootstrap }
   | { type: 'project-response'; requestId: string; response: ProjectResponse }
+  | { type: 'loop-control-response'; requestId: string; response: LoopControlResponse }
   | { type: 'scene'; requestId: string; scene: SimulationScene }
   | { type: 'error'; requestId: string; error: string }
 import type { SimulationScene } from './scene'

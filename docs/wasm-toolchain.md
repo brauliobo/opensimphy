@@ -45,7 +45,7 @@ The Phase 2 microstrip geometry is generated from the same pinned upstream bytes
 
 `npm run wasm:reference` independently compiles native Gmsh, GetDP, and real-double PETSc from the same revisions. It records the actual compiler identity and executable hash, PETSc/GetDP configuration hashes, and pinned BLAS/LAPACK provenance. It compares regenerated reference bytes with the tracked file and fails on drift; `UPDATE_REFERENCE=1` is required for an intentional replacement. Browser and native log parsers are separate implementations. Both fail closed on explicit PETSc divergence, malformed or non-finite evidence, unexpected solve structure, and unmet fixture-owned absolute/relative criteria when PETSc emits no reason. Nonlinear certification additionally requires contiguous bounded iterations, monotone finite absolute/relative histories, and explicit final absolute and relative limits. The production Playwright gate compares every structured solve boundary and uses dedicated scalar-sample, scalar-aggregate, and vector tolerances at deterministic physical coordinates. Final KSP norms near machine precision are not compared as raw x86/WASM values because BLAS reduction order differs between those targets.
 
-Deployment has two explicit profiles. GitHub Pages, Docker-capable CI, and the local production gate use `npm run build:deploy`; Pages wraps it with SPA fallback generation. The command removes source/build/output/staging caches, builds canonical sources in Docker, verifies staging, and invokes Vite with `VITE_ONELAB_ENABLED=true`. The production Playwright server also sets the flag explicitly. `VITE_BASE_PATH` remains inherited by the Vite build, and `.github/workflows/browser-onelab.yml` also runs native-reference drift and production E2E.
+Deployment has two explicit profiles. GitHub Pages and the local production gate use `npm run build:deploy`; Pages wraps it with SPA fallback generation. The command verifies an already staged exact runtime and invokes Vite with `VITE_ONELAB_ENABLED=true`; it never compiles or generates a release. Compilation, staging, deterministic candidate packaging, and guarded publication are explicit commands and workflows described in [WASM release distribution](wasm-releases.md). `VITE_BASE_PATH` remains inherited by the Vite build, and source CI still performs two isolated canonical builds, native-reference drift, and production E2E.
 
 Netlify sets `VITE_ONELAB_ENABLED=false` and runs the ordinary no-Docker `npm run build`. That profile omits the ONELAB Labs navigation card and route, so `/labs/onelab` reaches the ordinary catch-all instead of loading simulation code. Netlify may enable the flag only after an external process stages this exact immutable locked asset tree before its Vite build; there is intentionally no invented download URL or committed binary fallback.
 
@@ -53,13 +53,40 @@ The baseline Gmsh build applies `optional-quad-predicate.patch`: in an upstream 
 
 ## Phase 4 Artifact Size
 
-Measured from content version `02c171442cbddc2e0252` on 2026-08-14 with Node's gzip level 9 and Brotli quality 11:
+<!-- profile-measurements:phase4:start -->
+Measured from content version `8b4dd5c93e4141bd5be9` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11:
 
-| Module | Raw bytes | gzip bytes | Brotli bytes |
-| --- | ---: | ---: | ---: |
-| OCC Gmsh | 39,228,110 | 10,825,120 | 7,388,848 |
-| Real GetDP/PETSc | 31,154,832 | 6,880,639 | 4,650,219 |
-| Complex GetDP/PETSc | 31,638,732 | 7,220,561 | 4,778,829 |
-| Total | 102,021,674 | 24,926,320 | 16,817,896 |
+| Browser partition | Files | Raw bytes | gzip bytes | Brotli bytes |
+| --- | ---: | ---: | ---: | ---: |
+| OCC Gmsh | 5 | 43,034,272 | 10,271,181 | 6,953,724 |
+| Real GetDP/PETSc | 3 | 34,894,073 | 7,312,670 | 4,708,965 |
+| Complex GetDP/PETSc | 2 | 35,181,042 | 7,663,616 | 4,845,730 |
+| Total module partitions | 10 | 113,109,387 | 25,247,467 | 16,508,419 |
 
-Warm-up loads OCC Gmsh and real GetDP/PETSc first (12,039,067 Brotli bytes). The complex solver remains lazy and adds 4,778,829 Brotli bytes only when a complex project is opened.
+The separate real warm-up fetches exactly 43 files (the manifest plus `shared + gmsh + separate-real`) totaling 11,743,225 Brotli bytes. Opening a complex project adds the complete `separate-complex` partition; the cumulative exact load set is 16,588,955 Brotli bytes.
+<!-- profile-measurements:phase4:end -->
+
+## Phase 5 Combined Profiles
+
+The canonical build now also emits `combined-real` and `combined-complex`. GetDP is configured with `ENABLE_GMSH=ON`; its generated `GetDPConfig.h` must contain `HAVE_GMSH`, while the installed Gmsh private SDK provides the exact generated `GmshConfig.h` and developer headers. This suppresses GetDP's duplicate allocation/list/tree implementations. Gmsh's canonical `HAVE_ONELAB` definition suppresses GetDP's singleton definition, and the build gate requires exactly one strong `onelab::server::_server` plus at most one strong utility definition across both archives. SLEPc is explicitly disabled.
+
+The generated Gmsh API and the combined bridge are exported from one Emscripten module per scalar profile. They share one `wasmMemory`, MEMFS and the single strong `onelab::server::_server`. Check and compute import UI state through Gmsh's API into that server and pass its exact pointer to `getdp()`; no database is serialized between module copies. Native counters expose the server pointer, last pointer passed to GetDP, GetDP calls, upstream loop calls, and bridge JSON imports/exports. Production E2E requires equal nonzero server pointers and zero bridge JSON counts. Browser builds compile out native subprocess/socket facilities and retain link-time names until deterministic certification evidence is emitted. Every standalone and combined module is checked against its pre-strip symbol inventory, linker map, and final `wasm-objdump -x` import section; process, socket, and Emscripten syscall boundaries fail the build. Controlled checker fixtures prove each evidence path rejects a forbidden symbol. `VITE_ONELAB_PROFILE=separate` retains the Phase 4 modules strictly for regression comparison; combined is the default and the Phase 5 gate. CI runs the full Phase 0-4 production suite against both profiles, while Phase 5 loop tests remain combined-only.
+
+Loop execution calls the pinned upstream `onelabUtils::initializeLoops()` and `onelabUtils::incrementLoops()` exports. An independent native executable links Gmsh and GetDP against one singleton for each PETSc scalar profile, invokes those exact loop functions, runs GetDP at every point, and emits ordered values, outputs, call counts, and pointer identities. `phase5-reference.json` is derived directly from that trace; JavaScript neither enumerates nor reorders loop coordinates. The real fixture covers levels `3 -> 2 -> 1` in native order and the complex fixture covers a level-1 loop. Point ordinals are replayed through those native calls after worker recreation, so cancellation retains completed history and resumes the first uncommitted point without a JavaScript loop implementation. The browser gate performs eight real and two complex loop computes, verifies progress and full output histories against the pinned native Phase 5 reference, and checks the native call counters.
+
+<!-- profile-measurements:phase5:start -->
+Measured from content version `8b4dd5c93e4141bd5be9` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11. Every cumulative load set includes the fetched `manifest.json` exactly once:
+
+| Browser load set | Files | Raw bytes | gzip bytes | Brotli bytes |
+| --- | ---: | ---: | ---: | ---: |
+| Combined real | 40 | 78,283,472 | 17,558,386 | 11,622,565 |
+| Combined real + complex | 45 | 156,523,603 | 35,373,372 | 23,297,051 |
+| Separate real | 43 | 78,273,246 | 17,681,536 | 11,743,225 |
+| Separate real + complex | 45 | 113,454,288 | 25,345,152 | 16,588,955 |
+<!-- profile-measurements:phase5:end -->
+
+The manifest separates `shared` fixtures/catalog data, standalone `gmsh`, separate scalar solvers, and combined scalar modules; declarations, linker maps, symbol inventories, and object dumps remain reproducible build outputs but are not staged for browsers. Combined warm-up loads `shared + combined-real`; separate warm-up loads `shared + gmsh + separate-real`. Complex partitions stay lazy. `npm run wasm:measure` deterministically rewrites `profile-measurements.json` and both generated tables from the exact staged path sets; `node tools/wasm/measure-profiles.mjs --check` fully recompresses them, while the focused test verifies the current manifest fingerprint, partition/load-set identities, totals, and documentation blocks. Startup timing is measured independently in the production browser; unavailable offline measurements remain `null`, never inferred from transfer size. Runtime audits report per-module startup and memory, aggregate bytes across all unique resident `wasmMemory.buffer` objects, project MEMFS files/bytes, cached partition bytes, repeat-run aggregate WASM growth, model entities, views, and history points/bytes. Production E2E requires the expected aggregate step-up when the complex module becomes resident and stability over repeated alternating runs and cancellation/recreation.
+
+Project archive v2 export is canonical UTF-8 JSON with sorted file entries and SHA256 for every byte payload. It preserves the edited current ONELAB database separately from the parser-native default database used for read-only restoration and reset. Import canonicalizes and validates both databases, validates current editable values against the defaults, and restores both into `ProjectSession`; no v1 migration is supported. Import also rejects unsafe/duplicate paths, invalid hashes/base64, descriptor/file-list or entry-file mismatches, project/scalar identity drift, invalid physical-group sidecars, and histories whose coordinates or outputs do not match their ONELAB databases. Browser E2E downloads, imports after reload, edits the restored state, and verifies reset returns to parser-native defaults. OPFS persistence is optional: supported browsers store and verify the same canonical archive bytes; unsupported browsers report `unsupported` and leave import/export functional.
+
+SLEPc remains disabled and deferred because Phase 5 adds no eigen fixture. It will be introduced only with an explicit eigenproblem requirement and native reference gate.

@@ -2,6 +2,8 @@
 
 import { importStep } from 'meshstep'
 import { sceneTransferables, surfaceSignatures, type SimulationScene } from '../simulation/scene'
+import { verifySimulationManifest } from '../simulation/asset-manifest'
+import artifactLock from '../../tools/wasm/artifacts.lock.json'
 
 const worker = self as unknown as DedicatedWorkerGlobalScope
 
@@ -12,13 +14,14 @@ async function sha256(bytes: Uint8Array) {
 
 async function loadFixture() {
   const root = new URL(`${import.meta.env.BASE_URL}simulation/`, worker.location.origin)
-  const manifest = await fetch(new URL('manifest.json', root), { cache: 'no-store' }).then((response) => response.json()) as {
-    schema: 4
-    partitions: { core: { files: Array<{ path: string; bytes: number; sha256: string }> } }
-  }
-  const file = manifest.partitions.core.files.find(({ path }) => path.endsWith('/fixtures/cube/cube.step'))
+  const manifestResponse = await fetch(new URL('manifest.json', root), { cache: 'no-store' })
+  if (!manifestResponse.ok) throw new Error(`simulation manifest: HTTP ${manifestResponse.status}`)
+  const manifest = await verifySimulationManifest(await manifestResponse.json(), artifactLock.contentVersion)
+  const file = manifest.partitions.shared.files.find(({ path }) => path === `${artifactLock.contentVersion}/fixtures/cube/cube.step`)
   if (!file) throw new Error('locked STEP cube fixture is absent')
-  const bytes = new Uint8Array(await fetch(new URL(file.path, root), { cache: 'no-store' }).then((response) => response.arrayBuffer()))
+  const fixtureResponse = await fetch(new URL(file.path, root), { cache: 'no-store' })
+  if (!fixtureResponse.ok) throw new Error(`locked STEP cube fixture: HTTP ${fixtureResponse.status}`)
+  const bytes = new Uint8Array(await fixtureResponse.arrayBuffer())
   if (bytes.byteLength !== file.bytes || await sha256(bytes) !== file.sha256) throw new Error('STEP cube fixture failed lock verification')
   return new TextDecoder().decode(bytes)
 }

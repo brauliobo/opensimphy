@@ -1,0 +1,16 @@
+
+if(OPENSIMPHY_COMBINED_BRIDGE)
+  add_executable(opensimphy_combined ${OPENSIMPHY_COMBINED_BRIDGE})
+  target_include_directories(opensimphy_combined PRIVATE ${OPENSIMPHY_GMSH_INCLUDE}/gmsh)
+  target_link_libraries(opensimphy_combined lib ${LINK_LIBRARIES}
+    "-Wl,--start-group" ${OPENSIMPHY_GMSH_STATIC_DEPENDENCIES} "-Wl,--end-group")
+  set_target_properties(opensimphy_combined PROPERTIES OUTPUT_NAME combined SUFFIX ".mjs")
+  target_link_options(opensimphy_combined PRIVATE
+    "-O3" "-g3" "-fexceptions"
+    "-Wl,-Map=${OPENSIMPHY_LINK_MAP}"
+    "-sMODULARIZE=1" "-sEXPORT_NAME=createCombinedModule" "-sEXPORT_ES6=1"
+    "-sALLOW_MEMORY_GROWTH=1" "-sINITIAL_MEMORY=96MB" "-sMAXIMUM_MEMORY=2GB"
+    "-sSTACK_SIZE=4MB" "-sFORCE_FILESYSTEM=1" "-sENVIRONMENT=web,worker"
+    "-sEXPORTED_FUNCTIONS=@${OPENSIMPHY_GMSH_EXPORTS}"
+    "-sEXPORTED_RUNTIME_METHODS=['FS','ccall','cwrap','getValue','setValue','UTF8ToString','stringToUTF8','lengthBytesUTF8','wasmMemory','addFunction','removeFunction']")
+endif()

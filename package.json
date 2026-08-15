@@ -11,7 +11,7 @@
     "data:acquire": "node scripts/acquire-sources.mjs",
     "data:generate": "node scripts/generate-data.mjs",
     "build": "vue-tsc --noEmit && vite build",
-    "build:deploy": "rm -rf tools/wasm/.cache tools/wasm/out public/simulation dist && npm run wasm:build && npm run simulation:verify && VITE_ONELAB_ENABLED=true npm run build",
+    "build:deploy": "npm run simulation:verify && VITE_ONELAB_ENABLED=true npm run build",
     "build:pages": "npm run build:deploy && node scripts/create-pages-fallback.mjs",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
@@ -23,12 +23,19 @@
     "wasm:acquire": "tools/wasm/acquire-sources.sh",
     "wasm:build:gmsh": "tools/wasm/build.sh gmsh",
     "wasm:build:getdp": "tools/wasm/build.sh getdp",
+    "wasm:build:combined": "tools/wasm/build.sh combined",
     "wasm:reproducibility": "tools/wasm/verify-reproducible-build.sh",
     "wasm:reference": "tools/wasm/native-reference.sh",
+    "wasm:measure": "node tools/wasm/measure-profiles.mjs",
     "wasm:lock:update": "node tools/wasm/update-artifact-lock.mjs --intentional",
     "simulation:stage": "node tools/wasm/stage-assets.mjs",
     "simulation:verify": "node tools/wasm/verify-staged-assets.mjs",
+    "simulation:package": "node tools/wasm/package-release.mjs",
+    "simulation:package:verify": "node tools/wasm/package-release.mjs --verify-determinism",
+    "simulation:release:verify": "node tools/wasm/verify-release.mjs",
+    "simulation:fetch": "node tools/wasm/fetch-release.mjs",
     "test:simulation": "vitest run tests/engine/onelab.spec.ts && playwright test tests/e2e/onelab.spec.ts --config playwright.simulation.config.ts",
+    "test:simulation:separate": "VITE_ONELAB_PROFILE=separate playwright test tests/e2e/onelab.spec.ts --config playwright.separate.config.ts",
     "verify": "npm run data:generate && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
@@ -53,6 +60,7 @@
     "vite-node": "3.2.4",
     "vite-plugin-pwa": "0.21.1",
     "vitest": "3.2.7",
-    "vue-tsc": "2.2.0"
+    "vue-tsc": "2.2.0",
+    "wabt": "^1.0.37"
   }
 }

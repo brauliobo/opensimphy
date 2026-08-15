@@ -6,6 +6,8 @@ import { ProjectSession } from '../../src/simulation/project-session'
 import { canonicalMshRecords } from '../../src/simulation/msh'
 import { certifyConvergence } from '../../src/simulation/convergence'
 import type { ConvergenceCriteria } from '../../src/simulation/types'
+import { onelabLoopValues } from '../../src/simulation/loops'
+import { exportProjectArchive, importProjectArchive } from '../../src/simulation/project-archive'
 
 const database = canonicalizeOnelab({ onelab: { version: '1.3', parameters: [
   { type: 'string', name: 'Parameters/Label', values: ['default'], changedValue: 31, visible: true, readOnly: false, clients: { Gmsh: 0, GetDP: 0 } },
@@ -13,6 +15,63 @@ const database = canonicalizeOnelab({ onelab: { version: '1.3', parameters: [
 ] } })
 
 describe('ONELAB canonical project state', () => {
+  it('extracts loop coordinates without implementing native increment semantics in JavaScript', () => {
+    const loopDatabase = canonicalizeOnelab({ onelab: { version: '1.3', parameters: [
+      { type: 'number', name: 'Parameters/outer', values: [9], min: 1, max: 2, step: 1, changedValue: 31, visible: true, readOnly: false, attributes: { Loop: '1' } },
+      { type: 'number', name: 'Parameters/middle', values: [9], min: 10, max: 20, step: 10, changedValue: 31, visible: true, readOnly: false, attributes: { Loop: '2' } },
+      { type: 'number', name: 'Parameters/inner', values: [3], min: 3, max: 4, step: 0, choices: [3, 4], changedValue: 31, visible: true, readOnly: false, attributes: { Loop: '3' } },
+    ] } })
+    expect(onelabLoopValues(loopDatabase)).toEqual({
+      'Parameters/inner': 3,
+      'Parameters/middle': 9,
+      'Parameters/outer': 9,
+    })
+  })
+
+  it('roundtrips deterministic archive v2 current/default databases and rejects malformed archives', async () => {
+    const descriptor = { id: 'archive', title: 'Archive', kind: 'solve', source: '', directory: 'archive', files: ['b.pro', 'a.geo'], geometry: 'a.geo', problem: 'b.pro', dimension: 2, scalarType: 'real-double', resolution: 'A', postOperations: ['Map'], setNumbers: {}, parameterNames: {} } as const
+    const files = [{ path: 'b.pro', bytes: new Uint8Array([2]) }, { path: '/a.geo', bytes: new Uint8Array([1]) }]
+    const groups = { schema: 1 as const, projectId: 'archive', groups: [] }
+    const current = setParameterValue(database, 'Parameters/Mesh', 2)
+    const first = await exportProjectArchive(descriptor, files, current, database, groups)
+    const second = await exportProjectArchive(descriptor, [...files].reverse(), current, database, groups)
+    expect(first).toEqual(second)
+    const imported = await importProjectArchive(first)
+    expect(imported.files.map(({ path }) => path)).toEqual(['a.geo', 'b.pro'])
+    expect(imported.current).toBe(current)
+    expect(imported.defaults).toBe(database)
+    const canonical = (value: any): string => Array.isArray(value) ? `[${value.map(canonical).join(',')}]`
+      : value && typeof value === 'object' ? `{${Object.entries(value).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => `${JSON.stringify(key)}:${canonical(item)}`).join(',')}}`
+        : JSON.stringify(value)
+    const archiveBytes = (value: unknown) => new TextEncoder().encode(`${canonical(value)}\n`)
+    const source = JSON.parse(new TextDecoder().decode(first))
+    const malformed: Array<[string, (archive: any) => void, string]> = [
+      ['unsupported schema', (archive) => { archive.schema = 'opensimphy-project-archive-v1' }, 'unsupported project archive'],
+      ['unsafe traversal', (archive) => { archive.files[0].path = '../a.geo' }, 'unsafe archive path'],
+      ['duplicate path', (archive) => { archive.files[1].path = archive.files[0].path }, 'uniquely sorted'],
+      ['unsorted files', (archive) => { archive.files.reverse() }, 'uniquely sorted'],
+      ['negative byte count', (archive) => { archive.files[0].bytes = -1 }, 'file metadata is invalid'],
+      ['malformed hash', (archive) => { archive.files[0].sha256 = 'bad' }, 'file metadata is invalid'],
+      ['malformed base64', (archive) => { archive.files[0].base64 = '*' }, 'invalid base64'],
+      ['changed bytes', (archive) => { archive.files[0].base64 = btoa('changed') }, 'hash mismatch'],
+      ['foreign scalar profile', (archive) => { archive.project.scalarProfile = 'complex-double' }, 'descriptor identity is inconsistent'],
+      ['missing descriptor file', (archive) => { archive.project.descriptor.files = ['b.pro'] }, 'descriptor file list'],
+      ['foreign project ID', (archive) => { archive.project.id = 'foreign' }, 'descriptor identity is inconsistent'],
+      ['invalid history', (archive) => { archive.history = [{ index: 1, values: {}, outputs: {}, database }] }, 'history point 0 is inconsistent'],
+      ['invalid current database', (archive) => { archive.project.onelab.current = '{}' }, 'invalid ONELAB JSON database'],
+      ['invalid default database', (archive) => { archive.project.onelab.defaults = '{}' }, 'invalid ONELAB JSON database'],
+      ['unknown editable current parameter', (archive) => { archive.project.onelab.current = canonicalizeOnelab({ onelab: { version: '1.3', parameters: [...JSON.parse(current).onelab.parameters, { type: 'string', name: 'Injected', values: ['x'], changedValue: 31, visible: true, readOnly: false }] } }) }, 'unknown ONELAB parameter'],
+    ]
+    for (const [name, mutate, message] of malformed) {
+      const archive = structuredClone(source)
+      mutate(archive)
+      await expect(importProjectArchive(archiveBytes(archive)), name).rejects.toThrow(message)
+    }
+    await expect(importProjectArchive(new Uint8Array()), 'empty archive').rejects.toThrow('empty')
+    await expect(importProjectArchive(new Uint8Array([0xff])), 'invalid UTF-8').rejects.toThrow()
+    await expect(importProjectArchive(new TextEncoder().encode(JSON.stringify(source))), 'non-canonical encoding').rejects.toThrow('not canonical')
+  })
+
   it('canonicalizes MSH2 topology independently of whitespace and record order', () => {
     const left = '$Nodes\n2\n2 1 0 0\n1 0 0 0\n$EndNodes\n$Elements\n1\n1 15 0 1\n$EndElements\n'
     const right = '$Nodes 2\n1   0 0 0\n2 1 0 0\n$EndNodes\n$Elements 1\n1 15 0 1\n$EndElements\n'
@@ -41,6 +100,14 @@ describe('ONELAB canonical project state', () => {
     vi.unstubAllGlobals()
   })
 
+  it('restores imported current state while retaining parser-native reset defaults', () => {
+    const current = setParameterValue(database, 'Parameters/Mesh', 2)
+    const session = new ProjectSession('imported')
+    session.open([], database, undefined, current)
+    expect(parseOnelab(session.database).onelab.parameters.find(({ name }) => name === 'Parameters/Mesh')?.values).toEqual([2])
+    expect(session.envelope('reset')).toMatchObject({ database: '', defaults: database })
+  })
+
   it('validates envelope values against parser-native declarations', () => {
     const declarations = parseOnelab(database)
     declarations.onelab.parameters.push({ type: 'number', name: 'GetDP/Action', values: [0], min: 0, max: 1, step: 1, changedValue: 31, visible: false, readOnly: true, clients: { GetDP: 0 } })
@@ -48,8 +115,14 @@ describe('ONELAB canonical project state', () => {
     const edited = setParameterValue(database, 'Parameters/Mesh', 2)
     expect(validateEnvelopeValues(declared, edited)).toEqual([{ name: 'Parameters/Mesh', type: 'number', values: [2] }])
     expect(parseOnelab(mergeValidatedValues(declared, edited)).onelab.parameters.find(({ name }) => name === 'GetDP/Action')).toBeTruthy()
+    const nativeOutput = parseOnelab(edited)
+    nativeOutput.onelab.parameters.push({ type: 'string', name: 'GetDP/{Output files', values: ['field.pos'], changedValue: 31, visible: true, readOnly: true })
+    nativeOutput.onelab.parameters.push({ type: 'string', name: 'Gmsh/Action', values: ['refresh'], changedValue: 31, visible: false, readOnly: false })
+    expect(validateEnvelopeValues(declared, canonicalizeOnelab(nativeOutput))).toEqual([{ name: 'Parameters/Mesh', type: 'number', values: [2] }])
     const unknown = parseOnelab(edited); unknown.onelab.parameters.push({ type: 'string', name: 'Injected', values: ['x'], changedValue: 31, visible: true, readOnly: false })
     expect(() => validateEnvelopeValues(declared, canonicalizeOnelab(unknown))).toThrow('unknown ONELAB parameter Injected')
+    const nativeLoop = parseOnelab(edited); nativeLoop.onelab.parameters.push({ type: 'number', name: '0Metamodel/Loop', values: [1], min: -1e200, max: 1e200, step: 0, changedValue: 31, visible: false, readOnly: false })
+    expect(() => validateEnvelopeValues(declared, canonicalizeOnelab(nativeLoop))).not.toThrow()
     const wrongType = parseOnelab(edited); Object.assign(wrongType.onelab.parameters.find(({ name }) => name === 'Parameters/Mesh')!, { type: 'string', values: ['2'] })
     expect(() => validateEnvelopeValues(declared, canonicalizeOnelab(wrongType))).toThrow('has type string; expected number')
     const readonly = parseOnelab(declared); (readonly.onelab.parameters.find(({ name }) => name === 'GetDP/Action') as any).values = [1]

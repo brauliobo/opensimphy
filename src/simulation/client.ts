@@ -1,4 +1,4 @@
-import type { MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectResponse, SimulationAssetManifest } from './types'
+import type { LoopControlResponse, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectResponse, SimulationAssetManifest } from './types'
 import type { SimulationScene } from './scene'
 import { terminateWorker, trackWorker } from './diagnostics'
 
@@ -24,6 +24,7 @@ export class OnelabClient {
        else if (event.data.type === 'result') pending.resolve(event.data.result)
        else if (event.data.type === 'project-opened') pending.resolve(event.data.project)
        else if (event.data.type === 'project-response') pending.resolve(event.data.response)
+       else if (event.data.type === 'loop-control-response') pending.resolve(event.data.response)
        else if (event.data.type === 'scene') pending.resolve(event.data.scene)
        else pending.resolve(event.data.manifest)
     })
@@ -57,6 +58,10 @@ export class OnelabClient {
 
   startProject(envelope: ProjectEnvelope, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
     return this.request<ProjectResponse>({ type: 'project', envelope }, enteredNative)
+  }
+
+  startLoopControl(operation: 'initialize' | 'increment', envelope: ProjectEnvelope) {
+    return this.request<LoopControlResponse>({ type: 'loop-control', operation, envelope })
   }
 
   getCubeScene() { return this.request<SimulationScene>({ type: 'get-cube-scene' }).promise }

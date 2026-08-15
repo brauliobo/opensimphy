@@ -12,6 +12,8 @@ import { fieldCsv, fieldPos, probeScenePoint } from '../simulation/results'
 import { MeshstepClient } from '../simulation/viewer-client'
 import { projectCatalog } from '../simulation/project-catalog'
 import { PhysicalGroupEditor } from '../simulation/physical-groups'
+import { onelabLoopValues, onelabOutputs, type LoopHistoryPoint } from '../simulation/loops'
+import { exportProjectArchive, importProjectArchive, loadPersistedProjectArchive, persistProjectArchive, projectPersistenceStatus } from '../simulation/project-archive'
 
 const client = new OnelabClient()
 const session = new ProjectSession()
@@ -41,6 +43,12 @@ const selectedProjectId = ref('microstrip')
 const groupName = ref('selection')
 const selectedGroupId = ref('')
 const authoredGroups = ref<ReturnType<PhysicalGroupEditor['sidecar']>['groups']>([])
+const loopHistory = ref<LoopHistoryPoint[]>([])
+const loopProgress = ref(0)
+const loopTotal = ref(0)
+const loopRunning = ref(false)
+let loopCancelled = false
+const opfsStatus = ref<'available' | 'unsupported' | 'saved' | 'loaded' | 'error'>(projectPersistenceStatus())
 let groupEditor = new PhysicalGroupEditor(selectedProjectId.value)
 const parameters = computed(() => {
   sessionVersion.value
@@ -110,6 +118,9 @@ async function selectProject(event: Event) {
     session.open(project.files, project.defaults, project.descriptor)
     committedResultRevision.value = -1
     result.value = undefined
+    loopHistory.value = []
+    loopProgress.value = 0
+    loopTotal.value = 0
     authoritativeSelection.value = undefined
     restoreGroups(selectedProjectId.value)
     sessionVersion.value++
@@ -154,13 +165,13 @@ async function solve() {
   await execute('compute')
 }
 
-async function execute(action: 'check' | 'compute' | 'reset') {
+async function execute(action: 'check' | 'compute' | 'reset', loopIndex?: number) {
   if (!session.ready) await warm()
   if (!session.ready) return
   state.value = 'running'
   error.value = ''
   nativeOperation.value = ''
-  const request = client.startProject(session.envelope(action, groupEditor.sidecar()))
+  const request = client.startProject({ ...session.envelope(action, groupEditor.sidecar()), ...(loopIndex === undefined ? {} : { loopIndex }) })
   activeRequestId.value = request.requestId
   try {
     const response = await request.promise
@@ -169,7 +180,7 @@ async function execute(action: 'check' | 'compute' | 'reset') {
     if (!outcome.committed) {
       error.value = `Ignored ${outcome.reason} response for project revision ${response.revision}`
       state.value = 'stale'
-      return
+      return undefined
     }
     if (response.result) {
       result.value = response.result
@@ -182,12 +193,61 @@ async function execute(action: 'check' | 'compute' | 'reset') {
     }
     sessionVersion.value++
     state.value = 'complete'
+    return response
   } catch (reason) {
     if (activeRequestId.value !== request.requestId || state.value === 'cancelled') return
     error.value = reason instanceof Error ? reason.message : String(reason)
     state.value = 'error'
+    return undefined
   } finally {
     if (activeRequestId.value === request.requestId && state.value === 'running') state.value = 'ready'
+  }
+}
+
+async function runLoop() {
+  if (!session.ready) await warm()
+  if (!session.ready) return
+  loopCancelled = false
+  loopRunning.value = true
+  try {
+    if (!loopTotal.value || loopHistory.value.length === loopTotal.value) {
+      state.value = 'running'
+      const request = client.startLoopControl('initialize', session.envelope('check', groupEditor.sidecar()))
+      activeRequestId.value = request.requestId
+      const initialized = await request.promise
+      session.restore(initialized.database)
+      loopHistory.value = []
+      loopProgress.value = 0
+      loopTotal.value = initialized.total ?? 0
+      if (!loopTotal.value) throw new Error('native ONELAB loop returned no points')
+      sessionVersion.value++
+    }
+    for (let index = loopHistory.value.length; index < loopTotal.value; index++) {
+      if (loopCancelled) break
+      committedResultRevision.value = -1
+      sessionVersion.value++
+      const response = await execute('compute', index)
+      if (!response?.result || loopCancelled) break
+      loopHistory.value.push({ index, values: onelabLoopValues(session.database), database: session.database, outputs: onelabOutputs(session.database) })
+      loopProgress.value = loopHistory.value.length
+      if (loopHistory.value.length < loopTotal.value) {
+        state.value = 'running'
+        const request = client.startLoopControl('increment', session.envelope('check', groupEditor.sidecar()))
+        activeRequestId.value = request.requestId
+        const incremented = await request.promise
+        if (!incremented.hasNext) throw new Error(`native ONELAB loop ended after ${loopHistory.value.length} of ${loopTotal.value} points`)
+        session.restore(incremented.database)
+        sessionVersion.value++
+      }
+    }
+  } catch (reason) {
+    if (!loopCancelled) {
+      error.value = reason instanceof Error ? reason.message : String(reason)
+      state.value = 'error'
+    }
+  } finally {
+    loopRunning.value = false
+    if (!loopCancelled && state.value === 'running') state.value = 'complete'
   }
 }
 
@@ -207,7 +267,71 @@ function choiceLabel(parameter: Extract<OnelabParameter, { type: 'number' }>, va
 }
 
 function cancel() {
+  loopCancelled = true
   if (client.cancel(activeRequestId.value)) state.value = 'cancelled'
+}
+
+async function exportArchive(includeHistory: boolean) {
+  if (!session.ready || !session.descriptor) return
+  const bytes = await exportProjectArchive(session.descriptor, session.files, session.database, session.defaults, groupEditor.sidecar(), includeHistory ? loopHistory.value : undefined)
+  const url = URL.createObjectURL(new Blob([bytes], { type: 'application/vnd.opensimphy.project+json' }))
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = `${session.descriptor.id}.opensimphy.json`
+  anchor.click()
+  URL.revokeObjectURL(url)
+}
+
+function applyImportedProject(archive: Awaited<ReturnType<typeof importProjectArchive>>) {
+  selectedProjectId.value = archive.descriptor.id
+  session.open(archive.files, archive.defaults, archive.descriptor, archive.current)
+  groupEditor = PhysicalGroupEditor.load(JSON.stringify(archive.physicalGroups), archive.descriptor.id)
+  authoredGroups.value = groupEditor.sidecar().groups
+  loopHistory.value = archive.history
+  loopProgress.value = archive.history.length
+  loopTotal.value = archive.history.length
+  committedResultRevision.value = -1
+  result.value = undefined
+  sessionVersion.value++
+  state.value = 'ready'
+}
+
+async function importArchive(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  error.value = ''
+  try {
+    const archive = await importProjectArchive(new Uint8Array(await file.arrayBuffer()))
+    applyImportedProject(archive)
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : String(reason)
+  } finally {
+    ;(event.target as HTMLInputElement).value = ''
+  }
+}
+
+async function saveOpfs() {
+  if (!session.ready || !session.descriptor || projectPersistenceStatus() === 'unsupported') return
+  try {
+    const bytes = await exportProjectArchive(session.descriptor, session.files, session.database, session.defaults, groupEditor.sidecar(), loopHistory.value)
+    await persistProjectArchive(session.descriptor.id, bytes)
+    opfsStatus.value = 'saved'
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : String(reason)
+    opfsStatus.value = 'error'
+  }
+}
+
+async function loadOpfs() {
+  if (projectPersistenceStatus() === 'unsupported') return
+  try {
+    const { project } = await loadPersistedProjectArchive(selectedProjectId.value)
+    applyImportedProject(project)
+    opfsStatus.value = 'loaded'
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : String(reason)
+    opfsStatus.value = 'error'
+  }
 }
 
 async function loadViewer() {
@@ -273,7 +397,7 @@ onBeforeUnmount(() => { disposed = true; removeNativeListener(); meshstep.dispos
 <template lang="pug">
 section.onelab-lab.view
   header.section-heading
-    p.eyebrow LAB / ONELAB PHASE 4
+    p.eyebrow LAB / ONELAB PHASE 5
     h1 Browser ONELAB workbench
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
   .simulation-caveat(role="note")
@@ -311,7 +435,19 @@ section.onelab-lab.view
     button(type="button" data-testid="onelab-check" @click="execute('check')" :disabled="state === 'warming' || state === 'running'") Check metadata
     button(type="button" data-testid="onelab-reset" @click="execute('reset')" :disabled="state === 'warming' || state === 'running'") Reset defaults
     button(type="button" data-testid="onelab-solve" @click="solve" :disabled="state === 'warming' || state === 'running'") Compute
+    button(type="button" data-testid="onelab-loop" @click="runLoop" :disabled="state === 'warming' || state === 'running' || loopRunning") {{ loopHistory.length && loopHistory.length < loopTotal ? 'Resume loop' : 'Run bounded loop' }}
     button(type="button" data-testid="onelab-cancel" @click="cancel" :disabled="state !== 'running'") Cancel worker
+    button(type="button" data-testid="project-export" @click="exportArchive(false)" :disabled="!session.ready") Export project
+    button(type="button" data-testid="project-export-history" @click="exportArchive(true)" :disabled="!session.ready") Export with history
+    label.text-button Project import
+      input.sr-only(type="file" accept="application/json,.json" data-testid="project-import" @change="importArchive")
+    button(type="button" data-testid="project-opfs-save" @click="saveOpfs" :disabled="!session.ready || opfsStatus === 'unsupported'") Save project in browser
+    button(type="button" data-testid="project-opfs-load" @click="loadOpfs" :disabled="opfsStatus === 'unsupported'") Load browser project
+    output(data-testid="project-opfs-status" :data-status="opfsStatus") OPFS: {{ opfsStatus }}
+  section.onelab-loop-status(data-testid="onelab-loop-status" :data-running="loopRunning")
+    progress(:max="loopTotal || 1" :value="loopProgress")
+    span {{ loopProgress }} / {{ loopTotal }} committed points
+    output.sr-only(data-testid="onelab-loop-history") {{ JSON.stringify(loopHistory) }}
   section.onelab-parameters(v-if="parameters.length" data-testid="onelab-parameters")
     label.onelab-parameter(
       v-for="parameter in parameters"
@@ -358,6 +494,7 @@ section.onelab-lab.view
       )
       small(v-if="parameter.help") {{ parameter.help }}
   p(data-testid="onelab-state" :data-state="state") State: {{ state }}
+  output.sr-only(data-testid="onelab-database") {{ session.database }}
   p(data-testid="onelab-worker" :data-worker-id="workerId" :data-request-id="activeRequestId" :data-native-operation="nativeOperation") Worker: {{ workerId }} / request {{ activeRequestId }} / {{ nativeOperation }}
   p.system-error(v-if="error" role="alert") {{ error }}
   section.viewer-workbench(v-if="displayedResult?.scene" data-testid="result-viewer")
@@ -405,7 +542,7 @@ section.onelab-lab.view
     dt Dynamic outputs
     dd(data-testid="onelab-outputs") {{ JSON.stringify(displayedResult?.outputs) }}
     dt Resource footprint
-    dd(data-testid="onelab-resources") {{ JSON.stringify({ memoryBytes: displayedResult?.memoryBytes, snapshotBytes: displayedResult?.snapshotBytes, loadedPartitions: displayedResult?.loadedPartitions }) }}
+    dd(data-testid="onelab-resources") {{ JSON.stringify({ memoryBytes: displayedResult?.memoryBytes, snapshotBytes: displayedResult?.snapshotBytes, loadedPartitions: displayedResult?.loadedPartitions, ...displayedResult?.resourceAudit, historyPoints: loopHistory.length, historyBytes: JSON.stringify(loopHistory).length }) }}
     dt Native view probes
     dd(data-testid="onelab-native-probes") {{ JSON.stringify(displayedResult?.nativeProbes) }}
     dt Complex representation probes

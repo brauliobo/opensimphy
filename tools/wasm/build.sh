@@ -37,6 +37,32 @@ docker run --rm \
   "$EMSDK_IMAGE" \
   bash "/workspace/tools/container-build.sh" "$TARGET"
 
+certify_boundary() {
+  local profile=$1 module=$2
+  (
+    cd "$OUT/$profile"
+    "$ROOT/node_modules/.bin/wasm-objdump" -x "$module.wasm" > "$module.imports.txt"
+  )
+  node "$ROOT/tools/wasm/check-forbidden-boundary.mjs" \
+    "--imports=$OUT/$profile/$module.imports.txt" \
+    "--link-map=$OUT/$profile/$module.link.map" \
+    "--symbols=$OUT/$profile/$module.pre-strip.symbols.txt"
+}
+
+if [[ "$TARGET" == all || "$TARGET" == gmsh || "$TARGET" == combined ]]; then
+  certify_boundary gmsh gmsh-core
+fi
+if [[ "$TARGET" == all || "$TARGET" == getdp ]]; then
+  for profile in getdp getdp-complex; do
+    certify_boundary "$profile" getdp
+  done
+fi
+if [[ "$TARGET" == all || "$TARGET" == combined ]]; then
+  for profile in combined-real combined-complex; do
+    certify_boundary "$profile" combined
+  done
+fi
+
 if [[ ${STAGE_ASSETS:-1} == 1 ]]; then
   node "$ROOT/tools/wasm/stage-assets.mjs" --verify-lock
 fi

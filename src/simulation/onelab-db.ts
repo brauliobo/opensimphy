@@ -85,7 +85,10 @@ export function validateEnvelopeValues(declarationsJson: string, envelopeJson: s
   const edits: OnelabValueEdit[] = []
   for (const supplied of envelope.onelab.parameters) {
     const declaration = known.get(supplied.name)
-    if (!declaration) throw new Error(`unknown ONELAB parameter ${supplied.name}`)
+    if (!declaration) {
+      if (supplied.readOnly || /^(?:GetDP|Gmsh|0Metamodel)\//.test(supplied.name)) continue
+      throw new Error(`unknown ONELAB parameter ${supplied.name}`)
+    }
     if (declaration.type !== supplied.type) throw new Error(`ONELAB parameter ${supplied.name} has type ${supplied.type}; expected ${declaration.type}`)
     if (declaration.readOnly || sameValues(declaration, supplied)) continue
     if (declaration.type === 'number') {

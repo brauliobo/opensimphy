@@ -19,7 +19,7 @@ async function verified(path, expected, label) {
 }
 
 for (const [path, expected] of Object.entries(lock.inputs)) {
-  const bytes = await readFile(join(tools, path))
+  const bytes = await readFile(path.startsWith('workspace/') ? join(root, path.slice('workspace/'.length)) : join(tools, path))
   if (sha256(bytes) !== expected) throw new Error(`${path} differs from artifacts.lock.json`)
 }
 
@@ -30,7 +30,9 @@ const fixtureSource = (path) => {
   return join(cacheRoot, 'fixtures', path)
 }
 const assets = []
-for (const [path, expected] of Object.entries(lock.outputs)) assets.push({ path, bytes: await verified(join(outputRoot, path), expected, path), sha256: expected.sha256 })
+for (const [path, expected] of Object.entries(lock.outputs)) {
+  if (path.endsWith('.mjs') || path.endsWith('.wasm')) assets.push({ path, bytes: await verified(join(outputRoot, path), expected, path), sha256: expected.sha256 })
+}
 const runtime = await readFile(join(tools, 'getdp/runtime.mjs'))
 assets.push({ path: 'getdp/runtime.mjs', bytes: runtime, sha256: sha256(runtime) })
 const catalog = await readFile(join(tools, 'fixtures/projects.json'))
@@ -42,7 +44,7 @@ const contentId = sha256(Buffer.from(JSON.stringify(identity)))
 const version = contentId.slice(0, 20)
 if (verifyLock && version !== lock.contentVersion) throw new Error(`artifact lock drift: expected content version ${lock.contentVersion}, got ${version}`)
 const manifest = {
-  schema: 4,
+  schema: 5,
   version,
   scalarTypes: ['real-double', 'complex-double'],
   compiler: { image: versions.EMSDK_IMAGE, emscripten: versions.EMSDK_VERSION, clang: '21.0.0git' },
@@ -55,8 +57,14 @@ const manifest = {
     petsc: { url: versions.PETSC_URL, commit: versions.PETSC_REVISION, tree: versions.PETSC_TREE },
   },
   inputs: lock.inputs,
-  partitions: Object.fromEntries(['core', 'real', 'complex'].map((name) => {
-    const files = identity.filter(({ path }) => name === 'complex' ? path.startsWith('getdp-complex/') : name === 'real' ? path.startsWith('getdp/') : !path.startsWith('getdp/') && !path.startsWith('getdp-complex/'))
+  profiles: { default: 'combined', available: ['combined', 'separate'] },
+  partitions: Object.fromEntries(['shared', 'gmsh', 'separate-real', 'separate-complex', 'combined-real', 'combined-complex'].map((name) => {
+    const files = identity.filter(({ path }) => name === 'combined-real' ? path.startsWith('combined-real/')
+      : name === 'combined-complex' ? path.startsWith('combined-complex/')
+        : name === 'separate-complex' ? path.startsWith('getdp-complex/')
+          : name === 'separate-real' ? path.startsWith('getdp/')
+            : name === 'gmsh' ? path.startsWith('gmsh/')
+              : path.startsWith('fixtures/'))
       .map((file) => ({ ...file, path: `${version}/${file.path}` }))
     return [name, { name, cacheName: `opensimphy-onelab-${version}-${name}`, fileMapDigest: sha256(Buffer.from(JSON.stringify(files))), files }]
   })),

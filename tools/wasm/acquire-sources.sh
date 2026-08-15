@@ -38,6 +38,10 @@ acquire gmsh "$GMSH_URL" "$GMSH_REVISION" "$GMSH_TREE"
 acquire occt "$OCCT_URL" "$OCCT_REVISION" "$OCCT_TREE"
 acquire getdp "$GETDP_URL" "$GETDP_REVISION" "$GETDP_TREE"
 acquire petsc "$PETSC_URL" "$PETSC_REVISION" "$PETSC_TREE"
+patch -d "$CACHE/src/gmsh" -p1 < "$ROOT/tools/wasm/gmsh/wasm-boundaries.patch"
+patch -d "$CACHE/src/occt" -p1 < "$ROOT/tools/wasm/occt/wasm-boundaries.patch"
+patch -d "$CACHE/src/getdp" -p1 < "$ROOT/tools/wasm/getdp/wasm-boundaries.patch"
+patch -d "$CACHE/src/petsc" -p1 < "$ROOT/tools/wasm/petsc/wasm-boundaries.patch"
 
 f2cblaslapack="$CACHE/downloads/f2cblaslapack-3.8.0.q2.tar.gz"
 if [[ ! -f "$f2cblaslapack" ]] || [[ $(sha256sum "$f2cblaslapack" | cut -d' ' -f1) != "$F2CBLASLAPACK_SHA256" ]]; then
@@ -67,7 +71,12 @@ stage_upstream_fixture() {
 stage_upstream_fixture radiator getdp/tutorials/02-Thermal
 stage_upstream_fixture electromagnet getdp/tutorials/03-Magnetostatics
 stage_upstream_fixture full-wave getdp/tutorials/05-Full_wave
+stage_upstream_fixture global-quantity getdp/tutorials/06-Global_quantities
+rm -rf "$CACHE/fixtures/transfo"
+mkdir -p "$CACHE/fixtures/transfo"
+cp "$CACHE/src/getdp/tutorials/09-Template_library/"{transfo.geo,transfo.pro,transfo_common.pro,Lib_Magnetoquasistatics_av_2D_Cir.pro} "$CACHE/fixtures/transfo/"
 patch -d "$CACHE/fixtures" -p1 < "$ROOT/tools/wasm/fixtures/phase4-onelab.patch"
+patch -d "$CACHE/fixtures" -p1 < "$ROOT/tools/wasm/fixtures/phase5-onelab.patch"
 for fixture in radiator electromagnet full-wave; do
   if [[ -f "$ROOT/tools/wasm/fixtures/native-meshes/$fixture.msh" ]]; then cp "$ROOT/tools/wasm/fixtures/native-meshes/$fixture.msh" "$CACHE/fixtures/$fixture/reference.msh"; fi
 done

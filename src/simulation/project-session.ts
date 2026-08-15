@@ -18,12 +18,13 @@ export class ProjectSession {
   get database() { return this._database }
   get revision() { return this._revision }
   get lastResult() { return this._lastResult }
+  get descriptor() { return this._descriptor }
   get ready() { return Boolean(this._database) }
 
-  open(files: ProjectFile[], defaults: string, descriptor?: ProjectDescriptor) {
+  open(files: ProjectFile[], defaults: string, descriptor?: ProjectDescriptor, database = defaults) {
     this._files = files.map(({ path, bytes }) => ({ path, bytes: bytes.slice() }))
     this._defaults = canonicalizeOnelab(defaults)
-    this._database = this._defaults
+    this._database = canonicalizeOnelab(database)
     this._revision = 0
     this._lastResult = undefined
     this._descriptor = descriptor
@@ -32,6 +33,12 @@ export class ProjectSession {
   edit(name: string, value: number | string) {
     this._database = setParameterValue(this._database, name, value)
     this._revision++
+  }
+
+  restore(database: string) {
+    this._database = canonicalizeOnelab(database)
+    this._revision++
+    this._lastResult = undefined
   }
 
   envelope(action: ProjectEnvelope['action'], sidecar?: PhysicalGroupSidecar): ProjectEnvelope {

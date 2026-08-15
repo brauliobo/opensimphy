@@ -2,8 +2,14 @@ import { expect, test } from '@playwright/test'
 import reference from '../../tools/wasm/fixtures/microstrip-reference.json' with { type: 'json' }
 import phase4Reference from '../../tools/wasm/fixtures/phase4-reference.json' with { type: 'json' }
 import artifactLock from '../../tools/wasm/artifacts.lock.json' with { type: 'json' }
+import phase5Reference from '../../tools/wasm/fixtures/phase5-reference.json' with { type: 'json' }
 
 const defaultReference = reference.runs[0]
+const runtimeProfile = process.env.VITE_ONELAB_PROFILE === 'separate' ? 'separate' : 'combined'
+const realPartition = runtimeProfile === 'combined' ? 'combined-real' : 'separate-real'
+const complexPartition = runtimeProfile === 'combined' ? 'combined-complex' : 'separate-complex'
+const complexAssetDirectory = runtimeProfile === 'combined' ? 'combined-complex' : 'getdp-complex'
+const warmPartitions = runtimeProfile === 'combined' ? ['shared', realPartition] : ['shared', 'gmsh', realPartition]
 
 function expectVectorClose(actual: number, expected: number) {
   expect(Math.abs(actual - expected)).toBeLessThanOrEqual(
@@ -21,6 +27,22 @@ function expectScalarAggregateClose(actual: number, expected: number) {
 
 function expectResidualClose(actual: number, expected: number) {
   expect(Math.abs(actual - expected)).toBeLessThanOrEqual(reference.tolerance.residualAbsolute + reference.tolerance.residualRelative * Math.abs(expected))
+}
+
+function expectPhase5History(actual: Array<{ values: Record<string, number>; outputs: Record<string, number[]> }>, expected: Array<{ values: Record<string, number>; outputs: Record<string, number[]> }>) {
+  expect(actual).toHaveLength(expected.length)
+  actual.forEach((point, index) => {
+    const referencePoint = expected[index]!
+    expect(point.values).toEqual(referencePoint.values)
+    expect(Object.keys(point.outputs).sort()).toEqual(Object.keys(referencePoint.outputs).sort())
+    for (const [name, values] of Object.entries(point.outputs)) {
+      const referenceValues = referencePoint.outputs[name]!
+      expect(values).toHaveLength(referenceValues.length)
+      values.forEach((value, sample) => expect(Math.abs(value - referenceValues[sample]!)).toBeLessThanOrEqual(
+        phase5Reference.tolerance.absolute + phase5Reference.tolerance.relative * Math.abs(referenceValues[sample]!),
+      ))
+    }
+  })
 }
 
 function expectPhase4ValueClose(actual: number, expected: number, relative = phase4Reference.tolerance.numericRelative) {
@@ -72,29 +94,29 @@ test('warms online then meshes, solves and extracts views fully offline across r
     return state
   }).toBe('ready')
 
-  const cacheState = await page.evaluate(async () => {
+  const cacheState = await page.evaluate(async ({ warmPartitions }) => {
     const names = await caches.keys()
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { version: string; partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ path: string }> }> }
-    const loaded = Object.fromEntries(await Promise.all((['core', 'real'] as const).map(async (name) => {
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { version: string; partitions: Record<string, { cacheName: string; files: Array<{ path: string }> }> }
+    const loaded = Object.fromEntries(await Promise.all(warmPartitions.map(async (name) => {
       const partition = manifest.partitions[name], cache = await caches.open(partition.cacheName)
       const expected = ['/simulation/manifest.json', `/simulation/${manifest.version}/${name}.complete.json`, ...partition.files.map(({ path }) => `/simulation/${path}`)].sort()
       return [name, { cacheName: partition.cacheName, expected, assets: (await cache.keys()).map((request) => new URL(request.url).pathname).sort() }]
     })))
     return { names, manifest, loaded }
-  })
+  }, { warmPartitions })
   expect(cacheState.names.filter((name) => name.startsWith('opensimphy-onelab-')).sort()).toEqual([
-    `opensimphy-onelab-${artifactLock.contentVersion}-core`, `opensimphy-onelab-${artifactLock.contentVersion}-real`,
-  ])
-  expect(cacheState.loaded.core.assets).toEqual(cacheState.loaded.core.expected)
-  expect(cacheState.loaded.real.assets).toEqual(cacheState.loaded.real.expected)
-  expect(cacheState.loaded.core.assets.some((path) => path.endsWith('/gmsh/gmsh-core.wasm'))).toBe(true)
-  expect(cacheState.loaded.real.assets.some((path) => path.endsWith('/getdp/getdp.wasm'))).toBe(true)
-  expect(cacheState.names).not.toContain(cacheState.manifest.partitions.complex.cacheName)
+    ...warmPartitions.map((name) => `opensimphy-onelab-${artifactLock.contentVersion}-${name}`),
+  ].sort())
+  for (const name of warmPartitions) expect(cacheState.loaded[name].assets).toEqual(cacheState.loaded[name].expected)
+  expect(cacheState.loaded.shared.assets.some((path) => path.includes('/fixtures/'))).toBe(true)
+  expect(cacheState.loaded[realPartition].assets.some((path) => path.endsWith(runtimeProfile === 'combined' ? '/combined-real/combined.wasm' : '/getdp/getdp.wasm'))).toBe(true)
+  if (runtimeProfile === 'separate') expect(cacheState.loaded.gmsh.assets.some((path) => path.endsWith('/gmsh/gmsh-core.wasm'))).toBe(true)
+  expect(cacheState.names).not.toContain(cacheState.manifest.partitions[complexPartition].cacheName)
 
   const repaired = await page.evaluate(async () => {
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { core: { cacheName: string; files: Array<{ path: string; sha256: string }> } } }
-    const file = manifest.partitions.core.files.find(({ path }) => path.endsWith('/fixtures/microstrip/microstrip.geo'))!
-    const cache = await caches.open(manifest.partitions.core.cacheName)
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { shared: { cacheName: string; files: Array<{ path: string; sha256: string }> } } }
+    const file = manifest.partitions.shared.files.find(({ path }) => path.endsWith('/fixtures/microstrip/microstrip.geo'))!
+    const cache = await caches.open(manifest.partitions.shared.cacheName)
     await cache.put(`/simulation/${file.path}`, new Response('corrupt'))
     return file
   })
@@ -102,12 +124,12 @@ test('warms online then meshes, solves and extracts views fully offline across r
   await expect(page.getByTestId('app-ready')).toBeVisible()
   await page.getByTestId('onelab-warm').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
-  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ bytes: number }> }> }
-  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions.complex.cacheName)
-  expect(await page.evaluate(() => performance.getEntriesByType('resource').some(({ name }) => name.includes('/getdp-complex/')))).toBe(false)
+  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<string, { cacheName: string; files: Array<{ bytes: number }> }> }
+  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions[complexPartition].cacheName)
+  expect(await page.evaluate((path) => performance.getEntriesByType('resource').some(({ name }) => name.includes(`/${path}/`)), complexPartition)).toBe(false)
   const repairedHash = await page.evaluate(async ({ path }) => {
-    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { core: { cacheName: string } } }
-    const bytes = await (await (await caches.open(manifest.partitions.core.cacheName)).match(`/simulation/${path}`))!.arrayBuffer()
+    const manifest = await fetch('/simulation/manifest.json').then((response) => response.json()) as { partitions: { shared: { cacheName: string } } }
+    const bytes = await (await (await caches.open(manifest.partitions.shared.cacheName)).match(`/simulation/${path}`))!.arrayBuffer()
     const hash = await crypto.subtle.digest('SHA-256', bytes)
     return [...new Uint8Array(hash)].map((value) => value.toString(16).padStart(2, '0')).join('')
   }, repaired)
@@ -315,6 +337,14 @@ test('checks parser metadata, computes two native meshes, preserves edits throug
   expect(newWorker).not.toBe(oldWorker)
   await expect(meshSize).toHaveValue('2')
 
+  const archiveDownload = page.waitForEvent('download')
+  await page.getByTestId('project-export').click()
+  const archivePath = await (await archiveDownload).path()
+  expect(archivePath).toBeTruthy()
+  await meshSize.fill('1.5')
+  await page.getByTestId('project-import').setInputFiles(archivePath!)
+  await expect(meshSize).toHaveValue('2')
+  await meshSize.fill('1.5')
   await page.getByTestId('onelab-reset').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
   await expect(meshSize).toHaveValue('1')
@@ -323,6 +353,116 @@ test('checks parser metadata, computes two native meshes, preserves edits throug
   await expect(page.getByTestId('onelab-runs')).toHaveText('4')
   await expect(page.getByTestId('onelab-mesh')).toContainText(`${defaultReference.nodes} nodes / ${defaultReference.elements} elements`)
   expect((await page.getByTestId('onelab-mesh').innerText()).split(' / ').at(-1)).toBe(defaultReference.meshSha256)
+})
+
+test('executes bounded real and complex ONELAB loops and commits sent outputs point-by-point', async ({ page }) => {
+  test.skip(runtimeProfile === 'separate', 'Phase 5 native loops require the combined runtime')
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  let totalComputes = 0
+  for (const projectId of ['global-quantity-real-loop', 'transfo-complex-loop']) {
+    await page.getByTestId('onelab-project').selectOption(projectId)
+    await expect.poll(async () => JSON.parse(await page.getByTestId('onelab-database').innerText()).onelab.parameters.filter(({ attributes }: { attributes?: Record<string, string> }) => attributes?.Loop).length).toBe(projectId === 'global-quantity-real-loop' ? 3 : 1)
+    await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+    await page.getByTestId('onelab-loop').click()
+    const expectedHistory = phase5Reference.projects[projectId as keyof typeof phase5Reference.projects]
+    await expect.poll(async () => {
+      const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+      if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+      return JSON.parse(await page.getByTestId('onelab-loop-history').innerText()).length
+    }, { timeout: 300_000 }).toBe(expectedHistory.length)
+    const history = JSON.parse(await page.getByTestId('onelab-loop-history').innerText()) as Array<{ index: number; values: Record<string, number>; outputs: Record<string, number[]> }>
+    expect(history.map(({ index }) => index).join(',')).toBe(Array.from({ length: expectedHistory.length }, (_, index) => index).join(','))
+    expectPhase5History(history, expectedHistory)
+    totalComputes += history.length
+    const resources = JSON.parse(await page.getByTestId('onelab-resources').innerText())
+    expect(resources).toMatchObject({ profile: runtimeProfile, scalarType: projectId === 'transfo-complex-loop' ? 'complex-double' : 'real-double', historyPoints: expectedHistory.length })
+    expect(resources.startupMilliseconds).toBeGreaterThan(0)
+    expect(resources.wasmMemoryBytes).toBeGreaterThan(0)
+    expect(resources.cachedPartitionBytes).toBeGreaterThan(0)
+    expect(resources.memfsFiles).toBeGreaterThan(0)
+    expect(resources.views).toBeGreaterThan(0)
+    expect(resources.nativeBridge).toMatchObject({ sharedServer: true, jsonImportCalls: 0, jsonExportCalls: 0 })
+    expect(resources.nativeBridge.serverIdentity).toBe(resources.nativeBridge.lastGetdpServerIdentity)
+    expect(resources.nativeBridge.getdpCalls).toBeGreaterThanOrEqual(history.length)
+    expect(resources.nativeBridge.loopInitializeCalls).toBeGreaterThan(0)
+    expect(resources.nativeBridge.loopIncrementCalls).toBeGreaterThanOrEqual(history.length - 1)
+
+    if (projectId === 'global-quantity-real-loop') {
+      const downloadPromise = page.waitForEvent('download')
+      await page.getByTestId('project-export-history').click()
+      const download = await downloadPromise
+      const archivePath = await download.path()
+      expect(archivePath).toBeTruthy()
+      const database = await page.getByTestId('onelab-database').innerText()
+      const opfs = await page.getByTestId('project-opfs-status').getAttribute('data-status')
+      if (opfs === 'available') {
+        await page.getByTestId('project-opfs-save').click()
+        await expect(page.getByTestId('project-opfs-status')).toHaveAttribute('data-status', 'saved')
+      } else {
+        expect(opfs).toBe('unsupported')
+        await expect(page.getByTestId('project-opfs-save')).toBeDisabled()
+      }
+      await page.reload()
+      await page.getByTestId('onelab-warm').click()
+      await page.getByTestId('project-import').setInputFiles(archivePath!)
+      await expect(page.getByTestId('onelab-database')).toHaveText(database)
+      expect(JSON.parse(await page.getByTestId('onelab-loop-history').innerText())).toHaveLength(expectedHistory.length)
+      const preserved = {
+        project: await page.getByTestId('onelab-project').inputValue(),
+        database: await page.getByTestId('onelab-database').innerText(),
+        history: await page.getByTestId('onelab-loop-history').innerText(),
+        state: await page.getByTestId('onelab-state').getAttribute('data-state'),
+      }
+      await page.getByTestId('project-import').setInputFiles({
+        name: 'invalid.opensimphy.json',
+        mimeType: 'application/vnd.opensimphy.project+json',
+        buffer: Buffer.from('{"schema":"invalid"}\n'),
+      })
+      await expect(page.getByRole('alert')).toContainText('unsupported project archive')
+      expect(await page.getByTestId('onelab-project').inputValue()).toBe(preserved.project)
+      expect(await page.getByTestId('onelab-database').innerText()).toBe(preserved.database)
+      expect(await page.getByTestId('onelab-loop-history').innerText()).toBe(preserved.history)
+      expect(await page.getByTestId('onelab-state').getAttribute('data-state')).toBe(preserved.state)
+      if (opfs === 'available') {
+        await page.getByTestId('project-opfs-load').click()
+        await expect(page.getByTestId('project-opfs-status')).toHaveAttribute('data-status', 'loaded')
+        await expect(page.getByTestId('onelab-database')).toHaveText(database)
+      }
+    }
+  }
+  expect(totalComputes).toBeGreaterThanOrEqual(10)
+})
+
+test('audits alternating profile memory and reconstructs a cancelled loop at a point boundary', async ({ page }) => {
+  test.skip(runtimeProfile === 'separate', 'Phase 5 native loops require the combined runtime')
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await page.getByTestId('onelab-warm').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
+  const metrics: Array<{ memoryBytes: number; modelEntities: number; views: number; memfsFiles: number; memfsBytes: number }> = []
+  for (const projectId of ['microstrip', 'transfo-complex-loop', 'global-quantity-real-loop', 'microstrip']) {
+    await page.getByTestId('onelab-project').selectOption(projectId)
+    await page.getByTestId('onelab-solve').click()
+    await expect.poll(async () => page.getByTestId('onelab-state').getAttribute('data-state'), { timeout: 180_000 }).toBe('complete')
+    metrics.push(JSON.parse(await page.getByTestId('onelab-resources').innerText()))
+  }
+  expect(metrics.every(({ memoryBytes, modelEntities, views, memfsFiles, memfsBytes }) => memoryBytes > 0 && modelEntities > 0 && views > 0 && memfsFiles > 0 && memfsBytes > 0)).toBe(true)
+  expect(metrics.at(-1)!.memoryBytes - metrics[0]!.memoryBytes).toBeLessThanOrEqual(256 * 1024 * 1024)
+  console.log(`Phase 5 memory audit: ${JSON.stringify(metrics)}`)
+
+  await page.getByTestId('onelab-project').selectOption('transfo-complex-loop')
+  const workerBefore = await page.getByTestId('onelab-worker').getAttribute('data-worker-id')
+  await page.getByTestId('onelab-loop').click()
+  await expect.poll(async () => JSON.parse(await page.getByTestId('onelab-loop-history').innerText()).length).toBe(1)
+  await page.getByTestId('onelab-cancel').click()
+  await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'cancelled')
+  expect(JSON.parse(await page.getByTestId('onelab-loop-history').innerText())).toHaveLength(1)
+  await page.getByTestId('onelab-loop').click()
+  await expect.poll(async () => JSON.parse(await page.getByTestId('onelab-loop-history').innerText()).length, { timeout: 180_000 }).toBe(2)
+  expect(await page.getByTestId('onelab-worker').getAttribute('data-worker-id')).not.toBe(workerBefore)
 })
 
 test('converts the committed STEP in a worker and hands a uniquely matched face to live Gmsh authority', async ({ page }) => {
@@ -429,12 +569,12 @@ test('mobile controls remain usable and ten route cycles release all viewer reso
 test('executes every Phase 4 fixture with native convergence, dynamic outputs and complex representations', async ({ page }) => {
   test.setTimeout(360_000)
   const complexTransfers: string[] = []
-  page.on('request', (request) => { if (request.url().includes('/getdp-complex/')) complexTransfers.push(request.url()) })
+  page.on('request', (request) => { if (request.url().includes(`/${complexAssetDirectory}/`)) complexTransfers.push(request.url()) })
   await page.goto('/labs/onelab')
   await page.getByTestId('onelab-warm').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
-  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<'core' | 'real' | 'complex', { cacheName: string; files: Array<{ bytes: number }> }> }
-  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions.complex.cacheName)
+  const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<string, { cacheName: string; files: Array<{ bytes: number }> }> }
+  expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions[complexPartition].cacheName)
   expect(complexTransfers).toEqual([])
   for (const native of phase4Reference.projects) {
     const id = native.id
@@ -469,10 +609,16 @@ test('executes every Phase 4 fixture with native convergence, dynamic outputs an
       probe.values.forEach((value, valueIndex) => expectPhase4ValueClose(value, native.probes[probeIndex]!.values[valueIndex]!, native.referenceRelative))
     })
     const fields = JSON.parse(await page.getByTestId('mapped-field-summary').innerText()) as Array<{ complexPart?: string; steps: number[]; provenance: { sourceFile: string; complexSourceSteps?: number[][]; complexSourceTimes?: number[][] } }>
-    const resources = JSON.parse(await page.getByTestId('onelab-resources').innerText()) as { memoryBytes: number; snapshotBytes: number; loadedPartitions: string[] }
-    const loaded = id === 'full-wave-2d-edge-complex' ? ['complex', 'core', 'real'] : ['core', 'real']
+    const resources = JSON.parse(await page.getByTestId('onelab-resources').innerText()) as { memoryBytes: number; snapshotBytes: number; loadedPartitions: string[]; nativeBridge?: { sharedServer: boolean; serverIdentity: number; lastGetdpServerIdentity: number; jsonImportCalls: number; jsonExportCalls: number } }
+    const loaded = [...warmPartitions, ...(id === 'full-wave-2d-edge-complex' ? [complexPartition] : [])].sort()
     expect(resources.loadedPartitions).toEqual(loaded)
     expect(resources.snapshotBytes).toBe(loaded.reduce((sum, name) => sum + manifest.partitions[name as keyof typeof manifest.partitions].files.reduce((total, file) => total + file.bytes, 0), 0))
+    if (runtimeProfile === 'combined') {
+      expect(resources.nativeBridge).toMatchObject({ sharedServer: true, jsonImportCalls: 0, jsonExportCalls: 0 })
+      expect(resources.nativeBridge!.serverIdentity).toBe(resources.nativeBridge!.lastGetdpServerIdentity)
+    } else {
+      expect(resources.nativeBridge).toBeUndefined()
+    }
     if (id === 'radiator-3d-transient') {
       await page.getByTestId('result-viewer').getByTestId('result-step').selectOption('2')
       await expect.poll(async () => JSON.parse(await page.getByTestId('result-viewer').getByTestId('viewer-render-summary').innerText()).result.isosurfaceTriangles).toBeGreaterThan(0)
@@ -488,7 +634,7 @@ test('executes every Phase 4 fixture with native convergence, dynamic outputs an
       expect(clipped.result.sectionSourceEntityTags.every((tag: number) => tag > 0)).toBe(true)
     }
     if (id === 'full-wave-2d-edge-complex') {
-      expect(await page.evaluate(() => caches.keys())).toContain(manifest.partitions.complex.cacheName)
+      expect(await page.evaluate(() => caches.keys())).toContain(manifest.partitions[complexPartition].cacheName)
       expect(complexTransfers.length).toBeGreaterThan(0)
       expect(new Set(fields.map(({ complexPart }) => complexPart))).toEqual(new Set(['real', 'imaginary', 'magnitude', 'phase']))
       expect(fields.every(({ steps }) => steps.length === 1)).toBe(true)
@@ -684,10 +830,31 @@ test('bounds retained WASM, snapshot, cache and JS growth across real, complex a
       if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
       return state
     }).toBe('complete')
-    return JSON.parse(await page.getByTestId('onelab-resources').innerText()) as { memoryBytes: number; snapshotBytes: number; loadedPartitions: string[] }
+    return JSON.parse(await page.getByTestId('onelab-resources').innerText()) as {
+      memoryBytes: number
+      snapshotBytes: number
+      loadedPartitions: string[]
+      wasmMemoryBytes: number
+      moduleWasmMemoryBytes: Record<string, number>
+      moduleStartupMilliseconds: Record<string, number>
+      repeatRunGrowthBytes: number
+      modelEntities: number
+      views: number
+      memfsFiles: number
+      memfsBytes: number
+      startupMilliseconds: number
+    }
   }
-  await solve('microstrip')
-  const baseline = await solve('full-wave-2d-edge-complex')
+  const realOnly = await solve('microstrip')
+  const realAndComplex = await solve('full-wave-2d-edge-complex')
+  expect(realAndComplex.wasmMemoryBytes).toBeGreaterThan(realOnly.wasmMemoryBytes)
+  expect(Object.keys(realOnly.moduleWasmMemoryBytes).sort()).toEqual(runtimeProfile === 'combined' ? ['combined-real'] : ['getdp-real', 'gmsh'])
+  expect(Object.keys(realAndComplex.moduleWasmMemoryBytes).sort()).toEqual(runtimeProfile === 'combined' ? ['combined-complex', 'combined-real'] : ['getdp-complex', 'getdp-real', 'gmsh'])
+  expect(Object.values(realAndComplex.moduleStartupMilliseconds).every((value) => value > 0)).toBe(true)
+  expect(realOnly.repeatRunGrowthBytes).toBe(0)
+  expect(realAndComplex.repeatRunGrowthBytes).toBe(0)
+  const baselineReal = await solve('microstrip')
+  const baselineComplex = await solve('full-wave-2d-edge-complex')
   const cacheBytes = () => page.evaluate(async () => {
     let bytes = 0
     for (const name of await caches.keys()) for (const request of await (await caches.open(name)).keys()) bytes += (await (await caches.open(name)).match(request))?.clone().arrayBuffer().then((value) => value.byteLength) ?? 0
@@ -699,8 +866,8 @@ test('bounds retained WASM, snapshot, cache and JS growth across real, complex a
   const baselineHeap = cdp ? (await cdp.send('Performance.getMetrics')).metrics.find(({ name }) => name === 'JSHeapUsedSize')?.value : undefined
   for (let cycle = 0; cycle < 5; cycle++) {
     const real = await solve('microstrip'), complex = await solve('full-wave-2d-edge-complex')
-    expect(real).toEqual(baseline)
-    expect(complex).toEqual(baseline)
+    expect(real).toMatchObject({ profile: runtimeProfile, scalarType: 'real-double', wasmMemoryBytes: baselineReal.wasmMemoryBytes, repeatRunGrowthBytes: 0, memfsFiles: baselineReal.memfsFiles, memfsBytes: baselineReal.memfsBytes, cachedPartitionBytes: baselineReal.cachedPartitionBytes })
+    expect(complex).toMatchObject({ profile: runtimeProfile, scalarType: 'complex-double', wasmMemoryBytes: baselineComplex.wasmMemoryBytes, repeatRunGrowthBytes: 0, memfsFiles: baselineComplex.memfsFiles, memfsBytes: baselineComplex.memfsBytes, cachedPartitionBytes: baselineComplex.cachedPartitionBytes })
     expect(await cacheBytes()).toBe(baselineCache)
   }
   await page.getByTestId('onelab-project').selectOption('microstrip')
@@ -712,7 +879,18 @@ test('bounds retained WASM, snapshot, cache and JS growth across real, complex a
   await expect(page.getByTestId('onelab-cancel')).toBeEnabled()
   await page.getByTestId('onelab-cancel').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'cancelled')
-  expect(await solve('full-wave-2d-edge-complex')).toEqual(baseline)
+  const recovered = await solve('full-wave-2d-edge-complex')
+  expect(recovered).toMatchObject({
+    memoryBytes: baselineComplex.memoryBytes,
+    snapshotBytes: baselineComplex.snapshotBytes,
+    loadedPartitions: baselineComplex.loadedPartitions,
+    wasmMemoryBytes: baselineComplex.wasmMemoryBytes,
+    modelEntities: baselineComplex.modelEntities,
+    views: baselineComplex.views,
+    memfsFiles: baselineComplex.memfsFiles,
+  })
+  expect(Math.abs(recovered.memfsBytes - baselineComplex.memfsBytes)).toBeLessThanOrEqual(1024)
+  expect(recovered.startupMilliseconds).toBeGreaterThan(0)
   expect(await cacheBytes()).toBe(baselineCache)
   if (cdp && baselineHeap !== undefined) {
     await cdp.send('HeapProfiler.collectGarbage')

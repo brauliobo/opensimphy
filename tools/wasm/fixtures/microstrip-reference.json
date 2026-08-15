@@ -35,27 +35,44 @@
       }
     },
     "inputs": {
+      "workspace/package.json": "3e6781e9a983e615f93b1458d201b2622397834f90536262e79f473519b3067e",
+      "workspace/package-lock.json": "773b2abc8e34aea9b5213e5b42b40bad6eea27dabab03ee85604eebe24ffc8d8",
       "versions.env": "b2ffa18764eb332be4fbd1a8e24a6218f6a28da8b90fe609baa51d5d1fbff5c1",
-      "build.sh": "2439caaf1e5662f003e6ea07098fa1e0ffa0f48fb65c7ddc885d4bbfebc9b7a0",
-      "container-build.sh": "2b88c79df6b77f3551744b9ab6a4444a0731b987eba9ca648be37b2c3377c5b3",
-      "acquire-sources.sh": "c67c58e150cdbc0d7b911ed02194ae12047079fbd11800b8662ea71ccfb8e7af",
-      "stage-assets.mjs": "4fc4b2c7e3f7ee6fb265ada1765c61d5546b8b50e61acbb482820b979e06058c",
-      "verify-staged-assets.mjs": "e06a4ae93161fbc33f337f58c4b1c049729d7cd7e247fb4e7b96a4b89a69e9ab",
-      "update-artifact-lock.mjs": "44aac89bf2234f5601fda56e122e1d35812f59afad14628bffdad8e3f1747d30",
+      "build.sh": "42cf2400ac2e4a65d41d754e2752c45dda21a9a3e6e5f81565b1428476adc6cf",
+      "container-build.sh": "80f525fa8c114386dc5fd25c43c42404fbb0365b5cb1168d6b797b11e1198336",
+      "acquire-sources.sh": "6b375451b90bcc53a919a2639064437aa6b9799c3f03038e9a34a40f655971d7",
+      "stage-assets.mjs": "9361d1760c480352e70d27c1a9616b1f6338c79b4e872f41deb60cd68fc356f6",
+      "verify-staged-assets.mjs": "d1e339301e4cb59c405c24b2efa237d89283a8a037db30c6168554b6e6447485",
+      "update-artifact-lock.mjs": "bb38c4367a6bab51a51952738ba9ba78ba7f8ecede63462260f9bc7dc5b8c56a",
       "verify-reproducible-build.sh": "37af8fa190cfde92d21a6661aaa866cfa2c3afb453a3d2f91a078e9f62a2e5cc",
-      "compare-builds.mjs": "282468ecb2830b88364353d58b882e631c49cd46a8fa82d040ecba4f3c4a178a",
+      "compare-builds.mjs": "8c93e4c9aaa90472384adc6c4bf1dc8a511f182746c36a71f568c3c4e838258c",
+      "native-reference.sh": "12438f3d221f12348bd5e890e1e988119e7dc7855fdcd70662f679c5e0581154",
+      "container-native-reference.sh": "62f26b53333f0ca3bdf17d6c3eb9e56dff14f695c9ecf9f6bc8f1ac388b3796b",
       "summarize-phase4.mjs": "2196f6ca114e2c12abab18bd56175e60d34927a7c19a99507ae4ba1a474d2d8d",
+      "summarize-phase5.mjs": "952ba5bbe701072e33a4937ecd5139337f844cf83f104c5cc99df81233dd8a7d",
       "native-convergence.mjs": "6f63d0a8c3b4d569dd37475f928d6dea2f9c8d29c67f2155fe27dc850fdbe60c",
+      "measure-profiles.mjs": "76ad4f6fd9e8ce5ab614d0bc4ffac88aed7b0d2d16b5680cf40392d17a2538f9",
+      "check-forbidden-boundary.mjs": "9b42ccc8b93499a3fa430510fe0fc6cb2d3c02ed3fe886753f6cc008b4dc5df7",
       "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
       "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
       "gmsh/persistent-parser-number.patch": "1f94fdbe7de30123c326688fc7be4f5ff531f0a588860d13b4cade766638a6be",
+      "gmsh/wasm-boundaries.patch": "1b67516d2753ab76874b939e6b9ba7a0901016480d62785937bbc726cf0bd1a3",
+      "occt/wasm-boundaries.patch": "a1d14307e7c7ae7bf10938cec25bc7df6bc56e1f9e3f1b04c582f2b116023214",
       "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
       "fixtures/phase4-onelab.patch": "0949b3d2f25e37b5b0c59545ae254b678334a8e913292d5f2f67b70214bf0873",
-      "fixtures/projects.json": "b02a3a4fa2c31f7fa501313f8fbc326379f89f3f82eec91606336fd70dc9db4f",
+      "fixtures/phase5-onelab.patch": "c15dc469448f697cffa24dab7b1ccb4928281733054c02489a110224705c06ba",
+      "fixtures/projects.json": "48db6bed08cbe53ccc708d0fb4fec5c9f417f20114fbaf0759749a255b5643fd",
       "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
-      "getdp/CMakeLists.append.txt": "a7024dc787ce10f4a846c741def3f00e033c5651556463d686b75e70be36936f",
+      "getdp/CMakeLists.append.txt": "699cb58bd13c7bcfbddcd9385f35ee70eee5f3ef94ecaac0cff57bcfe1e77a6a",
       "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b",
-      "native-probe.cpp": "bf86f077e775ae0e789a56209a860e0ff792abfb90fefbc8948bae18bd2bd72a"
+      "getdp/wasm-boundaries.patch": "b00d909a93b31f256eb0d7871974c5870dcfc099514fcc3026715b0a0b56064a",
+      "petsc/wasm-boundaries.patch": "f66e0d8dd18a47b5f6725511fe39702b25c37a7b973ead0d54dd26ec195a0047",
+      "getdp/combined-bridge.cpp": "42b54455636c2bf4db155bcb803f28efd44e6a42e36ae0de1983502d7c5b56be",
+      "getdp/CMakeLists.combined.txt": "4f76f572ea02a18e36a765f7825f9accfbadaddcb693c6886c439c9905bf1f6f",
+      "getdp/combined-runtime.mjs": "0f41aeefa908df321bb810511ffbbc1d126cf6f57acfd50f86aa21e412e10bd4",
+      "native-probe.cpp": "bf86f077e775ae0e789a56209a860e0ff792abfb90fefbc8948bae18bd2bd72a",
+      "phase5-native-trace.cpp": "57cd7d8894c049f0bc1d39c4b077ee403f9307f49721ff1d45c40cefb9cb2598",
+      "getdp/CMakeLists.native-trace.txt": "f865269c7b418d094500aea68a43873fbc95f7b74010e757794421a848775a91"
     },
     "fixtures": {
       "microstrip/microstrip.geo": {
@@ -141,6 +158,42 @@
       "full-wave/reference.msh": {
         "bytes": 7813,
         "sha256": "e07661bfe7666c12ede4c3b8046f236eb79f660f2ea233be92395d48fc968897"
+      },
+      "global-quantity/README.md": {
+        "bytes": 854,
+        "sha256": "8d5cbc41c370af199b7282a95e27618ecf3ffd6d0ff673bd3df156bca00cbfa8"
+      },
+      "global-quantity/microstrip.geo": {
+        "bytes": 1157,
+        "sha256": "60c9df1a39c6e1c10a9ca0968220d725ca5869df9457bb1c23f861cfd73fd90f"
+      },
+      "global-quantity/microstrip.pro": {
+        "bytes": 16418,
+        "sha256": "23d7450e358ecc95169ac5e03352736cba84b997669f9ec01082ee10a5fbac3e"
+      },
+      "global-quantity/microstrip.pro.orig": {
+        "bytes": 16169,
+        "sha256": "315dead0019f2b3b74ef099f1fd3211310e233b4b976be37f56a25a9a8d210e5"
+      },
+      "transfo/Lib_Magnetoquasistatics_av_2D_Cir.pro": {
+        "bytes": 18990,
+        "sha256": "02ae5ac76208c70bbf1998d211fef788e5eb2059c2eb7f0973ebe9a56d47cbec"
+      },
+      "transfo/transfo.geo": {
+        "bytes": 2336,
+        "sha256": "d75a3d9c109fc27b63ece3c3cda096f1f6542eadd8c8f3159d443499ac2b201f"
+      },
+      "transfo/transfo.pro": {
+        "bytes": 14790,
+        "sha256": "e7587f8be167ecdbade549884057642b223494b2166c0966935f31ce39af88ea"
+      },
+      "transfo/transfo.pro.orig": {
+        "bytes": 14793,
+        "sha256": "c916a99d79c69374f290ba8898995e2b97046ca50dfee5672fbf72e89868fd29"
+      },
+      "transfo/transfo_common.pro": {
+        "bytes": 824,
+        "sha256": "14ca2d6d4b072d983c60043f509df4272641702c3b4e984adbed5841782c6600"
       },
       "gmsh-rendering/test_displ.geo": {
         "bytes": 303,

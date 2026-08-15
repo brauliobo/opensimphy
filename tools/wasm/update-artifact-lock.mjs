@@ -29,16 +29,21 @@ async function metadata(path) {
 }
 
 const inputPaths = [
+  'workspace/package.json', 'workspace/package-lock.json',
   'versions.env', 'build.sh', 'container-build.sh', 'acquire-sources.sh',
   'stage-assets.mjs', 'verify-staged-assets.mjs', 'update-artifact-lock.mjs',
-  'verify-reproducible-build.sh', 'compare-builds.mjs',
-  'summarize-phase4.mjs', 'native-convergence.mjs',
-  'gmsh/view-bindings.patch', 'gmsh/optional-quad-predicate.patch', 'gmsh/persistent-parser-number.patch',
-  'fixtures/microstrip-onelab.patch', 'fixtures/phase4-onelab.patch', 'fixtures/projects.json',
-  'getdp/bridge.cpp', 'getdp/CMakeLists.append.txt', 'getdp/runtime.mjs',
-  'native-probe.cpp',
+  'verify-reproducible-build.sh', 'compare-builds.mjs', 'native-reference.sh', 'container-native-reference.sh',
+  'summarize-phase4.mjs', 'summarize-phase5.mjs', 'native-convergence.mjs', 'measure-profiles.mjs',
+  'check-forbidden-boundary.mjs',
+  'gmsh/view-bindings.patch', 'gmsh/optional-quad-predicate.patch', 'gmsh/persistent-parser-number.patch', 'gmsh/wasm-boundaries.patch',
+  'occt/wasm-boundaries.patch',
+  'fixtures/microstrip-onelab.patch', 'fixtures/phase4-onelab.patch', 'fixtures/phase5-onelab.patch', 'fixtures/projects.json',
+  'getdp/bridge.cpp', 'getdp/CMakeLists.append.txt', 'getdp/runtime.mjs', 'getdp/wasm-boundaries.patch', 'petsc/wasm-boundaries.patch',
+  'getdp/combined-bridge.cpp', 'getdp/CMakeLists.combined.txt', 'getdp/combined-runtime.mjs',
+  'native-probe.cpp', 'phase5-native-trace.cpp', 'getdp/CMakeLists.native-trace.txt',
 ]
-const inputs = Object.fromEntries(await Promise.all(inputPaths.map(async (path) => [path, sha256(await readFile(join(tools, path)))])))
+const inputFile = (path) => path.startsWith('workspace/') ? join(root, path.slice('workspace/'.length)) : join(tools, path)
+const inputs = Object.fromEntries(await Promise.all(inputPaths.map(async (path) => [path, sha256(await readFile(inputFile(path)))])))
 
 const fixtureSources = new Map([
   ['microstrip/microstrip.geo', join(cacheRoot, 'fixtures/microstrip/microstrip.geo')],
@@ -48,7 +53,7 @@ const fixtureSources = new Map([
   ['cube/cube.step', join(tools, 'fixtures/cube.step')],
   ['cube/cube.provenance.json', join(tools, 'fixtures/cube.provenance.json')],
 ])
-for (const family of ['radiator', 'electromagnet', 'full-wave', 'gmsh-rendering']) {
+for (const family of ['radiator', 'electromagnet', 'full-wave', 'global-quantity', 'transfo', 'gmsh-rendering']) {
   const directory = join(cacheRoot, 'fixtures', family)
   for (const name of await filesUnder(directory)) fixtureSources.set(`${family}/${name}`, join(directory, name))
 }
@@ -56,7 +61,7 @@ const fixtures = Object.fromEntries(await Promise.all([...fixtureSources].map(as
 const outputs = Object.fromEntries(await Promise.all((await filesUnder(outputRoot)).map(async (path) => [path, await metadata(join(outputRoot, path))])))
 
 const assets = [
-  ...Object.entries(outputs).map(([path, value]) => ({ path, ...value })),
+  ...Object.entries(outputs).filter(([path]) => path.endsWith('.mjs') || path.endsWith('.wasm')).map(([path, value]) => ({ path, ...value })),
   { path: 'getdp/runtime.mjs', ...await metadata(join(tools, 'getdp/runtime.mjs')) },
   { path: 'fixtures/projects.json', ...await metadata(join(tools, 'fixtures/projects.json')) },
   ...Object.entries(fixtures).map(([path, value]) => ({ path: `fixtures/${path}`, ...value })),

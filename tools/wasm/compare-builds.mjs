@@ -7,12 +7,12 @@ const [leftRoot, rightRoot, reportPath] = process.argv.slice(2)
 if (!reportPath) throw new Error('usage: compare-builds.mjs left-output right-output report.json')
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex')
 const tools = fileURLToPath(new URL('.', import.meta.url))
+const root = fileURLToPath(new URL('../..', import.meta.url))
 const versions = Object.fromEntries((await readFile(join(tools, 'versions.env'), 'utf8')).trim().split('\n').map((line) => line.split('=', 2)))
-const patches = Object.fromEntries(await Promise.all([
-  'gmsh/view-bindings.patch',
-  'gmsh/optional-quad-predicate.patch',
-  'gmsh/persistent-parser-number.patch',
-].map(async (path) => [path, hash(await readFile(join(tools, path)))])))
+const artifactLockBytes = await readFile(join(tools, 'artifacts.lock.json'))
+const artifactLock = JSON.parse(artifactLockBytes)
+const inputs = Object.fromEntries(await Promise.all(Object.keys(artifactLock.inputs).map(async (path) => [path, hash(await readFile(path.startsWith('workspace/') ? join(root, path.slice('workspace/'.length)) : join(tools, path)))])))
+if (JSON.stringify(inputs) !== JSON.stringify(artifactLock.inputs)) throw new Error('reproducibility inputs differ from artifacts.lock.json')
 
 async function filesUnder(root, directory = root) {
   const files = []
@@ -81,7 +81,8 @@ const report = {
       tree: versions[`${name}_TREE`],
     }])),
     f2cblaslapackSha256: versions.F2CBLASLAPACK_SHA256,
-    patches,
+    artifactLockSha256: hash(artifactLockBytes),
+    inputs,
   },
   byteIdentical: drift.length === 0,
   outputs,

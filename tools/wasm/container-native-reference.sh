@@ -27,11 +27,12 @@ for toolkit in "${occt_toolkits[@]}"; do occt_libraries+="${occt_libraries:+;}$B
 patch -d "$SRC/gmsh" -p1 < /workspace/tools/gmsh/optional-quad-predicate.patch
 cmake -S "$SRC/gmsh" -B "$BUILD/gmsh" \
   -DCMAKE_BUILD_TYPE=Release -DOCC_INC="$BUILD/occt/include/opencascade" -DOCC_LIBS="$occt_libraries" \
-  -DDEFAULT=OFF -DENABLE_MESH=ON -DENABLE_BUILD_LIB=ON -DENABLE_PARSER=ON \
+  -DDEFAULT=OFF -DENABLE_MESH=ON -DENABLE_BUILD_LIB=ON -DENABLE_PRIVATE_API=ON -DENABLE_PARSER=ON \
   -DENABLE_POST=ON -DENABLE_ONELAB=ON -DENABLE_EIGEN=ON -DENABLE_OCC=ON \
   -DENABLE_OCC_CAF=OFF -DENABLE_OCC_STATIC=ON
 grep -q '^#define HAVE_OCC' "$BUILD/gmsh/src/common/GmshConfig.h"
 nice cmake --build "$BUILD/gmsh" --target gmsh lib --parallel "$JOBS"
+cmake --install "$BUILD/gmsh" --prefix "$BUILD/gmsh-prefix"
 g++ -std=c++17 -O2 -I"$SRC/gmsh/api" /workspace/tools/native-probe.cpp "$BUILD/gmsh/libgmsh.a" \
   -L"$BUILD/occt/lin64/gcc/lib" -Wl,--start-group -lTKDESTEP -lTKDEIGES -lTKXSBase -lTKOffset -lTKFeat -lTKFillet -lTKBool -lTKMesh -lTKHLR -lTKBO -lTKPrim -lTKShHealing -lTKTopAlgo -lTKGeomAlgo -lTKBRep -lTKGeomBase -lTKG3d -lTKG2d -lTKMath -lTKernel -Wl,--end-group \
   -o "$BUILD/gmsh/native-probe" -ldl -lpthread
@@ -46,13 +47,29 @@ build_getdp() {
   nice make PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" -j"$JOBS" all
   popd >/dev/null
   cmake -S "$SRC/getdp" -B "$work" -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF \
-    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF \
+    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=OFF -DENABLE_BUILD_LIB=OFF \
     -DPETSC_DIR="$SRC/petsc" -DPETSC_ARCH="$arch" -DPETSC_LIBS="$SRC/petsc/$arch/lib/libpetsc.a"
   grep -q '^#define HAVE_PETSC' "$work/src/common/GetDPConfig.h"
   nice cmake --build "$work" --target getdp --parallel "$JOBS"
 }
+build_phase5_trace() {
+  local scalar=$1 arch="arch-opensimphy-native-$1" work="$BUILD/phase5-trace-$1"
+  cmake -S "$SRC/getdp" -B "$work" -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF \
+    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=ON \
+    -DENABLE_BUILD_LIB=ON -DOPENSIMPHY_NATIVE_TRACE=/workspace/tools/phase5-native-trace.cpp \
+    -DGMSH_LIB="$BUILD/gmsh-prefix/lib/libgmsh.a" -DGMSH_INC="$BUILD/gmsh-prefix/include" \
+    -DOPENSIMPHY_GMSH_SOURCE="$SRC/gmsh" -DOPENSIMPHY_GMSH_LIBRARY="$BUILD/gmsh-prefix/lib/libgmsh.a" \
+    -DOPENSIMPHY_GMSH_STATIC_DEPENDENCIES="$occt_libraries" \
+    -DPETSC_DIR="$SRC/petsc" -DPETSC_ARCH="$arch" -DPETSC_LIBS="$SRC/petsc/$arch/lib/libpetsc.a"
+  grep -q '^#define HAVE_GMSH' "$work/src/common/GetDPConfig.h"
+  grep -q '^#define HAVE_PETSC' "$work/src/common/GetDPConfig.h"
+  nice cmake --build "$work" --target phase5_native_trace --parallel "$JOBS"
+}
+cat /workspace/tools/getdp/CMakeLists.native-trace.txt >> "$SRC/getdp/CMakeLists.txt"
 build_getdp real
 build_getdp complex
+build_phase5_trace real
+build_phase5_trace complex
 
 run_project() {
   local id=$1 directory=$2 geometry=$3 problem=$4 dimension=$5 scalar=$6 resolution=$7
@@ -72,6 +89,23 @@ run_project() {
 run_project radiator-3d-transient radiator radiator.geo radiator.pro 3 real The dim 3 s 4 zh 0.01 AnalysisType 1 tmax 10 dt 5
 run_project electromagnet-2d-nonlinear electromagnet electromagnet.geo electromagnet.pro 2 real Mag SymmetryType 3 s 4 NonlinearCore 1 NewtonRaphson 1 Current 100
 run_project full-wave-2d-edge-complex full-wave full_wave.geo full_wave.pro 2 complex Wav dim 2 L 4 airRadius 5 res 1.5
+
+run_phase5_trace() {
+  local id=$1 directory=$2 geometry=$3 problem=$4 scalar=$5 resolution=$6 parameter=$7 value=$8
+  shift 8
+  local work="$RUN/phase5/$id" args=()
+  mkdir -p "$work" "$OUT/phase5"
+  cp -a "/workspace/native/fixtures/$directory/." "$work/"
+  while (( $# )); do args+=("-setnumber" "$1" "$2"); shift 2; done
+  pushd "$work" >/dev/null
+  "$BUILD/gmsh/gmsh" "$geometry" "${args[@]}" -setnumber "$parameter" "$value" -format msh2 -2 -o model.msh
+  "$BUILD/phase5-trace-$scalar/phase5_native_trace" "$id" "$geometry" "$problem" model.msh "$resolution" "$parameter" "$value"
+  cp "$id-native-trace.json" "$OUT/phase5/"
+  popd >/dev/null
+}
+
+run_phase5_trace global-quantity-real-loop global-quantity microstrip.geo microstrip.pro real Ele s 1
+run_phase5_trace transfo-complex-loop transfo transfo.geo transfo.pro complex Mag s 2
 
 for specification in \
   'radiator-3d-transient:0.004:0.005:0.005' 'radiator-3d-transient:0.004:0.03:0.005' \

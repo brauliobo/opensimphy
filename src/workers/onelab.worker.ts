@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import type { FieldSample, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
+import type { FieldSample, LoopControlResponse, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
 import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, parseOnelab, setParameterValue, validateReadOnlyValues } from '../simulation/onelab-db'
 import { certifyConvergence } from '../simulation/convergence'
 import { canonicalMshRecords } from '../simulation/msh'
@@ -9,6 +9,8 @@ import { complexFieldRepresentations, expandHomogeneousModelStep, parsePosTimes,
 import { projectDescriptor } from '../simulation/project-catalog'
 import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
+import { maximumLoopPoints } from '../simulation/loops'
+import { verifySimulationManifest } from '../simulation/asset-manifest'
 
 const worker = self as unknown as DedicatedWorkerGlobalScope
 const root = new URL(`${import.meta.env.BASE_URL}simulation/`, worker.location.origin)
@@ -21,6 +23,36 @@ const partitionAssets = new Map<SimulationAssetPartitionName, Map<string, Uint8A
 let gmsh: any
 let getdp: any
 let complexGetdp: any
+let combinedReal: any
+let combinedComplex: any
+const startupMilliseconds = new Map<ProjectDescriptor['scalarType'], number>()
+const residentModules = new Map<string, { module: any; startupMilliseconds: number }>()
+const baselineWasmMemory = new Map<string, number>()
+const runtimeProfile = import.meta.env.VITE_ONELAB_PROFILE === 'separate' ? 'separate' : 'combined'
+
+function registerModule(name: string, module: any, started: number) {
+  residentModules.set(name, { module, startupMilliseconds: performance.now() - started })
+}
+
+function residentModuleMetrics() {
+  const buffers = new Set<object>()
+  const moduleStartupMilliseconds: Record<string, number> = {}
+  const moduleWasmMemoryBytes: Record<string, number> = {}
+  let wasmMemoryBytes = 0
+  for (const [name, resident] of [...residentModules].sort(([left], [right]) => left.localeCompare(right))) {
+    const buffer = resident.module.wasmMemory.buffer as object & { byteLength: number }
+    moduleStartupMilliseconds[name] = resident.startupMilliseconds
+    moduleWasmMemoryBytes[name] = buffer.byteLength
+    if (!buffers.has(buffer)) {
+      buffers.add(buffer)
+      wasmMemoryBytes += buffer.byteLength
+    }
+  }
+  const residentSet = [...residentModules.keys()].sort().join(',')
+  const baseline = baselineWasmMemory.get(residentSet) ?? wasmMemoryBytes
+  baselineWasmMemory.set(residentSet, baseline)
+  return { moduleStartupMilliseconds, moduleWasmMemoryBytes, wasmMemoryBytes, repeatRunGrowthBytes: wasmMemoryBytes - baseline }
+}
 
 function emit(message: OnelabWorkerResponse, transfer: Transferable[] = []) {
   worker.postMessage(message, transfer)
@@ -143,7 +175,12 @@ async function fetchBytes(path: string) {
 }
 
 async function initializeModules() {
-  if (gmsh && getdp && manifest && partitionAssets.has('core') && partitionAssets.has('real')) return
+  const started = performance.now()
+  const realPartition = runtimeProfile === 'combined' ? 'combined-real' : 'separate-real'
+  const requiredPartitions: SimulationAssetPartitionName[] = runtimeProfile === 'combined'
+    ? ['shared', realPartition]
+    : ['shared', 'gmsh', realPartition]
+  if (gmsh && getdp && manifest && requiredPartitions.every((name) => partitionAssets.has(name))) return
   let response: Response | undefined
   try { response = await fetch(new URL('manifest.json', root), { cache: 'no-store' }) } catch { /* offline recreation */ }
   if (!response) {
@@ -153,31 +190,42 @@ async function initializeModules() {
         const candidate = await (await caches.open(name)).match(new URL('manifest.json', root).href)
         if (!candidate) continue
         const candidateManifest = await candidate.clone().json() as SimulationAssetManifest
-        if (candidateManifest.schema !== 4) continue
-        const [core, real] = await Promise.all([cacheSnapshot(candidateManifest, candidateManifest.partitions.core), cacheSnapshot(candidateManifest, candidateManifest.partitions.real)])
-        if (core && real) return { response: candidate, snapshots: { core, real } }
+        try { await verifySimulationManifest(candidateManifest, artifactLock.contentVersion) } catch { continue }
+        const snapshots = await Promise.all(requiredPartitions.map(async (partition) => [partition, await cacheSnapshot(candidateManifest, candidateManifest.partitions[partition])] as const))
+        if (snapshots.every(([, snapshot]) => snapshot)) return { response: candidate, snapshots }
       }
     })
     response = offline?.response
-    if (offline?.snapshots) {
-      partitionAssets.set('core', offline.snapshots.core)
-      partitionAssets.set('real', offline.snapshots.real)
-    }
+    for (const [partition, snapshot] of offline?.snapshots ?? []) partitionAssets.set(partition, snapshot!)
   }
   if (!response) throw new Error('simulation manifest is unavailable online and no complete cache exists')
   if (!response.ok) throw new Error(`simulation manifest: HTTP ${response.status}`)
-  const next = await response.json() as SimulationAssetManifest
-  if (next.schema !== 4 || next.version !== artifactLock.contentVersion) throw new Error('invalid simulation manifest identity')
-  for (const name of ['core', 'real', 'complex'] as const) {
-    const partition = next.partitions[name]
-    const expectedDigest = await digest(new TextEncoder().encode(JSON.stringify(partition.files)))
-    if (partition.name !== name || partition.cacheName !== `opensimphy-onelab-${next.version}-${name}` || partition.fileMapDigest !== expectedDigest) throw new Error(`invalid ${name} simulation partition identity`)
-  }
-  if (!partitionAssets.has('core')) partitionAssets.set('core', await populateCache(next, next.partitions.core))
-  if (!partitionAssets.has('real')) partitionAssets.set('real', await populateCache(next, next.partitions.real))
+  const next = await verifySimulationManifest(await response.json(), artifactLock.contentVersion)
+  for (const name of requiredPartitions) if (!partitionAssets.has(name)) partitionAssets.set(name, await populateCache(next, next.partitions[name]))
   manifest = next
 
   const moduleUrl = (source: string) => URL.createObjectURL(new Blob([source], { type: 'text/javascript' }))
+  if (runtimeProfile === 'combined') {
+    const entryUrl = moduleUrl(await (await fetchAsset('combined-real/combined.mjs')).text())
+    const gmshRuntimeUrl = moduleUrl(await (await fetchAsset('combined-real/runtime.mjs')).text())
+    const descriptorUrl = moduleUrl(await (await fetchAsset('combined-real/gmsh-descriptor.mjs')).text())
+    const combinedRuntimeUrl = moduleUrl(await (await fetchAsset('combined-real/combined-runtime.mjs')).text())
+    const [{ default: createCombinedModule }, { buildApi }, { default: descriptor }, { createCombinedRuntime }] = await Promise.all([
+      import(/* @vite-ignore */ entryUrl), import(/* @vite-ignore */ gmshRuntimeUrl), import(/* @vite-ignore */ descriptorUrl), import(/* @vite-ignore */ combinedRuntimeUrl),
+    ])
+    const moduleStarted = performance.now()
+    const module = await createCombinedModule({
+      wasmBinary: await fetchBytes('combined-real/combined.wasm'), locateFile: () => new URL('unused.wasm', root).href,
+      print: (line: string) => logs.push(`[combined-real] ${line}`), printErr: (line: string) => logs.push(`[combined-real:err] ${line}`),
+    })
+    registerModule('combined-real', module, moduleStarted)
+    combinedReal = createCombinedRuntime(module, buildApi, descriptor)
+    gmsh = combinedReal
+    getdp = combinedReal.solver
+    gmsh.initialize()
+    startupMilliseconds.set('real-double', performance.now() - started)
+    return
+  }
   const gmshCoreUrl = moduleUrl(await (await fetchAsset('gmsh/gmsh-core.mjs')).text())
   const gmshRuntimeUrl = moduleUrl(await (await fetchAsset('gmsh/runtime.mjs')).text())
   const gmshDescriptorUrl = moduleUrl(await (await fetchAsset('gmsh/gmsh-descriptor.mjs')).text())
@@ -193,20 +241,25 @@ async function initializeModules() {
     import(/* @vite-ignore */ getdpEntryUrl),
     import(/* @vite-ignore */ getdpRuntimeUrl),
   ])
+  const gmshStarted = performance.now()
   gmsh = await initializeGmsh({
     wasmBinary: await fetchBytes('gmsh/gmsh-core.wasm'),
     locateFile: () => new URL('unused.wasm', root).href,
     print: (line: string) => logs.push(`[gmsh] ${line}`),
     printErr: (line: string) => logs.push(`[gmsh:err] ${line}`),
   })
+  registerModule('gmsh', gmsh.module, gmshStarted)
+  const getdpStarted = performance.now()
   const module = await createGetdpModule({
     wasmBinary: await fetchBytes('getdp/getdp.wasm'),
     locateFile: () => new URL('unused.wasm', root).href,
     print: (line: string) => logs.push(`[getdp] ${line}`),
     printErr: (line: string) => logs.push(`[getdp:err] ${line}`),
   })
+  registerModule('getdp-real', module, getdpStarted)
   getdp = createGetdpRuntime(module)
   gmsh.initialize()
+  startupMilliseconds.set('real-double', performance.now() - started)
 }
 
 async function initialize() {
@@ -217,30 +270,77 @@ async function initialize() {
 
 async function solverFor(scalarType: ProjectDescriptor['scalarType']) {
   await initialize()
-  if (scalarType === 'real-double') return getdp
-  if (complexGetdp) return complexGetdp
+  if (scalarType === 'real-double') {
+    if (runtimeProfile === 'combined') gmsh = combinedReal
+    return getdp
+  }
+  if (complexGetdp) {
+    if (runtimeProfile === 'combined') gmsh = combinedComplex
+    return complexGetdp
+  }
   if (!manifest) throw new Error('simulation manifest is not loaded')
-  if (!partitionAssets.has('complex')) partitionAssets.set('complex', await populateCache(manifest, manifest.partitions.complex))
+  const complexPartition = runtimeProfile === 'combined' ? 'combined-complex' : 'separate-complex'
+  const started = performance.now()
+  if (!partitionAssets.has(complexPartition)) partitionAssets.set(complexPartition, await populateCache(manifest, manifest.partitions[complexPartition]))
   const moduleUrl = (source: string) => URL.createObjectURL(new Blob([source], { type: 'text/javascript' }))
+  if (runtimeProfile === 'combined') {
+    const entryUrl = moduleUrl(await (await fetchAsset('combined-complex/combined.mjs')).text())
+    const gmshRuntimeUrl = moduleUrl(await (await fetchAsset('combined-complex/runtime.mjs')).text())
+    const descriptorUrl = moduleUrl(await (await fetchAsset('combined-complex/gmsh-descriptor.mjs')).text())
+    const combinedRuntimeUrl = moduleUrl(await (await fetchAsset('combined-complex/combined-runtime.mjs')).text())
+    const [{ default: createCombinedModule }, { buildApi }, { default: descriptor }, { createCombinedRuntime }] = await Promise.all([
+      import(/* @vite-ignore */ entryUrl), import(/* @vite-ignore */ gmshRuntimeUrl), import(/* @vite-ignore */ descriptorUrl), import(/* @vite-ignore */ combinedRuntimeUrl),
+    ])
+    const moduleStarted = performance.now()
+    const module = await createCombinedModule({
+      wasmBinary: await fetchBytes('combined-complex/combined.wasm'), locateFile: () => new URL('unused.wasm', root).href,
+      print: (line: string) => logs.push(`[combined-complex] ${line}`), printErr: (line: string) => logs.push(`[combined-complex:err] ${line}`),
+    })
+    registerModule('combined-complex', module, moduleStarted)
+    combinedComplex = createCombinedRuntime(module, buildApi, descriptor)
+    combinedComplex.initialize()
+    complexGetdp = combinedComplex.solver
+    gmsh = combinedComplex
+    startupMilliseconds.set('complex-double', performance.now() - started)
+    return complexGetdp
+  }
   const entryUrl = moduleUrl(await (await fetchAsset('getdp-complex/getdp.mjs')).text())
   const runtimeUrl = moduleUrl(await (await fetchAsset('getdp/runtime.mjs')).text())
   const [{ default: createGetdpModule }, { createGetdpRuntime }] = await Promise.all([
     import(/* @vite-ignore */ entryUrl),
     import(/* @vite-ignore */ runtimeUrl),
   ])
+  const moduleStarted = performance.now()
   const module = await createGetdpModule({
     wasmBinary: await fetchBytes('getdp-complex/getdp.wasm'),
     locateFile: () => new URL('unused.wasm', root).href,
     print: (line: string) => logs.push(`[getdp-complex] ${line}`),
     printErr: (line: string) => logs.push(`[getdp-complex:err] ${line}`),
   })
+  registerModule('getdp-complex', module, moduleStarted)
   complexGetdp = createGetdpRuntime(module)
+  startupMilliseconds.set('complex-double', performance.now() - started)
   return complexGetdp
 }
 
 function writeFile(fs: any, path: string, bytes: Uint8Array) {
   try { fs.unlink(path) } catch { /* absent */ }
   fs.writeFile(path, bytes)
+}
+
+function memfsMetrics(fs: any, rootPath: string) {
+  let files = 0, bytes = 0
+  const visit = (path: string) => {
+    for (const name of fs.readdir(path) as string[]) {
+      if (name === '.' || name === '..') continue
+      const child = `${path.replace(/\/$/, '')}/${name}`
+      const stat = fs.stat(child)
+      if (fs.isDir(stat.mode)) visit(child)
+      else { files++; bytes += stat.size }
+    }
+  }
+  visit(rootPath)
+  return { memfsFiles: files, memfsBytes: bytes }
 }
 
 function extractView(name: string, list: { dataType: string[]; numElements: number[]; data: number[][] }, components: 1 | 3) {
@@ -384,17 +484,17 @@ function writeProjectFiles(envelope: ProjectEnvelope, solver: any) {
   solver.onelab.clear()
   const rootPath = `/projects/${envelope.descriptor.id}`
   gmsh.FS.mkdirTree(rootPath)
-  solver.FS.mkdirTree(rootPath)
+  if (solver.FS !== gmsh.FS) solver.FS.mkdirTree(rootPath)
   for (const file of envelope.files) {
     const path = safeProjectPath(rootPath, file.path)
     const directory = path.slice(0, path.lastIndexOf('/'))
     gmsh.FS.mkdirTree(directory)
-    solver.FS.mkdirTree(directory)
+    if (solver.FS !== gmsh.FS) solver.FS.mkdirTree(directory)
     writeFile(gmsh.FS, path, file.bytes)
-    writeFile(solver.FS, path, file.bytes)
+    if (solver.FS !== gmsh.FS) writeFile(solver.FS, path, file.bytes)
   }
   gmsh.FS.chdir(rootPath)
-  solver.FS.chdir(rootPath)
+  if (solver.FS !== gmsh.FS) solver.FS.chdir(rootPath)
   return rootPath
 }
 
@@ -411,6 +511,19 @@ function importGmshDatabase(database: string) {
   gmsh.onelab.clear()
   gmsh.onelab.set(database, 'json')
   return canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+}
+
+function callSolverWithDatabase(solver: any, database: string, invoke: () => number) {
+  if (runtimeProfile === 'separate') return callGetdpWithDatabase(solver.onelab, database, invoke)
+  importGmshDatabase(database)
+  const changedBefore = gmsh.onelab.getChanged('').value
+  const status = invoke()
+  return {
+    status,
+    changedBefore,
+    changedAfter: gmsh.onelab.getChanged('').value,
+    database: canonicalNativeDatabase(gmsh.onelab.get('', 'json').data),
+  }
 }
 
 function effectiveNumbers(descriptor: ProjectDescriptor, database: string) {
@@ -482,10 +595,19 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   writeFile(solver.FS, meshPath, msh)
   for (const output of solver.FS.readdir('.').filter((name: string) => /\.(?:pos|res)$/.test(name))) solver.FS.unlink(output)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-solve' })
-  const status = solver.run([
-    'getdp', descriptor.problem!, '-msh', meshPath, ...numberArguments(parameters),
-    '-solve', descriptor.resolution!, ...descriptor.postOperations!.flatMap((operation) => ['-pos', operation]),
-  ])
+  if (runtimeProfile === 'combined') gmsh.logger.start()
+  let status: number
+  try {
+    status = solver.run([
+      'getdp', descriptor.problem!, '-msh', meshPath, ...numberArguments(parameters),
+      '-solve', descriptor.resolution!, ...descriptor.postOperations!.flatMap((operation) => ['-pos', operation]),
+    ])
+  } finally {
+    if (runtimeProfile === 'combined') {
+      logs.push(...gmsh.logger.get().log)
+      gmsh.logger.stop()
+    }
+  }
   if (status !== 0) throw new Error(`GetDP exited with status ${status}`)
   if (!descriptor.convergence) throw new Error(`project ${descriptor.id} has no convergence certification criteria`)
   const certification = certifyConvergence(logs, descriptor.convergence, parameters)
@@ -571,13 +693,26 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   if (!scalarField || !vectorField) throw new Error(`project ${descriptor.id} must expose scalar and vector result fields`)
   const scalarSource = extractView(scalarField.name, gmsh.view.getListData(views[names.indexOf(scalarField.provenance.sourceFile)]!), 1)
   const vectorSource = extractView(vectorField.name, gmsh.view.getListData(views[names.indexOf(vectorField.provenance.sourceFile)]!), 3)
+  const memory = residentModuleMetrics()
+  const cachedPartitionBytes = [...partitionAssets.values()].flatMap((snapshot) => [...snapshot.values()]).reduce((sum, bytes) => sum + bytes.byteLength, 0)
+  const resourceAudit = {
+    profile: runtimeProfile,
+    scalarType: descriptor.scalarType,
+    startupMilliseconds: startupMilliseconds.get(descriptor.scalarType) ?? 0,
+    ...memory,
+    cachedPartitionBytes,
+    modelEntities: scene.entities.length,
+    views: views.length,
+    ...memfsMetrics(gmsh.FS, `/projects/${descriptor.id}`),
+    ...(runtimeProfile === 'combined' ? { nativeBridge: solver.diagnostics.bridge() } : {}),
+  }
   return {
     projectId: descriptor.id, parameters,
     nodes, elements, meshSha256, meshPhysicalNames, meshPhysicalTags, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,
     scalar: scalarSource.block, vector: vectorSource.block, samples: deterministicSamples(scalarSource, vectorSource, descriptor.probes ?? [], descriptor.id),
     scene, logs: [...logs],
-    memoryBytes: gmsh.module.wasmMemory.buffer.byteLength + getdp.module.wasmMemory.buffer.byteLength + (complexGetdp?.module.wasmMemory.buffer.byteLength ?? 0),
-    snapshotBytes: [...partitionAssets.values()].flatMap((snapshot) => [...snapshot.values()]).reduce((sum, bytes) => sum + bytes.byteLength, 0),
+    memoryBytes: memory.wasmMemoryBytes, resourceAudit,
+    snapshotBytes: cachedPartitionBytes,
     loadedPartitions: [...partitionAssets.keys()].sort(), workerId,
     outputs, convergence, nativeProbes, complexProbes,
   }
@@ -595,10 +730,10 @@ async function openProject(projectId: string): Promise<ProjectBootstrap> {
   const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
   writeProjectFiles(envelope, solver)
   const gmshDeclarations = parseGmshDatabase(descriptor)
-  const declarations = callGetdpWithDatabase(solver.onelab, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
+  const declarations = callSolverWithDatabase(solver, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
   const gmshDefaults = parseGmshDatabase(descriptor, seedInitialNumbers(descriptor, declarations.database))
-  const checked = callGetdpWithDatabase(solver.onelab, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, gmshDefaults)), '-check']))
+  const checked = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, gmshDefaults)), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP default check exited with status ${checked.status}`)
   return { files, defaults: checked.database, descriptor }
 }
@@ -613,25 +748,63 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
   writeProjectFiles(envelope, solver)
   const gmshDefaults = parseGmshDatabase(descriptor, envelope.defaults)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const declarations = callGetdpWithDatabase(solver.onelab, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, '-check']))
+  const declarations = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
   if (envelope.action !== 'reset') validateReadOnlyValues(declarations.database, envelope.database, envelope.defaults)
   const requested = envelope.action === 'reset' ? declarations.database : mergeValidatedValues(declarations.database, envelope.database)
   let database = parseGmshDatabase(descriptor, requested)
-  applyPhysicalGroups(envelope)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const parameters = effectiveNumbers(descriptor, database)
-  const checked = callGetdpWithDatabase(solver.onelab, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(parameters), '-check']))
+  const checked = callSolverWithDatabase(solver, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, database)), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP check exited with status ${checked.status}`)
-  database = importGmshDatabase(checked.database)
+  database = parseGmshDatabase(descriptor, checked.database)
+  if (envelope.loopIndex !== undefined) {
+    if (runtimeProfile !== 'combined' || !Number.isInteger(envelope.loopIndex) || envelope.loopIndex < 0 || envelope.loopIndex >= maximumLoopPoints) throw new Error('invalid native ONELAB loop point index')
+    const total = solver.loop.initialize(maximumLoopPoints)
+    if (envelope.loopIndex >= total) throw new Error(`native ONELAB loop point ${envelope.loopIndex} exceeds ${total} points`)
+    for (let index = 0; index < envelope.loopIndex; index++) if (!solver.loop.increment()) throw new Error(`native ONELAB loop ended before point ${envelope.loopIndex}`)
+    database = canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+  }
+  applyPhysicalGroups(envelope)
+  const parameters = effectiveNumbers(descriptor, database)
   if (envelope.action === 'compute') {
-    const imported = canonicalNativeDatabase(solver.onelab.get())
-    if (imported !== checked.database) throw new Error('GetDP database changed after check export')
+    const imported = runtimeProfile === 'combined'
+      ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+      : canonicalNativeDatabase(solver.onelab.get())
+    if (imported !== database) throw new Error('GetDP database changed after check export')
     const result = await solvePreparedProject(requestId, envelope, solver, parameters)
-    database = importGmshDatabase(canonicalNativeDatabase(solver.onelab.get()))
+    database = runtimeProfile === 'combined'
+      ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+      : importGmshDatabase(canonicalNativeDatabase(solver.onelab.get()))
     return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database, result }
   }
   return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
+}
+
+async function controlLoop(requestId: string, operation: 'initialize' | 'increment', envelope: ProjectEnvelope): Promise<LoopControlResponse> {
+  if (runtimeProfile !== 'combined') throw new Error('native ONELAB loops require the combined runtime profile')
+  const solver = await solverFor(envelope.descriptor.scalarType)
+  let total: number | undefined
+  let hasNext = true
+  let database: string
+  if (operation === 'initialize') {
+    const checked = await runProject(requestId, { ...envelope, action: 'check' })
+    importGmshDatabase(checked.database)
+    total = solver.loop.initialize(maximumLoopPoints)
+    database = canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+  } else {
+    writeProjectFiles(envelope, solver)
+    importGmshDatabase(envelope.database)
+    hasNext = solver.loop.increment()
+    database = canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
+  }
+  return {
+    projectId: envelope.projectId,
+    revision: envelope.revision,
+    database,
+    hasNext,
+    ...(total === undefined ? {} : { total }),
+    nativeBridge: solver.diagnostics.bridge(),
+  }
 }
 
 async function runMicrostrip(requestId: string) {
@@ -733,6 +906,9 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
       const response = await runProject(requestId, event.data.envelope)
       const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer, ...sceneTransferables(response.result.scene)] : []
       emit({ type: 'project-response', requestId, response }, transfers)
+    }
+    else if (event.data.type === 'loop-control') {
+      emit({ type: 'loop-control-response', requestId, response: await controlLoop(requestId, event.data.operation, event.data.envelope) })
     }
     else if (event.data.type === 'get-cube-scene') {
       const scene = await getCubeScene()

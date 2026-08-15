@@ -17,7 +17,7 @@ mkdir -p "$CACHE/src"
 cp -a "$ROOT/tools/wasm/.cache/src/gmsh" "$ROOT/tools/wasm/.cache/src/occt" "$ROOT/tools/wasm/.cache/src/getdp" "$ROOT/tools/wasm/.cache/src/petsc" "$CACHE/src/"
 cp "$ROOT/tools/wasm/.cache/downloads/f2cblaslapack-3.8.0.q2.tar.gz" "$CACHE/downloads/"
 cp "$ROOT/tools/wasm/.cache/fixtures/microstrip/"microstrip.{geo,pro} "$CACHE/fixtures/"
-for fixture in radiator electromagnet full-wave; do cp -a "$ROOT/tools/wasm/.cache/fixtures/$fixture" "$CACHE/fixtures/"; done
+for fixture in radiator electromagnet full-wave global-quantity transfo; do cp -a "$ROOT/tools/wasm/.cache/fixtures/$fixture" "$CACHE/fixtures/"; done
 
 docker run --rm \
   --hostname opensimphy-native \
@@ -46,6 +46,17 @@ if [[ ${UPDATE_REFERENCE:-0} == 1 ]]; then
 else
   cmp "$reference_output" "$ROOT/tools/wasm/fixtures/microstrip-reference.json" || {
     echo "native reference drift; inspect $reference_output or regenerate intentionally with UPDATE_REFERENCE=1" >&2
+    exit 1
+  }
+fi
+
+phase5_output="$CACHE/out/phase5-reference.json"
+node "$ROOT/tools/wasm/summarize-phase5.mjs" "$CACHE/out" "$phase5_output"
+if [[ ${UPDATE_REFERENCE:-0} == 1 ]]; then
+  cp "$phase5_output" "$ROOT/tools/wasm/fixtures/phase5-reference.json"
+else
+  cmp "$phase5_output" "$ROOT/tools/wasm/fixtures/phase5-reference.json" || {
+    echo "Phase 5 native reference drift; inspect $phase5_output or regenerate intentionally with UPDATE_REFERENCE=1" >&2
     exit 1
   }
 fi

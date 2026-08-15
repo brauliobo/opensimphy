@@ -100,6 +100,48 @@
       "probes": [[0, -0.02, 0], [0.03, 0.01, 0]]
     },
     {
+      "id": "global-quantity-real-loop",
+      "title": "Global quantity real loop",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/06-Global_quantities",
+      "directory": "global-quantity",
+      "files": ["microstrip.geo", "microstrip.pro"],
+      "geometry": "microstrip.geo",
+      "problem": "microstrip.pro",
+      "dimension": 2,
+      "scalarType": "real-double",
+      "resolution": "Ele",
+      "postOperations": ["Map"],
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-20, "relativeTolerance": 1e-12, "residualCount": 2},
+        "structure": {"kind": "fixed", "groups": [{"kind": "linear", "systemName": "Sys_Ele"}]}
+      },
+      "setNumbers": {"s": 1},
+      "parameterNames": {"s": "Parameters/Global mesh size factor"},
+      "probes": [[0.0004, 0.0002, 0]]
+    },
+    {
+      "id": "transfo-complex-loop",
+      "title": "Transformer complex load loop",
+      "kind": "solve",
+      "source": "https://gitlab.onelab.info/getdp/getdp/-/tree/8850e98c4aa6d96468c76ba5ee0feb881953f853/tutorials/09-Template_library",
+      "directory": "transfo",
+      "files": ["transfo.geo", "transfo.pro", "transfo_common.pro", "Lib_Magnetoquasistatics_av_2D_Cir.pro"],
+      "geometry": "transfo.geo",
+      "problem": "transfo.pro",
+      "dimension": 2,
+      "scalarType": "complex-double",
+      "resolution": "Mag",
+      "postOperations": ["Map"],
+      "convergence": {
+        "linear": {"absoluteTolerance": 1e-8, "relativeTolerance": 1e-12, "residualCount": 2},
+        "structure": {"kind": "fixed", "groups": [{"kind": "linear", "systemName": "A"}]}
+      },
+      "setNumbers": {"s": 2},
+      "parameterNames": {"s": "Parameters/}Global mesh size factor"},
+      "probes": [[0, 0, 0]]
+    },
+    {
       "id": "gmsh-field-displacement",
       "title": "Gmsh field and true displacement",
       "kind": "render",

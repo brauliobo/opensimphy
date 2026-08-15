@@ -1,0 +1,36 @@
+diff --git a/global-quantity/microstrip.pro b/global-quantity/microstrip.pro
+--- a/global-quantity/microstrip.pro
++++ b/global-quantity/microstrip.pro
+@@ -72,6 +72,10 @@ Function {
+     TypeBC = {0, Choices{0="Fixed voltage", 1="Fixed charge"},
+       Name "Parameters/0Type"}
+-    ValueBC = {1e-3,
+-      Name "Parameters/1Value"}
++    ValueBC = {1e-3, Choices {5e-4, 1e-3},
++      Name "Parameters/1Value", Loop 1}
+     epsr = {9.8,
+       Name "Parameters/2Relative permittivity"}
++    LoopMiddle = {10, Choices {10, 20},
++      Name "Parameters/Loop middle", Loop 2}
++    LoopInner = {3, Choices {3, 4},
++      Name "Parameters/Loop inner", Loop 3}
+@@ -346,5 +346,6 @@ PostOperation {
+   { Name Map; NameOfPostProcessing Ele;
+     Operation {
+       Print[ v, OnElementsOf Vol_Ele, File "v.pos" ];
++      Print[ e, OnElementsOf Vol_Ele, File "e.pos" ];
+ 
+       If(DisplayGlobalBasisFunctions)
+diff --git a/transfo/transfo.pro b/transfo/transfo.pro
+--- a/transfo/transfo.pro
++++ b/transfo/transfo.pro
+@@ -134,7 +134,7 @@ Function {
+       Name "Parameters/0Primary voltage [V]"}
+     f = {50, Min 0, Max 1e3, Step 1,
+       Name "Parameters/1Frequency [Hz]"}
+-    Rval = {50, Min 1e-3, Max 50, Step 0.25, Visible (LoadType == 0),
+-      Name "Parameters/3Load resistance [Ohm]"}
++    Rval = {50, Choices {25, 50}, Visible (LoadType == 0),
++      Name "Parameters/3Load resistance [Ohm]", Loop 1}
+     Lval = {1e-6, Min 1e-9, Max 0.1, Step 1e-3, Visible (LoadType == 1),
+       Name "Parameters/3Load inductance [H]"}
