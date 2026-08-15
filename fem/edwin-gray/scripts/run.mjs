@@ -16,9 +16,19 @@ import { spawnSync } from "node:child_process";
 import { delimiter, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { aggregateNormalizedResults, normalizeResults } from "./normalize-results.mjs";
+import {
+  environmentManifest,
+  identifyDockerEnvironment,
+  identifyHostEnvironment,
+  identifyUnavailableEnvironment,
+  resolveDockerImageReference,
+  runnerIdentity
+} from "./solver-environment.mjs";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, "..");
+const RUN_SCRIPT = fileURLToPath(import.meta.url);
+const ENVIRONMENT_MODULE = resolve(SCRIPT_DIR, "solver-environment.mjs");
 const DEFAULT_CASE = resolve(ROOT, "cases/patent-3890548-illustrative.json");
 const DEFAULT_GEO = resolve(ROOT, "geometry/patent-3890548-3d.geo");
 const DEFAULT_PRO = resolve(ROOT, "getdp/magnetostatic.pro");
@@ -39,7 +49,7 @@ const MESH_QUALITY_FAILURES = [
 
 function parseArgs(argv) {
   const options = { backend: "auto" };
-  const flags = new Set(["validate", "dry-run", "sweep", "resume", "aggregate", "help"]);
+  const flags = new Set(["validate", "dry-run", "sweep", "resume", "aggregate", "publication", "help"]);
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (!token.startsWith("--")) {
@@ -77,6 +87,8 @@ function usage() {
     "  --getdp-bin PATH                   Override host GetDP executable",
     "  --docker-bin PATH                  Override Docker executable",
     "  --docker-image IMAGE               Enable the optional Docker backend",
+    "  --publication                      Require a resolved immutable Docker image digest",
+    "  --threads COUNT                    Solver thread count (default: 1)",
     "  --case PATH                        Case JSON path",
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
@@ -479,9 +491,9 @@ function buildSweep(caseData, baseHash) {
   };
 }
 
-function inputHash(inputs, caseData, parameters) {
+function inputHash(inputs, caseData, parameters, environmentIdentityHash) {
   const baseHash = baseInputHash(inputs, caseData);
-  return sha256Bytes(Buffer.from(stableJson({ baseHash, parameters })));
+  return sha256Bytes(Buffer.from(stableJson({ baseHash, environmentIdentityHash, parameters })));
 }
 
 function baseInputHash(inputs, caseData) {
@@ -632,6 +644,52 @@ function backendPlan(options, host, { allowUnavailable = false } = {}) {
   throw new Error(`No solver backend available: host is missing ${missing}; provide --docker-image IMAGE and a working Docker executable for the optional fallback`);
 }
 
+function positiveInteger(value, label) {
+  const parsed = Number(value);
+  assert(Number.isInteger(parsed) && parsed > 0, `${label} must be a positive integer`);
+  return parsed;
+}
+
+function runnerRevision() {
+  if (process.env.SOLVER_RUNNER_REVISION) {
+    return process.env.SOLVER_RUNNER_REVISION;
+  }
+  const result = spawnSync("git", ["rev-parse", "HEAD"], { cwd: ROOT, encoding: "utf8" });
+  return result.status === 0 ? result.stdout.trim() : "unknown";
+}
+
+function identifyBackend(plan, options) {
+  const threads = positiveInteger(options.threads || process.env.SOLVER_THREADS || "1", "--threads");
+  const runner = runnerIdentity({
+    revision: runnerRevision(),
+    runScript: RUN_SCRIPT,
+    environmentModule: ENVIRONMENT_MODULE
+  });
+  if (plan.kind === "host") {
+    return {
+      ...plan,
+      threads,
+      environment: identifyHostEnvironment({ gmsh: plan.gmsh, getdp: plan.getdp, threads, runner })
+    };
+  }
+  if (plan.kind === "docker") {
+    const image = resolveDockerImageReference(plan.docker, plan.image, { publication: options.publication === true });
+    return {
+      ...plan,
+      image: image.image,
+      requestedImage: image.requestedImage,
+      imageDigest: image.digest,
+      threads,
+      environment: identifyDockerEnvironment({ image, threads, runner })
+    };
+  }
+  return {
+    ...plan,
+    threads,
+    environment: identifyUnavailableEnvironment({ reason: plan.reason, threads, runner })
+  };
+}
+
 function pathWithin(path, root) {
   const resolvedPath = resolve(path);
   const resolvedRoot = resolve(root);
@@ -639,8 +697,8 @@ function pathWithin(path, root) {
 }
 
 function dockerPath(path, root, runRoot) {
-  if (runRoot && pathWithin(path, runRoot) && !pathWithin(runRoot, root)) {
-    return `/runs/${relative(runRoot, path)}`;
+  if (runRoot && pathWithin(path, runRoot)) {
+    return `/output/${relative(runRoot, path)}`;
   }
   assert(pathWithin(path, root), `Docker path is outside the mounted workspace: ${path}`);
   return `/workspace/${relative(root, path)}`;
@@ -648,7 +706,6 @@ function dockerPath(path, root, runRoot) {
 
 function dockerCommand(plan, root, cwd, command, args, runRoot) {
   const mountCwd = "/workspace";
-  const externalRunRoot = runRoot && !pathWithin(runRoot, root);
   const translatedArgs = args.map((arg) => {
     if (typeof arg !== "string") {
       return arg;
@@ -662,9 +719,27 @@ function dockerCommand(plan, root, cwd, command, args, runRoot) {
     plan.docker,
     "run",
     "--rm",
+    "--read-only",
+    "--network",
+    "none",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,size=64m",
     "-v",
-    `${root}:${mountCwd}`,
-    ...(externalRunRoot ? ["-v", `${runRoot}:/runs`] : []),
+    `${root}:${mountCwd}:ro`,
+    "-v",
+    `${runRoot}:/output:rw`,
+    "-e",
+    `OMP_NUM_THREADS=${plan.threads}`,
+    "-e",
+    `SOLVER_IMAGE_REFERENCE=${plan.image}`,
+    "-e",
+    `SOLVER_RUNNER_REVISION=${plan.environment.identity.runner.revision}`,
+    "-e",
+    `SOLVER_SOURCE_REVISION=${plan.environment.identity.runner.runScriptSha256}`,
     "-w",
     dockerPath(cwd, root, runRoot),
     plan.image,
@@ -748,6 +823,9 @@ function checkpointMatches(checkpoint, job) {
     && checkpoint.modelInputHash === job.modelInputHash
     && checkpoint.jobInputHash === job.hash
     && checkpoint.jobId === job.jobId
+    && checkpoint.solverEnvironment?.identityHash === job.plan.environment.identityHash
+    && checkpoint.environmentIdentityHash === job.plan.environment.identityHash
+    && artifactMatches(join(job.jobDir, "solver-environment.json"), checkpoint.artifacts?.environment)
     && stableJson(checkpoint.parameters) === stableJson(job.parameters)
     && checkpoint.backend === job.plan.kind
     && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`
@@ -796,11 +874,13 @@ function commandPlan(job) {
   const outputName = join(jobDir, "motor.msh");
   const gmshArgs = commandWithOverrides(
     geoPath,
-    ["-3", "-format", "msh4", "-o", outputName],
+    ["-3", "-nt", String(plan.threads), "-format", "msh4", "-o", outputName],
     gmshOverrides(parameters, inputs.caseData)
   );
   const getdpArgs = [
     proPath,
+    "-nt",
+    String(plan.threads),
     "-name",
     join(jobDir, "solve"),
     "-msh",
@@ -831,7 +911,8 @@ function saveCheckpoint(jobDir, checkpoint) {
 }
 
 function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = false) {
-  const hash = inputHash(inputs, inputs.caseData, parameters);
+  assert(plan.environment?.identityHash, "Solver environment identity is required to plan a job");
+  const hash = inputHash(inputs, inputs.caseData, parameters, plan.environment.identityHash);
   const modelInputHash = baseInputHash(inputs, inputs.caseData);
   const jobId = sha256Bytes(Buffer.from(stableJson({ inputHash: modelInputHash, parameters }))).slice(0, 24);
   const jobDir = resolve(runRoot, jobId);
@@ -845,6 +926,9 @@ function runJob(job) {
   const { jobDir, parameters, hash, plan, inputs, runRoot } = job;
   mkdirSync(jobDir, { recursive: true });
   writeAtomic(job.parametersPath, parameters);
+  const commands = commandPlan(job);
+  const environmentPath = join(jobDir, "solver-environment.json");
+  writeAtomic(environmentPath, environmentManifest(plan.environment, commands));
   let checkpoint = job.checkpoint;
   if (!checkpointMatches(checkpoint, job)) {
     checkpoint = {
@@ -855,10 +939,12 @@ function runJob(job) {
       jobInputHash: hash,
       parameters,
       backend: plan.kind,
+      environmentIdentityHash: plan.environment.identityHash,
+      solverEnvironment: plan.environment,
       resultContract: `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`,
       meshQuality: null,
       phases: { mesh: "pending", solve: "pending", normalize: "pending" },
-      artifacts: { mesh: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
+      artifacts: { environment: sha256File(environmentPath), mesh: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
       result: null
     };
     saveCheckpoint(jobDir, checkpoint);
@@ -868,7 +954,6 @@ function runJob(job) {
     resetPhase(checkpoint, "mesh");
     removePhaseArtifacts(job, "mesh");
     saveCheckpoint(jobDir, checkpoint);
-    const commands = commandPlan(job);
     const meshRun = runCommand({
       plan,
       root: ROOT,
@@ -892,7 +977,6 @@ function runJob(job) {
     resetPhase(checkpoint, "solve");
     removePhaseArtifacts(job, "solve");
     saveCheckpoint(jobDir, checkpoint);
-    const commands = commandPlan(job);
     const solveRun = runCommand({
       plan,
       root: ROOT,
@@ -940,7 +1024,6 @@ function runJob(job) {
 }
 
 function printPlan(inputs, options, host, plan, parameters) {
-  const hash = inputHash(inputs, inputs.caseData, parameters);
   const job = planJob(inputs, parameters, options, plan, resolve(options["run-dir"] || DEFAULT_RUNS));
   const commands = plan.kind === "unavailable" ? { mesh: null, solve: null } : commandPlan(job);
   console.log(JSON.stringify({
@@ -948,7 +1031,8 @@ function printPlan(inputs, options, host, plan, parameters) {
     status: plan.kind === "unavailable" ? "unavailable" : "ready",
     host: { gmsh: host.gmsh, getdp: host.getdp },
     backend: { kind: plan.kind, reason: plan.reason || null, docker: plan.docker || null, image: plan.image || null },
-    inputHash: hash,
+    inputHash: job.hash,
+    environmentIdentityHash: plan.environment.identityHash,
     jobId: job.jobId,
     commands: { mesh: commands.mesh, solve: commands.solve },
     noSyntheticOutput: true
@@ -1069,7 +1153,10 @@ function aggregateManifest(inputs, manifestPath, options) {
     const item = manifestById.get(declared.jobId);
     assert(item.status === "complete", `Declared aggregation job is not complete: ${declared.jobId}`);
     const checkpoint = readCheckpoint(resolve(runRoot, item.jobId));
-    const job = planJob(inputs, item.parameters, options, { kind: checkpoint?.backend }, runRoot, item.symmetryApplied === true);
+    const job = planJob(inputs, item.parameters, options, {
+      kind: checkpoint?.backend,
+      environment: checkpoint?.solverEnvironment
+    }, runRoot, item.symmetryApplied === true);
     return validateCompleteJob(job, manifestPath, item.result);
   });
   const resultAngles = documents.map((document) => document.entries[0].parameters.rotorAngleDeg.toFixed(10));
@@ -1139,11 +1226,11 @@ function main(argv) {
   }
   const host = detectHost(options);
   if (options["dry-run"]) {
-    const plan = backendPlan(options, host, { allowUnavailable: true });
+    const plan = identifyBackend(backendPlan(options, host, { allowUnavailable: true }), options);
     printPlan(inputs, options, host, plan, defaultParameters(inputs.caseData));
     return;
   }
-  const plan = backendPlan(options, host);
+  const plan = identifyBackend(backendPlan(options, host), options);
   const manifestPath = options.manifest ? resolve(options.manifest) : null;
   if (manifestPath) {
     runManifest(inputs, manifestPath, options, plan);
