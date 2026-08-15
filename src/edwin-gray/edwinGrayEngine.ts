@@ -244,6 +244,81 @@ export interface GrayEnergyBalance {
   normalizedResidual: number
 }
 
+export type GrayCopClaimSource = 'user-provided-diagram' | 'retained-transcript'
+
+export interface GrayCopClaimScenario {
+  id: string
+  label: string
+  source: GrayCopClaimSource
+  attributedInputPowerW: number
+  attributedOutputPowerW: number | null
+  attributedOutputPowerRangeW: readonly [number, number] | null
+  displayedCop: number | null
+  sourceNote: string
+}
+
+export interface GrayCopClaimAccounting {
+  explicitExternalInputPowerW?: number
+  storedEnergyDepletionPowerW?: number
+}
+
+export interface GrayCopConservationCase {
+  outputPowerW: number
+  totalDeclaredInputPowerW: number
+  requiredUnaccountedPowerW: number
+  conservationResidualPowerW: number
+  boundaryClosed: boolean
+  copAfterDeclaredInputs: number
+  closedSystemCop: number | null
+}
+
+export interface GrayCopClaimFinding {
+  code:
+    | 'arithmetic-cop'
+    | 'displayed-cop-mismatch'
+    | 'observed-output-deficit'
+    | 'target-cop-deficit'
+    | 'ambiguous-output'
+    | 'incomplete-output'
+    | 'conservation-closed'
+  statement: string
+}
+
+export interface GrayCopClaimEvaluation {
+  claim: {
+    classification: 'attributed-boundary-claim'
+    scenarioId: string
+    label: string
+    source: GrayCopClaimSource
+    sourceNote: string
+    attributedInputPowerW: number
+    attributedOutputPowerW: number | null
+    attributedOutputPowerRangeW: readonly [number, number] | null
+    displayedCop: number | null
+    arithmeticCop: number | null
+    arithmeticCopRange: readonly [number, number] | null
+    displayedCopMismatch: number | null
+    outputPowerNeededForDisplayedCopW: number | null
+  }
+  status:
+    | 'arithmetic-mismatch-boundary-open'
+    | 'arithmetic-mismatch-boundary-closed'
+    | 'arithmetic-match-boundary-open'
+    | 'arithmetic-match-boundary-closed'
+    | 'ambiguous-source-values'
+    | 'incomplete-source-values'
+  findings: readonly GrayCopClaimFinding[]
+  validatesTheory: false
+  conservationClosure: {
+    attributedInputPowerW: number
+    explicitExternalInputPowerW: number
+    storedEnergyDepletionPowerW: number
+    totalDeclaredInputPowerW: number
+    observedOutput: GrayCopConservationCase | null
+    displayedCopTarget: GrayCopConservationCase | null
+  }
+}
+
 export interface GrayMotorResult {
   motor: GrayMotorCatalogEntry
   input: GrayResolvedMotorInput
@@ -320,6 +395,39 @@ const DEFAULT_INITIAL_ANGLE_DEG = -40 / 3
 const QUENCH_ANGLE_TOLERANCE_DEG = 1e-9
 const CLAIMED_COP = 300
 const CROSBY_INPUT_W = 26
+
+export const GRAY_COP_CLAIM_SCENARIOS = Object.freeze({
+  diagramCop282: Object.freeze({
+    id: 'diagram-cop-282',
+    label: 'User-provided COP 282 diagram values',
+    source: 'user-provided-diagram',
+    attributedInputPowerW: 26.8,
+    attributedOutputPowerW: 7_460,
+    attributedOutputPowerRangeW: null,
+    displayedCop: 282,
+    sourceNote: 'The diagram attributes 26.8 W input, 7,460 W output, and a displayed COP of 282.',
+  } satisfies GrayCopClaimScenario),
+  transcriptCop300: Object.freeze({
+    id: 'transcript-cop-300',
+    label: 'Retained transcript COP 300 alternative',
+    source: 'retained-transcript',
+    attributedInputPowerW: 26,
+    attributedOutputPowerW: null,
+    attributedOutputPowerRangeW: null,
+    displayedCop: 300,
+    sourceNote: 'The retained transcript alternative states COP 300 at 26 W without a paired output value.',
+  } satisfies GrayCopClaimScenario),
+  transcriptAmbiguousOutput: Object.freeze({
+    id: 'transcript-ambiguous-7-12-kw',
+    label: 'Retained transcript ambiguous 7.12 kW alternative',
+    source: 'retained-transcript',
+    attributedInputPowerW: 26.8,
+    attributedOutputPowerW: null,
+    attributedOutputPowerRangeW: Object.freeze([7_120, 7_460] as const),
+    displayedCop: null,
+    sourceNote: 'The ambiguous 7.12 kW reading is retained as a range through the 7.46 kW diagram value; no endpoint is selected.',
+  } satisfies GrayCopClaimScenario),
+})
 
 export const GRAY_TOPOLOGY: GrayTopologyContract = Object.freeze({
   statorPairStations: 9,
@@ -800,6 +908,177 @@ export function calculateEnergyBalance(input: GrayEnergyBalanceInput): GrayEnerg
 }
 
 export const energyBalance = calculateEnergyBalance
+
+function nonNegativeClaimPower(value: number, label: string): number {
+  if (!Number.isFinite(value) || value < 0) throw new Error(`${label} must be finite and non-negative`)
+  return value
+}
+
+function evaluateGrayCopConservationCase(
+  outputPowerW: number,
+  totalDeclaredInputPowerW: number,
+): GrayCopConservationCase {
+  const deficitPowerW = outputPowerW - totalDeclaredInputPowerW
+  const boundaryClosed = deficitPowerW <= 0
+  const requiredUnaccountedPowerW = boundaryClosed ? 0 : deficitPowerW
+  const copAfterDeclaredInputs = outputPowerW / totalDeclaredInputPowerW
+  return {
+    outputPowerW,
+    totalDeclaredInputPowerW,
+    requiredUnaccountedPowerW,
+    conservationResidualPowerW: totalDeclaredInputPowerW - outputPowerW,
+    boundaryClosed,
+    copAfterDeclaredInputs,
+    closedSystemCop: boundaryClosed ? copAfterDeclaredInputs : null,
+  }
+}
+
+/** Audits attributed source values; it does not call or alter the motor simulation. */
+export function evaluateGrayCopClaim(
+  scenario: GrayCopClaimScenario,
+  accounting: GrayCopClaimAccounting = {},
+): GrayCopClaimEvaluation {
+  const attributedInputPowerW = nonNegativeClaimPower(
+    scenario.attributedInputPowerW,
+    'attributedInputPowerW',
+  )
+  if (attributedInputPowerW === 0) throw new Error('attributedInputPowerW must be positive')
+  const attributedOutputPowerW = scenario.attributedOutputPowerW === null
+    ? null
+    : nonNegativeClaimPower(scenario.attributedOutputPowerW, 'attributedOutputPowerW')
+  const attributedOutputPowerRangeW = scenario.attributedOutputPowerRangeW === null
+    ? null
+    : [
+        nonNegativeClaimPower(scenario.attributedOutputPowerRangeW[0], 'attributedOutputPowerRangeW[0]'),
+        nonNegativeClaimPower(scenario.attributedOutputPowerRangeW[1], 'attributedOutputPowerRangeW[1]'),
+      ] as const
+  if (attributedOutputPowerRangeW
+    && attributedOutputPowerRangeW[0] > attributedOutputPowerRangeW[1]) {
+    throw new Error('attributedOutputPowerRangeW must be ordered')
+  }
+  const displayedCop = scenario.displayedCop === null
+    ? null
+    : nonNegativeClaimPower(scenario.displayedCop, 'displayedCop')
+  const explicitExternalInputPowerW = nonNegativeClaimPower(
+    accounting.explicitExternalInputPowerW ?? 0,
+    'explicitExternalInputPowerW',
+  )
+  const storedEnergyDepletionPowerW = nonNegativeClaimPower(
+    accounting.storedEnergyDepletionPowerW ?? 0,
+    'storedEnergyDepletionPowerW',
+  )
+  const totalDeclaredInputPowerW = attributedInputPowerW
+    + explicitExternalInputPowerW
+    + storedEnergyDepletionPowerW
+  const arithmeticCop = attributedOutputPowerW === null
+    ? null
+    : attributedOutputPowerW / attributedInputPowerW
+  const arithmeticCopRange = attributedOutputPowerRangeW === null
+    ? null
+    : [
+        attributedOutputPowerRangeW[0] / attributedInputPowerW,
+        attributedOutputPowerRangeW[1] / attributedInputPowerW,
+      ] as const
+  const displayedCopMismatch = arithmeticCop === null || displayedCop === null
+    ? null
+    : displayedCop - arithmeticCop
+  const outputPowerNeededForDisplayedCopW = displayedCop === null
+    ? null
+    : displayedCop * attributedInputPowerW
+  const observedOutput = attributedOutputPowerW === null
+    ? null
+    : evaluateGrayCopConservationCase(attributedOutputPowerW, totalDeclaredInputPowerW)
+  const displayedCopTarget = outputPowerNeededForDisplayedCopW === null
+    ? null
+    : evaluateGrayCopConservationCase(outputPowerNeededForDisplayedCopW, totalDeclaredInputPowerW)
+  const findings: GrayCopClaimFinding[] = []
+
+  if (arithmeticCop !== null) {
+    findings.push({
+      code: 'arithmetic-cop',
+      statement: `The attributed output/input arithmetic gives COP ${arithmeticCop}.`,
+    })
+  }
+  if (displayedCopMismatch !== null && Math.abs(displayedCopMismatch) > 1e-12) {
+    findings.push({
+      code: 'displayed-cop-mismatch',
+      statement: `The displayed COP differs from the output/input arithmetic by ${displayedCopMismatch}.`,
+    })
+  }
+  if (observedOutput?.requiredUnaccountedPowerW) {
+    findings.push({
+      code: 'observed-output-deficit',
+      statement: `${observedOutput.requiredUnaccountedPowerW} W remains unaccounted for at the attributed output.`,
+    })
+  } else if (observedOutput?.boundaryClosed) {
+    findings.push({
+      code: 'conservation-closed',
+      statement: 'Declared external and stored-energy inputs close the attributed-output boundary.',
+    })
+  }
+  if (displayedCopTarget?.requiredUnaccountedPowerW) {
+    findings.push({
+      code: 'target-cop-deficit',
+      statement: `${displayedCopTarget.requiredUnaccountedPowerW} W remains unaccounted for at the displayed-COP target.`,
+    })
+  }
+  if (attributedOutputPowerRangeW) {
+    findings.push({
+      code: 'ambiguous-output',
+      statement: 'The retained output is a source range; no single output value is selected.',
+    })
+  } else if (attributedOutputPowerW === null) {
+    findings.push({
+      code: 'incomplete-output',
+      statement: 'This source scenario does not pair the attributed input with one output value.',
+    })
+  }
+
+  let status: GrayCopClaimEvaluation['status']
+  if (attributedOutputPowerRangeW) {
+    status = 'ambiguous-source-values'
+  } else if (attributedOutputPowerW === null) {
+    status = 'incomplete-source-values'
+  } else {
+    const arithmeticMismatch = displayedCopMismatch !== null && Math.abs(displayedCopMismatch) > 1e-12
+    status = arithmeticMismatch
+      ? (observedOutput?.boundaryClosed
+          ? 'arithmetic-mismatch-boundary-closed'
+          : 'arithmetic-mismatch-boundary-open')
+      : (observedOutput?.boundaryClosed
+          ? 'arithmetic-match-boundary-closed'
+          : 'arithmetic-match-boundary-open')
+  }
+
+  return {
+    claim: {
+      classification: 'attributed-boundary-claim',
+      scenarioId: scenario.id,
+      label: scenario.label,
+      source: scenario.source,
+      sourceNote: scenario.sourceNote,
+      attributedInputPowerW,
+      attributedOutputPowerW,
+      attributedOutputPowerRangeW,
+      displayedCop,
+      arithmeticCop,
+      arithmeticCopRange,
+      displayedCopMismatch,
+      outputPowerNeededForDisplayedCopW,
+    },
+    status,
+    findings,
+    validatesTheory: false,
+    conservationClosure: {
+      attributedInputPowerW,
+      explicitExternalInputPowerW,
+      storedEnergyDepletionPowerW,
+      totalDeclaredInputPowerW,
+      observedOutput,
+      displayedCopTarget,
+    },
+  }
+}
 
 interface GraySimulationState {
   currentA: number
