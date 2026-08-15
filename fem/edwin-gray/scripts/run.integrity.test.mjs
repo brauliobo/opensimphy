@@ -31,6 +31,7 @@ function fixture(t) {
   const casePath = join(root, "cases/patent-3890548-illustrative.json");
   const caseData = JSON.parse(readFileSync(casePath, "utf8"));
   caseData.sweep.anglesDeg = [0, 20];
+  caseData.sweep.eventIndices = [0, 1];
   caseData.sweep.meshSizesM = [0.025];
   caseData.sweep.driveCurrentA = [1];
   writeFileSync(casePath, `${JSON.stringify(caseData, null, 2)}\n`, "utf8");
@@ -45,6 +46,7 @@ function fixture(t) {
 
   const gmsh = join(bin, "gmsh");
   const getdp = join(bin, "getdp");
+  const audit = join(bin, "audit.mjs");
   writeExecutable(gmsh, `
 import { appendFileSync, writeFileSync } from "node:fs";
 const outputIndex = process.argv.indexOf("-o");
@@ -58,17 +60,29 @@ import { join } from "node:path";
 appendFileSync(process.env.GETDP_COUNT, "run\\n");
 if (existsSync(process.env.GETDP_NO_OUTPUT)) process.exit(0);
 writeFileSync(join(process.cwd(), "observables.dat"), "MagneticEnergyJ 1.25\\n");
-writeFileSync(join(process.cwd(), "coenergy.dat"), "CoEnergyJ 1.5\\n");
+writeFileSync(join(process.cwd(), "coenergy.dat"), "CoEnergyJ 1.25\\n");
 writeFileSync(join(process.cwd(), "inductance.dat"), "InductanceH 2.5\\n");
+`);
+  writeExecutable(audit, `
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+const mesh = process.argv[2];
+const outputIndex = process.argv.indexOf("--output");
+if (outputIndex < 0) process.exit(2);
+const meshSha256 = createHash("sha256").update(readFileSync(mesh)).digest("hex");
+const valid = !existsSync(process.env.AUDIT_REJECT);
+writeFileSync(process.argv[outputIndex + 1], JSON.stringify({ schemaVersion: "edwin-gray-mesh-audit-v1", valid, source: { meshSha256 } }) + "\\n");
+if (!valid) process.exit(1);
 `);
 
   const environment = {
     ...process.env,
     GMSH_COUNT: join(counters, "gmsh"),
     GETDP_COUNT: join(counters, "getdp"),
-    GETDP_NO_OUTPUT: join(temporary, "getdp-no-output")
+    GETDP_NO_OUTPUT: join(temporary, "getdp-no-output"),
+    AUDIT_REJECT: join(temporary, "audit-reject")
   };
-  return { root, runs, manifest, output, gmsh, getdp, environment };
+  return { root, runs, manifest, output, gmsh, getdp, audit, environment };
 }
 
 function run(context, ...args) {
@@ -80,7 +94,7 @@ function run(context, ...args) {
 }
 
 function generateAndRun(context) {
-  let result = run(context, "--sweep", "--manifest", context.manifest);
+  let result = run(context, "--sweep", "--manifest", context.manifest, "--mesh-audit", context.audit);
   assert.equal(result.status, 0, result.stderr);
   result = run(
     context,
@@ -89,6 +103,7 @@ function generateAndRun(context) {
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.equal(result.status, 0, result.stderr);
@@ -116,6 +131,9 @@ test("successful solver runs resume from verified artifacts and aggregate exact 
     assert.equal(provenance.modelInputHash, manifest.inputHash);
     assert.match(provenance.jobInputHash, /^[a-f0-9]{64}$/);
     assert.notEqual(provenance.jobInputHash, provenance.modelInputHash);
+    assert.equal(normalized.entries[0].parameters.eventIndex, manifest.jobs.find((job) => job.jobId === item.jobId).parameters.eventIndex);
+    assert.equal(normalized.entries[0].parameters.excitationContract, "edwin-gray-fem-excitation-event-map/v1");
+    assert.ok(provenance.artifacts.some((artifact) => artifact.path === "mesh-audit.json"));
   }
 
   const resumed = run(
@@ -125,6 +143,7 @@ test("successful solver runs resume from verified artifacts and aggregate exact 
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.equal(resumed.status, 0, resumed.stderr);
@@ -138,6 +157,7 @@ test("successful solver runs resume from verified artifacts and aggregate exact 
     "--manifest", context.manifest,
     "--mesh-size", "0.025",
     "--drive-current", "1",
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs,
     "--out", context.output
   );
@@ -162,6 +182,7 @@ test("resume repairs tampered artifacts and rejects stale solver outputs", (t) =
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.equal(resumed.status, 0, resumed.stderr);
@@ -175,6 +196,7 @@ test("resume repairs tampered artifacts and rejects stale solver outputs", (t) =
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.equal(resumed.status, 0, resumed.stderr);
@@ -191,6 +213,7 @@ test("resume repairs tampered artifacts and rejects stale solver outputs", (t) =
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.equal(resumed.status, 0, resumed.stderr);
@@ -206,11 +229,31 @@ test("resume repairs tampered artifacts and rejects stale solver outputs", (t) =
     "--backend", "host",
     "--gmsh-bin", context.gmsh,
     "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs
   );
   assert.notEqual(resumed.status, 0);
   assert.match(resumed.stderr, /without producing all declared table outputs/);
   assert.equal(count(context.environment.GETDP_COUNT), 5);
+});
+
+test("runner rejects a quantitative mesh-audit failure before GetDP", (t) => {
+  const context = fixture(t);
+  writeFileSync(context.environment.AUDIT_REJECT, "reject\n", "utf8");
+  let result = run(context, "--sweep", "--manifest", context.manifest, "--mesh-audit", context.audit);
+  assert.equal(result.status, 0, result.stderr);
+  result = run(
+    context,
+    "--resume",
+    "--manifest", context.manifest,
+    "--backend", "host",
+    "--gmsh-bin", context.gmsh,
+    "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
+    "--run-dir", context.runs
+  );
+  assert.notEqual(result.status, 0);
+  assert.equal(count(context.environment.GETDP_COUNT), 0);
 });
 
 test("aggregation rejects an incomplete declared manifest slice", (t) => {
@@ -225,6 +268,7 @@ test("aggregation rejects an incomplete declared manifest slice", (t) => {
     "--manifest", context.manifest,
     "--mesh-size", "0.025",
     "--drive-current", "1",
+    "--mesh-audit", context.audit,
     "--run-dir", context.runs,
     "--out", context.output
   );

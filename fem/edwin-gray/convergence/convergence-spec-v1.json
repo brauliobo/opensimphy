@@ -5,7 +5,8 @@
   "evidenceContract": "edwin-gray-convergence-evidence@1",
   "reportContract": "edwin-gray-convergence-report@1",
   "resultContract": "edwin-gray-browser-result@1",
-  "checkpointVersion": "fem-checkpoint-v4",
+  "checkpointVersion": "fem-checkpoint-v5",
+  "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
   "production": {
     "ciSmoke": false,
     "meshLevels": [

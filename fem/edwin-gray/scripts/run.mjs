@@ -29,17 +29,20 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, "..");
 const RUN_SCRIPT = fileURLToPath(import.meta.url);
 const ENVIRONMENT_MODULE = resolve(SCRIPT_DIR, "solver-environment.mjs");
+const NORMALIZE_SCRIPT = resolve(SCRIPT_DIR, "normalize-results.mjs");
 const DEFAULT_CASE = resolve(ROOT, "cases/patent-3890548-illustrative.json");
 const DEFAULT_GEO = resolve(ROOT, "geometry/patent-3890548-3d.geo");
 const DEFAULT_PRO = resolve(ROOT, "getdp/magnetostatic.pro");
+const DEFAULT_EVENT_MAP = resolve(ROOT, "excitation/v1/event-map-v1.json");
+const DEFAULT_EVENT_SELECTOR = resolve(ROOT, "excitation/v1/event-map-v1.pro");
+const DEFAULT_MESH_AUDIT = resolve(ROOT, "mesh-audit/audit-msh.mjs");
 const DEFAULT_RUNS = resolve(ROOT, "runs");
-const CHECKPOINT_VERSION = "fem-checkpoint-v4";
-const SWEEP_MANIFEST_VERSION = "motor-fem-sweep-v2";
+const CHECKPOINT_VERSION = "fem-checkpoint-v5";
+const SWEEP_MANIFEST_VERSION = "motor-fem-sweep-v3";
 const RESULT_CONTRACT = "edwin-gray-browser-result";
 const RESULT_CONTRACT_VERSION = 1;
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
 const RESULT_OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
-const MESH_QUALITY_WARNING = "Gmsh passed the runner's fatal log-pattern gate; this is not a mesh-quality certification";
 const MESH_QUALITY_FAILURES = [
   "No elements in volume",
   "WARNING: Intersecting elements",
@@ -92,6 +95,8 @@ function usage() {
     "  --case PATH                        Case JSON path",
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
+    "  --event-index INDEX                Excitation event for a single run (default: case value)",
+    "  --mesh-audit PATH                  Override the quantitative mesh-audit script",
     "  --manifest PATH                    Input/output sweep manifest",
     "  --run-dir PATH                    Content-addressed run root",
     "",
@@ -239,6 +244,7 @@ function validateNormalizedProvenance(result, job) {
   assert(entry.parameters && stableJson(entry.parameters) === stableJson(job.parameters), "normalized result parameters do not match the job");
   const expectedArtifacts = [
     job.meshPath,
+    job.auditPath,
     join(job.jobDir, "getdp.log"),
     ...commandOutputs(job)
   ].map((path) => relative(job.jobDir, path));
@@ -382,6 +388,10 @@ function validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaDa
     }
   }
   validateArray(caseData.sweep.anglesDeg, "sweep.anglesDeg", { minimum: 0, exclusiveMaximum: 360 });
+  assert(Array.isArray(caseData.sweep.eventIndices), "sweep.eventIndices must be an array");
+  assert(caseData.sweep.eventIndices.length === caseData.sweep.anglesDeg.length, "sweep.eventIndices must pair exactly with sweep.anglesDeg");
+  assert(new Set(caseData.sweep.eventIndices).size === caseData.sweep.eventIndices.length, "sweep.eventIndices must be unique");
+  caseData.sweep.eventIndices.forEach((value, index) => assert(Number.isInteger(value) && value >= 0 && value <= 26, `sweep.eventIndices[${index}] must be in [0, 26]`));
   validateArray(caseData.sweep.meshSizesM, "sweep.meshSizesM", { exclusiveMinimum: 0 });
   validateArray(caseData.sweep.driveCurrentA, "sweep.driveCurrentA", { exclusiveMinimum: 0 });
   const symmetry = caseData.sweep.symmetry;
@@ -393,6 +403,8 @@ function validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaDa
   assert(caseData.results.contract === RESULT_CONTRACT && caseData.results.contractVersion === RESULT_CONTRACT_VERSION, "Result contract must be version 1");
   assert(stableJson(caseData.results.observables) === stableJson(RESULT_OBSERVABLES), "Case observables must match the normalized result contract");
   assert(caseData.results.noSyntheticOutput === true, "Synthetic output must be disabled");
+  assert(caseData.excitation.contract === "edwin-gray-fem-excitation-event-map/v1", "Excitation contract is invalid");
+  assert(Number.isInteger(caseData.excitation.eventIndex) && caseData.excitation.eventIndex >= 0 && caseData.excitation.eventIndex <= 26, "Excitation event index is invalid");
   assert(caseData.provenance.ledgerVersion === "source-ledger-v1", "Provenance ledger must be version 1");
   assert(Array.isArray(caseData.provenance.fieldEntries) && caseData.provenance.fieldEntries.length > 0, "Provenance entries are required");
   for (const entry of caseData.provenance.fieldEntries) {
@@ -408,9 +420,10 @@ function validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaDa
   assert(geometryText.includes("Physical Volume(StrCat(Sprintf(\"Stator_"), "Geometry must define the stator assembly group loop");
   assert(geometryText.includes("Physical Volume(StrCat(Sprintf(\"Rotor_"), "Geometry must define the rotor assembly group loop");
   assert(geometryText.includes("Volume In BoundingBox"), "Geometry must rebuild groups from post-boolean fragments");
-  assert(geometryText.includes("Mesh.Algorithm3D = 4"), "Geometry must use the robust 3D frontal mesher");
+  assert(geometryText.includes("Mesh.Algorithm3D = 1"), "Geometry must use the pinned-build-compatible 3D mesher");
   assert(geometryText.includes("Physical Volume(\"AllCores\""), "Geometry must define AllCores");
   assert(geometryText.includes("Physical Volume(\"AllCoils\""), "Geometry must define AllCoils");
+  assert(geometryText.includes("2101 + index") && geometryText.includes("2201 + index"), "Geometry must define explicit coil-only event regions");
   assert(geometryText.includes(`CoilRadialMarginM = DefineNumber[${geometry.coilRadialMarginM},`), "Geometry default coil radial margin must match the case");
   assert(getdpText.includes("Type Form1"), "GetDP artifact must use an H(curl) edge space");
   assert(getdpText.includes("Magnetostatics3D"), "GetDP magnetostatic formulation is missing");
@@ -425,13 +438,21 @@ function loadInputs(options) {
   const proPath = resolve(options.pro || DEFAULT_PRO);
   const schemaPath = resolve(ROOT, "schema/motor-case.schema.json");
   const lutSchemaPath = resolve(ROOT, "schema/motor-fem-lut.schema.json");
+  const eventMapPath = DEFAULT_EVENT_MAP;
+  const eventSelectorPath = DEFAULT_EVENT_SELECTOR;
+  const meshAuditPath = resolve(options["mesh-audit"] || DEFAULT_MESH_AUDIT);
   const caseData = readJson(casePath, "case");
   const geometryText = readFileSync(geoPath, "utf8");
   const getdpText = readFileSync(proPath, "utf8");
   const schemaData = readJson(schemaPath, "case schema");
   const lutSchemaData = readJson(lutSchemaPath, "result schema");
+  const eventMapData = readJson(eventMapPath, "excitation event map");
+  assert(eventMapData.contractVersion === caseData.excitation.contract, "Case excitation contract does not match the event map");
+  assert(eventMapData.eventCount === 27 && eventMapData.events?.length === 27, "Excitation event map must define 27 events");
+  assert(existsSync(eventSelectorPath), `Excitation selector does not exist: ${eventSelectorPath}`);
+  assert(existsSync(meshAuditPath), `Mesh audit does not exist: ${meshAuditPath}`);
   validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaData);
-  return { casePath, geoPath, proPath, schemaPath, lutSchemaPath, caseData, geometryText, getdpText, schemaData, lutSchemaData };
+  return { casePath, geoPath, proPath, schemaPath, lutSchemaPath, eventMapPath, eventSelectorPath, meshAuditPath, caseData, geometryText, getdpText, schemaData, lutSchemaData, eventMapData };
 }
 
 function canonicalAngle(angle, order) {
@@ -444,19 +465,21 @@ function buildSweep(caseData, baseHash) {
   const symmetry = caseData.sweep.symmetry;
   const seenAngles = new Set();
   const angles = [];
-  for (const angle of caseData.sweep.anglesDeg) {
+  for (let index = 0; index < caseData.sweep.anglesDeg.length; index += 1) {
+    const angle = caseData.sweep.anglesDeg[index];
+    const eventIndex = caseData.sweep.eventIndices[index];
     const canonical = symmetry.declared ? canonicalAngle(angle, symmetry.order) : angle;
     const key = canonical.toFixed(10);
     if (!seenAngles.has(key)) {
       seenAngles.add(key);
-      angles.push(canonical);
+      angles.push({ rotorAngleDeg: canonical, eventIndex });
     }
   }
   const jobs = [];
-  for (const rotorAngleDeg of angles) {
+  for (const { rotorAngleDeg, eventIndex } of angles) {
     for (const meshSizeM of caseData.sweep.meshSizesM) {
       for (const driveCurrentA of caseData.sweep.driveCurrentA) {
-        const parameters = { rotorAngleDeg, meshSizeM, driveCurrentA };
+        const parameters = { rotorAngleDeg, eventIndex, excitationContract: caseData.excitation.contract, meshSizeM, driveCurrentA };
         const jobId = sha256Bytes(Buffer.from(stableJson({ inputHash: baseHash, parameters }))).slice(0, 24);
         jobs.push({
           jobId,
@@ -503,6 +526,10 @@ function baseInputHash(inputs, caseData) {
     getdp: sha256File(inputs.proPath),
     schema: sha256File(inputs.schemaPath),
     resultSchema: sha256File(inputs.lutSchemaPath),
+    excitationEventMap: sha256File(inputs.eventMapPath),
+    excitationSelector: sha256File(inputs.eventSelectorPath),
+    meshAudit: sha256File(inputs.meshAuditPath),
+    normalizer: sha256File(NORMALIZE_SCRIPT),
     caseId: caseData.caseId
   };
   return sha256Bytes(Buffer.from(stableJson(payload)));
@@ -513,6 +540,7 @@ function gmshOverrides(parameters, caseData) {
   return [
     ["Parameters/Mesh size (m)", parameters.meshSizeM],
     ["Parameters/Rotor angle (deg)", parameters.rotorAngleDeg],
+    ["Parameters/Excitation event index", parameters.eventIndex],
     ["Parameters/Major-minor offset (deg)", g.pairOffsetDeg],
     ["Parameters/Stator phase (deg)", g.statorPhaseDeg],
     ["Parameters/Rotor phase (deg)", g.rotorPhaseDeg],
@@ -529,8 +557,11 @@ function gmshOverrides(parameters, caseData) {
     ["Parameters/Coil radial margin (m)", g.coilRadialMarginM],
     ["Parameters/Minor tangential width (m)", g.minorTangentialWidthM],
     ["Parameters/Major tangential width (m)", g.majorTangentialWidthM],
+    ["Parameters/Rotor minor tangential width (m)", g.rotorMinorTangentialWidthM],
+    ["Parameters/Rotor major tangential width (m)", g.rotorMajorTangentialWidthM],
     ["Parameters/Electromagnet axial length (m)", g.electromagnetAxialLengthM],
     ["Parameters/Coil tangential margin (m)", g.coilTangentialMarginM],
+    ["Parameters/Rotor coil tangential margin (m)", g.rotorCoilTangentialMarginM],
     ["Parameters/Coil axial margin (m)", g.coilAxialMarginM]
   ];
 }
@@ -540,7 +571,8 @@ function getdpOverrides(parameters, caseData) {
     ["Parameters/Core relative permeability", caseData.materials.core.relativePermeability],
     ["Parameters/Drive current (A)", parameters.driveCurrentA],
     ["Parameters/Turns", caseData.excitation.turns],
-    ["Parameters/Effective coil cross-section (m^2)", caseData.excitation.effectiveCoilCrossSectionM2]
+    ["Parameters/Effective coil cross-section (m^2)", caseData.excitation.effectiveCoilCrossSectionM2],
+    ["Parameters/Excitation event index", parameters.eventIndex]
   ];
 }
 
@@ -719,6 +751,8 @@ function dockerCommand(plan, root, cwd, command, args, runRoot) {
     plan.docker,
     "run",
     "--rm",
+    "--user",
+    `${process.getuid()}:${process.getgid()}`,
     "--read-only",
     "--network",
     "none",
@@ -790,6 +824,7 @@ function meshCheckpointValid(job, checkpoint) {
   return checkpoint.phases.mesh === "complete"
     && checkpoint.meshQuality === "passed"
     && artifactMatches(job.meshPath, checkpoint.artifacts?.mesh)
+    && artifactMatches(job.auditPath, checkpoint.artifacts?.audit)
     && artifactMatches(join(job.jobDir, "gmsh.log"), checkpoint.artifacts?.logs?.gmsh);
 }
 
@@ -827,6 +862,8 @@ function checkpointMatches(checkpoint, job) {
     && checkpoint.environmentIdentityHash === job.plan.environment.identityHash
     && artifactMatches(join(job.jobDir, "solver-environment.json"), checkpoint.artifacts?.environment)
     && stableJson(checkpoint.parameters) === stableJson(job.parameters)
+    && checkpoint.excitationContract === job.parameters.excitationContract
+    && checkpoint.eventIndex === job.parameters.eventIndex
     && checkpoint.backend === job.plan.kind
     && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`
     && checkpoint.phases && typeof checkpoint.phases === "object"
@@ -843,6 +880,7 @@ function resetPhase(checkpoint, phase) {
   if (phase === "mesh") {
     checkpoint.meshQuality = null;
     checkpoint.artifacts.mesh = null;
+    checkpoint.artifacts.audit = null;
     checkpoint.artifacts.logs.gmsh = null;
   }
   if (phase === "mesh" || phase === "solve") {
@@ -856,6 +894,7 @@ function resetPhase(checkpoint, phase) {
 function removePhaseArtifacts(job, phase) {
   if (phase === "mesh") {
     rmSync(job.meshPath, { force: true });
+    rmSync(job.auditPath, { force: true });
     rmSync(join(job.jobDir, "gmsh.log"), { force: true });
   }
   if (phase === "mesh" || phase === "solve") {
@@ -891,8 +930,17 @@ function commandPlan(job) {
     "MagnetostaticResults",
     ...getdpOverrides(parameters, inputs.caseData).flatMap(([name, value]) => ["-setnumber", name, String(value)])
   ];
+  const auditArgs = [
+    inputs.meshAuditPath,
+    meshPath,
+    "--output", job.auditPath,
+    "--mode", "production",
+    "--geometry-sha256", sha256File(inputs.geoPath),
+    "--command", [plan.gmsh, ...gmshArgs].join(" ")
+  ];
   return {
     mesh: plan.kind === "docker" ? dockerCommand(plan, ROOT, ROOT, "gmsh", gmshArgs, runRoot) : [plan.gmsh, ...gmshArgs],
+    audit: [process.execPath, ...auditArgs],
     solve: plan.kind === "docker" ? dockerCommand(plan, ROOT, jobDir, "getdp", getdpArgs, runRoot) : [plan.getdp, ...getdpArgs]
   };
 }
@@ -917,9 +965,10 @@ function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = f
   const jobId = sha256Bytes(Buffer.from(stableJson({ inputHash: modelInputHash, parameters }))).slice(0, 24);
   const jobDir = resolve(runRoot, jobId);
   const meshPath = join(jobDir, "motor.msh");
+  const auditPath = join(jobDir, "mesh-audit.json");
   const parametersPath = join(jobDir, "parameters.json");
   const checkpoint = readCheckpoint(jobDir);
-  return { hash, modelInputHash, jobId, jobDir, meshPath, parametersPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
+  return { hash, modelInputHash, jobId, jobDir, meshPath, auditPath, parametersPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
 }
 
 function runJob(job) {
@@ -942,9 +991,11 @@ function runJob(job) {
       environmentIdentityHash: plan.environment.identityHash,
       solverEnvironment: plan.environment,
       resultContract: `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`,
+      excitationContract: parameters.excitationContract,
+      eventIndex: parameters.eventIndex,
       meshQuality: null,
       phases: { mesh: "pending", solve: "pending", normalize: "pending" },
-      artifacts: { environment: sha256File(environmentPath), mesh: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
+      artifacts: { environment: sha256File(environmentPath), mesh: null, audit: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
       result: null
     };
     saveCheckpoint(jobDir, checkpoint);
@@ -966,9 +1017,23 @@ function runJob(job) {
     });
     assertMeshQuality(meshRun.log);
     assert(existsSync(job.meshPath), "Gmsh completed without producing a mesh");
+    runCommand({
+      plan,
+      root: ROOT,
+      cwd: jobDir,
+      command: process.execPath,
+      args: commands.audit.slice(1),
+      commandLine: commands.audit,
+      logName: "mesh-audit.log",
+      runRoot
+    });
+    const audit = readJson(job.auditPath, "mesh audit");
+    assert(audit.valid === true, "Quantitative mesh audit rejected the generated mesh");
+    assert(audit.source?.meshSha256 === sha256File(job.meshPath), "Mesh audit does not attest the generated mesh");
     checkpoint.phases.mesh = "complete";
     checkpoint.meshQuality = "passed";
     checkpoint.artifacts.mesh = sha256File(job.meshPath);
+    checkpoint.artifacts.audit = sha256File(job.auditPath);
     checkpoint.artifacts.logs.gmsh = sha256File(meshRun.log);
     saveCheckpoint(jobDir, checkpoint);
   }
@@ -1007,11 +1072,10 @@ function runJob(job) {
       jobInputHash: hash,
       solver: "getdp",
       backend: plan.kind,
-      artifacts: [job.meshPath, join(jobDir, "getdp.log"), ...commandOutputs(job)],
+      artifacts: [job.meshPath, job.auditPath, join(jobDir, "getdp.log"), ...commandOutputs(job)],
       resultSchema: inputs.lutSchemaData,
       symmetryApplied: job.symmetryApplied
     });
-    result.provenance.limitations.push(MESH_QUALITY_WARNING);
     validateNormalizedProvenance(result, job);
     validateLutResultSchema(result, inputs.lutSchemaData);
     writeAtomic(join(jobDir, "result.json"), result);
@@ -1034,7 +1098,7 @@ function printPlan(inputs, options, host, plan, parameters) {
     inputHash: job.hash,
     environmentIdentityHash: plan.environment.identityHash,
     jobId: job.jobId,
-    commands: { mesh: commands.mesh, solve: commands.solve },
+    commands: { mesh: commands.mesh, audit: commands.audit, solve: commands.solve },
     noSyntheticOutput: true
   }, null, 2));
 }
@@ -1050,9 +1114,18 @@ function validateOnly(options) {
   console.log(JSON.stringify({ status: "valid", caseId: inputs.caseData.caseId, expectedAssemblyPhysicalGroups: 48, full3d: true, resultContract: `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`, noSyntheticOutput: true }));
 }
 
-function defaultParameters(caseData) {
+function eventIndexOption(value, fallback) {
+  if (value === undefined) return fallback;
+  const parsed = Number(value);
+  assert(Number.isInteger(parsed) && parsed >= 0 && parsed <= 26, "--event-index must be an integer in [0, 26]");
+  return parsed;
+}
+
+function defaultParameters(caseData, options = {}) {
   return {
     rotorAngleDeg: caseData.geometry.rotorAngleDeg,
+    eventIndex: eventIndexOption(options["event-index"], caseData.excitation.eventIndex),
+    excitationContract: caseData.excitation.contract,
     meshSizeM: caseData.geometry.meshSizeM,
     driveCurrentA: caseData.excitation.driveCurrentA
   };
@@ -1227,7 +1300,7 @@ function main(argv) {
   const host = detectHost(options);
   if (options["dry-run"]) {
     const plan = identifyBackend(backendPlan(options, host, { allowUnavailable: true }), options);
-    printPlan(inputs, options, host, plan, defaultParameters(inputs.caseData));
+    printPlan(inputs, options, host, plan, defaultParameters(inputs.caseData, options));
     return;
   }
   const plan = identifyBackend(backendPlan(options, host), options);
@@ -1236,7 +1309,7 @@ function main(argv) {
     runManifest(inputs, manifestPath, options, plan);
     return;
   }
-  const parameters = defaultParameters(inputs.caseData);
+  const parameters = defaultParameters(inputs.caseData, options);
   const job = planJob(inputs, parameters, options, plan, resolve(options["run-dir"] || DEFAULT_RUNS));
   console.log(JSON.stringify(runJob(job), null, 2));
 }

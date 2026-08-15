@@ -178,7 +178,8 @@ function validateSpec(spec) {
   assert(spec.evidenceContract === "edwin-gray-convergence-evidence@1", "unsupported evidence contract in specification");
   assert(spec.reportContract === "edwin-gray-convergence-report@1", "unsupported report contract in specification");
   assert(spec.resultContract === "edwin-gray-browser-result@1", "unsupported normalized result contract in specification");
-  assert(spec.checkpointVersion === "fem-checkpoint-v4", "unsupported checkpoint version in specification");
+  assert(spec.checkpointVersion === "fem-checkpoint-v5", "unsupported checkpoint version in specification");
+  assert(spec.excitationContract === "edwin-gray-fem-excitation-event-map/v1", "unsupported excitation contract in specification");
   const production = spec.production;
   assert(production?.ciSmoke === false, "production convergence specification cannot be a CI smoke sweep");
   assert(Array.isArray(production.meshLevels) && production.meshLevels.length >= 3, "at least three mesh levels are required");
@@ -243,6 +244,7 @@ function verifySample(sample, expected, spec, evidenceDir) {
   assert(checkpoint.resultContract === spec.resultContract, `sample ${sample.id} checkpoint result contract is invalid`);
   assert(checkpoint.artifacts?.result === artifactHash(resultPath, `sample ${sample.id} result`), `sample ${sample.id} normalized result hash mismatch`);
   const meshPath = verifiedArtifact(jobDir, "motor.msh", checkpoint.artifacts?.mesh, `sample ${sample.id} mesh`);
+  const auditPath = verifiedArtifact(jobDir, "mesh-audit.json", checkpoint.artifacts?.audit, `sample ${sample.id} mesh audit`);
   const environmentPath = verifiedArtifact(jobDir, "solver-environment.json", checkpoint.artifacts?.environment, `sample ${sample.id} solver environment`);
   verifiedArtifact(jobDir, "gmsh.log", checkpoint.artifacts?.logs?.gmsh, `sample ${sample.id} Gmsh log`);
   verifiedArtifact(jobDir, "getdp.log", checkpoint.artifacts?.logs?.getdp, `sample ${sample.id} GetDP log`);
@@ -251,6 +253,8 @@ function verifySample(sample, expected, spec, evidenceDir) {
   for (const name of Object.values(TABLES)) {
     verifiedArtifact(jobDir, name, checkpoint.artifacts?.outputs?.[name], `sample ${sample.id} ${name}`);
   }
+  const audit = readJson(auditPath, `sample ${sample.id} mesh audit`);
+  assert(audit.valid === true && audit.source?.meshSha256 === artifactHash(meshPath, `sample ${sample.id} mesh`), `sample ${sample.id} mesh audit is invalid`);
 
   assert(result.contract === "edwin-gray-browser-result" && result.contractVersion === 1, `sample ${sample.id} normalized contract is invalid`);
   assert(result.caseId === spec.caseId && result.status === "complete", `sample ${sample.id} normalized result is incomplete or belongs to another case`);
@@ -258,6 +262,8 @@ function verifySample(sample, expected, spec, evidenceDir) {
   const entry = result.entries[0];
   assert(entry.status === "complete" && entry.provenance?.synthetic === false, `sample ${sample.id} normalized entry is incomplete or synthetic`);
   assert(stableJson(entry.parameters) === stableJson(checkpoint.parameters), `sample ${sample.id} normalized and checkpoint parameters differ`);
+  assert(entry.parameters.excitationContract === spec.excitationContract && checkpoint.excitationContract === spec.excitationContract, `sample ${sample.id} excitation contract is invalid`);
+  assert(Number.isInteger(entry.parameters.eventIndex) && entry.parameters.eventIndex === checkpoint.eventIndex, `sample ${sample.id} event index is invalid`);
   const mesh = spec.production.meshLevels.find((item) => item.id === expected.meshLevelId);
   assert(sameNumber(entry.parameters?.meshSizeM, mesh.meshSizeM), `sample ${sample.id} mesh size is not the specified level`);
   assert(sameNumber(entry.parameters?.driveCurrentA, expected.driveCurrentA) && sameNumber(entry.parameters?.rotorAngleDeg, expected.rotorAngleDeg), `sample ${sample.id} normalized parameters do not match the required tuple`);
@@ -269,7 +275,7 @@ function verifySample(sample, expected, spec, evidenceDir) {
   assert(readJson(environmentPath, `sample ${sample.id} solver environment`).identityHash === checkpoint.environmentIdentityHash, `sample ${sample.id} environment manifest identity is invalid`);
   assert(Array.isArray(entry.provenance.artifacts) && entry.provenance.artifacts.length > 0, `sample ${sample.id} normalized artifact list is missing`);
   assert(new Set(entry.provenance.artifacts.map((item) => item.path)).size === entry.provenance.artifacts.length, `sample ${sample.id} normalized artifact paths are duplicated`);
-  const expectedNormalizedArtifacts = ["motor.msh", "getdp.log", ...Object.values(TABLES)].sort();
+  const expectedNormalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", ...Object.values(TABLES)].sort();
   assert(stableJson(entry.provenance.artifacts.map((item) => item.path).sort()) === stableJson(expectedNormalizedArtifacts), `sample ${sample.id} normalized artifact set is invalid`);
   for (const artifact of entry.provenance.artifacts) verifiedArtifact(jobDir, artifact.path, artifact.sha256, `sample ${sample.id} normalized artifact ${artifact.path}`);
 

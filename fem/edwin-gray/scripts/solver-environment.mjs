@@ -5,11 +5,12 @@ import { arch, platform } from "node:os";
 
 export const SOLVER_ENVIRONMENT_VERSION = "solver-environment-v1";
 export const SOLVER_SOURCE = Object.freeze({
-  kind: "debian-snapshot",
+  kind: "debian-snapshot+getdp-official-sha256",
   baseImage: "debian@sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143",
   debianSnapshot: "20260804T000000Z",
   gmshPackage: "4.8.4+ds2-3",
-  getdpPackage: "3.2.0+dfsg1-1.1+b9",
+  getdpPackage: "official-3.5.0",
+  getdpArchiveSha256: "d3c28fa18f20d6147b4c7367d4dd802e9f7ddb58c608688bbb71919dbca8041d",
   testedArchitecture: "linux/amd64"
 });
 

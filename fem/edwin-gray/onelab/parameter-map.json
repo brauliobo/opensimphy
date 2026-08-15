@@ -3,6 +3,7 @@
   "parameters": [
     { "sourcePath": "geometry.meshSizeM", "client": "gmsh", "symbol": "MeshSizeValue", "onelabName": "Parameters/Mesh size (m)" },
     { "sourcePath": "geometry.rotorAngleDeg", "client": "gmsh", "symbol": "RotorAngleDeg", "onelabName": "Parameters/Rotor angle (deg)" },
+    { "sourcePath": "excitation.eventIndex", "client": "gmsh", "symbol": "EventIndex", "onelabName": "Parameters/Excitation event index" },
     { "sourcePath": "geometry.pairOffsetDeg", "client": "gmsh", "symbol": "PairOffsetDeg", "onelabName": "Parameters/Major-minor offset (deg)" },
     { "sourcePath": "geometry.statorPhaseDeg", "client": "gmsh", "symbol": "StatorPhaseDeg", "onelabName": "Parameters/Stator phase (deg)" },
     { "sourcePath": "geometry.rotorPhaseDeg", "client": "gmsh", "symbol": "RotorPhaseDeg", "onelabName": "Parameters/Rotor phase (deg)" },
@@ -17,14 +18,18 @@
     { "sourcePath": "geometry.coilRadialMarginM", "client": "gmsh", "symbol": "CoilRadialMarginM", "onelabName": "Parameters/Coil radial margin (m)" },
     { "sourcePath": "geometry.minorTangentialWidthM", "client": "gmsh", "symbol": "MinorTangentialWidthM", "onelabName": "Parameters/Minor tangential width (m)" },
     { "sourcePath": "geometry.majorTangentialWidthM", "client": "gmsh", "symbol": "MajorTangentialWidthM", "onelabName": "Parameters/Major tangential width (m)" },
+    { "sourcePath": "geometry.rotorMinorTangentialWidthM", "client": "gmsh", "symbol": "RotorMinorTangentialWidthM", "onelabName": "Parameters/Rotor minor tangential width (m)" },
+    { "sourcePath": "geometry.rotorMajorTangentialWidthM", "client": "gmsh", "symbol": "RotorMajorTangentialWidthM", "onelabName": "Parameters/Rotor major tangential width (m)" },
     { "sourcePath": "geometry.electromagnetAxialLengthM", "client": "gmsh", "symbol": "ElectromagnetAxialLengthM", "onelabName": "Parameters/Electromagnet axial length (m)" },
     { "sourcePath": "geometry.coilTangentialMarginM", "client": "gmsh", "symbol": "CoilTangentialMarginM", "onelabName": "Parameters/Coil tangential margin (m)" },
+    { "sourcePath": "geometry.rotorCoilTangentialMarginM", "client": "gmsh", "symbol": "RotorCoilTangentialMarginM", "onelabName": "Parameters/Rotor coil tangential margin (m)" },
     { "sourcePath": "geometry.coilAxialMarginM", "client": "gmsh", "symbol": "CoilAxialMarginM", "onelabName": "Parameters/Coil axial margin (m)" },
     { "sourcePath": "geometry.frontPlaneZM", "client": "gmsh", "symbol": "FrontZ", "onelabName": "Parameters/Front plane z (m)" },
     { "sourcePath": "geometry.backPlaneZM", "client": "gmsh", "symbol": "BackZ", "onelabName": "Parameters/Back plane z (m)" },
     { "sourcePath": "materials.core.relativePermeability", "client": "getdp", "symbol": "CoreRelativePermeability", "onelabName": "Parameters/Core relative permeability" },
     { "sourcePath": "excitation.driveCurrentA", "client": "getdp", "symbol": "DriveCurrentA", "onelabName": "Parameters/Drive current (A)" },
     { "sourcePath": "excitation.turns", "client": "getdp", "symbol": "Turns", "onelabName": "Parameters/Turns" },
-    { "sourcePath": "excitation.effectiveCoilCrossSectionM2", "client": "getdp", "symbol": "EffectiveCoilCrossSectionM2", "onelabName": "Parameters/Effective coil cross-section (m^2)" }
+    { "sourcePath": "excitation.effectiveCoilCrossSectionM2", "client": "getdp", "symbol": "EffectiveCoilCrossSectionM2", "onelabName": "Parameters/Effective coil cross-section (m^2)" },
+    { "sourcePath": "excitation.eventIndex", "client": "getdp", "symbol": "EventIndex", "onelabName": "Parameters/Excitation event index" }
   ]
 }

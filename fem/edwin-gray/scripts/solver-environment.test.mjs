@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
@@ -13,6 +13,13 @@ import {
 } from "./solver-environment.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+test("pinned image installs checksum-attested GetDP with MSH 4 support", () => {
+  const dockerfile = readFileSync(join(ROOT, "container/Dockerfile"), "utf8");
+  assert.match(dockerfile, /getdp-3\.5\.0-Linux64c\.tgz/);
+  assert.match(dockerfile, /d3c28fa18f20d6147b4c7367d4dd802e9f7ddb58c608688bbb71919dbca8041d/);
+  assert.doesNotMatch(dockerfile, /apt-get install[\s\S]*"getdp=/);
+});
 
 test("publication image references are immutable or resolved to a repository digest", () => {
   const immutable = "registry.example/solver@sha256:" + "a".repeat(64);
@@ -69,13 +76,14 @@ test("runner job hashes change with the solver environment but model job IDs rem
   chmodSync(gmsh, 0o755);
   chmodSync(getdp, 0o755);
 
-  const run = () => {
+  const run = (eventIndex = 0) => {
     const result = spawnSync(process.execPath, [
       join(ROOT, "scripts/run.mjs"),
       "--dry-run",
       "--backend", "host",
       "--gmsh-bin", gmsh,
-      "--getdp-bin", getdp
+      "--getdp-bin", getdp,
+      "--event-index", String(eventIndex)
     ], { cwd: ROOT, encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
     return JSON.parse(result.stdout);
@@ -87,4 +95,10 @@ test("runner job hashes change with the solver environment but model job IDs rem
   assert.equal(first.jobId, changed.jobId);
   assert.notEqual(first.environmentIdentityHash, changed.environmentIdentityHash);
   assert.notEqual(first.inputHash, changed.inputHash);
+  const changedEvent = run(4);
+  assert.notEqual(changed.jobId, changedEvent.jobId);
+  assert.notEqual(changed.inputHash, changedEvent.inputHash);
+  assert.ok(changedEvent.commands.mesh.includes("4"));
+  assert.ok(changedEvent.commands.solve.includes("4"));
+  assert.ok(changedEvent.commands.audit.includes("--output"));
 });

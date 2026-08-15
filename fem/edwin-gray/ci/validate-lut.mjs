@@ -65,6 +65,8 @@ export function validateBundledLut(document, schema) {
   assert(angles.every((angle, index) => index === 0 || angle > angles[index - 1]), "LUT entry angles must be strictly increasing");
 
   const first = document.entries[0];
+  assert(new Set(document.entries.map((entry) => entry.parameters.eventIndex)).size === document.entries.length, "LUT entries must have distinct excitation events");
+  assert(document.entries.every((entry) => entry.parameters.excitationContract === first.parameters.excitationContract), "LUT entries must share one excitation contract");
   assert(document.entries.every((entry) => entry.parameters.meshSizeM === first.parameters.meshSizeM), "LUT entries must share one mesh size");
   assert(document.entries.every((entry) => entry.parameters.driveCurrentA === first.parameters.driveCurrentA), "LUT entries must share one drive current");
   assert(document.entries.every((entry) => entry.provenance.modelInputHash === first.provenance.modelInputHash), "LUT entries must share one model input hash");

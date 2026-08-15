@@ -18,11 +18,17 @@
 Group {
   Air = Region[100];
   StatorCores = Region[200];
-  StatorCoils = Region[201];
+  StatorCoils = Region[{
+    2101, 2102, 2103, 2104, 2105, 2106, 2107, 2108, 2109,
+    2110, 2111, 2112, 2113, 2114, 2115, 2116, 2117, 2118,
+    2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127,
+    2128, 2129, 2130, 2131, 2132, 2133, 2134, 2135, 2136}];
   RotorCores = Region[202];
-  RotorCoils = Region[203];
-  AllCores = Region[204];
-  AllCoils = Region[205];
+  RotorCoils = Region[{
+    2201, 2202, 2203, 2204, 2205, 2206,
+    2207, 2208, 2209, 2210, 2211, 2212}];
+  AllCores = Region[{StatorCores, RotorCores}];
+  AllCoils = Region[{StatorCoils, RotorCoils}];
   OuterBoundary = Region[300];
 
   Domain = Region[{Air, AllCores, AllCoils}];

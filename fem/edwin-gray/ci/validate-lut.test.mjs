@@ -19,7 +19,13 @@ function validDocument() {
     entries: [{
       entryId: "ci-fixture-0",
       status: "complete",
-      parameters: { rotorAngleDeg: 0, meshSizeM: 0.025, driveCurrentA: 1 },
+      parameters: {
+        rotorAngleDeg: 0,
+        eventIndex: 0,
+        excitationContract: "edwin-gray-fem-excitation-event-map/v1",
+        meshSizeM: 0.025,
+        driveCurrentA: 1
+      },
       observables: {
         magneticEnergyJ: { value: 1, unit: "J" },
         coEnergyJ: { value: 1, unit: "J" },

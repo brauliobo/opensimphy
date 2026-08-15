@@ -82,12 +82,20 @@
         "parameters": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["rotorAngleDeg", "meshSizeM", "driveCurrentA"],
+          "required": ["rotorAngleDeg", "eventIndex", "excitationContract", "meshSizeM", "driveCurrentA"],
           "properties": {
             "rotorAngleDeg": {
               "type": "number",
               "minimum": 0,
               "exclusiveMaximum": 360
+            },
+            "eventIndex": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 26
+            },
+            "excitationContract": {
+              "const": "edwin-gray-fem-excitation-event-map/v1"
             },
             "meshSizeM": {
               "type": "number",

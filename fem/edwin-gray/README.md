@@ -27,6 +27,12 @@ core and coil-shell volumes. Additional aggregate groups named
 `StatorCores`, `StatorCoils`, `RotorCores`, `RotorCoils`, `AllCores`, and
 `AllCoils` are material/source groups for GetDP.
 
+The excitation contract additionally requires exactly 48 coil-envelope-only
+physical volumes: stator IDs `2101` through `2136` and rotor IDs `2201`
+through `2212`. These groups exclude core and air. The archived production
+audit verifies every one is nonempty and maps it to the corresponding
+`event-map-v1.json` identity.
+
 The patent describes a capacitor discharge and a programmed sequence. The FEM
 artifact uses a static impressed-current snapshot at a selected rotor angle.
 It does not claim to simulate the discharge transient or to validate unusual
@@ -43,11 +49,16 @@ energy claims.
   `MeshSize` are configurable Gmsh parameters.
 - `getdp/magnetostatic.pro` contains a basic 3D vector-potential solve and
   field, energy, and inductance-proxy postprocessing.
+- `excitation/v1/event-map-v1.json` is the excitation identity contract;
+  `event-map-v1.pro` selects the twelve positive/negative coil regions for one
+  `EventIndex`.
+- `mesh-audit/audit-msh.mjs` independently checks physical-region coverage,
+  exact material partitioning, connectivity, face conformity, element
+  orientation, degeneracy, shape quality, and feature resolution.
 - `scripts/run.mjs` validates inputs, detects host executables first, generates
   finite coarse sweep manifests, runs Gmsh/GetDP, and maintains content-
-  addressed checkpoints. The runner fails before GetDP when Gmsh reports an
-  empty volume, intersecting elements, ill-shaped tetrahedra, or disconnected
-  3D nodes.
+  addressed checkpoints. The runner invokes the quantitative mesh audit after
+  Gmsh and before GetDP, and hashes its report into the checkpoint and result.
 - `scripts/normalize-results.mjs` converts solver values into the versioned
   browser result contract.
 - `.gitignore` keeps run directories and generated solver artifacts out of the
@@ -119,6 +130,11 @@ Use an explicit Docker image only when the image contains both `gmsh` and
 node scripts/run.mjs --backend docker --docker-image IMAGE --resume
 ```
 
+Select a specific event for a single run with `--event-index 0..26`. Sweep
+jobs pair each declared angle with the same-position `sweep.eventIndices`
+entry; the event index and excitation contract participate in job IDs, input
+hashes, commands, checkpoints, manifests, and normalized results.
+
 The Docker executable can be selected explicitly with `--docker-bin PATH`.
 An actual run fails if required binaries are unavailable. `--validate`,
 `--sweep`, and `--dry-run` remain usable without solver binaries.
@@ -134,11 +150,12 @@ engineering guess is not treated as an exact symmetry declaration.
 
 ## Result and checkpoint behavior
 
-The runner hashes the case bytes, geometry bytes, GetDP bytes, and run
-parameters with SHA-256. A job is stored under a hash-named directory beneath
+The runner hashes the case, geometry, GetDP problem, excitation map/selector,
+mesh-audit implementation, schemas, environment, and run parameters with
+SHA-256. A job is stored under a hash-named directory beneath
 `runs/`. Its checkpoint records the completed phases, the shared model input
-hash, the parameter-point job input hash, and exact mesh, solver-output, and
-normalized-result hashes. `--resume` does not trust a manifest's `complete`
+hash, the parameter-point job input hash, and exact mesh, audit-report,
+solver-output, and normalized-result hashes. `--resume` does not trust a manifest's `complete`
 status: it revalidates the content-addressed result path, checkpoint identity,
 all phase statuses, every artifact hash, normalized parameters, and both
 provenance hashes. A mismatch reruns the invalid phase and its dependents.
@@ -154,9 +171,17 @@ Each normalized job result uses `contract: "edwin-gray-browser-result"` and
 `contractVersion: 1`, and carries one `motor-fem-lut-v1` entry. The explicit
 aggregation command combines those job documents into one multi-angle LUT. A
 browser can reject an unknown contract version instead of guessing at field
-meanings. The browser-facing LUT is not bundled by this workspace while the
-source ledger marks `results` as `not-run`; the current mesh-quality failure
-prevents a normalized result from being generated.
+meanings. The browser-facing LUT remains absent: one successful smoke solve is
+solver-capability evidence, not the complete converged production sweep
+required by `convergence/convergence-spec-v1.json`.
+
+## Pinned solver image
+
+`container/Dockerfile` pins the Debian base digest, Debian snapshot, and Gmsh
+package. Debian's GetDP package cannot read MSH 4.1 because it lacks Gmsh
+support, so the image installs the official GetDP 3.5.0 Linux binary from a
+URL protected by an explicit SHA-256 checksum. This preserves the audited MSH
+4.1 mesh instead of converting or bypassing it.
 
 Run the runner integrity integration tests with deterministic local solver
 stubs:
@@ -180,15 +205,14 @@ The GetDP file is intentionally conservative and clearly limited:
 - The reported inductance is the linear magnetic-energy proxy
   `2 W / I^2`, not a transient or measured motor inductance.
 - No extraordinary, radiant-event, or non-Maxwell force term is present.
-- The current coarse mesh fails the runner's quality gate because Gmsh reports
-  intersecting elements, an empty air volume fragment, and ill-shaped
-  tetrahedra. No normalized FEM result can be produced until the mesh is
-  repaired.
+- Rotor tangential widths and coil margin are explicit assumptions distinct
+  from the stator dimensions. This removes the former overlapping rotor
+  major/minor envelopes at the geometric source.
 
 The GetDP syntax is based on the documented 3D `Hcurl` vector-potential
  formulation. Because GetDP and Gmsh are optional external executables and are
 not included by this workspace, a host run requires compatible versions to be
-provided explicitly or found on `PATH`. The coarse illustrative geometry can
-also produce Gmsh intersecting-element warnings; a successful GetDP solve is
-not a mesh-quality certification, so the mesh should be inspected and refined
-before using values for engineering conclusions.
+provided explicitly or found on `PATH`. A successful GetDP solve is not a
+convergence result; mesh refinement, outer-domain convergence, current
+linearity, periodicity, and torque-derivative gates still require a complete
+production evidence set.

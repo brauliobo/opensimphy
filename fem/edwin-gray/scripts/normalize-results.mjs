@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 export const RESULT_CONTRACT = "edwin-gray-browser-result";
 export const RESULT_CONTRACT_VERSION = 1;
 export const LUT_CONTRACT = "motor-fem-lut-v1";
-const CHECKPOINT_VERSION = "fem-checkpoint-v4";
+const CHECKPOINT_VERSION = "fem-checkpoint-v5";
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 
@@ -107,6 +107,9 @@ function validateCheckpoint({ jobDir, modelInputHash, jobInputHash, parameters, 
   assert(checkpoint.backend === backend, "Runner checkpoint backend does not match normalization backend");
   assert(checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`, "Runner checkpoint result contract is invalid");
   assert(checkpoint.meshQuality === "passed", "Runner checkpoint does not contain a passed mesh-quality gate");
+  assert(checkpoint.excitationContract === parameters.excitationContract, "Runner checkpoint excitation contract does not match normalization parameters");
+  assert(checkpoint.eventIndex === parameters.eventIndex, "Runner checkpoint event index does not match normalization parameters");
+  assert(typeof checkpoint.artifacts?.audit === "string", "Runner checkpoint does not record a mesh-audit hash");
   assert(checkpoint.phases?.solve === "complete", "Runner checkpoint does not contain a completed solver phase");
   assert(checkpoint.artifacts?.outputs && typeof checkpoint.artifacts.outputs === "object", "Runner checkpoint does not record solver output hashes");
   return checkpoint;
@@ -229,6 +232,8 @@ function validateNormalizedDocument(document, index) {
     assert(Number.isFinite(entry.parameters?.rotorAngleDeg), `normalized result ${index} entry ${entryIndex} has no angle`);
     assert(Number.isFinite(entry.parameters?.meshSizeM) && entry.parameters.meshSizeM > 0, `normalized result ${index} entry ${entryIndex} has no mesh size`);
     assert(Number.isFinite(entry.parameters?.driveCurrentA) && entry.parameters.driveCurrentA > 0, `normalized result ${index} entry ${entryIndex} has no drive current`);
+    assert(Number.isInteger(entry.parameters?.eventIndex) && entry.parameters.eventIndex >= 0 && entry.parameters.eventIndex <= 26, `normalized result ${index} entry ${entryIndex} has no event index`);
+    assert(typeof entry.parameters?.excitationContract === "string" && entry.parameters.excitationContract.length > 0, `normalized result ${index} entry ${entryIndex} has no excitation contract`);
     assert(entry.provenance?.synthetic === false, `normalized result ${index} entry ${entryIndex} is synthetic or unmarked`);
     assert(entry.provenance.sourceFormat === "getdp-table" || entry.provenance.sourceFormat === "solver-json", `normalized result ${index} entry ${entryIndex} source format is invalid`);
     assert(typeof entry.provenance.solver === "string" && entry.provenance.solver.length > 0, `normalized result ${index} entry ${entryIndex} solver is invalid`);
@@ -322,6 +327,8 @@ export function normalizeResults({
   assert(Number.isFinite(parameters.rotorAngleDeg), "parameters.rotorAngleDeg is required");
   assert(Number.isFinite(parameters.meshSizeM), "parameters.meshSizeM is required");
   assert(Number.isFinite(parameters.driveCurrentA), "parameters.driveCurrentA is required");
+  assert(Number.isInteger(parameters.eventIndex) && parameters.eventIndex >= 0 && parameters.eventIndex <= 26, "parameters.eventIndex is required");
+  assert(parameters.excitationContract === caseData.excitation?.contract, "parameters.excitationContract must match the case");
   assert(typeof solver === "string" && solver.length > 0, "solver is required");
   assert(typeof backend === "string" && backend.length > 0, "backend is required");
 
@@ -331,11 +338,16 @@ export function normalizeResults({
     validateTableProvenance({ jobDir, modelInputHash, jobInputHash, parameters, solver, backend });
   }
   const observables = readObservables(jobDir, rawPath, provenance);
+  assert(observables.magneticEnergyJ.value > 0, "magneticEnergyJ must be positive for an excited event");
+  assert(observables.coEnergyJ.value > 0, "coEnergyJ must be positive for an excited event");
+  assert(observables.inductanceH.value > 0, "inductanceH must be positive for an excited event");
+  const energyScale = Math.max(observables.magneticEnergyJ.value, observables.coEnergyJ.value);
+  assert(Math.abs(observables.magneticEnergyJ.value - observables.coEnergyJ.value) / energyScale <= 1e-9, "linear magnetic energy and co-energy are inconsistent");
   const provenanceArtifacts = artifactRecords(
     jobDir,
     rawPath && !artifacts.some((artifact) => resolve(artifact) === resolve(rawPath)) ? [...artifacts, rawPath] : artifacts
   );
-  const entryId = `angle-${parameters.rotorAngleDeg}-mesh-${parameters.meshSizeM}-current-${parameters.driveCurrentA}`;
+  const entryId = `angle-${parameters.rotorAngleDeg}-event-${parameters.eventIndex}-mesh-${parameters.meshSizeM}-current-${parameters.driveCurrentA}`;
   const result = {
     contract: RESULT_CONTRACT,
     contractVersion: RESULT_CONTRACT_VERSION,
@@ -349,6 +361,8 @@ export function normalizeResults({
         status: "complete",
         parameters: {
           rotorAngleDeg: parameters.rotorAngleDeg,
+          eventIndex: parameters.eventIndex,
+          excitationContract: parameters.excitationContract,
           meshSizeM: parameters.meshSizeM,
           driveCurrentA: parameters.driveCurrentA
         },

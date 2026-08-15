@@ -76,9 +76,11 @@ function writeSample(root, definition, index) {
   }[definition.meshLevelId];
   const radius = SPEC.production.domains.find((item) => item.id === definition.domainId).outerRadiusM;
   const mesh = meshText(meshCounts[0], meshCounts[1], radius);
+  const meshAudit = `${JSON.stringify({ valid: true, source: { meshSha256: sha256(mesh) } })}\n`;
   const values = observableValues(definition);
   const files = {
     "motor.msh": mesh,
+    "mesh-audit.json": meshAudit,
     "solver-environment.json": `${JSON.stringify({ identityHash: ENVIRONMENT_HASH })}\n`,
     "gmsh.log": "fixture mesh completed\n",
     "getdp.log": "fixture solve completed\n",
@@ -91,12 +93,14 @@ function writeSample(root, definition, index) {
   const meshSizeM = SPEC.production.meshLevels.find((item) => item.id === definition.meshLevelId).meshSizeM;
   const parameters = {
     rotorAngleDeg: definition.rotorAngleDeg,
+    eventIndex: Math.round(definition.rotorAngleDeg / (40 / 3)) % 27,
+    excitationContract: SPEC.excitationContract,
     meshSizeM,
     driveCurrentA: definition.driveCurrentA
   };
   const modelInputHash = sha256(`model:${definition.domainId}`);
   const jobInputHash = sha256(`job:${definition.domainId}:${definition.meshLevelId}:${definition.driveCurrentA}:${definition.rotorAngleDeg}`);
-  const normalizedArtifacts = ["motor.msh", "getdp.log", "observables.dat", "coenergy.dat", "inductance.dat"]
+  const normalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", "observables.dat", "coenergy.dat", "inductance.dat"]
     .map((name) => ({ path: name, sha256: sha256(files[name]) }));
   const result = {
     contract: "edwin-gray-browser-result",
@@ -145,11 +149,14 @@ function writeSample(root, definition, index) {
     environmentIdentityHash: ENVIRONMENT_HASH,
     solverEnvironment: { identityHash: ENVIRONMENT_HASH },
     resultContract: SPEC.resultContract,
+    excitationContract: SPEC.excitationContract,
+    eventIndex: parameters.eventIndex,
     meshQuality: "passed",
     phases: { mesh: "complete", solve: "complete", normalize: "complete" },
     artifacts: {
       environment: sha256(files["solver-environment.json"]),
       mesh: sha256(mesh),
+      audit: sha256(meshAudit),
       logs: {
         gmsh: sha256(files["gmsh.log"]),
         getdp: sha256(files["getdp.log"])

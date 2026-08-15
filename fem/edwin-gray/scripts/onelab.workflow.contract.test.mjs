@@ -47,7 +47,7 @@ test("ONELAB validation resolves existing files, parameters and solver names", (
   const report = JSON.parse(result.stdout);
   assert.equal(report.valid, true);
   assert.equal(report.caseId, "patent-3890548-illustrative");
-  assert.equal(report.parameters, 25);
+  assert.equal(report.parameters, 30);
 });
 
 test("ONELAB headless plan invokes the existing Gmsh and GetDP contracts", () => {
@@ -67,8 +67,10 @@ test("ONELAB headless plan invokes the existing Gmsh and GetDP contracts", () =>
   assert.ok(plan.getdp[1].endsWith("/getdp/magnetostatic.pro"));
   assert.ok(plan.getdp.includes("Magnetostatics3D"));
   assert.ok(plan.getdp.includes("MagnetostaticResults"));
-  assert.equal(plan.gmsh.filter((value) => value === "-setnumber").length, 21);
-  assert.equal(plan.getdp.filter((value) => value === "-setnumber").length, 4);
+  assert.equal(plan.gmsh.filter((value) => value === "-setnumber").length, 25);
+  assert.equal(plan.getdp.filter((value) => value === "-setnumber").length, 5);
+  assert.ok(plan.gmsh.includes("Parameters/Excitation event index"));
+  assert.ok(plan.getdp.includes("Parameters/Excitation event index"));
 });
 
 test("ONELAB GUI plan seeds the complete shared parameter database", () => {
@@ -76,6 +78,6 @@ test("ONELAB GUI plan seeds the complete shared parameter database", () => {
   assert.equal(result.status, 0, result.stderr);
   const plan = JSON.parse(result.stdout);
   assert.ok(plan.command[1].endsWith("/onelab/project.geo"));
-  assert.equal(plan.command.filter((value) => value === "-setnumber").length, 25);
+  assert.equal(plan.command.filter((value) => value === "-setnumber").length, 30);
   assert.ok(plan.command.includes("Parameters/Drive current (A)"));
 });

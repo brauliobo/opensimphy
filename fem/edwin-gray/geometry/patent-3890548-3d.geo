@@ -9,11 +9,10 @@ SetFactory("OpenCASCADE");
 Geometry.OCCBooleanPreserveNumbering = 1;
 
 MeshSizeValue = DefineNumber[0.025, Name "Parameters/Mesh size (m)"];
-DefineConstant[
-  FeatureMeshSizeM = {0.002, Name "Meshing/Feature mesh size (m)"},
-  SmokeMesh = {0, Choices{0="Production", 1="Smoke"}, Name "Meshing/Mode"}
-];
+FeatureMeshSizeM = DefineNumber[0.002, Name "Meshing/Feature mesh size (m)"];
+SmokeMesh = DefineNumber[0, Choices{0="Production", 1="Smoke"}, Name "Meshing/Mode"];
 RotorAngleDeg = DefineNumber[0, Name "Parameters/Rotor angle (deg)"];
+EventIndex = DefineNumber[0, Name "Parameters/Excitation event index", Min 0, Max 26, Step 1];
 PairOffsetDeg = DefineNumber[13.3333333333, Name "Parameters/Major-minor offset (deg)"];
 StatorPhaseDeg = DefineNumber[0, Name "Parameters/Stator phase (deg)"];
 RotorPhaseDeg = DefineNumber[0, Name "Parameters/Rotor phase (deg)"];
@@ -29,8 +28,11 @@ CoilRadialDepthM = DefineNumber[0.008, Name "Parameters/Coil radial depth (m)"];
 CoilRadialMarginM = DefineNumber[0.001, Name "Parameters/Coil radial margin (m)"];
 MinorTangentialWidthM = DefineNumber[0.01, Name "Parameters/Minor tangential width (m)"];
 MajorTangentialWidthM = DefineNumber[0.016, Name "Parameters/Major tangential width (m)"];
+RotorMinorTangentialWidthM = DefineNumber[0.008, Name "Parameters/Rotor minor tangential width (m)"];
+RotorMajorTangentialWidthM = DefineNumber[0.012, Name "Parameters/Rotor major tangential width (m)"];
 ElectromagnetAxialLengthM = DefineNumber[0.03, Name "Parameters/Electromagnet axial length (m)"];
 CoilTangentialMarginM = DefineNumber[0.003, Name "Parameters/Coil tangential margin (m)"];
+RotorCoilTangentialMarginM = DefineNumber[0.001, Name "Parameters/Rotor coil tangential margin (m)"];
 CoilAxialMarginM = DefineNumber[0.004, Name "Parameters/Coil axial margin (m)"];
 
 Deg = Pi / 180.;
@@ -38,10 +40,9 @@ FrontZ = DefineNumber[0.035, Name "Parameters/Front plane z (m)"];
 BackZ = DefineNumber[-0.035, Name "Parameters/Back plane z (m)"];
 Eps = 1.e-6;
 
-// Record source-box bounds before fragmentation. The rotor major/minor boxes
-// overlap in this illustrative topology, so an input can map to several OCC
-// fragments and an overlap fragment can legitimately belong to two assembly
-// groups. The five base material groups below remain a disjoint partition.
+// Record source-box bounds before fragmentation. Rotor dimensions are separate
+// assumptions because stator-sized major/minor envelopes overlap at the smaller
+// rotor radius and create a nonphysical sliver in the OCC partition.
 Cylinder(1) = {0, 0, AirZMinM, 0, 0, AirZMaxM - AirZMinM, AirOuterRadiusM};
 
 statorCoreVolumes[] = {};
@@ -90,10 +91,10 @@ For station In {0:8}
                       StatorCoreRadialDepthM, elementWidth,
                       ElectromagnetAxialLengthM};
        Box(coilTag) = {StatorCoreInnerRadiusM + StatorCoreRadialDepthM + CoilRadialMarginM,
-                      -(elementWidth + 2. * CoilTangentialMarginM) / 2.,
+                       -(elementWidth + 2. * CoilTangentialMarginM) / 2.,
                       elementZ - (ElectromagnetAxialLengthM + 2. * CoilAxialMarginM) / 2.,
                       CoilRadialDepthM,
-                      elementWidth + 2. * CoilTangentialMarginM,
+                       elementWidth + 2. * CoilTangentialMarginM,
                       ElectromagnetAxialLengthM + 2. * CoilAxialMarginM};
        Rotate {{0, 0, 1}, {0, 0, 0}, elementAngle * Deg} {
          Volume{coreTag};
@@ -115,10 +116,10 @@ For station In {0:2}
   For pair In {0:1}
     If(pair == 0)
       elementName = "Minor";
-      elementWidth = MinorTangentialWidthM;
+      elementWidth = RotorMinorTangentialWidthM;
     Else
       elementName = "Major";
-      elementWidth = MajorTangentialWidthM;
+      elementWidth = RotorMajorTangentialWidthM;
     EndIf
 
     If(pair == 0)
@@ -145,10 +146,10 @@ For station In {0:2}
                       RotorCoreRadialDepthM, elementWidth,
                       ElectromagnetAxialLengthM};
        Box(coilTag) = {RotorCoreInnerRadiusM + RotorCoreRadialDepthM + CoilRadialMarginM,
-                      -(elementWidth + 2. * CoilTangentialMarginM) / 2.,
+                       -(elementWidth + 2. * RotorCoilTangentialMarginM) / 2.,
                       elementZ - (ElectromagnetAxialLengthM + 2. * CoilAxialMarginM) / 2.,
                       CoilRadialDepthM,
-                      elementWidth + 2. * CoilTangentialMarginM,
+                       elementWidth + 2. * RotorCoilTangentialMarginM,
                       ElectromagnetAxialLengthM + 2. * CoilAxialMarginM};
        Rotate {{0, 0, 1}, {0, 0, 0}, elementAngle * Deg} {
          Volume{coreTag};
@@ -174,11 +175,11 @@ allPostVolumes[] = Volume{:};
 // the saved bounding boxes. This is stable even when OCC renumbers or splits a
 // source box during fragmentation.
 Physical Volume("StatorCores", 200) = {};
-Physical Volume("StatorCoils", 201) = {};
+Physical Volume("StatorCoils", 3201) = {};
 Physical Volume("RotorCores", 202) = {};
-Physical Volume("RotorCoils", 203) = {};
+Physical Volume("RotorCoils", 3203) = {};
 Physical Volume("AllCores", 204) = {};
-Physical Volume("AllCoils", 205) = {};
+Physical Volume("AllCoils", 3205) = {};
 Physical Volume("Air", 100) = {};
 statorCorePostVolumes[] = {};
 statorCoilPostVolumes[] = {};
@@ -214,13 +215,15 @@ For station In {0:8}
         statorCoilBounds[boundOffset + 3] + Eps,
         statorCoilBounds[boundOffset + 4] + Eps,
         statorCoilBounds[boundOffset + 5] + Eps};
-      assemblyTag = 1001 + index;
+      assemblyTag = 5001 + index;
       Physical Volume(StrCat(Sprintf("Stator_%g_", station + 1),
                              elementName, "_", planeName, "_CoilCore"), assemblyTag) = {coreFragments[], coilFragments[]};
+      Physical Volume(StrCat(Sprintf("Stator_%g_", station + 1),
+                             elementName, "_", planeName, "_Coil"), 2101 + index) = {coilFragments[]};
       Physical Volume("StatorCores", 200) += coreFragments[];
-      Physical Volume("StatorCoils", 201) += coilFragments[];
+      Physical Volume("StatorCoils", 3201) += coilFragments[];
       Physical Volume("AllCores", 204) += coreFragments[];
-      Physical Volume("AllCoils", 205) += coilFragments[];
+      Physical Volume("AllCoils", 3205) += coilFragments[];
       statorCorePostVolumes[] += {coreFragments[]};
       statorCoilPostVolumes[] += {coilFragments[]};
     EndFor
@@ -256,21 +259,21 @@ For station In {0:2}
         rotorCoilBounds[boundOffset + 3] + Eps,
         rotorCoilBounds[boundOffset + 4] + Eps,
         rotorCoilBounds[boundOffset + 5] + Eps};
-      assemblyTag = 1101 + index;
+      assemblyTag = 5101 + index;
       Physical Volume(StrCat(Sprintf("Rotor_%g_", station + 1),
                              elementName, "_", planeName, "_CoilCore"), assemblyTag) = {coreFragments[], coilFragments[]};
+      Physical Volume(StrCat(Sprintf("Rotor_%g_", station + 1),
+                             elementName, "_", planeName, "_Coil"), 2201 + index) = {coilFragments[]};
       Physical Volume("RotorCores", 202) += coreFragments[];
-      Physical Volume("RotorCoils", 203) += coilFragments[];
+      Physical Volume("RotorCoils", 3203) += coilFragments[];
       Physical Volume("AllCores", 204) += coreFragments[];
-      Physical Volume("AllCoils", 205) += coilFragments[];
+      Physical Volume("AllCoils", 3205) += coilFragments[];
       rotorCorePostVolumes[] += {coreFragments[]};
       rotorCoilPostVolumes[] += {coilFragments[]};
     EndFor
   EndFor
 EndFor
 
-// Repeated fragments from overlapping rotor assembly bounds are removed by
-// array subtraction from the complete OCC partition when Air is constructed.
 materialVolumes[] = statorCorePostVolumes[];
 materialVolumes[] += statorCoilPostVolumes[];
 materialVolumes[] += rotorCorePostVolumes[];

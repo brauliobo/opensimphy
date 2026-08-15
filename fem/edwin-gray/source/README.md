@@ -50,6 +50,9 @@ assumption records.
 | `geometry.statorCoreInnerRadiusM` | assumption | Chosen illustrative scale, not a patent measurement. |
 | `geometry.minorTangentialWidthM` | assumption | Chosen to keep neighboring 40 degree stations separated in the coarse mesh. |
 | `geometry.majorTangentialWidthM` | assumption | Chosen illustrative scale; major/minor size ordering is retained. |
+| `geometry.rotorMinorTangentialWidthM` | assumption | Separate rotor-scale width chosen to keep the minor envelope disjoint at the smaller rotor radius. |
+| `geometry.rotorMajorTangentialWidthM` | assumption | Separate rotor-scale width chosen to keep the major envelope disjoint from the minor envelope. |
+| `geometry.rotorCoilTangentialMarginM` | assumption | Reduced rotor coil margin prevents overlap between adjacent assumed coil envelopes. |
 | `geometry.coilRadialMarginM` | assumption | Keeps the homogenized coil shell separated from the core in the illustrative geometry. |
 | `geometry.frontPlaneZM` | assumption | Axial placement is illustrative because the patent does not provide a dimensioned axial layout. |
 | `materials.core.relativePermeability` | assumption | Linear constant permeability is a solver simplification; no material curve is claimed. |

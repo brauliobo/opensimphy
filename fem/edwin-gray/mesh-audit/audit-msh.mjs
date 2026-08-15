@@ -7,6 +7,11 @@ import { pathToFileURL } from "node:url";
 
 const BASE_MATERIALS = ["Air", "StatorCores", "StatorCoils", "RotorCores", "RotorCoils"];
 const REQUIRED_GROUPS = [...BASE_MATERIALS, "AllCores", "AllCoils", "OuterBoundary"];
+const REQUIRED_COIL_REGION_IDS = [
+  ...Array.from({ length: 36 }, (_, index) => 2101 + index),
+  ...Array.from({ length: 12 }, (_, index) => 2201 + index)
+];
+const ILL_SHAPED_MEAN_RATIO_LIMIT = 1e-3;
 const ELEMENT_NODE_COUNTS = new Map([[1, 2], [2, 3], [4, 4], [15, 1]]);
 
 function section(text, name) {
@@ -126,7 +131,7 @@ function tetraQuality(nodes, coordinates) {
   const ab = subtract(b, a);
   const ac = subtract(c, a);
   const ad = subtract(d, a);
-  const volume6 = Math.abs(
+  const signedVolume6 = (
     ab[0] * (ac[1] * ad[2] - ac[2] * ad[1]) -
     ab[1] * (ac[0] * ad[2] - ac[2] * ad[0]) +
     ab[2] * (ac[0] * ad[1] - ac[1] * ad[0])
@@ -139,7 +144,9 @@ function tetraQuality(nodes, coordinates) {
     }
   }
   return {
-    volume6,
+    signedVolume6,
+    volume6: Math.abs(signedVolume6),
+    meanRatio: 12 * (Math.abs(signedVolume6) / 2) ** (2 / 3) / edges.reduce((sum, edge) => sum + edge ** 2, 0),
     edgeRatio: Math.max(...edges) / Math.min(...edges),
     minimumEdge: Math.min(...edges),
     maximumEdge: Math.max(...edges)
@@ -183,6 +190,9 @@ function parseElements(text, entities, physicalNames, nodes) {
   let maximumMaterialEdge = 0;
   const materialEdges = [];
   let degenerateTetrahedra = 0;
+  let invertedTetrahedra = 0;
+  let illShapedTetrahedra = 0;
+  let minimumMeanRatio = Infinity;
   let outerBoundaryTriangles = 0;
   let partitionedTetrahedra = 0;
   let partitionErrors = 0;
@@ -201,6 +211,7 @@ function parseElements(text, entities, physicalNames, nodes) {
     for (const tetra of block.entries) {
       const quality = tetraQuality(tetra, nodes.coordinates);
       minimumVolume6 = Math.min(minimumVolume6, quality.volume6);
+      minimumMeanRatio = Math.min(minimumMeanRatio, quality.meanRatio);
       maximumEdgeRatio = Math.max(maximumEdgeRatio, quality.edgeRatio);
       minimumEdge = Math.min(minimumEdge, quality.minimumEdge);
       maximumEdge = Math.max(maximumEdge, quality.maximumEdge);
@@ -209,6 +220,8 @@ function parseElements(text, entities, physicalNames, nodes) {
         materialEdges.push(quality.maximumEdge);
       }
       if (quality.volume6 <= 1e-18) degenerateTetrahedra += 1;
+      if (quality.signedVolume6 < 0) invertedTetrahedra += 1;
+      if (quality.meanRatio < ILL_SHAPED_MEAN_RATIO_LIMIT) illShapedTetrahedra += 1;
       const tetraFaces = [
         faceKey(tetra[0], tetra[1], tetra[2]),
         faceKey(tetra[0], tetra[1], tetra[3]),
@@ -256,7 +269,10 @@ function parseElements(text, entities, physicalNames, nodes) {
     maximumEdge,
     maximumMaterialEdge,
     materialEdgeP99,
-    degenerateTetrahedra
+    degenerateTetrahedra,
+    invertedTetrahedra,
+    illShapedTetrahedra,
+    minimumMeanRatio
   };
 }
 
@@ -271,6 +287,10 @@ export function auditMesh(meshPath, metadata = {}) {
   const elements = parseElements(text, entities, physicalNames, nodes);
   const groupNames = [...physicalNames.values()];
   const assemblyNames = groupNames.filter((name) => /^(Stator|Rotor)_\d+_(Minor|Major)_(Front|Back)_CoilCore$/.test(name));
+  const coilRegions = REQUIRED_COIL_REGION_IDS.map((id) => {
+    const name = physicalNames.get(`3:${id}`);
+    return { id, name: name ?? null, elements: name ? elements.groupElements[name] : 0 };
+  });
   const missingGroups = REQUIRED_GROUPS.filter((name) => !groupNames.includes(name));
   const emptyGroups = groupNames.filter((name) => elements.groupElements[name] === 0);
   const featureTarget = metadata.mode === "smoke" ? 0.005 : 0.002;
@@ -279,13 +299,15 @@ export function auditMesh(meshPath, metadata = {}) {
     expectedGroupsPresent: missingGroups.length === 0,
     allPhysicalGroupsNonempty: emptyGroups.length === 0,
     canonicalAssemblyCount: assemblyNames.length === 48,
+    eventCoilRegionsExact: coilRegions.every((region) => region.name && region.elements > 0),
     materialPartitionExact: elements.partitionErrors === 0 && elements.partitionedTetrahedra === elements.tetraCount,
     aggregateCoreCountExact: elements.groupElements.AllCores === elements.groupElements.StatorCores + elements.groupElements.RotorCores,
     aggregateCoilCountExact: elements.groupElements.AllCoils === elements.groupElements.StatorCoils + elements.groupElements.RotorCoils,
     faceConformity: elements.nonManifoldFaces === 0,
     singleConnectedDomain: elements.connectedComponents === 1,
     outerBoundaryComplete: elements.outerBoundaryTriangles === elements.exteriorFaces,
-    positiveTetraVolumes: elements.degenerateTetrahedra === 0 && elements.minimumVolume6 > 0,
+    positiveTetraVolumes: elements.degenerateTetrahedra === 0 && elements.invertedTetrahedra === 0 && elements.minimumVolume6 > 0,
+    noIllShapedTetrahedra: elements.illShapedTetrahedra === 0,
     materialFeatureResolution: elements.materialEdgeP99 <= materialEdgeP99Limit
   };
   return {
@@ -305,7 +327,8 @@ export function auditMesh(meshPath, metadata = {}) {
     physicalGroups: {
       count: physicalNames.size,
       assemblyCount: assemblyNames.length,
-      expectedCount: 56,
+      expectedCount: 104,
+      eventCoilRegions: coilRegions,
       elements: elements.groupElements,
       missing: missingGroups,
       empty: emptyGroups
@@ -323,6 +346,10 @@ export function auditMesh(meshPath, metadata = {}) {
     },
     quality: {
       degenerateTetrahedra: elements.degenerateTetrahedra,
+      invertedTetrahedra: elements.invertedTetrahedra,
+      illShapedTetrahedra: elements.illShapedTetrahedra,
+      minimumMeanRatio: elements.minimumMeanRatio,
+      illShapedMeanRatioLimit: ILL_SHAPED_MEAN_RATIO_LIMIT,
       minimumSixTimesVolumeM3: elements.minimumVolume6,
       minimumEdgeM: elements.minimumEdge,
       maximumEdgeM: elements.maximumEdge,

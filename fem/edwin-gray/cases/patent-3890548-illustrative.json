@@ -53,8 +53,11 @@
     "coilRadialMarginM": 0.001,
     "minorTangentialWidthM": 0.01,
     "majorTangentialWidthM": 0.016,
+    "rotorMinorTangentialWidthM": 0.008,
+    "rotorMajorTangentialWidthM": 0.012,
     "electromagnetAxialLengthM": 0.03,
     "coilTangentialMarginM": 0.003,
+    "rotorCoilTangentialMarginM": 0.001,
     "coilAxialMarginM": 0.004,
     "meshSizeM": 0.025
   },
@@ -76,6 +79,8 @@
     }
   },
   "excitation": {
+    "contract": "edwin-gray-fem-excitation-event-map/v1",
+    "eventIndex": 0,
     "kind": "impressed-current-magnetostatic",
     "driveCurrentA": 1,
     "turns": 100,
@@ -114,6 +119,11 @@
       320,
       333.3333333333,
       346.6666666667
+    ],
+    "eventIndices": [
+      0, 1, 2, 3, 4, 5, 6, 7, 8,
+      9, 10, 11, 12, 13, 14, 15, 16, 17,
+      18, 19, 20, 21, 22, 23, 24, 25, 26
     ],
     "meshSizesM": [0.025, 0.04],
     "driveCurrentA": [1, 10],
@@ -214,6 +224,30 @@
         "status": "assumption",
         "evidenceRefs": ["source/README.md:field-map"],
         "note": "Chosen illustrative scale; major/minor size ordering is retained."
+      },
+      {
+        "path": "geometry.rotorMinorTangentialWidthM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "The rotor minor width is a separate illustrative assumption chosen to leave a positive tangential gap at the smaller rotor radius."
+      },
+      {
+        "path": "geometry.rotorMajorTangentialWidthM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "The rotor major width is a separate illustrative assumption chosen to avoid overlap with the minor rotor envelope."
+      },
+      {
+        "path": "geometry.rotorCoilTangentialMarginM",
+        "status": "assumption",
+        "evidenceRefs": ["source/README.md:field-map"],
+        "note": "The rotor coil margin is reduced relative to the stator margin so adjacent assumed coil envelopes remain disjoint."
+      },
+      {
+        "path": "excitation.contract",
+        "status": "derived",
+        "evidenceRefs": ["excitation/v1/event-map-v1.json"],
+        "note": "The event-map contract binds each solve to explicit coil-only physical regions."
       },
       {
         "path": "geometry.frontPlaneZM",
