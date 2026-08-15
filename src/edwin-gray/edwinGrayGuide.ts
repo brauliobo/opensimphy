@@ -1,3 +1,9 @@
+import {
+  GRAY_EVIDENCE_CONTRADICTIONS,
+  GRAY_EVIDENCE_RECORDS,
+  GRAY_RETAINED_FRAME_BOUNDARY,
+} from './edwinGrayEvidence'
+
 export interface GrayTimelineEntry {
   id: string
   timestamp: string
@@ -34,8 +40,8 @@ export const GRAY_VIDEO = Object.freeze({
   uploader: 'Rogerio Polenta',
   duration: '1:16:08',
   uploaded: '2026-08-11',
-  downloadedSource: 'research/opensimphy-edwin-gray/source/nC740fpBs4M.mp4',
-  transcript: 'Motor Edwin Gray.txt',
+  downloadedSource: 'research/opensimphy-edwin-gray/source/media/nC740fpBs4M-470-770.mp4',
+  transcript: 'research/opensimphy-edwin-gray/source/media/nC740fpBs4M.en-orig.vtt',
   analysisReport: 'research/opensimphy-edwin-gray/analysis/report.md',
 })
 
@@ -64,10 +70,10 @@ export const GRAY_GUIDE_SECTIONS: readonly GrayGuideSection[] = Object.freeze([
   Object.freeze({
     id: 'circuit',
     number: '02',
-    title: 'Charge two capacitors, pulse-charge four, then schedule a dump',
+    title: 'Presenter reconstruction: charge two, pulse-charge four, then dump',
     question: 'How did the 1979 gold/purple electrics switch?',
-    answer: 'A high-voltage supply holds a pair of capacitors. A commutator event is modeled as charging a four-capacitor bank, followed by a scheduled dump into the participating sectors.',
-    teacherNote: 'The exact wiring and contact assignment are not established here. The instrument shows a bounded schematic and three-sector event schedule; it does not claim a whole-machine simultaneous trigger.',
+    answer: 'The presenter reconstructs a high-voltage supply holding a pair of capacitors, a commutator event pulse-charging a four-capacitor bank, and a later dump. The retained source does not establish the original 15-contact assignment.',
+    teacherNote: 'Treat the switching sequence as a presenter reconstruction. Original thyratron and later Schloff Zener trigger states are separate, and unused contact functions remain unknown.',
     equation: 'E = 1/2 C V^2 dumped into L_eq of paralleled open-core coils',
     evidenceLabel: 'Evidence: presenter-reported circuit description',
     assumptionLabel: 'Assumption: ideal switches and lumped capacitor/coil values',
@@ -77,8 +83,8 @@ export const GRAY_GUIDE_SECTIONS: readonly GrayGuideSection[] = Object.freeze([
     id: 'arc',
     number: '03',
     title: 'The running condition is an elongating pole-face arc',
-    question: 'Why will the machine not start from rest?',
-    answer: 'Current is interrupted by stretching an arc across the pole faces. The talk reports 500 rpm for one described setup, with quench timing marked in three-degree steps; this is not a universal threshold.',
+    question: 'Why is a 500 RPM starter claim not the same as start-from-zero?',
+    answer: 'The presenter assigns a 500 RPM starter condition to an original configuration. A separate secondhand report says the later Schloff AWG 14 rewind started from zero and rotated oppositely; the states must not be merged.',
     teacherNote: 'The “radiant event” is a source-claim placed at current interruption. This instrument integrates only the classical RLC current until the modeled quench condition and does not insert extra force at the break.',
     equation: 't_quench = theta_quench / omega,  omega = 2 pi n / 60',
     evidenceLabel: 'Evidence: presenter-reported 500 rpm reference condition, not universal',
@@ -91,7 +97,7 @@ export const GRAY_GUIDE_SECTIONS: readonly GrayGuideSection[] = Object.freeze([
     title: 'A classical ledger versus a historical COP claim',
     question: 'Where does the capacitor energy go?',
     answer: 'Into I^2 R, the quench spark, a small Maxwell-stress torque, optional recovery-coil transfer, and leftover C and L. The independent torque integral is shown directly; any pulse-stage balance residual remains visible instead of being assigned to torque.',
-    teacherNote: 'Crosby/JPL COP 300 at 26 W is a source-claim from the talk, not a result of this model. Open cores leak flux; McCay’s own point is that classical magnetic torque is tiny.',
+    teacherNote: 'COP 300 and 26.8 W input are source claims, not results of this model. The raw automatic caption says “7 12 kilowatts” and is not normalized to either a range or a decimal. COP 282 is absent from the retained pack.',
     equation: 'W_torque = integral(tau d theta);  Delta E = E_source - (W_torque + W_rec + losses + residuals)',
     evidenceLabel: 'Evidence: historical COP-300 statement is a source-claim',
     assumptionLabel: 'Assumption: angle-dependent co-energy and inductance form a lumped classical surrogate',
@@ -102,8 +108,8 @@ export const GRAY_GUIDE_SECTIONS: readonly GrayGuideSection[] = Object.freeze([
     number: '05',
     title: 'Later colored prototypes: evidence comparison, not patent topology',
     question: 'What changes between the colored prototype rows?',
-    answer: 'The catalog comparison varies the prototype label, pole count, leakage coupling, housing, and recovery winding. It does not revise the patent topology or prove that any colored machine had the displayed parameters.',
-    teacherNote: 'Compare rows, do not merge them into a single “Gray motor.” Purple, gold, white, black, EMA4, and EMA6 are source-described prototype claims represented by illustrative model inputs; recovery energy here is transformer-like at interruption.',
+    answer: 'The presentation distinguishes black by one pole set and a viewing opening, purple by recovery coils, white by its plastic construction, and gold as similar to purple without recovery. Other catalog values remain illustrative model inputs.',
+    teacherNote: 'Compare original, modified, and inferred rows; do not merge them into one “Gray motor.” Schloff’s rewind and trigger changes describe later states, while unknown original wiring remains unknown.',
     equation: 'k_white << k_aluminum;  W_rec = 0 unless hasRecovery',
     evidenceLabel: 'Evidence: later colored prototype descriptions and claims',
     assumptionLabel: 'Assumption: coupling, housing, and recovery values are illustrative comparison inputs',
@@ -140,3 +146,10 @@ export const GRAY_RELATED_LINKS = Object.freeze([
   { to: '/evidence', label: 'Evidence guide', note: 'Claim classes and validatesTheory: false' },
   { to: '/labs', label: 'All laboratories', note: 'Back to the workbench index' },
 ])
+
+export const GRAY_SOURCE_GUIDE = Object.freeze({
+  records: GRAY_EVIDENCE_RECORDS,
+  contradictions: GRAY_EVIDENCE_CONTRADICTIONS,
+  retainedFrameBoundary: GRAY_RETAINED_FRAME_BOUNDARY,
+  interpretationBoundary: 'Records establish what the retained presentation says or shows. They do not validate machine performance, recovery efficiency, COP, original wiring, or non-classical physics.',
+})

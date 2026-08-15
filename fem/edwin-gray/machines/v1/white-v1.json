@@ -6,7 +6,7 @@
   "identity": {
     "machineId": { "value": "white", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "White 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white.label"], "note": "Exact current engine catalog label." },
-    "source": { "value": "1979 Hackenberger / Gray white prototype row", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white"], "note": "This contract freezes the current engine row without upgrading it to measured machine evidence." },
+    "source": { "value": { "catalog": "1979 Hackenberger / Gray white prototype row", "originalState": { "status": "source-described-all-plastic", "evidenceRefs": ["gray-caption-colored-machine-distinctions"] }, "modifiedState": { "status": "unknown", "evidenceRefs": [] }, "inferredState": { "status": "engine-surrogate", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white"] } }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-colored-machine-distinctions", "src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white"], "note": "The original all-plastic presentation claim, unknown later state, and engine surrogate are separate; no internal material specification is inferred." },
     "engineModel": { "value": { "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "plastic", "leakageCoupling": 0.012, "recoveryCoupling": 0, "observationWindow": false, "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 3, "turns": 140 }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white", "src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.white"], "note": "Bounded surrogate parameters; they are not physical measurements or FEM identity values." }
   },
   "compatibilityIdentity": {
@@ -20,6 +20,7 @@
     "femAvailability": { "value": { "compatible": false, "caseId": null, "scope": "blocked-unavailable-identity", "runStatus": "not-applicable", "blockedBy": ["topology", "geometryRevision", "windingTurns", "excitationEventSchedule", "materials", "circuit", "mechanicalLoad"] }, "evidenceClass": "unavailable", "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:caseId"], "note": "White 1979 must not inherit the patent case assumptions; a machine-specific contract and dimensions are required." }
   },
   "limitations": [
-    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." }
+    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." },
+    { "value": "all-plastic-does-not-define-internal-materials", "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-colored-machine-distinctions"], "note": "The presentation does not identify which structural parts were plastic or provide electromagnetic material laws." }
   ]
 }

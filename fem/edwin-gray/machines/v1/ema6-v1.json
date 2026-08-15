@@ -6,7 +6,7 @@
   "identity": {
     "machineId": { "value": "ema6", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "EMA6", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6.label"], "note": "Exact current engine catalog label." },
-    "source": { "value": "1976 Richard Hackenberger prototype row", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6"], "note": "This contract freezes the current engine row without upgrading it to measured machine evidence." },
+    "source": { "value": { "catalog": "1976 Richard Hackenberger EMA6 prototype row", "originalState": { "status": "source-described-demonstration", "evidenceRefs": ["gray-caption-ema6-two-horsepower"] }, "modifiedState": { "status": "unknown", "evidenceRefs": [] }, "inferredState": { "status": "engine-surrogate", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6"] } }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-ema6-two-horsepower", "src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6"], "note": "The approximately two-horsepower demonstration claim belongs to the presented original state; later physical values are unknown and the engine row remains inferred." },
     "engineModel": { "value": { "year": 1976, "designer": "Richard Hackenberger", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.06, "recoveryCoupling": 0, "observationWindow": false, "chargeVoltageV": 3000, "capacitanceF": 0.0000012, "startRpm": 500, "quenchDeg": 6, "turns": 160 }, "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6", "src/edwin-gray/edwinGrayEngine.ts:GRAY_PRESETS.ema6"], "note": "Bounded surrogate parameters; they are not physical measurements or FEM identity values." }
   },
   "compatibilityIdentity": {
@@ -20,6 +20,7 @@
     "femAvailability": { "value": { "compatible": false, "caseId": null, "scope": "blocked-unavailable-identity", "runStatus": "not-applicable", "blockedBy": ["topology", "geometryRevision", "windingTurns", "excitationEventSchedule", "materials", "circuit", "mechanicalLoad"] }, "evidenceClass": "unavailable", "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:caseId"], "note": "EMA6 must not inherit the patent case assumptions; a machine-specific contract and dimensions are required." }
   },
   "limitations": [
-    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." }
+    { "value": "engine-surrogate-not-machine-replica", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MODEL_STATUS"], "note": "The engine row is a bounded classical surrogate." },
+    { "value": "two-horsepower-is-unverified-demonstration-claim", "evidenceClass": "unavailable", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-ema6-two-horsepower"], "note": "No retained dynamometer record, operating point, or later revision output is available." }
   ]
 }
