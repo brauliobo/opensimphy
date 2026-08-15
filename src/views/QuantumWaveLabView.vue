@@ -57,158 +57,137 @@ onMounted(() => {
 })
 </script>
 
-<template>
-  <div class="quantum-lab-view" data-testid="quantum-wave-lab-ready">
-    <header class="quantum-lab-header">
-      <div class="quantum-lab-header__index">
-        <span>OpenSimPhy / Lab 04</span>
-        <span>source → model → simulation</span>
-      </div>
-      <div class="quantum-lab-header__copy">
-        <p class="eyebrow">A teacher's reconstruction of a quantum-wave story</p>
-        <h1>Why does physics need i?</h1>
-        <p class="lede">{{ QUANTUM_LEARNING_PROMISE }} Start with a spectrum, build a wave, read its curvature, rotate its phase, and finish with a probability distribution.</p>
-        <div class="quantum-lab-depth"><TourDepthControl /></div>
-      </div>
-      <aside class="quantum-lab-header__source">
-        <p class="eyebrow">Reference media / {{ QUANTUM_VIDEO.duration }}</p>
-        <h2>{{ QUANTUM_VIDEO.title }}</h2>
-        <p>{{ QUANTUM_VIDEO.channel }}. The source explains the time-dependent Schrodinger equation through spectra, Fourier analysis, complex rotation, and the Born rule.</p>
-        <a :href="QUANTUM_VIDEO.url" target="_blank" rel="noreferrer">Open the original video on YouTube</a>
-      </aside>
-    </header>
+<template lang="pug">
+.quantum-lab-view(data-testid="quantum-wave-lab-ready")
+  header.quantum-lab-header
+    .quantum-lab-header__index
+      span OpenSimPhy / Lab 04
+      span source → model → simulation
+    .quantum-lab-header__copy
+      p.eyebrow A teacher's reconstruction of a quantum-wave story
+      h1 Why does physics need i?
+      p.lede {{ QUANTUM_LEARNING_PROMISE }} Start with a spectrum, build a wave, read its curvature, rotate its phase, and finish with a probability distribution.
+      .quantum-lab-depth
+        TourDepthControl
+    aside.quantum-lab-header__source
+      p.eyebrow Reference media / {{ QUANTUM_VIDEO.duration }}
+      h2 {{ QUANTUM_VIDEO.title }}
+      p {{ QUANTUM_VIDEO.channel }}. The source explains the time-dependent Schrodinger equation through spectra, Fourier analysis, complex rotation, and the Born rule.
+      a(:href="QUANTUM_VIDEO.url" target="_blank" rel="noreferrer") Open the original video on YouTube
 
-    <div class="quantum-lab-promise">
-      <strong>Teacher's shortcut</strong>
-      <p>Do not memorize "imaginary numbers are mysterious." Remember: a wave needs a phase, operators need predictable derivatives, and complex magnitude gives a stable probability.</p>
-    </div>
+  .quantum-lab-promise
+    strong Teacher's shortcut
+    p Do not memorize "imaginary numbers are mysterious." Remember: a wave needs a phase, operators need predictable derivatives, and complex magnitude gives a stable probability.
 
-    <div class="quantum-lab-layout">
-      <main class="quantum-lab-main">
-        <section class="quantum-shortcut" aria-labelledby="quantum-shortcut-title">
-          <div class="quantum-shortcut__heading">
-            <p class="eyebrow">The route / five moves</p>
-            <h2 id="quantum-shortcut-title">A shorter explanation than the video</h2>
-            <p>Use the numbered instruments below in order. Each one answers one question and leaves its assumptions visible.</p>
-          </div>
-          <div class="quantum-shortcut__steps">
-            <article v-for="step in shortcutSteps" :key="step.label">
-              <span>{{ step.label }}</span>
-              <h3>{{ step.title }}</h3>
-              <p>{{ step.body }}</p>
-            </article>
-          </div>
-          <details class="quantum-disclosure quantum-vocabulary">
-            <summary>Open the essential vocabulary</summary>
-            <dl>
-              <template v-for="term in QUANTUM_TERMS" :key="term.term">
-                <dt>{{ term.term }}</dt>
-                <dd>{{ depth === 'technical' ? term.technical : term.plain }}</dd>
-              </template>
-            </dl>
-          </details>
-        </section>
+  .quantum-lab-layout
+    main.quantum-lab-main
+      section.quantum-shortcut(aria-labelledby="quantum-shortcut-title")
+        .quantum-shortcut__heading
+          p.eyebrow The route / five moves
+          h2#quantum-shortcut-title A shorter explanation than the video
+          p Use the numbered instruments below in order. Each one answers one question and leaves its assumptions visible.
+        .quantum-shortcut__steps
+          article(v-for="step in shortcutSteps" :key="step.label")
+            span {{ step.label }}
+            h3 {{ step.title }}
+            p {{ step.body }}
+        details.quantum-disclosure.quantum-vocabulary
+          summary Open the essential vocabulary
+          dl
+            template(v-for="term in QUANTUM_TERMS" :key="term.term")
+              dt {{ term.term }}
+              dd {{ depth === 'technical' ? term.technical : term.plain }}
 
-        <section
-          v-for="section in QUANTUM_GUIDE_SECTIONS"
-          :id="section.moduleId ?? section.id"
-          :key="section.id"
-          class="quantum-lab-section"
-          :aria-labelledby="`${section.id}-heading`"
-        >
-          <div class="quantum-lab-section__heading">
-            <span>{{ section.number }} / {{ section.id }}</span>
-            <div>
-              <h2 :id="`${section.id}-heading`">{{ section.title }}</h2>
-              <p><strong>Question:</strong> {{ section.question }}</p>
-              <div class="quantum-lab-section__answer">
-                <strong>Short answer</strong>
-                <p>{{ section.answer }}</p>
-              </div>
-              <div class="quantum-lab-section__teacher-note">
-                <strong>Teacher note</strong>
-                <p>{{ section.teacherNote }}</p>
-              </div>
-              <p class="quantum-lab-section__equation"><code>{{ section.equation }}</code></p>
-            </div>
-          </div>
-          <component
-            :is="section.moduleId ? instrumentComponents[section.moduleId as keyof typeof instrumentComponents] : undefined"
-            v-if="section.moduleId"
-            :depth="depth"
-          />
-        </section>
+      section.quantum-lab-section(
+        v-for="section in QUANTUM_GUIDE_SECTIONS"
+        :id="section.moduleId ?? section.id"
+        :key="section.id"
+        :aria-labelledby="`${section.id}-heading`"
+      )
+        .quantum-lab-section__heading
+          span {{ section.number }} / {{ section.id }}
+          div
+            h2(:id="`${section.id}-heading`") {{ section.title }}
+            p
+              strong Question:
+              |  {{ section.question }}
+            .quantum-lab-section__answer
+              strong Short answer
+              p {{ section.answer }}
+            .quantum-lab-section__teacher-note
+              strong Teacher note
+              p {{ section.teacherNote }}
+            p.quantum-lab-section__equation
+              code {{ section.equation }}
+        component(
+          v-if="section.moduleId"
+          :is="section.moduleId ? instrumentComponents[section.moduleId as keyof typeof instrumentComponents] : undefined"
+          :depth="depth"
+        )
 
-        <section class="quantum-source-map" aria-labelledby="quantum-source-map-title">
-          <div class="quantum-source-map__heading">
-            <p class="eyebrow">Media / extracted visual sequence</p>
-            <h2 id="quantum-source-map-title">The frame map behind this lab</h2>
-            <p>Every card is a semantic checkpoint from the local frame inventory. Open a timestamp to compare the original narration with the original diagrams here. The app deliberately redraws the ideas in its own accessible SVG language.</p>
-          </div>
-          <div class="quantum-timeline">
-            <a v-for="entry in QUANTUM_VIDEO_TIMELINE" :key="entry.id" :href="videoAt(entry.seconds)" target="_blank" rel="noreferrer">
-              <time :datetime="`PT${entry.seconds}S`">{{ entry.timestamp }}</time>
-              <strong>{{ entry.title }}</strong>
-              <small>{{ entry.frame }}<br>{{ entry.lesson }}</small>
-              <small>Open source timestamp ↗</small>
-            </a>
-          </div>
-          <details class="quantum-media">
-            <summary>Optional source video player</summary>
-            <div class="quantum-media__frame">
-              <iframe
-                :src="`https://www.youtube-nocookie.com/embed/${QUANTUM_VIDEO.id}?rel=0`"
-                title="Reference video: why the universe needs imaginary numbers"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              />
-            </div>
-            <p>This is an external YouTube embed, not an app-owned copy. Close it for an entirely local lesson; all eight instruments above run in the browser without a network request.</p>
-          </details>
-          <p class="quantum-provenance"><strong>Reproducibility note.</strong> {{ openSourceReport() }} Whisper was run locally with whisper.cpp large-v3. The raw transcript remains unchanged; the research report documents repeated hallucinated spans and recognition corrections.</p>
-        </section>
+      section.quantum-source-map(aria-labelledby="quantum-source-map-title")
+        .quantum-source-map__heading
+          p.eyebrow Media / extracted visual sequence
+          h2#quantum-source-map-title The frame map behind this lab
+          p Every card is a semantic checkpoint from the local frame inventory. Open a timestamp to compare the original narration with the original diagrams here. The app deliberately redraws the ideas in its own accessible SVG language.
+        .quantum-timeline
+          a(v-for="entry in QUANTUM_VIDEO_TIMELINE" :key="entry.id" :href="videoAt(entry.seconds)" target="_blank" rel="noreferrer")
+            time(:datetime="`PT${entry.seconds}S`") {{ entry.timestamp }}
+            strong {{ entry.title }}
+            small
+              | {{ entry.frame }}
+              br
+              | {{ entry.lesson }}
+            small Open source timestamp ↗
+        details.quantum-media
+          summary Optional source video player
+          .quantum-media__frame
+            iframe(
+              :src="`https://www.youtube-nocookie.com/embed/${QUANTUM_VIDEO.id}?rel=0`"
+              title="Reference video: why the universe needs imaginary numbers"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            )
+          p This is an external YouTube embed, not an app-owned copy. Close it for an entirely local lesson; all eight instruments above run in the browser without a network request.
+        p.quantum-provenance
+          strong Reproducibility note.
+          |  {{ openSourceReport() }} Whisper was run locally with whisper.cpp large-v3. The raw transcript remains unchanged; the research report documents repeated hallucinated spans and recognition corrections.
 
-        <section class="quantum-related" aria-labelledby="quantum-related-title">
-          <div class="quantum-related__heading">
-            <p class="eyebrow">Keep exploring</p>
-            <h2 id="quantum-related-title">Connect this story to the rest of OpenSimPhy</h2>
-            <p>
-              Use the related pages to move from the teacher's reconstruction into the project's existing instruments.
-              <QuantumTooltip term="validation" plain="A stronger claim than successfully running a calculation." technical="An independent comparison protocol with calibrated inputs, held-out observables, uncertainty treatment, and acceptance criteria." :depth="depth" />
-              is intentionally kept separate from every result on this page.
-            </p>
-          </div>
-          <div class="quantum-related-grid">
-            <RouterLink v-for="link in QUANTUM_RELATED_LINKS" :key="link.to" :to="link.to">
-              <strong>{{ link.label }}</strong>
-              <span>{{ link.note }} →</span>
-            </RouterLink>
-          </div>
-        </section>
+      section.quantum-related(aria-labelledby="quantum-related-title")
+        .quantum-related__heading
+          p.eyebrow Keep exploring
+          h2#quantum-related-title Connect this story to the rest of OpenSimPhy
+          p
+            | Use the related pages to move from the teacher's reconstruction into the project's existing instruments. 
+            QuantumTooltip(term="validation" plain="A stronger claim than successfully running a calculation." technical="An independent comparison protocol with calibrated inputs, held-out observables, uncertainty treatment, and acceptance criteria." :depth="depth")
+            |  is intentionally kept separate from every result on this page.
+        .quantum-related-grid
+          RouterLink(v-for="link in QUANTUM_RELATED_LINKS" :key="link.to" :to="link.to")
+            strong {{ link.label }}
+            span {{ link.note }} →
 
-        <section class="quantum-provenance" aria-label="Scope boundary">
-          <strong>Scope boundary:</strong> these are original, bounded teaching models inspired by the reference video's sequence. They do not copy its frames, claim to reproduce its production, or establish that a quantum interpretation is empirically complete. See <RouterLink to="/evidence">Evidence</RouterLink> for the project's claim vocabulary and <RouterLink to="/tour">Tour</RouterLink> for the established-physics path.
-        </section>
-      </main>
+      section.quantum-provenance(aria-label="Scope boundary")
+        strong Scope boundary:
+        |  these are original, bounded teaching models inspired by the reference video's sequence. They do not copy its frames, claim to reproduce its production, or establish that a quantum interpretation is empirically complete. See 
+        RouterLink(to="/evidence") Evidence
+        |  for the project's claim vocabulary and 
+        RouterLink(to="/tour") Tour
+        |  for the established-physics path.
 
-      <aside class="quantum-lab-rail" aria-label="Quantum wave lab contents">
-        <span class="quantum-lab-rail__label">Instrument index</span>
-        <nav>
-          <a href="#spectral-lines">01 / Spectra</a>
-          <a href="#standing-wave">02 / Standing wave</a>
-          <a href="#operator-lab">03 / Operators</a>
-          <a href="#fourier-composer">04 / Fourier</a>
-          <a href="#complex-plane">05 / Complex plane</a>
-          <a href="#schrodinger-equation">06 / Equation</a>
-          <a href="#probability-wave">07 / Probability</a>
-          <a href="#hydrogen-materials">08 / Applications</a>
-          <a href="#quantum-source-map">Media / Frame map</a>
-        </nav>
-        <RouterLink class="text-link" to="/labs">← Back to all laboratories</RouterLink>
-      </aside>
-    </div>
-  </div>
+    aside.quantum-lab-rail(aria-label="Quantum wave lab contents")
+      span.quantum-lab-rail__label Instrument index
+      nav
+        a(href="#spectral-lines") 01 / Spectra
+        a(href="#standing-wave") 02 / Standing wave
+        a(href="#operator-lab") 03 / Operators
+        a(href="#fourier-composer") 04 / Fourier
+        a(href="#complex-plane") 05 / Complex plane
+        a(href="#schrodinger-equation") 06 / Equation
+        a(href="#probability-wave") 07 / Probability
+        a(href="#hydrogen-materials") 08 / Applications
+        a(href="#quantum-source-map") Media / Frame map
+      RouterLink.text-link(to="/labs") ← Back to all laboratories
 </template>
 
 <style src="../styles/quantum-wave.css"></style>

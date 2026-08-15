@@ -40,26 +40,21 @@ if (typeof document !== 'undefined') attachDocumentListener()
 onBeforeUnmount(detachDocumentListener)
 </script>
 
-<template>
-  <span class="quantum-tooltip">
-    <button
-      type="button"
-      class="quantum-tooltip__button"
-       :aria-expanded="open"
-       :aria-controls="tooltipId"
-       :aria-describedby="open ? tooltipId : undefined"
-       :aria-label="`Explain ${term}`"
-      @click="toggle"
-      @keydown.esc="close"
-    >
-      ?
-    </button>
-    <span v-if="open" :id="tooltipId" class="quantum-tooltip__panel" role="tooltip">
-      <strong>{{ term }}</strong>
-      <span>{{ plain }}</span>
-      <span v-if="depth === 'technical' && technical">{{ technical }}</span>
-    </span>
-  </span>
+<template lang="pug">
+span.quantum-tooltip
+  button.quantum-tooltip__button(
+    type="button"
+    :aria-expanded="open"
+    :aria-controls="tooltipId"
+    :aria-describedby="open ? tooltipId : undefined"
+    :aria-label="`Explain ${term}`"
+    @click="toggle"
+    @keydown.esc="close"
+  ) ?
+  span.quantum-tooltip__panel(v-if="open" :id="tooltipId" role="tooltip")
+    strong {{ term }}
+    span {{ plain }}
+    span(v-if="depth === 'technical' && technical") {{ technical }}
 </template>
 
 <style scoped>

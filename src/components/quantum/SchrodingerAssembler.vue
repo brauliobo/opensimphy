@@ -20,54 +20,76 @@ const assembled = computed(() => {
 const complete = computed(() => includeTime.value && includeKinetic.value && includePotential.value)
 </script>
 
-<template>
-  <article class="quantum-instrument schrodinger-assembler" data-testid="quantum-schrodinger-assembler">
-    <header class="quantum-instrument__header">
-       <p class="quantum-kicker">Instrument 06 / equation assembly</p>
-      <h3>Assemble the energy rule from three jobs</h3>
-      <p>
-        Toggle the pieces on and off. This is a reading aid: it shows which part of the derivation contributes time,
-        curvature, and local potential energy. The equation is not a magic label for every wave.
-      </p>
-    </header>
-    <div class="equation-parts">
-      <label><input v-model="includeTime" type="checkbox" data-testid="equation-time"><span><strong>Total energy</strong><small>The time derivative, with i hbar, reads the energy content.</small></span></label>
-      <label><input v-model="includeKinetic" type="checkbox" data-testid="equation-kinetic"><span><strong>Kinetic energy</strong><small>Spatial curvature supplies -(hbar^2 / 2m) d2/dx2.</small></span></label>
-      <label><input v-model="includePotential" type="checkbox" data-testid="equation-potential"><span><strong>Potential energy</strong><small>V multiplies the local wave amplitude.</small></span></label>
-    </div>
-    <figure class="equation-assembly-figure">
-      <div class="equation-assembly" :data-complete="complete">
-        <code>{{ assembled.left }}</code>
-        <span>=</span>
-        <code>{{ assembled.right }}</code>
-      </div>
-      <figcaption>
-        Complete model form:
-        <strong><code>i hbar d psi/dt = -(hbar^2/2m) d2 psi/dx2 + V psi</code></strong>.
-        <QuantumTooltip term="potential" plain="Energy assigned locally by the model's environment." technical="A multiplication term V(x,t) in this one-dimensional teaching form; a full Hamiltonian can contain more structure." :depth="props.depth" />
-      </figcaption>
-    </figure>
-    <dl class="quantum-readout-grid">
-      <div><dt>Time term</dt><dd>{{ includeTime ? 'included' : 'missing' }}</dd></div>
-      <div><dt>Curvature term</dt><dd>{{ includeKinetic ? 'included' : 'missing' }}</dd></div>
-      <div><dt>Potential term</dt><dd>{{ includePotential ? 'included' : 'missing' }}</dd></div>
-      <div><dt>Status</dt><dd>{{ complete ? 'complete teaching form' : 'partial expression' }}</dd></div>
-    </dl>
-    <table>
-      <caption>Equation role map</caption>
-      <thead><tr><th>Piece</th><th>Symbolic role</th><th>Plain-language job</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Time</th><td>i hbar d psi/dt</td><td>How the state changes in time</td></tr>
-        <tr><th scope="row">Kinetic</th><td>-(hbar^2/2m) d2 psi/dx2</td><td>How spatial curvature contributes energy</td></tr>
-        <tr><th scope="row">Potential</th><td>V psi</td><td>How the declared environment contributes locally</td></tr>
-      </tbody>
-    </table>
-    <details v-if="props.depth === 'technical'" class="quantum-disclosure">
-      <summary>Technical reading</summary>
-      <p>This surface deliberately uses a one-dimensional, time-dependent, nonrelativistic form. It omits spin, electromagnetic gauge coupling, many-body terms, relativistic corrections, boundary conditions, and domain questions that a real Hamiltonian must specify.</p>
-    </details>
-    <p class="quantum-boundary">Assembling the standard equation reproduces notation and a model structure. It does not independently derive the physical law or validate a theory.</p>
-  </article>
+<template lang="pug">
+article.quantum-instrument.schrodinger-assembler(data-testid="quantum-schrodinger-assembler")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 06 / equation assembly
+    h3 Assemble the energy rule from three jobs
+    p Toggle the pieces on and off. This is a reading aid: it shows which part of the derivation contributes time, curvature, and local potential energy. The equation is not a magic label for every wave.
+  .equation-parts
+    label
+      input(v-model="includeTime" type="checkbox" data-testid="equation-time")
+      span
+        strong Total energy
+        small The time derivative, with i hbar, reads the energy content.
+    label
+      input(v-model="includeKinetic" type="checkbox" data-testid="equation-kinetic")
+      span
+        strong Kinetic energy
+        small Spatial curvature supplies -(hbar^2 / 2m) d2/dx2.
+    label
+      input(v-model="includePotential" type="checkbox" data-testid="equation-potential")
+      span
+        strong Potential energy
+        small V multiplies the local wave amplitude.
+  figure.equation-assembly-figure
+    .equation-assembly(:data-complete="complete")
+      code {{ assembled.left }}
+      span =
+      code {{ assembled.right }}
+    figcaption
+      | Complete model form: 
+      strong
+        code i hbar d psi/dt = -(hbar^2/2m) d2 psi/dx2 + V psi
+      | . 
+      QuantumTooltip(term="potential" plain="Energy assigned locally by the model's environment." technical="A multiplication term V(x,t) in this one-dimensional teaching form; a full Hamiltonian can contain more structure." :depth="props.depth")
+  dl.quantum-readout-grid
+    div
+      dt Time term
+      dd {{ includeTime ? 'included' : 'missing' }}
+    div
+      dt Curvature term
+      dd {{ includeKinetic ? 'included' : 'missing' }}
+    div
+      dt Potential term
+      dd {{ includePotential ? 'included' : 'missing' }}
+    div
+      dt Status
+      dd {{ complete ? 'complete teaching form' : 'partial expression' }}
+  table
+    caption Equation role map
+    thead
+      tr
+        th Piece
+        th Symbolic role
+        th Plain-language job
+    tbody
+      tr
+        th(scope="row") Time
+        td i hbar d psi/dt
+        td How the state changes in time
+      tr
+        th(scope="row") Kinetic
+        td -(hbar^2/2m) d2 psi/dx2
+        td How spatial curvature contributes energy
+      tr
+        th(scope="row") Potential
+        td V psi
+        td How the declared environment contributes locally
+  details.quantum-disclosure(v-if="props.depth === 'technical'")
+    summary Technical reading
+    p This surface deliberately uses a one-dimensional, time-dependent, nonrelativistic form. It omits spin, electromagnetic gauge coupling, many-body terms, relativistic corrections, boundary conditions, and domain questions that a real Hamiltonian must specify.
+  p.quantum-boundary Assembling the standard equation reproduces notation and a model structure. It does not independently derive the physical law or validate a theory.
 </template>
 
 <style scoped>
