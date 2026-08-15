@@ -110,105 +110,84 @@ watch([element, upperLevel, lowerLevel, catalogIndex], () => {
 })
 </script>
 
-<template>
-  <article class="quantum-instrument spectrum-instrument" data-testid="quantum-spectrum-instrument">
-    <header class="quantum-instrument__header">
-      <p class="quantum-kicker">Instrument 01 / spectral lines</p>
-      <h3>See the atom leave a line-shaped clue</h3>
-      <p>
-        A spectrometer does not show an electron orbit. It shows wavelengths. Use a simple
-        <QuantumTooltip term="energy level" plain="One allowed model energy for a bound system." technical="The energy eigenvalue of a declared Hamiltonian model." :depth="props.depth" />
-        model to connect a level difference to a photon.
-      </p>
-    </header>
+<template lang="pug">
+article.quantum-instrument.spectrum-instrument(data-testid="quantum-spectrum-instrument")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 01 / spectral lines
+    h3 See the atom leave a line-shaped clue
+    p A spectrometer does not show an electron orbit. It shows wavelengths. Use a simple #[QuantumTooltip(term="energy level" plain="One allowed model energy for a bound system." technical="The energy eigenvalue of a declared Hamiltonian model." :depth="props.depth")] model to connect a level difference to a photon.
 
-    <div class="quantum-controls quantum-controls--three">
-      <label>
-        <span>Element signature</span>
-        <select v-model="element" data-testid="spectrum-element">
-          <option value="hydrogen">Hydrogen-like</option>
-          <option value="sodium">Sodium reference</option>
-          <option value="calcium">Calcium reference</option>
-        </select>
-        <small>Hydrogen is calculated from the Rydberg relation. Sodium and calcium use compact reference line catalogs.</small>
-      </label>
-      <label v-if="element === 'hydrogen'">
-        <span>Upper level n</span>
-        <input v-model.number="upperLevel" type="range" min="2" max="8" step="1" data-testid="spectrum-upper">
-        <output>{{ upperLevel }}</output>
-      </label>
-      <label v-if="element === 'hydrogen'">
-        <span>Lower level n</span>
-        <input v-model.number="lowerLevel" type="range" min="1" :max="lowerMaximum" step="1" data-testid="spectrum-lower">
-        <output>{{ lowerLevel }}</output>
-      </label>
-      <label v-else>
-        <span>Catalog line</span>
-        <input v-model.number="catalogIndex" type="range" min="0" :max="catalogMaximum" step="1" data-testid="spectrum-catalog-index">
-        <output>{{ catalogIndex + 1 }} / {{ catalogMaximum + 1 }}</output>
-      </label>
-    </div>
+  .quantum-controls.quantum-controls--three
+    label
+      span Element signature
+      select(v-model="element" data-testid="spectrum-element")
+        option(value="hydrogen") Hydrogen-like
+        option(value="sodium") Sodium reference
+        option(value="calcium") Calcium reference
+      small Hydrogen is calculated from the Rydberg relation. Sodium and calcium use compact reference line catalogs.
+    label(v-if="element === 'hydrogen'")
+      span Upper level n
+      input(v-model.number="upperLevel" type="range" min="2" max="8" step="1" data-testid="spectrum-upper")
+      output {{ upperLevel }}
+    label(v-if="element === 'hydrogen'")
+      span Lower level n
+      input(v-model.number="lowerLevel" type="range" min="1" :max="lowerMaximum" step="1" data-testid="spectrum-lower")
+      output {{ lowerLevel }}
+    label(v-else)
+      span Catalog line
+      input(v-model.number="catalogIndex" type="range" min="0" :max="catalogMaximum" step="1" data-testid="spectrum-catalog-index")
+      output {{ catalogIndex + 1 }} / {{ catalogMaximum + 1 }}
 
-    <fieldset class="quantum-prediction" data-testid="spectrum-prediction">
-      <legend>Predict before revealing</legend>
-      <p>{{ predictionPrompt }}</p>
-      <label v-for="choice in predictionChoices" :key="choice.value"><input v-model="prediction" type="radio" :value="choice.value" name="spectrum-prediction"> {{ choice.label }}</label>
-    </fieldset>
-    <div class="quantum-actions">
-      <button type="button" :disabled="!prediction" data-testid="spectrum-reveal" @click="reveal">Reveal line</button>
-      <button type="button" data-testid="spectrum-reset" @click="reset">Reset</button>
-    </div>
-    <p v-if="error" class="quantum-error" role="alert">{{ error }}</p>
-    <p v-if="stale" class="quantum-stale" aria-live="polite">The controls changed. Make a new prediction to compare the new line.</p>
+  fieldset.quantum-prediction(data-testid="spectrum-prediction")
+    legend Predict before revealing
+    p {{ predictionPrompt }}
+    label(v-for="choice in predictionChoices" :key="choice.value")
+      input(v-model="prediction" type="radio" :value="choice.value" name="spectrum-prediction")
+      |  {{ choice.label }}
+  .quantum-actions
+    button(type="button" :disabled="!prediction" data-testid="spectrum-reveal" @click="reveal") Reveal line
+    button(type="button" data-testid="spectrum-reset" @click="reset") Reset
+  p.quantum-error(v-if="error" role="alert") {{ error }}
+  p.quantum-stale(v-if="stale" aria-live="polite") The controls changed. Make a new prediction to compare the new line.
 
-    <section v-if="revealed && result" class="quantum-result" data-testid="spectrum-result">
-      <figure>
-        <svg viewBox="0 0 760 330" role="img" aria-labelledby="spectrum-title spectrum-description">
-          <title id="spectrum-title">Energy levels and a spectral line</title>
-          <desc id="spectrum-description">A downward transition from the selected upper level to the selected lower level, with reference spectral lines below.</desc>
-          <template v-if="result.element === 'hydrogen'">
-            <g v-for="level in result.levels" :key="level.n">
-              <line class="spectrum-level" x1="70" x2="300" :y1="levelY(level.n)" :y2="levelY(level.n)" />
-              <text x="20" :y="levelY(level.n) + 4">n={{ level.n }}</text>
-            </g>
-          </template>
-          <line v-if="result.element === 'hydrogen'" class="spectrum-transition" x1="220" x2="220" :y1="levelY(result.upperLevel)" :y2="levelY(result.lowerLevel)" marker-end="url(#spectrum-arrow)" />
-          <defs>
-            <marker id="spectrum-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 z" />
-            </marker>
-          </defs>
-          <text x="70" y="285">{{ result.element === 'hydrogen' ? 'energy-level model' : 'reference catalog' }}</text>
-          <line class="spectrum-axis" x1="380" x2="730" y1="250" y2="250" />
-          <g v-for="(line, index) in result.lines" :key="`${line.label}-${index}`">
-            <line class="spectrum-line" :style="{ stroke: line.color }" :x1="spectrumX(line.wavelengthNm)" :x2="spectrumX(line.wavelengthNm)" y1="180" y2="250" />
-            <text v-if="index < 5" :x="spectrumX(line.wavelengthNm)" y="270" text-anchor="middle">{{ line.wavelengthNm.toFixed(0) }}</text>
-          </g>
-          <text x="555" y="310" text-anchor="middle">wavelength / nm (log-positioned)</text>
-        </svg>
-        <figcaption>
-          Selected line: <strong>{{ result.selected.label }}</strong>, {{ format(result.selected.wavelengthNm, 6) }} nm,
-          {{ format(result.selected.frequencyHz, 5) }} Hz, {{ format(result.selected.energyEv, 5) }} eV.
-        </figcaption>
-      </figure>
+  section.quantum-result(v-if="revealed && result" data-testid="spectrum-result")
+    figure
+      svg(viewBox="0 0 760 330" role="img" aria-labelledby="spectrum-title spectrum-description")
+        title#spectrum-title Energy levels and a spectral line
+        desc#spectrum-description A downward transition from the selected upper level to the selected lower level, with reference spectral lines below.
+        template(v-if="result.element === 'hydrogen'")
+          g(v-for="level in result.levels" :key="level.n")
+            line.spectrum-level(x1="70" x2="300" :y1="levelY(level.n)" :y2="levelY(level.n)")
+            text(x="20" :y="levelY(level.n) + 4") n={{ level.n }}
+        line.spectrum-transition(v-if="result.element === 'hydrogen'" x1="220" x2="220" :y1="levelY(result.upperLevel)" :y2="levelY(result.lowerLevel)" marker-end="url(#spectrum-arrow)")
+        defs
+          marker#spectrum-arrow(markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto")
+            path(d="M0,0 L8,4 L0,8 z")
+        text(x="70" y="285") {{ result.element === 'hydrogen' ? 'energy-level model' : 'reference catalog' }}
+        line.spectrum-axis(x1="380" x2="730" y1="250" y2="250")
+        g(v-for="(line, index) in result.lines" :key="`${line.label}-${index}`")
+          line.spectrum-line(:style="{ stroke: line.color }" :x1="spectrumX(line.wavelengthNm)" :x2="spectrumX(line.wavelengthNm)" y1="180" y2="250")
+          text(v-if="index < 5" :x="spectrumX(line.wavelengthNm)" y="270" text-anchor="middle") {{ line.wavelengthNm.toFixed(0) }}
+        text(x="555" y="310" text-anchor="middle") wavelength / nm (log-positioned)
+      figcaption Selected line: #[strong {{ result.selected.label }}], {{ format(result.selected.wavelengthNm, 6) }} nm, {{ format(result.selected.frequencyHz, 5) }} Hz, {{ format(result.selected.energyEv, 5) }} eV.
 
-      <p class="quantum-finding" role="status">{{ result.finding }}</p>
-      <p v-if="predictionComparison" class="quantum-prediction-result">{{ predictionComparison }}</p>
-      <table>
-        <caption>Line table: calculated hydrogen-like lines or compact reference lines</caption>
-        <thead><tr><th>Line</th><th>Wavelength (nm)</th><th>Frequency (Hz)</th><th>Energy (eV)</th></tr></thead>
-        <tbody>
-          <tr v-for="line in result.lines" :key="line.label">
-            <th scope="row">{{ line.label }}</th>
-            <td>{{ format(line.wavelengthNm, 6) }}</td>
-            <td>{{ format(line.frequencyHz, 5) }}</td>
-            <td>{{ format(line.energyEv, 5) }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="quantum-boundary">Computed here: a model mapping. It does not identify a unique atom, line strength, selection rule, detector calibration, or empirical validation.</p>
-    </section>
-  </article>
+    p.quantum-finding(role="status") {{ result.finding }}
+    p.quantum-prediction-result(v-if="predictionComparison") {{ predictionComparison }}
+    table
+      caption Line table: calculated hydrogen-like lines or compact reference lines
+      thead
+        tr
+          th Line
+          th Wavelength (nm)
+          th Frequency (Hz)
+          th Energy (eV)
+      tbody
+        tr(v-for="line in result.lines" :key="line.label")
+          th(scope="row") {{ line.label }}
+          td {{ format(line.wavelengthNm, 6) }}
+          td {{ format(line.frequencyHz, 5) }}
+          td {{ format(line.energyEv, 5) }}
+    p.quantum-boundary Computed here: a model mapping. It does not identify a unique atom, line strength, selection rule, detector calibration, or empirical validation.
 </template>
 
 <style scoped>

@@ -75,81 +75,80 @@ watch(period, () => { time.value = Math.min(time.value, 4) })
 onBeforeUnmount(stop)
 </script>
 
-<template>
-  <article class="quantum-instrument standing-wave-instrument" data-testid="quantum-standing-wave-instrument">
-    <header class="quantum-instrument__header">
-      <p class="quantum-kicker">Instrument 02 / standing wave</p>
-      <h3>Make a matter-wave shape that fits fixed ends</h3>
-      <p>
-        Choose the number of half-waves in a fixed eight-unit box. Nodes are the quiet points; antinodes are the largest excursions.
-        The animation shows a changing phase, not a particle orbit.
-      </p>
-    </header>
+<template lang="pug">
+article.quantum-instrument.standing-wave-instrument(data-testid="quantum-standing-wave-instrument")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 02 / standing wave
+    h3 Make a matter-wave shape that fits fixed ends
+    p Choose the number of half-waves in a fixed eight-unit box. Nodes are the quiet points; antinodes are the largest excursions. The animation shows a changing phase, not a particle orbit.
 
-    <div class="quantum-controls quantum-controls--three">
-      <label>
-        <span>Amplitude A</span>
-        <input v-model.number="amplitude" type="range" min="0.2" max="1.5" step="0.1" data-testid="standing-amplitude">
-        <output>{{ format(amplitude) }}</output>
-      </label>
-      <label>
-        <span>Boundary mode n</span>
-        <input v-model.number="modeNumber" type="range" min="1" max="5" step="1" data-testid="standing-mode">
-        <output>{{ modeNumber }} half-waves</output>
-      </label>
-      <label>
-        <span>Period T</span>
-        <input v-model.number="period" type="range" min="0.5" max="4" step="0.1" data-testid="standing-period">
-        <output>{{ format(period) }} time units</output>
-      </label>
-    </div>
-    <div class="quantum-actions">
-      <button type="button" data-testid="standing-play" @click="togglePlaying">{{ playing ? 'Pause motion' : 'Play motion' }}</button>
-      <button type="button" data-testid="standing-reset" @click="reset">Reset</button>
-      <span class="quantum-readout">t = {{ format(time) }}</span>
-    </div>
-    <p v-if="error" class="quantum-error" role="alert">{{ error }}</p>
+  .quantum-controls.quantum-controls--three
+    label
+      span Amplitude A
+      input(v-model.number="amplitude" type="range" min="0.2" max="1.5" step="0.1" data-testid="standing-amplitude")
+      output {{ format(amplitude) }}
+    label
+      span Boundary mode n
+      input(v-model.number="modeNumber" type="range" min="1" max="5" step="1" data-testid="standing-mode")
+      output {{ modeNumber }} half-waves
+    label
+      span Period T
+      input(v-model.number="period" type="range" min="0.5" max="4" step="0.1" data-testid="standing-period")
+      output {{ format(period) }} time units
+  .quantum-actions
+    button(type="button" data-testid="standing-play" @click="togglePlaying") {{ playing ? 'Pause motion' : 'Play motion' }}
+    button(type="button" data-testid="standing-reset" @click="reset") Reset
+    span.quantum-readout t = {{ format(time) }}
+  p.quantum-error(v-if="error" role="alert") {{ error }}
 
-    <section v-if="result" class="quantum-result" data-testid="standing-result">
-      <figure>
-        <svg viewBox="0 0 760 300" role="img" aria-labelledby="standing-title standing-description">
-          <title id="standing-title">Animated standing wave with nodes and antinodes</title>
-          <desc id="standing-description">A sine-shaped wave changes height over time. Dashed vertical lines mark nodes and amber circles mark antinodes.</desc>
-          <line class="wave-axis" x1="52" x2="702" y1="145" y2="145" />
-          <polyline class="wave-envelope" :points="envelope" />
-          <polyline class="wave-curve" :points="points" data-testid="standing-wave-curve" />
-          <g v-for="node in result.nodes" :key="`node-${node}`">
-            <line class="wave-node" :x1="mapX(node)" :x2="mapX(node)" y1="32" y2="258" />
-            <text class="wave-label" :x="mapX(node)" y="278" text-anchor="middle">node</text>
-          </g>
-          <circle v-for="antinode in result.antinodes" :key="`antinode-${antinode}`" class="wave-antinode" :cx="mapX(antinode)" :cy="mapY(result.amplitude * Math.sin(result.waveNumber * antinode) * Math.cos(result.angularFrequency * result.time))" r="5" />
-          <text class="wave-label" x="52" y="22">+A</text>
-          <text class="wave-label" x="52" y="270">-A</text>
-          <text class="wave-label" x="702" y="22" text-anchor="end">x</text>
-        </svg>
-        <figcaption>
-          <strong>Watch for:</strong> the nodes stay put while the antinodes change sign. The spatial scale is set by
-          <QuantumTooltip term="wavelength" plain="The distance between repeating points of a wave." technical="lambda = 2 pi / k, the reciprocal coordinate of spatial angular frequency." :depth="props.depth" />.
-        </figcaption>
-      </figure>
-       <dl class="quantum-readout-grid">
-         <div><dt>Boundary mode n</dt><dd>{{ result.modeNumber }}</dd></div>
-         <div><dt>Wave number k</dt><dd>{{ format(result.waveNumber) }}</dd></div>
-        <div><dt>Wavelength lambda</dt><dd>{{ format(result.wavelength) }} length units</dd></div>
-        <div><dt>Angular frequency omega</dt><dd>{{ format(result.angularFrequency) }}</dd></div>
-        <div><dt>Nodes shown</dt><dd>{{ result.nodes.length }}</dd></div>
-        <div><dt>Antinodes shown</dt><dd>{{ result.antinodes.length }}</dd></div>
-      </dl>
-      <table>
-        <caption>Named points in the standing-wave construction</caption>
-        <thead><tr><th>Point</th><th>Position</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr v-for="(node, index) in result.nodes" :key="`row-${node}`"><th scope="row">Node {{ index + 1 }}</th><td>{{ format(node) }}</td><td>Amplitude is zero for this shape</td></tr>
-        </tbody>
-      </table>
-      <p class="quantum-boundary">This is a visual wave model. It does not claim that a bound electron traces the curve or that boundary conditions for a particular atom have been solved.</p>
-    </section>
-  </article>
+  section.quantum-result(v-if="result" data-testid="standing-result")
+    figure
+      svg(viewBox="0 0 760 300" role="img" aria-labelledby="standing-title standing-description")
+        title#standing-title Animated standing wave with nodes and antinodes
+        desc#standing-description A sine-shaped wave changes height over time. Dashed vertical lines mark nodes and amber circles mark antinodes.
+        line.wave-axis(x1="52" x2="702" y1="145" y2="145")
+        polyline.wave-envelope(:points="envelope")
+        polyline.wave-curve(:points="points" data-testid="standing-wave-curve")
+        g(v-for="node in result.nodes" :key="`node-${node}`")
+          line.wave-node(:x1="mapX(node)" :x2="mapX(node)" y1="32" y2="258")
+          text.wave-label(:x="mapX(node)" y="278" text-anchor="middle") node
+        circle.wave-antinode(v-for="antinode in result.antinodes" :key="`antinode-${antinode}`" :cx="mapX(antinode)" :cy="mapY(result.amplitude * Math.sin(result.waveNumber * antinode) * Math.cos(result.angularFrequency * result.time))" r="5")
+        text.wave-label(x="52" y="22") +A
+        text.wave-label(x="52" y="270") -A
+        text.wave-label(x="702" y="22" text-anchor="end") x
+      figcaption #[strong Watch for:] the nodes stay put while the antinodes change sign. The spatial scale is set by #[QuantumTooltip(term="wavelength" plain="The distance between repeating points of a wave." technical="lambda = 2 pi / k, the reciprocal coordinate of spatial angular frequency." :depth="props.depth")].
+    dl.quantum-readout-grid
+      div
+        dt Boundary mode n
+        dd {{ result.modeNumber }}
+      div
+        dt Wave number k
+        dd {{ format(result.waveNumber) }}
+      div
+        dt Wavelength lambda
+        dd {{ format(result.wavelength) }} length units
+      div
+        dt Angular frequency omega
+        dd {{ format(result.angularFrequency) }}
+      div
+        dt Nodes shown
+        dd {{ result.nodes.length }}
+      div
+        dt Antinodes shown
+        dd {{ result.antinodes.length }}
+    table
+      caption Named points in the standing-wave construction
+      thead
+        tr
+          th Point
+          th Position
+          th Role
+      tbody
+        tr(v-for="(node, index) in result.nodes" :key="`row-${node}`")
+          th(scope="row") Node {{ index + 1 }}
+          td {{ format(node) }}
+          td Amplitude is zero for this shape
+    p.quantum-boundary This is a visual wave model. It does not claim that a bound electron traces the curve or that boundary conditions for a particular atom have been solved.
 </template>
 
 <style scoped>

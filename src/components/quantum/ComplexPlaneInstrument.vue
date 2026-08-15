@@ -92,89 +92,87 @@ function setMode(value: 'complex' | 'real'): void {
 onBeforeUnmount(stop)
 </script>
 
-<template>
-  <article class="quantum-instrument complex-plane-instrument" data-testid="quantum-complex-plane-instrument">
-    <header class="quantum-instrument__header">
-      <p class="quantum-kicker">Instrument 05 / complex plane</p>
-      <h3>Turn the exponential instead of letting it run away</h3>
-      <p>
-        Choose the real or complex version. In the complex plane, the vector rotates with fixed radius because
-        <QuantumTooltip term="i" plain="A number whose square is -1; here it supplies a quarter-turn." technical="Multiplication by i maps (a,b) to (-b,a), a 90-degree rotation in the Argand plane." :depth="props.depth" />
-        makes the derivative perpendicular to the position.
-      </p>
-    </header>
-    <div class="quantum-mode-switch" role="group" aria-label="Wave type">
-       <button type="button" :class="{ 'is-selected': mode === 'real' }" :aria-pressed="mode === 'real'" data-testid="complex-real-mode" @click="setMode('real')">Real exponential</button>
-       <button type="button" :class="{ 'is-selected': mode === 'complex' }" :aria-pressed="mode === 'complex'" data-testid="complex-mode" @click="setMode('complex')">Complex rotation</button>
-    </div>
-    <div class="quantum-controls quantum-controls--three">
-      <label>
-        <span>Time / phase</span>
-        <input v-model.number="time" type="range" min="0" :max="2 * Math.PI" step="0.01" data-testid="complex-time">
-        <output>{{ format(time) }}</output>
-      </label>
-      <label>
-        <span>Angular pace</span>
-        <input v-model.number="waveNumber" type="range" min="0.4" max="2" step="0.05" data-testid="complex-wave-number">
-        <output>{{ format(waveNumber) }}</output>
-      </label>
-      <label>
-        <span>Real growth rate</span>
-        <input v-model.number="growthRate" type="range" min="-0.35" max="0.35" step="0.01" data-testid="complex-growth-rate">
-        <output>{{ format(growthRate) }}</output>
-      </label>
-    </div>
-    <div class="quantum-actions">
-      <button type="button" data-testid="complex-play" @click="togglePlaying">{{ playing ? 'Pause rotation' : 'Play rotation' }}</button>
-      <button type="button" data-testid="complex-reset" @click="reset">Reset</button>
-    </div>
+<template lang="pug">
+article.quantum-instrument.complex-plane-instrument(data-testid="quantum-complex-plane-instrument")
+  header.quantum-instrument__header
+    p.quantum-kicker Instrument 05 / complex plane
+    h3 Turn the exponential instead of letting it run away
+    p Choose the real or complex version. In the complex plane, the vector rotates with fixed radius because #[QuantumTooltip(term="i" plain="A number whose square is -1; here it supplies a quarter-turn." technical="Multiplication by i maps (a,b) to (-b,a), a 90-degree rotation in the Argand plane." :depth="props.depth")] makes the derivative perpendicular to the position.
+  .quantum-mode-switch(role="group" aria-label="Wave type")
+    button(type="button" :class="{ 'is-selected': mode === 'real' }" :aria-pressed="mode === 'real'" data-testid="complex-real-mode" @click="setMode('real')") Real exponential
+    button(type="button" :class="{ 'is-selected': mode === 'complex' }" :aria-pressed="mode === 'complex'" data-testid="complex-mode" @click="setMode('complex')") Complex rotation
+  .quantum-controls.quantum-controls--three
+    label
+      span Time / phase
+      input(v-model.number="time" type="range" min="0" :max="2 * Math.PI" step="0.01" data-testid="complex-time")
+      output {{ format(time) }}
+    label
+      span Angular pace
+      input(v-model.number="waveNumber" type="range" min="0.4" max="2" step="0.05" data-testid="complex-wave-number")
+      output {{ format(waveNumber) }}
+    label
+      span Real growth rate
+      input(v-model.number="growthRate" type="range" min="-0.35" max="0.35" step="0.01" data-testid="complex-growth-rate")
+      output {{ format(growthRate) }}
+  .quantum-actions
+    button(type="button" data-testid="complex-play" @click="togglePlaying") {{ playing ? 'Pause rotation' : 'Play rotation' }}
+    button(type="button" data-testid="complex-reset" @click="reset") Reset
 
-    <section class="quantum-result" data-testid="complex-result">
-      <figure>
-        <svg viewBox="0 0 760 300" role="img" aria-labelledby="complex-title complex-description">
-          <title id="complex-title">Real axis versus complex-plane motion</title>
-          <desc id="complex-description">The left plot shows a vector path in the Argand plane. The right plot shows real and imaginary wave traces.</desc>
-          <line class="complex-axis" x1="50" x2="310" y1="130" y2="130" />
-          <line class="complex-axis" x1="180" x2="180" y1="20" y2="240" />
-          <polyline class="complex-path" :points="pathPoints()" />
-          <line class="complex-vector" x1="180" y1="130" :x2="mapPlaneX(result.vector.real)" :y2="mapPlaneY(result.vector.imaginary)" />
-          <circle class="complex-dot" :cx="mapPlaneX(result.vector.real)" :cy="mapPlaneY(result.vector.imaginary)" r="5" />
-          <text class="complex-label" x="180" y="264" text-anchor="middle">real</text>
-          <text class="complex-label" x="20" y="30">imaginary</text>
-          <line class="complex-axis" x1="390" x2="710" y1="130" y2="130" />
-          <polyline class="complex-real-wave" :points="realWavePoints()" />
-          <polyline v-if="mode === 'complex'" class="complex-imaginary-wave" :points="imaginaryWavePoints()" />
-          <polyline class="complex-magnitude-wave" :points="magnitudePoints()" />
-          <text class="complex-label" x="390" y="270">space</text>
-          <text class="complex-label" x="710" y="270" text-anchor="end">wave snapshot</text>
-        </svg>
-        <figcaption>
-          Vector magnitude: <strong>{{ format(result.vector.magnitude) }}</strong>. Angle: <strong>{{ format(result.vector.angle) }}</strong> radians.
-          Cyan is the real component; violet is the imaginary component; amber is magnitude.
-        </figcaption>
-      </figure>
-      <dl class="quantum-readout-grid">
-        <div><dt>Mode</dt><dd>{{ result.mode }}</dd></div>
-        <div><dt>Vector magnitude</dt><dd>{{ format(result.vector.magnitude) }}</dd></div>
-        <div><dt>Wave magnitude range</dt><dd>{{ format(result.magnitudeRange.minimum) }} to {{ format(result.magnitudeRange.maximum) }}</dd></div>
-        <div><dt>Squared magnitude</dt><dd>{{ format(result.vector.magnitude ** 2) }}</dd></div>
-      </dl>
-      <p class="quantum-finding" role="status">{{ result.finding }}</p>
-      <table>
-        <caption>Complex-plane checkpoint values</caption>
-        <thead><tr><th>Quantity</th><th>Real part</th><th>Imaginary part</th><th>Magnitude</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Current vector</th><td>{{ format(result.vector.real) }}</td><td>{{ format(result.vector.imaginary) }}</td><td>{{ format(result.vector.magnitude) }}</td></tr>
-          <tr><th scope="row">Squared magnitude</th><td colspan="2">phase-independent in complex mode</td><td>{{ format(result.vector.magnitude ** 2) }}</td></tr>
-        </tbody>
-      </table>
-      <details v-if="props.depth === 'technical'" class="quantum-disclosure">
-        <summary>Technical reading</summary>
-         <p>Complex mode uses exp(-i k t), so the vector is (cos(k t), -sin(k t)). Real mode uses exp(gamma t) on the real axis. The two choices share an exponential-looking derivative but have different geometry and magnitude behavior.</p>
-      </details>
-      <p class="quantum-boundary">The complex plane is a mathematical representation. Its usefulness here comes from the model's transformation and its probability interpretation, not from calling imaginary coordinates directly observable.</p>
-    </section>
-  </article>
+  section.quantum-result(data-testid="complex-result")
+    figure
+      svg(viewBox="0 0 760 300" role="img" aria-labelledby="complex-title complex-description")
+        title#complex-title Real axis versus complex-plane motion
+        desc#complex-description The left plot shows a vector path in the Argand plane. The right plot shows real and imaginary wave traces.
+        line.complex-axis(x1="50" x2="310" y1="130" y2="130")
+        line.complex-axis(x1="180" x2="180" y1="20" y2="240")
+        polyline.complex-path(:points="pathPoints()")
+        line.complex-vector(x1="180" y1="130" :x2="mapPlaneX(result.vector.real)" :y2="mapPlaneY(result.vector.imaginary)")
+        circle.complex-dot(:cx="mapPlaneX(result.vector.real)" :cy="mapPlaneY(result.vector.imaginary)" r="5")
+        text.complex-label(x="180" y="264" text-anchor="middle") real
+        text.complex-label(x="20" y="30") imaginary
+        line.complex-axis(x1="390" x2="710" y1="130" y2="130")
+        polyline.complex-real-wave(:points="realWavePoints()")
+        polyline.complex-imaginary-wave(v-if="mode === 'complex'" :points="imaginaryWavePoints()")
+        polyline.complex-magnitude-wave(:points="magnitudePoints()")
+        text.complex-label(x="390" y="270") space
+        text.complex-label(x="710" y="270" text-anchor="end") wave snapshot
+      figcaption Vector magnitude: #[strong {{ format(result.vector.magnitude) }}]. Angle: #[strong {{ format(result.vector.angle) }}] radians. Cyan is the real component; violet is the imaginary component; amber is magnitude.
+    dl.quantum-readout-grid
+      div
+        dt Mode
+        dd {{ result.mode }}
+      div
+        dt Vector magnitude
+        dd {{ format(result.vector.magnitude) }}
+      div
+        dt Wave magnitude range
+        dd {{ format(result.magnitudeRange.minimum) }} to {{ format(result.magnitudeRange.maximum) }}
+      div
+        dt Squared magnitude
+        dd {{ format(result.vector.magnitude ** 2) }}
+    p.quantum-finding(role="status") {{ result.finding }}
+    table
+      caption Complex-plane checkpoint values
+      thead
+        tr
+          th Quantity
+          th Real part
+          th Imaginary part
+          th Magnitude
+      tbody
+        tr
+          th(scope="row") Current vector
+          td {{ format(result.vector.real) }}
+          td {{ format(result.vector.imaginary) }}
+          td {{ format(result.vector.magnitude) }}
+        tr
+          th(scope="row") Squared magnitude
+          td(colspan="2") phase-independent in complex mode
+          td {{ format(result.vector.magnitude ** 2) }}
+    details.quantum-disclosure(v-if="props.depth === 'technical'")
+      summary Technical reading
+      p Complex mode uses exp(-i k t), so the vector is (cos(k t), -sin(k t)). Real mode uses exp(gamma t) on the real axis. The two choices share an exponential-looking derivative but have different geometry and magnitude behavior.
+    p.quantum-boundary The complex plane is a mathematical representation. Its usefulness here comes from the model's transformation and its probability interpretation, not from calling imaginary coordinates directly observable.
 </template>
 
 <style scoped>
