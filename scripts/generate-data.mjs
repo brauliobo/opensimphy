@@ -12,6 +12,7 @@ import { buildEarthDatasetRegistry } from "./lib/earth-dataset-registry.mjs";
 import { buildEarthEvidenceArtifacts } from "./lib/earth-evidence.mjs";
 import { buildEarthSimulationCoverage } from "./lib/earth-simulation-coverage.mjs";
 import { buildEarthSimulationRegistry } from "./lib/earth-simulation-registry.mjs";
+import { buildAwesomePhysicsArtifacts } from "./lib/awesome-physics-catalog.mjs";
 import { bindPublishedResults, parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
 import { buildTourArtifacts, readTourSource } from "./lib/tour-content.mjs";
 
@@ -147,6 +148,14 @@ const publishedText = await readFile(join(sourceDirectory, "latest-output.txt"),
 const wallIndex = await readJson(join(sourceDirectory, "number-walls-index.json"));
 const sourceManifest = await readJson(join(sourceDirectory, "manifest.json"));
 const generatedAt = process.env.SOURCE_DATE || sourceManifest.acquisitionDate;
+const awesomePhysicsCatalogText = await readFile(join(corpusRoot, "awesome-physics", "README.md"), "utf8");
+const awesomePhysicsManifestText = await readFile(join(corpusRoot, "awesome-physics-repos", "CLONE_MANIFEST.tsv"), "utf8");
+const awesomePhysicsPlanText = await readFile(join(corpusRoot, "AWESOME_PHYSICS_MIGRATION_PLAN.md"), "utf8");
+const awesomePhysics = buildAwesomePhysicsArtifacts({
+  catalogText: awesomePhysicsCatalogText,
+  manifestText: awesomePhysicsManifestText,
+  planText: awesomePhysicsPlanText,
+});
 const recipes = parseConstantsYaml(constantsText);
 const symbols = parseSymbolsCsv(symbolsText);
 const published = parsePublishedOutput(publishedText);
@@ -264,6 +273,7 @@ const earthEvidenceDirectory = join(earthGeneratedDirectory, "evidence");
 const earthEvidenceProgramDirectory = join(earthEvidenceDirectory, "programs");
 const earthEvidenceDocumentDirectory = join(earthEvidenceDirectory, "documents");
 const tourGeneratedDirectory = join(generatedDirectory, "tour");
+const awesomePhysicsGeneratedDirectory = join(generatedDirectory, "awesomePhysics");
 const tourChapterDirectory = join(tourGeneratedDirectory, "chapters");
 const tourLessonDirectory = join(tourGeneratedDirectory, "lessons");
 const tourSimulationDirectory = join(tourGeneratedDirectory, "simulations");
@@ -273,6 +283,7 @@ await rm(tourGeneratedDirectory, { recursive: true, force: true });
 await mkdir(earthDocumentDirectory, { recursive: true });
 await mkdir(earthEvidenceProgramDirectory, { recursive: true });
 await mkdir(earthEvidenceDocumentDirectory, { recursive: true });
+await mkdir(awesomePhysicsGeneratedDirectory, { recursive: true });
 await mkdir(tourChapterDirectory, { recursive: true });
 await mkdir(tourLessonDirectory, { recursive: true });
 await mkdir(tourSimulationDirectory, { recursive: true });
@@ -293,6 +304,8 @@ await Promise.all([
   writeFile(join(earthGeneratedDirectory, "datasets.json"), stableJson(earthDatasetRegistry)),
   writeFile(join(earthGeneratedDirectory, "completion.json"), stableJson(earthSimulationArtifacts.completion)),
   writeFile(join(earthEvidenceDirectory, "manifest.json"), stableJson(earthEvidenceArtifacts.manifest)),
+  writeFile(join(awesomePhysicsGeneratedDirectory, "catalog.json"), stableJson(awesomePhysics.catalog)),
+  writeFile(join(awesomePhysicsGeneratedDirectory, "simulations.json"), stableJson(awesomePhysics.simulations)),
   writeFile(join(tourGeneratedDirectory, "manifest.json"), stableJson(tourArtifacts.manifest)),
   writeFile(join(tourGeneratedDirectory, "glossary.json"), stableJson(tourArtifacts.glossary)),
   writeFile(join(tourGeneratedDirectory, "references.json"), stableJson(tourArtifacts.references)),
@@ -306,4 +319,4 @@ await Promise.all([
 ]);
 await generateCompletion();
 
-console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary, tour: tourArtifacts.summary }));
+console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, awesomePhysics: { catalog: awesomePhysics.catalog.summary, simulations: awesomePhysics.simulations.summary }, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary, tour: tourArtifacts.summary }));

@@ -1,0 +1,1090 @@
+const CATALOG_REVISION = "807186a1235f3b35aa969718e16b04480e4e5f6a";
+const DEFAULT_ACQUISITION_DATE = "2026-08-15";
+const CATALOG_PATH = "awesome-physics/README.md";
+const MANIFEST_PATH = "awesome-physics-repos/CLONE_MANIFEST.tsv";
+const PLAN_PATH = "AWESOME_PHYSICS_MIGRATION_PLAN.md";
+const EXPECTED_PROJECT_ENTRIES = 75;
+const EXPECTED_CLONED_REPOSITORIES = 74;
+const EXPECTED_ORGANIZATIONS = 10;
+const EXPECTED_ARCHIVE_ENTRIES = 1;
+const EXPECTED_SIMULATION_CAPABILITIES = 76;
+const NO_ADAPTER_IMPLEMENTATION_REVISION = "phase-0-no-adapters";
+const OUTPUT_REVISION = "awesome-physics-descriptor-v1";
+const COMPATIBILITY_REVISION = "awesome-physics-compatibility-v1";
+
+const EXECUTION_KINDS = new Set([
+  "browser",
+  "wasm",
+  "wasm-candidate",
+  "typescript",
+  "artifact",
+  "reference",
+  "blocked",
+]);
+
+const CATALOG_ALIASES = Object.freeze({
+  PhysX: "PhysX-3.4",
+  scattpy: "scikits.scattpy",
+  Psi4: "psi4",
+  QMsolve: "qmsolve",
+  ROOT: "root",
+  "Shut up and calculate": "shut-up-and-calculate",
+});
+
+const PLAN_POLICIES = Object.freeze({
+  "scikit-kinematics": {
+    licenseStatus: "unclear",
+    licenseText: "README BSD-2-Clause and pyproject.toml BSD-3-Clause statements need resolution.",
+    maintenance: "unknown",
+    maintenanceSignal: "The plan records a source-level license discrepancy; no maintenance claim is made.",
+  },
+  bullet3: {
+    licenseStatus: "restricted",
+    licenseText: "zlib license and third-party notices require review before redistribution.",
+    maintenance: "active",
+    maintenanceSignal: "The plan treats bullet3 as a current native engine with a port gate.",
+  },
+  "cannon.js": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan explicitly describes the upstream API as stale.",
+  },
+  "matter-js": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a maintained browser-native model boundary for a pilot.",
+  },
+  "mujoco-py": {
+    licenseStatus: "unclear",
+    licenseText: "The deprecated wrapper and the maintained MuJoCo engine require a separate license review.",
+    maintenance: "archived",
+    maintenanceSignal: "The plan identifies mujoco-py as deprecated.",
+  },
+  myphysicslab: {
+    licenseStatus: "verified",
+    licenseText: "Apache-2.0.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an active TypeScript educational collection.",
+  },
+  ncollide: {
+    licenseStatus: "verified",
+    licenseText: "Apache-2.0.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan records old cargo-web/wasm32 evidence and prefers the successor ecosystem.",
+  },
+  "newton-dynamics": {
+    licenseStatus: "restricted",
+    licenseText: "zlib license and bundled notices require review.",
+    maintenance: "archived",
+    maintenanceSignal: "The source README marks the repository discontinued.",
+  },
+  nphysics: {
+    licenseStatus: "verified",
+    licenseText: "Apache-2.0.",
+    maintenance: "archived",
+    maintenanceSignal: "The plan identifies nphysics as superseded by Rapier.",
+  },
+  "PhysX-3.4": {
+    licenseStatus: "restricted",
+    licenseText: "BSD-style notices must be retained and reviewed for the selected SDK subset.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan treats the 3.4 SDK as a low-priority legacy engine reference.",
+  },
+  PositionBasedDynamics: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan explicitly describes the source as active.",
+  },
+  pydy: {
+    licenseStatus: "unclear",
+    licenseText: "BSD-style license is recorded in the plan; exact source terms still need review.",
+    maintenance: "unknown",
+    maintenanceSignal: "The plan gives no definitive maintenance status.",
+  },
+  pymunk: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current Pyodide/Emscripten evaluation path.",
+  },
+  simbody: {
+    licenseStatus: "verified",
+    licenseText: "Apache-2.0.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current articulated-body evaluation path.",
+  },
+  "fluid-engine-dev": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current native SDK with a reduced port target.",
+  },
+  fluids: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an active formulas library and a deferred browser build.",
+  },
+  pysph: {
+    licenseStatus: "unclear",
+    licenseText: "The plan says the license requires review before reuse.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan describes a legacy Python/OpenCL/Cg demo stack.",
+  },
+  DualSPHysics: {
+    licenseStatus: "restricted",
+    licenseText: "LGPL-2.1 obligations apply to the source and any redistributed subset.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current CUDA/OpenMP solver with a reduced CPU target.",
+  },
+  "Gravity-Simulator": {
+    licenseStatus: "missing",
+    licenseText: "No source license was found; redistribution is blocked pending permission.",
+    maintenance: "unknown",
+    maintenanceSignal: "The plan records no verified maintenance signal.",
+  },
+  Gravisim: {
+    licenseStatus: "unclear",
+    licenseText: "License is unclear and must gate reuse.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan treats the SDL2 desktop project as a port candidate rather than a current browser target.",
+  },
+  pycbc: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-3.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current data-analysis stack whose full workflow remains external.",
+  },
+  pyrocko: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-3.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current seismology toolkit with native applications.",
+  },
+  sw4: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2-or-later plus notices.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current MPI seismic propagator whose full solver stays external.",
+  },
+  "webgl-ripples": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan treats the existing shader as a narrow browser-native source to preserve or modernize.",
+  },
+  "python-acoustics": {
+    licenseStatus: "unclear",
+    licenseText: "BSD license text contains a placeholder that must be reviewed.",
+    maintenance: "unknown",
+    maintenanceSignal: "The plan gives no definitive maintenance status.",
+  },
+  cantera: {
+    licenseStatus: "restricted",
+    licenseText: "BSD-3-Clause with government notices that must be retained.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a documented Pyodide wheel path.",
+  },
+  CoolProp: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an existing Emscripten JavaScript/WASM interface and tests.",
+  },
+  "RMG-Py": {
+    licenseStatus: "restricted",
+    licenseText: "MIT source license; database licensing needs a separate review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current mechanism-generation stack with a fixed lesson target.",
+  },
+  thermo: {
+    licenseStatus: "restricted",
+    licenseText: "MIT source license; dependency closure and data packaging remain review gates.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an alpha/broad dependency surface and a deferred browser build.",
+  },
+  thermopy: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-3-or-later from v0.5; license compatibility is a gate.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan describes thermopy as a small legacy library.",
+  },
+  ElectricFieldSimulation: {
+    licenseStatus: "missing",
+    licenseText: "No license file was found; redistribution is blocked pending permission.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan describes an old Xcode/FORZE/OpenGL example.",
+  },
+  EMpy: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan gives no current browser build and limits reuse to selected algorithms.",
+  },
+  gprMax: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-3+.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current CUDA-capable solver with a reduced lesson target.",
+  },
+  meep: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current FDTD solver whose full dependency graph stays external.",
+  },
+  openEMS: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-3.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current FDTD solver with a reduced worker target.",
+  },
+  openmeeg: {
+    licenseStatus: "restricted",
+    licenseText: "CeCILL-B requires credit and license review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current C++23 boundary-element solver.",
+  },
+  PlasmaPy: {
+    licenseStatus: "restricted",
+    licenseText: "BSD-3-Clause with a patent notice.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a community plasma package in active development.",
+  },
+  radis: {
+    licenseStatus: "restricted",
+    licenseText: "LGPL-3; spectral data licenses require separate review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current spectral synthesis stack with explicit data acquisition gates.",
+  },
+  "scikits.scattpy": {
+    licenseStatus: "missing",
+    licenseText: "No license file was found.",
+    maintenance: "archived",
+    maintenanceSignal: "The plan describes Python 2-era packaging and obsolete dependencies.",
+  },
+  "scikit-beam": {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current analysis library with a bounded kernel target.",
+  },
+  "scikit-rf": {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current RF library suitable for a pure TypeScript subset.",
+  },
+  "scikit-spectra": {
+    licenseStatus: "unclear",
+    licenseText: "README and LICENSE.txt license wording must be resolved.",
+    maintenance: "archived",
+    maintenanceSignal: "The source is described as unmaintained Python 2-era software.",
+  },
+  "scuff-em": {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current native BEM suite with a small analytic target.",
+  },
+  spirit: {
+    licenseStatus: "restricted",
+    licenseText: "MIT root license; bundled notices and the old web toolchain require review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an explicit Emscripten ui-web path.",
+  },
+  euclider: {
+    licenseStatus: "unclear",
+    licenseText: "MIT/Unlicense signals require source-level review.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan describes a nightly-Cargo prototype with native rendering dependencies.",
+  },
+  lightpipes: {
+    licenseStatus: "unclear",
+    licenseText: "BSD file and MIT classifier metadata disagree and require review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current wave-optics algorithm source without a browser runtime.",
+  },
+  odak: {
+    licenseStatus: "restricted",
+    licenseText: "MPL-2.0.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a broad current toolkit and limits the target to small kernels.",
+  },
+  opticspy: {
+    licenseStatus: "restricted",
+    licenseText: "MIT source license; glass database provenance requires review.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan records a future JavaScript app mention rather than a verified browser build.",
+  },
+  poppy: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current physical-optics library with a bounded subset target.",
+  },
+  pyRT: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The upstream project is described as WIP/pre-alpha.",
+  },
+  rayopt: {
+    licenseStatus: "restricted",
+    licenseText: "LGPL-3+.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan limits reuse to a bounded subset of a native Cython/lens stack.",
+  },
+  raysect: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current native ray-tracing framework with a narrow lesson target.",
+  },
+  OpenRelativity: {
+    licenseStatus: "restricted",
+    licenseText: "MIT source file; Unity asset rights require review.",
+    maintenance: "archived",
+    maintenanceSignal: "The plan describes a Unity 5.3 project with legacy shaders.",
+  },
+  TFG: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan limits the target to a CPU correctness pass before any GPU/WASM work.",
+  },
+  artiq: {
+    licenseStatus: "restricted",
+    licenseText: "LGPL-3+/GPL-3 components; hardware and gateware remain external.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current hardware-control system but no browser simulation contract.",
+  },
+  flavio: {
+    licenseStatus: "restricted",
+    licenseText: "MIT source license; parameter-table rights require separate review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current phenomenology library with frozen-table artifact options.",
+  },
+  hepdata: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2 service code; dataset rights require separate review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current data service whose backend is not a static runtime target.",
+  },
+  "particle-clicker": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan identifies an AngularJS-era browser game to be rewritten locally.",
+  },
+  psi4: {
+    licenseStatus: "restricted",
+    licenseText: "LGPL-3.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current quantum-chemistry stack whose full runtime remains external.",
+  },
+  pypdt: {
+    licenseStatus: "missing",
+    licenseText: "Source could not be retrieved, so a license could not be verified.",
+    maintenance: "unknown",
+    maintenanceSignal: "The access failure prevents a maintenance assessment.",
+  },
+  qmsolve: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan uses qmsolve as a source reference for an existing bounded quantum-wave engine.",
+  },
+  "quantum-python-lectures": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan explicitly describes the notebook content as stale.",
+  },
+  "QuantumOptics.jl": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current Julia library used only for reference fixtures.",
+  },
+  qutip: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current quantum toolbox used as an external test oracle.",
+  },
+  root: {
+    licenseStatus: "restricted",
+    licenseText: "ROOT LGPL-2.1+ and JSROOT MIT require separate handling.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current analysis framework with a static artifact/viewer boundary.",
+  },
+  "scikit-hep": {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current HEP ecosystem metapackage without a simulation runtime.",
+  },
+  astropy: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current astronomy core with bounded conversion targets.",
+  },
+  gala: {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current galactic-dynamics library without a verified browser build.",
+  },
+  galpy: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current upstream Pyodide/Emscripten workflow.",
+  },
+  pynbody: {
+    licenseStatus: "unclear",
+    licenseText: "pyproject.toml says GPL-3+ but the source license file is missing and must be verified.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current analysis framework with a reviewed snapshot target.",
+  },
+  sunpy: {
+    licenseStatus: "verified",
+    licenseText: "BSD-3-Clause.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current solar-data library with a static sample boundary.",
+  },
+  burnman: {
+    licenseStatus: "restricted",
+    licenseText: "GPL-2-or-later.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current planetary thermodynamics library.",
+  },
+  em: {
+    licenseStatus: "restricted",
+    licenseText: "CC BY 4.0 with third-party exceptions.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies an educational resource whose content and third-party terms must be preserved.",
+  },
+  simpeg: {
+    licenseStatus: "restricted",
+    licenseText: "MIT source license; data dependencies require separate review.",
+    maintenance: "active",
+    maintenanceSignal: "The plan identifies a current geophysics package with a bounded forward-model target.",
+  },
+  "shut-up-and-calculate": {
+    licenseStatus: "verified",
+    licenseText: "MIT.",
+    maintenance: "stale",
+    maintenanceSignal: "The plan limits reuse to a bounded lesson and source fixtures.",
+  },
+});
+
+const ORGANIZATION_METADATA = Object.freeze({
+  CERN: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  IOP: { status: "review", notes: "The plan flags the link as resolving to an unrelated individual account." },
+  LANL: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  LIGO: { status: "official-source-note", notes: "The plan directs LIGO software references to official GitLab sources where applicable." },
+  LLNL: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  MPPMU: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  NIST: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  NREL: { status: "moved", notes: "The plan records that the organization link moved to NatLabRockies." },
+  ORNL: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+  SLAC: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
+});
+
+const LANGUAGE_RULES = [
+  ["C++", /C\+\+/],
+  ["C", /(?:^|[\s/,(])C(?:$|[\s/),.;])/],
+  ["C#", /C#/],
+  ["Cython", /Cython/],
+  ["CUDA", /CUDA/],
+  ["Fortran", /Fortran/],
+  ["GLSL", /GLSL/],
+  ["HTML", /HTML/],
+  ["JavaScript", /JavaScript|AngularJS/],
+  ["Julia", /Julia/],
+  ["Python", /Python/],
+  ["Rust", /Rust/],
+  ["Scheme", /Scheme/],
+  ["TypeScript", /TypeScript/],
+];
+
+const RUNTIME_LIMITS = Object.freeze({
+  maxGridSize: 256,
+  maxParticles: 4096,
+  maxIterations: 10000,
+  maxMemoryBytes: 64 * 1024 * 1024,
+  maxWorkerTimeMs: 5000,
+  maxOutputBytes: 4 * 1024 * 1024,
+});
+
+const NO_RUNTIME_LIMITS = Object.freeze({
+  maxGridSize: 0,
+  maxParticles: 0,
+  maxIterations: 0,
+  maxMemoryBytes: 0,
+  maxWorkerTimeMs: 0,
+  maxOutputBytes: 0,
+});
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function slug(value) {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function stripMarkdown(value) {
+  return value
+    .replace(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function markdownLinks(value) {
+  return [...value.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g)].map((match) => ({
+    label: match[1],
+    url: match[2],
+  }));
+}
+
+function tableCells(line) {
+  return line.split("|").slice(1, -1).map((cell) => cell.trim());
+}
+
+function canonicalName(name) {
+  return CATALOG_ALIASES[name] ?? name;
+}
+
+function assertRelativePath(value, label) {
+  if (value === null) return;
+  assert(typeof value === "string" && value.length > 0, `${label} must be a non-empty path or null`);
+  assert(!value.startsWith("/"), `${label} must be repository-relative`);
+  assert(!/^[A-Za-z]:[\\/]/.test(value), `${label} must not be a local absolute path`);
+  assert(!value.includes("\\"), `${label} must use POSIX separators`);
+  assert(!value.split("/").includes(".."), `${label} must not escape its repository`);
+}
+
+function parseCatalogMarkdown(markdown) {
+  assert(typeof markdown === "string" && markdown.length > 0, "Awesome Physics README is missing or empty");
+  const rows = [];
+  let section = null;
+  let subsection = null;
+
+  for (const [index, line] of markdown.split(/\r?\n/).entries()) {
+    const sectionMatch = line.match(/^## (.+)$/);
+    if (sectionMatch) {
+      section = sectionMatch[1].trim();
+      subsection = null;
+      continue;
+    }
+    const subsectionMatch = line.match(/^### (.+)$/);
+    if (subsectionMatch) {
+      subsection = subsectionMatch[1].trim();
+      continue;
+    }
+    if (!line.startsWith("* [")) continue;
+    if (!/^\* \[[^\]]+\]\(https?:\/\//.test(line)) continue;
+
+    const match = line.match(/^\* \[([^\]]+)\]\((https?:\/\/[^)]+)\)(?:\s+-\s+|\s+)(.+)$/);
+    assert(match, `Malformed Awesome Physics catalog row at line ${index + 1}`);
+    assert(section, `Catalog row has no section at line ${index + 1}`);
+    const title = match[1].trim();
+    const url = match[2].trim();
+    const remainder = match[3]?.trim() ?? "";
+    rows.push({
+      title,
+      url,
+      description: stripMarkdown(remainder),
+      relatedLinks: markdownLinks(remainder),
+      section,
+      subsection,
+      line: index + 1,
+      organization: section === "Organizations",
+    });
+  }
+
+  assert(rows.length === EXPECTED_PROJECT_ENTRIES + EXPECTED_ARCHIVE_ENTRIES + EXPECTED_ORGANIZATIONS,
+    `Expected ${EXPECTED_PROJECT_ENTRIES + EXPECTED_ARCHIVE_ENTRIES + EXPECTED_ORGANIZATIONS} catalog rows, found ${rows.length}`);
+  const organizations = rows.filter((row) => row.organization);
+  const nonOrganizations = rows.filter((row) => !row.organization);
+  const archives = nonOrganizations.filter((row) => row.title === "Solid State Simulations");
+  const projects = nonOrganizations.filter((row) => row.title !== "Solid State Simulations");
+  assert(projects.length === EXPECTED_PROJECT_ENTRIES, `Expected ${EXPECTED_PROJECT_ENTRIES} project rows, found ${projects.length}`);
+  assert(archives.length === EXPECTED_ARCHIVE_ENTRIES, `Expected ${EXPECTED_ARCHIVE_ENTRIES} archive row, found ${archives.length}`);
+  assert(organizations.length === EXPECTED_ORGANIZATIONS, `Expected ${EXPECTED_ORGANIZATIONS} organization rows, found ${organizations.length}`);
+  return { projects, archive: archives[0], organizations };
+}
+
+function parseManifest(manifestText) {
+  assert(typeof manifestText === "string" && manifestText.length > 0, "Awesome Physics clone manifest is missing or empty");
+  const lines = manifestText.split(/\r?\n/).filter((line) => line.length > 0);
+  const expectedHeader = "name\tcategory\tcatalog_url\tupstream_url\tclone_path\trevision\tstatus\tnotes";
+  assert(lines[0] === expectedHeader, "Awesome Physics clone manifest header is malformed");
+  const rows = lines.slice(1).map((line, index) => {
+    const cells = line.split("\t");
+    assert(cells.length === 8, `Malformed clone manifest row at line ${index + 2}`);
+    const [name, category, catalogUrl, upstreamUrl, clonePath, revision, status, notes] = cells;
+    assert(name && category && catalogUrl && upstreamUrl && status && notes, `Incomplete clone manifest row at line ${index + 2}`);
+    assert(status === "cloned" || status === "not-cloned", `Unsupported clone status for ${name}: ${status}`);
+    const normalizedClonePath = clonePath === "-" ? null : clonePath;
+    const normalizedRevision = revision === "-" ? null : revision;
+    if (status === "cloned") {
+      assertRelativePath(normalizedClonePath, `clone path for ${name}`);
+      assert(normalizedClonePath.startsWith("awesome-physics-repos/"), `Clone path for ${name} must stay under awesome-physics-repos`);
+      assert(/^[a-f0-9]{12}$/.test(normalizedRevision), `Clone revision for ${name} must be a 12-character lowercase revision`);
+    } else {
+      assert(normalizedClonePath === null && normalizedRevision === null, `Failed clone ${name} must not have a path or revision`);
+    }
+    return {
+      name,
+      category,
+      catalogUrl,
+      upstreamUrl,
+      clonePath: normalizedClonePath,
+      revision: normalizedRevision,
+      status,
+      notes,
+      line: index + 2,
+    };
+  });
+
+  assert(rows.length === EXPECTED_PROJECT_ENTRIES, `Expected ${EXPECTED_PROJECT_ENTRIES} manifest rows, found ${rows.length}`);
+  assert(rows.filter(({ status }) => status === "cloned").length === EXPECTED_CLONED_REPOSITORIES,
+    `Expected ${EXPECTED_CLONED_REPOSITORIES} cloned repositories`);
+  assert(rows.filter(({ status }) => status === "not-cloned").length === 1, "Expected one failed clone record");
+  assert(new Set(rows.map(({ name }) => name)).size === rows.length, "Clone manifest names must be unique");
+  return rows;
+}
+
+function parsePlan(planText) {
+  assert(typeof planText === "string" && planText.length > 0, "Awesome Physics migration plan is missing or empty");
+  const lines = planText.split(/\r?\n/);
+  const rows = [];
+  let inMatrix = false;
+
+  for (const [index, line] of lines.entries()) {
+    if (line === "## Complete Migration Matrix") {
+      inMatrix = true;
+      continue;
+    }
+    if (line === "### Non-repository and organization entries") {
+      inMatrix = false;
+      continue;
+    }
+    if (!inMatrix || !line.startsWith("| ")) continue;
+    const cells = tableCells(line);
+    if (cells[0] === "Entry" || cells.every((cell) => /^-+$/.test(cell))) continue;
+    assert(cells.length === 5, `Malformed migration matrix row at line ${index + 1}`);
+    const [entryCell, role, routeCell, disposition, priority] = cells;
+    const name = entryCell.replace(/^`|`$/g, "").trim();
+    const executionOptions = routeCell.split(/\s*\/\s*/).map((value) => value.replace(/`/g, "").trim()).filter(Boolean);
+    assert(name && role && disposition, `Incomplete migration matrix row at line ${index + 1}`);
+    assert(executionOptions.length > 0 && executionOptions.every((kind) => EXECUTION_KINDS.has(kind)),
+      `Unsupported execution route for ${name}`);
+    assert(/^P[0-3]$/.test(priority), `Unsupported priority for ${name}: ${priority}`);
+    rows.push({ name, role, executionOptions, disposition, priority, line: index + 1 });
+  }
+
+  assert(rows.length === EXPECTED_PROJECT_ENTRIES, `Expected ${EXPECTED_PROJECT_ENTRIES} migration rows, found ${rows.length}`);
+  assert(new Set(rows.map(({ name }) => name)).size === rows.length, "Migration matrix names must be unique");
+  const policyNames = Object.keys(PLAN_POLICIES).sort();
+  const rowNames = rows.map(({ name }) => name).sort();
+  assert(JSON.stringify(policyNames) === JSON.stringify(rowNames), "Migration policy coverage does not match the pinned matrix");
+  return rows;
+}
+
+function planRef(row) {
+  return `${PLAN_PATH}:${row.line}`;
+}
+
+function catalogRef(row) {
+  return `${CATALOG_PATH}:${row.line}`;
+}
+
+function manifestRef(row) {
+  return `${MANIFEST_PATH}:${row.line}`;
+}
+
+function findByName(rows, name, label) {
+  const row = rows.find((candidate) => candidate.name === name);
+  assert(row, `${label} is missing ${name}`);
+  return row;
+}
+
+function languagesFor(row, plan) {
+  const text = `${row.description} ${plan.role} ${plan.disposition}`;
+  return LANGUAGE_RULES.filter(([, pattern]) => pattern.test(text)).map(([language]) => language);
+}
+
+function licenseGate(status) {
+  if (status === "verified") return "pass";
+  if (status === "missing") return "blocked";
+  return "review";
+}
+
+function modelOrigin(execution) {
+  if (execution === "browser" || execution === "wasm" || execution === "wasm-candidate") return "upstream-adaptation";
+  if (execution === "typescript") return "educational-reimplementation";
+  if (execution === "artifact") return "source-artifact";
+  return "reference-only";
+}
+
+function limitsFor(execution) {
+  if (execution === "browser" || execution === "wasm" || execution === "wasm-candidate" || execution === "typescript") {
+    return { ...RUNTIME_LIMITS };
+  }
+  return { ...NO_RUNTIME_LIMITS };
+}
+
+function assertFiniteLimits(limits, id) {
+  for (const [key, value] of Object.entries(limits)) {
+    assert(Number.isFinite(value) && Number.isInteger(value) && value >= 0, `${id}.limits.${key} must be a finite non-negative integer`);
+  }
+}
+
+function accessFailureFor(manifest) {
+  if (manifest.status !== "not-cloned") return null;
+  const attemptedOn = manifest.notes.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0] ?? null;
+  const observed = [];
+  if (/404/.test(manifest.notes)) observed.push("404");
+  if (/authentication/i.test(manifest.notes)) observed.push("authentication-unavailable");
+  assert(attemptedOn, `Failed clone ${manifest.name} must record an acquisition date`);
+  assert(observed.length > 0, `Failed clone ${manifest.name} must record an observed access failure`);
+  return { attemptedOn, observed, note: manifest.notes };
+}
+
+function buildLinks(row, manifest, archive = false) {
+  const links = [{ kind: "catalog", label: row.title, url: row.url }];
+  if (manifest && manifest.upstreamUrl !== row.url) links.push({ kind: "upstream", label: "Upstream source", url: manifest.upstreamUrl });
+  if (manifest && manifest.upstreamUrl === row.url) links.push({ kind: "upstream", label: "Upstream source", url: manifest.upstreamUrl });
+  for (const related of row.relatedLinks) {
+    links.push({ kind: archive ? "archive-download" : "related", label: related.label, url: related.url });
+  }
+  if (manifest?.name === "galpy") {
+    links.push({ kind: "documentation", label: "Canonical galpy documentation", url: "https://docs.galpy.org/en/latest/" });
+    links.push({ kind: "legacy-documentation", label: "Legacy catalog documentation URL", url: row.url });
+  }
+  const seen = new Set();
+  return links.filter((link) => {
+    const key = `${link.kind}:${link.url}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function buildCatalogItem(row, manifest, plan, catalogRevision) {
+  const policy = PLAN_POLICIES[plan.name];
+  assert(policy, `No policy for ${plan.name}`);
+  const canonical = canonicalName(row.title);
+  assert(canonical === manifest.name, `Catalog name ${row.title} does not map to manifest name ${manifest.name}`);
+  assert(manifest.catalogUrl === row.url, `Catalog URL mismatch for ${canonical}`);
+  assert(manifest.category, `Missing category for ${canonical}`);
+  assertRelativePath(manifest.clonePath, `${canonical}.localPath`);
+  const sourceKind = canonical === "galpy" ? "documentation" : "repository";
+  const sourceRefs = [catalogRef(row), planRef(plan), manifestRef(manifest)];
+  const licenseRefs = [planRef(plan), manifestRef(manifest)];
+  const maintenanceRefs = [catalogRef(row), planRef(plan)];
+  const failure = accessFailureFor(manifest);
+  const substitution = canonical === "galpy" ? {
+    kind: "current-upstream-substitution",
+    reason: manifest.notes,
+    catalogUrl: row.url,
+    canonicalUpstreamUrl: manifest.upstreamUrl,
+  } : null;
+
+  return {
+    id: `awesome-${slug(canonical)}`,
+    canonicalName: canonical,
+    aliases: Object.entries(CATALOG_ALIASES).filter(([, value]) => value === canonical).map(([key]) => key),
+    category: manifest.category,
+    catalogSection: row.section,
+    title: row.title,
+    description: row.description,
+    catalogUrl: row.url,
+    upstreamUrl: manifest.upstreamUrl,
+    catalogRevision,
+    upstreamRevision: manifest.revision,
+    localPath: manifest.clonePath,
+    sourceKind,
+    language: languagesFor(row, plan),
+    license: {
+      status: policy.licenseStatus,
+      text: policy.licenseText,
+      evidenceRefs: licenseRefs,
+    },
+    maintenance: policy.maintenance,
+    maintenanceSignal: policy.maintenanceSignal,
+    evidence: { sourceRefs, licenseRefs, maintenanceRefs },
+    links: buildLinks(row, manifest),
+    catalogLine: row.line,
+    manifestLine: manifest.line,
+    planLine: plan.line,
+    access: {
+      status: manifest.status,
+      note: manifest.notes,
+      attemptedOn: failure?.attemptedOn ?? null,
+    },
+    accessFailure: failure,
+    upstreamResolution: substitution,
+  };
+}
+
+function buildArchiveItem(row, planText, catalogRevision) {
+  const planLine = planText.split(/\r?\n/).findIndex((line) => line.startsWith("| Solid State Simulations archive |")) + 1;
+  assert(planLine > 0, "Solid State Simulations archive is missing from the migration plan");
+  const sourceRefs = [catalogRef(row), `${PLAN_PATH}:${planLine}`];
+  const licenseRefs = [`${PLAN_PATH}:${planLine}`];
+  const maintenanceRefs = [catalogRef(row), `${PLAN_PATH}:${planLine}`];
+  return {
+    id: "awesome-solid-state-simulations-archive",
+    canonicalName: "Solid State Simulations archive",
+    aliases: [],
+    category: "Condensed matter",
+    catalogSection: row.section,
+    title: row.title,
+    description: row.description,
+    catalogUrl: row.url,
+    upstreamUrl: row.url,
+    catalogRevision,
+    upstreamRevision: null,
+    localPath: null,
+    sourceKind: "archive",
+    language: [],
+    license: {
+      status: "unclear",
+      text: "Archive binaries and source rights require review before acquisition or redistribution.",
+      evidenceRefs: licenseRefs,
+    },
+    maintenance: "archived",
+    maintenanceSignal: "The catalog marks the Solid State Simulations software as unmaintained.",
+    evidence: { sourceRefs, licenseRefs, maintenanceRefs },
+    links: buildLinks(row, null, true),
+    catalogLine: row.line,
+    manifestLine: null,
+    planLine,
+    access: {
+      status: "archived",
+      note: "External archive retained as a reference; no binary or reconstructed artifact was acquired.",
+      attemptedOn: null,
+    },
+    accessFailure: null,
+    upstreamResolution: null,
+  };
+}
+
+function buildOrganization(row, planText) {
+  const metadata = ORGANIZATION_METADATA[row.title];
+  assert(metadata, `No organization metadata for ${row.title}`);
+  const planLine = planText.split(/\r?\n/).findIndex((line) => line.startsWith("| CERN, IOP, LANL, LIGO, LLNL, MPPMU, NIST, NREL, ORNL, SLAC |")) + 1;
+  assert(planLine > 0, "Organization metadata row is missing from the migration plan");
+  return {
+    id: `awesome-org-${slug(row.title)}`,
+    title: row.title,
+    description: row.description,
+    url: row.url,
+    sourceKind: "organization",
+    maintenance: "unknown",
+    status: metadata.status,
+    notes: metadata.notes,
+    evidenceRefs: [catalogRef(row), `${PLAN_PATH}:${planLine}`],
+    catalogLine: row.line,
+  };
+}
+
+function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
+  const execution = plan?.executionOptions[0] ?? "artifact";
+  const executionOptions = plan?.executionOptions ?? ["artifact", "reference"];
+  const policy = plan ? PLAN_POLICIES[plan.name] : {
+    licenseStatus: "unclear",
+    licenseText: "Archive rights require review.",
+  };
+  const gate = licenseGate(policy.licenseStatus);
+  const availability = execution === "blocked" || gate === "blocked" ? "blocked" : "unavailable";
+  let availabilityReason;
+  if (execution === "blocked") {
+    availabilityReason = "Blocked: the source access attempt failed and no public canonical source or verified license is available.";
+  } else if (gate === "blocked") {
+    availabilityReason = "Blocked: the source or license gate has not passed; no adapter or redistributed artifact is permitted.";
+  } else if (executionOptions.includes("wasm-candidate")) {
+    availabilityReason = "Unavailable: wasm-candidate proof-of-concept gates have not passed and Phase 0 has no adapter.";
+  } else if (execution === "reference") {
+    availabilityReason = "Unavailable: this is a reference-only source capability with no OpenSimPhy runtime adapter.";
+  } else if (execution === "artifact") {
+    availabilityReason = "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.";
+  } else {
+    availabilityReason = "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.";
+  }
+
+  const evidenceRefs = [...new Set([
+    ...item.evidence.sourceRefs,
+    ...item.evidence.licenseRefs,
+    ...item.evidence.maintenanceRefs,
+  ])];
+  const limits = limitsFor(execution);
+  assertFiniteLimits(limits, item.id);
+  const sourceRevision = item.upstreamRevision;
+  const transformation = item.sourceKind === "archive"
+    ? "none: archive was not acquired or reconstructed"
+    : item.accessFailure
+      ? "none: source acquisition failed; no artifact was produced"
+      : "none: no artifact redistributed in Phase 0";
+
+  return {
+    id: `${item.id}-capability`,
+    catalogItemId: item.id,
+    title: item.title,
+    capability: item.sourceKind === "archive" ? "archive-reference" : "catalog-entry",
+    execution,
+    executionOptions,
+    availability,
+    runnable: false,
+    priority: plan?.priority ?? "P3",
+    modelOrigin: modelOrigin(execution),
+    numericalMethod: null,
+    inputSchema: null,
+    outputSchema: null,
+    sourceRevision,
+    implementationRevision: NO_ADAPTER_IMPLEMENTATION_REVISION,
+    licenseGate: gate,
+    availabilityReason,
+    planDisposition: plan?.disposition ?? "Preserve the archived links as attributed reference records; do not create placeholder artifacts.",
+    limits,
+    artifactProvenance: {
+      sourceRevision,
+      acquisitionDate,
+      byteSize: null,
+      sha256: null,
+      transformation,
+      datasetLicense: null,
+      evidenceRefs,
+    },
+    evidenceRefs,
+    compatibilityRevision: COMPATIBILITY_REVISION,
+    modelRevision: `awesome-physics-plan-${catalogRevision}`,
+    contentRevision: `awesome-physics-catalog-${catalogRevision}`,
+    outputRevision: OUTPUT_REVISION,
+  };
+}
+
+function assertNoAbsoluteSourcePaths(catalog, simulations) {
+  assertRelativePath(catalog.source.catalogPath, "catalog.source.catalogPath");
+  assertRelativePath(catalog.source.manifestPath, "catalog.source.manifestPath");
+  assertRelativePath(catalog.source.migrationPlanPath, "catalog.source.migrationPlanPath");
+  for (const item of catalog.items) {
+    assertRelativePath(item.localPath, `${item.id}.localPath`);
+    for (const reference of [...item.evidence.sourceRefs, ...item.evidence.licenseRefs, ...item.evidence.maintenanceRefs]) {
+      assert(!reference.startsWith("/"), `${item.id} evidence reference must be repository-relative`);
+    }
+  }
+  for (const organization of catalog.organizations) {
+    for (const reference of organization.evidenceRefs) assert(!reference.startsWith("/"), `${organization.id} evidence reference must be repository-relative`);
+  }
+  for (const descriptor of simulations.items) {
+    for (const reference of descriptor.evidenceRefs) assert(!reference.startsWith("/"), `${descriptor.id} evidence reference must be repository-relative`);
+  }
+}
+
+export function buildAwesomePhysicsArtifacts({
+  catalogText,
+  manifestText,
+  planText,
+  catalogRevision = CATALOG_REVISION,
+  acquisitionDate = DEFAULT_ACQUISITION_DATE,
+} = {}) {
+  assert(/^[a-f0-9]{40}$/.test(catalogRevision), "Awesome Physics catalog revision must be a lowercase 40-character revision");
+  assert(/^\d{4}-\d{2}-\d{2}$/.test(acquisitionDate), "Awesome Physics acquisition date must be YYYY-MM-DD");
+  const parsedCatalog = parseCatalogMarkdown(catalogText);
+  const manifest = parseManifest(manifestText);
+  const plan = parsePlan(planText);
+  const manifestByName = new Map(manifest.map((row) => [row.name, row]));
+  const planByName = new Map(plan.map((row) => [row.name, row]));
+
+  const items = parsedCatalog.projects.map((row) => {
+    const name = canonicalName(row.title);
+    const manifestRow = findByName(manifest, name, "Clone manifest");
+    const planRow = findByName(plan, name, "Migration plan");
+    return buildCatalogItem(row, manifestRow, planRow, catalogRevision);
+  });
+  const archiveItem = buildArchiveItem(parsedCatalog.archive, planText, catalogRevision);
+  items.push(archiveItem);
+  items.sort((left, right) => left.catalogLine - right.catalogLine);
+  const organizations = parsedCatalog.organizations.map((row) => buildOrganization(row, planText));
+
+  assert(manifestByName.size === EXPECTED_PROJECT_ENTRIES, "Manifest index size changed unexpectedly");
+  assert(planByName.size === EXPECTED_PROJECT_ENTRIES, "Plan index size changed unexpectedly");
+  assert(new Set(items.map(({ id }) => id)).size === items.length, "Catalog item IDs must be unique");
+  assert(new Set(organizations.map(({ id }) => id)).size === organizations.length, "Organization IDs must be unique");
+  assert(items.length === EXPECTED_PROJECT_ENTRIES + EXPECTED_ARCHIVE_ENTRIES, "Catalog item count changed unexpectedly");
+
+  const source = {
+    catalogPath: CATALOG_PATH,
+    manifestPath: MANIFEST_PATH,
+    migrationPlanPath: PLAN_PATH,
+    acquisitionDate,
+    evidenceRefs: [CATALOG_PATH, MANIFEST_PATH, PLAN_PATH],
+  };
+  const catalog = {
+    schemaVersion: 1,
+    generatedAt: acquisitionDate,
+    catalogRevision,
+    source,
+    summary: {
+      totalEntries: items.length + organizations.length,
+      projectEntries: EXPECTED_PROJECT_ENTRIES,
+      archiveEntries: EXPECTED_ARCHIVE_ENTRIES,
+      organizationEntries: organizations.length,
+      clonedRepositories: manifest.filter(({ status }) => status === "cloned").length,
+      failedAccessEntries: manifest.filter(({ status }) => status === "not-cloned").length,
+      documentationAliases: items.filter(({ sourceKind }) => sourceKind === "documentation").length,
+    },
+    items,
+    organizations,
+  };
+
+  const simulationsItems = items.map((item) => buildSimulation(item, planByName.get(item.canonicalName), catalogRevision, acquisitionDate));
+  assert(simulationsItems.length === EXPECTED_SIMULATION_CAPABILITIES, `Expected ${EXPECTED_SIMULATION_CAPABILITIES} simulation capabilities`);
+  assert(new Set(simulationsItems.map(({ id }) => id)).size === simulationsItems.length, "Simulation descriptor IDs must be unique");
+  assert(simulationsItems.every(({ runnable, adapterId }) => runnable === false && adapterId === undefined), "Unavailable descriptors must not declare adapters");
+  const executionKinds = Object.fromEntries([...EXECUTION_KINDS].map((kind) => [kind, simulationsItems.filter(({ execution }) => execution === kind).length]));
+  const simulations = {
+    schemaVersion: 1,
+    generatedAt: acquisitionDate,
+    catalogRevision,
+    source,
+    summary: {
+      sourceCapabilities: simulationsItems.length,
+      runnable: simulationsItems.filter(({ runnable }) => runnable).length,
+      available: simulationsItems.filter(({ availability }) => availability === "available").length,
+      unavailable: simulationsItems.filter(({ availability }) => availability === "unavailable").length,
+      blocked: simulationsItems.filter(({ availability }) => availability === "blocked").length,
+      adapterCount: simulationsItems.filter(({ adapterId }) => adapterId !== undefined).length,
+      executionKinds,
+    },
+    items: simulationsItems,
+  };
+
+  assertNoAbsoluteSourcePaths(catalog, simulations);
+  return { catalog, simulations };
+}
+
+export {
+  CATALOG_REVISION,
+  DEFAULT_ACQUISITION_DATE,
+  EXPECTED_CLONED_REPOSITORIES,
+  EXPECTED_ORGANIZATIONS,
+  EXPECTED_PROJECT_ENTRIES,
+};
