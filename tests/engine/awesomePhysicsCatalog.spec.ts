@@ -40,15 +40,15 @@ describe('Awesome Physics catalog foundation', () => {
     expect(catalog.items.filter(({ access }) => access.status === 'cloned')).toHaveLength(74)
     expect(simulations.summary).toEqual({
       sourceCapabilities: 76,
-      runnable: 13,
-      available: 13,
-      unavailable: 59,
+      runnable: 14,
+      available: 14,
+      unavailable: 58,
       blocked: 4,
-      adapterCount: 13,
+      adapterCount: 14,
       executionKinds: {
         browser: 6,
-        wasm: 6,
-        'wasm-candidate': 8,
+        wasm: 7,
+        'wasm-candidate': 7,
         typescript: 44,
         artifact: 8,
         reference: 3,
@@ -135,12 +135,20 @@ describe('Awesome Physics catalog foundation', () => {
     for (const descriptor of simulations.items) {
       expectFiniteLimits(descriptor.limits)
       expectFiniteLimits(descriptor.artifactProvenance.byteSize === null ? {} : { byteSize: descriptor.artifactProvenance.byteSize })
-      expect(descriptor.artifactProvenance.sha256).toBeNull()
+      if (descriptor.catalogItemId === 'awesome-positionbaseddynamics') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: 'beafc921e21553515b4f406258e5b16054a45268',
+          byteSize: 1256,
+          sha256: '3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df',
+        })
+      } else {
+        expect(descriptor.artifactProvenance.sha256).toBeNull()
+      }
       expect(descriptor.compatibilityRevision).toBe('awesome-physics-compatibility-v1')
       expect(descriptor.outputRevision).toBe('awesome-physics-descriptor-v1')
     }
     const availableDescriptors = simulations.items.filter(({ availability }) => availability === 'available')
-    expect(availableDescriptors).toHaveLength(13)
+    expect(availableDescriptors).toHaveLength(14)
     expect(availableDescriptors.every(({ implementationRevision }) => implementationRevision !== PHASE_ZERO_IMPLEMENTATION_REVISION)).toBe(true)
     expect(simulations.items
       .filter(({ availability }) => availability !== 'available')

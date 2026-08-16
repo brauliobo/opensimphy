@@ -19,6 +19,7 @@ export const AWESOME_PHYSICS_ADAPTER_IDS = Object.freeze({
   gala: 'awesome-gala-typescript',
   tightBinding: 'awesome-shut-up-and-calculate-typescript',
   poppy: 'awesome-poppy-typescript',
+  positionBasedDynamics: 'awesome-positionbaseddynamics-wasm',
 })
 
 type AdapterFactoryModuleLoader = (
@@ -79,6 +80,10 @@ export const awesomePhysicsAdapterFactoryMap: ReadonlyMap<string, AdapterFactory
   [AWESOME_PHYSICS_ADAPTER_IDS.poppy, async (descriptor, signal) => {
     const module = await import('./adapters/typescript/poppy')
     return module.poppyAdapterFactory(descriptor, signal)
+  }],
+  [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics, async (descriptor, signal) => {
+    const module = await import('./adapters/wasm/positionBasedDynamics')
+    return module.positionBasedDynamicsAdapterFactory(descriptor, signal)
   }],
 ])
 

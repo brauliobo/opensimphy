@@ -13,7 +13,12 @@ const awesomePhysicsDataAssets = [
   'data/generated/awesomePhysics/catalog.json',
   'data/generated/awesomePhysics/simulations.json',
 ]
-const requiredDistAssets = ['index.html', ...awesomePhysicsDataAssets]
+const requiredDistAssets = [
+  'index.html',
+  ...awesomePhysicsDataAssets,
+  'wasm/awesomePhysics/position-based-dynamics/NOTICE.md',
+  'wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm',
+]
 const awesomePhysicsOwnedDistAssets = new Set(awesomePhysicsDataAssets)
 
 const lazySources = [
@@ -36,6 +41,7 @@ const adapterSources = [
   'src/awesomePhysics/adapters/typescript/gala.ts',
   'src/awesomePhysics/adapters/typescript/tightBinding.ts',
   'src/awesomePhysics/adapters/typescript/poppy.ts',
+  'src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts',
 ]
 
 function fail(message) {

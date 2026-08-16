@@ -56,9 +56,9 @@ the module.
 
 The verified module is published at
 `public/wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm`.
-Its byte size and SHA-256 are recorded in `build-ledger.json`, the adapter,
-and the focused engine spec. Central manifest and adapter registration remain
-deferred until the shared integration updates the candidate record.
+Its byte size and SHA-256 are recorded in `build-ledger.json`, the central
+artifact manifest, the adapter, and the focused engine spec. The generated
+catalog promotes the verified candidate to a runnable WASM descriptor.
 
 ## Notices
 

@@ -70,7 +70,7 @@ describe('Awesome Physics catalog and detail surfaces', () => {
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Projects + archive76')
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Organizations10')
     expect(wrapper.findAll('.awesome-catalog-card')).toHaveLength(86)
-    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(13)
+    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(14)
     expect(runnerMock).not.toHaveBeenCalled()
     wrapper.unmount()
   })

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,6 +18,9 @@ const OUTPUT_REVISION = "awesome-physics-descriptor-v1";
 const COMPATIBILITY_REVISION = "awesome-physics-compatibility-v1";
 const OPEN_SIMPHY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const CORPUS_ROOT = resolve(OPEN_SIMPHY_ROOT, "..");
+const nativeCandidateManifest = JSON.parse(readFileSync(resolve(OPEN_SIMPHY_ROOT, "scripts/awesomePhysics/native-candidates.json"), "utf8"));
+const positionBasedDynamicsArtifactRecord = nativeCandidateManifest.records.find(({ id }) => id === "position-based-dynamics");
+assert(positionBasedDynamicsArtifactRecord, "PositionBasedDynamics central artifact record is missing");
 
 const EXECUTION_KINDS = new Set([
   "browser",
@@ -494,6 +498,30 @@ const PLAN_POLICIES = Object.freeze({
 // package, data, or build requirement at runtime. The module and license
 // references are verified before an available descriptor is emitted.
 const AWESOME_PHYSICS_IMPLEMENTATION_MAP = Object.freeze({
+  PositionBasedDynamics: {
+    adapterId: "awesome-positionbaseddynamics-wasm",
+    modulePath: "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+    factoryExport: "positionBasedDynamicsAdapterFactory",
+    execution: "wasm",
+    modelOrigin: "upstream-adaptation",
+    numericalMethod: "PositionBasedDynamics scalar distance-constraint correction",
+    inputSchema: "position-based-dynamics-distance-input-v1",
+    outputSchema: "position-based-dynamics-distance-output-v1",
+    implementationRevision: "position-based-dynamics-headless-v1",
+    transformation: "Pinned PositionBasedDynamics CPU solver translation units and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+    sourceRefs: [
+      "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/build-ledger.json",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/README.md",
+    ],
+    licenseRefs: [
+      "awesome-physics-repos/PositionBasedDynamics/LICENSE",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/NOTICE.md",
+      "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md",
+    ],
+    artifactRecord: positionBasedDynamicsArtifactRecord,
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
   "matter-js": {
     adapterId: "matter-js-browser",
     modulePath: "src/awesomePhysics/adapters/browser/matterJs.ts",
@@ -943,7 +971,7 @@ function licenseGate(status) {
 }
 
 function implementationReferenceExists(reference) {
-  const root = reference.startsWith("src/") ? OPEN_SIMPHY_ROOT : CORPUS_ROOT;
+  const root = /^(?:public|scripts|src)\//.test(reference) ? OPEN_SIMPHY_ROOT : CORPUS_ROOT;
   return existsSync(resolve(root, reference));
 }
 
@@ -955,10 +983,9 @@ function assertImplementationEntry(name, plan, implementation) {
   const policy = PLAN_POLICIES[name];
   assert(policy, `No policy for implementation ${name}`);
   assert(licenseGate(policy.licenseStatus) === "pass", `Implementation ${name} requires a passing plan license gate`);
-  assert(plan.executionOptions[0] === implementation.execution,
-    `Implementation ${name} execution must match the migration plan`);
-  assert(!plan.executionOptions.includes("wasm") && !plan.executionOptions.includes("wasm-candidate"),
-    `Implementation ${name} cannot enable a WASM or wasm-candidate entry`);
+  const followsPlan = plan.executionOptions[0] === implementation.execution;
+  const promotesWasmCandidate = implementation.execution === "wasm" && plan.executionOptions.includes("wasm-candidate");
+  assert(followsPlan || promotesWasmCandidate, `Implementation ${name} execution must match or promote the migration plan`);
   assert(EXECUTION_KINDS.has(implementation.execution), `Implementation ${name} has an unsupported execution kind`);
   assert(/^[A-Za-z0-9_-]+$/.test(implementation.adapterId), `Implementation ${name} has an unsafe adapter ID`);
   assertRelativePath(implementation.modulePath, `${name}.implementation.modulePath`);
@@ -975,6 +1002,22 @@ function assertImplementationEntry(name, plan, implementation) {
   assert(implementation.runtime.externalPackages.length === 0, `Implementation ${name} requires an external package`);
   assert(implementation.runtime.externalData.length === 0, `Implementation ${name} requires external data`);
   assert(implementation.runtime.requiresBuild === false, `Implementation ${name} requires an external build`);
+  if (implementation.execution === "wasm") {
+    const artifactRecord = implementation.artifactRecord;
+    assert(artifactRecord?.project === name, `Implementation ${name} requires its central artifact record`);
+    assert(artifactRecord.status === "available", `Implementation ${name} artifact must be available`);
+    assert(artifactRecord.licenseGate?.status === "pass", `Implementation ${name} artifact license gate must pass`);
+    const { path, sha256, byteSize } = artifactRecord.artifact ?? {};
+    assert(typeof path === "string" && path.length > 0, `Implementation ${name} artifact path is incomplete`);
+    assert(typeof sha256 === "string" && /^[a-f0-9]{64}$/.test(sha256), `Implementation ${name} artifact SHA-256 is incomplete`);
+    assert(Number.isSafeInteger(byteSize) && byteSize > 0, `Implementation ${name} artifact byte size is incomplete`);
+    const artifactBytes = readFileSync(resolve(OPEN_SIMPHY_ROOT, "public", path));
+    assert(artifactBytes.byteLength === byteSize, `Implementation ${name} artifact byte size does not match the central record`);
+    assert(createHash("sha256").update(artifactBytes).digest("hex") === sha256,
+      `Implementation ${name} artifact SHA-256 does not match the central record`);
+  } else {
+    assert(implementation.artifactRecord === undefined, `Implementation ${name} must not claim a WASM artifact`);
+  }
   for (const field of ["numericalMethod", "inputSchema", "outputSchema", "implementationRevision", "transformation"])
     assert(typeof implementation[field] === "string" && implementation[field].trim().length > 0,
       `Implementation ${name}.${field} must be a non-empty string`);
@@ -1161,10 +1204,11 @@ function buildOrganization(row, planText) {
 }
 
 function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
-  const execution = plan?.executionOptions[0] ?? "artifact";
-  const executionOptions = plan?.executionOptions ?? ["artifact", "reference"];
+  const plannedExecutionOptions = plan?.executionOptions ?? ["artifact", "reference"];
   const implementation = plan ? AWESOME_PHYSICS_IMPLEMENTATION_MAP[plan.name] : null;
   const hasImplementation = implementation !== undefined && implementation !== null;
+  const execution = implementation?.execution ?? plannedExecutionOptions[0];
+  const executionOptions = hasImplementation ? [execution] : plannedExecutionOptions;
   const policy = plan ? PLAN_POLICIES[plan.name] : {
     licenseStatus: "unclear",
     licenseText: "Archive rights require review.",
@@ -1202,7 +1246,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
   ])];
   const limits = limitsFor(execution);
   assertFiniteLimits(limits, item.id);
-  const sourceRevision = item.upstreamRevision;
+  const sourceRevision = implementation?.artifactRecord?.source.revision ?? item.upstreamRevision;
   const transformation = implementation?.transformation ?? (item.sourceKind === "archive"
     ? "none: archive was not acquired or reconstructed"
     : item.accessFailure
@@ -1232,8 +1276,8 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     artifactProvenance: {
       sourceRevision,
       acquisitionDate,
-      byteSize: null,
-      sha256: null,
+      byteSize: implementation?.artifactRecord?.artifact.byteSize ?? null,
+      sha256: implementation?.artifactRecord?.artifact.sha256 ?? null,
       transformation,
       datasetLicense: null,
       evidenceRefs,

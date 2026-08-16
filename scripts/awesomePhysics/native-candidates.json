@@ -17,13 +17,13 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/PositionBasedDynamics",
-        "revision": "beafc921e215",
+        "revision": "beafc921e21553515b4f406258e5b16054a45268",
         "files": [
           "CMakeLists.txt",
           "PositionBasedDynamics/CMakeLists.txt",
           "PositionBasedDynamics/PositionBasedDynamics.cpp",
-          "PositionBasedDynamics/PositionBasedFluids.cpp",
-          "PositionBasedDynamics/XPBD.cpp",
+          "PositionBasedDynamics/MathFunctions.cpp",
+          "extern/eigen/version.txt",
           "LICENSE"
         ],
         "evidenceRefs": [
@@ -33,45 +33,48 @@
       },
       "build": {
         "family": "emscripten-headless",
-        "command": "emcmake cmake -S . -B build-wasm -DPBD_LIBS_ONLY=ON -DCMAKE_BUILD_TYPE=Release -DEIGEN3_INCLUDE_DIR=\"$EIGEN3_INCLUDE_DIR\" && cmake --build build-wasm --parallel 4",
-        "toolchain": "Emscripten SDK with the repository's Eigen dependency; a new narrow C ABI façade must compile only the CPU solver library and exclude GLFW, ImGui, demos, and Python bindings.",
-        "workingDirectory": "awesome-physics-repos/PositionBasedDynamics"
+        "command": "node scripts/awesomePhysics/wasm/position-based-dynamics/build.mjs --source ../awesome-physics-repos/PositionBasedDynamics --output <empty out-of-tree directory> --emscripten-root <pinned Emscripten root> --em-cache <pinned Emscripten cache>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245 with vendored Eigen 3.4.0; release C++11 build with double precision and no exceptions, RTTI, OpenMP, pthreads, GUI, demos, or Python bindings.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "A new PositionBasedDynamics C ABI façade plus PositionBasedDynamics.wasm",
-        "workerBoundary": "A dedicated worker owns typed particle/constraint buffers, solver steps, explicit allocation/free, cancellation, and copied state snapshots; Vue/WebGL owns demo controls and rendering.",
+        "module": "position-based-dynamics-headless.wasm with a bounded scalar distance-constraint C ABI",
+        "workerBoundary": "The lazy adapter verifies and instantiates the local raw module, validates six finite scalar inputs, performs one bounded solver call, and returns copied scalar corrections; no pointers or mutable module state cross the adapter boundary.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Cap linear memory at 128 MiB and reject particle, constraint, and iteration counts before allocation.",
-        "threadPolicy": "Serial CPU subset only; no native threads, OpenMP, tasking, or shared memory.",
-        "maxMemoryBytes": 134217728,
-        "maxArtifactBytes": 33554432,
+        "memoryPolicy": "The standalone module has a fixed 16908288-byte linear memory and no allocation ABI; the adapter accepts only bounded finite scalar inputs.",
+        "threadPolicy": "Serial CPU subset only; no native threads, OpenMP, tasking, workers, or shared memory.",
+        "maxMemoryBytes": 16908288,
+        "maxArtifactBytes": 4194304,
         "maxWorkerTimeMs": 10000,
-        "maxOutputBytes": 4194304
+        "maxOutputBytes": 1024
       },
       "licenseGate": {
-        "status": "review",
+        "status": "pass",
         "license": "MIT",
         "noticeRequirements": [
           "Retain the PositionBasedDynamics MIT license with the module.",
-          "Review Eigen and Discregrid notices before redistributing a linked build; do not include Python bindings."
+          "Retain the reviewed Eigen MPL-2.0 and Emscripten/musl notices; Discregrid, GUI dependencies, demos, and Python bindings are excluded from this build."
         ]
       },
       "proofRequirements": [
-        "Extract and compile a small CPU solver core behind a POD-only C ABI.",
-        "Run deterministic particle/constraint fixtures through a dedicated worker and compare copied buffers.",
+        "Extract and compile the distance-constraint CPU solver core behind a scalar-only C ABI.",
+        "Run deterministic scalar distance fixtures through the raw module and verified adapter and compare finite corrections.",
         "Record the Emscripten revision, module hash and byte size, memory/thread policy, and all third-party notices before release."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm",
+        "sha256": "3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df",
+        "byteSize": 1256
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:162"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+        "scripts/awesomePhysics/wasm/position-based-dynamics/README.md",
+        "scripts/awesomePhysics/wasm/position-based-dynamics/build-ledger.json",
+        "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md"
       ]
     },
     {

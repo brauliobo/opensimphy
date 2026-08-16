@@ -32,6 +32,7 @@ const expectedAdapters = new Map([
   ['gala', 'awesome-gala-typescript'],
   ['shut-up-and-calculate', 'awesome-shut-up-and-calculate-typescript'],
   ['poppy', 'awesome-poppy-typescript'],
+  ['PositionBasedDynamics', 'awesome-positionbaseddynamics-wasm'],
 ])
 
 function installGeneratedFixture(): void {

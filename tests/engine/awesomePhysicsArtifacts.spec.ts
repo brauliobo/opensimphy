@@ -79,8 +79,17 @@ describe('Awesome Physics artifact manifests and loader', () => {
     expect(NATIVE_CANDIDATES.find(({ project }) => project === 'ncollide')?.optional).toBe(true)
   })
 
-  it('keeps every current entry unavailable and without an artifact claim', () => {
-    for (const record of [...WASM_PILOTS, ...NATIVE_CANDIDATES]) {
+  it('keeps artifact claims aligned with each entry lifecycle', () => {
+    const records = [...WASM_PILOTS, ...NATIVE_CANDIDATES]
+    const available = records.filter(({ status }) => status === 'available')
+    const unavailable = records.filter(({ status }) => status !== 'available')
+    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'position-based-dynamics'])
+    for (const record of available) {
+      expect(record.artifact.path).not.toBeNull()
+      expect(record.artifact.sha256).toMatch(/^[a-f0-9]{64}$/)
+      expect(record.artifact.byteSize).toBeGreaterThan(0)
+    }
+    for (const record of unavailable) {
       expect(['planned', 'blocked']).toContain(record.status)
       expect(record.artifact).toEqual({ path: null, sha256: null, byteSize: null })
     }
@@ -142,8 +151,10 @@ describe('Awesome Physics artifact manifests and loader', () => {
   })
 
   it('rejects a planned record before attempting a fetch', async () => {
+    const plannedRecord = WASM_PILOTS.find(({ status }) => status === 'planned')
+    expect(plannedRecord).toBeDefined()
     const fetch = vi.fn(async () => wasmResponse(WASM_BYTES))
-    await expect(loadVerifiedWasmArtifact(WASM_PILOTS[0]!, { fetch })).rejects.toThrow(/is planned, not available/)
+    await expect(loadVerifiedWasmArtifact(plannedRecord!, { fetch })).rejects.toThrow(/is planned, not available/)
     expect(fetch).not.toHaveBeenCalled()
   })
 
@@ -208,12 +219,14 @@ describe('Awesome Physics artifact manifests and loader', () => {
 
   it('requires complete SHA-256 and byte-size metadata before an entry can become available', () => {
     const incomplete = clone(WASM_PILOT_MANIFEST)
-    incomplete.records[0]!.status = 'available'
+    const plannedIndex = incomplete.records.findIndex(({ status }) => status === 'planned')
+    expect(plannedIndex).toBeGreaterThanOrEqual(0)
+    incomplete.records[plannedIndex]!.status = 'available'
     expect(() => parseWasmPilotManifest(incomplete)).toThrow(/available artifacts require path, sha256, and byteSize/)
 
     const malformedHash = clone(WASM_PILOT_MANIFEST)
-    malformedHash.records[0]!.status = 'available'
-    malformedHash.records[0]!.artifact = {
+    malformedHash.records[plannedIndex]!.status = 'available'
+    malformedHash.records[plannedIndex]!.artifact = {
       path: 'artifacts/coolprop.wasm',
       sha256: 'not-a-hash',
       byteSize: 8,

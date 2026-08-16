@@ -30,8 +30,8 @@ if (!positionDescriptor) throw new Error('Missing generated PositionBasedDynamic
 
 const publicArtifactPath = resolve(process.cwd(), 'public/wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm')
 const artifactBytes = new Uint8Array(readFileSync(publicArtifactPath))
-const plannedRecord = NATIVE_CANDIDATES.find(({ id }) => id === POSITION_BASED_DYNAMICS_MANIFEST_ID)
-if (!plannedRecord) throw new Error('Missing PositionBasedDynamics native candidate record')
+const manifestRecord = NATIVE_CANDIDATES.find(({ id }) => id === POSITION_BASED_DYNAMICS_MANIFEST_ID)
+if (!manifestRecord) throw new Error('Missing PositionBasedDynamics native candidate record')
 
 const fixtureDescriptor: AwesomePhysicsSimulationDescriptorV1 = {
   ...positionDescriptor,
@@ -45,9 +45,8 @@ const fixtureDescriptor: AwesomePhysicsSimulationDescriptorV1 = {
 }
 
 const fixtureRecord: ArtifactRecordV1 = {
-  ...plannedRecord,
-  status: 'available',
-  artifact: { ...POSITION_BASED_DYNAMICS_ARTIFACT_INTEGRITY },
+  ...manifestRecord,
+  artifact: { ...manifestRecord.artifact },
 }
 
 function sha256(bytes: Uint8Array): string {
@@ -171,7 +170,7 @@ describe('PositionBasedDynamics headless WASM artifact', () => {
     )
   })
 
-  it('fails closed on compatibility, cancellation, and unavailable central records', async () => {
+  it('fails closed on compatibility, cancellation, and unavailable records', async () => {
     expect(() => createPositionBasedDynamicsAdapterFromRecord(
       { ...fixtureDescriptor, catalogItemId: 'wrong-catalog-item' },
       new AbortController().signal,
@@ -211,21 +210,31 @@ describe('PositionBasedDynamics headless WASM artifact', () => {
     }, abortedRun.signal)).rejects.toMatchObject({ name: 'AbortError' })
     expect(fetch).not.toHaveBeenCalled()
 
-    expect(() => createPositionBasedDynamicsAdapter(positionDescriptor, new AbortController().signal)).toThrow(/available manifest record/)
+    expect(() => createPositionBasedDynamicsAdapterFromRecord(
+      fixtureDescriptor,
+      new AbortController().signal,
+      { ...fixtureRecord, status: 'planned', artifact: { path: null, sha256: null, byteSize: null } },
+    )).toThrow(/requires an available manifest record/)
+    expect(createPositionBasedDynamicsAdapter(positionDescriptor, new AbortController().signal)).toMatchObject({
+      adapterId: POSITION_BASED_DYNAMICS_ADAPTER_ID,
+      protocol: 'awesome-physics-adapter-v1',
+    })
   })
 
-  it('does not change descriptor availability or central adapter registration yet', () => {
+  it('publishes the verified descriptor and central adapter registration', () => {
     expect(positionDescriptor).toMatchObject({
-      execution: 'wasm-candidate',
-      availability: 'unavailable',
-      runnable: false,
+      execution: 'wasm',
+      availability: 'available',
+      runnable: true,
+      adapterId: POSITION_BASED_DYNAMICS_ADAPTER_ID,
+      sourceRevision: POSITION_BASED_DYNAMICS_PROVENANCE.sourceRevision,
+      implementationRevision: POSITION_BASED_DYNAMICS_IMPLEMENTATION_REVISION,
     })
-    expect(positionDescriptor).not.toHaveProperty('adapterId')
-    expect(plannedRecord).toMatchObject({
-      status: 'planned',
-      artifact: { path: null, sha256: null, byteSize: null },
+    expect(manifestRecord).toMatchObject({
+      status: 'available',
+      artifact: POSITION_BASED_DYNAMICS_ARTIFACT_INTEGRITY,
     })
     const adapterFactories = readFileSync(resolve(process.cwd(), 'src/awesomePhysics/adapterFactories.ts'), 'utf8')
-    expect(adapterFactories).not.toContain(POSITION_BASED_DYNAMICS_ADAPTER_ID)
+    expect(adapterFactories).toContain(POSITION_BASED_DYNAMICS_ADAPTER_ID)
   })
 })
