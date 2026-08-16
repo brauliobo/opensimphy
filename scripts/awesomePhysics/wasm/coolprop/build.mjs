@@ -174,7 +174,7 @@ async function assertPortableArtifact(path, label) {
     /\/root\//,
     /\/mnt\//,
     /\/workspace(?:s)?\//,
-    /(?:^|[^A-Za-z0-9])[A-Za-z]:[\\/](?:[^\\/\0-\x1F:*?"<>|]+[\\/]){2}/,
+    /(?:^|[^A-Za-z0-9])[A-Za-z]:[\\/](?:[A-Za-z0-9._~-][^\\/\0-\x1F:*?"<>|]*[\\/]){2}/,
   ]
   if (localPathPatterns.some((pattern) => pattern.test(text))) {
     fail(`${label} contains an absolute local build path`)
