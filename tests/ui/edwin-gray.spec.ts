@@ -1,76 +1,66 @@
 import { mount } from '@vue/test-utils'
-import { vi } from 'vitest'
+import CircuitInstrument from '../../src/components/edwin-gray/CircuitInstrument.vue'
 import EnergyLedgerInstrument from '../../src/components/edwin-gray/EnergyLedgerInstrument.vue'
 import FamilyInstrument from '../../src/components/edwin-gray/FamilyInstrument.vue'
 import GeometryInstrument from '../../src/components/edwin-gray/GeometryInstrument.vue'
 import PulseCycleInstrument from '../../src/components/edwin-gray/PulseCycleInstrument.vue'
+import { evaluateGrayFullMotor, GRAY_PRESETS } from '../../src/edwin-gray/edwinGrayEngine'
+import { freezeGrayFullMotorResult } from '../../src/edwin-gray/edwinGrayWorkbench'
 
-describe('Edwin Gray lab instruments', () => {
-  it('draws the selected prototype and reports pole count', async () => {
-    const wrapper = mount(GeometryInstrument, { props: { depth: 'guided' } })
+const result = freezeGrayFullMotorResult(evaluateGrayFullMotor({
+  ...GRAY_PRESETS.purple,
+  revolutions: 1,
+  mode: 'dynamic',
+  machineMode: 'original-500rpm-contact-v1',
+  rotorInertiaKgM2: 0.01,
+  loadTorqueNm: 0.01,
+}))
 
-    expect(wrapper.get('[data-testid="gray-geometry-result"]').text()).toContain('3 stator')
-    expect(wrapper.get('[data-testid="gray-patent-topology"]').text()).toContain('9 stator pair stations')
-    expect(wrapper.get('[data-testid="gray-event-schedule"] tbody').findAll('tr')).toHaveLength(27)
-    expect(wrapper.get('[data-testid="gray-geometry-status"]').attributes('aria-live')).toBe('polite')
-    await wrapper.get('[data-testid="gray-geometry-motor"]').setValue('black')
-    expect(wrapper.get('[data-testid="gray-geometry-result"]').text()).toContain('1 stator')
-    expect(wrapper.get('[data-testid="gray-geometry-result"] svg').attributes('role')).toBe('img')
+describe('unified Edwin Gray result instruments', () => {
+  it('uses one immutable event for geometry and circuit state', () => {
+    const geometry = mount(GeometryInstrument, {
+      props: { depth: 'guided', result, activeEventIndex: 2 },
+    })
+    const circuit = mount(CircuitInstrument, {
+      props: { depth: 'guided', result, activeEventIndex: 2 },
+    })
+
+    expect(Object.isFrozen(result)).toBe(true)
+    expect(Object.isFrozen(result.events[2])).toBe(true)
+    expect(geometry.get('[data-testid="gray-geometry-status"]').text()).toContain('event 3')
+    expect(geometry.get('[data-testid="gray-rotor"]').attributes('transform')).toContain(
+      String(result.events[2]!.scheduledAbsoluteAngleDeg),
+    )
+    expect(geometry.get('[data-testid="gray-active-sectors"] tbody').findAll('tr')).toHaveLength(3)
+    expect(circuit.get('[data-testid="gray-circuit-table"]').text()).toContain(
+      result.events[2]!.before.holdingCapacitorJ.toExponential(3),
+    )
   })
 
-  it('marks an unquenched dump below 500 rpm', async () => {
-    const wrapper = mount(PulseCycleInstrument, { props: { depth: 'guided' } })
+  it('renders raw event, mechanical, and run-ledger tables from the same result', () => {
+    const pulse = mount(PulseCycleInstrument, {
+      props: { depth: 'technical', result, activeEventIndex: 0 },
+    })
+    const energy = mount(EnergyLedgerInstrument, {
+      props: { depth: 'technical', result },
+    })
 
-    expect(wrapper.get('[data-testid="gray-pulse-status"]').text()).toContain('arc quenched')
-    await wrapper.get('[data-testid="gray-pulse-rpm"]').setValue('120')
-    expect(wrapper.get('[data-testid="gray-pulse-status"]').text()).toContain('unquenched dump')
-    expect(wrapper.get('[data-testid="gray-pulse-result"]').findAll('table tbody tr')).toHaveLength(11)
-    expect(wrapper.get('[data-testid="gray-pulse-result"]').get('table caption').text()).toContain('Classical pulse samples')
+    expect(pulse.get('[data-testid="gray-event-timeline"] tbody').findAll('tr')).toHaveLength(result.completedEventCount)
+    expect(pulse.get('[data-testid="gray-mechanical-table"]').text()).toContain(result.finalRpm.toFixed(3))
+    expect(energy.get('[data-testid="gray-run-ledger"]').text()).toContain(result.ledger.totalLossesJ.toExponential(4))
+    expect(energy.get('[data-testid="gray-system-cop"]').text()).toBe(result.ledger.wholeSystemCop.toFixed(6))
+    expect(energy.get('[data-testid="gray-claim-reproduction"]').text()).toContain('explicitly separate')
   })
 
-  it('does not start spin-up animation when reduced motion is preferred', async () => {
-    vi.spyOn(window, 'matchMedia').mockReturnValue({
-      matches: true,
-      media: '(prefers-reduced-motion: reduce)',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    } as MediaQueryList)
-    const wrapper = mount(PulseCycleInstrument, { props: { depth: 'guided' } })
+  it('keeps guided content and adds technical disclosure without evaluating family rows', () => {
+    const guided = mount(FamilyInstrument, { props: { depth: 'guided', result } })
+    const technical = mount(FamilyInstrument, { props: { depth: 'technical', result } })
 
-    await wrapper.get('[data-testid="gray-pulse-play"]').trigger('click')
-
-    expect(wrapper.get('[data-testid="gray-pulse-play"]').text()).toBe('Spin up')
-    expect(wrapper.get('[data-testid="gray-pulse-motion-notice"]').text()).toContain('reduced motion')
-  })
-
-  it('keeps classical COP below 100% and shows the EMA4 claim separately', async () => {
-    const wrapper = mount(EnergyLedgerInstrument, { props: { depth: 'technical' } })
-
-    expect(wrapper.get('[data-testid="gray-claimed-cop"]').text()).toContain('300')
-    const cop = Number(wrapper.get('[data-testid="gray-classical-cop"]').text().replace('%', ''))
-    expect(cop).toBeGreaterThanOrEqual(0)
-    expect(cop).toBeLessThan(100)
-    expect(wrapper.get('[data-testid="gray-system-cop"]').text()).toBe('Unavailable / inconclusive')
-    const claim = wrapper.get('[data-testid="gray-claim-reproduction"]')
-    expect(claim.text()).toContain('not computed motor performance')
-    expect(claim.get('[data-testid="gray-claim-arithmetic-cop"]').text()).toBe('278.36')
-    expect(claim.get('[data-testid="gray-claim-mismatch"]').text()).toBe('+3.64 COP')
-    expect(claim.get('[data-testid="gray-claim-deficit"]').text()).toBe('7433.2 W')
-    expect(claim.get('[data-testid="gray-claim-target-output"]').text()).toBe('7557.6 W')
-    expect(claim.get('[data-testid="gray-claim-closed-cop"]').text()).toBe('1.00')
-  })
-
-  it('lists six machines and zero recovery on gold', () => {
-    const wrapper = mount(FamilyInstrument, { props: { depth: 'guided' } })
-    const gold = wrapper.get('[data-motor="gold"]').text()
-
-    expect(wrapper.get('[data-testid="gray-family-result"]').findAll('table tbody tr')).toHaveLength(6)
-    expect(gold).toMatch(/0\.00e\+0/)
-    expect(wrapper.get('table caption').text()).toContain('Later colored prototype evidence comparison')
-    expect(wrapper.get('[role="status"]').attributes('aria-live')).toBe('polite')
+    expect(guided.get('tbody').findAll('tr')).toHaveLength(6)
+    expect(guided.get('[data-motor="purple"]').text()).toContain(`${result.completedEventCount} worker events`)
+    expect(guided.get('[data-motor="gold"]').text()).toContain('not evaluated')
+    expect(guided.find('.gray-technical').exists()).toBe(false)
+    expect(technical.get('.gray-technical').text()).toContain(result.provenance.eventSchedule)
+    expect(technical.get('[data-testid="gray-structured-findings"]').text()).toContain('validatesTheory: false')
   })
 })

@@ -5,6 +5,7 @@ import {
   GRAY_PATENT_MODEL_INPUT_HASH,
 } from '../../src/edwin-gray/edwinGrayMachines'
 import {
+  loadGrayMagneticLookup,
   parseGrayFemLookupDocument,
   requireCompatibleGrayFemLookup,
 } from '../../src/edwin-gray/edwinGrayFem'
@@ -77,6 +78,19 @@ describe('Edwin Gray machine contracts', () => {
   it('accepts an exact patent machine and model match', () => {
     const lookup = parseGrayFemLookupDocument(patentLookup())
     expect(requireCompatibleGrayFemLookup(lookup, GRAY_PATENT_MACHINE_ID)).toBe(lookup)
+  })
+
+  it('loads a lookup only after exact machine compatibility succeeds', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify(patentLookup()), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    })) as typeof fetch
+
+    await expect(loadGrayMagneticLookup(GRAY_PATENT_MACHINE_ID, fetcher)).resolves.toMatchObject({
+      source: 'fem-lookup',
+      caseId: GRAY_PATENT_MACHINE_ID,
+    })
+    await expect(loadGrayMagneticLookup('edwin-gray-purple', fetcher)).rejects.toThrow(/machine contract ID mismatch/)
   })
 
   it.each([

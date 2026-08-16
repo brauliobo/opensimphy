@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
 import GeometryInstrument from '../components/edwin-gray/GeometryInstrument.vue'
@@ -17,12 +18,56 @@ import {
   GRAY_VIDEO_TIMELINE,
 } from '../edwin-gray/edwinGrayGuide'
 import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
+import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
+import { GRAY_MACHINE_CONTRACTS, GRAY_MACHINE_IDS } from '../edwin-gray/edwinGrayMachines'
+import type { GrayFullMotorResult, GrayMagneticLookup } from '../edwin-gray/edwinGrayEngine'
+import {
+  defaultGrayWorkbenchInput,
+  freezeGrayFullMotorResult,
+  grayFemCanBeRequested,
+  grayFullMotorInput,
+  GRAY_WORKBENCH_QUERY_KEYS,
+  parseGrayWorkbenchQuery,
+  serializeGrayWorkbenchInput,
+  type GrayWorkbenchInputState,
+} from '../edwin-gray/edwinGrayWorkbench'
+import { resetGrayWorker, runGrayInWorker } from '../edwin-gray/edwinGrayWorkerProtocol'
+import {
+  createGraySnapshot,
+  exportGraySnapshot,
+  importGraySnapshot,
+  loadGraySnapshots,
+  saveGraySnapshot,
+} from '../edwin-gray/edwinGrayPersistence'
+import { compareSnapshots } from '../workbench/snapshots'
+import type { WorkbenchSnapshotV1 } from '../types/workbench'
 import type { ReadingDepth } from '../types/tour'
 
 const progress = useTourProgress()
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
+const route = useRoute()
+const router = useRouter()
+const input = ref<GrayWorkbenchInputState>(parseGrayWorkbenchQuery(route.query))
+const result = ref<Readonly<GrayFullMotorResult> | null>(null)
+const runStatus = ref<'idle' | 'running' | 'completed' | 'cancelled' | 'failed'>('idle')
+const runProgress = ref(0)
+const runStage = ref('Ready to run')
+const runError = ref('')
+const stale = ref(false)
+const activeEventIndex = ref(0)
+const timelinePlaying = ref(false)
+const motionNotice = ref('')
+const femStatus = ref<'unavailable' | 'loading' | 'invalid' | 'ready'>('unavailable')
+const femMessage = ref('The selected machine contract has no compatible FEM lookup.')
+const femLookup = ref<GrayMagneticLookup | null>(null)
+const snapshots = ref<readonly WorkbenchSnapshotV1[]>([])
+const selectedSnapshotTimes = ref<string[]>([])
+const snapshotMessage = ref('')
+const snapshotError = ref('')
+let abortController: AbortController | null = null
+let timelineTimer: ReturnType<typeof setInterval> | null = null
 const videoActivated = ref(false)
 const originalStarterEvidence = grayEvidenceRecord('gray-caption-original-500-rpm-starter')
 const modifiedWindingEvidence = grayEvidenceRecord('gray-caption-schloff-awg14-rewind')
@@ -36,9 +81,24 @@ const instrumentComponents = {
   family: FamilyInstrument,
 } as const
 
+const activeEvent = computed(() => result.value?.events[activeEventIndex.value] ?? result.value?.events[0] ?? null)
+const selectedSnapshots = computed(() => selectedSnapshotTimes.value
+  .map((timestamp) => snapshots.value.find((snapshot) => snapshot.timestamp === timestamp))
+  .filter((snapshot): snapshot is WorkbenchSnapshotV1 => Boolean(snapshot)))
+const snapshotComparison = computed(() => selectedSnapshots.value.length === 2
+  ? compareSnapshots(selectedSnapshots.value[0]!, selectedSnapshots.value[1]!)
+  : null)
+
 function instrumentComponent(moduleId: string | undefined) {
   if (!moduleId) return undefined
   return instrumentComponents[moduleId as keyof typeof instrumentComponents]
+}
+
+function instrumentProps(moduleId: string | undefined) {
+  if (!result.value) return {}
+  return moduleId === 'geometry' || moduleId === 'circuit' || moduleId === 'pulse'
+    ? { depth: depth.value, result: result.value, activeEventIndex: activeEventIndex.value }
+    : { depth: depth.value, result: result.value }
 }
 
 const shortcutSteps = Object.freeze([
@@ -57,8 +117,201 @@ function activateVideo(): void {
   videoActivated.value = true
 }
 
-onMounted(() => {
+function stopTimeline(): void {
+  timelinePlaying.value = false
+  if (timelineTimer) clearInterval(timelineTimer)
+  timelineTimer = null
+}
+
+function toggleTimeline(): void {
+  if (timelinePlaying.value) {
+    stopTimeline()
+    return
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    motionNotice.value = 'Rotor animation is disabled because reduced motion is preferred.'
+    return
+  }
+  if (!result.value?.events.length) return
+  motionNotice.value = ''
+  timelinePlaying.value = true
+  timelineTimer = setInterval(() => {
+    const count = result.value?.events.length ?? 0
+    if (!count) return stopTimeline()
+    activeEventIndex.value = (activeEventIndex.value + 1) % count
+  }, 180)
+}
+
+function cancelRun(): void {
+  abortController?.abort()
+  abortController = null
+  if (runStatus.value === 'running') {
+    runStatus.value = 'cancelled'
+    runStage.value = 'Cancelled; the prior result remains available and stale.'
+  }
+}
+
+async function runWorkbench(): Promise<void> {
+  cancelRun()
+  runError.value = ''
+  runProgress.value = 0
+  runStatus.value = 'running'
+  runStage.value = 'Starting worker'
+  const controller = new AbortController()
+  abortController = controller
+  try {
+    const lookup = input.value.magneticModel === 'fem-lookup' ? femLookup.value ?? undefined : undefined
+    const completed = await runGrayInWorker(grayFullMotorInput(input.value, lookup), {
+      signal: controller.signal,
+      onProgress(progressValue, stage) {
+        runProgress.value = progressValue
+        runStage.value = stage
+      },
+    })
+    if (controller.signal.aborted) return
+    result.value = freezeGrayFullMotorResult(completed)
+    runStatus.value = 'completed'
+    runProgress.value = 1
+    runStage.value = `Completed ${completed.completedEventCount} events`
+    stale.value = false
+    activeEventIndex.value = 0
+  } catch (reason) {
+    if (reason instanceof DOMException && reason.name === 'AbortError') return
+    runStatus.value = 'failed'
+    runError.value = reason instanceof Error ? reason.message : String(reason)
+    runStage.value = 'Worker run failed'
+  } finally {
+    if (abortController === controller) abortController = null
+  }
+}
+
+async function refreshFem(): Promise<void> {
+  femLookup.value = null
+  if (!grayFemCanBeRequested(input.value)) {
+    femStatus.value = 'unavailable'
+    femMessage.value = GRAY_MACHINE_CONTRACTS[input.value.machineContractId].femBlocker
+    if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
+    return
+  }
+  femStatus.value = 'loading'
+  femMessage.value = 'Loading and validating the generated FEM lookup contract.'
+  try {
+    femLookup.value = await loadGrayMagneticLookup(input.value.machineContractId)
+    femStatus.value = 'ready'
+    femMessage.value = `Compatible lookup ${femLookup.value.caseId} is ready; only its magnetic relation will be activated.`
+  } catch (reason) {
+    const message = reason instanceof Error ? reason.message : String(reason)
+    femStatus.value = /request failed with 404/.test(message) ? 'unavailable' : 'invalid'
+    femMessage.value = message
+    if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
+  }
+}
+
+function selectMachine(): void {
+  const machineContractId = input.value.machineContractId
+  input.value = defaultGrayWorkbenchInput(machineContractId)
+  void refreshFem()
+}
+
+async function resetWorkbench(): Promise<void> {
+  cancelRun()
+  stopTimeline()
+  try {
+    await resetGrayWorker()
+  } catch (reason) {
+    runError.value = reason instanceof Error ? reason.message : String(reason)
+  }
+  input.value = defaultGrayWorkbenchInput()
+  result.value = null
+  stale.value = false
+  runStatus.value = 'idle'
+  runProgress.value = 0
+  runStage.value = 'Reset to canonical defaults'
+  void refreshFem()
+  await runWorkbench()
+}
+
+function saveSnapshot(): void {
+  snapshotError.value = ''
+  if (!result.value || stale.value) {
+    snapshotError.value = 'Run the current canonical input before saving a snapshot.'
+    return
+  }
+  try {
+    const snapshot = createGraySnapshot(input.value, result.value, new Date().toISOString(), GRAY_MACHINE_CONTRACTS[input.value.machineContractId].label)
+    snapshots.value = saveGraySnapshot(snapshot)
+    snapshotMessage.value = `Saved snapshot ${snapshot.timestamp}.`
+  } catch (reason) {
+    snapshotError.value = reason instanceof Error ? reason.message : String(reason)
+  }
+}
+
+function toggleSnapshot(timestamp: string): void {
+  selectedSnapshotTimes.value = selectedSnapshotTimes.value.includes(timestamp)
+    ? selectedSnapshotTimes.value.filter((value) => value !== timestamp)
+    : [...selectedSnapshotTimes.value, timestamp].slice(-2)
+}
+
+function downloadSnapshot(snapshot: WorkbenchSnapshotV1): void {
+  const blob = new Blob([exportGraySnapshot(snapshot)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = `edwin-gray-${snapshot.timestamp.replaceAll(':', '-')}.json`
+  anchor.click()
+  URL.revokeObjectURL(url)
+}
+
+async function importSnapshot(event: Event): Promise<void> {
+  snapshotError.value = ''
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  try {
+    const snapshot = importGraySnapshot(await file.text())
+    snapshots.value = saveGraySnapshot(snapshot)
+    snapshotMessage.value = `Imported snapshot ${snapshot.timestamp}.`
+  } catch (reason) {
+    snapshotError.value = reason instanceof Error ? reason.message : String(reason)
+  } finally {
+    ;(event.target as HTMLInputElement).value = ''
+  }
+}
+
+watch(input, (next) => {
+  if (result.value) stale.value = true
+  stopTimeline()
+  const serialized = serializeGrayWorkbenchInput(next)
+  const alreadyCanonical = GRAY_WORKBENCH_QUERY_KEYS.every((key) => route.query[key] === serialized[key])
+  if (alreadyCanonical) return
+  const query = { ...route.query }
+  for (const key of GRAY_WORKBENCH_QUERY_KEYS) delete query[key]
+  Object.assign(query, serialized)
+  void router.replace({ query })
+}, { deep: true, immediate: true })
+
+watch(() => route.query, (query) => {
+  const parsed = parseGrayWorkbenchQuery(query)
+  if (JSON.stringify(serializeGrayWorkbenchInput(parsed))
+    !== JSON.stringify(serializeGrayWorkbenchInput(input.value))) {
+    input.value = parsed
+    void refreshFem()
+  }
+})
+
+onMounted(async () => {
   document.title = 'Edwin Gray Motor Lab | OpenSimPhy Atlas'
+  try {
+    snapshots.value = loadGraySnapshots()
+  } catch (reason) {
+    snapshotError.value = reason instanceof Error ? reason.message : String(reason)
+  }
+  await refreshFem()
+  await runWorkbench()
+})
+
+onBeforeUnmount(() => {
+  cancelRun()
+  stopTimeline()
 })
 </script>
 
@@ -83,6 +336,136 @@ onMounted(() => {
   .quantum-lab-promise
     strong Teacher's shortcut
     p Do not treat "cold electricity" as a second Maxwell term. Establish the patent topology, schedule the participating sectors, quench an arc, and keep the energy ledger classical.
+
+  section.gray-workbench(aria-labelledby="gray-workbench-title" data-testid="gray-workbench")
+    header.gray-workbench__header
+      div
+        p.eyebrow Unified worker instrument
+        h2#gray-workbench-title Edwin Gray Workbench
+        p One URL-serializable input contract produces one immutable full-run result for every panel below.
+      .gray-workbench__signal(:data-status="runStatus")
+        strong {{ runStatus }}
+        span {{ runStage }}
+    .gray-workbench__controls
+      fieldset
+        legend Identity and run
+        label
+          span Machine contract
+          select(v-model="input.machineContractId" data-testid="gray-machine-contract" @change="selectMachine")
+            option(v-for="id in GRAY_MACHINE_IDS" :key="id" :value="id") {{ GRAY_MACHINE_CONTRACTS[id].label }}
+        label
+          span Full-run mode
+          select(v-model="input.mode" data-testid="gray-run-mode")
+            option(value="dynamic") Dynamic inertial
+            option(value="prescribed-diagnostic") Prescribed diagnostic
+        label
+          span Revolutions
+          input(v-model.number="input.revolutions" type="number" min="1" max="100" step="1" data-testid="gray-revolutions")
+        label
+          span Contact contract
+          select(v-model="input.machineMode" data-testid="gray-contact-mode")
+            option(value="original-500rpm-contact-v1") Original 500 rpm contact v1
+            option(value="modified-electronic-v1") Modified electronic v1
+      fieldset
+        legend Mechanical state
+        label
+          span Start speed / rpm
+          input(v-model.number="input.startRpm" type="number" min="0" max="20000" step="10" data-testid="gray-rpm")
+        label
+          span Rotor inertia / kg m2
+          input(v-model.number="input.rotorInertiaKgM2" type="number" min="0.000001" max="1000" step="0.001" data-testid="gray-inertia")
+        label
+          span Load torque / Nm
+          input(v-model.number="input.loadTorqueNm" type="number" min="0" max="1000000" step="0.01" data-testid="gray-load")
+        label
+          span Quench angle / deg
+          input(v-model.number="input.quenchDeg" type="number" min="0" max="40" step="1" data-testid="gray-quench")
+      fieldset
+        legend Circuit and storage
+        label
+          span Charge voltage / V
+          input(v-model.number="input.chargeVoltageV" type="number" min="0" max="200000" step="100" data-testid="gray-voltage")
+        label
+          span Holding capacitance / F
+          input(v-model.number="input.capacitanceF" type="number" min="0.000000000001" max="0.01" step="0.00000001" data-testid="gray-capacitance")
+        label
+          span Turns
+          input(v-model.number="input.turns" type="number" min="1" max="2000" step="1" data-testid="gray-turns")
+        label
+          span Source resistance / ohm
+          input(v-model.number="input.sourceResistanceOhm" type="number" min="0.000001" max="1000000000" step="1" data-testid="gray-source-resistance")
+        label
+          span Dump capacitance / F
+          input(v-model.number="input.dumpCapacitanceF" type="number" min="0.000000000001" max="0.01" step="0.00000001" data-testid="gray-dump-capacitance")
+        label
+          span Recovery capacitance / F
+          input(v-model.number="input.recoveryCapacitanceF" type="number" min="0.000000000001" max="0.1" step="0.00000001" data-testid="gray-recovery-capacitance")
+        label
+          span Initial recovery voltage / V
+          input(v-model.number="input.initialRecoveryVoltageV" type="number" min="0" :max="input.chargeVoltageV * 2" step="10" data-testid="gray-recovery-voltage")
+      fieldset
+        legend Magnetic relation
+        label
+          span Magnetic model
+          select(v-model="input.magneticModel" data-testid="gray-magnetic-model")
+            option(value="illustrative-surrogate") Illustrative lumped surrogate
+            option(value="fem-lookup" :disabled="femStatus !== 'ready'") Compatible FEM lookup
+        p.gray-fem-state(:data-state="femStatus" role="status" data-testid="gray-fem-runtime-status")
+          strong {{ femStatus }}
+          |  / {{ femMessage }}
+        button(type="button" :disabled="!grayFemCanBeRequested(input) || femStatus === 'loading'" @click="refreshFem") Recheck FEM lookup
+    .gray-workbench__actions
+      button(type="button" :disabled="runStatus === 'running'" data-testid="gray-run" @click="runWorkbench") Run full motor
+      button(type="button" :disabled="runStatus !== 'running'" data-testid="gray-cancel" @click="cancelRun") Cancel
+      button(type="button" data-testid="gray-reset" @click="resetWorkbench") Reset
+      progress(:value="runProgress" max="1" aria-label="Gray worker progress")
+      span {{ Math.round(runProgress * 100) }}%
+    p.quantum-stale(v-if="stale" role="status" data-testid="gray-stale") Inputs changed. The visible result is stale until the worker completes another run.
+    p.quantum-boundary(v-if="runError" role="alert") {{ runError }}
+
+    .gray-shared-timeline(v-if="result" data-testid="gray-shared-timeline")
+      .gray-shared-timeline__readout
+        strong Event {{ (activeEvent?.eventIndex ?? 0) + 1 }} / {{ result.completedEventCount }}
+        span {{ activeEvent?.scheduledAbsoluteAngleDeg.toFixed(2) }} deg / phase {{ activeEvent?.phaseLabel }} / {{ activeEvent?.after.arcState }}
+      input(v-model.number="activeEventIndex" type="range" min="0" :max="Math.max(0, result.events.length - 1)" step="1" aria-label="Active motor event" data-testid="gray-event-slider")
+      button(type="button" data-testid="gray-timeline-play" @click="toggleTimeline") {{ timelinePlaying ? 'Pause rotor' : 'Animate rotor' }}
+      p.quantum-stale(v-if="motionNotice" role="status" data-testid="gray-motion-notice") {{ motionNotice }}
+
+    section.gray-snapshots(aria-labelledby="gray-snapshot-title")
+      header
+        div
+          p.eyebrow Revisioned records
+          h3#gray-snapshot-title Save, compare, import, and export
+        .gray-snapshot-actions
+          button(type="button" :disabled="!result || stale" data-testid="gray-snapshot-save" @click="saveSnapshot") Save snapshot
+          label.gray-import-button
+            span Import JSON
+            input(type="file" accept="application/json" data-testid="gray-snapshot-import" @change="importSnapshot")
+      p.gray-status(v-if="snapshotMessage" role="status") {{ snapshotMessage }}
+      p.quantum-boundary(v-if="snapshotError" role="alert") {{ snapshotError }}
+      .gray-table-scroll(v-if="snapshots.length")
+        table(data-testid="gray-snapshot-table")
+          caption Saved revisioned Gray snapshots; select two to compare
+          thead
+            tr
+              th(scope="col") Compare
+              th(scope="col") Timestamp
+              th(scope="col") Label
+              th(scope="col") Revision
+              th(scope="col") Export
+          tbody
+            tr(v-for="snapshot in snapshots" :key="snapshot.timestamp")
+              td
+                input(type="checkbox" :checked="selectedSnapshotTimes.includes(snapshot.timestamp)" :aria-label="`Compare ${snapshot.timestamp}`" @change="toggleSnapshot(snapshot.timestamp)")
+              td {{ snapshot.timestamp }}
+              td {{ snapshot.label }}
+              td {{ snapshot.modelRevision }} / {{ snapshot.compatibilityKey.slice(0, 8) }}
+              td
+                button(type="button" @click="downloadSnapshot(snapshot)") Export
+      .gray-snapshot-comparison(v-if="snapshotComparison" data-testid="gray-snapshot-comparison")
+        strong {{ snapshotComparison.compatible ? 'Compatible comparison' : 'Incompatible comparison' }}
+        p {{ selectedSnapshots[0]?.finding.changed }}
+        p {{ selectedSnapshots[1]?.finding.changed }}
 
   .quantum-lab-layout
     main.quantum-lab-main
@@ -130,9 +513,10 @@ onMounted(() => {
               code {{ section.equation }}
         component(
           :is="instrumentComponent(section.moduleId)"
-          v-if="section.moduleId"
-          :depth="depth"
+          v-if="section.moduleId && result"
+          v-bind="instrumentProps(section.moduleId)"
         )
+        p.quantum-stale(v-else-if="section.moduleId") Run the full motor to populate this instrument.
 
       section.gray-machine-evidence(aria-labelledby="gray-machine-evidence-title" data-testid="gray-machine-evidence")
         .gray-machine-evidence__heading
@@ -192,8 +576,8 @@ onMounted(() => {
       section.gray-fem-card(aria-labelledby="gray-fem-title" data-testid="gray-fem-status")
         div
           p.eyebrow Local finite-element workspace
-          h2#gray-fem-title FEM status: {{ GRAY_FEM_PROVENANCE.status }}
-          p {{ GRAY_FEM_PROVENANCE.solverBoundary }} The browser instruments use the bounded classical engine, not an FEM result.
+          h2#gray-fem-title Runtime FEM status: {{ femStatus }}
+          p {{ femMessage }} FEM is activated only for an exact machine compatibility match. The surrogate remains explicitly labeled and is never relabeled FEM.
         .gray-fem-card__links
           a(:href="GRAY_FEM_PROVENANCE.workspace" target="_blank" rel="noreferrer") Open fem/edwin-gray provenance
           a(:href="GRAY_FEM_PROVENANCE.sourceLedger" target="_blank" rel="noreferrer") Open source ledger

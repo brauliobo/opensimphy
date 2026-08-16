@@ -1718,6 +1718,7 @@ export type GrayFullMotorArcState = 'none' | 'quenched' | 'sustained'
 
 export interface GrayFullMotorInput {
   motorId: GrayMotorId
+  machineContractId?: string
   revolutions: number
   chargeVoltageV: number
   capacitanceF: number
@@ -1739,6 +1740,7 @@ export interface GrayFullMotorInput {
 
 export interface GrayFullMotorResolvedInput {
   motorId: GrayMotorId
+  machineContractId: string
   revolutions: number
   chargeVoltageV: number
   capacitanceF: number
@@ -2106,6 +2108,10 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
   const startRpm = finiteInRange(input.startRpm, 'startRpm', 0, 2e4)
   const quenchDeg = finiteInRange(input.quenchDeg, 'quenchDeg', 0, 40)
   const turns = finiteInRange(input.turns, 'turns', 1, 2e3)
+  const machineContractId = input.machineContractId ?? `edwin-gray-${input.motorId}`
+  if (!/^[a-z0-9][a-z0-9-]{0,127}$/.test(machineContractId)) {
+    throw new Error('machineContractId must be a safe lowercase contract ID')
+  }
   if (input.mode !== 'prescribed-diagnostic' && input.mode !== 'dynamic') {
     throw new Error('mode must be prescribed-diagnostic or dynamic')
   }
@@ -2155,6 +2161,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
   }
   const resolved: GrayFullMotorResolvedInput = {
     motorId: input.motorId,
+    machineContractId,
     revolutions,
     chargeVoltageV,
     capacitanceF,

@@ -1,80 +1,70 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import {
-  evaluateGrayMotor,
-  GRAY_MOTOR_IDS,
-  GRAY_MOTORS,
-  GRAY_PRESETS,
-  type GrayMotorId,
-} from '../../edwin-gray/edwinGrayEngine'
+import { computed } from 'vue'
+import type { GrayFullMotorResult } from '../../edwin-gray/edwinGrayEngine'
 import type { ReadingDepth } from '../../types/tour'
 
-defineProps<{ depth: ReadingDepth }>()
-
-const motorId = ref<GrayMotorId>('gold')
-const error = ref('')
-const result = computed(() => {
-  try {
-    error.value = ''
-    return evaluateGrayMotor(GRAY_PRESETS[motorId.value])
-  } catch (reason) {
-    error.value = reason instanceof Error ? reason.message : String(reason)
-    return null
-  }
-})
+const props = defineProps<{
+  depth: ReadingDepth
+  result: Readonly<GrayFullMotorResult>
+  activeEventIndex: number
+}>()
+const event = computed(() => props.result.events[props.activeEventIndex] ?? props.result.events[0])
+const formatJ = (value: number): string => value.toExponential(3)
 </script>
 
 <template lang="pug">
 article.quantum-instrument(data-testid="gray-circuit-instrument")
   header.quantum-instrument__header
     p.quantum-kicker Instrument 02 / circuit
-    h3 Pulse-charge, then follow the event schedule
-    p The supply holds two capacitors. A commutator event charges a four-capacitor bank. A later scheduled event dumps that bank into the participating stator and rotor sectors.
-
-  .quantum-controls.quantum-controls--one
-    label
-      span Prototype
-      select(v-model="motorId" data-testid="gray-circuit-motor")
-        option(v-for="id in GRAY_MOTOR_IDS" :key="id" :value="id") {{ GRAY_MOTORS[id].label }}
-
-  p.quantum-boundary(v-if="error" role="alert") {{ error }}
-  .quantum-result(v-else-if="result" data-testid="gray-circuit-result")
-    p.gray-status(role="status" aria-live="polite") {{ result.eventSchedule.length }} scheduled events per revolution; {{ result.topology.simultaneousSectors }} sectors participate in each event. This is not an all-coil trigger.
-    svg(viewBox="0 0 720 220" role="img" aria-label="Capacitor dump schematic")
+    h3 Follow the same event through charge, dump, coil, and recovery
+    p The circuit state below is the before/after state stored on the active full-run event.
+  .quantum-result(v-if="event" data-testid="gray-circuit-result")
+    p.gray-status(role="status" aria-live="polite") {{ event.before.switchState }} → {{ event.after.switchState }} / arc {{ event.after.arcState }} / contact rule {{ event.contactRuleSatisfied ? 'satisfied' : 'not satisfied' }}.
+    svg(viewBox="0 0 720 220" role="img" aria-label="Active event capacitor dump circuit")
       rect(x="20" y="70" width="90" height="80" fill="none" stroke="currentColor")
-      text(x="32" y="116" fill="currentColor" font-size="13") HV supply
-      rect(x="150" y="40" width="70" height="50" fill="none" stroke="currentColor")
-      text(x="160" y="70" fill="currentColor" font-size="12") C hold
-      rect(x="150" y="130" width="70" height="50" fill="none" stroke="currentColor")
-      text(x="158" y="160" fill="currentColor" font-size="12") C bank
-      rect(x="280" y="80" width="90" height="60" fill="none" stroke="currentColor")
-      text(x="292" y="116" fill="currentColor" font-size="12") commutator
-      rect(x="420" y="40" width="110" height="50" fill="none" stroke="currentColor")
-      text(x="432" y="70" fill="currentColor" font-size="12") stator N={{ result.motor.statorPoles }}
-      rect(x="420" y="130" width="110" height="50" fill="none" stroke="currentColor")
-      text(x="432" y="160" fill="currentColor" font-size="12") rotor N={{ result.motor.rotorPoles }}
-      rect(v-if="result.motor.hasRecovery" x="560" y="80" width="130" height="60" fill="none" stroke="currentColor")
-      text(v-if="result.motor.hasRecovery" x="572" y="116" fill="currentColor" font-size="12") recovery C
+      text(x="32" y="116" fill="currentColor" font-size="13") source
+      rect(x="150" y="40" width="90" height="50" fill="none" stroke="currentColor")
+      text(x="160" y="70" fill="currentColor" font-size="12") holding C
+      rect(x="150" y="130" width="90" height="50" fill="none" stroke="currentColor")
+      text(x="160" y="160" fill="currentColor" font-size="12") dump bank
+      rect(x="290" y="80" width="100" height="60" fill="none" stroke="currentColor")
+      text(x="302" y="116" fill="currentColor" font-size="12") {{ event.after.switchState }}
+      rect(x="440" y="80" width="100" height="60" fill="none" stroke="currentColor")
+      text(x="452" y="116" fill="currentColor" font-size="12") active coil
+      rect(x="590" y="80" width="100" height="60" fill="none" stroke="currentColor")
+      text(x="602" y="116" fill="currentColor" font-size="12") recovery
       line(x1="110" y1="110" x2="150" y2="65" stroke="currentColor")
-      line(x1="220" y1="65" x2="280" y2="110" stroke="currentColor")
-      line(x1="220" y1="155" x2="280" y2="110" stroke="currentColor")
-      line(x1="370" y1="110" x2="420" y2="65" stroke="currentColor")
-      line(x1="370" y1="110" x2="420" y2="155" stroke="currentColor")
-    .gray-table-scroll
-      table
-        caption Selected circuit model inputs and derived values
+      line(x1="240" y1="65" x2="290" y2="110" stroke="currentColor")
+      line(x1="240" y1="155" x2="290" y2="110" stroke="currentColor")
+      line(x1="390" y1="110" x2="440" y2="110" stroke="currentColor")
+      line(x1="540" y1="110" x2="590" y2="110" stroke="currentColor")
+    .gray-table-scroll.gray-table-scroll--wide
+      table(data-testid="gray-circuit-table")
+        caption Raw active-event circuit state and transfer ledger, joules
+        thead
+          tr
+            th(scope="col") State
+            th(scope="col") Holding
+            th(scope="col") Dump
+            th(scope="col") Coil
+            th(scope="col") Recovery
+            th(scope="col") Current A
         tbody
           tr
-            th(scope="row") Charge voltage
-            td {{ result.input.chargeVoltageV }} V
+            th(scope="row") Before
+            td {{ formatJ(event.before.holdingCapacitorJ) }}
+            td {{ formatJ(event.before.dumpBankJ) }}
+            td {{ formatJ(event.before.activeCoilMagneticJ) }}
+            td {{ formatJ(event.before.recoveryStorageJ) }}
+            td {{ event.before.activeCoilCurrentA.toExponential(3) }}
           tr
-            th(scope="row") Bank C
-            td {{ (result.input.capacitanceF * 1e6).toFixed(3) }} uF
-          tr
-            th(scope="row") L_eq
-            td {{ (result.inductanceH * 1e6).toFixed(1) }} uH
-          tr
-            th(scope="row") Dump energy
-            td {{ result.ledger.capacitorJ.toFixed(3) }} J
-    p.quantum-boundary Ignitrons and conversion tubes are ideal switches here. Tube drop, mercury plasma, and EMI are omitted.
+            th(scope="row") After
+            td {{ formatJ(event.after.holdingCapacitorJ) }}
+            td {{ formatJ(event.after.dumpBankJ) }}
+            td {{ formatJ(event.after.activeCoilMagneticJ) }}
+            td {{ formatJ(event.after.recoveryStorageJ) }}
+            td {{ event.after.activeCoilCurrentA.toExponential(3) }}
+    details.gray-technical(v-if="depth === 'technical'" open)
+      summary Technical circuit disclosure
+      p Recovery branch: {{ event.recoveryBranch.topology }}. Transferred {{ formatJ(event.recoveryBranch.transferredJ) }} J from {{ formatJ(event.recoveryBranch.availableMagneticJ) }} J available magnetic energy.
 </template>

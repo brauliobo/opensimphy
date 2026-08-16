@@ -1,73 +1,49 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import {
-  evaluateGrayFamily,
-  GRAY_PRESETS,
-} from '../../edwin-gray/edwinGrayEngine'
+import { GRAY_MOTOR_IDS, GRAY_MOTORS, type GrayFullMotorResult } from '../../edwin-gray/edwinGrayEngine'
+import { grayEvidenceRecord } from '../../edwin-gray/edwinGrayEvidence'
 import type { ReadingDepth } from '../../types/tour'
 
-defineProps<{ depth: ReadingDepth }>()
-
-const chargeVoltageV = ref(5000)
-const startRpm = ref(500)
-const error = ref('')
-
-const rows = computed(() => {
-  try {
-    error.value = ''
-    const gold = GRAY_PRESETS.gold
-    return evaluateGrayFamily({
-      chargeVoltageV: chargeVoltageV.value,
-      capacitanceF: gold.capacitanceF,
-      startRpm: startRpm.value,
-      quenchDeg: gold.quenchDeg,
-      turns: gold.turns,
-    })
-  } catch (reason) {
-    error.value = reason instanceof Error ? reason.message : String(reason)
-    return []
-  }
-})
+defineProps<{ depth: ReadingDepth; result: Readonly<GrayFullMotorResult> }>()
+const recoveryEvidence = grayEvidenceRecord('gray-caption-purple-recovery-coils')
 </script>
 
 <template lang="pug">
 article.quantum-instrument(data-testid="gray-family-instrument")
   header.quantum-instrument__header
-    p.quantum-kicker Instrument 05 / family
-    h3 Compare later colored prototype evidence rows
-    p Hold voltage, capacitance, speed, and turns fixed while comparing the source-described prototype rows. Recovery energy appears only on EMA4 and purple in this illustrative model; the comparison does not establish a universal Gray motor.
-
-  .quantum-controls.quantum-controls--two
-    label
-      span Shared charge voltage
-      input(v-model.number="chargeVoltageV" type="range" min="500" max="10000" step="100" data-testid="gray-family-voltage")
-      output {{ chargeVoltageV }} V
-    label
-      span Shared speed
-      input(v-model.number="startRpm" type="range" min="0" max="2000" step="10" data-testid="gray-family-rpm")
-      output {{ startRpm }} rpm
-
-  p.quantum-boundary(v-if="error" role="alert") {{ error }}
-  .quantum-result(v-else data-testid="gray-family-result")
-    p.gray-status(role="status" aria-live="polite") Six later-prototype rows compared with shared inputs. Patent topology is not being redefined by these colors.
+    p.quantum-kicker Instrument 05 / family and evidence
+    h3 Keep machine identity and evidence scope attached
+    p The family table is catalog evidence, not six fresh simulations. Only the selected row carries the unified worker result.
+  .quantum-result(data-testid="gray-family-result")
+    p.gray-status(role="status" aria-live="polite") Worker result belongs to {{ result.motor.label }} only. Other rows remain descriptive.
     .gray-table-scroll.gray-table-scroll--wide
       table
-        caption Later colored prototype evidence comparison; values are illustrative model outputs
+        caption Gray prototype family evidence; selected result identified explicitly
         thead
           tr
             th(scope="col") Machine
-            th(scope="col") Stator pole sets
-            th(scope="col") Recovery J
-            th(scope="col") Mech J
-            th(scope="col") COP %
-            th(scope="col") Quenched
+            th(scope="col") Year
+            th(scope="col") Designer
+            th(scope="col") Recovery evidence
+            th(scope="col") Result scope
         tbody
-          tr(v-for="row in rows" :key="row.motor.id" :data-motor="row.motor.id")
-            td {{ row.motor.label }}
-            td {{ row.motor.statorPoles }}
-            td {{ row.ledger.recoveredJ.toExponential(2) }}
-            td {{ row.ledger.mechanicalJ.toExponential(2) }}
-            td {{ (row.ledger.classicalCop * 100).toFixed(3) }}
-            td {{ row.arcQuenched ? 'yes' : 'no' }}
-    p.quantum-boundary Do not merge these rows into one Gray motor. Each prototype row contains source claims and illustrative assumptions, not validation.
+          tr(v-for="id in GRAY_MOTOR_IDS" :key="id" :data-motor="id")
+            td {{ GRAY_MOTORS[id].label }}
+            td {{ GRAY_MOTORS[id].year }}
+            td {{ GRAY_MOTORS[id].designer }}
+            td {{ GRAY_MOTORS[id].hasRecovery ? 'source-described path' : 'none in catalog row' }}
+            td {{ result.input.machineContractId === `edwin-gray-${id}` ? `${result.completedEventCount} worker events` : 'not evaluated' }}
+    section.gray-findings(data-testid="gray-structured-findings")
+      h4 Structured findings
+      dl
+        div(v-for="finding in result.findings" :key="finding.code")
+          dt {{ finding.code }}
+          dd {{ finding.statement }}
+        div
+          dt validatesTheory
+          dd validatesTheory: {{ result.validatesTheory }}
+    details.gray-technical(v-if="depth === 'technical'" open)
+      summary Technical provenance disclosure
+      p {{ result.provenance.eventSchedule }}
+      p {{ result.provenance.originalContactRule }}
+      p Evidence boundary: {{ recoveryEvidence.text }} {{ recoveryEvidence.implications[1] }}
 </template>

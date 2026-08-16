@@ -1,116 +1,68 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import {
   evaluateGrayCopClaim,
-  evaluateGrayMotor,
   GRAY_COP_CLAIM_SCENARIOS,
-  GRAY_MOTOR_IDS,
-  GRAY_MOTORS,
-  GRAY_PRESETS,
-  type GrayMotorId,
+  type GrayFullMotorResult,
 } from '../../edwin-gray/edwinGrayEngine'
 import type { ReadingDepth } from '../../types/tour'
 
-defineProps<{ depth: ReadingDepth }>()
-
-const motorId = ref<GrayMotorId>('ema4')
-const chargeVoltageV = ref(1500)
-const capacitanceF = ref(2.3e-6)
-const error = ref('')
+defineProps<{ depth: ReadingDepth; result: Readonly<GrayFullMotorResult> }>()
 const claimAudit = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282)
 const observedDeficitW = claimAudit.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
-const closedClaimAudit = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282, {
-  explicitExternalInputPowerW: observedDeficitW,
-})
-
-const result = computed(() => {
-  try {
-    error.value = ''
-    const preset = GRAY_PRESETS[motorId.value]
-    return evaluateGrayMotor({
-      ...preset,
-      chargeVoltageV: chargeVoltageV.value,
-      capacitanceF: capacitanceF.value,
-    })
-  } catch (reason) {
-    error.value = reason instanceof Error ? reason.message : String(reason)
-    return null
-  }
-})
-
-function applyPreset(): void {
-  const preset = GRAY_PRESETS[motorId.value]
-  chargeVoltageV.value = preset.chargeVoltageV
-  capacitanceF.value = preset.capacitanceF
-}
-
-function formatJ(value: number): string {
-  return `${value.toExponential(3)} J`
-}
+const formatJ = (value: number): string => `${value.toExponential(4)} J`
 </script>
 
 <template lang="pug">
 article.quantum-instrument(data-testid="gray-energy-instrument")
   header.quantum-instrument__header
-    p.quantum-kicker Instrument 04 / energy
-    h3 Account for the dump without a radiant extra term
-    p Classical COP uses mechanical work plus recovery transfer over capacitor energy. EMA4 still shows the talk’s COP 300 as a source-claim beside that number.
-
-  .quantum-controls.quantum-controls--three
-    label
-      span Prototype
-      select(v-model="motorId" data-testid="gray-energy-motor" @change="applyPreset")
-        option(v-for="id in GRAY_MOTOR_IDS" :key="id" :value="id") {{ GRAY_MOTORS[id].label }}
-    label
-      span Charge voltage
-      input(v-model.number="chargeVoltageV" type="range" min="100" max="20000" step="100" data-testid="gray-energy-voltage")
-      output {{ chargeVoltageV }} V
-    label
-      span Bank capacitance
-      input(v-model.number="capacitanceF" type="range" min="1e-8" max="1e-5" step="1e-8" data-testid="gray-energy-cap")
-      output {{ (capacitanceF * 1e6).toFixed(3) }} μF
-
-  p.quantum-boundary(v-if="error" role="alert") {{ error }}
-  .quantum-result(v-else-if="result" data-testid="gray-energy-result")
-    p.gray-status(role="status" aria-live="polite") Model status: {{ result.modelStatus }}. Classical COP is scoped to the pulse stage; the historical claim remains separate.
-    .gray-table-scroll
-      table
-        caption Classical pulse-stage energy ledger; historical claim shown separately
+    p.quantum-kicker Instrument 04 / complete ledger
+    h3 Close the declared run boundary
+    p This is the full-run ledger from the same immutable result. The historical arithmetic diagnostic remains separate below and never contributes energy.
+  .quantum-result(data-testid="gray-energy-result")
+    p.gray-status(role="status" aria-live="polite") {{ result.ledger.copScope }} / boundary {{ result.ledger.boundaryComplete ? 'complete' : 'incomplete' }}.
+    .gray-table-scroll.gray-table-scroll--wide
+      table(data-testid="gray-run-ledger")
+        caption Raw full-run energy ledger
         tbody
           tr
-            th(scope="row") Capacitor energy
-            td {{ formatJ(result.ledger.capacitorJ) }}
+            th(scope="row") Initial stored electrical
+            td {{ formatJ(result.ledger.initialStoredElectricalJ) }}
           tr
-            th(scope="row") Ohmic
-            td {{ formatJ(result.ledger.ohmicJ) }}
+            th(scope="row") Initial kinetic
+            td {{ formatJ(result.ledger.initialKineticJ) }}
           tr
-            th(scope="row") Spark at quench
-            td {{ formatJ(result.ledger.sparkJ) }}
+            th(scope="row") External recharge
+            td {{ formatJ(result.ledger.externalRechargeJ) }}
           tr
-            th(scope="row") Torque work (integral)
-            td {{ formatJ(result.ledger.mechanicalJ) }}
+            th(scope="row") Prescribed drive input
+            td {{ formatJ(result.ledger.prescribedDriveInputJ) }}
           tr
-            th(scope="row") Recovered
-            td {{ formatJ(result.ledger.recoveredJ) }}
+            th(scope="row") Load work
+            td {{ formatJ(result.ledger.loadWorkJ) }}
           tr
-            th(scope="row") Energy balance residual
-            td {{ formatJ(result.ledger.residualJ) }}
+            th(scope="row") Total losses
+            td {{ formatJ(result.ledger.totalLossesJ) }}
           tr
-            th(scope="row") Classical COP
-            td(data-testid="gray-classical-cop") {{ (result.ledger.classicalCop * 100).toFixed(3) }}%
+            th(scope="row") Final stored residuals
+            td {{ formatJ(result.ledger.finalStoredResidualsJ) }}
           tr
-            th(scope="row") Claimed COP
-            td(data-testid="gray-claimed-cop") {{ result.ledger.claimedCop ?? 'none in this source row' }}
+            th(scope="row") Numerical residual
+            td {{ formatJ(result.ledger.numericalResidualJ) }}
           tr
             th(scope="row") Whole-system COP
-            td(data-testid="gray-system-cop") Unavailable / inconclusive
-    p.quantum-boundary {{ result.finding }} Reproduction is not validation. validatesTheory remains false.
+            td(data-testid="gray-system-cop") {{ result.ledger.wholeSystemCop.toFixed(6) }}
+          tr
+            th(scope="row") Claim deficit injected
+            td {{ formatJ(result.ledger.claimDeficitInjectedJ) }}
+    details.gray-technical(v-if="depth === 'technical'" open)
+      summary Technical ledger disclosure
+      p Normalized residual {{ result.ledger.normalizedResidual.toExponential(4) }}. Electromagnetic work {{ formatJ(result.ledger.electromagneticWorkJ) }}; kinetic change {{ formatJ(result.ledger.kineticEnergyChangeJ) }}.
 
   section.gray-claim-panel(aria-labelledby="gray-claim-title" data-testid="gray-claim-reproduction")
     .gray-claim-panel__heading
-      p.quantum-kicker Claim reproduction / separate evidence boundary
-      h4#gray-claim-title User-provided diagram and presenter claim
-      p This arithmetic audit reproduces the supplied 26.8 W input, 7,460 W output, and displayed COP 282. It is not computed motor performance, simulation output, or validation.
+      p.quantum-kicker Fallback diagnostic / explicitly separate
+      h4#gray-claim-title Historical diagram arithmetic, not motor output
+      p This fallback reproduces attributed values only. It is not the worker result, is not labeled FEM, and does not validate the theory.
     dl.gray-claim-metrics
       div
         dt Diagram values
@@ -119,16 +71,7 @@ article.quantum-instrument(data-testid="gray-energy-instrument")
         dt Arithmetic COP
         dd(data-testid="gray-claim-arithmetic-cop") {{ claimAudit.claim.arithmeticCop?.toFixed(2) }}
       div
-        dt Display mismatch
-        dd(data-testid="gray-claim-mismatch") +{{ claimAudit.claim.displayedCopMismatch?.toFixed(2) }} COP
-      div
         dt Required unaccounted power
         dd(data-testid="gray-claim-deficit") {{ observedDeficitW.toFixed(1) }} W
-      div
-        dt Output needed for COP 282
-        dd(data-testid="gray-claim-target-output") {{ claimAudit.claim.outputPowerNeededForDisplayedCopW?.toFixed(1) }} W
-      div
-        dt Closed-boundary COP after explicit deficit input
-        dd(data-testid="gray-claim-closed-cop") {{ closedClaimAudit.conservationClosure.observedOutput?.closedSystemCop?.toFixed(2) }}
-    p.gray-claim-panel__boundary The explicit {{ observedDeficitW.toFixed(1) }} W deficit closes the attributed-output boundary at COP 1.00. It does not explain where that power came from. Whole-system COP therefore remains unavailable and inconclusive.
+    p.gray-claim-panel__boundary validatesTheory: {{ claimAudit.validatesTheory }}. This diagnostic is preserved only as an attributed source-claim boundary check.
 </template>

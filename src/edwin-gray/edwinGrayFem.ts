@@ -222,12 +222,19 @@ export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
   return lookup
 }
 
-export function loadGrayMagneticLookup(fetcher: typeof fetch = fetch): Promise<GrayMagneticLookup> {
+export function loadGrayMagneticLookup(
+  machine: GrayMachineContract | GrayMachineContractId,
+  fetcher: typeof fetch = fetch,
+): Promise<GrayMagneticLookup> {
   const path = 'data/generated/edwin-gray/motor-fem-lut-v1.json'
   return fetcher(`${import.meta.env.BASE_URL}${path}`)
     .then((response) => {
       if (!response.ok) throw new Error(`FEM lookup request failed with ${response.status}`)
       return response.json() as Promise<unknown>
     })
-    .then(buildGrayMagneticLookup)
+    .then((value) => {
+      const document = parseGrayFemLookupDocument(value)
+      requireCompatibleGrayFemLookup(document, machine)
+      return buildGrayMagneticLookup(document)
+    })
 }
