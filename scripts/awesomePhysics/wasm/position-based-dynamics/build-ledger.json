@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "artifact": {
+    "name": "position-based-dynamics-headless.wasm",
+    "path": "wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm",
+    "byteSize": 1256,
+    "sha256": "3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df"
+  },
+  "source": {
+    "checkout": "awesome-physics-repos/PositionBasedDynamics",
+    "revision": "beafc921e21553515b4f406258e5b16054a45268",
+    "eigen": "Eigen 3.4.0 (vendored extern/eigen)",
+    "translationUnits": [
+      "PositionBasedDynamics/PositionBasedDynamics.cpp",
+      "PositionBasedDynamics/MathFunctions.cpp",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/pbd_abi.cpp"
+    ]
+  },
+  "toolchain": {
+    "name": "Emscripten",
+    "version": "6.0.6-git",
+    "revision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245",
+    "cmakeToolchainSha256": "fdca7d6b6ebe9c087aa7f0a0c7391b0b83fdb081160158f65aa1182cdc964718"
+  },
+  "abi": {
+    "exports": [
+      "pbd_solve_distance",
+      "pbd_solve_distance_correction0",
+      "pbd_solve_distance_correction1"
+    ],
+    "memory": "standalone linear memory; no browser pointer ABI",
+    "status": "i32 0 or 1",
+    "corrections": "finite f64 scalars"
+  },
+  "build": {
+    "script": "scripts/awesomePhysics/wasm/position-based-dynamics/build.mjs",
+    "parallelism": 4,
+    "staticLibrary": "scratch-only out-of-tree intermediate; never a browser artifact",
+    "flags": [
+      "-DUSE_DOUBLE",
+      "-DEIGEN_MPL2_ONLY",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-openmp",
+      "-sSTANDALONE_WASM=1",
+      "-sFILESYSTEM=0",
+      "-sDISABLE_EXCEPTION_CATCHING=1"
+    ]
+  },
+  "verification": [
+    "source checkout is clean before and after the build",
+    "source revision, vendored Eigen version, toolchain version/revision, and toolchain hash are pinned",
+    "raw module has no imports and contains the scalar ABI exports",
+    "artifact byte size and SHA-256 are fixed"
+  ]
+}
