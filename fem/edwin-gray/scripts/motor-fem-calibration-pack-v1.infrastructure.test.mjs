@@ -7,6 +7,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { blockedExistingInventory, buildCalibrationPack, expectedSymmetryProof } from "../calibration/build-calibration-pack.mjs";
+import { collectSolverEvidence } from "../calibration/solver-evidence.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROFILE_PATH = resolve(ROOT, "calibration/profile-v1.json");
@@ -47,7 +48,11 @@ function jobFixture(root, eventClass) {
   };
   const solverProfile = {
     configSha256: SOLVER_CONFIG_HASH,
-    name: "direct-mumps-publication-v1"
+    name: "direct-mumps-publication-v1",
+    mode: "direct",
+    kspType: "preonly",
+    pcType: "lu",
+    factorSolverType: "mumps"
   };
   const environmentIdentity = {
     backend: "docker",
@@ -74,14 +79,30 @@ function jobFixture(root, eventClass) {
     "motor.msh": `$MeshFormat\n4.1 0 8\n$EndMeshFormat\n// event ${eventClass}\n`,
     "mesh-audit.json": `${JSON.stringify({ valid: true, eventClass })}\n`,
     "gmsh.log": `event ${eventClass} mesh complete\n`,
-    "getdp.log": `event ${eventClass} solve complete\n`,
+    "getdp.log": [
+      "Info    : N: 1320328 - preonly lu mumps",
+      "Linear solve converged due to CONVERGED_ITS iterations 1",
+      "Info    : SaveSolution[Sys_Mag]",
+      `Info    : PostOperation 'MagnetostaticResults' 1/5\n          > '${join(jobDir, "magnetic-potential.pos")}'`,
+      `Info    : PostOperation 'MagnetostaticResults' 2/5\n          > '${join(jobDir, "magnetic-flux-density.pos")}'`,
+      `Info    : PostOperation 'MagnetostaticResults' 3/5\n          > '${join(jobDir, "observables.dat")}'`,
+      `Info    : PostOperation 'MagnetostaticResults' 4/5\n          > '${join(jobDir, "coenergy.dat")}'`,
+      `Info    : PostOperation 'MagnetostaticResults' 5/5\n          > '${join(jobDir, "inductance.dat")}'`,
+      "E n d   P o s t - P r o c e s s i n g",
+      "Info    : Stopped (fixture, Wall = 2.5s, CPU = 2.0s, Mem = 64.0Mb)\n"
+    ].join("\n"),
+    "magnetic-potential.pos": `event ${eventClass} potential\n`,
+    "magnetic-flux-density.pos": `event ${eventClass} flux density\n`,
     "observables.dat": `MagneticEnergyJ ${values.magneticEnergyJ}\n`,
     "coenergy.dat": `CoEnergyJ ${values.coEnergyJ}\n`,
     "inductance.dat": `InductanceH ${values.inductanceH}\n`
   };
   for (const [name, content] of Object.entries(files)) writeFileSync(join(jobDir, name), content, "utf8");
+  const solverEvidence = collectSolverEvidence({ jobDir, solver: solverProfile, getdpExitStatus: 0 });
+  files["solver-convergence.json"] = `${JSON.stringify(solverEvidence, null, 2)}\n`;
+  writeFileSync(join(jobDir, "solver-convergence.json"), files["solver-convergence.json"], "utf8");
 
-  const normalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", "observables.dat", "coenergy.dat", "inductance.dat"]
+  const normalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", "solver-convergence.json", "magnetic-potential.pos", "magnetic-flux-density.pos", "observables.dat", "coenergy.dat", "inductance.dat"]
     .map((path) => ({ path, sha256: sha256(files[path]) }));
   const result = {
     contract: "edwin-gray-browser-result",
@@ -145,14 +166,17 @@ function jobFixture(root, eventClass) {
       mesh: sha256(files["motor.msh"]),
       audit: sha256(files["mesh-audit.json"]),
       logs: { gmsh: sha256(files["gmsh.log"]), getdp: sha256(files["getdp.log"]) },
-      convergence: null,
+      convergence: sha256(files["solver-convergence.json"]),
       outputs: {
+        "magnetic-potential.pos": sha256(files["magnetic-potential.pos"]),
+        "magnetic-flux-density.pos": sha256(files["magnetic-flux-density.pos"]),
         "observables.dat": sha256(files["observables.dat"]),
         "coenergy.dat": sha256(files["coenergy.dat"]),
         "inductance.dat": sha256(files["inductance.dat"])
       },
       result: sha256(readFileSync(resultPath))
     },
+    solverConvergence: solverEvidence,
     result: "result.json"
   };
   const checkpointPath = join(jobDir, "checkpoint.json");
@@ -217,6 +241,14 @@ function rewriteCheckpoint(job, update) {
   writeJson(job.checkpointPath, checkpoint);
 }
 
+function rewriteGetdpLog(job, update) {
+  const path = join(job.jobDir, "getdp.log");
+  writeFileSync(path, update(readFileSync(path, "utf8")), "utf8");
+  rewriteCheckpoint(job, (checkpoint) => {
+    checkpoint.artifacts.logs.getdp = sha256(readFileSync(path));
+  });
+}
+
 test("calibration fixture declarations cover every required pass and failure mode", () => {
   assert.equal(SCENARIOS.contractVersion, 1);
   assert.deepEqual(SCENARIOS.scenarios.map((scenario) => scenario.id), [
@@ -248,6 +280,57 @@ test("complete calibration evidence builds the deterministic limited contract", 
   });
   assert.equal(first.torque.bounded, false);
   assert.equal(first.evidence.coarseFineDrift.measured, 0.011584935659327932);
+});
+
+test("direct calibration solver evidence fails closed", async (t) => {
+  await t.test("valid direct log", () => {
+    const context = fixture(t);
+    assert.doesNotThrow(() => build(context));
+  });
+  await t.test("missing completion", () => {
+    const context = fixture(t);
+    rewriteGetdpLog(context.jobs[0], (log) => log.replace(/Info    : Stopped[^\n]+\n$/, ""));
+    assert.throws(() => build(context), /truncated|final stopped record/);
+  });
+  await t.test("wrong solver", () => {
+    const context = fixture(t);
+    rewriteGetdpLog(context.jobs[0], (log) => log.replace("preonly lu mumps", "gmres ilu"));
+    assert.throws(() => build(context), /selected gmres\/ilu instead of preonly\/lu/);
+  });
+  for (const [name, failure] of [
+    ["PETSc error", "[0]PETSC ERROR: factorization failed"],
+    ["GetDP error", "Error   : failed to write solution"],
+    ["out of memory", "Out of memory: Killed process 42 (getdp)"]
+  ]) {
+    await t.test(name, () => {
+      const context = fixture(t);
+      rewriteGetdpLog(context.jobs[0], (log) => log.replace("Info    : Stopped", `${failure}\nInfo    : Stopped`));
+      assert.throws(() => build(context), /PETSc\/GetDP error or out-of-memory/);
+    });
+  }
+});
+
+test("iterative calibration solver evidence rejects nonconvergence", (t) => {
+  const context = fixture(t);
+  const job = context.jobs[0];
+  rewriteGetdpLog(job, (log) => log
+    .replace("preonly lu mumps", "cg gamg")
+    .replace("Linear solve converged due to CONVERGED_ITS iterations 1", [
+      "0 KSP unpreconditioned resid norm 1.0 true resid norm 1.0 ||r(i)||/||b|| 1.0",
+      "750 KSP unpreconditioned resid norm 0.2 true resid norm 0.2 ||r(i)||/||b|| 0.2",
+      "Linear solve did not converge due to DIVERGED_ITS iterations 750"
+    ].join("\n")));
+  assert.throws(() => collectSolverEvidence({
+    jobDir: job.jobDir,
+    solver: {
+      name: "iterative-cg-gamg-v1",
+      configSha256: SOLVER_CONFIG_HASH,
+      mode: "iterative",
+      kspType: "cg",
+      pcType: "gamg"
+    },
+    getdpExitStatus: 0
+  }), /PETSc solve did not converge: DIVERGED_ITS/);
 });
 
 test("current event 0/9 inventory blocks deterministically without inventing classes", (t) => {

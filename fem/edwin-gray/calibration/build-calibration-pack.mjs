@@ -5,6 +5,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFile
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { proveEventMapSymmetry, validateEventMapSymmetryProof } from "../scripts/event-map-symmetry.mjs";
+import { validateCheckpointSolverEvidence } from "./solver-evidence.mjs";
 
 const CALIBRATION_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(CALIBRATION_DIR, "..");
@@ -172,6 +173,7 @@ function validateJob(job, inventoryDir, profile, eventMap) {
   assert(IMMUTABLE_IMAGE.test(checkpoint.solverEnvironment.identity?.image?.image || "")
     && IMMUTABLE_IMAGE.test(checkpoint.solverEnvironment.identity?.image?.digest || ""), `event class ${job.eventClass} environment image is not immutable`);
   validateCheckpointArtifacts(jobDir, checkpoint);
+  validateCheckpointSolverEvidence(jobDir, checkpoint);
 
   const environment = readJson(join(jobDir, "solver-environment.json"), `event class ${job.eventClass} environment`);
   assert(environment.identityHash === checkpoint.environmentIdentityHash, `event class ${job.eventClass} environment manifest identity differs`);

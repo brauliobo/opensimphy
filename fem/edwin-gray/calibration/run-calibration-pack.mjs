@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync } from "node:fs";
-import { basename, dirname, relative, resolve } from "node:path";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildCalibrationPack, expectedSymmetryProof, writeJsonAtomic } from "./build-calibration-pack.mjs";
+import { residualOnlyRunnerFailure, validateSolveForAttestation } from "./solver-evidence.mjs";
 
 const CALIBRATION_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(CALIBRATION_DIR, "..");
@@ -66,9 +68,50 @@ function runArguments({ options, profile, event, runDir }) {
   ];
 }
 
-function executeWithDeadline(args, remainingSeconds, eventClass) {
-  assert(remainingSeconds > 0, "calibration hard deadline expired before all event classes completed");
-  const result = spawnSync("timeout", [
+function sha256File(path) {
+  return createHash("sha256").update(readFileSync(path)).digest("hex");
+}
+
+function pendingCheckpoint(runDir, eventClass) {
+  if (!existsSync(runDir)) return null;
+  const matches = readdirSync(runDir, { withFileTypes: true }).flatMap((entry) => {
+    if (!entry.isDirectory()) return [];
+    const path = join(runDir, entry.name, "checkpoint.json");
+    if (!existsSync(path)) return [];
+    const checkpoint = readJson(path, `event class ${eventClass} checkpoint`);
+    return checkpoint.parameters?.eventIndex === eventClass && checkpoint.phases?.solve === "pending"
+      ? [{ path, checkpoint }]
+      : [];
+  });
+  assert(matches.length <= 1, `event class ${eventClass} has multiple pending checkpoints`);
+  return matches[0] || null;
+}
+
+function attestPendingDirectSolve(runDir, eventClass, failureOutput) {
+  assert(residualOnlyRunnerFailure(failureOutput), `event class ${eventClass} did not fail only on the inapplicable direct residual check`);
+  const pending = pendingCheckpoint(runDir, eventClass);
+  assert(pending, `event class ${eventClass} does not have a pending solve checkpoint`);
+  const jobDir = dirname(pending.path);
+  const evidence = validateSolveForAttestation(jobDir, pending.checkpoint, 0);
+  const evidencePath = join(jobDir, "solver-convergence.json");
+  writeJsonAtomic(evidencePath, evidence);
+  pending.checkpoint.phases.solve = "complete";
+  pending.checkpoint.artifacts.logs.getdp = evidence.getdpLogSha256;
+  pending.checkpoint.artifacts.convergence = sha256File(evidencePath);
+  pending.checkpoint.artifacts.outputs = evidence.outputHashes;
+  pending.checkpoint.solverConvergence = evidence;
+  const temporary = `${pending.path}.${process.pid}.tmp`;
+  writeFileSync(temporary, `${JSON.stringify(pending.checkpoint, null, 2)}\n`, "utf8");
+  renameSync(temporary, pending.path);
+}
+
+function priorResidualFailure(output, eventClass) {
+  return new RegExp(`calibration-run: event class ${eventClass} failed: run: GetDP log does not contain the final true residual\\s*$`, "m")
+    .test(output || "");
+}
+
+function spawnWithDeadline(args, remainingSeconds) {
+  return spawnSync("timeout", [
     "--foreground",
     "--signal=TERM",
     "--kill-after=5s",
@@ -76,6 +119,21 @@ function executeWithDeadline(args, remainingSeconds, eventClass) {
     process.execPath,
     ...args
   ], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+}
+
+function executeWithDeadline(args, remainingSeconds, eventClass, runDir, priorFailure = "") {
+  assert(remainingSeconds > 0, "calibration hard deadline expired before all event classes completed");
+  const started = Date.now();
+  if (pendingCheckpoint(runDir, eventClass) && priorResidualFailure(priorFailure, eventClass)) {
+    attestPendingDirectSolve(runDir, eventClass, priorFailure);
+  }
+  let result = spawnWithDeadline(args, remainingSeconds);
+  if (result.status !== 0 && residualOnlyRunnerFailure(result.stderr)) {
+    attestPendingDirectSolve(runDir, eventClass, result.stderr);
+    const retrySeconds = remainingSeconds - Math.ceil((Date.now() - started) / 1000);
+    assert(retrySeconds > 0, "calibration hard deadline expired before direct solve normalization");
+    result = spawnWithDeadline(args, retrySeconds);
+  }
   assert(result.status === 0, result.status === 124
     ? `event class ${eventClass} exceeded the calibration hard deadline`
     : `event class ${eventClass} failed${result.stderr ? `: ${result.stderr.trim()}` : ""}`);
@@ -128,6 +186,7 @@ function main(argv) {
   assert(events.every(Boolean), "event map does not contain all calibration classes");
   const workDir = resolve(options["work-dir"]);
   const runDir = resolve(workDir, "runs");
+  const calibrationLogPath = resolve(workDir, "calibration.log");
 
   if (options.plan === "true") {
     console.log(JSON.stringify(plan(options, profile, events, runDir), null, 2));
@@ -140,7 +199,8 @@ function main(argv) {
   for (const event of events) {
     const elapsedSeconds = Math.ceil((Date.now() - started) / 1000);
     const remainingSeconds = profile.hardDeadlineSeconds - elapsedSeconds;
-    const output = executeWithDeadline(runArguments({ options, profile, event, runDir }), remainingSeconds, event.eventIndex);
+    const priorFailure = existsSync(calibrationLogPath) ? readFileSync(calibrationLogPath, "utf8") : "";
+    const output = executeWithDeadline(runArguments({ options, profile, event, runDir }), remainingSeconds, event.eventIndex, runDir, priorFailure);
     assert(output.status === "complete" && output.jobDir, `event class ${event.eventIndex} did not complete`);
     jobs.push({
       eventClass: event.eventIndex,
