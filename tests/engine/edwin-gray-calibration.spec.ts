@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import {
   buildGrayCalibrationMagneticLookup,
   GRAY_CALIBRATION_TRANSFER_PROXY,
@@ -15,6 +17,9 @@ import {
 } from '../../src/edwin-gray/edwinGrayWorkbench'
 
 const patent = GRAY_MACHINE_CONTRACTS[GRAY_PATENT_MACHINE_ID]
+const publicCalibrationPack = JSON.parse(readFileSync(resolve(
+  'public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json',
+), 'utf8')) as unknown
 
 function calibrationPack() {
   return {
@@ -72,6 +77,31 @@ function calibrationPack() {
 }
 
 describe('limited Edwin Gray FEM calibration contract', () => {
+  it('loads the real public pack as compatible and ready without changing its opt-in boundary', () => {
+    const parsed = parseGrayCalibrationPack(publicCalibrationPack)
+    const lookup = buildGrayCalibrationMagneticLookup(parsed)
+
+    expect(parsed).toMatchObject({
+      status: 'limited-not-validated',
+      productionEligible: false,
+      fullConvergenceClaim: false,
+      optIn: true,
+      defaultEnabled: false,
+    })
+    expect(requireCompatibleGrayCalibration(parsed, GRAY_PATENT_MACHINE_ID)).toBe(patent)
+    expect(lookup.inductanceH.slice(0, 3)).toEqual([
+      0.005452776863618732,
+      0.006393174744381888,
+      0.005048067456746148,
+    ])
+    expect(lookup.calibration).toMatchObject({
+      status: 'limited-not-validated',
+      productionEligible: false,
+      fullConvergenceClaim: false,
+      torqueBounded: false,
+    })
+  })
+
   it('strictly parses the non-production evidence and uncertainty boundary', () => {
     const parsed = parseGrayCalibrationPack(calibrationPack())
 

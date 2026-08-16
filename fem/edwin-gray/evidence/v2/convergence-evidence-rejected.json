@@ -1,0 +1,285 @@
+{
+  "contract": "edwin-gray-convergence-evidence",
+  "contractVersion": 2,
+  "status": "complete",
+  "caseId": "patent-3890548-illustrative",
+  "samples": [
+    {
+      "id": "base-coarse-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/53fdb71a07a2a7ad6a0d7b24/result.json",
+      "checkpoint": "runs/53fdb71a07a2a7ad6a0d7b24/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a10-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 10,
+      "eventIndex": 0,
+      "result": "runs/92c022f81f208cc898d5e282/result.json",
+      "checkpoint": "runs/92c022f81f208cc898d5e282/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a120-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 120,
+      "eventIndex": 9,
+      "result": "runs/08b7009251f2ca15cde55264/result.json",
+      "checkpoint": "runs/08b7009251f2ca15cde55264/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "result": "runs/fc3086d3c4e898ef8fa74550/result.json",
+      "checkpoint": "runs/fc3086d3c4e898ef8fa74550/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/571ab421eeafa4840627a840/result.json",
+      "checkpoint": "runs/571ab421eeafa4840627a840/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a133p3333333333-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 133.3333333333,
+      "eventIndex": 9,
+      "result": "runs/781b7d0fe5b1f8a7d4fba86f/result.json",
+      "checkpoint": "runs/781b7d0fe5b1f8a7d4fba86f/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a3p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 3.3333333333,
+      "eventIndex": 0,
+      "result": "runs/02ce6dcbb02a582731565b14/result.json",
+      "checkpoint": "runs/02ce6dcbb02a582731565b14/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/cbed0ee8ddc2ade1f8fc30fe/result.json",
+      "checkpoint": "runs/cbed0ee8ddc2ade1f8fc30fe/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/c3551e27868951e1b689d1e3/result.json",
+      "checkpoint": "runs/c3551e27868951e1b689d1e3/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/36d48960f7218dcca0b02b9a/result.json",
+      "checkpoint": "runs/36d48960f7218dcca0b02b9a/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/d004601156256fd81cc8ac26/result.json",
+      "checkpoint": "runs/d004601156256fd81cc8ac26/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/3cfc02857dfd541cb287883e/result.json",
+      "checkpoint": "runs/3cfc02857dfd541cb287883e/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a10-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 10,
+      "eventIndex": 0,
+      "result": "runs/6ee57f945392bb22b399ad0a/result.json",
+      "checkpoint": "runs/6ee57f945392bb22b399ad0a/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a120-e9",
+      "kind": "symmetry-derived-convergence-sample",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 120,
+      "eventIndex": 9,
+      "derivation": {
+        "symmetryProofSha256": "b93b3b02372eaf929dcee5420deff4413caa9b112b1efe5fa90448b1532d10af",
+        "rotationDeg": 120,
+        "source": {
+          "sampleId": "base-fine-i10-a0-e0",
+          "jobInputHash": "23ed122bf54f98fdc37ef14a4804520d48156bef49a51392323e9559bc2d1769",
+          "artifactHashes": [
+            {
+              "path": "motor.msh",
+              "sha256": "187e9ef48384105fa545194ad6f5fd5a46ac566fd76c3a265a9155eecf241d09"
+            },
+            {
+              "path": "mesh-audit.json",
+              "sha256": "abb35a1795fbb6fc5760f79b641e88d2312b4969c1dbfc5dd05897beb4345de6"
+            },
+            {
+              "path": "getdp.log",
+              "sha256": "13f7e6967127cb4c0a8378a2bd978eb0f1c6e33d9fb928cbb87e151725c508fd"
+            },
+            {
+              "path": "observables.dat",
+              "sha256": "3260121b9d5c8a903098030260a290c8583ccf642dfe5b1bc63014c237b011a4"
+            },
+            {
+              "path": "coenergy.dat",
+              "sha256": "3260121b9d5c8a903098030260a290c8583ccf642dfe5b1bc63014c237b011a4"
+            },
+            {
+              "path": "inductance.dat",
+              "sha256": "6e751095ebe6645efe78316cc8a2fb43430fee99b6a6ee5e12b76ea4621fad18"
+            }
+          ]
+        },
+        "validation": {
+          "maximumRelativeDifference": 0.00005144881727898063,
+          "tolerance": 0.01,
+          "source": {
+            "sampleId": "base-coarse-i10-a0-e0",
+            "jobInputHash": "f7e0a5ddc6d891fcdc85044c363a79a09b953d024e2748fb4e9aed4b4a314a40",
+            "artifactHashes": [
+              {
+                "path": "motor.msh",
+                "sha256": "cec61d55d6eb82c8dd14728782e55ffb6f488d5a9dcf5b24685e7d14381d612d"
+              },
+              {
+                "path": "mesh-audit.json",
+                "sha256": "417551ae9306b7ae9a1538a9b7f272c43f333d45b7b765e151e404d72d2d854a"
+              },
+              {
+                "path": "getdp.log",
+                "sha256": "2c266fd6d4ffdbe1f290e1e524ea968e29f9d0bbf9b0624e6aff786035958dd7"
+              },
+              {
+                "path": "observables.dat",
+                "sha256": "5b04a9517be473b51980232fb1ab190a9b61f4e56f25cbe3ce596a22a6bbcacf"
+              },
+              {
+                "path": "coenergy.dat",
+                "sha256": "5b04a9517be473b51980232fb1ab190a9b61f4e56f25cbe3ce596a22a6bbcacf"
+              },
+              {
+                "path": "inductance.dat",
+                "sha256": "e1b0911bc87008154dedb0c31925fca31bcd8a1a5fd5d836d8a9c9f469d080ba"
+              }
+            ]
+          },
+          "partner": {
+            "sampleId": "base-coarse-i10-a120-e9",
+            "jobInputHash": "e1b30ac090255e74c79831ac3a3d463db2f13f86fb2664d13e1920838940944d",
+            "artifactHashes": [
+              {
+                "path": "motor.msh",
+                "sha256": "f7bcb8bed5c077b921ea6d547e7844e78165bfc074fcb4dd91ef460e9310d9cf"
+              },
+              {
+                "path": "mesh-audit.json",
+                "sha256": "73445f71078e0b80e5187b40621c258702dd7dc758f821e56bc2e4de8841ad6a"
+              },
+              {
+                "path": "getdp.log",
+                "sha256": "303c5fec42887be2568a74e6ac07f09a19214ed647884c8e9a9f00e49872641b"
+              },
+              {
+                "path": "observables.dat",
+                "sha256": "b94604a33e78d8d9cf7e2a624cb3b757f5e15e87d72d8d6e660424704d95b290"
+              },
+              {
+                "path": "coenergy.dat",
+                "sha256": "b94604a33e78d8d9cf7e2a624cb3b757f5e15e87d72d8d6e660424704d95b290"
+              },
+              {
+                "path": "inductance.dat",
+                "sha256": "727c4583d033124a188e4ee6f37aecf48279e9aab12bbf02e9f337f0421eb12c"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "base-fine-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "result": "runs/b1c3a23f6755319d17e9b53b/result.json",
+      "checkpoint": "runs/b1c3a23f6755319d17e9b53b/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/d761f8fe298aef3d8ff625c2/result.json",
+      "checkpoint": "runs/d761f8fe298aef3d8ff625c2/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/dabf7decf5c60d53d7443bc6/result.json",
+      "checkpoint": "runs/dabf7decf5c60d53d7443bc6/checkpoint.json"
+    },
+    {
+      "id": "far-fine-i10-a6p6666666667-e0",
+      "domainId": "far",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/087fb1afcc05b9065df83b2a/result.json",
+      "checkpoint": "runs/087fb1afcc05b9065df83b2a/checkpoint.json"
+    }
+  ]
+}

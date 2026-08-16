@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "edwin-gray-solver-evidence-v1",
+  "status": "complete",
+  "profile": "direct-mumps-publication-v1",
+  "configSha256": "22a8a4ae6e959b164cb22f2991ae3df1c35820cc592510a8a449cdc7468f5ded",
+  "mode": "direct",
+  "getdpExitStatus": 0,
+  "kspType": "preonly",
+  "pcType": "lu",
+  "factorSolverType": "mumps",
+  "reason": "CONVERGED_ITS",
+  "iterations": 1,
+  "finalResidualNorm": null,
+  "finalRelativeResidual": null,
+  "saveSolution": true,
+  "postoperations": [
+    "magnetic-potential.pos",
+    "magnetic-flux-density.pos",
+    "observables.dat",
+    "coenergy.dat",
+    "inductance.dat"
+  ],
+  "getdpLogSha256": "9897d42222f64199943873fc435af0bc183ee0d051f3239b20e14a2e2ee6a712",
+  "outputHashes": {
+    "magnetic-potential.pos": "87d7e5ea58d64d2687654bd44a6ff37a43510822cdaf118d94939aeb76d2d284",
+    "magnetic-flux-density.pos": "7e4102ea4462190d23bd9ce9fd111956b8c92cab830907789c7b5b9573cdc910",
+    "observables.dat": "81031355e5f2a5aab1cfe600e99ceaa4b1553af6fdd37a9cb813e0031ee17f44",
+    "coenergy.dat": "81031355e5f2a5aab1cfe600e99ceaa4b1553af6fdd37a9cb813e0031ee17f44",
+    "inductance.dat": "7775070600127f08bbf889f69118ecc26d2cee534f43215bcf78d33d1ddecb21"
+  }
+}

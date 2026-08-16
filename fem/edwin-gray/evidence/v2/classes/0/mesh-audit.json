@@ -1,0 +1,437 @@
+{
+  "schemaVersion": "edwin-gray-mesh-audit-v1",
+  "model": "US3890548A illustrative topology",
+  "mode": "production",
+  "gmsh": {
+    "version": "unknown",
+    "command": "gmsh {REPOSITORY_ROOT}/fem/edwin-gray/runs/calibration-v1/runs/ac66e80266d88f64f9afe4c2/geometry-wrapper.geo -3 -nt 1 -format msh4 -o {REPOSITORY_ROOT}/fem/edwin-gray/runs/calibration-v1/runs/ac66e80266d88f64f9afe4c2/motor.msh"
+  },
+  "source": {
+    "geometrySha256": "6f443a1f02f3bd37b855a329a36e703c61673ca35bb4972b1c45e198ce59cef7",
+    "meshSha256": "5013f077f69537e56ba0ef08f33580e6c55b0021426cfdb9ec8291f842654630"
+  },
+  "mesh": {
+    "format": "4.1 ASCII",
+    "nodes": 215420,
+    "elements": 1321899,
+    "elementsByType": {
+      "2": 1322,
+      "4": 1320577
+    },
+    "tetrahedra": 1320577,
+    "entityCountsByDimension": [
+      770,
+      1155,
+      579,
+      97
+    ]
+  },
+  "physicalGroups": {
+    "count": 104,
+    "assemblyCount": 48,
+    "expectedCount": 104,
+    "eventCoilRegions": [
+      {
+        "id": 2101,
+        "name": "Stator_1_Minor_Front_Coil",
+        "elements": 3235
+      },
+      {
+        "id": 2102,
+        "name": "Stator_1_Minor_Back_Coil",
+        "elements": 3198
+      },
+      {
+        "id": 2103,
+        "name": "Stator_1_Major_Front_Coil",
+        "elements": 4272
+      },
+      {
+        "id": 2104,
+        "name": "Stator_1_Major_Back_Coil",
+        "elements": 4265
+      },
+      {
+        "id": 2105,
+        "name": "Stator_2_Minor_Front_Coil",
+        "elements": 3171
+      },
+      {
+        "id": 2106,
+        "name": "Stator_2_Minor_Back_Coil",
+        "elements": 3233
+      },
+      {
+        "id": 2107,
+        "name": "Stator_2_Major_Front_Coil",
+        "elements": 4267
+      },
+      {
+        "id": 2108,
+        "name": "Stator_2_Major_Back_Coil",
+        "elements": 4271
+      },
+      {
+        "id": 2109,
+        "name": "Stator_3_Minor_Front_Coil",
+        "elements": 3237
+      },
+      {
+        "id": 2110,
+        "name": "Stator_3_Minor_Back_Coil",
+        "elements": 3191
+      },
+      {
+        "id": 2111,
+        "name": "Stator_3_Major_Front_Coil",
+        "elements": 4274
+      },
+      {
+        "id": 2112,
+        "name": "Stator_3_Major_Back_Coil",
+        "elements": 4241
+      },
+      {
+        "id": 2113,
+        "name": "Stator_4_Minor_Front_Coil",
+        "elements": 3164
+      },
+      {
+        "id": 2114,
+        "name": "Stator_4_Minor_Back_Coil",
+        "elements": 3238
+      },
+      {
+        "id": 2115,
+        "name": "Stator_4_Major_Front_Coil",
+        "elements": 4274
+      },
+      {
+        "id": 2116,
+        "name": "Stator_4_Major_Back_Coil",
+        "elements": 4252
+      },
+      {
+        "id": 2117,
+        "name": "Stator_5_Minor_Front_Coil",
+        "elements": 3259
+      },
+      {
+        "id": 2118,
+        "name": "Stator_5_Minor_Back_Coil",
+        "elements": 3241
+      },
+      {
+        "id": 2119,
+        "name": "Stator_5_Major_Front_Coil",
+        "elements": 4195
+      },
+      {
+        "id": 2120,
+        "name": "Stator_5_Major_Back_Coil",
+        "elements": 4245
+      },
+      {
+        "id": 2121,
+        "name": "Stator_6_Minor_Front_Coil",
+        "elements": 3169
+      },
+      {
+        "id": 2122,
+        "name": "Stator_6_Minor_Back_Coil",
+        "elements": 3160
+      },
+      {
+        "id": 2123,
+        "name": "Stator_6_Major_Front_Coil",
+        "elements": 4224
+      },
+      {
+        "id": 2124,
+        "name": "Stator_6_Major_Back_Coil",
+        "elements": 4243
+      },
+      {
+        "id": 2125,
+        "name": "Stator_7_Minor_Front_Coil",
+        "elements": 3181
+      },
+      {
+        "id": 2126,
+        "name": "Stator_7_Minor_Back_Coil",
+        "elements": 3168
+      },
+      {
+        "id": 2127,
+        "name": "Stator_7_Major_Front_Coil",
+        "elements": 4254
+      },
+      {
+        "id": 2128,
+        "name": "Stator_7_Major_Back_Coil",
+        "elements": 4229
+      },
+      {
+        "id": 2129,
+        "name": "Stator_8_Minor_Front_Coil",
+        "elements": 3239
+      },
+      {
+        "id": 2130,
+        "name": "Stator_8_Minor_Back_Coil",
+        "elements": 3202
+      },
+      {
+        "id": 2131,
+        "name": "Stator_8_Major_Front_Coil",
+        "elements": 4214
+      },
+      {
+        "id": 2132,
+        "name": "Stator_8_Major_Back_Coil",
+        "elements": 4170
+      },
+      {
+        "id": 2133,
+        "name": "Stator_9_Minor_Front_Coil",
+        "elements": 3209
+      },
+      {
+        "id": 2134,
+        "name": "Stator_9_Minor_Back_Coil",
+        "elements": 3183
+      },
+      {
+        "id": 2135,
+        "name": "Stator_9_Major_Front_Coil",
+        "elements": 4266
+      },
+      {
+        "id": 2136,
+        "name": "Stator_9_Major_Back_Coil",
+        "elements": 4206
+      },
+      {
+        "id": 2201,
+        "name": "Rotor_1_Minor_Front_Coil",
+        "elements": 2035
+      },
+      {
+        "id": 2202,
+        "name": "Rotor_1_Minor_Back_Coil",
+        "elements": 2081
+      },
+      {
+        "id": 2203,
+        "name": "Rotor_1_Major_Front_Coil",
+        "elements": 2778
+      },
+      {
+        "id": 2204,
+        "name": "Rotor_1_Major_Back_Coil",
+        "elements": 2794
+      },
+      {
+        "id": 2205,
+        "name": "Rotor_2_Minor_Front_Coil",
+        "elements": 2070
+      },
+      {
+        "id": 2206,
+        "name": "Rotor_2_Minor_Back_Coil",
+        "elements": 2045
+      },
+      {
+        "id": 2207,
+        "name": "Rotor_2_Major_Front_Coil",
+        "elements": 2761
+      },
+      {
+        "id": 2208,
+        "name": "Rotor_2_Major_Back_Coil",
+        "elements": 2774
+      },
+      {
+        "id": 2209,
+        "name": "Rotor_3_Minor_Front_Coil",
+        "elements": 2102
+      },
+      {
+        "id": 2210,
+        "name": "Rotor_3_Minor_Back_Coil",
+        "elements": 2023
+      },
+      {
+        "id": 2211,
+        "name": "Rotor_3_Major_Front_Coil",
+        "elements": 2739
+      },
+      {
+        "id": 2212,
+        "name": "Rotor_3_Major_Back_Coil",
+        "elements": 2741
+      }
+    ],
+    "elements": {
+      "OuterBoundary": 1322,
+      "Air": 920957,
+      "StatorCores": 190584,
+      "RotorCores": 46053,
+      "AllCores": 236637,
+      "Stator_1_Minor_Front_Coil": 3235,
+      "Stator_1_Minor_Back_Coil": 3198,
+      "Stator_1_Major_Front_Coil": 4272,
+      "Stator_1_Major_Back_Coil": 4265,
+      "Stator_2_Minor_Front_Coil": 3171,
+      "Stator_2_Minor_Back_Coil": 3233,
+      "Stator_2_Major_Front_Coil": 4267,
+      "Stator_2_Major_Back_Coil": 4271,
+      "Stator_3_Minor_Front_Coil": 3237,
+      "Stator_3_Minor_Back_Coil": 3191,
+      "Stator_3_Major_Front_Coil": 4274,
+      "Stator_3_Major_Back_Coil": 4241,
+      "Stator_4_Minor_Front_Coil": 3164,
+      "Stator_4_Minor_Back_Coil": 3238,
+      "Stator_4_Major_Front_Coil": 4274,
+      "Stator_4_Major_Back_Coil": 4252,
+      "Stator_5_Minor_Front_Coil": 3259,
+      "Stator_5_Minor_Back_Coil": 3241,
+      "Stator_5_Major_Front_Coil": 4195,
+      "Stator_5_Major_Back_Coil": 4245,
+      "Stator_6_Minor_Front_Coil": 3169,
+      "Stator_6_Minor_Back_Coil": 3160,
+      "Stator_6_Major_Front_Coil": 4224,
+      "Stator_6_Major_Back_Coil": 4243,
+      "Stator_7_Minor_Front_Coil": 3181,
+      "Stator_7_Minor_Back_Coil": 3168,
+      "Stator_7_Major_Front_Coil": 4254,
+      "Stator_7_Major_Back_Coil": 4229,
+      "Stator_8_Minor_Front_Coil": 3239,
+      "Stator_8_Minor_Back_Coil": 3202,
+      "Stator_8_Major_Front_Coil": 4214,
+      "Stator_8_Major_Back_Coil": 4170,
+      "Stator_9_Minor_Front_Coil": 3209,
+      "Stator_9_Minor_Back_Coil": 3183,
+      "Stator_9_Major_Front_Coil": 4266,
+      "Stator_9_Major_Back_Coil": 4206,
+      "Rotor_1_Minor_Front_Coil": 2035,
+      "Rotor_1_Minor_Back_Coil": 2081,
+      "Rotor_1_Major_Front_Coil": 2778,
+      "Rotor_1_Major_Back_Coil": 2794,
+      "Rotor_2_Minor_Front_Coil": 2070,
+      "Rotor_2_Minor_Back_Coil": 2045,
+      "Rotor_2_Major_Front_Coil": 2761,
+      "Rotor_2_Major_Back_Coil": 2774,
+      "Rotor_3_Minor_Front_Coil": 2102,
+      "Rotor_3_Minor_Back_Coil": 2023,
+      "Rotor_3_Major_Front_Coil": 2739,
+      "Rotor_3_Major_Back_Coil": 2741,
+      "StatorCoils": 134040,
+      "RotorCoils": 28943,
+      "AllCoils": 162983,
+      "Stator_1_Minor_Front_CoilCore": 7443,
+      "Stator_1_Minor_Back_CoilCore": 7439,
+      "Stator_1_Major_Front_CoilCore": 10651,
+      "Stator_1_Major_Back_CoilCore": 10513,
+      "Stator_2_Minor_Front_CoilCore": 7395,
+      "Stator_2_Minor_Back_CoilCore": 7473,
+      "Stator_2_Major_Front_CoilCore": 10645,
+      "Stator_2_Major_Back_CoilCore": 10583,
+      "Stator_3_Minor_Front_CoilCore": 7516,
+      "Stator_3_Minor_Back_CoilCore": 7483,
+      "Stator_3_Major_Front_CoilCore": 10558,
+      "Stator_3_Major_Back_CoilCore": 10683,
+      "Stator_4_Minor_Front_CoilCore": 7363,
+      "Stator_4_Minor_Back_CoilCore": 7400,
+      "Stator_4_Major_Front_CoilCore": 10688,
+      "Stator_4_Major_Back_CoilCore": 10638,
+      "Stator_5_Minor_Front_CoilCore": 7473,
+      "Stator_5_Minor_Back_CoilCore": 7494,
+      "Stator_5_Major_Front_CoilCore": 10542,
+      "Stator_5_Major_Back_CoilCore": 10617,
+      "Stator_6_Minor_Front_CoilCore": 7351,
+      "Stator_6_Minor_Back_CoilCore": 7392,
+      "Stator_6_Major_Front_CoilCore": 10548,
+      "Stator_6_Major_Back_CoilCore": 10602,
+      "Stator_7_Minor_Front_CoilCore": 7327,
+      "Stator_7_Minor_Back_CoilCore": 7458,
+      "Stator_7_Major_Front_CoilCore": 10666,
+      "Stator_7_Major_Back_CoilCore": 10587,
+      "Stator_8_Minor_Front_CoilCore": 7425,
+      "Stator_8_Minor_Back_CoilCore": 7402,
+      "Stator_8_Major_Front_CoilCore": 10626,
+      "Stator_8_Major_Back_CoilCore": 10565,
+      "Stator_9_Minor_Front_CoilCore": 7449,
+      "Stator_9_Minor_Back_CoilCore": 7350,
+      "Stator_9_Major_Front_CoilCore": 10584,
+      "Stator_9_Major_Back_CoilCore": 10695,
+      "Rotor_1_Minor_Front_CoilCore": 5125,
+      "Rotor_1_Minor_Back_CoilCore": 5189,
+      "Rotor_1_Major_Front_CoilCore": 7348,
+      "Rotor_1_Major_Back_CoilCore": 7403,
+      "Rotor_2_Minor_Front_CoilCore": 5210,
+      "Rotor_2_Minor_Back_CoilCore": 5147,
+      "Rotor_2_Major_Front_CoilCore": 7436,
+      "Rotor_2_Major_Back_CoilCore": 7295,
+      "Rotor_3_Minor_Front_CoilCore": 5230,
+      "Rotor_3_Minor_Back_CoilCore": 5111,
+      "Rotor_3_Major_Front_CoilCore": 7251,
+      "Rotor_3_Major_Back_CoilCore": 7251
+    },
+    "missing": [],
+    "empty": []
+  },
+  "materialPartition": {
+    "groups": [
+      "Air",
+      "StatorCores",
+      "StatorCoils",
+      "RotorCores",
+      "RotorCoils"
+    ],
+    "assignedTetrahedra": 1320577,
+    "multiplyOrUnassignedTetrahedra": 0
+  },
+  "connectivity": {
+    "tetrahedralComponents": 1,
+    "exteriorFaces": 1322,
+    "outerBoundaryTriangles": 1322,
+    "nonManifoldFaces": 0
+  },
+  "quality": {
+    "degenerateTetrahedra": 0,
+    "invertedTetrahedra": 0,
+    "illShapedTetrahedra": 0,
+    "minimumMeanRatio": 0.03850438217583766,
+    "illShapedMeanRatioLimit": 0.001,
+    "minimumSixTimesVolumeM3": 3.2380348751533565e-11,
+    "minimumEdgeM": 0.0009999999999999744,
+    "maximumEdgeM": 0.04969525384598046,
+    "maximumMaterialEdgeM": 0.005927015397766923,
+    "materialEdgeP99M": 0.00394339408555214,
+    "maximumEdgeRatio": 10.411483238571384,
+    "featureTargetM": 0.002,
+    "materialEdgeP99LimitM": 0.004,
+    "representedFeatureDimensionsM": [
+      0.001,
+      0.008,
+      0.01
+    ]
+  },
+  "checks": {
+    "expectedGroupsPresent": true,
+    "allPhysicalGroupsNonempty": true,
+    "canonicalAssemblyCount": true,
+    "eventCoilRegionsExact": true,
+    "materialPartitionExact": true,
+    "aggregateCoreCountExact": true,
+    "aggregateCoilCountExact": true,
+    "faceConformity": true,
+    "singleConnectedDomain": true,
+    "outerBoundaryComplete": true,
+    "positiveTetraVolumes": true,
+    "noIllShapedTetrahedra": true,
+    "materialFeatureResolution": true
+  },
+  "valid": true
+}

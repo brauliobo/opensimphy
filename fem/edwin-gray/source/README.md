@@ -59,7 +59,7 @@ assumption records.
 | `excitation.currentPotentialModel` | assumption | A compactly supported local-radial current potential represents each selected winding as a closed surface current through `J = curl(T)`. |
 | `excitation.currentPotentialThicknessM` | derived | Equal to `geometry.coilRadialDepthM`, so integrating the winding sheet gives exactly turns times drive current. |
 | `sweep.symmetry.declared` | assumption | Exact symmetry is disabled by default; no reduction is applied unless explicitly declared. |
-| `results` | not-run | Generated solver artifacts are excluded from the source workspace; no browser LUT is bundled. |
+| `results` | solver-derived | A completed three-class limited calibration pack and compact evidence are retained under `../evidence/v2/`; no production browser LUT is bundled. |
 
 ## Interpretation boundary
 
@@ -70,3 +70,7 @@ balance of a particular surviving motor. The FEM result therefore answers a
 narrow classical field question for this declared illustrative geometry. It is
 not evidence that the historical machine had these dimensions or that any
 non-classical operating claim follows from the solve.
+
+The retained calibration is explicitly `limited-not-validated`: only class 0
+has a measured coarse/fine drift, classes 1 and 2 inherit a transfer assumption,
+and no torque or full production convergence bound is claimed.

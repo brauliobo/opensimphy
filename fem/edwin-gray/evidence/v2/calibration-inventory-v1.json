@@ -1,0 +1,26 @@
+{
+  "contract": "edwin-gray-motor-fem-calibration-inventory",
+  "contractVersion": 1,
+  "status": "complete",
+  "execution": {
+    "serial": true,
+    "hardDeadlineSeconds": 1720
+  },
+  "jobs": [
+    {
+      "eventClass": 0,
+      "checkpoint": "runs/ac66e80266d88f64f9afe4c2/checkpoint.json",
+      "result": "runs/ac66e80266d88f64f9afe4c2/result.json"
+    },
+    {
+      "eventClass": 1,
+      "checkpoint": "runs/31cd83d8836b1eac7ca1eeee/checkpoint.json",
+      "result": "runs/31cd83d8836b1eac7ca1eeee/result.json"
+    },
+    {
+      "eventClass": 2,
+      "checkpoint": "runs/8fa4d3763c22e432fa648f26/checkpoint.json",
+      "result": "runs/8fa4d3763c22e432fa648f26/result.json"
+    }
+  ]
+}

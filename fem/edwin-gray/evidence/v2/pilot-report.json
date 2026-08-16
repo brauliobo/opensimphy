@@ -1,0 +1,287 @@
+{
+  "contract": "edwin-gray-convergence-pilot",
+  "contractVersion": 2,
+  "sourceFormulation": "closed-surface-equivalent-current-potential",
+  "specification": {
+    "sha256": "ee85e38a8e25281e0c2ca55db7c3f393b6da2a5cd531b3577e089392acfb428e"
+  },
+  "status": "passed",
+  "checks": [
+    {
+      "id": "mesh-quality-and-partition",
+      "status": "passed",
+      "observed": 1,
+      "tolerance": 1,
+      "comparison": "minimum"
+    },
+    {
+      "id": "environment-identity",
+      "status": "passed",
+      "observed": 1,
+      "tolerance": 1,
+      "comparison": "maximum"
+    },
+    {
+      "id": "energy-coenergy-agreement",
+      "status": "passed",
+      "observed": 0,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-node-growth",
+      "status": "passed",
+      "observed": 1.453320350177753,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-growth",
+      "status": "passed",
+      "observed": 1.4596485416607337,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-observable-coarse-fine",
+      "status": "passed",
+      "observed": 0.011584935659327932,
+      "tolerance": 0.02,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-medium-fine",
+      "status": "passed",
+      "observed": 0.005115271306443604,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-base-far",
+      "status": "passed",
+      "observed": 0.00017093705781642368,
+      "tolerance": 0.015,
+      "comparison": "maximum"
+    },
+    {
+      "id": "current-inductance",
+      "status": "passed",
+      "observed": 0,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "current-energy-i2",
+      "status": "passed",
+      "observed": 1.9970499897481398e-14,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "angle-periodicity",
+      "status": "passed",
+      "observed": 0.00007019656506237802,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "expanded-domain-convergence",
+      "status": "not-run",
+      "reason": "pilot failure blocks full convergence study"
+    },
+    {
+      "id": "torque-derivative-stability",
+      "status": "not-run",
+      "reason": "pilot failure blocks full convergence study"
+    }
+  ],
+  "failures": [],
+  "samples": [
+    {
+      "id": "base-coarse-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2532810462193057,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2532810462193057,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005065620924386578,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 217718,
+        "elements": 1334326,
+        "minimumMeanRatio": 0.13177497641935398,
+        "sha256": "81858d8cacc3675e6f1e564383360ae10ba838a32f7adb15bb0c96ddd9e393cb"
+      },
+      "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+      "jobInputHash": "ec2c178ef0c913c6b088f25c54c16eb4af952a288f98e34d810ccfb39ac472eb",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    },
+    {
+      "id": "base-fine-i1-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.002562496823014866,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.002562496823014866,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005124993646029731,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 473029,
+        "elements": 2918475,
+        "minimumMeanRatio": 0.13270416186646633,
+        "sha256": "d9cf10e5e539a9ebe4d574e57641fe139a36d84784ddff1a5b48b11b3ade0be8"
+      },
+      "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+      "jobInputHash": "d32e1ef120f8ecb419296a3141771e3df111c59563be9e16c1913d003cce8ed7",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    },
+    {
+      "id": "base-fine-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2562316944540138,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2562316944540138,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005124633889079813,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 473344,
+        "elements": 2920300,
+        "minimumMeanRatio": 0.08066077162292398,
+        "sha256": "623e407d84faad9cfd070a0f42b8cb3926e5e9010eb6bac8b7bd84ae4a38a3e3"
+      },
+      "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+      "jobInputHash": "8a3cf8bb7d182ae49d0b1c38558e62990be07ffc3cb1fbd81a91c5bd958cb5b6",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    },
+    {
+      "id": "base-fine-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2562496823014917,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2562496823014917,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005124993646029731,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 473029,
+        "elements": 2918475,
+        "minimumMeanRatio": 0.13270416186646633,
+        "sha256": "d9cf10e5e539a9ebe4d574e57641fe139a36d84784ddff1a5b48b11b3ade0be8"
+      },
+      "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+      "jobInputHash": "101d59d2fc68afb4e0870bb66471f96920e2ef95fc77a5967119aca1c0874195",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    },
+    {
+      "id": "base-medium-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2549388956543296,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2549388956543296,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005098777913087302,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 316414,
+        "elements": 1947647,
+        "minimumMeanRatio": 0.1459504682199015,
+        "sha256": "077a047245ea37bd1374da00a31c300692d7793915da126f743bc38463706b51"
+      },
+      "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+      "jobInputHash": "f453212d29e8f42f7eb799c1102b924111d4bd2c452f65ae3d57bd0155f7fc8e",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    },
+    {
+      "id": "far-fine-i10-a6p6666666667-e0",
+      "domainId": "far",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2562058797347327,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2562058797347327,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005124117594694964,
+          "unit": "H"
+        }
+      },
+      "mesh": {
+        "nodes": 494641,
+        "elements": 3048329,
+        "minimumMeanRatio": 0.12912482472638978,
+        "sha256": "5f3497408326aa0dfdf23d22aa9ef9280cf1c89b53412b4fd8c4d523ecb2dc09"
+      },
+      "modelInputHash": "ebf28ecf468c6c076ff56d05b90eb08ada4c362ba2f64506aa51799ac53f8380",
+      "jobInputHash": "f7275f34353c8b4cd361ba87ef6a6223d75d59d2cc7f1491f7788bd1d071d5c2",
+      "environmentIdentityHash": "290bd5c997f81340d4b8d3e0d0e7d10f19bac2c4b719de6981805afb7cb159bb"
+    }
+  ]
+}

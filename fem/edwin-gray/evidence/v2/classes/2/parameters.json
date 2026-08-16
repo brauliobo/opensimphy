@@ -1,0 +1,7 @@
+{
+  "rotorAngleDeg": 26.666666666666668,
+  "eventIndex": 2,
+  "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+  "meshSizeM": 0.025,
+  "driveCurrentA": 10
+}

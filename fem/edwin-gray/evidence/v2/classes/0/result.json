@@ -1,0 +1,113 @@
+{
+  "contract": "edwin-gray-browser-result",
+  "contractVersion": 1,
+  "lutContract": "motor-fem-lut-v1",
+  "caseId": "patent-3890548-illustrative",
+  "status": "complete",
+  "expectedAnglesDeg": [
+    0,
+    13.3333333333,
+    26.6666666667,
+    40,
+    53.3333333333,
+    66.6666666667,
+    80,
+    93.3333333333,
+    106.6666666667,
+    120,
+    133.3333333333,
+    146.6666666667,
+    160,
+    173.3333333333,
+    186.6666666667,
+    200,
+    213.3333333333,
+    226.6666666667,
+    240,
+    253.3333333333,
+    266.6666666667,
+    280,
+    293.3333333333,
+    306.6666666667,
+    320,
+    333.3333333333,
+    346.6666666667
+  ],
+  "entries": [
+    {
+      "entryId": "angle-0-event-0-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 0,
+        "eventIndex": 0,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2726388431809273,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2726388431809273,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005452776863618732,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+        "jobInputHash": "c46d7f6ce90d3cf9baac506031c00d4fd41ca34898b9373fba2f9dcde79c392e",
+        "inputHash": "c46d7f6ce90d3cf9baac506031c00d4fd41ca34898b9373fba2f9dcde79c392e",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": false,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "5013f077f69537e56ba0ef08f33580e6c55b0021426cfdb9ec8291f842654630"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "2725de45f962163cce5f8775a01f0606014e7fa843a2fe033a3e30fe762cbc64"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "d2e24196c6f02cfd42031abff9bc37f7eb16d27ca91fe3f0eca44a13c745c011"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6a14a1b9a12ca7c39ff7beb96d964eee8ae197967c97acfd09847014b8ca907b"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "7daf7e58918583c89bfa30bcfcb1d7125c50cac1c20250e4532ca6250025c063"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "7daf7e58918583c89bfa30bcfcb1d7125c50cac1c20250e4532ca6250025c063"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "79621bc09d3d48d07f616de5a40d1fde5ce750a96b7a7036f1b3dfe2eac3dbae"
+          }
+        ]
+      }
+    }
+  ],
+  "provenance": {
+    "synthetic": false,
+    "limitations": [
+      "Linear isotropic magnetostatic snapshot only",
+      "Closed-surface homogenized equivalent current-potential source; no capacitor discharge transient",
+      "Inductance is the magnetic-energy proxy 2 W / I^2",
+      "No motion, torque, saturation, hysteresis, losses, or energy-recovery model"
+    ],
+    "source": "US3890548A illustrative full 3D topology"
+  }
+}

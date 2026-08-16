@@ -13,6 +13,9 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROFILE_PATH = resolve(ROOT, "calibration/profile-v1.json");
 const SCENARIOS_PATH = resolve(ROOT, "calibration/fixtures/calibration-pack-scenarios-v1.json");
 const SCHEMA_PATH = resolve(ROOT, "schema/motor-fem-calibration-pack.schema.json");
+const EVIDENCE_PATH = resolve(ROOT, "evidence/v2/motor-fem-calibration-pack-v1.json");
+const MANIFEST_PATH = resolve(ROOT, "evidence/v2/manifest.json");
+const PUBLIC_PACK_PATH = resolve(ROOT, "../../public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json");
 const RUNNER_PATH = resolve(ROOT, "calibration/run-calibration-pack.mjs");
 const PROFILE = JSON.parse(readFileSync(PROFILE_PATH, "utf8"));
 const SCENARIOS = JSON.parse(readFileSync(SCENARIOS_PATH, "utf8"));
@@ -30,6 +33,59 @@ const PETSC_OPTIONS = [
 
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function schemaMatches(value, schema, root) {
+  try {
+    validateSchema(value, schema, "value", root);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function validateSchema(value, schema, path, root) {
+  if (schema.$ref) {
+    assert.match(schema.$ref, /^#\/\$defs\//, `${path} has an unsupported schema reference`);
+    validateSchema(value, root.$defs[schema.$ref.slice("#/$defs/".length)], path, root);
+    return;
+  }
+  if (Object.hasOwn(schema, "const")) assert.deepEqual(value, schema.const, `${path} differs from its schema constant`);
+  if (schema.enum) assert.ok(schema.enum.some((item) => JSON.stringify(item) === JSON.stringify(value)), `${path} is outside its schema enum`);
+  if (schema.type === "object") {
+    assert.ok(value && typeof value === "object" && !Array.isArray(value), `${path} must be an object`);
+    for (const key of schema.required || []) assert.ok(Object.hasOwn(value, key), `${path}.${key} is required`);
+    if (schema.additionalProperties === false) {
+      for (const key of Object.keys(value)) assert.ok(Object.hasOwn(schema.properties || {}, key), `${path}.${key} is not allowed`);
+    }
+    for (const [key, child] of Object.entries(schema.properties || {})) {
+      if (Object.hasOwn(value, key)) validateSchema(value[key], child, `${path}.${key}`, root);
+    }
+  } else if (schema.type === "array") {
+    assert.ok(Array.isArray(value), `${path} must be an array`);
+    if (schema.minItems !== undefined) assert.ok(value.length >= schema.minItems, `${path} has too few items`);
+    if (schema.maxItems !== undefined) assert.ok(value.length <= schema.maxItems, `${path} has too many items`);
+    if (schema.items) value.forEach((item, index) => validateSchema(item, schema.items, `${path}[${index}]`, root));
+  } else if (schema.type === "string") {
+    assert.equal(typeof value, "string", `${path} must be a string`);
+    if (schema.minLength !== undefined) assert.ok(value.length >= schema.minLength, `${path} is too short`);
+    if (schema.pattern) assert.match(value, new RegExp(schema.pattern), `${path} has an invalid format`);
+  } else if (schema.type === "number" || schema.type === "integer") {
+    assert.ok(typeof value === "number" && Number.isFinite(value), `${path} must be finite`);
+    if (schema.type === "integer") assert.ok(Number.isInteger(value), `${path} must be an integer`);
+    if (schema.minimum !== undefined) assert.ok(value >= schema.minimum, `${path} is below its minimum`);
+    if (schema.maximum !== undefined) assert.ok(value <= schema.maximum, `${path} is above its maximum`);
+    if (schema.exclusiveMaximum !== undefined) assert.ok(value < schema.exclusiveMaximum, `${path} is above its exclusive maximum`);
+  } else if (schema.type === "boolean") {
+    assert.equal(typeof value, "boolean", `${path} must be a boolean`);
+  }
+  if (schema.contains) {
+    assert.ok(Array.isArray(value), `${path} contains applies only to arrays`);
+    const count = value.filter((item) => schemaMatches(item, schema.contains, root)).length;
+    assert.ok(count >= (schema.minContains ?? 1), `${path} has too few matching items`);
+    if (schema.maxContains !== undefined) assert.ok(count <= schema.maxContains, `${path} has too many matching items`);
+  }
+  for (const child of schema.allOf || []) validateSchema(value, child, path, root);
 }
 
 function writeJson(path, value) {
@@ -496,4 +552,25 @@ test("calibration schema fixes the non-production output contract", () => {
   assert.equal(PROFILE.hardDeadlineSeconds, 1720);
   assert.equal(PROFILE.resources.meshThreads, 1);
   assert.equal(PROFILE.resources.solverThreads, 2);
+});
+
+test("published calibration pack validates against the schema and retained builder evidence", () => {
+  const schema = JSON.parse(readFileSync(SCHEMA_PATH, "utf8"));
+  const publishedBytes = readFileSync(PUBLIC_PACK_PATH);
+  const published = JSON.parse(publishedBytes);
+  const evidence = JSON.parse(readFileSync(EVIDENCE_PATH, "utf8"));
+  const manifest = JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
+
+  validateSchema(published, schema, "published calibration pack", schema);
+  assert.deepEqual(published, evidence);
+  assert.equal(sha256(publishedBytes), manifest.pack.sha256);
+  assert.equal(manifest.validation.builderReproducedPack, true);
+  assert.equal(manifest.validation.builderValidatedOriginalArtifactsBeforeCleanup, true);
+  assert.equal(manifest.validation.rebuiltPackSha256, manifest.pack.sha256);
+  for (const calibrationClass of published.classes) {
+    const retained = manifest.retention.classes[calibrationClass.eventClass];
+    assert.equal(sha256(readFileSync(resolve(ROOT, "evidence/v2", retained.checkpoint))), calibrationClass.checkpointSha256);
+    assert.equal(sha256(readFileSync(resolve(ROOT, "evidence/v2", retained.result))), calibrationClass.resultSha256);
+    assert.equal(retained.jobInputHash, calibrationClass.jobInputHash);
+  }
 });

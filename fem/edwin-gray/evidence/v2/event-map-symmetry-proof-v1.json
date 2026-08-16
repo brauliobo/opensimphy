@@ -1,0 +1,424 @@
+{
+  "contract": "edwin-gray-event-map-symmetry-proof",
+  "contractVersion": 1,
+  "status": "complete",
+  "transformation": {
+    "eventOffset": 3,
+    "rotationDeg": 40,
+    "representativeEvents": [
+      0,
+      1,
+      2
+    ],
+    "validationPartners": [
+      3,
+      4,
+      5
+    ],
+    "classCount": 3,
+    "eventsPerClass": 9
+  },
+  "inputs": {
+    "eventMapSha256": "be25d49f0bec392d6e5855b6703693df48a5bce1390d341cdf49f66610092b1d",
+    "caseSha256": "720492d6a8f94a444676e8031209952274d68c844a5794977c87216d83667c91",
+    "geometrySha256": "6f443a1f02f3bd37b855a329a36e703c61673ca35bb4972b1c45e198ce59cef7"
+  },
+  "checks": [
+    {
+      "id": "complete-stator-geometry-40deg-invariant",
+      "status": "passed",
+      "evidence": "nine congruent stations exhaust one revolution"
+    },
+    {
+      "id": "complete-rotor-geometry-rotates-with-angle",
+      "status": "passed",
+      "evidence": "three congruent rotor stations exhaust one revolution"
+    },
+    {
+      "id": "air-domain-z-rotation-invariant",
+      "status": "passed",
+      "evidence": "centered circular cylindrical outer domain"
+    },
+    {
+      "id": "geometry-construction-equivariant",
+      "status": "passed",
+      "evidence": "station loops use only z-axis rotations of common element boxes"
+    },
+    {
+      "id": "material-domain-rotation-invariant",
+      "status": "passed",
+      "evidence": "each complete physical domain has scalar linear permeability"
+    },
+    {
+      "id": "source-law-rotation-equivariant",
+      "status": "passed",
+      "evidence": "local-radial current potential rotates with each selected envelope"
+    },
+    {
+      "id": "complete-region-identity",
+      "status": "passed",
+      "evidence": "all 36 stator and 12 rotor coil-envelope identities are unique"
+    },
+    {
+      "id": "event-0-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-0-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-0-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-1-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-1-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-1-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-2-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-2-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-2-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-3-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-3-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-3-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-4-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-4-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-4-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-5-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-5-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-5-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-6-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-6-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-6-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-7-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-7-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-7-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-8-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-8-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-8-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-9-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-9-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-9-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-10-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-10-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-10-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-11-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-11-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-11-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-12-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-12-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-12-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-13-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-13-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-13-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-14-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-14-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-14-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-15-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-15-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-15-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-16-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-16-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-16-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-17-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-17-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-17-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-18-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-18-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-18-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-19-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-19-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-19-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-20-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-20-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-20-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-21-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-21-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-21-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-22-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-22-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-22-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    },
+    {
+      "id": "event-23-angle",
+      "status": "passed",
+      "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+    },
+    {
+      "id": "event-23-stator-source-set",
+      "status": "passed",
+      "evidence": "complete selected stator set advances by one 40-degree station"
+    },
+    {
+      "id": "event-23-rotor-source-set",
+      "status": "passed",
+      "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+    }
+  ],
+  "proofSha256": "b93b3b02372eaf929dcee5420deff4413caa9b112b1efe5fa90448b1532d10af"
+}

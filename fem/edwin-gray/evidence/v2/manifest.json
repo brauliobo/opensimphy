@@ -1,0 +1,154 @@
+{
+  "contract": "edwin-gray-compact-calibration-evidence-manifest",
+  "contractVersion": 1,
+  "status": "complete-limited-calibration-evidence",
+  "pack": {
+    "path": "motor-fem-calibration-pack-v1.json",
+    "publicPath": "../../../../public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json",
+    "sha256": "3e4594defcb5414c023aa423226f6e35957e840dd9a5dcdf8fa2f63bb1dc5e48",
+    "scientificStatus": "limited-not-validated",
+    "productionEligible": false,
+    "fullConvergenceClaim": false,
+    "optIn": true,
+    "defaultEnabled": false
+  },
+  "validation": {
+    "builderReproducedPack": true,
+    "builderSource": "calibration/build-calibration-pack.mjs",
+    "builderValidatedOriginalArtifactsBeforeCleanup": true,
+    "rebuiltPackSha256": "3e4594defcb5414c023aa423226f6e35957e840dd9a5dcdf8fa2f63bb1dc5e48",
+    "schema": "../../schema/motor-fem-calibration-pack.schema.json",
+    "browserParser": "src/edwin-gray/edwinGrayCalibration.ts"
+  },
+  "run": {
+    "profileId": "fast-limited-calibration-v1",
+    "meshSizeM": 0.025,
+    "driveCurrentA": 10,
+    "solverProfile": "direct-mumps-publication-v1",
+    "hardDeadlineSeconds": 1720,
+    "resources": {
+      "memoryGiB": 24,
+      "memorySwapGiB": 24,
+      "cpus": 2,
+      "meshThreads": 1,
+      "solverThreads": 2,
+      "serial": true
+    },
+    "modelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+    "environmentIdentityHash": "7aa133cfdf55eb226ad87f9267df17052156d42e445c1d054fa81bc8ff756f5f"
+  },
+  "pilot": {
+    "path": "pilot-report.json",
+    "sha256": "a263a89f78ca5b420038498ae9c44b5de322448d42d6b5222f0eedd82cea9db4",
+    "status": "passed",
+    "coarseFineDrift": 0.011584935659327932,
+    "maximumDrift": 0.02
+  },
+  "productionConvergence": {
+    "evidencePath": "convergence-evidence-rejected.json",
+    "reportPath": "convergence-report-rejected.json",
+    "reportSha256": "5429d381ea1015e21027f6d2a5d3ea41ce0d5df2add1a68827d2f9b793866c89",
+    "status": "rejected",
+    "presentSamples": 18,
+    "requiredSamples": 33,
+    "productionLutPublished": false
+  },
+  "retention": {
+    "classes": [
+      {
+        "eventClass": 0,
+        "eventIndex": 0,
+        "jobId": "ac66e80266d88f64f9afe4c2",
+        "jobInputHash": "c46d7f6ce90d3cf9baac506031c00d4fd41ca34898b9373fba2f9dcde79c392e",
+        "checkpoint": "classes/0/checkpoint.json",
+        "checkpointSha256": "6d0a1bd3f2700af15db326986a4d01ddb34d9ff736835c9676e8303f21458bc5",
+        "result": "classes/0/result.json",
+        "resultSha256": "a310cdf4586f6d31a64eac93f4adda0d670c2200b2d85f080f9d63c70910a0fb",
+        "sanitizedRawHashes": {
+          "solver-environment.json": "236852b1a2d6876c736295b6c71715ceaee4e65b4ecfe247b81c76562c141211",
+          "mesh-audit.json": "2725de45f962163cce5f8775a01f0606014e7fa843a2fe033a3e30fe762cbc64"
+        },
+        "excluded": {
+          "motor.msh": { "bytes": 59840842, "sha256": "5013f077f69537e56ba0ef08f33580e6c55b0021426cfdb9ec8291f842654630" },
+          "solve.res": { "bytes": 32222494, "sha256": "e40f376a6a800f3285e71f8b2481033d0f70885c2987a6b6a99b93f7c7399974" },
+          "solve.pre": { "bytes": 106875237, "sha256": "969260631fc6b95cc80eed004726c6fa2857773258d473d0b4834b4bdff7831f" },
+          "magnetic-potential.pos": { "bytes": 675323051, "sha256": "6a8e25e86569a8c8acb77b50b2307850fead3f9fc6278677d9776f8052637e21" },
+          "magnetic-flux-density.pos": { "bytes": 671757098, "sha256": "bf2c951d489b3512ac2054baf87e2497025047a47d79a15653c42815aaf3fc5e" }
+        }
+      },
+      {
+        "eventClass": 1,
+        "eventIndex": 1,
+        "jobId": "31cd83d8836b1eac7ca1eeee",
+        "jobInputHash": "9535087289cbfdb6e58f47f9bf0e4bbb6beda11ca9d6850335ae583e2855b20f",
+        "checkpoint": "classes/1/checkpoint.json",
+        "checkpointSha256": "7684e8b1c9f7cf1fd99472292842d97c4ba32a2b135dfeb3011828f4134589df",
+        "result": "classes/1/result.json",
+        "resultSha256": "cfd733a519180708d946ad9928191e5ecaab919ded1bf578fb6dd3d2baaad837",
+        "sanitizedRawHashes": {
+          "solver-environment.json": "1bcbf9f932f2401d3859fef0729068d8ff2824be8085f936d5b399e864e7be37",
+          "mesh-audit.json": "f67ca5082c0a23774eefc762b509e11db2e97440092ef46ea4328b30a4e9748d"
+        },
+        "excluded": {
+          "motor.msh": { "bytes": 59983194, "sha256": "8191ee065bc1d50436f354991b72a5e47f697acaeb3410276a579f917f5f0761" },
+          "solve.res": { "bytes": 32282257, "sha256": "0bd3e073b4f1d5b83a76deb0d858c8c2490fe4a49eed68e36e0288b51610b591" },
+          "solve.pre": { "bytes": 107094634, "sha256": "7471dc376ea5e44140ab8999e0d6747c19c5865141ac982bd73f9539326aba3f" },
+          "magnetic-potential.pos": { "bytes": 676729232, "sha256": "87d7e5ea58d64d2687654bd44a6ff37a43510822cdaf118d94939aeb76d2d284" },
+          "magnetic-flux-density.pos": { "bytes": 668821078, "sha256": "7e4102ea4462190d23bd9ce9fd111956b8c92cab830907789c7b5b9573cdc910" }
+        }
+      },
+      {
+        "eventClass": 2,
+        "eventIndex": 2,
+        "jobId": "8fa4d3763c22e432fa648f26",
+        "jobInputHash": "1ff4d288e19c4b926a06c4524f57eb6d4bf8b4b78bbb3bd520ba659836f4bd32",
+        "checkpoint": "classes/2/checkpoint.json",
+        "checkpointSha256": "033ddd95ed6cb9bd19d426c25ed570251ac17cfd21d0b0706b3f8e4178d968d1",
+        "result": "classes/2/result.json",
+        "resultSha256": "0dcbd20afd611be30c7052de148410b55c799d3b95b02024bc60cc5a202f4917",
+        "sanitizedRawHashes": {
+          "solver-environment.json": "f2ae6d89bd7ab575b5acf0f3ac4c048c0a61cb213c750c938f25ec259d1a50a7",
+          "mesh-audit.json": "a754a2bd2929ca0eb7abb1b1e7f5c4fb13615dc49a8c756470bac305925059af"
+        },
+        "excluded": {
+          "motor.msh": { "bytes": 59282394, "sha256": "51fa01ce49901131d7b9821f383a202d485c0f94307e5d1e68b7f0b428658e0a" },
+          "solve.res": { "bytes": 31926987, "sha256": "d3fa02e2c291befcd242243958e0ded42deed7f4189f1560a8093c245556814c" },
+          "solve.pre": { "bytes": 105825915, "sha256": "ab72c3e2cd2be5174e6bef4b2f8718a2dd6e2cf333aa56304ab09fd2a540ea91" },
+          "magnetic-potential.pos": { "bytes": 669480869, "sha256": "edda2c18740bd37e5ddf5594787522fe8e6954af223f639fb4ed2f68418031e7" },
+          "magnetic-flux-density.pos": { "bytes": 663575696, "sha256": "d437eb867340b8f6af83323868d2bd08e23078ae786eb0ec346d40f161fabf62" }
+        }
+      }
+    ],
+    "retainedPerClass": [
+      "checkpoint.json",
+      "result.json",
+      "parameters.json",
+      "solver-environment.json",
+      "solver-convergence.json",
+      "mesh-audit.json",
+      "gmsh.log",
+      "getdp.log",
+      "mesh-audit.log",
+      "geometry-wrapper.geo",
+      "getdp-wrapper.pro",
+      "observables.dat",
+      "coenergy.dat",
+      "inductance.dat"
+    ],
+    "excludedExtensions": [".msh", ".res", ".pre", ".pos"],
+    "excludedBytes": 4621020978,
+    "sanitization": {
+      "files": ["solver-environment.json", "mesh-audit.json"],
+      "replacement": "original absolute repository root -> {REPOSITORY_ROOT}",
+      "scope": "path text only; numerical, solver, model, resource, and artifact identity fields are unchanged"
+    }
+  },
+  "limitations": [
+    "This is a limited coarse calibration pack, not a production FEM lookup table.",
+    "Only class 0 has measured coarse/fine drift; classes 1 and 2 use a transfer assumption.",
+    "The relative bound applies only to inductance, magnetic energy, and coenergy.",
+    "No full mesh or outer-domain convergence claim is made.",
+    "Torque and torque derivatives are unbounded.",
+    "The illustrative magnetostatic model is not a manufactured-machine replica or experimental validation."
+  ]
+}

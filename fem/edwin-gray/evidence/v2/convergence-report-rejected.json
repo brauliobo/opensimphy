@@ -1,0 +1,29 @@
+{
+  "contract": "edwin-gray-convergence-report",
+  "contractVersion": 2,
+  "specification": {
+    "contract": "edwin-gray-convergence-spec",
+    "contractVersion": 2,
+    "sha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7"
+  },
+  "evidence": {
+    "contract": "edwin-gray-convergence-evidence",
+    "contractVersion": 2,
+    "sampleCount": 18,
+    "independentlySolvedSampleCount": 17,
+    "symmetryDerivedSampleCount": 1
+  },
+  "status": "rejected",
+  "checks": [
+    {
+      "id": "evidence-integrity-and-coverage",
+      "status": "failed",
+      "observed": null,
+      "tolerance": null,
+      "comparison": "exact"
+    }
+  ],
+  "failures": [
+    "evidence sample count 18 does not match required production count 33"
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "checkpointVersion": "fem-checkpoint-v6",
+  "jobId": "8fa4d3763c22e432fa648f26",
+  "inputHash": "1ff4d288e19c4b926a06c4524f57eb6d4bf8b4b78bbb3bd520ba659836f4bd32",
+  "modelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+  "jobInputHash": "1ff4d288e19c4b926a06c4524f57eb6d4bf8b4b78bbb3bd520ba659836f4bd32",
+  "parameters": {
+    "rotorAngleDeg": 26.666666666666668,
+    "eventIndex": 2,
+    "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+    "meshSizeM": 0.025,
+    "driveCurrentA": 10
+  },
+  "backend": "docker",
+  "solverProfile": {
+    "configSchemaVersion": "edwin-gray-petsc-solver-profiles-v1",
+    "configSha256": "22a8a4ae6e959b164cb22f2991ae3df1c35820cc592510a8a449cdc7468f5ded",
+    "name": "direct-mumps-publication-v1",
+    "mode": "direct",
+    "publicationAllowed": true,
+    "publicationProfile": "fast-coarse-direct-mumps-v1",
+    "safeMinimumMeshSizeM": 0.025,
+    "requiredMeshSizeM": 0.025,
+    "measuredDegreesOfFreedom": 1335000,
+    "measuredPeakMemoryGiB": 19.3,
+    "requiredMemoryGiB": 24,
+    "requiredCpus": 2,
+    "requiredThreads": 2,
+    "kspType": "preonly",
+    "pcType": "lu",
+    "factorSolverType": "mumps",
+    "petscOptions": [
+      "-ksp_type",
+      "preonly",
+      "-pc_type",
+      "lu",
+      "-pc_factor_mat_solver_type",
+      "mumps",
+      "-ksp_monitor_true_residual",
+      "-ksp_converged_reason",
+      "-ksp_error_if_not_converged"
+    ]
+  },
+  "resourceLimits": {
+    "memoryGiB": 24,
+    "cpus": 2,
+    "memorySwapGiB": 24,
+    "meshThreads": 1,
+    "solverThreads": 2
+  },
+  "environmentIdentityHash": "7aa133cfdf55eb226ad87f9267df17052156d42e445c1d054fa81bc8ff756f5f",
+  "solverEnvironment": {
+    "schemaVersion": "solver-environment-v3",
+    "identityHash": "7aa133cfdf55eb226ad87f9267df17052156d42e445c1d054fa81bc8ff756f5f",
+    "identity": {
+      "backend": "docker",
+      "architecture": "linux/amd64",
+      "solver": {
+        "configSchemaVersion": "edwin-gray-petsc-solver-profiles-v1",
+        "configSha256": "22a8a4ae6e959b164cb22f2991ae3df1c35820cc592510a8a449cdc7468f5ded",
+        "name": "direct-mumps-publication-v1",
+        "mode": "direct",
+        "publicationAllowed": true,
+        "publicationProfile": "fast-coarse-direct-mumps-v1",
+        "safeMinimumMeshSizeM": 0.025,
+        "requiredMeshSizeM": 0.025,
+        "measuredDegreesOfFreedom": 1335000,
+        "measuredPeakMemoryGiB": 19.3,
+        "requiredMemoryGiB": 24,
+        "requiredCpus": 2,
+        "requiredThreads": 2,
+        "kspType": "preonly",
+        "pcType": "lu",
+        "factorSolverType": "mumps",
+        "petscOptions": [
+          "-ksp_type",
+          "preonly",
+          "-pc_type",
+          "lu",
+          "-pc_factor_mat_solver_type",
+          "mumps",
+          "-ksp_monitor_true_residual",
+          "-ksp_converged_reason",
+          "-ksp_error_if_not_converged"
+        ]
+      },
+      "resources": {
+        "memoryGiB": 24,
+        "cpus": 2,
+        "memorySwapGiB": 24,
+        "meshThreads": 1,
+        "solverThreads": 2
+      },
+      "commandPlan": {
+        "mesh": [
+          "gmsh",
+          "{geometry}",
+          "-3",
+          "-nt",
+          "1",
+          "-format",
+          "msh4",
+          "-o",
+          "{mesh}"
+        ],
+        "solve": [
+          "getdp",
+          "{problem}",
+          "-nt",
+          "2",
+          "-name",
+          "{solution}",
+          "-msh",
+          "{mesh}",
+          "-solve",
+          "Magnetostatics3D",
+          "-pos",
+          "MagnetostaticResults",
+          "-ksp_type",
+          "preonly",
+          "-pc_type",
+          "lu",
+          "-pc_factor_mat_solver_type",
+          "mumps",
+          "-ksp_monitor_true_residual",
+          "-ksp_converged_reason",
+          "-ksp_error_if_not_converged"
+        ]
+      },
+      "image": {
+        "requestedImage": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d",
+        "image": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d",
+        "digest": "sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d",
+        "mutableReference": false
+      },
+      "software": {
+        "gmsh": "4.8.4+ds2-3",
+        "getdp": "official-3.5.0"
+      },
+      "source": {
+        "kind": "debian-snapshot+getdp-official-sha256",
+        "baseImage": "debian@sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143",
+        "debianSnapshot": "20260804T000000Z",
+        "gmshPackage": "4.8.4+ds2-3",
+        "getdpPackage": "official-3.5.0",
+        "getdpArchiveSha256": "d3c28fa18f20d6147b4c7367d4dd802e9f7ddb58c608688bbb71919dbca8041d",
+        "testedArchitecture": "linux/amd64"
+      },
+      "runner": {
+        "revision": "6dafb09f4f8ad45d2aae3c8bc5ceb9af274f2994",
+        "runScriptSha256": "0df2f6aca645b53a2ba28847c08273311fdfd3ff5a56928438575d3537f608b5",
+        "environmentModuleSha256": "22c005466a06b9cdcd6d4e7b49f73036843c1db1a16345b91e6c08a560b95270",
+        "solverConfigSha256": "22a8a4ae6e959b164cb22f2991ae3df1c35820cc592510a8a449cdc7468f5ded"
+      }
+    }
+  },
+  "resultContract": "edwin-gray-browser-result@1",
+  "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+  "eventIndex": 2,
+  "meshQuality": "passed",
+  "phases": {
+    "mesh": "complete",
+    "solve": "complete",
+    "normalize": "complete"
+  },
+  "artifacts": {
+    "environment": "f2ae6d89bd7ab575b5acf0f3ac4c048c0a61cb213c750c938f25ec259d1a50a7",
+    "inputs": {
+      "geometry": "0af77502aa73abf6b1aa23a6760907b1964106e180d2f3357d588e39bc87626d",
+      "getdp": "411bd16b9836a823ebcc6d5c5446536412af45292d2e01d233a0a14fa3250d4b"
+    },
+    "mesh": "51fa01ce49901131d7b9821f383a202d485c0f94307e5d1e68b7f0b428658e0a",
+    "audit": "a754a2bd2929ca0eb7abb1b1e7f5c4fb13615dc49a8c756470bac305925059af",
+    "logs": {
+      "gmsh": "0a8ff07a82317b42b8f6941101508dfe170f3700ea4de68c84215077784076f1",
+      "getdp": "1b7be7ff0691c17a5f34004f84acaa18fc3a0e26e84dab0327b847d1cc1d3678"
+    },
+    "convergence": "b954b24db32d9ffef92f7fc2a27f659ccf62f53c87a4c80a1040e47b4393e986",
+    "outputs": {
+      "magnetic-potential.pos": "edda2c18740bd37e5ddf5594787522fe8e6954af223f639fb4ed2f68418031e7",
+      "magnetic-flux-density.pos": "d437eb867340b8f6af83323868d2bd08e23078ae786eb0ec346d40f161fabf62",
+      "observables.dat": "499e80c3847e7a41ca6fc3f04f918f666618c615bebb162a0c378b5880bd64d6",
+      "coenergy.dat": "499e80c3847e7a41ca6fc3f04f918f666618c615bebb162a0c378b5880bd64d6",
+      "inductance.dat": "bf5340938d6aa67c474d0f49629cc35cc8fc65668d9e490c8e130244fe7012f9"
+    },
+    "result": "0dcbd20afd611be30c7052de148410b55c799d3b95b02024bc60cc5a202f4917"
+  },
+  "result": "result.json",
+  "solverConvergence": {
+    "schemaVersion": "edwin-gray-solver-evidence-v1",
+    "status": "complete",
+    "profile": "direct-mumps-publication-v1",
+    "configSha256": "22a8a4ae6e959b164cb22f2991ae3df1c35820cc592510a8a449cdc7468f5ded",
+    "mode": "direct",
+    "getdpExitStatus": 0,
+    "kspType": "preonly",
+    "pcType": "lu",
+    "factorSolverType": "mumps",
+    "reason": "CONVERGED_ITS",
+    "iterations": 1,
+    "finalResidualNorm": null,
+    "finalRelativeResidual": null,
+    "saveSolution": true,
+    "postoperations": [
+      "magnetic-potential.pos",
+      "magnetic-flux-density.pos",
+      "observables.dat",
+      "coenergy.dat",
+      "inductance.dat"
+    ],
+    "getdpLogSha256": "1b7be7ff0691c17a5f34004f84acaa18fc3a0e26e84dab0327b847d1cc1d3678",
+    "outputHashes": {
+      "magnetic-potential.pos": "edda2c18740bd37e5ddf5594787522fe8e6954af223f639fb4ed2f68418031e7",
+      "magnetic-flux-density.pos": "d437eb867340b8f6af83323868d2bd08e23078ae786eb0ec346d40f161fabf62",
+      "observables.dat": "499e80c3847e7a41ca6fc3f04f918f666618c615bebb162a0c378b5880bd64d6",
+      "coenergy.dat": "499e80c3847e7a41ca6fc3f04f918f666618c615bebb162a0c378b5880bd64d6",
+      "inductance.dat": "bf5340938d6aa67c474d0f49629cc35cc8fc65668d9e490c8e130244fe7012f9"
+    }
+  }
+}

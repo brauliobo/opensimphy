@@ -1,7 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { grayFemLookupRevision } from '../../src/edwin-gray/edwinGrayFem'
 import { GRAY_MACHINE_CONTRACTS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
-import { compatibleGrayCalibrationPack } from '../helpers/edwinGrayCalibration'
 
 const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
@@ -136,23 +135,12 @@ test('a warmed limited calibration pack remains explicit and fail-closed offline
   await ensureServiceWorkerControl(page)
   await page.goto('/labs/edwin-gray')
   await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
-
-  await page.evaluate(async ({ cacheName, path, value }) => {
-    const cache = await caches.open(cacheName)
-    await cache.put(path, new Response(JSON.stringify(value), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    }))
-  }, {
-    cacheName: GRAY_CALIBRATION_CACHE,
-    path: GRAY_CALIBRATION_PATH,
-    value: compatibleGrayCalibrationPack(),
-  })
-
-  await context.setOffline(true)
   await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
   await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
   await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+  expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_CALIBRATION_CACHE)).toBe(1)
+
+  await context.setOffline(true)
   await page.getByTestId('gray-calibration-acknowledgement').check()
   await page.getByTestId('gray-magnetic-model').selectOption('limited-fem-calibration')
   await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'active')

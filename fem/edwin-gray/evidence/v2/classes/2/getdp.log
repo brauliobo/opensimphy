@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "solver-environment-v1",
+  "software": {"gmsh": "4.8.4", "getdp": "3.5.0"},
+  "image": {"reference": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d", "revision": "817d122-source-v2"},
+  "source": {"kind": "debian-snapshot+getdp-official-sha256", "baseImage": "debian@sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143", "debianSnapshot": "20260804T000000Z", "gmshPackage": "4.8.4+ds2-3", "getdpPackage": "official-3.5.0"},
+  "architecture": {"os": "linux", "debian": "amd64", "kernel": "x86_64"},
+  "execution": {"command": "getdp", "options": ["/output/8fa4d3763c22e432fa648f26/getdp-wrapper.pro","-nt","2","-name","/output/8fa4d3763c22e432fa648f26/solve","-msh","/output/8fa4d3763c22e432fa648f26/motor.msh","-solve","Magnetostatics3D","-pos","MagnetostaticResults","-ksp_type","preonly","-pc_type","lu","-pc_factor_mat_solver_type","mumps","-ksp_monitor_true_residual","-ksp_converged_reason","-ksp_error_if_not_converged"], "threadCount": 2},
+  "runner": {"revision": "6dafb09f4f8ad45d2aae3c8bc5ceb9af274f2994", "sourceRevision": "0df2f6aca645b53a2ba28847c08273311fdfd3ff5a56928438575d3537f608b5"}
+}
+Info    : Running 'getdp /output/8fa4d3763c22e432fa648f26/getdp-wrapper.pro -nt 2 -name /output/8fa4d3763c22e432fa648f26/solve -msh /output/8fa4d3763c22e432fa648f26/motor.msh -solve Magnetostatics3D -pos MagnetostaticResults -ksp_type preonly -pc_type lu -pc_factor_mat_solver_type mumps -ksp_monitor_true_residual -ksp_converged_reason -ksp_error_if_not_converged' [GetDP 3.5.0, 1 node, max. 1 thread]
+Info    : Started (Sun Aug 16 19:42:43 2026, Wall = 7.10487e-05s, CPU = 0.008129s, Mem = 8.39453Mb)
+Info    : Initializing Gmsh
+Info    : Loading problem definition '/output/8fa4d3763c22e432fa648f26/getdp-wrapper.pro'
+Info    : Loading problem definition '/workspace/getdp/magnetostatic.pro'
+Info    : Loading problem definition '/workspace/getdp/../excitation/v1/event-map-v1.pro'
+Info    : Selected Resolution 'Magnetostatics3D'
+Info    : Loading Geometric data '/output/8fa4d3763c22e432fa648f26/motor.msh'
+Info    : Reading '/output/8fa4d3763c22e432fa648f26/motor.msh'...
+Info    : 2601 entities
+Info    : 213534 nodes
+Info    : 1309776 elements
+Info    : Done reading '/output/8fa4d3763c22e432fa648f26/motor.msh'
+Info    : System 'Sys_Mag' : Real
+P r e - P r o c e s s i n g . . .
+Info    : Treatment Formulation 'Magnetostatics3D'
+  0%    : Pre-processing                                          Info    :   Generate ExtendedGroup '_CO_Entity_13' (EdgesOfTreeIn, StartingOn)
+ 10%    : Pre-processing                                           20%    : Pre-processing                                           30%    : Pre-processing                                           40%    : Pre-processing                                           50%    : Pre-processing                                           60%    : Pre-processing                                           70%    : Pre-processing                                           80%    : Pre-processing                                           90%    : Pre-processing                                                                                    Info    : System 1/1: 1309115 Dofs
+Info    : (Wall = 21.95s, CPU = 21.6544s, Mem = 888.098Mb)
+E n d   P r e - P r o c e s s i n g
+P r o c e s s i n g . . .
+Info    : Generate[Sys_Mag]
+  0%    : Processing (Generate)                                           10%    : Processing (Generate)                                           20%    : Processing (Generate)                                           30%    : Processing (Generate)                                           40%    : Processing (Generate)                                           50%    : Processing (Generate)                                           60%    : Processing (Generate)                                           70%    : Processing (Generate)                                           80%    : Processing (Generate)                                           90%    : Processing (Generate)                                                                                    Info    : Solve[Sys_Mag]
+Info    : N: 1309115 - preonly lu mumps
+Linear solve converged due to CONVERGED_ITS iterations 1
+Info    : SaveSolution[Sys_Mag]
+Info    : (Wall = 152.645s, CPU = 232.315s, Mem = 18799.5Mb)
+E n d   P r o c e s s i n g
+P o s t - P r o c e s s i n g . . .
+Info    : NameOfSystem not set in PostProcessing: selected 'Sys_Mag'
+Info    : Selected PostProcessing 'MagnetostaticResults'
+Info    : Selected Mesh '/output/8fa4d3763c22e432fa648f26/motor.msh'
+Info    : PostOperation 'MagnetostaticResults' 1/5
+          > '/output/8fa4d3763c22e432fa648f26/magnetic-potential.pos'
+  0%    : Post-processing (Compute)                                           10%    : Post-processing (Compute)                                           20%    : Post-processing (Compute)                                           30%    : Post-processing (Compute)                                           40%    : Post-processing (Compute)                                           50%    : Post-processing (Compute)                                           60%    : Post-processing (Compute)                                           70%    : Post-processing (Compute)                                           80%    : Post-processing (Compute)                                           90%    : Post-processing (Compute)                                                                                    Info    : PostOperation 'MagnetostaticResults' 2/5
+          > '/output/8fa4d3763c22e432fa648f26/magnetic-flux-density.pos'
+  0%    : Post-processing (Compute)                                           10%    : Post-processing (Compute)                                           20%    : Post-processing (Compute)                                           30%    : Post-processing (Compute)                                           40%    : Post-processing (Compute)                                           50%    : Post-processing (Compute)                                           60%    : Post-processing (Compute)                                           70%    : Post-processing (Compute)                                           80%    : Post-processing (Compute)                                           90%    : Post-processing (Compute)                                                                                    Info    : PostOperation 'MagnetostaticResults' 3/5
+          > '/output/8fa4d3763c22e432fa648f26/observables.dat'
+Info    : PostOperation 'MagnetostaticResults' 4/5
+          > '/output/8fa4d3763c22e432fa648f26/coenergy.dat'
+Info    : PostOperation 'MagnetostaticResults' 5/5
+          > '/output/8fa4d3763c22e432fa648f26/inductance.dat'
+Info    : (Wall = 178.202s, CPU = 257.424s, Mem = 18799.5Mb)
+E n d   P o s t - P r o c e s s i n g
+Info    : Stopped (Sun Aug 16 19:45:43 2026, Wall = 179.638s, CPU = 258.251s, Mem = 18799.5Mb)

@@ -1,5 +1,4 @@
 import { expect, test, type Page } from '@playwright/test'
-import { compatibleGrayCalibrationPack } from '../helpers/edwinGrayCalibration'
 
 const reflowViewports = [
   { width: 1440, height: 900, label: 'desktop' },
@@ -102,13 +101,13 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(eventSummary).toHaveAttribute('aria-live', 'polite')
   })
 
-  test('fails closed when the selected machine has no compatible FEM lookup', async ({ page }) => {
+  test('keeps the absent production LUT separate from the ready opt-in calibration', async ({ page }) => {
     await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'unavailable')
     await expect(page.getByTestId('gray-magnetic-model').locator('option[value="fem-lookup"]')).toHaveAttribute('disabled', '')
 
     await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
     await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
-    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'absent')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
     await expect(page.getByTestId('gray-fem-status')).toContainText('never relabeled FEM')
 
@@ -121,14 +120,6 @@ test.describe('Edwin Gray Workbench', () => {
   test('requires acknowledgement, activates limited calibration, and never silently falls back', async ({ context, page }) => {
     await page.evaluate(() => navigator.serviceWorker.ready)
     if (!await page.evaluate(() => Boolean(navigator.serviceWorker.controller))) await page.reload()
-    await page.evaluate(async (value) => {
-      const cache = await caches.open('opensimphy-gray-fem-calibration')
-      await cache.put('/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json', new Response(JSON.stringify(value), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }))
-    }, compatibleGrayCalibrationPack())
-    await context.setOffline(true)
     await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
 
     const calibrationOption = page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')
@@ -146,19 +137,20 @@ test.describe('Edwin Gray Workbench', () => {
     await page.getByTestId('gray-magnetic-model').selectOption('limited-fem-calibration')
     await expect(page).toHaveURL(/grayMagnetic=limited-fem-calibration/)
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'active')
-    await context.setOffline(false)
     await page.getByTestId('gray-run').click()
     await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
     await page.getByTestId('gray-snapshot-save').click()
     await expect(page.getByTestId('gray-snapshot-table').locator('tbody tr')).toHaveCount(1)
 
-    await page.evaluate(async (value) => {
+    await page.evaluate(async () => {
+      const path = '/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
+      const value = await fetch(path).then((response) => response.json())
       const cache = await caches.open('opensimphy-gray-fem-calibration')
-      await cache.put('/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json', new Response(JSON.stringify(value), {
+      await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }))
-    }, { ...compatibleGrayCalibrationPack(), status: 'complete' })
+    })
     await context.setOffline(true)
     await page.getByTestId('gray-calibration-recheck').click()
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')

@@ -1,11 +1,17 @@
 # FEM convergence gate
 
 `convergence-spec-v1.json` and `pilot-failure-report-v1.json` are immutable
-rejected evidence. `convergence-spec-v2.json` is the active production study
-definition. It replaces disconnected axial volume currents with a closed
+rejected evidence. `convergence-spec-v2.json` defines the attempted production
+study. It replaces disconnected axial volume currents with a closed
 equivalent current potential, couples local feature resolution to each mesh
 level, starts at the v1 far radius, and expands both radial and axial air bounds.
 The v1 numerical tolerances are retained.
+
+The retained v2 pilot passed its bounded checks, but the production report is
+rejected because only 18 of 33 required samples are present. Compact copies are
+stored under `../evidence/v2/`. No production LUT, full convergence result, or
+torque bound was published. The separate completed three-class calibration pack
+remains `limited-not-validated` and does not satisfy this production gate.
 
 Run the evaluator after all individual runner jobs are complete:
 
