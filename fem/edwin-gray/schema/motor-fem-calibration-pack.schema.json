@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensimphy.local/edwin-gray/motor-fem-calibration-pack.schema.json",
+  "title": "Edwin Gray limited FEM calibration pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "contractVersion",
+    "profileId",
+    "status",
+    "productionEligible",
+    "fullConvergenceClaim",
+    "optIn",
+    "defaultEnabled",
+    "configuration",
+    "evidence",
+    "classes",
+    "uncertainty",
+    "torque",
+    "limitations"
+  ],
+  "properties": {
+    "contract": { "const": "edwin-gray-motor-fem-calibration-pack" },
+    "contractVersion": { "const": 1 },
+    "profileId": { "const": "fast-limited-calibration-v1" },
+    "status": { "const": "limited-not-validated" },
+    "productionEligible": { "const": false },
+    "fullConvergenceClaim": { "const": false },
+    "optIn": { "const": true },
+    "defaultEnabled": { "const": false },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventClasses", "meshSizeM", "driveCurrentA", "solverProfile", "resources", "hardDeadlineSeconds"],
+      "properties": {
+        "eventClasses": { "const": [0, 1, 2] },
+        "meshSizeM": { "const": 0.025 },
+        "driveCurrentA": { "const": 10 },
+        "solverProfile": { "const": "direct-mumps-publication-v1" },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["memoryGiB", "memorySwapGiB", "cpus", "threads", "serial"],
+          "properties": {
+            "memoryGiB": { "const": 24 },
+            "memorySwapGiB": { "const": 24 },
+            "cpus": { "const": 2 },
+            "threads": { "const": 2 },
+            "serial": { "const": true }
+          }
+        },
+        "hardDeadlineSeconds": { "type": "integer", "minimum": 1, "exclusiveMaximum": 1740 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modelInputHash", "environmentIdentityHash", "pilotReportSha256", "symmetryProofSha256", "coarseFineDrift"],
+      "properties": {
+        "modelInputHash": { "$ref": "#/$defs/sha256" },
+        "environmentIdentityHash": { "$ref": "#/$defs/sha256" },
+        "pilotReportSha256": { "$ref": "#/$defs/sha256" },
+        "symmetryProofSha256": { "$ref": "#/$defs/sha256" },
+        "coarseFineDrift": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["measured", "maximum", "status"],
+          "properties": {
+            "measured": { "const": 0.011584935659327932 },
+            "maximum": { "const": 0.02 },
+            "status": { "const": "passed" }
+          }
+        }
+      }
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/class" },
+      "allOf": [
+        { "contains": { "type": "object", "required": ["eventClass"], "properties": { "eventClass": { "const": 0 } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "type": "object", "required": ["eventClass"], "properties": { "eventClass": { "const": 1 } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "type": "object", "required": ["eventClass"], "properties": { "eventClass": { "const": 2 } } }, "minContains": 1, "maxContains": 1 }
+      ]
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relativeBound", "quantities", "classBasis"],
+      "properties": {
+        "relativeBound": { "const": 0.02 },
+        "quantities": { "const": ["L", "W", "W'"] },
+        "classBasis": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["0", "1", "2"],
+          "properties": {
+            "0": { "const": "measured" },
+            "1": { "const": "transfer-assumed" },
+            "2": { "const": "transfer-assumed" }
+          }
+        }
+      }
+    },
+    "torque": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bounded", "reason"],
+      "properties": {
+        "bounded": { "const": false },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "limitations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "class": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventClass", "eventIndex", "rotorAngleDeg", "jobInputHash", "checkpointSha256", "resultSha256", "observables", "uncertaintyBasis"],
+      "properties": {
+        "eventClass": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "eventIndex": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "rotorAngleDeg": { "type": "number", "minimum": 0, "exclusiveMaximum": 40 },
+        "jobInputHash": { "$ref": "#/$defs/sha256" },
+        "checkpointSha256": { "$ref": "#/$defs/sha256" },
+        "resultSha256": { "$ref": "#/$defs/sha256" },
+        "observables": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["magneticEnergyJ", "coEnergyJ", "inductanceH"],
+          "properties": {
+            "magneticEnergyJ": { "$ref": "#/$defs/value" },
+            "coEnergyJ": { "$ref": "#/$defs/value" },
+            "inductanceH": { "$ref": "#/$defs/value" }
+          }
+        },
+        "uncertaintyBasis": { "enum": ["measured", "transfer-assumed"] }
+      }
+    }
+  }
+}

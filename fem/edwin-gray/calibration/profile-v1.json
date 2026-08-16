@@ -1,0 +1,23 @@
+{
+  "contract": "edwin-gray-motor-fem-calibration-profile",
+  "contractVersion": 1,
+  "profileId": "fast-limited-calibration-v1",
+  "eventClasses": [0, 1, 2],
+  "meshSizeM": 0.025,
+  "driveCurrentA": 10,
+  "solverProfile": "direct-mumps-publication-v1",
+  "resources": {
+    "memoryGiB": 24,
+    "memorySwapGiB": 24,
+    "cpus": 2,
+    "threads": 2,
+    "serial": true
+  },
+  "hardDeadlineSeconds": 1720,
+  "energyCoenergyRelativeTolerance": 0.01,
+  "coarseFineDrift": {
+    "measured": 0.011584935659327932,
+    "maximum": 0.02
+  },
+  "outputFileName": "motor-fem-calibration-pack-v1.json"
+}
