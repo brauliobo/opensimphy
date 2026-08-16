@@ -20,6 +20,7 @@ const LUT_SCHEMA_PATH = resolve(ROOT, "schema/motor-fem-lut.schema.json");
 const EVENT_MAP_PATH = resolve(ROOT, "excitation/v1/event-map-v1.json");
 const GEOMETRY_PATH = resolve(ROOT, "geometry/patent-3890548-3d.geo");
 const PUBLICATION_PROFILE_PATH = resolve(CONVERGENCE_DIR, "publication-profile-v1.json");
+const REDUCED_PROFILE_PATH = resolve(CONVERGENCE_DIR, "reduced-profile-v1.json");
 const DEFAULT_LUT_PATH = resolve(ROOT, "../../public/data/generated/edwin-gray/motor-fem-lut-v1.json");
 
 function assert(condition, message) {
@@ -28,12 +29,19 @@ function assert(condition, message) {
 
 function parseArgs(argv) {
   const options = {};
+  const flags = new Set(["missing-only", "plan"]);
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     assert(token.startsWith("--"), `unexpected argument ${token}`);
+    const key = token.slice(2);
+    assert(options[key] === undefined, `duplicate option ${token}`);
+    if (flags.has(key)) {
+      options[key] = true;
+      continue;
+    }
     const value = argv[index + 1];
     assert(value && !value.startsWith("--"), `missing value for ${token}`);
-    options[token.slice(2)] = value;
+    options[key] = value;
     index += 1;
   }
   return options;
@@ -56,9 +64,13 @@ function writeJson(path, value) {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
-function run(command, args, label) {
-  const result = spawnSync(command, args, { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+export function run(command, args, label, timeoutSeconds) {
+  const invocation = timeoutSeconds === undefined
+    ? { command, args }
+    : { command: "timeout", args: ["--foreground", "--signal=TERM", "--kill-after=5s", `${timeoutSeconds}s`, command, ...args] };
+  const result = spawnSync(invocation.command, invocation.args, { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
   if (result.status !== 0) {
+    if (result.status === 124) throw new Error(`${label} exceeded the shared hard timeout`);
     throw new Error(`${label} failed${result.stderr ? `: ${result.stderr.trim()}` : ""}`);
   }
   return result.stdout.trim();
@@ -89,6 +101,32 @@ function sameNumber(left, right) {
 
 function sampleKey(sample) {
   return `${sample.domainId}|${sample.meshLevelId}|${Number(sample.driveCurrentA).toPrecision(15)}|${Number(sample.rotorAngleDeg).toFixed(10)}`;
+}
+
+function tupleKey(sample) {
+  return `${sampleKey(sample)}|${sample.eventIndex}`;
+}
+
+export function selectedDefinitions(selection, declared) {
+  const tuples = Array.isArray(selection) ? selection : selection?.tuples;
+  assert(Array.isArray(tuples) && tuples.length > 0, "selected tuple input must contain a non-empty tuples array");
+  const declaredByKey = new Map(declared.map((tuple) => [tupleKey(tuple), tuple]));
+  const selected = [];
+  const seen = new Set();
+  for (const tuple of tuples) {
+    assert(tuple && Object.keys(tuple).sort().join(",") === "domainId,driveCurrentA,eventIndex,meshLevelId,rotorAngleDeg", "selected tuple fields are invalid");
+    const key = tupleKey(tuple);
+    assert(!seen.has(key), `duplicate selected tuple ${key}`);
+    assert(declaredByKey.has(key), `selected tuple is not declared by the reduced profile: ${key}`);
+    seen.add(key);
+    selected.push(declaredByKey.get(key));
+  }
+  return selected;
+}
+
+export function missingDefinitions(definitions, completed) {
+  const completedKeys = new Set(completed.map(tupleKey));
+  return definitions.filter((sample) => !completedKeys.has(tupleKey(sample)));
 }
 
 function wrapperNumber(text, name) {
@@ -191,37 +229,6 @@ function collectExistingEvidence(workDir, spec, definitions) {
     };
   });
 
-  const declaration = spec.production.symmetryDerivedConvergenceSample;
-  if (!complete.has(sampleKey(declaration.target))) {
-    const source = complete.get(sampleKey(declaration.source));
-    const validationSource = complete.get(sampleKey({ ...declaration.source, meshLevelId: declaration.validationMeshLevelId }));
-    const validationPartner = complete.get(sampleKey({ ...declaration.target, meshLevelId: declaration.validationMeshLevelId }));
-    const targetAttempt = jobs.find((job) => sampleKey(job) === sampleKey(declaration.target));
-    assert(source, "declared fine symmetry source is not complete");
-    assert(validationSource && validationPartner, "declared coarse symmetry validation pair is not complete");
-    assert(targetAttempt, "declared derived target has no matching failed solve attempt");
-    verifyIncompleteTargetAttempt(targetAttempt, source);
-    const validationDifference = maximumObservableDifference(workDir, validationSource, validationPartner);
-    assert(validationDifference <= declaration.validationRelativeTolerance,
-      `coarse symmetry validation differs by ${validationDifference}, above ${declaration.validationRelativeTolerance}`);
-    const proof = convergenceSymmetryProof();
-    samples.push({
-      id: sampleId(declaration.target),
-      kind: declaration.kind,
-      ...declaration.target,
-      derivation: {
-        symmetryProofSha256: proof.proofSha256,
-        rotationDeg: declaration.rotationDeg,
-        source: resultAttestation(workDir, source),
-        validation: {
-          maximumRelativeDifference: validationDifference,
-          tolerance: declaration.validationRelativeTolerance,
-          source: resultAttestation(workDir, validationSource),
-          partner: resultAttestation(workDir, validationPartner)
-        }
-      }
-    });
-  }
   return samples.sort((left, right) => sampleKey(left).localeCompare(sampleKey(right)));
 }
 
@@ -240,42 +247,73 @@ function pilotDefinitions(definitions, spec) {
   const fine = spec.production.meshLevels.at(-1).id;
   const far = spec.production.domains.at(-1).id;
   const periodic = spec.production.periodicityPairsDeg.find((pair) => pair[0] === angle)?.[1];
-  return definitions.filter((sample) => (
+  const selected = definitions.filter((sample) => (
     (sample.domainId === spec.production.baseDomainId && sample.driveCurrentA === spec.production.productionCurrentA && sample.rotorAngleDeg === angle)
     || (sample.domainId === spec.production.baseDomainId && sample.meshLevelId === fine && sample.driveCurrentA === spec.production.linearityAuditCurrentA && sample.rotorAngleDeg === angle)
     || (sample.domainId === far && sample.meshLevelId === fine && sample.rotorAngleDeg === angle)
     || (sample.domainId === spec.production.baseDomainId && sample.meshLevelId === fine && sample.rotorAngleDeg === periodic)
   ));
+  if (!selected.some((sample) => sample.domainId === spec.production.baseDomainId && sample.meshLevelId === fine
+      && sample.driveCurrentA === spec.production.productionCurrentA && sample.rotorAngleDeg === periodic)) {
+    selected.push({
+      domainId: spec.production.baseDomainId,
+      meshLevelId: fine,
+      driveCurrentA: spec.production.productionCurrentA,
+      rotorAngleDeg: periodic,
+      eventIndex: eventIndexForAngle(spec, periodic)
+    });
+  }
+  return selected;
 }
 
-function executeSamples({ definitions, spec, cases, workDir, image, threads, cpus, memoryGiB, solverProfile, publication = false }) {
+function eventIndexForAngle(spec, angle) {
+  const periodic = spec.production.periodicityPairsDeg.some((pair) => sameNumber(pair[1], angle));
+  return spec.production.convergenceEventIndex + (periodic ? spec.production.periodicityEventIndexOffset : 0);
+}
+
+export function sampleArguments({ sample, mesh, cases, runs, image, threads, meshThreads, cpus, memoryGiB, solverProfile, publication, source }) {
+  const args = [
+    RUNNER,
+    "--resume",
+    "--backend", "docker",
+    "--docker-image", image,
+    "--threads", String(threads),
+    "--mesh-threads", String(meshThreads),
+    "--cpus", String(cpus),
+    "--memory-gib", String(memoryGiB),
+    "--solver-profile", solverProfile,
+    "--case", cases[sample.domainId],
+    "--run-dir", runs,
+    "--rotor-angle", String(sample.rotorAngleDeg),
+    "--event-index", String(sample.eventIndex),
+    "--mesh-size", String(mesh.meshSizeM),
+    "--drive-current", String(sample.driveCurrentA)
+  ];
+  if (publication) args.splice(2, 0, "--publication");
+  if (source) args.push("--reuse-mesh-checkpoint", source);
+  return args;
+}
+
+function executeSamples({ definitions, spec, cases, workDir, image, threads, meshThreads, cpus, memoryGiB, solverProfile, publication = false, hardTimeoutSeconds, expectedEnvironmentIdentityHash = null }) {
   const runs = resolve(workDir, "runs");
   const completed = [];
   const meshSources = new Map();
+  const started = Date.now();
+  let environmentIdentityHash = expectedEnvironmentIdentityHash;
   for (const sample of definitions) {
     const mesh = spec.production.meshLevels.find((item) => item.id === sample.meshLevelId);
     const meshKey = `${sample.domainId}|${sample.meshLevelId}|${sample.rotorAngleDeg}|${sample.eventIndex}`;
-    const args = [
-      RUNNER,
-      "--resume",
-      "--backend", "docker",
-      "--docker-image", image,
-      "--threads", String(threads),
-      "--cpus", String(cpus),
-      "--memory-gib", String(memoryGiB),
-      "--solver-profile", solverProfile,
-      "--case", cases[sample.domainId],
-      "--run-dir", runs,
-      "--rotor-angle", String(sample.rotorAngleDeg),
-      "--event-index", String(sample.eventIndex),
-      "--mesh-size", String(mesh.meshSizeM),
-      "--drive-current", String(sample.driveCurrentA)
-    ];
-    if (publication) args.splice(2, 0, "--publication");
     const source = meshSources.get(meshKey);
-    if (source) args.push("--reuse-mesh-checkpoint", source);
-    const output = JSON.parse(run(process.execPath, args, `sample ${sampleId(sample)}`));
+    const args = sampleArguments({ sample, mesh, cases, runs, image, threads, meshThreads, cpus, memoryGiB, solverProfile, publication, source });
+    const remainingSeconds = hardTimeoutSeconds === undefined
+      ? undefined
+      : hardTimeoutSeconds - Math.ceil((Date.now() - started) / 1000);
+    assert(remainingSeconds === undefined || remainingSeconds > 0, "shared hard timeout expired before all samples completed");
+    const output = JSON.parse(run(process.execPath, args, `sample ${sampleId(sample)}`, remainingSeconds));
     const checkpoint = join(output.jobDir, "checkpoint.json");
+    const checkpointData = readJson(checkpoint, `sample ${sampleId(sample)} checkpoint`);
+    environmentIdentityHash ||= checkpointData.environmentIdentityHash;
+    assert(checkpointData.environmentIdentityHash === environmentIdentityHash, `sample ${sampleId(sample)} solver environment identity mismatch`);
     meshSources.set(meshKey, checkpoint);
     completed.push({
       id: sampleId(sample),
@@ -285,6 +323,38 @@ function executeSamples({ definitions, spec, cases, workDir, image, threads, cpu
     });
   }
   return completed;
+}
+
+export function studyPlan({ definitions, spec, cases, workDir, options }) {
+  const runs = resolve(workDir, "runs");
+  const timeout = Number(options["hard-timeout-seconds"]);
+  return {
+    contract: "edwin-gray-reduced-convergence-run-plan",
+    contractVersion: 1,
+    profile: "illustrative-linear-numerical-convergence-v1",
+    execution: { serial: true, sharedHardTimeoutSeconds: timeout },
+    samples: definitions.map((sample) => {
+      const mesh = spec.production.meshLevels.find((item) => item.id === sample.meshLevelId);
+      return {
+        id: sampleId(sample),
+        tuple: sample,
+        timeout: ["timeout", "--foreground", "--signal=TERM", "--kill-after=5s", `${timeout}s`],
+        command: [process.execPath, ...sampleArguments({
+          sample,
+          mesh,
+          cases,
+          runs,
+          image: options["docker-image"],
+          threads: Number(options.threads || 1),
+          meshThreads: Number(options["mesh-threads"] || 1),
+          cpus: Number(options.cpus || 2),
+          memoryGiB: Number(options["memory-gib"] || 24),
+          solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1",
+          publication: false
+        })]
+      };
+    })
+  };
 }
 
 function relativeDifference(left, right) {
@@ -386,10 +456,17 @@ function runConvergence(options, spec, definitions, workDir) {
     };
   }
   const cases = caseVariants(workDir, spec);
+  let completedBeforeRun = [];
+  if (options["missing-only"] && existsSync(resolve(workDir, "runs"))) {
+    completedBeforeRun = collectExistingEvidence(workDir, spec, definitions);
+    definitions = missingDefinitions(definitions, completedBeforeRun);
+  }
+  if (options.plan) return studyPlan({ definitions, spec, cases, workDir, options });
   if (options.stage === "publication") {
     const convergenceReportPath = resolve(workDir, "convergence-report.json");
     const convergenceReport = readJson(convergenceReportPath, "approved convergence report");
     assert(convergenceReport.status === "approved", "publication requires an approved convergence report");
+    assert(convergenceReport.profile?.productionEligible === true, "reduced illustrative convergence cannot authorize LUT publication");
     assert(convergenceReport.contract === "edwin-gray-convergence-report" && convergenceReport.contractVersion === 2, "publication convergence report contract is invalid");
     assert(convergenceReport.specification?.sha256 === sha256(SPEC_PATH), "publication convergence report does not match convergence spec v2");
     const caseData = readJson(cases[spec.production.baseDomainId], "publication case");
@@ -413,10 +490,12 @@ function runConvergence(options, spec, definitions, workDir) {
       workDir,
       image: options["docker-image"],
       threads: Number(options.threads),
+      meshThreads: Number(options["mesh-threads"]),
       cpus: Number(options.cpus),
       memoryGiB: Number(options["memory-gib"]),
       solverProfile: options["solver-profile"],
-      publication: true
+      publication: true,
+      hardTimeoutSeconds: Number(options["hard-timeout-seconds"])
     });
     const documents = samples.map((sample) => readJson(resolve(workDir, sample.result), `publication result ${sample.id}`));
     const lut = expandPublicationLut({ documents, profile, caseData, symmetryProof });
@@ -443,6 +522,8 @@ function runConvergence(options, spec, definitions, workDir) {
     return { status: "published", stage: "publication", independentlySolvedJobs: samples.length, symmetryDerivedEntries: lut.entries.length, lut: lutPath, lutSha256: sha256(lutPath), evidence: publicationEvidencePath };
   }
   const selected = options.stage === "pilot" ? pilotDefinitions(definitions, spec) : definitions;
+  const priorEnvironmentHashes = new Set(completedBeforeRun.map((sample) => readJson(resolve(workDir, sample.checkpoint), `existing checkpoint ${sample.id}`).environmentIdentityHash));
+  assert(priorEnvironmentHashes.size <= 1, "existing convergence samples use different solver environments");
   const samples = executeSamples({
     definitions: selected,
     spec,
@@ -450,15 +531,22 @@ function runConvergence(options, spec, definitions, workDir) {
     workDir,
     image: options["docker-image"],
     threads: Number(options.threads || 1),
+    meshThreads: Number(options["mesh-threads"] || 1),
     cpus: Number(options.cpus || 2),
     memoryGiB: Number(options["memory-gib"] || 24),
-    solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1"
+    solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1",
+    hardTimeoutSeconds: Number(options["hard-timeout-seconds"]),
+    expectedEnvironmentIdentityHash: [...priorEnvironmentHashes][0] || null
   });
   if (options.stage === "pilot") {
     const reportPath = resolve(workDir, "pilot-report.json");
     const report = pilotReport(samples, workDir, spec);
     writeJson(reportPath, report);
     return { status: report.status, stage: "pilot", jobs: samples.length, report: reportPath, reportSha256: sha256(reportPath), failures: report.failures };
+  }
+  const allSamples = collectExistingEvidence(workDir, spec, expectedSampleDefinitions(spec));
+  if (allSamples.length !== expectedSampleDefinitions(spec).length) {
+    return { status: "pending", stage: "convergence", jobs: samples.length, completedReducedTuples: allSamples.length, requiredReducedTuples: expectedSampleDefinitions(spec).length };
   }
   const evidencePath = resolve(workDir, "convergence-evidence.json");
   const reportPath = resolve(workDir, "convergence-report.json");
@@ -467,7 +555,7 @@ function runConvergence(options, spec, definitions, workDir) {
     contractVersion: 2,
     status: "complete",
     caseId: spec.caseId,
-    samples
+    samples: allSamples
   });
   const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath);
   return {
@@ -486,9 +574,11 @@ function main(argv) {
   assert(["pilot", "convergence", "publication"].includes(options.stage), "--stage must be pilot, convergence, or publication");
   const existingOnly = options["existing-only"] === "true";
   assert(options["existing-only"] === undefined || (existingOnly && options.stage === "convergence"), "--existing-only true is valid only for convergence");
+  assert(!options["missing-only"] || options.stage === "convergence", "--missing-only is valid only for convergence");
+  assert(!options.plan || options.stage === "convergence", "--plan is valid only for convergence");
   if (!existingOnly) assert(options["docker-image"], "--docker-image is required");
   if (options.stage === "publication") {
-    for (const required of ["solver-profile", "memory-gib", "cpus", "threads"]) {
+    for (const required of ["solver-profile", "memory-gib", "cpus", "threads", "mesh-threads"]) {
       assert(options[required], `publication requires explicit --${required}`);
     }
     assert(options["solver-profile"] === "direct-mumps-publication-v1", "publication requires solver profile direct-mumps-publication-v1");
@@ -496,18 +586,25 @@ function main(argv) {
   const threads = Number(options.threads || 2);
   const cpus = Number(options.cpus || 2);
   const memoryGiB = Number(options["memory-gib"] || 24);
+  const meshThreads = Number(options["mesh-threads"] || 1);
+  const hardTimeoutSeconds = Number(options["hard-timeout-seconds"]);
   assert(Number.isInteger(threads) && threads >= 1 && threads <= 2, "--threads must be an integer in [1, 2]");
   assert(Number.isFinite(cpus) && cpus > 0 && cpus <= 2, "--cpus must be in (0, 2]");
   assert(Number.isFinite(memoryGiB) && memoryGiB > 0 && memoryGiB <= 24, "--memory-gib must be in (0, 24]");
+  assert(Number.isInteger(meshThreads) && meshThreads >= 1 && meshThreads <= 2, "--mesh-threads must be an integer in [1, 2]");
+  assert(Number.isFinite(hardTimeoutSeconds) && hardTimeoutSeconds > 0, "--hard-timeout-seconds must be finite and positive");
   if (options.stage === "publication") {
-    assert(threads === 2 && cpus === 2 && memoryGiB === 24, "publication requires exactly 2 threads, 2 CPUs, and 24 GiB");
+    assert(threads === 2 && meshThreads === 1 && cpus === 2 && memoryGiB === 24, "publication requires exactly 2 solver threads, 1 mesh thread, 2 CPUs, and 24 GiB");
   }
   const workDir = resolve(options["work-dir"] || "edwin-gray-study");
   mkdirSync(workDir, { recursive: true });
   const spec = readJson(SPEC_PATH, "convergence specification");
+  const profile = readJson(REDUCED_PROFILE_PATH, "reduced convergence profile");
+  let definitions = expectedSampleDefinitions(spec, profile);
+  if (options["selected-tuples"]) definitions = selectedDefinitions(readJson(resolve(options["selected-tuples"]), "selected tuples"), definitions);
   const started = Date.now();
-  const result = runConvergence(options, spec, expectedSampleDefinitions(spec), workDir);
-  result.runtimeSeconds = (Date.now() - started) / 1000;
+  const result = runConvergence(options, spec, definitions, workDir);
+  if (!options.plan) result.runtimeSeconds = (Date.now() - started) / 1000;
   console.log(JSON.stringify(result, null, 2));
   if (result.status === "rejected") process.exitCode = 1;
 }

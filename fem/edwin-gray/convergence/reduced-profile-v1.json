@@ -1,0 +1,37 @@
+{
+  "contract": "edwin-gray-reduced-convergence-profile",
+  "contractVersion": 1,
+  "profileId": "illustrative-linear-numerical-convergence-v1",
+  "caseId": "patent-3890548-illustrative",
+  "scope": "Illustrative linear numerical convergence only.",
+  "productionEligible": false,
+  "claims": {
+    "physicalValidation": false,
+    "lutPublication": false
+  },
+  "independentlySolvedTuples": [
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 0, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 13.3333333333, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 120, "eventIndex": 9 },
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 126.6666666667, "eventIndex": 9 },
+    { "domainId": "base", "meshLevelId": "coarse", "driveCurrentA": 10, "rotorAngleDeg": 133.3333333333, "eventIndex": 9 },
+    { "domainId": "base", "meshLevelId": "medium", "driveCurrentA": 10, "rotorAngleDeg": 0, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "medium", "driveCurrentA": 10, "rotorAngleDeg": 3.3333333333, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "medium", "driveCurrentA": 10, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "medium", "driveCurrentA": 10, "rotorAngleDeg": 10, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "medium", "driveCurrentA": 10, "rotorAngleDeg": 13.3333333333, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 0, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 3.3333333333, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 10, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 13.3333333333, "eventIndex": 0 },
+    { "domainId": "expanded", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 0, "eventIndex": 0 },
+    { "domainId": "expanded", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 },
+    { "domainId": "expanded", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 13.3333333333, "eventIndex": 0 },
+    { "domainId": "far", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 0, "eventIndex": 0 },
+    { "domainId": "far", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 },
+    { "domainId": "far", "meshLevelId": "fine", "driveCurrentA": 10, "rotorAngleDeg": 13.3333333333, "eventIndex": 0 },
+    { "domainId": "base", "meshLevelId": "fine", "driveCurrentA": 1, "rotorAngleDeg": 6.6666666667, "eventIndex": 0 }
+  ]
+}

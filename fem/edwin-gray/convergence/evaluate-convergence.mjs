@@ -9,6 +9,7 @@ import { proveEventMapSymmetry, validateEventMapSymmetryProof } from "../scripts
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, "..");
 const DEFAULT_SPEC = resolve(SCRIPT_DIR, "convergence-spec-v2.json");
+const DEFAULT_PROFILE = resolve(SCRIPT_DIR, "reduced-profile-v1.json");
 const CASE_PATH = resolve(ROOT, "cases/patent-3890548-illustrative.json");
 const EVENT_MAP_PATH = resolve(ROOT, "excitation/v1/event-map-v1.json");
 const GEOMETRY_PATH = resolve(ROOT, "geometry/patent-3890548-3d.geo");
@@ -34,6 +35,10 @@ function stableJson(value) {
 
 function sha256Bytes(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function profileFromDisk() {
+  return JSON.parse(readFileSync(DEFAULT_PROFILE, "utf8"));
 }
 
 function readJson(path, label) {
@@ -70,6 +75,39 @@ function verifiedArtifact(jobDir, path, expectedHash, label) {
   assert(pathWithin(artifactPath, jobDir), `${label} escapes its job directory`);
   assert(artifactHash(artifactPath, label) === expectedHash, `${label} hash mismatch`);
   return artifactPath;
+}
+
+function verifySolverConvergence(jobDir, checkpoint, sampleId) {
+  const label = `sample ${sampleId} solver convergence`;
+  const path = verifiedArtifact(jobDir, "solver-convergence.json", checkpoint.artifacts?.convergence, label);
+  const convergence = readJson(path, label);
+  assert(stableJson(convergence) === stableJson(checkpoint.solverConvergence), `${label} differs from checkpoint provenance`);
+  assert(convergence.profile === checkpoint.solverProfile?.name && convergence.configSha256 === checkpoint.solverProfile?.configSha256, `${label} profile is invalid`);
+  assert(convergence.kspType === checkpoint.solverProfile?.kspType && convergence.pcType === checkpoint.solverProfile?.pcType, `${label} KSP/PC provenance is invalid`);
+  assert(convergence.factorSolverType === (checkpoint.solverProfile?.factorSolverType || null), `${label} factor solver provenance is invalid`);
+  assert(typeof convergence.reason === "string" && convergence.reason.startsWith("CONVERGED_"), `${label} reason is invalid`);
+  assert(Number.isInteger(convergence.iterations) && convergence.iterations >= 0, `${label} iteration count is invalid`);
+  if (convergence.schemaVersion === "edwin-gray-solver-convergence-v1") {
+    assert(convergence.status === "converged", `${label} status is invalid`);
+    assert(Number.isFinite(convergence.finalResidualNorm) && convergence.finalResidualNorm >= 0, `${label} final residual is invalid`);
+    assert(Number.isFinite(convergence.finalRelativeResidual) && convergence.finalRelativeResidual >= 0, `${label} relative residual is invalid`);
+  } else {
+    assert(convergence.schemaVersion === "edwin-gray-solver-evidence-v1" && convergence.status === "complete", `${label} contract is invalid`);
+    assert(convergence.mode === checkpoint.solverProfile?.mode && convergence.getdpExitStatus === 0, `${label} direct solve status is invalid`);
+    assert(convergence.getdpLogSha256 === checkpoint.artifacts?.logs?.getdp, `${label} GetDP log provenance is invalid`);
+    assert(stableJson(convergence.outputHashes) === stableJson(checkpoint.artifacts?.outputs), `${label} output provenance is invalid`);
+    assert(convergence.finalResidualNorm === null && convergence.finalRelativeResidual === null, `${label} direct residual provenance is invalid`);
+  }
+}
+
+function verifyEnvironmentIdentity(environment, checkpoint, sampleId) {
+  const label = `sample ${sampleId} solver environment`;
+  assert(checkpoint.solverEnvironment?.schemaVersion === "solver-environment-v3", `${label} version is invalid`);
+  assert(checkpoint.solverEnvironment.identityHash === checkpoint.environmentIdentityHash && SHA256.test(checkpoint.environmentIdentityHash || ""), `${label} identity is invalid`);
+  assert(checkpoint.environmentIdentityHash === sha256Bytes(Buffer.from(stableJson(checkpoint.solverEnvironment.identity))), `${label} identity hash mismatch`);
+  assert(environment.identityHash === checkpoint.environmentIdentityHash && environment.schemaVersion === checkpoint.solverEnvironment.schemaVersion, `${label} manifest identity is invalid`);
+  const manifestIdentity = Object.fromEntries(Object.keys(checkpoint.solverEnvironment.identity).map((key) => [key, environment[key]]));
+  assert(stableJson(manifestIdentity) === stableJson(checkpoint.solverEnvironment.identity), `${label} manifest differs from checkpoint identity`);
 }
 
 function parseLastNumber(path, label) {
@@ -176,33 +214,49 @@ function eventIndexForAngle(spec, angle) {
     : spec.production.convergenceEventIndex;
 }
 
-export function expectedSampleDefinitions(spec) {
+export function expectedSampleDefinitions(spec, profile = profileFromDisk()) {
   validateSpec(spec);
-  const production = spec.production;
-  const base = production.baseDomainId;
-  const fine = production.meshLevels.at(-1).id;
-  const representative = production.representativeAngles.map((item) => item.angleDeg);
-  const productionAngles = new Set([
-    ...representative,
-    ...production.torqueAnglesDeg,
-    ...production.periodicityPairsDeg.flat()
-  ].map(angleKey));
-  const expected = new Map();
-  const add = (domainId, meshLevelId, driveCurrentA, rotorAngleDeg) => {
-    const item = { domainId, meshLevelId, driveCurrentA, rotorAngleDeg, eventIndex: eventIndexForAngle(spec, rotorAngleDeg) };
-    expected.set(sampleKey(domainId, meshLevelId, driveCurrentA, rotorAngleDeg), item);
-  };
-  for (const mesh of production.meshLevels) {
-    for (const angle of productionAngles) add(base, mesh.id, production.productionCurrentA, Number(angle));
+  validateReducedProfile(profile, spec);
+  return structuredClone(profile.independentlySolvedTuples);
+}
+
+export function validateReducedProfile(profile, spec) {
+  assert(profile?.contract === "edwin-gray-reduced-convergence-profile" && profile.contractVersion === 1, "unsupported reduced convergence profile");
+  assert(profile.profileId === "illustrative-linear-numerical-convergence-v1" && profile.caseId === spec.caseId, "reduced convergence profile identity is invalid");
+  assert(profile.scope === "Illustrative linear numerical convergence only.", "reduced convergence scope is invalid");
+  assert(profile.productionEligible === false, "reduced convergence profile cannot be production eligible");
+  assert(profile.claims?.physicalValidation === false && profile.claims?.lutPublication === false, "reduced convergence profile cannot claim physical validation or LUT publication");
+  assert(Array.isArray(profile.independentlySolvedTuples) && profile.independentlySolvedTuples.length === 23, "reduced convergence profile must contain exactly 23 independent tuples");
+  const tuples = (domainId, meshLevelId, driveCurrentA, angles, eventIndex) => angles.map((rotorAngleDeg) => ({
+    domainId,
+    meshLevelId,
+    driveCurrentA,
+    rotorAngleDeg,
+    eventIndex
+  }));
+  const representative = [0, 6.6666666667, 13.3333333333];
+  const torque = [0, 3.3333333333, 6.6666666667, 10, 13.3333333333];
+  const required = [
+    ...tuples("base", "coarse", 10, representative, 0),
+    ...tuples("base", "coarse", 10, [120, 126.6666666667, 133.3333333333], 9),
+    ...tuples("base", "medium", 10, torque, 0),
+    ...tuples("base", "fine", 10, torque, 0),
+    ...tuples("expanded", "fine", 10, representative, 0),
+    ...tuples("far", "fine", 10, representative, 0),
+    ...tuples("base", "fine", 1, [6.6666666667], 0)
+  ];
+  assert(stableJson(profile.independentlySolvedTuples) === stableJson(required), "reduced convergence profile does not encode the required 23 tuples in deterministic order");
+  const seen = new Set();
+  for (const tuple of profile.independentlySolvedTuples) {
+    assert(tuple && Object.keys(tuple).sort().join(",") === "domainId,driveCurrentA,eventIndex,meshLevelId,rotorAngleDeg", "reduced convergence tuple fields are invalid");
+    assert(spec.production.domains.some((domain) => domain.id === tuple.domainId), `reduced convergence domain ${tuple.domainId} is invalid`);
+    assert(spec.production.meshLevels.some((mesh) => mesh.id === tuple.meshLevelId), `reduced convergence mesh ${tuple.meshLevelId} is invalid`);
+    assert(Number.isFinite(tuple.driveCurrentA) && tuple.driveCurrentA > 0 && Number.isFinite(tuple.rotorAngleDeg), "reduced convergence tuple numbers are invalid");
+    assert(tuple.eventIndex === eventIndexForAngle(spec, tuple.rotorAngleDeg), "reduced convergence tuple event does not match its angle");
+    const key = definitionKey(tuple);
+    assert(!seen.has(key), `duplicate reduced convergence tuple ${key}`);
+    seen.add(key);
   }
-  for (const domain of production.domains) {
-    for (const angle of representative) add(domain.id, fine, production.productionCurrentA, angle);
-  }
-  for (const current of [production.productionCurrentA, production.linearityAuditCurrentA]) {
-    for (const angle of representative) add(base, fine, current, angle);
-  }
-  return [...expected.values()].sort((left, right) => sampleKey(left.domainId, left.meshLevelId, left.driveCurrentA, left.rotorAngleDeg)
-    .localeCompare(sampleKey(right.domainId, right.meshLevelId, right.driveCurrentA, right.rotorAngleDeg)));
 }
 
 function validateSpec(spec) {
@@ -321,6 +375,7 @@ function verifySample(sample, expected, spec, evidenceDir) {
   for (const name of Object.values(TABLES)) {
     verifiedArtifact(jobDir, name, checkpoint.artifacts?.outputs?.[name], `sample ${sample.id} ${name}`);
   }
+  if (checkpoint.checkpointVersion === spec.checkpointVersion) verifySolverConvergence(jobDir, checkpoint, sample.id);
   const audit = readJson(auditPath, `sample ${sample.id} mesh audit`);
   assert(audit.valid === true && audit.source?.meshSha256 === artifactHash(meshPath, `sample ${sample.id} mesh`), `sample ${sample.id} mesh audit is invalid`);
 
@@ -340,11 +395,22 @@ function verifySample(sample, expected, spec, evidenceDir) {
   assert(SHA256.test(entry.provenance.jobInputHash || "") && entry.provenance.jobInputHash === checkpoint.jobInputHash && checkpoint.inputHash === checkpoint.jobInputHash, `sample ${sample.id} job input hash is invalid`);
   assert(entry.provenance.inputHash === undefined || entry.provenance.inputHash === entry.provenance.jobInputHash, `sample ${sample.id} normalized legacy input hash is invalid`);
   assert(entry.provenance.backend === checkpoint.backend && entry.provenance.solver === "getdp", `sample ${sample.id} solver provenance is invalid`);
-  assert(checkpoint.solverEnvironment?.identityHash === checkpoint.environmentIdentityHash && SHA256.test(checkpoint.environmentIdentityHash || ""), `sample ${sample.id} solver environment identity is invalid`);
-  assert(readJson(environmentPath, `sample ${sample.id} solver environment`).identityHash === checkpoint.environmentIdentityHash, `sample ${sample.id} environment manifest identity is invalid`);
+  const environment = readJson(environmentPath, `sample ${sample.id} solver environment`);
+  if (checkpoint.checkpointVersion === spec.checkpointVersion) {
+    verifyEnvironmentIdentity(environment, checkpoint, sample.id);
+  } else {
+    assert(checkpoint.solverEnvironment?.identityHash === checkpoint.environmentIdentityHash && SHA256.test(checkpoint.environmentIdentityHash || ""), `sample ${sample.id} solver environment identity is invalid`);
+    assert(environment.identityHash === checkpoint.environmentIdentityHash, `sample ${sample.id} environment manifest identity is invalid`);
+  }
   assert(Array.isArray(entry.provenance.artifacts) && entry.provenance.artifacts.length > 0, `sample ${sample.id} normalized artifact list is missing`);
   assert(new Set(entry.provenance.artifacts.map((item) => item.path)).size === entry.provenance.artifacts.length, `sample ${sample.id} normalized artifact paths are duplicated`);
-  const expectedNormalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", ...Object.values(TABLES)].sort();
+  const expectedNormalizedArtifacts = [
+    "motor.msh",
+    "mesh-audit.json",
+    "getdp.log",
+    ...(checkpoint.checkpointVersion === spec.checkpointVersion ? ["solver-convergence.json"] : []),
+    ...Object.values(TABLES)
+  ].sort();
   assert(stableJson(entry.provenance.artifacts.map((item) => item.path).sort()) === stableJson(expectedNormalizedArtifacts), `sample ${sample.id} normalized artifact set is invalid`);
   for (const artifact of entry.provenance.artifacts) verifiedArtifact(jobDir, artifact.path, artifact.sha256, `sample ${sample.id} normalized artifact ${artifact.path}`);
 
@@ -492,7 +558,7 @@ function evaluateMetrics(samples, spec) {
   const representative = p.representativeAngles.map((item) => item.angleDeg);
 
   add("energy-coenergy-agreement", Math.max(...samples.map((sample) => relativeDifference(sample.observables.magneticEnergyJ, sample.observables.coEnergyJ))), t.energyCoEnergyRelative);
-  for (const angle of new Set([...representative, ...p.torqueAnglesDeg, ...p.periodicityPairsDeg.flat()].map(Number))) {
+  for (const angle of representative) {
     const chain = p.meshLevels.map((mesh) => get(base, mesh.id, p.productionCurrentA, angle));
     add(`mesh-node-growth:${angleKey(angle)}`, Math.min(...chain.slice(1).map((sample, index) => sample.meshMetrics.nodeCount / chain[index].meshMetrics.nodeCount)), t.meshMetrics.minimumNodeGrowthRatio, "minimum");
     add(`mesh-element-growth:${angleKey(angle)}`, Math.min(...chain.slice(1).map((sample, index) => sample.meshMetrics.elementCount / chain[index].meshMetrics.elementCount)), t.meshMetrics.minimumElementGrowthRatio, "minimum");
@@ -506,18 +572,19 @@ function evaluateMetrics(samples, spec) {
   for (const angle of representative) {
     add(`domain-base-far:${angleKey(angle)}`, maxObservableDifference(get(base, fine, p.productionCurrentA, angle), get(far, fine, p.productionCurrentA, angle)), t.outerDomainObservableRelative.baseToFar);
     add(`domain-expanded-far:${angleKey(angle)}`, maxObservableDifference(get(expanded, fine, p.productionCurrentA, angle), get(far, fine, p.productionCurrentA, angle)), t.outerDomainObservableRelative.expandedToFar);
-    const production = get(base, fine, p.productionCurrentA, angle);
-    const audit = get(base, fine, p.linearityAuditCurrentA, angle);
-    add(`current-inductance:${angleKey(angle)}`, relativeDifference(production.observables.inductanceH, audit.observables.inductanceH), t.inductanceCurrentRelative);
-    const energyScalingError = Math.max(...["magneticEnergyJ", "coEnergyJ"].map((observable) => {
-      const productionScaled = production.observables[observable] / p.productionCurrentA ** 2;
-      const auditScaled = audit.observables[observable] / p.linearityAuditCurrentA ** 2;
-      return relativeDifference(productionScaled, auditScaled);
-    }));
-    add(`current-energy-i2:${angleKey(angle)}`, energyScalingError, t.energyCurrentSquaredRelative);
   }
+  const transition = p.representativeAngles.find((item) => item.role === "transition").angleDeg;
+  const production = get(base, fine, p.productionCurrentA, transition);
+  const audit = get(base, fine, p.linearityAuditCurrentA, transition);
+  add(`current-inductance:${angleKey(transition)}`, relativeDifference(production.observables.inductanceH, audit.observables.inductanceH), t.inductanceCurrentRelative);
+  const energyScalingError = Math.max(...["magneticEnergyJ", "coEnergyJ"].map((observable) => {
+    const productionScaled = production.observables[observable] / p.productionCurrentA ** 2;
+    const auditScaled = audit.observables[observable] / p.linearityAuditCurrentA ** 2;
+    return relativeDifference(productionScaled, auditScaled);
+  }));
+  add(`current-energy-i2:${angleKey(transition)}`, energyScalingError, t.energyCurrentSquaredRelative);
   for (const [leftAngle, rightAngle] of p.periodicityPairsDeg) {
-    add(`angle-periodicity:${angleKey(leftAngle)}:${angleKey(rightAngle)}`, maxObservableDifference(get(base, fine, p.productionCurrentA, leftAngle), get(base, fine, p.productionCurrentA, rightAngle)), t.anglePeriodicityRelative);
+    add(`angle-periodicity:${angleKey(leftAngle)}:${angleKey(rightAngle)}`, maxObservableDifference(get(base, coarse, p.productionCurrentA, leftAngle), get(base, coarse, p.productionCurrentA, rightAngle)), t.anglePeriodicityRelative);
   }
   const torqueByMesh = [medium, fine].map((mesh) => p.torqueAnglesDeg.map((angle) => get(base, mesh, p.productionCurrentA, angle)));
   const mediumTorque = torqueByMesh[0].slice(1, -1).map((_, index) => derivative(torqueByMesh[0], index + 1));
@@ -528,7 +595,7 @@ function evaluateMetrics(samples, spec) {
   return checks;
 }
 
-export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) {
+export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk(), profileBytes, evidence, evidenceDir }) {
   const report = {
     contract: "edwin-gray-convergence-report",
     contractVersion: 2,
@@ -536,6 +603,15 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
       contract: spec?.contract || null,
       contractVersion: spec?.contractVersion || null,
       sha256: sha256Bytes(specBytes || Buffer.from(stableJson(spec)))
+    },
+    profile: {
+      contract: profile?.contract || null,
+      contractVersion: profile?.contractVersion || null,
+      profileId: profile?.profileId || null,
+      sha256: sha256Bytes(profileBytes || Buffer.from(stableJson(profile))),
+      scope: profile?.scope || null,
+      productionEligible: profile?.productionEligible ?? null,
+      claims: profile?.claims || null
     },
     evidence: {
       contract: evidence?.contract || null,
@@ -554,12 +630,13 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
   };
   try {
     validateSpec(spec);
+    validateReducedProfile(profile, spec);
     assert(evidence?.contract === "edwin-gray-convergence-evidence" && evidence.contractVersion === 2, "unsupported convergence evidence contract");
     assert(evidence.status === "complete", "convergence evidence is not complete");
     assert(evidence.caseId === spec.caseId, "convergence evidence case ID is invalid");
     assert(Array.isArray(evidence.samples), "convergence evidence samples are missing");
     assert(new Set(evidence.samples.map((sample) => sample?.id)).size === evidence.samples.length, "convergence evidence sample IDs are duplicated");
-    const expected = expectedSampleDefinitions(spec);
+    const expected = expectedSampleDefinitions(spec, profile);
     const expectedByKey = new Map(expected.map((item) => [sampleKey(item.domainId, item.meshLevelId, item.driveCurrentA, item.rotorAngleDeg), item]));
     assert(evidence.samples.length === expected.length, `evidence sample count ${evidence.samples.length} does not match required production count ${expected.length}`);
     const declared = new Map();
@@ -575,17 +652,13 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
     const derived = [];
     for (const item of expected) {
       const sample = declared.get(definitionKey(item));
-      if (sample.kind === "symmetry-derived-convergence-sample") {
-        derived.push([sample, item]);
-      } else {
-        const verifiedSample = verifySample(sample, item, spec, evidenceDir);
-        direct.push(verifiedSample);
-        directByKey.set(definitionKey(item), verifiedSample);
-      }
+      assert(sample.kind !== "symmetry-derived-convergence-sample", `sample ${sample.id} must be independently solved by the reduced profile`);
+      const verifiedSample = verifySample(sample, item, spec, evidenceDir);
+      direct.push(verifiedSample);
+      directByKey.set(definitionKey(item), verifiedSample);
     }
-    assert(derived.length <= 1, "only one declared symmetry-derived convergence sample is permitted");
-    const symmetryProof = derived.length === 1 ? convergenceSymmetryProof() : null;
-    const verifiedDerived = derived.map(([sample, item]) => verifyDerivedSample(sample, item, spec, directByKey, symmetryProof));
+    assert(derived.length === 0, "reduced convergence evidence cannot contain derived samples");
+    const verifiedDerived = [];
     const verifiedByKey = new Map([...direct, ...verifiedDerived].map((item) => [definitionKey(item), item]));
     const verified = expected.map((item) => verifiedByKey.get(definitionKey(item)));
     assert(new Set(direct.map((item) => item.jobInputHash)).size === direct.length, "attested job input hashes are not unique");
@@ -626,12 +699,16 @@ function main(argv) {
   const options = parseArgs(argv);
   assert(options.evidence, "--evidence is required");
   const specPath = resolve(options.spec || DEFAULT_SPEC);
+  const profilePath = resolve(options.profile || DEFAULT_PROFILE);
   const evidencePath = resolve(options.evidence);
   const outputPath = resolve(options.out || "convergence-report.json");
   const specBytes = readFileSync(specPath);
+  const profileBytes = readFileSync(profilePath);
   const report = evaluateConvergence({
     spec: readJson(specPath, "convergence specification"),
     specBytes,
+    profile: readJson(profilePath, "reduced convergence profile"),
+    profileBytes,
     evidence: readJson(evidencePath, "convergence evidence"),
     evidenceDir: dirname(evidencePath)
   });

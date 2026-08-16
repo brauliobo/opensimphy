@@ -12,10 +12,30 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SPEC_PATH = join(ROOT, "convergence/convergence-spec-v2.json");
 const SPEC_BYTES = readFileSync(SPEC_PATH);
 const SPEC = JSON.parse(SPEC_BYTES);
-const ENVIRONMENT_HASH = sha256("one deterministic solver environment");
+const SOLVER_PROFILE = {
+  name: "iterative-cg-gamg-v1",
+  configSha256: "c".repeat(64),
+  kspType: "cg",
+  pcType: "gamg",
+  petscOptions: ["-ksp_type", "cg", "-pc_type", "gamg"]
+};
+const ENVIRONMENT_IDENTITY = {
+  backend: "host",
+  solver: SOLVER_PROFILE,
+  resources: { memoryGiB: null, cpus: 1, memorySwapGiB: null, meshThreads: 1, solverThreads: 1 },
+  commandPlan: { mesh: ["gmsh"], solve: ["getdp"] },
+  runner: { revision: "fixture" }
+};
+const ENVIRONMENT_HASH = sha256(stableJson(ENVIRONMENT_IDENTITY));
 
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function stableJson(value) {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  if (value && typeof value === "object") return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`).join(",")}}`;
+  return JSON.stringify(value);
 }
 
 function writeJson(path, value) {
@@ -79,17 +99,34 @@ function writeSample(root, definition, index) {
   const mesh = meshText(meshCounts[0], meshCounts[1], domain.outerRadiusM, domain.axialHalfExtentM);
   const meshAudit = `${JSON.stringify({ valid: true, source: { meshSha256: sha256(mesh) } })}\n`;
   const values = observableValues(definition);
+  const convergence = {
+    schemaVersion: "edwin-gray-solver-convergence-v1",
+    status: "converged",
+    profile: SOLVER_PROFILE.name,
+    configSha256: SOLVER_PROFILE.configSha256,
+    kspType: SOLVER_PROFILE.kspType,
+    pcType: SOLVER_PROFILE.pcType,
+    factorSolverType: null,
+    reason: "CONVERGED_RTOL",
+    iterations: 8,
+    finalResidualNorm: 1e-10,
+    finalRelativeResidual: 1e-9,
+    tolerances: { relative: 1e-8, absolute: 1e-12, maximumIterations: 1000 },
+    peakGetdpMemoryMiB: 100,
+    runtimeSeconds: 1
+  };
   const files = {
     "motor.msh": mesh,
     "mesh-audit.json": meshAudit,
     "geometry-wrapper.geo": "SetNumber(\"Parameters/Mesh size (m)\", 0.01);\n",
     "getdp-wrapper.pro": "SetNumber(\"Parameters/Drive current (A)\", 10);\n",
-    "solver-environment.json": `${JSON.stringify({ identityHash: ENVIRONMENT_HASH })}\n`,
+    "solver-environment.json": `${JSON.stringify({ schemaVersion: "solver-environment-v3", identityHash: ENVIRONMENT_HASH, ...ENVIRONMENT_IDENTITY })}\n`,
     "gmsh.log": "fixture mesh completed\n",
     "getdp.log": "fixture solve completed\n",
     "observables.dat": `MagneticEnergyJ ${values.magneticEnergyJ}\n`,
     "coenergy.dat": `CoEnergyJ ${values.coEnergyJ}\n`,
-    "inductance.dat": `InductanceH ${values.inductanceH}\n`
+    "inductance.dat": `InductanceH ${values.inductanceH}\n`,
+    "solver-convergence.json": `${JSON.stringify(convergence, null, 2)}\n`
   };
   for (const [name, content] of Object.entries(files)) writeFileSync(join(jobDir, name), content, "utf8");
 
@@ -103,7 +140,7 @@ function writeSample(root, definition, index) {
   };
   const modelInputHash = sha256(`model:${definition.domainId}`);
   const jobInputHash = sha256(`job:${definition.domainId}:${definition.meshLevelId}:${definition.driveCurrentA}:${definition.rotorAngleDeg}`);
-  const normalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", "observables.dat", "coenergy.dat", "inductance.dat"]
+  const normalizedArtifacts = ["motor.msh", "mesh-audit.json", "getdp.log", "solver-convergence.json", "observables.dat", "coenergy.dat", "inductance.dat"]
     .map((name) => ({ path: name, sha256: sha256(files[name]) }));
   const result = {
     contract: "edwin-gray-browser-result",
@@ -149,8 +186,9 @@ function writeSample(root, definition, index) {
     jobInputHash,
     parameters,
     backend: "host",
+    solverProfile: SOLVER_PROFILE,
     environmentIdentityHash: ENVIRONMENT_HASH,
-    solverEnvironment: { identityHash: ENVIRONMENT_HASH },
+    solverEnvironment: { schemaVersion: "solver-environment-v3", identityHash: ENVIRONMENT_HASH, identity: ENVIRONMENT_IDENTITY },
     resultContract: SPEC.resultContract,
     excitationContract: SPEC.excitationContract,
     eventIndex: parameters.eventIndex,
@@ -164,6 +202,7 @@ function writeSample(root, definition, index) {
       },
       mesh: sha256(mesh),
       audit: sha256(meshAudit),
+      convergence: sha256(files["solver-convergence.json"]),
       logs: {
         gmsh: sha256(files["gmsh.log"]),
         getdp: sha256(files["getdp.log"])
@@ -175,6 +214,7 @@ function writeSample(root, definition, index) {
       },
       result: sha256(readFileSync(resultPath))
     },
+    solverConvergence: convergence,
     result: "result.json"
   };
   const checkpointPath = join(jobDir, "checkpoint.json");
@@ -362,50 +402,59 @@ test("missing production evidence is rejected", (t) => {
   assert.match(report.failures[0], /sample count/);
 });
 
-test("the one declared fine periodic partner may use an exactly attested symmetry derivation", (t) => {
+test("reduced convergence samples must all be independently solved", (t) => {
   const context = fixture(t);
-  applyFinePeriodicityDerivation(context);
-  const first = evaluate(context);
-  const second = evaluate(context);
-  assert.equal(first.status, "approved");
-  assert.deepEqual(first, second);
-  assert.equal(first.evidence.independentlySolvedSampleCount, expectedSampleDefinitions(SPEC).length - 1);
-  assert.equal(first.evidence.symmetryDerivedSampleCount, 1);
-});
-
-test("a symmetry derivation without the event-map proof hash is rejected", (t) => {
-  const context = fixture(t);
-  const derived = applyFinePeriodicityDerivation(context);
-  delete derived.derivation.symmetryProofSha256;
+  context.evidence.samples[0].kind = "symmetry-derived-convergence-sample";
   const report = evaluate(context);
   assert.equal(report.status, "rejected");
-  assert.match(report.failures[0], /derivation attestation is absent or tampered/);
+  assert.match(report.failures[0], /must be independently solved/);
 });
 
-test("a tampered event-map proof hash is rejected", (t) => {
+test("v6 solver-convergence provenance mismatch is rejected", (t) => {
   const context = fixture(t);
-  const derived = applyFinePeriodicityDerivation(context);
-  derived.derivation.symmetryProofSha256 = "f".repeat(64);
+  const files = sampleFiles(context, () => true);
+  const convergencePath = join(files.jobDir, "solver-convergence.json");
+  const convergence = JSON.parse(readFileSync(convergencePath, "utf8"));
+  convergence.iterations += 1;
+  writeJson(convergencePath, convergence);
+  files.checkpoint.artifacts.convergence = sha256(readFileSync(convergencePath));
+  writeJson(files.checkpointPath, files.checkpoint);
   const report = evaluate(context);
   assert.equal(report.status, "rejected");
-  assert.match(report.failures[0], /derivation attestation is absent or tampered/);
+  assert.match(report.failures[0], /differs from checkpoint provenance/);
 });
 
-test("a coarse validation pair above one percent cannot authorize derivation", (t) => {
+test("declared historical v5 evidence remains valid without the v6 convergence artifact", (t) => {
   const context = fixture(t);
-  const declaration = SPEC.production.symmetryDerivedConvergenceSample;
-  const files = sampleFiles(context, (sample) => (
-    sample.domainId === declaration.target.domainId
-      && sample.meshLevelId === declaration.validationMeshLevelId
-      && sample.driveCurrentA === declaration.target.driveCurrentA
-      && sample.rotorAngleDeg === declaration.target.rotorAngleDeg
-  ));
-  const current = files.result.entries[0].observables;
-  reattestObservables(files, Object.fromEntries(Object.entries(current).map(([name, item]) => [name, item.value * 1.02])));
-  applyFinePeriodicityDerivation(context);
+  for (const sample of context.evidence.samples) {
+    const files = sampleFiles(context, (candidate) => candidate.id === sample.id);
+    files.checkpoint.checkpointVersion = "fem-checkpoint-v5";
+    delete files.checkpoint.artifacts.convergence;
+    delete files.checkpoint.solverConvergence;
+    files.result.entries[0].provenance.artifacts = files.result.entries[0].provenance.artifacts
+      .filter((artifact) => artifact.path !== "solver-convergence.json");
+    writeJson(files.resultPath, files.result);
+    files.checkpoint.artifacts.result = sha256(readFileSync(files.resultPath));
+    writeJson(files.checkpointPath, files.checkpoint);
+  }
+  assert.equal(evaluate(context).status, "approved");
+});
+
+test("a coherent but different solver environment is rejected", (t) => {
+  const context = fixture(t);
+  const files = sampleFiles(context, () => true);
+  const identity = structuredClone(ENVIRONMENT_IDENTITY);
+  identity.runner.revision = "different-fixture";
+  const identityHash = sha256(stableJson(identity));
+  const environmentPath = join(files.jobDir, "solver-environment.json");
+  writeJson(environmentPath, { schemaVersion: "solver-environment-v3", identityHash, ...identity });
+  files.checkpoint.environmentIdentityHash = identityHash;
+  files.checkpoint.solverEnvironment = { schemaVersion: "solver-environment-v3", identityHash, identity };
+  files.checkpoint.artifacts.environment = sha256(readFileSync(environmentPath));
+  writeJson(files.checkpointPath, files.checkpoint);
   const report = evaluate(context);
   assert.equal(report.status, "rejected");
-  assert.match(report.failures[0], /coarse symmetry validation differs.*above 0.01/);
+  assert.match(report.failures[0], /different solver environments/);
 });
 
 test("tampered checkpoint artifact is rejected", (t) => {
