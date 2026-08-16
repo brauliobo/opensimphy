@@ -67,6 +67,8 @@ export const router = createRouter({
       meta: { title: 'Formula Record' },
     },
     { path: '/labs', name: 'labs', component: () => import('../views/LabsView.vue'), meta: { title: 'Labs' } },
+    { path: '/labs/quantum-wave', name: 'quantum-wave', component: () => import('../views/QuantumWaveLabView.vue'), meta: { title: 'Quantum Wave Lab' } },
+    { path: '/labs/edwin-gray', name: 'edwin-gray', component: () => import('../views/EdwinGrayLabView.vue'), meta: { title: 'Edwin Gray Motor Lab' } },
     { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: () => import('../views/FiddleArchiveView.vue'), meta: { title: 'Fiddle Archive' } },
     { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: () => import('../views/FiddleRecordView.vue'), props: true, meta: { title: 'Fiddle Record' } },
     {

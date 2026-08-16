@@ -26,6 +26,8 @@ const routes = {
   tourMap: 'src/views/TourMapView.vue',
   tourChapter: 'src/views/TourChapterView.vue',
   tourLesson: 'src/views/TourLessonView.vue',
+  quantumWaveLab: 'src/views/QuantumWaveLabView.vue',
+  edwinGrayLab: 'src/views/EdwinGrayLabView.vue',
   fiddleArchive: 'src/views/FiddleArchiveView.vue',
   fiddleRecord: 'src/views/FiddleRecordView.vue',
   evidence: 'src/views/EvidenceView.vue',
@@ -45,7 +47,7 @@ const routes = {
 }
 
 const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
-const nonNumericalRoutes = [...tourRoutes, 'evidence', 'saved', 'notFound']
+const nonNumericalRoutes = [...tourRoutes, 'quantumWaveLab', 'evidence', 'saved', 'notFound']
 const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthWorkbench', 'earthDatasets']
 const fiddleRoutes = ['fiddleArchive', 'fiddleRecord']
 
@@ -76,6 +78,12 @@ const ownershipMarkers = {
   earth: [
     ['earth worker asset', /earthSimulation\.worker-[A-Za-z0-9_-]+\.js/],
   ],
+  gray: [
+    ['Gray worker asset', /edwinGray\.worker-[A-Za-z0-9_-]+\.js/],
+    ['Gray worker request', /completed-event-/],
+    ['Gray evaluator identifier', /evaluateGrayFullMotor|runGrayFullMotor/],
+    ['Gray evaluator diagnostic', /Gray full motor energy boundary failed to close|integrationStepsPerEvent must be in/],
+  ],
   plotly: [
     ['Plotly asset', /^assets\/plotly-[A-Za-z0-9_-]+\.js$/],
   ],
@@ -105,10 +113,18 @@ const recipeEvaluatorIdentifiers = [
   'Recipe dependency build exceeded source count',
 ]
 
+const grayEvaluatorIdentifiers = [
+  'evaluateGrayFullMotor',
+  'runGrayFullMotor',
+  'Gray full motor energy boundary failed to close',
+  'integrationStepsPerEvent must be in [1, 10000]',
+]
+
 const evaluatorSignatures = {
   formula: ['Invalid expected measurement:', 'Recipe dependency build exceeded source count'],
   core: ['Duplicate core case ID:', 'Unknown Planck site:'],
   wall: ['Bareiss determinant requires a square matrix', 'Number-wall simulation cancelled'],
+  gray: ['Gray full motor energy boundary failed to close', 'integrationStepsPerEvent must be in [1, 10000]'],
 }
 
 function fail(message) {
@@ -343,6 +359,7 @@ function extractCalls(source, name) {
 function assertRuntimeRegistryPolicies(sw, revision) {
   if (revision === null) return []
   const registrations = extractCalls(sw, 'registerRoute')
+  const routeOwnedCacheNames = new Set(['opensimphy-gray-fem-lut', 'opensimphy-gray-worker'])
   const policies = [
     { prefix: 'opensimphy-taxonomy', marker: 'taxonomy\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-formula-sources', marker: '(?:recipes|symbols)\\.json$', maxEntries: 2 },
@@ -371,7 +388,9 @@ function assertRuntimeRegistryPolicies(sw, revision) {
   const cacheNames = [...sw.matchAll(/cacheName:"([^"]+)"/g)].map((match) => match[1]).sort()
   if (cacheNames.length === 0) fail('sw.js contains no parseable runtime cache names')
   for (const cacheName of cacheNames) {
-    if (!cacheName.endsWith(`-${revision}`)) fail(`Runtime cache ${cacheName} does not include registry revision ${revision}`)
+    if (!routeOwnedCacheNames.has(cacheName) && !cacheName.endsWith(`-${revision}`)) {
+      fail(`Runtime cache ${cacheName} does not include registry revision ${revision}`)
+    }
   }
   return policies.map(({ prefix }) => `${prefix}-${revision}`)
 }
@@ -396,25 +415,28 @@ if (manifest) {
   closures.root = await manifestClosure(manifest, 'index.html', false)
   for (const [name, key] of Object.entries(routes)) closures[name] = await manifestClosure(manifest, key, true)
 
-  assertNoOwnership('Root entry static closure', closures.root, ['formula', 'core', 'wall', 'plotly'])
+  assertNoOwnership('Root entry static closure', closures.root, ['formula', 'core', 'wall', 'gray', 'plotly'])
   for (const route of nonNumericalRoutes) {
-    assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'plotly'])
+    assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'gray', 'plotly'])
   }
   assertContainsAny('tourLesson route closure', closures.tourLesson, dimensionEngineMarkers)
 
+  assertOwns('EdwinGrayLabView route closure', closures.edwinGrayLab, 'gray')
+  assertNoOwnership('EdwinGrayLabView route closure', closures.edwinGrayLab, ['formula', 'core', 'wall', 'earth', 'plotly'])
+
   assertOwns('FormulaAtlasView route closure', closures.formulaAtlas, 'formula')
   assertOwns('FormulaDetailView route closure', closures.formulaDetail, 'formula')
-  assertNoOwnership('FormulaAtlasView route closure', closures.formulaAtlas, ['core', 'wall'])
-  assertNoOwnership('FormulaDetailView route closure', closures.formulaDetail, ['core', 'wall'])
+  assertNoOwnership('FormulaAtlasView route closure', closures.formulaAtlas, ['core', 'wall', 'gray'])
+  assertNoOwnership('FormulaDetailView route closure', closures.formulaDetail, ['core', 'wall', 'gray'])
 
   assertOwns('CoreLabView route closure', closures.coreLab, 'core')
-  assertNoOwnership('CoreLabView route closure', closures.coreLab, ['formula', 'wall'])
+  assertNoOwnership('CoreLabView route closure', closures.coreLab, ['formula', 'wall', 'gray'])
 
   assertOwns('NumberWallsView route closure', closures.numberWalls, 'wall')
-  assertNoOwnership('NumberWallsView route closure', closures.numberWalls, ['formula', 'core'])
+  assertNoOwnership('NumberWallsView route closure', closures.numberWalls, ['formula', 'core', 'gray'])
 
-  for (const route of earthRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall'])
-  for (const route of fiddleRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'earth', 'plotly'])
+  for (const route of earthRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'gray'])
+  for (const route of fiddleRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'earth', 'gray', 'plotly'])
 }
 
 const allFiles = await listFiles(distRoot)
@@ -426,6 +448,7 @@ const jsContents = new Map(await Promise.all(jsFiles.map(async (path) => [
 const formulaWorkers = workerOutputs(jsFiles, 'formula')
 const coreWorkers = workerOutputs(jsFiles, 'core')
 const wallWorkers = workerOutputs(jsFiles, 'numberWall')
+const grayWorkers = workerOutputs(jsFiles, 'edwinGray')
 const evaluatorChunks = Object.fromEntries(Object.entries(evaluatorSignatures).map(([owner, signatures]) => [
   owner,
   jsFiles.filter((path) => {
@@ -437,13 +460,14 @@ const evaluatorChunks = Object.fromEntries(Object.entries(evaluatorSignatures).m
 if (formulaWorkers.length !== 1) fail(`Expected exactly one formula worker output, found ${formulaWorkers.length}: ${formulaWorkers.map((path) => relative(distRoot, path)).join(', ') || 'none'}`)
 if (coreWorkers.length !== 1) fail(`Expected exactly one core worker output, found ${coreWorkers.length}: ${coreWorkers.map((path) => relative(distRoot, path)).join(', ') || 'none'}`)
 if (wallWorkers.length === 0) fail('Expected at least one numberWall worker output, found none')
+if (grayWorkers.length !== 1) fail(`Expected exactly one Edwin Gray worker output, found ${grayWorkers.length}: ${grayWorkers.map((path) => relative(distRoot, path)).join(', ') || 'none'}`)
 
 for (const [owner, chunks] of Object.entries(evaluatorChunks)) {
   if (chunks.length !== 1) {
     fail(`Expected exactly one ${owner} evaluator-bearing chunk, found ${chunks.length}: ${chunks.map((path) => relative(distRoot, path)).join(', ') || 'none'}`)
     continue
   }
-  const expectedOwner = owner === 'wall' ? 'numberWall' : owner
+  const expectedOwner = owner === 'wall' ? 'numberWall' : owner === 'gray' ? 'edwinGray' : owner
   if (!new RegExp(`^${expectedOwner}\\.worker-[A-Za-z0-9_-]+\\.js$`).test(chunks[0].slice(chunks[0].lastIndexOf(sep) + 1))) {
     fail(`Unexpected ${owner} evaluator-bearing chunk outside its dedicated worker: ${relative(distRoot, chunks[0])}`)
   }
@@ -461,6 +485,21 @@ if (evaluatorChunks.core.length === 1) {
   const content = jsContents.get(path)
   for (const identifier of recipeEvaluatorIdentifiers) {
     if (content?.includes(identifier)) fail(`Core worker ${relative(distRoot, path)} contains recipe evaluator identifier ${JSON.stringify(identifier)}`)
+  }
+}
+for (const owner of ['formula', 'core', 'wall']) {
+  if (evaluatorChunks[owner].length !== 1) continue
+  const [path] = evaluatorChunks[owner]
+  const content = jsContents.get(path)
+  for (const identifier of grayEvaluatorIdentifiers) {
+    if (content?.includes(identifier)) fail(`${owner} worker ${relative(distRoot, path)} contains Gray evaluator identifier ${JSON.stringify(identifier)}`)
+  }
+}
+if (evaluatorChunks.gray.length === 1) {
+  const [path] = evaluatorChunks.gray
+  const content = jsContents.get(path)
+  for (const identifier of [...coreEvaluatorIdentifiers, ...recipeEvaluatorIdentifiers]) {
+    if (content?.includes(identifier)) fail(`Gray worker ${relative(distRoot, path)} contains unrelated evaluator identifier ${JSON.stringify(identifier)}`)
   }
 }
 
@@ -504,7 +543,7 @@ for (const url of excludedPrecacheUrls) {
   }
 }
 for (const url of precacheUrls) {
-  if (/(?:^|\/)assets\/(?:formula|core|numberWall)\.worker-[A-Za-z0-9_-]+\.js$/.test(url)) {
+  if (/(?:^|\/)assets\/(?:formula|core|numberWall|edwinGray)\.worker-[A-Za-z0-9_-]+\.js$/.test(url)) {
     fail(`sw.js precache still contains route-owned worker ${url}`)
   }
 }
@@ -518,7 +557,7 @@ if (failures.length > 0) {
     .filter(([name]) => name !== 'root')
     .map(([name, chunks]) => `${name}=${chunks.length}`)
     .join(', ')
-  const workerSummary = [...formulaWorkers, ...coreWorkers, ...wallWorkers]
+  const workerSummary = [...formulaWorkers, ...coreWorkers, ...wallWorkers, ...grayWorkers]
     .map((path) => relative(distRoot, path))
     .sort()
     .join(', ')
@@ -526,5 +565,5 @@ if (failures.length > 0) {
   console.log(`Runtime registry revision: ${runtimeRegistryRevision}.`)
   console.log(`Manifest: ${Object.keys(manifest).length} entries; root static closure=${closures.root.length}; transitive route closures: ${routeSummary}.`)
   console.log(`Workers: ${workerSummary}.`)
-  console.log(`PWA: ${precacheUrls.length} precache URLs; ${runtimeCacheNames.length} revisioned NetworkFirst registry routes; ${tourJsonUrls.length} Tour JSON files, owner JSON, and formula/core/numberWall workers excluded.`)
+  console.log(`PWA: ${precacheUrls.length} precache URLs; ${runtimeCacheNames.length} revisioned NetworkFirst registry routes; ${tourJsonUrls.length} Tour JSON files, owner JSON, and formula/core/numberWall/edwinGray workers excluded.`)
 }

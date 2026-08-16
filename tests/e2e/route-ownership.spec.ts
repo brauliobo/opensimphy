@@ -13,7 +13,7 @@ const rootOwnerArtifacts = [
   '/data/generated/fiddles/runtime-verification.json',
 ] as const
 
-type WorkerOwner = 'formula' | 'core' | 'wall' | 'earth'
+type WorkerOwner = 'formula' | 'core' | 'wall' | 'earth' | 'gray'
 
 interface RouteActivity {
   requests: string[]
@@ -59,6 +59,7 @@ function workerOwners(activity: RouteActivity): WorkerOwner[] {
     if (normalized.includes('core.worker')) return ['core']
     if (normalized.includes('numberwall.worker')) return ['wall']
     if (normalized.includes('earthsimulation.worker')) return ['earth']
+    if (normalized.includes('edwingray.worker')) return ['gray']
     return []
   })
 }
@@ -164,6 +165,26 @@ for (const route of tourRoutes) {
     expect(workerOwners(activity)).toEqual([])
   })
 }
+
+test('/labs/quantum-wave stays browser-local and loads no registry owner', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/quantum-wave')
+  await expect(page.getByTestId('quantum-wave-lab-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, [])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.getByRole('heading', { name: 'Why does physics need i?' })).toBeVisible()
+})
+
+test('/labs/edwin-gray owns exactly one Gray worker and no unrelated owner', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/edwin-gray')
+  await expect(page.getByTestId('edwin-gray-lab-ready')).toBeVisible()
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  expectOwnerArtifacts(activity, [])
+  expect(workerOwners(activity)).toEqual(['gray'])
+  expect(workerOwners(activity).filter((owner) => owner !== 'gray')).toEqual([])
+  await expect(page.getByRole('heading', { name: 'What did the purple motor actually switch?' })).toBeVisible()
+})
 
 test('/labs/authors/chenopdodium owns only the Fiddle source archive and no workers', async ({ page }) => {
   const activity = await gotoColdRoute(page, '/labs/authors/chenopdodium')
@@ -299,7 +320,9 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(5)
+  await expect(page.locator('.lab-choice-grid a[href="/labs/quantum-wave"]')).toContainText('Quantum wave lab')
+  await expect(page.locator('.lab-choice-grid a[href="/labs/edwin-gray"]')).toContainText('Edwin Gray motor lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('.lab-choice-grid a[href*="chenopdodium"]')).toHaveCount(0)
   await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('Chenopdodium author collection')

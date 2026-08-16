@@ -26,6 +26,16 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
     strong Laboratory counts unavailable
     p {{ registryError }}
   .lab-choice-grid(v-else-if="registryReady")
+    RouterLink(to="/labs/quantum-wave")
+      span 00 / GUIDED DERIVATION
+      strong Quantum wave lab
+      p Rebuild the imaginary-number story with spectra, standing waves, operators, Fourier sums, probability, and materials.
+      small Open the teacher's reconstruction →
+    RouterLink(to="/labs/edwin-gray")
+      span 00b / HISTORICAL MACHINE
+      strong Edwin Gray motor lab
+      p Reconstruct the 1971–1979 pulsed-capacitor motors with a classical dump, arc quench, and energy ledger.
+      small Open the motor reconstruction →
     RouterLink(to="/labs/core")
       span 01 / TRANSFORM CASES
       strong Core lab
