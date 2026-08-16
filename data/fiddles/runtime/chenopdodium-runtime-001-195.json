@@ -2,7 +2,7 @@
   "methodology": {
     "scope": "Chenopdodium archive registry positions 1-195 inclusive",
     "sourceRegistry": "public/data/generated/fiddles/registry.json",
-    "browserEngine": "Playwright Chromium using installed /usr/bin/chromium",
+    "browserEngine": "Playwright Chromium (executable path omitted)",
     "concurrency": 4,
     "freshPagePerAttempt": true,
     "retryPolicy": "Every non-verified first attempt was retried exactly once; the second attempt is final.",

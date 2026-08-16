@@ -34,7 +34,7 @@ solver:
 node fem/edwin-gray/calibration/run-calibration-pack.mjs \
   --existing-only true \
   --work-dir fem/edwin-gray/runs/study-v2 \
-  --out /tmp/calibration-blocked-inventory-v1.json
+  --out <temporary directory>/calibration-blocked-inventory-v1.json
 ```
 
 Plan a new serial reproduction without executing it:
@@ -44,8 +44,8 @@ node fem/edwin-gray/calibration/run-calibration-pack.mjs \
   --plan true \
   --docker-image IMAGE@sha256:DIGEST \
   --pilot-report fem/edwin-gray/runs/study-v2/pilot-report.json \
-  --work-dir /tmp/edwin-gray-calibration \
-  --out /tmp/edwin-gray-calibration/motor-fem-calibration-pack-v1.json \
+  --work-dir <temporary directory>/edwin-gray-calibration \
+  --out <temporary directory>/edwin-gray-calibration/motor-fem-calibration-pack-v1.json \
   --solver-profile direct-mumps-publication-v1 \
   --memory-gib 24 --cpus 2 --mesh-threads 1 --threads 2 \
   --hard-timeout-seconds 1720

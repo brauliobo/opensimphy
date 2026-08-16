@@ -7,6 +7,14 @@ import { fileURLToPath } from 'node:url'
 const SOURCE_REVISION = '4db89c1ce8d0b0d98ba7f03594f58a845351cf6a'
 const EMSCRIPTEN_VERSION = '6.0.6-git'
 const EMSCRIPTEN_REVISION = 'ce75e06884093bcefb86a6b8fd56a5d62a4cc245'
+const SOURCE_PREFIX_MAP = '.'
+const SOURCE_PATCHES = Object.freeze([
+  Object.freeze({
+    relativePath: 'src/Backends/REFPROP/REFPROPMixtureBackend.cpp',
+    from: 'char refpropPath[] = "/opt/refprop";',
+    to: 'char refpropPath[] = "";',
+  }),
+])
 const EXPECTED_ARTIFACTS = Object.freeze({
   javascript: Object.freeze({
     name: 'coolprop.js',
@@ -15,8 +23,8 @@ const EXPECTED_ARTIFACTS = Object.freeze({
   }),
   wasm: Object.freeze({
     name: 'coolprop.wasm',
-    byteSize: 9352503,
-    sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
+    byteSize: 9352013,
+    sha256: '57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829',
   }),
 })
 const REQUIRED_CPM_ENTRIES = Object.freeze([
@@ -154,6 +162,35 @@ async function verifyArtifact(path, expected, label) {
   }
 }
 
+async function assertPortableArtifact(path, label) {
+  const text = new TextDecoder().decode(await readFile(path))
+  const localPathPatterns = [
+    /\/tmp\//,
+    /\/home\/(?!web_user(?:\/|[^A-Za-z0-9_]|$))/,
+    /\/Users\//,
+    /\/private\//,
+    /\/var\//,
+    /\/opt\//,
+    /\/root\//,
+    /\/mnt\//,
+    /\/workspace(?:s)?\//,
+    /(?:^|[^A-Za-z0-9])[A-Za-z]:[\\/](?:[^\\/\0-\x1F:*?"<>|]+[\\/]){2}/,
+  ]
+  if (localPathPatterns.some((pattern) => pattern.test(text))) {
+    fail(`${label} contains an absolute local build path`)
+  }
+}
+
+async function applySourcePatches(sourceStage) {
+  for (const patch of SOURCE_PATCHES) {
+    const path = join(sourceStage, patch.relativePath)
+    const source = await readFile(path, 'utf8')
+    const occurrences = source.split(patch.from).length - 1
+    if (occurrences !== 1) fail(`expected one ${patch.from} source occurrence in ${patch.relativePath}, found ${occurrences}`)
+    await writeFile(path, source.replace(patch.from, patch.to), 'utf8')
+  }
+}
+
 async function assertSourceClean(source, gitOptions, label) {
   const head = capture('git', ['-C', source, 'rev-parse', 'HEAD'], gitOptions, `${label} revision`).trim()
   if (head !== SOURCE_REVISION) fail(`${label} is at ${head}, expected ${SOURCE_REVISION}`)
@@ -212,6 +249,7 @@ async function main() {
   const buildDirectory = join(output, 'build')
   const installDirectory = join(output, 'install_root')
   const linkOptionsPath = join(output, 'classic-worker-link-options.cmake')
+  env.CXXFLAGS = `-DEMSCRIPTEN -ffile-prefix-map=${sourceStage}=${SOURCE_PREFIX_MAP}`
   run('cp', ['-a', source, sourceStage], commandOptions, 'source copy')
   for (const entry of ['.git', '.cpm_cache', 'build', 'build-wasm', 'install_root']) {
     await rm(join(sourceStage, entry), { recursive: true, force: true })
@@ -234,6 +272,7 @@ async function main() {
       if (error.code !== 'ENOENT') fail(`cannot normalize ${cacheName}: ${error.message}`)
     }
   }
+  await applySourcePatches(sourceStage)
   await writeFile(join(sourceStage, 'dev', 'gitrevision.txt'), `${SOURCE_REVISION}\n`, 'utf8')
   await writeFile(linkOptionsPath, LINK_OPTIONS, 'utf8')
 
@@ -246,7 +285,6 @@ async function main() {
     '-DCMAKE_BUILD_TYPE=Release',
     `-DCOOLPROP_INSTALL_PREFIX=${installDirectory}`,
     `-DCPM_SOURCE_CACHE=${cpmCache}`,
-    `-DCMAKE_CXX_FLAGS:STRING=-DEMSCRIPTEN -ffile-prefix-map=${sourceStage}=${source}`,
     `-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=${linkOptionsPath}`,
     '-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON',
   ], commandOptions, 'CMake configure')
@@ -262,6 +300,8 @@ async function main() {
   const buildWasm = join(buildDirectory, EXPECTED_ARTIFACTS.wasm.name)
   await verifyArtifact(buildJavaScript, EXPECTED_ARTIFACTS.javascript, 'built JavaScript')
   await verifyArtifact(buildWasm, EXPECTED_ARTIFACTS.wasm, 'built WASM')
+  await assertPortableArtifact(buildJavaScript, 'built JavaScript')
+  await assertPortableArtifact(buildWasm, 'built WASM')
   await verifyArtifact(join(installDirectory, 'Javascript', EXPECTED_ARTIFACTS.javascript.name), EXPECTED_ARTIFACTS.javascript, 'installed JavaScript')
   await verifyArtifact(join(installDirectory, 'Javascript', EXPECTED_ARTIFACTS.wasm.name), EXPECTED_ARTIFACTS.wasm, 'installed WASM')
 

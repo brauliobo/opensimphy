@@ -25,10 +25,10 @@ Run from the repository root with an empty scratch directory:
 
 ```sh
 node scripts/awesomePhysics/wasm/position-based-dynamics/build.mjs \
-  --source ../awesome-physics-repos/PositionBasedDynamics \
-  --output /tmp/position-based-dynamics-wasm \
-  --emscripten-root /usr/lib/emscripten \
-  --em-cache "$HOME/.cache/emscripten"
+  --source <pinned PositionBasedDynamics checkout> \
+  --output <empty out-of-tree directory> \
+  --emscripten-root <pinned Emscripten root> \
+  --em-cache <pinned Emscripten cache>
 ```
 
 The command builds an out-of-tree `libPositionBasedDynamics.a` containing the

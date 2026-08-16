@@ -1479,8 +1479,8 @@
       "artifactProvenance": {
         "sourceRevision": "4db89c1ce8d0b0d98ba7f03594f58a845351cf6a",
         "acquisitionDate": "2026-08-15",
-        "byteSize": 9352503,
-        "sha256": "14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762",
+        "byteSize": 9352013,
+        "sha256": "57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829",
         "transformation": "Verified pinned CoolProp Emscripten artifact dispatched through a local classic worker; no remote runtime, package, or data fallback is used.",
         "datasetLicense": null,
         "evidenceRefs": [

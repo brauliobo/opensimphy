@@ -17,8 +17,8 @@ export const COOLPROP_ARTIFACT_INTEGRITY = Object.freeze({
   }),
   wasm: Object.freeze({
     path: 'wasm/awesomePhysics/coolprop/coolprop.wasm',
-    sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
-    byteSize: 9352503,
+    sha256: '57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829',
+    byteSize: 9352013,
   }),
 })
 

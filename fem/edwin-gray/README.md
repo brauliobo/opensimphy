@@ -95,7 +95,7 @@ Generate the finite coarse full 3D sweep manifest. The output contains pending
 jobs only; it contains no solver output:
 
 ```sh
-node scripts/run.mjs --sweep --manifest /tmp/edwin-gray-sweep.json
+node scripts/run.mjs --sweep --manifest <temporary directory>/edwin-gray-sweep.json
 ```
 
 After every selected angle has a completed normalized result, aggregate one
@@ -107,7 +107,7 @@ declares more than one value for either parameter:
 
 ```sh
 node scripts/run.mjs --aggregate \
-  --manifest /tmp/edwin-gray-sweep.json \
+  --manifest <temporary directory>/edwin-gray-sweep.json \
   --mesh-size 0.025 \
   --drive-current 1
 ```
@@ -125,7 +125,7 @@ Supply explicit compatible binaries when they are not on `PATH`:
 node scripts/run.mjs --backend host \
   --gmsh-bin /path/to/gmsh \
   --getdp-bin /path/to/getdp \
-  --run-dir /tmp/edwin-gray-runs \
+  --run-dir <temporary directory>/edwin-gray-runs \
   --resume
 ```
 

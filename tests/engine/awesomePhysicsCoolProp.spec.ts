@@ -127,8 +127,8 @@ describe('CoolProp verified classic-worker artifact path', () => {
       licenseGate: { status: 'pass' },
       artifact: {
         path: 'wasm/awesomePhysics/coolprop/coolprop.wasm',
-        sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
-        byteSize: 9352503,
+        sha256: '57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829',
+        byteSize: 9352013,
         companion: {
           path: 'wasm/awesomePhysics/coolprop/coolprop.js',
           sha256: '0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6',
@@ -143,8 +143,8 @@ describe('CoolProp verified classic-worker artifact path', () => {
       adapterId: COOLPROP_ADAPTER_ID,
       licenseGate: 'pass',
       artifactProvenance: {
-        byteSize: 9352503,
-        sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
+        byteSize: 9352013,
+        sha256: '57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829',
       },
     })
     expect(awesomePhysicsDefaultInput(COOLPROP_ADAPTER_ID)).toEqual({ operation: 'F2K', celsius: 0 })
@@ -152,6 +152,13 @@ describe('CoolProp verified classic-worker artifact path', () => {
     const legacyManifest = JSON.parse(JSON.stringify(WASM_PILOT_MANIFEST)) as typeof WASM_PILOT_MANIFEST
     delete legacyManifest.records[0]!.artifact.companion
     expect(() => parseWasmPilotManifest(legacyManifest)).not.toThrow()
+  })
+
+  it('does not publish host build or REFPROP installation paths in the WASM', () => {
+    const text = new TextDecoder().decode(wasmBytes)
+    expect(text).not.toContain('/tmp/')
+    expect(text).not.toContain('/home/')
+    expect(text).not.toContain('/opt/refprop')
   })
 
   it('bounds the explicit F2K, PropsSI, and AbstractState input schemas', () => {

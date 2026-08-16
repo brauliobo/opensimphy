@@ -38,14 +38,15 @@ instantiates the raw module.
 ## Reproduction
 
 Run from the `opensimphy` checkout with an empty output directory outside both
-the source checkout and this repository:
+the source checkout and this repository. The argument values below are portable
+placeholders supplied by the build environment:
 
 ```sh
 node scripts/awesomePhysics/wasm/bullet3/build.mjs \
-  --source ../awesome-physics-repos/bullet3 \
-  --output /tmp/opencode/awesome-physics-builds/bullet3-repro \
-  --em-cache /home/braulio/.cache/emscripten \
-  --toolchain /usr/lib/emscripten/cmake/Modules/Platform/Emscripten.cmake
+  --source <pinned Bullet3 checkout> \
+  --output <empty out-of-tree directory> \
+  --em-cache <pinned Emscripten cache> \
+  --toolchain <Emscripten CMake toolchain file>
 ```
 
 The script fails before promotion when the checkout, toolchain, source notice

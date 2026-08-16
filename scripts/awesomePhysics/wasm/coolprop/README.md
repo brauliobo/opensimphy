@@ -21,8 +21,10 @@ nlohmann/json, valijson, IF97, REFPROP headers, Boost headers, multicomplex, and
 fmt. The script fails before configuration when any required cache entry is
 missing. The supplied source directory must be the clean pinned checkout used
 for the verified build, including its ignored generated dependency inputs; the
-script preserves their timestamps and normalizes the staged source prefix so
-compiler file names do not change the expected artifact bytes.
+script preserves their timestamps, disables CoolProp's unused upstream REFPROP
+installation default in the staged source, and normalizes the staged source prefix so
+compiler file names do not change the expected artifact bytes. No REFPROP
+runtime or fluid files are redistributed by this artifact.
 
 ## Reproduction
 
@@ -48,7 +50,7 @@ do not copy the staging tree or caches.
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
 | `coolprop.js` | `171012` | `0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6` |
-| `coolprop.wasm` | `9352503` | `14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762` |
+| `coolprop.wasm` | `9352013` | `57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829` |
 
 The classic worker uses `importScripts('./coolprop.js')` and the factory's
 `locateFile` callback to resolve `./coolprop.wasm`. The main-side runner verifies

@@ -17,11 +17,11 @@ require Gmsh or GetDP:
 
 ```sh
 node launcher.mjs validate
-node launcher.mjs export --output /tmp/edwin-gray-onelab.json
-node launcher.mjs validate --config /tmp/edwin-gray-onelab.json
+node launcher.mjs export --output <temporary directory>/edwin-gray-onelab.json
+node launcher.mjs validate --config <temporary directory>/edwin-gray-onelab.json
 node launcher.mjs import \
-  --config /tmp/edwin-gray-onelab.json \
-  --output /tmp/edwin-gray-onelab-roundtrip.json
+  --config <temporary directory>/edwin-gray-onelab.json \
+  --output <temporary directory>/edwin-gray-onelab-roundtrip.json
 ```
 
 The exported JSON is deterministic. It records the authoritative case hash,
@@ -36,7 +36,7 @@ again; stale configs are rejected by hash.
 With `gmsh`, `getdp`, and `node` available on `PATH`:
 
 ```sh
-node launcher.mjs gui --work-dir /tmp/edwin-gray-onelab
+node launcher.mjs gui --work-dir <temporary directory>/edwin-gray-onelab
 ```
 
 Use the ONELAB parameter panel to inspect or edit the values exposed by the
@@ -49,10 +49,10 @@ Explicit binaries and a previously exported config can be selected with:
 
 ```sh
 node launcher.mjs gui \
-  --config /tmp/edwin-gray-onelab.json \
+  --config <temporary directory>/edwin-gray-onelab.json \
   --gmsh-bin /path/to/gmsh \
   --getdp-bin /path/to/getdp \
-  --work-dir /tmp/edwin-gray-onelab
+  --work-dir <temporary directory>/edwin-gray-onelab
 ```
 
 The GUI config initializes Gmsh parameters. Interactive changes subsequently
@@ -65,16 +65,16 @@ Inspect the exact Gmsh/GetDP commands without executing either tool:
 
 ```sh
 node launcher.mjs headless --dry-run \
-  --config /tmp/edwin-gray-onelab.json \
-  --work-dir /tmp/edwin-gray-onelab
+  --config <temporary directory>/edwin-gray-onelab.json \
+  --work-dir <temporary directory>/edwin-gray-onelab
 ```
 
 Run the same project without the GUI:
 
 ```sh
 node launcher.mjs headless \
-  --config /tmp/edwin-gray-onelab.json \
-  --work-dir /tmp/edwin-gray-onelab
+  --config <temporary directory>/edwin-gray-onelab.json \
+  --work-dir <temporary directory>/edwin-gray-onelab
 ```
 
 The headless path passes the shared ONELAB names to Gmsh and GetDP with

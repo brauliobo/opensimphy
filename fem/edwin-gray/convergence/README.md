@@ -88,19 +88,19 @@ mesh for the 1 A audit, and resumes from content-addressed checkpoints:
 nice -n 10 node fem/edwin-gray/convergence/run-study.mjs \
   --stage pilot \
   --docker-image IMAGE_ID \
-  --work-dir /tmp/edwin-gray-study \
+  --work-dir <temporary directory>/edwin-gray-study \
   --hard-timeout-seconds 1800
 
 nice -n 10 node fem/edwin-gray/convergence/run-study.mjs \
   --stage convergence \
   --docker-image IMAGE_ID \
-  --work-dir /tmp/edwin-gray-study \
+  --work-dir <temporary directory>/edwin-gray-study \
   --hard-timeout-seconds 7200
 
 nice -n 10 node fem/edwin-gray/convergence/run-study.mjs \
   --stage publication \
   --docker-image IMMUTABLE_IMAGE_ID_OR_DIGEST \
-  --work-dir /tmp/edwin-gray-study \
+  --work-dir <temporary directory>/edwin-gray-study \
   --solver-profile direct-mumps-publication-v1 \
   --memory-gib 24 \
   --cpus 2 \
@@ -143,12 +143,12 @@ nohup nice -n 10 \
   node fem/edwin-gray/convergence/run-study.mjs \
   --stage publication \
   --docker-image "$IMAGE_ID" \
-  --work-dir /tmp/edwin-gray-study \
+  --work-dir <temporary directory>/edwin-gray-study \
   --solver-profile direct-mumps-publication-v1 \
   --memory-gib 24 \
   --cpus 2 \
   --threads 2 \
   --mesh-threads 1 \
   --hard-timeout-seconds 1800 \
-  > /tmp/edwin-gray-study/publication.log 2>&1 &
+  > <temporary directory>/edwin-gray-study/publication.log 2>&1 &
 ```
