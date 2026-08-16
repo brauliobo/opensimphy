@@ -36,12 +36,21 @@ Group {
 
 Function {
   mu0 = 4.e-7 * Pi;
-  CoreRelativePermeability = DefineNumber[1000., Name "Parameters/Core relative permeability"];
-  DriveCurrentA = DefineNumber[1., Name "Parameters/Drive current (A)"];
-  Turns = DefineNumber[100., Name "Parameters/Turns"];
-  EffectiveCoilCrossSectionM2 = DefineNumber[1.e-4, Name "Parameters/Effective coil cross-section (m^2)"];
-
-  EventIndex = DefineNumber[0, Name "Parameters/Excitation event index", Min 0, Max 26, Step 1];
+  If(!Exists(CoreRelativePermeability))
+    CoreRelativePermeability = DefineNumber[1000., Name "Parameters/Core relative permeability"];
+  EndIf
+  If(!Exists(DriveCurrentA))
+    DriveCurrentA = DefineNumber[1., Name "Parameters/Drive current (A)"];
+  EndIf
+  If(!Exists(Turns))
+    Turns = DefineNumber[100., Name "Parameters/Turns"];
+  EndIf
+  If(!Exists(EffectiveCoilCrossSectionM2))
+    EffectiveCoilCrossSectionM2 = DefineNumber[1.e-4, Name "Parameters/Effective coil cross-section (m^2)"];
+  EndIf
+  If(!Exists(EventIndex))
+    EventIndex = DefineNumber[0, Name "Parameters/Excitation event index", Min 0, Max 26, Step 1];
+  EndIf
 }
 
 Include "../excitation/v1/event-map-v1.pro";

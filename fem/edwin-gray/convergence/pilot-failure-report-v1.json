@@ -1,0 +1,123 @@
+{
+  "contract": "edwin-gray-convergence-pilot-summary",
+  "contractVersion": 1,
+  "status": "rejected",
+  "jobs": 6,
+  "runtimeSeconds": 1940.34,
+  "sourceReportSha256": "efe9a19e66f89c7cf0f7445da716187b9edd1de5a87bd414bb09ff1c8ef4674b",
+  "specificationSha256": "a3bee65ba5e3bbd2068116f9b34249b311a873a79c4892bfb5988d9b2166ec77",
+  "environment": {
+    "identityHash": "00270920cb70642552524df7571b007a513bc9d88ddc5bd9e5398f707ba58fea",
+    "image": "opensimphy-edwin-gray-fem@sha256:28d2ddd29c4e8784564a8d0340f047af32731463b192c21a7f8bb45918048692",
+    "gmsh": "4.8.4+ds2-3",
+    "getdp": "official-3.5.0",
+    "threads": 1
+  },
+  "checks": [
+    {
+      "id": "mesh-quality-and-partition",
+      "status": "passed",
+      "minimumMeanRatio": 0.1530388644566494
+    },
+    {
+      "id": "energy-coenergy-agreement",
+      "status": "passed",
+      "observed": 0,
+      "tolerance": 0.01
+    },
+    {
+      "id": "mesh-node-growth",
+      "status": "failed",
+      "observed": 1.0129903835013323,
+      "tolerance": 1.05
+    },
+    {
+      "id": "mesh-element-growth",
+      "status": "failed",
+      "observed": 1.0131331473175507,
+      "tolerance": 1.05
+    },
+    {
+      "id": "mesh-observable-coarse-fine",
+      "status": "passed",
+      "observed": 0.007863091709090336,
+      "tolerance": 0.02
+    },
+    {
+      "id": "mesh-observable-medium-fine",
+      "status": "passed",
+      "observed": 0.006739861908676889,
+      "tolerance": 0.01
+    },
+    {
+      "id": "domain-base-far",
+      "status": "failed",
+      "observed": 0.026314083192205403,
+      "tolerance": 0.015
+    },
+    {
+      "id": "current-inductance",
+      "status": "passed",
+      "observed": 1.5261345253365095e-15,
+      "tolerance": 0.01
+    },
+    {
+      "id": "current-energy-i2",
+      "status": "passed",
+      "observed": 7.325445721615257e-14,
+      "tolerance": 0.01
+    },
+    {
+      "id": "angle-periodicity",
+      "status": "passed",
+      "observed": 0.009758611598795318,
+      "tolerance": 0.01
+    },
+    {
+      "id": "expanded-domain-convergence",
+      "status": "not-run",
+      "reason": "pilot rejection blocked the full convergence study"
+    },
+    {
+      "id": "torque-derivative-stability",
+      "status": "not-run",
+      "reason": "pilot rejection blocked the full convergence study"
+    }
+  ],
+  "meshAttestations": [
+    {
+      "level": "coarse",
+      "nodes": 215775,
+      "elements": 1323902,
+      "sha256": "a7bfc5a2f7f911b1883dbcc5c530bb05d2914bbcfaa4dc1a01d6bb0be3f1ec7f"
+    },
+    {
+      "level": "medium",
+      "nodes": 218578,
+      "elements": 1341289,
+      "sha256": "6fe08bfb06e6570110d467fb268c197a329802687de305baaeb6c1f08f9c4932"
+    },
+    {
+      "level": "fine",
+      "nodes": 226026,
+      "elements": 1387729,
+      "sha256": "f2fb6d5f54026a994602e7389e26b21ed0d4331b241db5c0d4705f89633e0b9c"
+    },
+    {
+      "level": "far-fine",
+      "nodes": 233975,
+      "elements": 1435501,
+      "sha256": "3276c17e0689c672234cfcbb1a0d0d8e9890b45e727e0e4a6d13b0976c083f5f"
+    }
+  ],
+  "diagnosis": [
+    "The fixed 2 mm feature field dominates the declared air-size levels, so the three audit-valid meshes do not meet the required five-percent partition growth despite passing observable drift limits.",
+    "The finite base domain changes energy and inductance by 2.63 percent relative to the far domain. The disconnected homogenized axial source envelopes omit end-turn closure and are a likely contributor to this unresolved boundary sensitivity.",
+    "A narrower feature halo was attempted and rejected by the quantitative mesh audit because material-edge p99 exceeded the fixed feature-resolution limit."
+  ],
+  "publication": {
+    "convergenceApproved": false,
+    "productionSliceRun": false,
+    "lutPublished": false
+  }
+}

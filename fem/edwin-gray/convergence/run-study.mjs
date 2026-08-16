@@ -1,0 +1,263 @@
+#!/usr/bin/env node
+
+import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { expectedSampleDefinitions } from "./evaluate-convergence.mjs";
+
+const CONVERGENCE_DIR = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(CONVERGENCE_DIR, "..");
+const RUNNER = resolve(ROOT, "scripts/run.mjs");
+const EVALUATOR = resolve(CONVERGENCE_DIR, "evaluate-convergence.mjs");
+const SPEC_PATH = resolve(CONVERGENCE_DIR, "convergence-spec-v1.json");
+const CASE_PATH = resolve(ROOT, "cases/patent-3890548-illustrative.json");
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function parseArgs(argv) {
+  const options = {};
+  for (let index = 0; index < argv.length; index += 1) {
+    const token = argv[index];
+    assert(token.startsWith("--"), `unexpected argument ${token}`);
+    const value = argv[index + 1];
+    assert(value && !value.startsWith("--"), `missing value for ${token}`);
+    options[token.slice(2)] = value;
+    index += 1;
+  }
+  return options;
+}
+
+function readJson(path, label) {
+  try {
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch (error) {
+    throw new Error(`${label} is invalid: ${error.message}`);
+  }
+}
+
+function sha256(path) {
+  return createHash("sha256").update(readFileSync(path)).digest("hex");
+}
+
+function writeJson(path, value) {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+function run(command, args, label) {
+  const result = spawnSync(command, args, { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  if (result.status !== 0) {
+    throw new Error(`${label} failed${result.stderr ? `: ${result.stderr.trim()}` : ""}`);
+  }
+  return result.stdout.trim();
+}
+
+function caseVariants(workDir, spec) {
+  const source = readJson(CASE_PATH, "source case");
+  return Object.fromEntries(spec.production.domains.map((domain) => {
+    const variant = structuredClone(source);
+    variant.geometry.airOuterRadiusM = domain.outerRadiusM;
+    const path = resolve(workDir, "cases", `${domain.id}.json`);
+    writeJson(path, variant);
+    return [domain.id, path];
+  }));
+}
+
+function sampleId(sample) {
+  return [sample.domainId, sample.meshLevelId, `i${sample.driveCurrentA}`, `a${sample.rotorAngleDeg}`, `e${sample.eventIndex}`]
+    .join("-")
+    .replaceAll(".", "p");
+}
+
+function pilotDefinitions(definitions, spec) {
+  const angle = spec.production.representativeAngles.find((item) => item.role === "transition").angleDeg;
+  const fine = spec.production.meshLevels.at(-1).id;
+  const far = spec.production.domains.at(-1).id;
+  const periodic = spec.production.periodicityPairsDeg.find((pair) => pair[0] === angle)?.[1];
+  return definitions.filter((sample) => (
+    (sample.domainId === spec.production.baseDomainId && sample.driveCurrentA === spec.production.productionCurrentA && sample.rotorAngleDeg === angle)
+    || (sample.domainId === spec.production.baseDomainId && sample.meshLevelId === fine && sample.driveCurrentA === spec.production.linearityAuditCurrentA && sample.rotorAngleDeg === angle)
+    || (sample.domainId === far && sample.meshLevelId === fine && sample.rotorAngleDeg === angle)
+    || (sample.domainId === spec.production.baseDomainId && sample.meshLevelId === fine && sample.rotorAngleDeg === periodic)
+  ));
+}
+
+function executeSamples({ definitions, spec, cases, workDir, image, threads }) {
+  const runs = resolve(workDir, "runs");
+  const completed = [];
+  const meshSources = new Map();
+  for (const sample of definitions) {
+    const mesh = spec.production.meshLevels.find((item) => item.id === sample.meshLevelId);
+    const meshKey = `${sample.domainId}|${sample.meshLevelId}|${sample.rotorAngleDeg}|${sample.eventIndex}`;
+    const args = [
+      RUNNER,
+      "--resume",
+      "--backend", "docker",
+      "--docker-image", image,
+      "--threads", String(threads),
+      "--case", cases[sample.domainId],
+      "--run-dir", runs,
+      "--rotor-angle", String(sample.rotorAngleDeg),
+      "--event-index", String(sample.eventIndex),
+      "--mesh-size", String(mesh.meshSizeM),
+      "--drive-current", String(sample.driveCurrentA)
+    ];
+    const source = meshSources.get(meshKey);
+    if (source) args.push("--reuse-mesh-checkpoint", source);
+    const output = JSON.parse(run(process.execPath, args, `sample ${sampleId(sample)}`));
+    const checkpoint = join(output.jobDir, "checkpoint.json");
+    meshSources.set(meshKey, checkpoint);
+    completed.push({
+      id: sampleId(sample),
+      ...sample,
+      result: relative(workDir, join(output.jobDir, "result.json")),
+      checkpoint: relative(workDir, checkpoint)
+    });
+  }
+  return completed;
+}
+
+function relativeDifference(left, right) {
+  return Math.abs(left - right) / Math.max(Math.abs(left), Math.abs(right), Number.MIN_VALUE);
+}
+
+function pilotReport(samples, workDir, spec) {
+  const verified = samples.map((sample) => {
+    const result = readJson(resolve(workDir, sample.result), `pilot result ${sample.id}`);
+    const checkpoint = readJson(resolve(workDir, sample.checkpoint), `pilot checkpoint ${sample.id}`);
+    const audit = readJson(resolve(dirname(resolve(workDir, sample.checkpoint)), "mesh-audit.json"), `pilot audit ${sample.id}`);
+    return {
+      id: sample.id,
+      domainId: sample.domainId,
+      meshLevelId: sample.meshLevelId,
+      driveCurrentA: sample.driveCurrentA,
+      rotorAngleDeg: sample.rotorAngleDeg,
+      eventIndex: sample.eventIndex,
+      observables: result.entries[0].observables,
+      mesh: { nodes: audit.mesh.nodes, elements: audit.mesh.elements, minimumMeanRatio: audit.quality.minimumMeanRatio, sha256: checkpoint.artifacts.mesh },
+      modelInputHash: checkpoint.modelInputHash,
+      jobInputHash: checkpoint.jobInputHash,
+      environmentIdentityHash: checkpoint.environmentIdentityHash
+    };
+  });
+  const transition = spec.production.representativeAngles.find((item) => item.role === "transition").angleDeg;
+  const base = spec.production.baseDomainId;
+  const far = spec.production.domains.at(-1).id;
+  const levels = spec.production.meshLevels.map((item) => item.id);
+  const current = spec.production.productionCurrentA;
+  const auditCurrent = spec.production.linearityAuditCurrentA;
+  const get = (domain, level, amps, angle) => verified.find((sample) => sample.domainId === domain && sample.meshLevelId === level && sample.driveCurrentA === amps && sample.rotorAngleDeg === angle);
+  const chain = levels.map((level) => get(base, level, current, transition));
+  const fine = chain.at(-1);
+  const lowCurrent = get(base, levels.at(-1), auditCurrent, transition);
+  const farSample = get(far, levels.at(-1), current, transition);
+  const periodicAngle = spec.production.periodicityPairsDeg.find((pair) => pair[0] === transition)[1];
+  const periodic = get(base, levels.at(-1), current, periodicAngle);
+  const observableDifference = (left, right) => Math.max(...Object.keys(left.observables).map((name) => relativeDifference(left.observables[name].value, right.observables[name].value)));
+  const checks = [];
+  const add = (id, observed, tolerance, comparison = "maximum") => checks.push({
+    id,
+    status: comparison === "minimum" ? (observed >= tolerance ? "passed" : "failed") : (observed <= tolerance ? "passed" : "failed"),
+    observed,
+    tolerance,
+    comparison
+  });
+  add("mesh-quality-and-partition", verified.every((sample) => sample.mesh.minimumMeanRatio > 0) ? 1 : 0, 1, "minimum");
+  add("environment-identity", new Set(verified.map((sample) => sample.environmentIdentityHash)).size, 1);
+  add("energy-coenergy-agreement", Math.max(...verified.map((sample) => relativeDifference(sample.observables.magneticEnergyJ.value, sample.observables.coEnergyJ.value))), spec.tolerances.energyCoEnergyRelative);
+  add("mesh-node-growth", Math.min(...chain.slice(1).map((sample, index) => sample.mesh.nodes / chain[index].mesh.nodes)), spec.tolerances.meshMetrics.minimumNodeGrowthRatio, "minimum");
+  add("mesh-element-growth", Math.min(...chain.slice(1).map((sample, index) => sample.mesh.elements / chain[index].mesh.elements)), spec.tolerances.meshMetrics.minimumElementGrowthRatio, "minimum");
+  add("mesh-observable-coarse-fine", observableDifference(chain[0], fine), spec.tolerances.meshObservableRelative.coarseToFine);
+  add("mesh-observable-medium-fine", observableDifference(chain.at(-2), fine), spec.tolerances.meshObservableRelative.mediumToFine);
+  add("domain-base-far", observableDifference(fine, farSample), spec.tolerances.outerDomainObservableRelative.baseToFar);
+  add("current-inductance", relativeDifference(fine.observables.inductanceH.value, lowCurrent.observables.inductanceH.value), spec.tolerances.inductanceCurrentRelative);
+  add("current-energy-i2", Math.max(...["magneticEnergyJ", "coEnergyJ"].map((name) => relativeDifference(
+    fine.observables[name].value / current ** 2,
+    lowCurrent.observables[name].value / auditCurrent ** 2
+  ))), spec.tolerances.energyCurrentSquaredRelative);
+  add("angle-periodicity", observableDifference(fine, periodic), spec.tolerances.anglePeriodicityRelative);
+  checks.push({ id: "expanded-domain-convergence", status: "not-run", reason: "pilot failure blocks full convergence study" });
+  checks.push({ id: "torque-derivative-stability", status: "not-run", reason: "pilot failure blocks full convergence study" });
+  const failures = checks.filter((check) => check.status === "failed").map((check) => check.id);
+  return {
+    contract: "edwin-gray-convergence-pilot",
+    contractVersion: 1,
+    specification: { sha256: sha256(SPEC_PATH) },
+    status: failures.length === 0 ? "passed" : "rejected",
+    checks,
+    failures,
+    samples: verified
+  };
+}
+
+function runConvergence(options, spec, definitions, workDir) {
+  const cases = caseVariants(workDir, spec);
+  const selected = options.stage === "pilot" ? pilotDefinitions(definitions, spec) : definitions;
+  const samples = executeSamples({
+    definitions: selected,
+    spec,
+    cases,
+    workDir,
+    image: options["docker-image"],
+    threads: Number(options.threads || 1)
+  });
+  if (options.stage === "pilot") {
+    const reportPath = resolve(workDir, "pilot-report.json");
+    const report = pilotReport(samples, workDir, spec);
+    writeJson(reportPath, report);
+    return { status: report.status, stage: "pilot", jobs: samples.length, report: reportPath, reportSha256: sha256(reportPath), failures: report.failures };
+  }
+  const evidencePath = resolve(workDir, "convergence-evidence.json");
+  const reportPath = resolve(workDir, "convergence-report.json");
+  writeJson(evidencePath, {
+    contract: "edwin-gray-convergence-evidence",
+    contractVersion: 1,
+    status: "complete",
+    caseId: spec.caseId,
+    samples
+  });
+  const evaluation = spawnSync(process.execPath, [EVALUATOR, "--evidence", evidencePath, "--out", reportPath], {
+    cwd: ROOT,
+    encoding: "utf8"
+  });
+  assert(existsSync(reportPath), "convergence evaluator did not write a report");
+  const report = readJson(reportPath, "convergence report");
+  return {
+    status: report.status,
+    stage: "convergence",
+    jobs: samples.length,
+    report: reportPath,
+    reportSha256: sha256(reportPath),
+    evidenceSha256: sha256(evidencePath),
+    evaluatorExitCode: evaluation.status
+  };
+}
+
+function main(argv) {
+  const options = parseArgs(argv);
+  assert(["pilot", "convergence"].includes(options.stage), "--stage must be pilot or convergence");
+  assert(options["docker-image"], "--docker-image is required");
+  const threads = Number(options.threads || 1);
+  assert(Number.isInteger(threads) && threads >= 1 && threads <= 4, "--threads must be an integer in [1, 4]");
+  const workDir = resolve(options["work-dir"] || "edwin-gray-study");
+  mkdirSync(workDir, { recursive: true });
+  const spec = readJson(SPEC_PATH, "convergence specification");
+  const result = runConvergence(options, spec, expectedSampleDefinitions(spec), workDir);
+  console.log(JSON.stringify(result, null, 2));
+  if (result.status === "rejected") process.exitCode = 1;
+}
+
+if (resolve(process.argv[1] || "") === fileURLToPath(import.meta.url)) {
+  try {
+    main(process.argv.slice(2));
+  } catch (error) {
+    console.error(`run-study: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
+
+export { pilotDefinitions, sampleId };

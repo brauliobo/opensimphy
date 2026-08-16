@@ -37,7 +37,7 @@ ENV DEBIAN_SNAPSHOT=${DEBIAN_SNAPSHOT} \
     SOLVER_IMAGE_REVISION=${SOLVER_IMAGE_REVISION} \
     SOLVER_SOURCE="debian-snapshot+getdp-official-sha256"
 
-COPY --chmod=0555 entrypoint.sh /usr/local/bin/solver-entrypoint
+COPY --chmod=0555 container/entrypoint.sh /usr/local/bin/solver-entrypoint
 
 USER 10001:10001
 WORKDIR /output

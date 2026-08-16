@@ -81,6 +81,8 @@ function writeSample(root, definition, index) {
   const files = {
     "motor.msh": mesh,
     "mesh-audit.json": meshAudit,
+    "geometry-wrapper.geo": "SetNumber(\"Parameters/Mesh size (m)\", 0.01);\n",
+    "getdp-wrapper.pro": "SetNumber(\"Parameters/Drive current (A)\", 10);\n",
     "solver-environment.json": `${JSON.stringify({ identityHash: ENVIRONMENT_HASH })}\n`,
     "gmsh.log": "fixture mesh completed\n",
     "getdp.log": "fixture solve completed\n",
@@ -93,7 +95,7 @@ function writeSample(root, definition, index) {
   const meshSizeM = SPEC.production.meshLevels.find((item) => item.id === definition.meshLevelId).meshSizeM;
   const parameters = {
     rotorAngleDeg: definition.rotorAngleDeg,
-    eventIndex: Math.round(definition.rotorAngleDeg / (40 / 3)) % 27,
+    eventIndex: definition.eventIndex,
     excitationContract: SPEC.excitationContract,
     meshSizeM,
     driveCurrentA: definition.driveCurrentA
@@ -155,6 +157,10 @@ function writeSample(root, definition, index) {
     phases: { mesh: "complete", solve: "complete", normalize: "complete" },
     artifacts: {
       environment: sha256(files["solver-environment.json"]),
+      inputs: {
+        geometry: sha256(files["geometry-wrapper.geo"]),
+        getdp: sha256(files["getdp-wrapper.pro"])
+      },
       mesh: sha256(mesh),
       audit: sha256(meshAudit),
       logs: {
@@ -245,6 +251,13 @@ test("complete attested production coverage is approved deterministically", (t) 
   assert.deepEqual(first, second);
   assert.equal(first.evidence.sampleCount, expectedSampleDefinitions(SPEC).length);
   assert.deepEqual(first.failures, []);
+});
+
+test("required convergence tuples bind fixed torque and rotated periodicity events", () => {
+  const definitions = expectedSampleDefinitions(SPEC);
+  const eventAt = (angle) => new Set(definitions.filter((item) => item.rotorAngleDeg === angle).map((item) => item.eventIndex));
+  assert.deepEqual(eventAt(6.6666666667), new Set([0]));
+  assert.deepEqual(eventAt(126.6666666667), new Set([9]));
 });
 
 test("CLI writes the deterministic convergence-report.json contract", (t) => {

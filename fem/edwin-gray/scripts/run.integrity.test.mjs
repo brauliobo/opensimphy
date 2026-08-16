@@ -275,3 +275,35 @@ test("aggregation rejects an incomplete declared manifest slice", (t) => {
   assert.notEqual(aggregated.status, 0);
   assert.match(aggregated.stderr, /Declared aggregation job is not complete/);
 });
+
+test("single-job overrides reuse only an attested geometry-identical mesh", (t) => {
+  const context = fixture(t);
+  const common = [
+    "--resume",
+    "--backend", "host",
+    "--gmsh-bin", context.gmsh,
+    "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
+    "--run-dir", context.runs,
+    "--rotor-angle", "6.6666666667",
+    "--event-index", "0",
+    "--mesh-size", "0.01875"
+  ];
+  const production = run(context, ...common, "--drive-current", "10");
+  assert.equal(production.status, 0, production.stderr);
+  const first = JSON.parse(production.stdout);
+  const audit = run(
+    context,
+    ...common,
+    "--drive-current", "1",
+    "--reuse-mesh-checkpoint", join(first.jobDir, "checkpoint.json")
+  );
+  assert.equal(audit.status, 0, audit.stderr);
+  assert.equal(count(context.environment.GMSH_COUNT), 1);
+  assert.equal(count(context.environment.GETDP_COUNT), 2);
+  const second = JSON.parse(audit.stdout);
+  const firstCheckpoint = JSON.parse(readFileSync(join(first.jobDir, "checkpoint.json"), "utf8"));
+  const secondCheckpoint = JSON.parse(readFileSync(join(second.jobDir, "checkpoint.json"), "utf8"));
+  assert.equal(firstCheckpoint.artifacts.mesh, secondCheckpoint.artifacts.mesh);
+  assert.notEqual(firstCheckpoint.jobInputHash, secondCheckpoint.jobInputHash);
+});

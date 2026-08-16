@@ -144,6 +144,13 @@ function sampleKey(domainId, meshLevelId, current, angle) {
   return `${domainId}|${meshLevelId}|${Number(current).toPrecision(15)}|${angleKey(angle)}`;
 }
 
+function eventIndexForAngle(spec, angle) {
+  const periodicityRightAngles = new Set(spec.production.periodicityPairsDeg.map((pair) => angleKey(pair[1])));
+  return periodicityRightAngles.has(angleKey(angle))
+    ? spec.production.convergenceEventIndex + spec.production.periodicityEventIndexOffset
+    : spec.production.convergenceEventIndex;
+}
+
 export function expectedSampleDefinitions(spec) {
   validateSpec(spec);
   const production = spec.production;
@@ -157,7 +164,7 @@ export function expectedSampleDefinitions(spec) {
   ].map(angleKey));
   const expected = new Map();
   const add = (domainId, meshLevelId, driveCurrentA, rotorAngleDeg) => {
-    const item = { domainId, meshLevelId, driveCurrentA, rotorAngleDeg };
+    const item = { domainId, meshLevelId, driveCurrentA, rotorAngleDeg, eventIndex: eventIndexForAngle(spec, rotorAngleDeg) };
     expected.set(sampleKey(domainId, meshLevelId, driveCurrentA, rotorAngleDeg), item);
   };
   for (const mesh of production.meshLevels) {
@@ -199,6 +206,9 @@ function validateSpec(spec) {
   finitePositive(production.productionCurrentA, "production current");
   finitePositive(production.linearityAuditCurrentA, "linearity audit current");
   assert(!sameNumber(production.productionCurrentA, production.linearityAuditCurrentA), "linearity audit current must differ from production current");
+  assert(Number.isInteger(production.convergenceEventIndex) && production.convergenceEventIndex >= 0 && production.convergenceEventIndex <= 26, "convergence event index is invalid");
+  assert(Number.isInteger(production.periodicityEventIndexOffset) && production.periodicityEventIndexOffset > 0, "periodicity event index offset is invalid");
+  assert(production.convergenceEventIndex + production.periodicityEventIndexOffset <= 26, "periodicity event index is out of range");
   assert(Array.isArray(production.representativeAngles) && production.representativeAngles.length >= 3, "aligned, transition, and unaligned angles are required");
   assert(["aligned", "transition", "unaligned"].every((role) => production.representativeAngles.some((item) => item.role === role)), "representative angle roles are incomplete");
   assert(Array.isArray(production.torqueAnglesDeg) && production.torqueAnglesDeg.length >= 5, "at least five torque derivative angles are required");
@@ -246,6 +256,8 @@ function verifySample(sample, expected, spec, evidenceDir) {
   const meshPath = verifiedArtifact(jobDir, "motor.msh", checkpoint.artifacts?.mesh, `sample ${sample.id} mesh`);
   const auditPath = verifiedArtifact(jobDir, "mesh-audit.json", checkpoint.artifacts?.audit, `sample ${sample.id} mesh audit`);
   const environmentPath = verifiedArtifact(jobDir, "solver-environment.json", checkpoint.artifacts?.environment, `sample ${sample.id} solver environment`);
+  verifiedArtifact(jobDir, "geometry-wrapper.geo", checkpoint.artifacts?.inputs?.geometry, `sample ${sample.id} geometry wrapper`);
+  verifiedArtifact(jobDir, "getdp-wrapper.pro", checkpoint.artifacts?.inputs?.getdp, `sample ${sample.id} GetDP wrapper`);
   verifiedArtifact(jobDir, "gmsh.log", checkpoint.artifacts?.logs?.gmsh, `sample ${sample.id} Gmsh log`);
   verifiedArtifact(jobDir, "getdp.log", checkpoint.artifacts?.logs?.getdp, `sample ${sample.id} GetDP log`);
   assert(stableJson(Object.keys(checkpoint.artifacts.logs).sort()) === stableJson(["getdp", "gmsh"]), `sample ${sample.id} checkpoint log set is invalid`);
@@ -264,6 +276,7 @@ function verifySample(sample, expected, spec, evidenceDir) {
   assert(stableJson(entry.parameters) === stableJson(checkpoint.parameters), `sample ${sample.id} normalized and checkpoint parameters differ`);
   assert(entry.parameters.excitationContract === spec.excitationContract && checkpoint.excitationContract === spec.excitationContract, `sample ${sample.id} excitation contract is invalid`);
   assert(Number.isInteger(entry.parameters.eventIndex) && entry.parameters.eventIndex === checkpoint.eventIndex, `sample ${sample.id} event index is invalid`);
+  assert(entry.parameters.eventIndex === expected.eventIndex, `sample ${sample.id} event index does not match the convergence excitation schedule`);
   const mesh = spec.production.meshLevels.find((item) => item.id === expected.meshLevelId);
   assert(sameNumber(entry.parameters?.meshSizeM, mesh.meshSizeM), `sample ${sample.id} mesh size is not the specified level`);
   assert(sameNumber(entry.parameters?.driveCurrentA, expected.driveCurrentA) && sameNumber(entry.parameters?.rotorAngleDeg, expected.rotorAngleDeg), `sample ${sample.id} normalized parameters do not match the required tuple`);

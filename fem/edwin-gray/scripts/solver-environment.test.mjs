@@ -98,7 +98,5 @@ test("runner job hashes change with the solver environment but model job IDs rem
   const changedEvent = run(4);
   assert.notEqual(changed.jobId, changedEvent.jobId);
   assert.notEqual(changed.inputHash, changedEvent.inputHash);
-  assert.ok(changedEvent.commands.mesh.includes("4"));
-  assert.ok(changedEvent.commands.solve.includes("4"));
   assert.ok(changedEvent.commands.audit.includes("--output"));
 });

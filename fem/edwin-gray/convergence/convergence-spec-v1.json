@@ -40,6 +40,8 @@
     "baseDomainId": "base",
     "productionCurrentA": 10,
     "linearityAuditCurrentA": 1,
+    "convergenceEventIndex": 0,
+    "periodicityEventIndexOffset": 9,
     "representativeAngles": [
       {
         "role": "aligned",

@@ -2,6 +2,7 @@
 
 import {
   accessSync,
+  copyFileSync,
   constants,
   existsSync,
   mkdirSync,
@@ -96,6 +97,10 @@ function usage() {
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
     "  --event-index INDEX                Excitation event for a single run (default: case value)",
+    "  --rotor-angle DEG                 Rotor angle for a single run (default: case value)",
+    "  --mesh-size METERS                Mesh size for a single run (default: case value)",
+    "  --drive-current AMPS              Drive current for a single run (default: case value)",
+    "  --reuse-mesh-checkpoint PATH      Reuse an attested mesh from an otherwise identical job",
     "  --mesh-audit PATH                  Override the quantitative mesh-audit script",
     "  --manifest PATH                    Input/output sweep manifest",
     "  --run-dir PATH                    Content-addressed run root",
@@ -568,20 +573,20 @@ function gmshOverrides(parameters, caseData) {
 
 function getdpOverrides(parameters, caseData) {
   return [
-    ["Parameters/Core relative permeability", caseData.materials.core.relativePermeability],
-    ["Parameters/Drive current (A)", parameters.driveCurrentA],
-    ["Parameters/Turns", caseData.excitation.turns],
-    ["Parameters/Effective coil cross-section (m^2)", caseData.excitation.effectiveCoilCrossSectionM2],
-    ["Parameters/Excitation event index", parameters.eventIndex]
+    ["CoreRelativePermeability", caseData.materials.core.relativePermeability],
+    ["DriveCurrentA", parameters.driveCurrentA],
+    ["Turns", caseData.excitation.turns],
+    ["EffectiveCoilCrossSectionM2", caseData.excitation.effectiveCoilCrossSectionM2],
+    ["EventIndex", parameters.eventIndex]
   ];
 }
 
-function commandWithOverrides(command, args, overrides) {
-  const result = [command, ...args];
-  for (const [name, value] of overrides) {
-    result.push("-setnumber", name, String(value));
-  }
-  return result;
+function parameterWrapper(source, overrides) {
+  return `${overrides.map(([name, value]) => `SetNumber(${JSON.stringify(name)}, ${value});`).join("\n")}\nInclude ${JSON.stringify(source)};`;
+}
+
+function problemWrapper(source, overrides) {
+  return `${overrides.map(([name, value]) => `${name} = ${value};`).join("\n")}\nInclude ${JSON.stringify(source)};`;
 }
 
 function backendPlan(options, host, { allowUnavailable = false } = {}) {
@@ -686,7 +691,11 @@ function runnerRevision() {
   if (process.env.SOLVER_RUNNER_REVISION) {
     return process.env.SOLVER_RUNNER_REVISION;
   }
-  const result = spawnSync("git", ["rev-parse", "HEAD"], { cwd: ROOT, encoding: "utf8" });
+  const top = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: ROOT, encoding: "utf8" });
+  if (top.status !== 0) return "unknown";
+  const repositoryRoot = top.stdout.trim();
+  const treePath = relative(repositoryRoot, ROOT);
+  const result = spawnSync("git", ["rev-parse", `HEAD:${treePath}`], { cwd: repositoryRoot, encoding: "utf8" });
   return result.status === 0 ? result.stdout.trim() : "unknown";
 }
 
@@ -868,6 +877,8 @@ function checkpointMatches(checkpoint, job) {
     && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`
     && checkpoint.phases && typeof checkpoint.phases === "object"
     && checkpoint.artifacts && typeof checkpoint.artifacts === "object"
+    && artifactMatches(job.geoWrapperPath, checkpoint.artifacts.inputs?.geometry)
+    && artifactMatches(job.proWrapperPath, checkpoint.artifacts.inputs?.getdp)
     && checkpoint.artifacts.logs && typeof checkpoint.artifacts.logs === "object";
 }
 
@@ -906,16 +917,55 @@ function removePhaseArtifacts(job, phase) {
   rmSync(join(job.jobDir, "result.json"), { force: true });
 }
 
+function reuseMesh(job, checkpoint, sourceCheckpointPath, commands) {
+  const sourcePath = resolve(sourceCheckpointPath);
+  const sourceDir = dirname(sourcePath);
+  const source = readJson(sourcePath, "reusable mesh checkpoint");
+  const meshParameters = ({ rotorAngleDeg, eventIndex, excitationContract, meshSizeM }) => ({
+    rotorAngleDeg,
+    eventIndex,
+    excitationContract,
+    meshSizeM
+  });
+  assert(source.checkpointVersion === CHECKPOINT_VERSION, "Reusable mesh checkpoint version is invalid");
+  assert(source.phases?.mesh === "complete" && source.meshQuality === "passed", "Reusable mesh checkpoint is incomplete");
+  assert(source.modelInputHash === job.modelInputHash, "Reusable mesh model input hash does not match the job");
+  assert(source.environmentIdentityHash === job.plan.environment.identityHash, "Reusable mesh solver environment does not match the job");
+  assert(stableJson(meshParameters(source.parameters || {})) === stableJson(meshParameters(job.parameters)), "Reusable mesh parameters do not match the job geometry");
+  const sourceMesh = join(sourceDir, "motor.msh");
+  const sourceLog = join(sourceDir, "gmsh.log");
+  assert(artifactMatches(sourceMesh, source.artifacts?.mesh), "Reusable mesh artifact hash is invalid");
+  assert(artifactMatches(join(sourceDir, "mesh-audit.json"), source.artifacts?.audit), "Reusable mesh audit hash is invalid");
+  assert(artifactMatches(sourceLog, source.artifacts?.logs?.gmsh), "Reusable Gmsh log hash is invalid");
+  copyFileSync(sourceMesh, job.meshPath);
+  copyFileSync(sourceLog, join(job.jobDir, "gmsh.log"));
+  assertMeshQuality(join(job.jobDir, "gmsh.log"));
+  runCommand({
+    plan: job.plan,
+    root: ROOT,
+    cwd: job.jobDir,
+    command: process.execPath,
+    args: commands.audit.slice(1),
+    commandLine: commands.audit,
+    logName: "mesh-audit.log",
+    runRoot: job.runRoot
+  });
+  const audit = readJson(job.auditPath, "reused mesh audit");
+  assert(audit.valid === true && audit.source?.meshSha256 === sha256File(job.meshPath), "Quantitative mesh audit rejected the reused mesh");
+  checkpoint.phases.mesh = "complete";
+  checkpoint.meshQuality = "passed";
+  checkpoint.artifacts.mesh = sha256File(job.meshPath);
+  checkpoint.artifacts.audit = sha256File(job.auditPath);
+  checkpoint.artifacts.logs.gmsh = sha256File(join(job.jobDir, "gmsh.log"));
+  saveCheckpoint(job.jobDir, checkpoint);
+}
+
 function commandPlan(job) {
   const { inputs, parameters, plan, jobDir, meshPath, runRoot } = job;
-  const geoPath = inputs.geoPath;
-  const proPath = inputs.proPath;
+  const geoPath = job.geoWrapperPath;
+  const proPath = job.proWrapperPath;
   const outputName = join(jobDir, "motor.msh");
-  const gmshArgs = commandWithOverrides(
-    geoPath,
-    ["-3", "-nt", String(plan.threads), "-format", "msh4", "-o", outputName],
-    gmshOverrides(parameters, inputs.caseData)
-  );
+  const gmshArgs = [geoPath, "-3", "-nt", String(plan.threads), "-format", "msh4", "-o", outputName];
   const getdpArgs = [
     proPath,
     "-nt",
@@ -927,8 +977,7 @@ function commandPlan(job) {
     "-solve",
     "Magnetostatics3D",
     "-pos",
-    "MagnetostaticResults",
-    ...getdpOverrides(parameters, inputs.caseData).flatMap(([name, value]) => ["-setnumber", name, String(value)])
+    "MagnetostaticResults"
   ];
   const auditArgs = [
     inputs.meshAuditPath,
@@ -967,14 +1016,20 @@ function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = f
   const meshPath = join(jobDir, "motor.msh");
   const auditPath = join(jobDir, "mesh-audit.json");
   const parametersPath = join(jobDir, "parameters.json");
+  const geoWrapperPath = join(jobDir, "geometry-wrapper.geo");
+  const proWrapperPath = join(jobDir, "getdp-wrapper.pro");
   const checkpoint = readCheckpoint(jobDir);
-  return { hash, modelInputHash, jobId, jobDir, meshPath, auditPath, parametersPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
+  return { hash, modelInputHash, jobId, jobDir, meshPath, auditPath, parametersPath, geoWrapperPath, proWrapperPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
 }
 
 function runJob(job) {
   const { jobDir, parameters, hash, plan, inputs, runRoot } = job;
   mkdirSync(jobDir, { recursive: true });
   writeAtomic(job.parametersPath, parameters);
+  const geometrySource = plan.kind === "docker" ? dockerPath(inputs.geoPath, ROOT, runRoot) : inputs.geoPath;
+  const getdpSource = plan.kind === "docker" ? dockerPath(inputs.proPath, ROOT, runRoot) : inputs.proPath;
+  writeAtomic(job.geoWrapperPath, parameterWrapper(geometrySource, gmshOverrides(parameters, inputs.caseData)));
+  writeAtomic(job.proWrapperPath, problemWrapper(getdpSource, getdpOverrides(parameters, inputs.caseData)));
   const commands = commandPlan(job);
   const environmentPath = join(jobDir, "solver-environment.json");
   writeAtomic(environmentPath, environmentManifest(plan.environment, commands));
@@ -995,7 +1050,15 @@ function runJob(job) {
       eventIndex: parameters.eventIndex,
       meshQuality: null,
       phases: { mesh: "pending", solve: "pending", normalize: "pending" },
-      artifacts: { environment: sha256File(environmentPath), mesh: null, audit: null, logs: { gmsh: null, getdp: null }, outputs: {}, result: null },
+      artifacts: {
+        environment: sha256File(environmentPath),
+        inputs: { geometry: sha256File(job.geoWrapperPath), getdp: sha256File(job.proWrapperPath) },
+        mesh: null,
+        audit: null,
+        logs: { gmsh: null, getdp: null },
+        outputs: {},
+        result: null
+      },
       result: null
     };
     saveCheckpoint(jobDir, checkpoint);
@@ -1005,37 +1068,41 @@ function runJob(job) {
     resetPhase(checkpoint, "mesh");
     removePhaseArtifacts(job, "mesh");
     saveCheckpoint(jobDir, checkpoint);
-    const meshRun = runCommand({
-      plan,
-      root: ROOT,
-      cwd: ROOT,
-      command: plan.gmsh,
-      args: commands.mesh.slice(1),
-      commandLine: commands.mesh,
-      logName: join(jobDir, "gmsh.log"),
-      runRoot
-    });
-    assertMeshQuality(meshRun.log);
-    assert(existsSync(job.meshPath), "Gmsh completed without producing a mesh");
-    runCommand({
-      plan,
-      root: ROOT,
-      cwd: jobDir,
-      command: process.execPath,
-      args: commands.audit.slice(1),
-      commandLine: commands.audit,
-      logName: "mesh-audit.log",
-      runRoot
-    });
-    const audit = readJson(job.auditPath, "mesh audit");
-    assert(audit.valid === true, "Quantitative mesh audit rejected the generated mesh");
-    assert(audit.source?.meshSha256 === sha256File(job.meshPath), "Mesh audit does not attest the generated mesh");
-    checkpoint.phases.mesh = "complete";
-    checkpoint.meshQuality = "passed";
-    checkpoint.artifacts.mesh = sha256File(job.meshPath);
-    checkpoint.artifacts.audit = sha256File(job.auditPath);
-    checkpoint.artifacts.logs.gmsh = sha256File(meshRun.log);
-    saveCheckpoint(jobDir, checkpoint);
+    if (job.options["reuse-mesh-checkpoint"]) {
+      reuseMesh(job, checkpoint, job.options["reuse-mesh-checkpoint"], commands);
+    } else {
+      const meshRun = runCommand({
+        plan,
+        root: ROOT,
+        cwd: ROOT,
+        command: plan.gmsh,
+        args: commands.mesh.slice(1),
+        commandLine: commands.mesh,
+        logName: join(jobDir, "gmsh.log"),
+        runRoot
+      });
+      assertMeshQuality(meshRun.log);
+      assert(existsSync(job.meshPath), "Gmsh completed without producing a mesh");
+      runCommand({
+        plan,
+        root: ROOT,
+        cwd: jobDir,
+        command: process.execPath,
+        args: commands.audit.slice(1),
+        commandLine: commands.audit,
+        logName: "mesh-audit.log",
+        runRoot
+      });
+      const audit = readJson(job.auditPath, "mesh audit");
+      assert(audit.valid === true, "Quantitative mesh audit rejected the generated mesh");
+      assert(audit.source?.meshSha256 === sha256File(job.meshPath), "Mesh audit does not attest the generated mesh");
+      checkpoint.phases.mesh = "complete";
+      checkpoint.meshQuality = "passed";
+      checkpoint.artifacts.mesh = sha256File(job.meshPath);
+      checkpoint.artifacts.audit = sha256File(job.auditPath);
+      checkpoint.artifacts.logs.gmsh = sha256File(meshRun.log);
+      saveCheckpoint(jobDir, checkpoint);
+    }
   }
 
   if (!solveCheckpointValid(job, checkpoint)) {
@@ -1121,13 +1188,21 @@ function eventIndexOption(value, fallback) {
   return parsed;
 }
 
+function finiteOption(value, fallback, label, { minimum = -Infinity, exclusiveMinimum = -Infinity, exclusiveMaximum = Infinity } = {}) {
+  if (value === undefined) return fallback;
+  const parsed = Number(value);
+  assert(Number.isFinite(parsed), `${label} must be finite`);
+  assert(parsed >= minimum && parsed > exclusiveMinimum && parsed < exclusiveMaximum, `${label} is outside its allowed range`);
+  return parsed;
+}
+
 function defaultParameters(caseData, options = {}) {
   return {
-    rotorAngleDeg: caseData.geometry.rotorAngleDeg,
+    rotorAngleDeg: finiteOption(options["rotor-angle"], caseData.geometry.rotorAngleDeg, "--rotor-angle", { minimum: 0, exclusiveMaximum: 360 }),
     eventIndex: eventIndexOption(options["event-index"], caseData.excitation.eventIndex),
     excitationContract: caseData.excitation.contract,
-    meshSizeM: caseData.geometry.meshSizeM,
-    driveCurrentA: caseData.excitation.driveCurrentA
+    meshSizeM: finiteOption(options["mesh-size"], caseData.geometry.meshSizeM, "--mesh-size", { exclusiveMinimum: 0 }),
+    driveCurrentA: finiteOption(options["drive-current"], caseData.excitation.driveCurrentA, "--drive-current", { exclusiveMinimum: 0 })
   };
 }
 
