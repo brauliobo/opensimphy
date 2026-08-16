@@ -86,4 +86,5 @@ onBeforeUnmount(() => headingObserver?.disconnect())
     span OPENSIMPHY / browser instrument
     span Reproduction is not validation
     span No telemetry / no API
+    RouterLink.text-link(to="/awesome-physics" data-testid="footer-awesome-physics") Awesome Physics catalog
 </template>
