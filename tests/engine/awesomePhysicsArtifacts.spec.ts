@@ -1,14 +1,24 @@
 import {
   NATIVE_CANDIDATE_MANIFEST,
   NATIVE_CANDIDATES,
+  REFERENCE_LEDGER,
+  REFERENCE_LEDGER_MANIFEST,
+  SOURCE_ARTIFACTS,
+  SOURCE_ARTIFACT_MANIFEST,
   WASM_PILOT_MANIFEST,
   WASM_PILOTS,
   parseNativeCandidateManifest,
+  parseReferenceLedgerManifest,
+  parseSourceArtifactManifest,
   parseWasmPilotManifest,
 } from '../../src/awesomePhysics/artifactManifest'
 import type { ArtifactIntegrityV1, ArtifactRecordV1 } from '../../src/awesomePhysics/artifactManifest'
 import { loadVerifiedWasmArtifact } from '../../src/awesomePhysics/wasmArtifactLoader'
+import simulationsJson from '../../public/data/generated/awesomePhysics/simulations.json'
+import type { AwesomePhysicsSimulationArtifactV1 } from '../../src/types/awesomePhysics'
 import { vi } from 'vitest'
+
+const simulations = simulationsJson as AwesomePhysicsSimulationArtifactV1
 
 const WASM_BYTES = new Uint8Array([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00])
 
@@ -78,6 +88,57 @@ describe('Awesome Physics artifact manifests and loader', () => {
     expect(WASM_PILOTS.find(({ project }) => project === 'thermo')?.status).toBe('blocked')
     expect(WASM_PILOT_MANIFEST.records).toHaveLength(8)
     expect(NATIVE_CANDIDATE_MANIFEST.records).toHaveLength(10)
+  })
+
+  it('maps every artifact, reference, and blocked descriptor to one ledger record', () => {
+    const artifactDescriptors = simulations.items.filter(({ execution }) => execution === 'artifact')
+    const referenceDescriptors = simulations.items.filter(({ execution }) => execution === 'reference')
+    const blockedDescriptors = simulations.items.filter(({ execution }) => execution === 'blocked')
+
+    expect(SOURCE_ARTIFACTS).toHaveLength(8)
+    expect(SOURCE_ARTIFACTS.map(({ id }) => id)).toEqual(artifactDescriptors.map(({ id }) => id))
+    expect(SOURCE_ARTIFACTS.map(({ descriptorId }) => descriptorId)).toEqual(artifactDescriptors.map(({ id }) => id))
+    expect(SOURCE_ARTIFACTS.map(({ catalogItemId }) => catalogItemId)).toEqual(artifactDescriptors.map(({ catalogItemId }) => catalogItemId))
+    expect(SOURCE_ARTIFACTS.map(({ project }) => project)).toEqual(artifactDescriptors.map(({ title }) => title))
+
+    expect(REFERENCE_LEDGER.filter(({ execution }) => execution === 'reference')).toHaveLength(3)
+    expect(REFERENCE_LEDGER.filter(({ execution }) => execution === 'blocked')).toHaveLength(1)
+    expect(REFERENCE_LEDGER.map(({ id }) => id)).toEqual([...referenceDescriptors, ...blockedDescriptors].map(({ id }) => id))
+    expect(REFERENCE_LEDGER.map(({ catalogItemId }) => catalogItemId)).toEqual(
+      [...referenceDescriptors, ...blockedDescriptors].map(({ catalogItemId }) => catalogItemId),
+    )
+    expect(REFERENCE_LEDGER.map(({ project }) => project)).toEqual(
+      [...referenceDescriptors, ...blockedDescriptors].map(({ title }) => title),
+    )
+    expect(new Set(SOURCE_ARTIFACTS.map(({ id }) => id)).size).toBe(SOURCE_ARTIFACTS.length)
+    expect(new Set(REFERENCE_LEDGER.map(({ id }) => id)).size).toBe(REFERENCE_LEDGER.length)
+    expect(new Set([...SOURCE_ARTIFACTS, ...REFERENCE_LEDGER].map(({ catalogItemId }) => catalogItemId)).size)
+      .toBe(SOURCE_ARTIFACTS.length + REFERENCE_LEDGER.length)
+  })
+
+  it('preserves repository-relative source and evidence metadata without Run capability', () => {
+    for (const record of [...SOURCE_ARTIFACTS, ...REFERENCE_LEDGER]) {
+      expect(['planned', 'blocked']).toContain(record.status)
+      expect(record.artifact).toEqual({ path: null, sha256: null, byteSize: null })
+      expect(record.runCapability).toBe('none')
+      expect(record.runnable).toBe(false)
+      expect(record.sourceUrl !== null || record.dataUrl !== null || record.unavailableNote !== null).toBe(true)
+      expect(record.source.path === null).toBe(record.source.revision === null)
+      for (const reference of [...record.source.evidenceRefs, ...record.evidenceRefs]) {
+        expect(reference.startsWith('/')).toBe(false)
+        expect(reference).not.toContain('..')
+        expect(reference).not.toContain('\\')
+        expect(reference).not.toMatch(/^[a-z][a-z\d+.-]*:/i)
+      }
+      if (record.source.path !== null) {
+        expect(record.source.path.startsWith('/')).toBe(false)
+        expect(record.source.path).not.toContain('..')
+        expect(record.source.path).not.toContain('\\')
+      }
+    }
+    expect(SOURCE_ARTIFACT_MANIFEST.records).toHaveLength(8)
+    expect(REFERENCE_LEDGER_MANIFEST.records).toHaveLength(4)
+    expect(REFERENCE_LEDGER.find(({ project }) => project === 'pypdt')?.status).toBe('blocked')
   })
 
   it('rejects a planned record before attempting a fetch', async () => {
@@ -158,5 +219,24 @@ describe('Awesome Physics artifact manifests and loader', () => {
       byteSize: 8,
     }
     expect(() => parseWasmPilotManifest(malformedHash)).toThrow(/artifact\.sha256.*SHA-256/)
+  })
+
+  it('rejects malformed ledger records and available records without immutable integrity', () => {
+    const malformed = clone(SOURCE_ARTIFACT_MANIFEST)
+    malformed.records[0]!.source.path = '../outside'
+    expect(() => parseSourceArtifactManifest(malformed)).toThrow(/source\.path/)
+
+    const incompleteSource = clone(SOURCE_ARTIFACT_MANIFEST)
+    incompleteSource.records[0]!.status = 'available'
+    incompleteSource.records[0]!.artifact = { path: 'artifacts/pyrocko.json', sha256: null, byteSize: 8 }
+    expect(() => parseSourceArtifactManifest(incompleteSource)).toThrow(/available artifacts require path, sha256, and byteSize/)
+
+    const incompleteReference = clone(REFERENCE_LEDGER_MANIFEST)
+    incompleteReference.records[0]!.status = 'available'
+    incompleteReference.records[0]!.artifact = { path: 'artifacts/reference.json', sha256: null, byteSize: 8 }
+    expect(() => parseReferenceLedgerManifest(incompleteReference)).toThrow(/available artifacts require path, sha256, and byteSize/)
+
+    const wrongKind = clone(REFERENCE_LEDGER_MANIFEST)
+    expect(() => parseSourceArtifactManifest(wrongKind)).toThrow(/manifest\.manifestKind/)
   })
 })

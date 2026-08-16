@@ -1,9 +1,12 @@
 import nativeCandidatesJson from '../../scripts/awesomePhysics/native-candidates.json'
+import referenceLedgerJson from '../../scripts/awesomePhysics/reference-ledger.json'
+import sourceArtifactsJson from '../../scripts/awesomePhysics/source-artifacts.json'
 import wasmPilotsJson from '../../scripts/awesomePhysics/wasm-pilots.json'
 
 type UnknownRecord = Record<string, unknown>
 
-export type ArtifactManifestKind = 'wasm-pilots' | 'native-candidates'
+export type LegacyArtifactManifestKind = 'wasm-pilots' | 'native-candidates'
+export type ArtifactManifestKind = LegacyArtifactManifestKind | 'source-artifacts' | 'reference-ledger'
 export type ArtifactBuildFamily =
   | 'emscripten'
   | 'pyodide'
@@ -14,6 +17,8 @@ export type ArtifactBuildFamily =
 export type ArtifactKind = 'wasm-module' | 'pyodide-wheel'
 export type ArtifactStatus = 'planned' | 'blocked' | 'available'
 export type ArtifactLicenseGateStatus = 'pass' | 'review' | 'blocked'
+export type ArtifactLedgerExecution = 'artifact' | 'reference' | 'blocked'
+export type ArtifactLedgerKind = 'source-bundle' | 'dataset' | 'reference'
 
 export interface ArtifactSourceV1 {
   path: string
@@ -73,7 +78,7 @@ export interface ArtifactRecordV1 {
 
 export interface ArtifactManifestV1 {
   schemaVersion: 1
-  manifestKind: ArtifactManifestKind
+  manifestKind: LegacyArtifactManifestKind
   manifestRevision: string
   sourcePlan: {
     path: string
@@ -85,8 +90,74 @@ export interface ArtifactManifestV1 {
 
 export type WasmPilotManifestV1 = ArtifactManifestV1 & { manifestKind: 'wasm-pilots' }
 export type NativeCandidateManifestV1 = ArtifactManifestV1 & { manifestKind: 'native-candidates' }
+export interface ArtifactLedgerSourceV1 {
+  path: string | null
+  revision: string | null
+  evidenceRefs: string[]
+}
 
-const MANIFEST_KINDS: readonly ArtifactManifestKind[] = ['wasm-pilots', 'native-candidates']
+export interface ArtifactLedgerRecordV1 {
+  id: string
+  project: string
+  descriptorId: string
+  catalogItemId: string
+  execution: ArtifactLedgerExecution
+  artifactKind: ArtifactLedgerKind
+  source: ArtifactLedgerSourceV1
+  sourceUrl: string | null
+  dataUrl: string | null
+  unavailableNote: string | null
+  acquisitionDate: string
+  transformation: string
+  fallback: string
+  licenseGate: ArtifactLicenseGateV1
+  buildDisposition: string
+  runtimeDisposition: string
+  runCapability: 'none'
+  runnable: false
+  status: ArtifactStatus
+  artifact: ArtifactIntegrityV1
+  evidenceRefs: string[]
+}
+
+export type SourceArtifactRecordV1 = Omit<ArtifactLedgerRecordV1, 'execution' | 'artifactKind'> & {
+  execution: 'artifact'
+  artifactKind: 'source-bundle' | 'dataset'
+}
+
+export type ReferenceLedgerRecordV1 = Omit<ArtifactLedgerRecordV1, 'execution' | 'artifactKind'> & {
+  execution: 'reference' | 'blocked'
+  artifactKind: 'reference'
+}
+
+export interface SourceArtifactManifestV1 {
+  schemaVersion: 1
+  manifestKind: 'source-artifacts'
+  manifestRevision: string
+  sourcePlan: ArtifactManifestV1['sourcePlan']
+  records: SourceArtifactRecordV1[]
+}
+
+export interface ReferenceLedgerManifestV1 {
+  schemaVersion: 1
+  manifestKind: 'reference-ledger'
+  manifestRevision: string
+  sourcePlan: ArtifactManifestV1['sourcePlan']
+  records: ReferenceLedgerRecordV1[]
+}
+
+export type ArtifactManifestAnyV1 =
+  | ArtifactManifestV1
+  | SourceArtifactManifestV1
+  | ReferenceLedgerManifestV1
+
+const LEGACY_MANIFEST_KINDS: readonly LegacyArtifactManifestKind[] = ['wasm-pilots', 'native-candidates']
+const MANIFEST_KINDS: readonly ArtifactManifestKind[] = [
+  'wasm-pilots',
+  'native-candidates',
+  'source-artifacts',
+  'reference-ledger',
+]
 const BUILD_FAMILIES: readonly ArtifactBuildFamily[] = [
   'emscripten',
   'pyodide',
@@ -96,11 +167,14 @@ const BUILD_FAMILIES: readonly ArtifactBuildFamily[] = [
   'rust-wasm-bindgen-headless',
 ]
 const ARTIFACT_KINDS: readonly ArtifactKind[] = ['wasm-module', 'pyodide-wheel']
+const LEDGER_ARTIFACT_KINDS: readonly ArtifactLedgerKind[] = ['source-bundle', 'dataset', 'reference']
+const LEDGER_EXECUTIONS: readonly ArtifactLedgerExecution[] = ['artifact', 'reference', 'blocked']
 const STATUSES: readonly ArtifactStatus[] = ['planned', 'blocked', 'available']
 const LICENSE_GATE_STATUSES: readonly ArtifactLicenseGateStatus[] = ['pass', 'review', 'blocked']
 const SHA256_PATTERN = /^[a-f0-9]{64}$/
 const REVISION_PATTERN = /^[a-f0-9]{7,64}$/
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 
 function isRecord(value: unknown): value is UnknownRecord {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -138,6 +212,18 @@ function requireBoolean(value: unknown, path: string): asserts value is boolean 
 
 function requireOneOf<T extends string>(value: unknown, values: readonly T[], path: string): asserts value is T {
   if (typeof value !== 'string' || !values.includes(value as T)) fail(path, 'has an unsupported value')
+}
+
+function requireNullableHttpsUrl(value: unknown, path: string): asserts value is string | null {
+  if (value === null) return
+  requireNonEmptyString(value, path)
+  let url: URL
+  try {
+    url = new URL(value)
+  } catch {
+    fail(path, 'must be an HTTPS URL or null')
+  }
+  if (url.protocol !== 'https:') fail(path, 'must be an HTTPS URL or null')
 }
 
 function requireSafeId(value: unknown, path: string): asserts value is string {
@@ -303,10 +389,10 @@ function parseRecord(value: unknown, index: number): ArtifactRecordV1 {
   return value as ArtifactRecordV1
 }
 
-export function parseArtifactManifest(value: unknown, expectedKind?: ArtifactManifestKind): ArtifactManifestV1 {
+function parseLegacyArtifactManifest(value: unknown, expectedKind?: LegacyArtifactManifestKind): ArtifactManifestV1 {
   requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], 'manifest')
   if (value.schemaVersion !== 1) fail('manifest.schemaVersion', 'must be 1')
-  requireOneOf(value.manifestKind, MANIFEST_KINDS, 'manifest.manifestKind')
+  requireOneOf(value.manifestKind, LEGACY_MANIFEST_KINDS, 'manifest.manifestKind')
   if (expectedKind !== undefined && value.manifestKind !== expectedKind) {
     fail('manifest.manifestKind', `must be ${expectedKind}`)
   }
@@ -319,6 +405,124 @@ export function parseArtifactManifest(value: unknown, expectedKind?: ArtifactMan
   return value as ArtifactManifestV1
 }
 
+function parseLedgerSource(value: unknown, path: string): ArtifactLedgerSourceV1 {
+  requireExactKeys(value, ['path', 'revision', 'evidenceRefs'], path)
+  if (value.path === null) {
+    if (value.revision !== null) fail(`${path}.revision`, 'must be null when source.path is null')
+  } else {
+    requireSafeRelativePath(value.path, `${path}.path`)
+    if (value.revision === null) fail(`${path}.revision`, 'must identify the pinned source revision')
+    requireRevision(value.revision, `${path}.revision`)
+  }
+  requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
+  return value as ArtifactLedgerSourceV1
+}
+
+function parseLedgerRecord(
+  value: unknown,
+  index: number,
+  manifestKind: 'source-artifacts' | 'reference-ledger',
+): ArtifactLedgerRecordV1 {
+  const path = `manifest.records[${index}]`
+  requireExactKeys(value, [
+    'id',
+    'project',
+    'descriptorId',
+    'catalogItemId',
+    'execution',
+    'artifactKind',
+    'source',
+    'sourceUrl',
+    'dataUrl',
+    'unavailableNote',
+    'acquisitionDate',
+    'transformation',
+    'fallback',
+    'licenseGate',
+    'buildDisposition',
+    'runtimeDisposition',
+    'runCapability',
+    'runnable',
+    'status',
+    'artifact',
+    'evidenceRefs',
+  ], path)
+  requireSafeId(value.id, `${path}.id`)
+  requireNonEmptyString(value.project, `${path}.project`)
+  requireSafeId(value.descriptorId, `${path}.descriptorId`)
+  requireSafeId(value.catalogItemId, `${path}.catalogItemId`)
+  requireOneOf(value.execution, LEDGER_EXECUTIONS, `${path}.execution`)
+  requireOneOf(value.artifactKind, LEDGER_ARTIFACT_KINDS, `${path}.artifactKind`)
+  if (manifestKind === 'source-artifacts') {
+    if (value.execution !== 'artifact') fail(`${path}.execution`, 'must be artifact in a source-artifacts manifest')
+    if (value.artifactKind !== 'source-bundle' && value.artifactKind !== 'dataset') {
+      fail(`${path}.artifactKind`, 'must be source-bundle or dataset in a source-artifacts manifest')
+    }
+  } else {
+    if (value.execution !== 'reference' && value.execution !== 'blocked') {
+      fail(`${path}.execution`, 'must be reference or blocked in a reference-ledger manifest')
+    }
+    if (value.artifactKind !== 'reference') fail(`${path}.artifactKind`, 'must be reference in a reference-ledger manifest')
+  }
+  parseLedgerSource(value.source, `${path}.source`)
+  requireNullableHttpsUrl(value.sourceUrl, `${path}.sourceUrl`)
+  requireNullableHttpsUrl(value.dataUrl, `${path}.dataUrl`)
+  if (value.unavailableNote !== null) requireNonEmptyString(value.unavailableNote, `${path}.unavailableNote`)
+  if (value.sourceUrl === null && value.dataUrl === null && value.unavailableNote === null) {
+    fail(path, 'must include a source/data URL or an unavailable note')
+  }
+  requireNonEmptyString(value.acquisitionDate, `${path}.acquisitionDate`)
+  if (!DATE_PATTERN.test(value.acquisitionDate)) fail(`${path}.acquisitionDate`, 'must be a YYYY-MM-DD date')
+  requireNonEmptyString(value.transformation, `${path}.transformation`)
+  requireNonEmptyString(value.fallback, `${path}.fallback`)
+  parseLicenseGate(value.licenseGate, `${path}.licenseGate`)
+  requireNonEmptyString(value.buildDisposition, `${path}.buildDisposition`)
+  requireNonEmptyString(value.runtimeDisposition, `${path}.runtimeDisposition`)
+  requireOneOf(value.runCapability, ['none'], `${path}.runCapability`)
+  if (value.runnable !== false) fail(`${path}.runnable`, 'must be false because ledger records have no Run capability')
+  requireOneOf(value.status, STATUSES, `${path}.status`)
+  parseArtifact(value.artifact, value.status, `${path}.artifact`)
+  requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
+  return value as ArtifactLedgerRecordV1
+}
+
+function parseLedgerManifest(
+  value: unknown,
+  expectedKind?: 'source-artifacts' | 'reference-ledger',
+): SourceArtifactManifestV1 | ReferenceLedgerManifestV1 {
+  requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], 'manifest')
+  if (value.schemaVersion !== 1) fail('manifest.schemaVersion', 'must be 1')
+  requireOneOf(value.manifestKind, ['source-artifacts', 'reference-ledger'], 'manifest.manifestKind')
+  if (expectedKind !== undefined && value.manifestKind !== expectedKind) {
+    fail('manifest.manifestKind', `must be ${expectedKind}`)
+  }
+  requireSafeId(value.manifestRevision, 'manifest.manifestRevision')
+  parseSourcePlan(value.sourcePlan)
+  if (!Array.isArray(value.records) || value.records.length === 0) fail('manifest.records', 'must be a non-empty array')
+  const records = value.records.map((record, index) => parseLedgerRecord(record, index, value.manifestKind))
+  if (new Set(records.map(({ id }) => id)).size !== records.length) fail('manifest.records', 'must contain unique IDs')
+  if (new Set(records.map(({ project }) => project)).size !== records.length) fail('manifest.records', 'must contain unique project names')
+  if (new Set(records.map(({ descriptorId }) => descriptorId)).size !== records.length) fail('manifest.records', 'must contain unique descriptor IDs')
+  if (new Set(records.map(({ catalogItemId }) => catalogItemId)).size !== records.length) fail('manifest.records', 'must contain unique catalog item IDs')
+  return value as SourceArtifactManifestV1 | ReferenceLedgerManifestV1
+}
+
+export function parseArtifactManifest(value: unknown, expectedKind: 'source-artifacts'): SourceArtifactManifestV1
+export function parseArtifactManifest(value: unknown, expectedKind: 'reference-ledger'): ReferenceLedgerManifestV1
+export function parseArtifactManifest(value: unknown, expectedKind?: LegacyArtifactManifestKind): ArtifactManifestV1
+export function parseArtifactManifest(value: unknown, expectedKind?: ArtifactManifestKind): ArtifactManifestAnyV1
+export function parseArtifactManifest(value: unknown, expectedKind?: ArtifactManifestKind): ArtifactManifestAnyV1 {
+  requireRecord(value, 'manifest')
+  requireOneOf(value.manifestKind, MANIFEST_KINDS, 'manifest.manifestKind')
+  if (expectedKind !== undefined && value.manifestKind !== expectedKind) {
+    fail('manifest.manifestKind', `must be ${expectedKind}`)
+  }
+  if (value.manifestKind === 'source-artifacts' || value.manifestKind === 'reference-ledger') {
+    return parseLedgerManifest(value, value.manifestKind)
+  }
+  return parseLegacyArtifactManifest(value, expectedKind as LegacyArtifactManifestKind | undefined)
+}
+
 export function parseWasmPilotManifest(value: unknown): WasmPilotManifestV1 {
   return parseArtifactManifest(value, 'wasm-pilots') as WasmPilotManifestV1
 }
@@ -327,10 +531,23 @@ export function parseNativeCandidateManifest(value: unknown): NativeCandidateMan
   return parseArtifactManifest(value, 'native-candidates') as NativeCandidateManifestV1
 }
 
+export function parseSourceArtifactManifest(value: unknown): SourceArtifactManifestV1 {
+  return parseArtifactManifest(value, 'source-artifacts')
+}
+
+export function parseReferenceLedgerManifest(value: unknown): ReferenceLedgerManifestV1 {
+  return parseArtifactManifest(value, 'reference-ledger')
+}
+
 export const WASM_PILOT_MANIFEST = parseWasmPilotManifest(wasmPilotsJson)
 export const NATIVE_CANDIDATE_MANIFEST = parseNativeCandidateManifest(nativeCandidatesJson)
+export const SOURCE_ARTIFACT_MANIFEST = parseSourceArtifactManifest(sourceArtifactsJson)
+export const REFERENCE_LEDGER_MANIFEST = parseReferenceLedgerManifest(referenceLedgerJson)
 export const WASM_PILOTS = WASM_PILOT_MANIFEST.records
 export const NATIVE_CANDIDATES = NATIVE_CANDIDATE_MANIFEST.records
+export const SOURCE_ARTIFACTS = SOURCE_ARTIFACT_MANIFEST.records
+export const REFERENCE_LEDGER = REFERENCE_LEDGER_MANIFEST.records
+export const REFERENCE_RECORDS = REFERENCE_LEDGER
 
 export function artifactRecordById(id: string): ArtifactRecordV1 | null {
   return [...WASM_PILOTS, ...NATIVE_CANDIDATES].find((record) => record.id === id) ?? null

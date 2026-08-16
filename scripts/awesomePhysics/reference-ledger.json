@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "manifestKind": "reference-ledger",
+  "manifestRevision": "awesome-physics-reference-ledger-v1",
+  "sourcePlan": {
+    "path": "AWESOME_PHYSICS_MIGRATION_PLAN.md",
+    "revision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+    "evidenceRefs": [
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:23-27",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:132-142",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:273-277"
+    ]
+  },
+  "records": [
+    {
+      "id": "awesome-mujoco-py-capability",
+      "project": "mujoco-py",
+      "descriptorId": "awesome-mujoco-py-capability",
+      "catalogItemId": "awesome-mujoco-py",
+      "execution": "reference",
+      "artifactKind": "reference",
+      "source": {
+        "path": "awesome-physics-repos/mujoco-py",
+        "revision": "a13903b82f1a",
+        "evidenceRefs": [
+          "awesome-physics/README.md:39",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+        ]
+      },
+      "sourceUrl": "https://github.com/openai/mujoco-py",
+      "dataUrl": null,
+      "unavailableNote": "Deprecated wrapper retained as an attributed reference; no OpenSimPhy runtime adapter or redistributed MuJoCo engine is available.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "None: the deprecated Python/Cython wrapper and native MuJoCo runtime are not ported, bundled, or reconstructed.",
+      "fallback": "A future MuJoCo integration must use a maintained binding and a separate engine/license review; this record remains reference-only.",
+      "licenseGate": {
+        "status": "review",
+        "license": "The deprecated wrapper and the maintained MuJoCo engine require a separate license review.",
+        "noticeRequirements": [
+          "Resolve the maintained MuJoCo engine license before any integration or redistribution.",
+          "Do not imply that the deprecated wrapper grants rights to the native engine or data."
+        ]
+      },
+      "buildDisposition": "Do not build the deprecated wrapper, GLFW, OpenGL, or native MuJoCo stack for the static app.",
+      "runtimeDisposition": "Catalog and migration-boundary metadata only; no client-side execution, remote execution, or Run action.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:39",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+      ]
+    },
+    {
+      "id": "awesome-newton-dynamics-capability",
+      "project": "newton-dynamics",
+      "descriptorId": "awesome-newton-dynamics-capability",
+      "catalogItemId": "awesome-newton-dynamics",
+      "execution": "reference",
+      "artifactKind": "reference",
+      "source": {
+        "path": "awesome-physics-repos/newton-dynamics",
+        "revision": "a9c460c3509c",
+        "evidenceRefs": [
+          "awesome-physics/README.md:42",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:9"
+        ]
+      },
+      "sourceUrl": "https://github.com/MADEAPPS/newton-dynamics",
+      "dataUrl": null,
+      "unavailableNote": "Discontinued native engine and demos are retained as reference; no headless WASM proof or browser adapter exists.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "None: the native OpenGL sandbox, engine binaries, and reconstructed browser output are not redistributed.",
+      "fallback": "Attempt a CPU headless WASM proof only for a separately selected demo after ABI and notice review; otherwise keep the engine reference-only.",
+      "licenseGate": {
+        "status": "review",
+        "license": "zlib license and bundled notices require review.",
+        "noticeRequirements": [
+          "Retain the source zlib license and all bundled notices for any selected artifact.",
+          "Resolve the discontinued repository's exact notice and dependency closure before a WASM proof."
+        ]
+      },
+      "buildDisposition": "Do not port the native sandbox wholesale or build its OpenGL/platform stack; any future build must be a narrow headless CPU proof.",
+      "runtimeDisposition": "Reference metadata and source links only; no native engine execution, remote service, or Run action.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:42",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:9"
+      ]
+    },
+    {
+      "id": "awesome-artiq-capability",
+      "project": "artiq",
+      "descriptorId": "awesome-artiq-capability",
+      "catalogItemId": "awesome-artiq",
+      "execution": "reference",
+      "artifactKind": "reference",
+      "source": {
+        "path": "awesome-physics-repos/artiq",
+        "revision": "7d7b85f377e0",
+        "evidenceRefs": [
+          "awesome-physics/README.md:121",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+        ]
+      },
+      "sourceUrl": "https://github.com/m-labs/artiq",
+      "dataUrl": null,
+      "unavailableNote": "Hardware-control system retained as a reference; no browser simulation contract, hardware control, gateware, or exported experiment trace artifact is available.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "None: ARTIQ hardware control, gateware, HDF5/LMDB state, and Qt dashboards are not ported, bundled, or reconstructed.",
+      "fallback": "Show attributed timing, units, and separately acquired experiment traces only after data and license review; never emulate hardware in the static app.",
+      "licenseGate": {
+        "status": "review",
+        "license": "LGPL-3+/GPL-3 components; hardware and gateware remain external.",
+        "noticeRequirements": [
+          "Inventory LGPL-3+/GPL-3 components and preserve their notices before any selected redistribution.",
+          "Keep hardware, gateware, experiment data, and source-code rights as separate review gates."
+        ]
+      },
+      "buildDisposition": "Do not build the FPGA gateware, hardware-control stack, HDF5/LMDB service, or Qt dashboard for the static browser.",
+      "runtimeDisposition": "Reference and explicitly acquired trace metadata only; no hardware connection, remote execution, or Run action.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:121",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+      ]
+    },
+    {
+      "id": "awesome-pypdt-capability",
+      "project": "pypdt",
+      "descriptorId": "awesome-pypdt-capability",
+      "catalogItemId": "awesome-pypdt",
+      "execution": "blocked",
+      "artifactKind": "reference",
+      "source": {
+        "path": null,
+        "revision": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:126",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+        ]
+      },
+      "sourceUrl": "https://bitbucket.org/andybuckley/pypdt",
+      "dataUrl": null,
+      "unavailableNote": "Access attempted 2026-08-15; the catalog URL returned 404 over the web and Git requested unavailable authentication. No public canonical source or verified license is available.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "None: source acquisition failed and no artifact, empty placeholder, or reconstructed data table was produced.",
+      "fallback": "Preserve the access failure and reopen only after a public canonical source and license are verified; no substitute particle data table is created.",
+      "licenseGate": {
+        "status": "blocked",
+        "license": "Source could not be retrieved, so a license could not be verified.",
+        "noticeRequirements": [
+          "Do not redistribute source, data, or reconstructed tables while the canonical source and license are unavailable.",
+          "Retain the observed 404 and authentication failure in the acquisition record."
+        ]
+      },
+      "buildDisposition": "Do not build or substitute the inaccessible project; access and license verification must succeed before any implementation work.",
+      "runtimeDisposition": "Blocked source record only; no source checkout, data artifact, remote execution, or Run action.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "blocked",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:126",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+      ]
+    }
+  ]
+}

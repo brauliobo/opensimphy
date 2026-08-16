@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "manifestKind": "source-artifacts",
+  "manifestRevision": "awesome-physics-source-artifacts-v1",
+  "sourcePlan": {
+    "path": "AWESOME_PHYSICS_MIGRATION_PLAN.md",
+    "revision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+    "evidenceRefs": [
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:132-142",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:273-277"
+    ]
+  },
+  "records": [
+    {
+      "id": "awesome-pyrocko-capability",
+      "project": "pyrocko",
+      "descriptorId": "awesome-pyrocko-capability",
+      "catalogItemId": "awesome-pyrocko",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/pyrocko",
+        "revision": "b5bbdee44b32",
+        "evidenceRefs": [
+          "awesome-physics/README.md:70",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+        ]
+      },
+      "sourceUrl": "https://github.com/pyrocko/pyrocko",
+      "dataUrl": null,
+      "unavailableNote": "No immutable waveform sample or reviewed source artifact has been acquired; no reconstructed browser result is redistributed.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "Future work may freeze a reviewed static seismogram sample and picker metadata; the Phase 0 checkout, build output, and native inversion workflows remain external.",
+      "fallback": "Use a bounded local waveform viewer only after a sample is rights-cleared, byte-pinned, and independently reviewed; otherwise keep the descriptor unavailable.",
+      "licenseGate": {
+        "status": "review",
+        "license": "GPL-3",
+        "noticeRequirements": [
+          "Retain the Pyrocko GPL-3 license and source notices with any redistributed artifact.",
+          "Review waveform and sample-data rights separately from source-code rights."
+        ]
+      },
+      "buildDisposition": "Do not compile the Qt, VTK, OpenMP, or native application stack for the static browser; an artifact build requires a separately pinned reduced pipeline.",
+      "runtimeDisposition": "Static reviewed samples only; Green's-function modeling and inversion remain native or backend work.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:70",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+      ]
+    },
+    {
+      "id": "awesome-flavio-capability",
+      "project": "flavio",
+      "descriptorId": "awesome-flavio-capability",
+      "catalogItemId": "awesome-flavio",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/flavio",
+        "revision": "940d118de495",
+        "evidenceRefs": [
+          "awesome-physics/README.md:122",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+        ]
+      },
+      "sourceUrl": "https://github.com/flav-io/flavio",
+      "dataUrl": null,
+      "unavailableNote": "No immutable parameter-table or observable-result artifact has been acquired; full flavio fits and multiprocessing remain external.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No parameter tables or generated observables are redistributed in Phase 0; any future export must preserve the pinned source revision and table provenance.",
+      "fallback": "Use selected formulas or frozen tables only after per-table rights, dependency closure, and reproducibility review; no browser Run action is exposed.",
+      "licenseGate": {
+        "status": "review",
+        "license": "MIT source license; parameter-table rights require separate review.",
+        "noticeRequirements": [
+          "Retain the flavio MIT license with any selected artifact.",
+          "Review parameter-table, dependency, and generated-result rights before redistribution."
+        ]
+      },
+      "buildDisposition": "Do not bundle the full Python precision-physics dependency graph or multiprocessing stack; build only a separately specified frozen export.",
+      "runtimeDisposition": "Offline parameter tables or selected observable results only; full fits remain external.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:122",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+      ]
+    },
+    {
+      "id": "awesome-hepdata-capability",
+      "project": "hepdata",
+      "descriptorId": "awesome-hepdata-capability",
+      "catalogItemId": "awesome-hepdata",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/hepdata",
+        "revision": "78294e2c18cf",
+        "evidenceRefs": [
+          "awesome-physics/README.md:123",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+        ]
+      },
+      "sourceUrl": "https://github.com/HEPData/hepdata",
+      "dataUrl": null,
+      "unavailableNote": "No curated YAML, JSON, or CSV table has been acquired; the multi-service backend is not ported or called.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No HEPData table bytes are redistributed in Phase 0; a future export must retain the table source URL, upstream revision, rights record, byte size, and SHA-256.",
+      "fallback": "Keep the repository as provenance and add only individually rights-cleared curated tables; never replace the backend with a remote runtime dependency.",
+      "licenseGate": {
+        "status": "review",
+        "license": "GPL-2 service code; dataset rights require separate review.",
+        "noticeRequirements": [
+          "Retain the HEPData service license and required notices for any selected code artifact.",
+          "Record rights and attribution for every curated table independently of the service license."
+        ]
+      },
+      "buildDisposition": "Do not build or call Flask, Invenio, PostgreSQL, Redis, OpenSearch, or Celery in the static app; build only reviewed table exports.",
+      "runtimeDisposition": "Curated local tables only after rights and integrity review; the backend remains external and there is no remote fallback.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:123",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+      ]
+    },
+    {
+      "id": "awesome-root-capability",
+      "project": "ROOT",
+      "descriptorId": "awesome-root-capability",
+      "catalogItemId": "awesome-root",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/root",
+        "revision": "c050cbde9525",
+        "evidenceRefs": [
+          "awesome-physics/README.md:131",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+        ]
+      },
+      "sourceUrl": "https://github.com/root-project/root",
+      "dataUrl": null,
+      "unavailableNote": "No ROOT file, JSROOT bundle, or generated export has been acquired; ROOT and Cling are not compiled.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No ROOT binary, ROOT file, or JSROOT asset is redistributed in Phase 0; a future export must be a reviewed, immutable data artifact.",
+      "fallback": "Use curated ROOT or HEPData exports, or a separately reviewed JSROOT viewer, without presenting either as a full ROOT runtime.",
+      "licenseGate": {
+        "status": "review",
+        "license": "ROOT LGPL-2.1+ and JSROOT MIT require separate handling.",
+        "noticeRequirements": [
+          "Retain ROOT LGPL-2.1+ notices for any selected ROOT-derived artifact.",
+          "Review JSROOT MIT terms and HEP data rights separately before redistribution."
+        ]
+      },
+      "buildDisposition": "Do not compile ROOT, Cling, or the native dependency graph; a future build is limited to a separately reviewed viewer or export.",
+      "runtimeDisposition": "Static reviewed HEP data or a lazy reviewed viewer only; no full analysis runtime or remote service.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:131",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+      ]
+    },
+    {
+      "id": "awesome-scikit-hep-capability",
+      "project": "scikit-hep",
+      "descriptorId": "awesome-scikit-hep-capability",
+      "catalogItemId": "awesome-scikit-hep",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/scikit-hep",
+        "revision": "c6aa34ca776c",
+        "evidenceRefs": [
+          "awesome-physics/README.md:132",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+        ]
+      },
+      "sourceUrl": "https://github.com/scikit-hep/scikit-hep",
+      "dataUrl": null,
+      "unavailableNote": "No package bundle or HEP data artifact has been acquired; the metapackage remains outside the static runtime.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No scikit-hep package closure or data export is redistributed in Phase 0; selected concepts must be frozen independently from the metapackage.",
+      "fallback": "Select individual vector, histogram, or data concepts only after per-package license, data-rights, and WASM review; do not bundle the ecosystem wholesale.",
+      "licenseGate": {
+        "status": "pass",
+        "license": "BSD-3-Clause.",
+        "noticeRequirements": [
+          "Retain the scikit-hep BSD-3-Clause notice for any selected source artifact.",
+          "Review every selected package and HEP data source independently before redistribution."
+        ]
+      },
+      "buildDisposition": "Do not build the broad Python HEP ecosystem; a future build must select and pin one narrow package or data export.",
+      "runtimeDisposition": "Offline selected data concepts only after package-level review; no package installation or remote data provider.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:132",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+      ]
+    },
+    {
+      "id": "awesome-pynbody-capability",
+      "project": "pynbody",
+      "descriptorId": "awesome-pynbody-capability",
+      "catalogItemId": "awesome-pynbody",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/pynbody",
+        "revision": "da855f370504",
+        "evidenceRefs": [
+          "awesome-physics/README.md:140",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+        ]
+      },
+      "sourceUrl": "https://github.com/pynbody/pynbody",
+      "dataUrl": null,
+      "unavailableNote": "No licensed N-body or SPH snapshot has been acquired; HDF5 readers and remote test data remain external.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No snapshot, HDF5 payload, or generated projection is redistributed in Phase 0; no source data is reconstructed from the checkout.",
+      "fallback": "Preconvert only a small licensed snapshot after rights review and hash verification; otherwise provide no data view or Run action.",
+      "licenseGate": {
+        "status": "review",
+        "license": "pyproject.toml says GPL-3+ but the source license file is missing and must be verified.",
+        "noticeRequirements": [
+          "Resolve the missing source license file before redistributing code or a derived artifact.",
+          "Record the independent snapshot license, attribution, and data notices before publication."
+        ]
+      },
+      "buildDisposition": "Do not ship HDF5, every reader, OpenMP, or the full Cython analysis stack; a future export must be produced by a separately reviewed conversion.",
+      "runtimeDisposition": "A small immutable local snapshot and bounded WebGL projection only after acquisition review; no remote test-data fallback.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:140",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+      ]
+    },
+    {
+      "id": "awesome-sunpy-capability",
+      "project": "sunpy",
+      "descriptorId": "awesome-sunpy-capability",
+      "catalogItemId": "awesome-sunpy",
+      "execution": "artifact",
+      "artifactKind": "dataset",
+      "source": {
+        "path": "awesome-physics-repos/sunpy",
+        "revision": "ed70935fa156",
+        "evidenceRefs": [
+          "awesome-physics/README.md:141",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+        ]
+      },
+      "sourceUrl": "https://github.com/sunpy/sunpy",
+      "dataUrl": null,
+      "unavailableNote": "No solar-image sample or derived data artifact has been acquired; remote providers and FITS/JP2 stacks remain external.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No solar image, FITS/JP2 payload, or provider response is redistributed in Phase 0; no image is reconstructed from the source checkout.",
+      "fallback": "Ship only small rights-cleared static samples after acquisition and hash verification; do not use a remote provider as a runtime fallback.",
+      "licenseGate": {
+        "status": "pass",
+        "license": "BSD-3-Clause.",
+        "noticeRequirements": [
+          "Retain the SunPy BSD-3-Clause notice with any selected source artifact.",
+          "Review the rights and attribution for every solar-image sample independently."
+        ]
+      },
+      "buildDisposition": "Do not bundle the FITS/JP2 stack, remote providers, or the full C/Cython dependency closure; build only a reviewed sample/export boundary.",
+      "runtimeDisposition": "Static solar samples and bounded coordinate/image transforms only after data-rights review; no remote provider execution.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:141",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+      ]
+    },
+    {
+      "id": "awesome-solid-state-simulations-archive-capability",
+      "project": "Solid State Simulations",
+      "descriptorId": "awesome-solid-state-simulations-archive-capability",
+      "catalogItemId": "awesome-solid-state-simulations-archive",
+      "execution": "artifact",
+      "artifactKind": "source-bundle",
+      "source": {
+        "path": null,
+        "revision": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:151",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ]
+      },
+      "sourceUrl": "https://web.archive.org/web/20060907125225/http://www.physics.cornell.edu/sss/simulationlist.html",
+      "dataUrl": "https://web.archive.org/web/20190610115705/http://pages.physics.cornell.edu/~sethna/teaching/sss/labs/",
+      "unavailableNote": "External archive retained as a reference; no binary, source bundle, placeholder PDF, or reconstructed file was acquired.",
+      "acquisitionDate": "2026-08-15",
+      "transformation": "No archived binary or source bytes are transformed or redistributed; no placeholder or reconstructed artifact is created.",
+      "fallback": "Retain the two archived URLs as reference links and reconsider an artifact only after binary/source rights and immutable bytes are reviewed.",
+      "licenseGate": {
+        "status": "review",
+        "license": "Archive binaries and source rights require review before acquisition or redistribution.",
+        "noticeRequirements": [
+          "Resolve rights for archived binaries, source, downloads, and interactive-plot assets before redistribution.",
+          "Retain the archive URLs and unmaintained-source warning with any future record."
+        ]
+      },
+      "buildDisposition": "Do not download, reconstruct, or build archived binaries in Phase 0; any future artifact must be acquired and pinned as source bytes.",
+      "runtimeDisposition": "Reference links only; archived interactive plots and downloads are not a browser runtime or a Run target.",
+      "runCapability": "none",
+      "runnable": false,
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:151",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+      ]
+    }
+  ]
+}
