@@ -36,6 +36,10 @@ const instrumentComponents = {
   'hydrogen-materials': HydrogenMaterialsInstrument,
 } as const
 
+function instrumentFor(moduleId: string | undefined) {
+  return moduleId ? instrumentComponents[moduleId as keyof typeof instrumentComponents] : undefined
+}
+
 const shortcutSteps = Object.freeze([
   Object.freeze({ label: 'Observe', title: 'Lines', body: 'Start with what a spectrometer records.' }),
   Object.freeze({ label: 'Construct', title: 'Waves', body: 'Use standing waves to make allowed shapes visible.' }),
@@ -121,7 +125,7 @@ onMounted(() => {
               code {{ section.equation }}
         component(
           v-if="section.moduleId"
-          :is="section.moduleId ? instrumentComponents[section.moduleId as keyof typeof instrumentComponents] : undefined"
+          :is="instrumentFor(section.moduleId)"
           :depth="depth"
         )
 
