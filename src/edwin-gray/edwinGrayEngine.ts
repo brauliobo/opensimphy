@@ -250,11 +250,12 @@ export interface GrayCopClaimScenario {
   id: string
   label: string
   source: GrayCopClaimSource
-  attributedInputPowerW: number
+  attributedInputPowerW: number | null
   attributedOutputPowerW: number | null
   attributedOutputPowerRangeW: readonly [number, number] | null
   displayedCop: number | null
   sourceNote: string
+  rawSourceText?: string | null
 }
 
 export interface GrayCopClaimAccounting {
@@ -291,7 +292,7 @@ export interface GrayCopClaimEvaluation {
     label: string
     source: GrayCopClaimSource
     sourceNote: string
-    attributedInputPowerW: number
+    attributedInputPowerW: number | null
     attributedOutputPowerW: number | null
     attributedOutputPowerRangeW: readonly [number, number] | null
     displayedCop: number | null
@@ -299,6 +300,7 @@ export interface GrayCopClaimEvaluation {
     arithmeticCopRange: readonly [number, number] | null
     displayedCopMismatch: number | null
     outputPowerNeededForDisplayedCopW: number | null
+    rawSourceText: string | null
   }
   status:
     | 'arithmetic-mismatch-boundary-open'
@@ -310,10 +312,10 @@ export interface GrayCopClaimEvaluation {
   findings: readonly GrayCopClaimFinding[]
   validatesTheory: false
   conservationClosure: {
-    attributedInputPowerW: number
+    attributedInputPowerW: number | null
     explicitExternalInputPowerW: number
     storedEnergyDepletionPowerW: number
-    totalDeclaredInputPowerW: number
+    totalDeclaredInputPowerW: number | null
     observedOutput: GrayCopConservationCase | null
     displayedCopTarget: GrayCopConservationCase | null
   }
@@ -419,13 +421,14 @@ export const GRAY_COP_CLAIM_SCENARIOS = Object.freeze({
   } satisfies GrayCopClaimScenario),
   transcriptAmbiguousOutput: Object.freeze({
     id: 'transcript-ambiguous-7-12-kw',
-    label: 'Retained transcript ambiguous 7.12 kW alternative',
+    label: 'Retained transcript unresolved power wording',
     source: 'retained-transcript',
-    attributedInputPowerW: 26.8,
+    attributedInputPowerW: null,
     attributedOutputPowerW: null,
-    attributedOutputPowerRangeW: Object.freeze([7_120, 7_460] as const),
+    attributedOutputPowerRangeW: null,
     displayedCop: null,
-    sourceNote: 'The ambiguous 7.12 kW reading is retained as a range through the 7.46 kW diagram value; no endpoint is selected.',
+    sourceNote: 'The words are retained without importing values from the separate diagram or COP 300 statement.',
+    rawSourceText: '7 12 kilowatts',
   } satisfies GrayCopClaimScenario),
 })
 
@@ -938,10 +941,9 @@ export function evaluateGrayCopClaim(
   scenario: GrayCopClaimScenario,
   accounting: GrayCopClaimAccounting = {},
 ): GrayCopClaimEvaluation {
-  const attributedInputPowerW = nonNegativeClaimPower(
-    scenario.attributedInputPowerW,
-    'attributedInputPowerW',
-  )
+  const attributedInputPowerW = scenario.attributedInputPowerW === null
+    ? null
+    : nonNegativeClaimPower(scenario.attributedInputPowerW, 'attributedInputPowerW')
   if (attributedInputPowerW === 0) throw new Error('attributedInputPowerW must be positive')
   const attributedOutputPowerW = scenario.attributedOutputPowerW === null
     ? null
@@ -967,13 +969,13 @@ export function evaluateGrayCopClaim(
     accounting.storedEnergyDepletionPowerW ?? 0,
     'storedEnergyDepletionPowerW',
   )
-  const totalDeclaredInputPowerW = attributedInputPowerW
-    + explicitExternalInputPowerW
-    + storedEnergyDepletionPowerW
-  const arithmeticCop = attributedOutputPowerW === null
+  const totalDeclaredInputPowerW = attributedInputPowerW === null
+    ? null
+    : attributedInputPowerW + explicitExternalInputPowerW + storedEnergyDepletionPowerW
+  const arithmeticCop = attributedOutputPowerW === null || attributedInputPowerW === null
     ? null
     : attributedOutputPowerW / attributedInputPowerW
-  const arithmeticCopRange = attributedOutputPowerRangeW === null
+  const arithmeticCopRange = attributedOutputPowerRangeW === null || attributedInputPowerW === null
     ? null
     : [
         attributedOutputPowerRangeW[0] / attributedInputPowerW,
@@ -982,13 +984,13 @@ export function evaluateGrayCopClaim(
   const displayedCopMismatch = arithmeticCop === null || displayedCop === null
     ? null
     : displayedCop - arithmeticCop
-  const outputPowerNeededForDisplayedCopW = displayedCop === null
+  const outputPowerNeededForDisplayedCopW = displayedCop === null || attributedInputPowerW === null
     ? null
     : displayedCop * attributedInputPowerW
-  const observedOutput = attributedOutputPowerW === null
+  const observedOutput = attributedOutputPowerW === null || totalDeclaredInputPowerW === null
     ? null
     : evaluateGrayCopConservationCase(attributedOutputPowerW, totalDeclaredInputPowerW)
-  const displayedCopTarget = outputPowerNeededForDisplayedCopW === null
+  const displayedCopTarget = outputPowerNeededForDisplayedCopW === null || totalDeclaredInputPowerW === null
     ? null
     : evaluateGrayCopConservationCase(outputPowerNeededForDisplayedCopW, totalDeclaredInputPowerW)
   const findings: GrayCopClaimFinding[] = []
@@ -1022,7 +1024,13 @@ export function evaluateGrayCopClaim(
       statement: `${displayedCopTarget.requiredUnaccountedPowerW} W remains unaccounted for at the displayed-COP target.`,
     })
   }
-  if (attributedOutputPowerRangeW) {
+  const rawSourceText = scenario.rawSourceText ?? null
+  if (rawSourceText !== null) {
+    findings.push({
+      code: 'ambiguous-output',
+      statement: 'The retained wording is unresolved raw source text; no numeric output or COP is inferred.',
+    })
+  } else if (attributedOutputPowerRangeW) {
     findings.push({
       code: 'ambiguous-output',
       statement: 'The retained output is a source range; no single output value is selected.',
@@ -1035,7 +1043,7 @@ export function evaluateGrayCopClaim(
   }
 
   let status: GrayCopClaimEvaluation['status']
-  if (attributedOutputPowerRangeW) {
+  if (rawSourceText !== null || attributedOutputPowerRangeW) {
     status = 'ambiguous-source-values'
   } else if (attributedOutputPowerW === null) {
     status = 'incomplete-source-values'
@@ -1065,6 +1073,7 @@ export function evaluateGrayCopClaim(
       arithmeticCopRange,
       displayedCopMismatch,
       outputPowerNeededForDisplayedCopW,
+      rawSourceText,
     },
     status,
     findings,
@@ -1763,6 +1772,7 @@ export interface GrayFullMotorStoredState {
   holdingCapacitorJ: number
   holdingCapacitorVoltageV: number
   dumpBankJ: number
+  dumpBankVoltageV: number
   activeCoilMagneticJ: number
   activeCoilCurrentA: number
   recoveryStorageJ: number
@@ -1777,7 +1787,10 @@ export interface GrayFullMotorStoredState {
 
 export interface GrayFullMotorEventLedger {
   holdingDeliveredJ: number
+  holdingToDumpLossJ: number
+  dumpBankInitialJ: number
   dumpBankPeakJ: number
+  dumpBankResidualJ: number
   magneticPeakJ: number
   electromagneticWorkJ: number
   copperLossJ: number
@@ -1803,6 +1816,9 @@ export interface GrayFullMotorEventResult {
   phaseLabel: 'A' | 'B' | 'C'
   majorMinor: GrayMajorMinorElement
   contactRuleSatisfied: boolean
+  fireEligible: boolean
+  conductedPulse: boolean
+  interruptionReachable: boolean
   quenchSucceeded: boolean
   recharge: {
     sourceJ: number
@@ -1811,7 +1827,11 @@ export interface GrayFullMotorEventResult {
     recoveryReleasedJ: number
     recoveryReturnedJ: number
     recoveryReturnLossJ: number
+    priorCoilMagneticJ: number
     priorCoilArcLossJ: number
+    residualCoilJ: number
+    residualCoilCurrentA: number
+    interruptionReached: boolean
   }
   recoveryBranch: {
     solved: boolean
@@ -1868,7 +1888,7 @@ export interface GrayFullMotorResult {
   motor: GrayMotorCatalogEntry
   topology: GrayTopologyContract
   magneticScope: 'illustrative-lumped-surrogate' | 'hybrid-fem-magnetic-lumped-circuit'
-  numericalMethod: 'closed-form-event-map-v1'
+  numericalMethod: 'bounded-midpoint-event-map-v2'
   quenchRule: {
     id: GrayFullMotorMachineMode
     version: 1
@@ -1903,8 +1923,11 @@ export interface GrayFullMotorResult {
 interface GrayFullMotorMutableState {
   holdingJ: number
   dumpJ: number
+  dumpVoltageV: number
   coilJ: number
   coilCurrentA: number
+  coilInductanceH: number
+  coilDecayResistanceOhm: number
   recoveryJ: number
   kineticJ: number
   angleDeg: number
@@ -1936,6 +1959,7 @@ function grayFullMotorStoredState(
     holdingCapacitorJ: state.holdingJ,
     holdingCapacitorVoltageV: Math.sqrt(2 * state.holdingJ / input.capacitanceF),
     dumpBankJ: state.dumpJ,
+    dumpBankVoltageV: state.dumpVoltageV,
     activeCoilMagneticJ: state.coilJ,
     activeCoilCurrentA: state.coilCurrentA,
     recoveryStorageJ: state.recoveryJ,
@@ -1996,18 +2020,104 @@ function grayFullMotorRecoveryTransfer(
   }
 }
 
+function grayFullMotorHoldingToDumpTransfer(
+  holdingJ: number,
+  dumpVoltageV: number,
+  durationSeconds: number,
+  holdingCapacitanceF: number,
+  dumpCapacitanceF: number,
+  resistanceOhm: number,
+): {
+  holdingJ: number
+  dumpJ: number
+  dumpVoltageV: number
+  holdingDeliveredJ: number
+  transferLossJ: number
+} {
+  const holdingVoltageV = Math.sqrt(2 * holdingJ / holdingCapacitanceF)
+  const equivalentCapacitanceF = holdingCapacitanceF * dumpCapacitanceF
+    / (holdingCapacitanceF + dumpCapacitanceF)
+  const transferredChargeC = equivalentCapacitanceF * (holdingVoltageV - dumpVoltageV)
+    * (1 - Math.exp(-durationSeconds / (resistanceOhm * equivalentCapacitanceF)))
+  const nextHoldingVoltageV = holdingVoltageV - transferredChargeC / holdingCapacitanceF
+  const nextDumpVoltageV = dumpVoltageV + transferredChargeC / dumpCapacitanceF
+  const nextHoldingJ = 0.5 * holdingCapacitanceF * nextHoldingVoltageV ** 2
+  const nextDumpJ = 0.5 * dumpCapacitanceF * nextDumpVoltageV ** 2
+  const initialDumpJ = 0.5 * dumpCapacitanceF * dumpVoltageV ** 2
+  const holdingDeliveredJ = holdingJ - nextHoldingJ
+  return {
+    holdingJ: nextHoldingJ,
+    dumpJ: nextDumpJ,
+    dumpVoltageV: nextDumpVoltageV,
+    holdingDeliveredJ,
+    transferLossJ: Math.max(0, holdingJ + initialDumpJ - nextHoldingJ - nextDumpJ),
+  }
+}
+
+function grayFullMotorDumpCoilTransient(
+  dumpVoltageV: number,
+  durationSeconds: number,
+  dumpCapacitanceF: number,
+  inductanceH: number,
+  resistanceOhm: number,
+  steps: number,
+): {
+  dumpVoltageV: number
+  dumpJ: number
+  coilJ: number
+  peakMagneticJ: number
+  resistiveLossJ: number
+} {
+  let voltageV = dumpVoltageV
+  let currentA = 0
+  let peakMagneticJ = 0
+  const initialJ = 0.5 * dumpCapacitanceF * voltageV ** 2
+  const stepSeconds = durationSeconds / steps
+  const a12 = -1 / dumpCapacitanceF
+  const a21 = 1 / inductanceH
+  const a22 = -resistanceOhm / inductanceH
+
+  for (let index = 0; index < steps; index += 1) {
+    const halfStep = stepSeconds / 2
+    const m12 = -halfStep * a12
+    const m21 = -halfStep * a21
+    const m22 = 1 - halfStep * a22
+    const rhsVoltage = voltageV + halfStep * a12 * currentA
+    const rhsCurrent = halfStep * a21 * voltageV + (1 + halfStep * a22) * currentA
+    const determinant = m22 - m12 * m21
+    const nextVoltageV = (rhsVoltage * m22 - m12 * rhsCurrent) / determinant
+    const nextCurrentA = (rhsCurrent - m21 * rhsVoltage) / determinant
+    voltageV = nextVoltageV
+    currentA = nextCurrentA
+    peakMagneticJ = Math.max(peakMagneticJ, 0.5 * inductanceH * currentA ** 2)
+  }
+
+  const dumpJ = 0.5 * dumpCapacitanceF * voltageV ** 2
+  const coilJ = 0.5 * inductanceH * currentA ** 2
+  return {
+    dumpVoltageV: voltageV,
+    dumpJ,
+    coilJ,
+    peakMagneticJ,
+    resistiveLossJ: Math.max(0, initialJ - dumpJ - coilJ),
+  }
+}
+
 function grayFullMotorRecharge(
   state: GrayFullMotorMutableState,
   intervalSeconds: number,
   input: GrayFullMotorResolvedInput,
 ): GrayFullMotorEventResult['recharge'] {
-  const priorCoilArcLossJ = state.coilJ
-  state.coilJ = 0
-  state.coilCurrentA = 0
-  if (priorCoilArcLossJ > 0) {
-    state.arcState = 'quenched'
-    state.switchState = 'open'
+  const priorCoilMagneticJ = state.coilJ
+  if (priorCoilMagneticJ > 0 && intervalSeconds > 0) {
+    state.coilJ *= Math.exp(
+      -2 * state.coilDecayResistanceOhm * intervalSeconds / state.coilInductanceH,
+    )
+    state.coilCurrentA = Math.sqrt(2 * state.coilJ / state.coilInductanceH)
+    state.arcState = state.coilJ > 0 ? 'sustained' : 'none'
+    if (state.coilJ === 0) state.switchState = 'open'
   }
+  const priorCoilArcLossJ = priorCoilMagneticJ - state.coilJ
 
   const holdingMaximumJ = 0.5 * input.capacitanceF * input.chargeVoltageV ** 2
   const holdingHeadroomJ = Math.max(0, holdingMaximumJ - state.holdingJ)
@@ -2042,7 +2152,11 @@ function grayFullMotorRecharge(
     recoveryReleasedJ: actualRecoveryReleasedJ,
     recoveryReturnedJ,
     recoveryReturnLossJ,
+    priorCoilMagneticJ,
     priorCoilArcLossJ,
+    residualCoilJ: state.coilJ,
+    residualCoilCurrentA: state.coilCurrentA,
+    interruptionReached: priorCoilMagneticJ > 0 && state.coilJ === 0,
   }
 }
 
@@ -2153,7 +2267,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     1e9,
   )
   const integrationStepsPerEvent = positiveInteger(
-    input.integrationStepsPerEvent ?? 1,
+    input.integrationStepsPerEvent ?? 64,
     'integrationStepsPerEvent',
   )
   if (integrationStepsPerEvent < 1 || integrationStepsPerEvent > 10_000) {
@@ -2187,8 +2301,13 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
   const state: GrayFullMotorMutableState = {
     holdingJ: initialHoldingJ,
     dumpJ: 0,
+    dumpVoltageV: 0,
     coilJ: 0,
     coilCurrentA: 0,
+    coilInductanceH: input.magneticLookup
+      ? grayLookupInductanceAtAngle(input.magneticLookup, initialAngleDeg)
+      : grayInductanceAtAngle(initialAngleDeg, turns, motor.leakageCoupling, sectorCount),
+    coilDecayResistanceOhm: 0.12 * turns / 140 / sectorCount + 0.01,
     recoveryJ: initialRecoveryJ,
     kineticJ: initialKineticJ,
     angleDeg: initialAngleDeg,
@@ -2235,11 +2354,12 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     const rpmAtEvent = before.rpm
     const contactRuleSatisfied = input.machineMode === 'modified-electronic-v1'
       || rpmAtEvent + 1e-9 >= GRAY_QUENCH_REFERENCE.minimumRpm
-    const switchState: GrayFullMotorSwitchState = !contactRuleSatisfied
+    const fireEligible = contactRuleSatisfied && state.omega > 0 && state.coilJ === 0
+    const switchState: GrayFullMotorSwitchState = !fireEligible
       ? 'open'
       : (input.machineMode === 'modified-electronic-v1' ? 'electronic-conducting' : 'contact-closed')
     state.switchState = switchState
-    state.arcState = 'none'
+    if (fireEligible) state.arcState = 'none'
     const inductanceH = input.magneticLookup
       ? grayLookupInductanceAtAngle(input.magneticLookup, scheduledAbsoluteAngleDeg)
       : grayInductanceAtAngle(scheduledAbsoluteAngleDeg, turns, motor.leakageCoupling, sectorCount)
@@ -2252,32 +2372,65 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
           sectorCount,
         )
     const quenchTime = state.omega > 0 ? quenchDeg * Math.PI / 180 / state.omega : 0
-    const electricalQuarterCycleSeconds = Math.PI / 2 * Math.sqrt(inductanceH * capacitanceF)
-    const dischargeFraction = contactRuleSatisfied && quenchTime > 0
-      ? 1 - Math.exp(-quenchTime / electricalQuarterCycleSeconds)
-      : 0
-    const holdingDeliveredJ = Math.min(state.holdingJ, state.holdingJ * dischargeFraction)
-    state.holdingJ -= holdingDeliveredJ
-    state.dumpJ = holdingDeliveredJ
     const coilResistanceOhm = 0.12 * turns / 140 / sectorCount + 0.01
     const switchResistanceOhm = input.machineMode === 'modified-electronic-v1' ? 0.008 : 0.025
-    const dampingLossFraction = 1 - Math.exp(
-      -Math.PI / 2 * (coilResistanceOhm + switchResistanceOhm) * Math.sqrt(capacitanceF / inductanceH),
-    )
-    const conductionLossJ = holdingDeliveredJ * Math.min(1, dampingLossFraction)
-    const copperLossJ = conductionLossJ * coilResistanceOhm
+    const dumpBankInitialJ = state.dumpJ
+    const holdingTransfer = fireEligible && quenchTime > 0
+      ? grayFullMotorHoldingToDumpTransfer(
+          state.holdingJ,
+          state.dumpVoltageV,
+          quenchTime,
+          capacitanceF,
+          dumpCapacitanceF,
+          switchResistanceOhm,
+        )
+      : {
+          holdingJ: state.holdingJ,
+          dumpJ: state.dumpJ,
+          dumpVoltageV: state.dumpVoltageV,
+          holdingDeliveredJ: 0,
+          transferLossJ: 0,
+        }
+    state.holdingJ = holdingTransfer.holdingJ
+    state.dumpJ = holdingTransfer.dumpJ
+    state.dumpVoltageV = holdingTransfer.dumpVoltageV
+    const holdingDeliveredJ = holdingTransfer.holdingDeliveredJ
+    const dumpBankPeakJ = state.dumpJ
+    const electricalQuarterCycleSeconds = Math.PI / 2 * Math.sqrt(inductanceH * dumpCapacitanceF)
+    const transientDurationSeconds = Math.min(quenchTime, electricalQuarterCycleSeconds)
+    const conductedPulse = fireEligible && holdingDeliveredJ > 0 && dumpBankPeakJ > 0
+      && transientDurationSeconds > 0
+    const transient = conductedPulse
+      ? grayFullMotorDumpCoilTransient(
+          state.dumpVoltageV,
+          transientDurationSeconds,
+          dumpCapacitanceF,
+          inductanceH,
+          coilResistanceOhm + switchResistanceOhm,
+          integrationStepsPerEvent,
+        )
+      : {
+          dumpVoltageV: state.dumpVoltageV,
+          dumpJ: state.dumpJ,
+          coilJ: 0,
+          peakMagneticJ: 0,
+          resistiveLossJ: 0,
+        }
+    state.dumpVoltageV = transient.dumpVoltageV
+    state.dumpJ = transient.dumpJ
+    const copperLossJ = transient.resistiveLossJ * coilResistanceOhm
       / (coilResistanceOhm + switchResistanceOhm)
-    const conductionSwitchLossJ = conductionLossJ - copperLossJ
-    const afterConductionJ = holdingDeliveredJ - conductionLossJ
+    const conductionSwitchLossJ = holdingTransfer.transferLossJ
+      + transient.resistiveLossJ - copperLossJ
     const conversionFraction = Math.min(
       0.35,
       Math.abs(slopeHPerRad / inductanceH) * quenchDeg * Math.PI / 360,
     )
-    const electromagneticWorkJ = afterConductionJ * conversionFraction
-    const magneticPeakJ = afterConductionJ - electromagneticWorkJ
-    state.dumpJ = magneticPeakJ
-    state.coilJ = magneticPeakJ
-    state.coilCurrentA = Math.sqrt(2 * magneticPeakJ / inductanceH)
+    const electromagneticWorkJ = conductedPulse ? transient.coilJ * conversionFraction : 0
+    const magneticAtInterruptionJ = conductedPulse
+      ? transient.coilJ - electromagneticWorkJ
+      : before.activeCoilMagneticJ
+    const magneticPeakJ = conductedPulse ? transient.peakMagneticJ : before.activeCoilMagneticJ
     totals.copperLossJ += copperLossJ
     totals.electromagneticWorkJ += electromagneticWorkJ
     if (resolved.mode === 'dynamic') {
@@ -2290,10 +2443,10 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     const recoveryMaximumJ = 0.5 * recoveryCapacitanceF
       * (chargeVoltageV * GRAY_FULL_MOTOR_RECOVERY_VOLTAGE_MULTIPLIER) ** 2
     const recoveryHeadroomJ = Math.max(0, recoveryMaximumJ - state.recoveryJ)
-    const recoveryEnabled = contactRuleSatisfied && motor.hasRecovery
+    const recoveryEnabled = conductedPulse && motor.hasRecovery
     const recoverySolve = recoveryEnabled
       ? grayFullMotorRecoveryTransfer(
-          magneticPeakJ,
+          magneticAtInterruptionJ,
           inductanceH,
           motor.recoveryCoupling,
           coilResistanceOhm + switchResistanceOhm,
@@ -2304,27 +2457,35 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
       : { transferredJ: 0, transferTimeSeconds: 0 }
     const recoveredJ = recoverySolve.transferredJ
     state.recoveryJ += recoveredJ
-    const quenchSucceeded = contactRuleSatisfied && quenchDeg > 0
-    const dumpRemainderJ = quenchSucceeded ? magneticPeakJ - recoveredJ : 0
+    const interruptionReachable = fireEligible && quenchDeg > 0
+      && quenchDeg <= scheduled.stepDeg + QUENCH_ANGLE_TOLERANCE_DEG
+    const quenchSucceeded = conductedPulse && holdingDeliveredJ > 0
+      && magneticAtInterruptionJ > 0 && interruptionReachable
+    const dumpRemainderJ = quenchSucceeded ? magneticAtInterruptionJ - recoveredJ : 0
     const arcLossJ = input.machineMode === 'original-500rpm-contact-v1' ? dumpRemainderJ : 0
     const switchLossJ = conductionSwitchLossJ
       + (input.machineMode === 'modified-electronic-v1' ? dumpRemainderJ : 0)
-    const residualCoilJ = quenchSucceeded ? 0 : magneticPeakJ
+    const residualCoilJ = quenchSucceeded ? 0 : magneticAtInterruptionJ - recoveredJ
     totals.arcLossJ += arcLossJ
     totals.switchLossJ += switchLossJ
-    state.dumpJ = 0
     state.coilJ = residualCoilJ
+    state.coilInductanceH = inductanceH
+    state.coilDecayResistanceOhm = coilResistanceOhm + switchResistanceOhm
     state.coilCurrentA = residualCoilJ > 0 ? Math.sqrt(2 * residualCoilJ / inductanceH) : 0
     state.switchState = quenchSucceeded ? 'open' : switchState
     state.arcState = quenchSucceeded && input.machineMode === 'original-500rpm-contact-v1'
       ? 'quenched'
-      : (holdingDeliveredJ > 0 && !quenchSucceeded ? 'sustained' : 'none')
+      : (conductedPulse && !quenchSucceeded ? 'sustained' : state.arcState)
+    const eventAvailableJ = holdingDeliveredJ + dumpBankInitialJ + before.activeCoilMagneticJ
     const accountedJ = electromagneticWorkJ + copperLossJ + switchLossJ + arcLossJ
-      + recoveredJ + residualCoilJ
-    const numericalResidualJ = holdingDeliveredJ - accountedJ
+      + recoveredJ + residualCoilJ + state.dumpJ
+    const numericalResidualJ = eventAvailableJ - accountedJ
     const ledger: GrayFullMotorEventLedger = {
       holdingDeliveredJ,
-      dumpBankPeakJ: holdingDeliveredJ,
+      holdingToDumpLossJ: holdingTransfer.transferLossJ,
+      dumpBankInitialJ,
+      dumpBankPeakJ,
+      dumpBankResidualJ: state.dumpJ,
       magneticPeakJ,
       electromagneticWorkJ,
       copperLossJ,
@@ -2334,7 +2495,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
       residualCoilJ,
       accountedJ,
       numericalResidualJ,
-      normalizedResidual: holdingDeliveredJ === 0 ? numericalResidualJ : numericalResidualJ / holdingDeliveredJ,
+      normalizedResidual: eventAvailableJ === 0 ? numericalResidualJ : numericalResidualJ / eventAvailableJ,
     }
     const event: GrayFullMotorEventResult = {
       eventIndex: scheduled.stepIndex,
@@ -2349,13 +2510,16 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
       phaseLabel: scheduled.phaseLabel,
       majorMinor: scheduled.majorMinor,
       contactRuleSatisfied,
+      fireEligible,
+      conductedPulse,
+      interruptionReachable,
       quenchSucceeded,
       recharge,
       recoveryBranch: {
         solved: recoveryEnabled,
         topology: recoveryEnabled ? 'series-rlc-quarter-cycle' : 'unavailable',
         transferTimeSeconds: recoveryEnabled ? recoverySolve.transferTimeSeconds : null,
-        availableMagneticJ: magneticPeakJ,
+        availableMagneticJ: magneticAtInterruptionJ,
         storageHeadroomJ: recoveryHeadroomJ,
         transferredJ: recoveredJ,
       },
@@ -2466,7 +2630,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     magneticScope: input.magneticLookup
       ? 'hybrid-fem-magnetic-lumped-circuit'
       : 'illustrative-lumped-surrogate',
-    numericalMethod: 'closed-form-event-map-v1',
+    numericalMethod: 'bounded-midpoint-event-map-v2',
     quenchRule: {
       id: input.machineMode,
       version: 1,

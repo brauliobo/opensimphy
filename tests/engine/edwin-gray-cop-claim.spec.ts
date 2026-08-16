@@ -92,7 +92,7 @@ describe('Edwin Gray COP claim reproduction', () => {
     const cases = scenarios.map((scenario) => evaluateGrayCopClaim(scenario, {
       explicitExternalInputPowerW: scenario.attributedOutputPowerW === null
         ? 0
-        : Math.max(0, scenario.attributedOutputPowerW - scenario.attributedInputPowerW),
+        : Math.max(0, scenario.attributedOutputPowerW - (scenario.attributedInputPowerW ?? 0)),
     }))
 
     for (const result of cases) {
@@ -119,12 +119,17 @@ describe('Edwin Gray COP claim reproduction', () => {
       outputPowerNeededForDisplayedCopW: 7_800,
     })
     expect(ambiguous.status).toBe('ambiguous-source-values')
+    expect(ambiguous.claim.attributedInputPowerW).toBeNull()
     expect(ambiguous.claim.attributedOutputPowerW).toBeNull()
-    expect(ambiguous.claim.attributedOutputPowerRangeW).toEqual([7_120, 7_460])
-    expect(ambiguous.claim.arithmeticCopRange).toEqual([
-      7_120 / 26.8,
-      7_460 / 26.8,
-    ])
+    expect(ambiguous.claim.attributedOutputPowerRangeW).toBeNull()
+    expect(ambiguous.claim.displayedCop).toBeNull()
+    expect(ambiguous.claim.arithmeticCop).toBeNull()
+    expect(ambiguous.claim.arithmeticCopRange).toBeNull()
+    expect(ambiguous.claim.outputPowerNeededForDisplayedCopW).toBeNull()
+    expect(ambiguous.claim.rawSourceText).toBe('7 12 kilowatts')
+    expect(ambiguous.conservationClosure.totalDeclaredInputPowerW).toBeNull()
+    expect(ambiguous.conservationClosure.observedOutput).toBeNull()
+    expect(ambiguous.conservationClosure.displayedCopTarget).toBeNull()
   })
 
   it('does not inject claim deficits into the motor simulation', () => {

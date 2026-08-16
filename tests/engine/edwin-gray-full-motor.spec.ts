@@ -77,7 +77,14 @@ describe('Edwin Gray continuous full motor teaching model', () => {
     expect(result.events.slice(1).some((event) => event.recharge.sourceJ > 0)).toBe(true)
     expect(result.events.slice(1).some((event) => event.recharge.recoveryReturnedJ > 0)).toBe(true)
     for (const event of recoveredEvents) {
-      expect(event.ledger.dumpBankPeakJ).toBe(event.ledger.holdingDeliveredJ)
+      expect(event.ledger.dumpBankPeakJ).toBeLessThan(
+        event.ledger.holdingDeliveredJ + event.ledger.dumpBankInitialJ,
+      )
+      expect(event.ledger.holdingToDumpLossJ).toBeCloseTo(
+        event.ledger.holdingDeliveredJ + event.ledger.dumpBankInitialJ
+          - event.ledger.dumpBankPeakJ,
+        12,
+      )
       expect(event.recoveryBranch.solved).toBe(true)
       expect(event.recoveryBranch.topology).toBe('series-rlc-quarter-cycle')
       expect(event.recoveryBranch.transferTimeSeconds).toBeGreaterThan(0)
@@ -117,6 +124,81 @@ describe('Edwin Gray continuous full motor teaching model', () => {
     expect(modified.events.every((event) => event.contactRuleSatisfied && event.quenchSucceeded)).toBe(true)
   })
 
+  it('requires rotor motion and a conducted positive-energy pulse before quench success', () => {
+    for (const machineMode of ['original-500rpm-contact-v1', 'modified-electronic-v1'] as const) {
+      const result = evaluateGrayFullMotor({ ...prescribedInput, startRpm: 0, machineMode })
+      const event = result.events[0]!
+
+      expect(event.conductedPulse).toBe(false)
+      expect(event.interruptionReachable).toBe(false)
+      expect(event.quenchSucceeded).toBe(false)
+      expect(event.ledger.holdingDeliveredJ).toBe(0)
+      expect(event.ledger.magneticPeakJ).toBe(0)
+    }
+  })
+
+  it('keeps failed-quench energy through inter-event decay and blocks the next fire', () => {
+    const withRecovery = evaluateGrayFullMotor({
+      ...prescribedInput,
+      quenchDeg: 20,
+      machineMode: 'modified-electronic-v1',
+    })
+    const withoutRecovery = evaluateGrayFullMotor({
+      ...prescribedInput,
+      motorId: 'gold',
+      quenchDeg: 20,
+      machineMode: 'modified-electronic-v1',
+    })
+
+    for (const result of [withRecovery, withoutRecovery]) {
+      const failed = result.events[0]!
+      const blocked = result.events[1]!
+      expect(failed.conductedPulse).toBe(true)
+      expect(failed.interruptionReachable).toBe(false)
+      expect(failed.quenchSucceeded).toBe(false)
+      expect(failed.after.arcState).toBe('sustained')
+      expect(failed.ledger.residualCoilJ).toBeGreaterThan(0)
+      expect(blocked.recharge.priorCoilMagneticJ).toBe(failed.ledger.residualCoilJ)
+      expect(blocked.recharge.priorCoilArcLossJ).toBeGreaterThan(0)
+      expect(blocked.recharge.residualCoilJ).toBeGreaterThan(0)
+      expect(blocked.fireEligible).toBe(false)
+      expect(blocked.conductedPulse).toBe(false)
+      expect(blocked.quenchSucceeded).toBe(false)
+      expect(Math.abs(result.ledger.normalizedResidual)).toBeLessThan(1e-10)
+    }
+    expect(withRecovery.events[0]!.ledger.recoveredJ).toBeGreaterThan(0)
+    expect(withRecovery.events[0]!.ledger.residualCoilJ)
+      .toBeLessThan(withoutRecovery.events[0]!.ledger.residualCoilJ)
+    expect(withoutRecovery.events[0]!.ledger.recoveredJ).toBe(0)
+  })
+
+  it('separates holding-capacitance supply from dump-capacitance transient sensitivity', () => {
+    const baseline = evaluateGrayFullMotor({
+      ...prescribedInput,
+      capacitanceF: 1e-6,
+      dumpCapacitanceF: 2e-7,
+    })
+    const largerHolding = evaluateGrayFullMotor({
+      ...prescribedInput,
+      capacitanceF: 2e-6,
+      dumpCapacitanceF: 2e-7,
+    })
+    const largerDump = evaluateGrayFullMotor({
+      ...prescribedInput,
+      capacitanceF: 1e-6,
+      dumpCapacitanceF: 4e-7,
+    })
+
+    expect(largerHolding.events[0]!.ledger.holdingDeliveredJ)
+      .not.toBeCloseTo(baseline.events[0]!.ledger.holdingDeliveredJ, 10)
+    expect(largerDump.events[0]!.ledger.dumpBankPeakJ)
+      .not.toBeCloseTo(baseline.events[0]!.ledger.dumpBankPeakJ, 10)
+    expect(largerDump.events[0]!.ledger.magneticPeakJ)
+      .not.toBeCloseTo(baseline.events[0]!.ledger.magneticPeakJ, 10)
+    expect(largerDump.input.capacitanceF).toBe(baseline.input.capacitanceF)
+    expect(largerHolding.input.dumpCapacitanceF).toBe(baseline.input.dumpCapacitanceF)
+  })
+
   it('closes a complete declared boundary without importing COP claim deficits', () => {
     const result = evaluateGrayFullMotor({
       ...prescribedInput,
@@ -139,9 +221,10 @@ describe('Edwin Gray continuous full motor teaching model', () => {
     expect(result.findings.some((finding) => finding.statement.includes('no claim deficit'))).toBe(true)
   })
 
-  it('is invariant to event-map refinement and labels compatible lookup use as hybrid', () => {
-    const coarse = evaluateGrayFullMotor({ ...prescribedInput, integrationStepsPerEvent: 1 })
-    const refined = evaluateGrayFullMotor({ ...prescribedInput, integrationStepsPerEvent: 256 })
+  it('converges under event-transient refinement and labels compatible lookup use as hybrid', () => {
+    const coarse = evaluateGrayFullMotor({ ...prescribedInput, integrationStepsPerEvent: 4 })
+    const refined = evaluateGrayFullMotor({ ...prescribedInput, integrationStepsPerEvent: 64 })
+    const reference = evaluateGrayFullMotor({ ...prescribedInput, integrationStepsPerEvent: 1024 })
     const lookup: GrayMagneticLookup = {
       source: 'fem-lookup',
       caseId: 'full-motor-test',
@@ -163,8 +246,13 @@ describe('Edwin Gray continuous full motor teaching model', () => {
 
     expect(refined.finalAngleDeg).toBe(coarse.finalAngleDeg)
     expect(refined.simulatedDurationSeconds).toBe(coarse.simulatedDurationSeconds)
-    expect(refined.ledger.totalDeclaredInputJ).toBeCloseTo(coarse.ledger.totalDeclaredInputJ, 14)
-    expect(refined.ledger.loadWorkJ).toBeCloseTo(coarse.ledger.loadWorkJ, 14)
+    const coarseError = Math.abs(coarse.events[0]!.ledger.magneticPeakJ
+      - reference.events[0]!.ledger.magneticPeakJ)
+    const refinedError = Math.abs(refined.events[0]!.ledger.magneticPeakJ
+      - reference.events[0]!.ledger.magneticPeakJ)
+    expect(coarseError).toBeGreaterThan(0)
+    expect(refinedError).toBeLessThan(coarseError)
+    expect(refined.numericalMethod).toBe('bounded-midpoint-event-map-v2')
     expect(hybrid.magneticScope).toBe('hybrid-fem-magnetic-lumped-circuit')
     expect(hybrid.findings.find((finding) => finding.code === 'magnetic-scope')!.statement)
       .toContain('FEM lookup values cover only the magnetic relation')
