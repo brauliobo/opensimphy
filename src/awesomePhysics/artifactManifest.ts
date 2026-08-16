@@ -55,10 +55,17 @@ export interface ArtifactLicenseGateV1 {
   noticeRequirements: string[]
 }
 
+export interface ArtifactCompanionIntegrityV1 {
+  path: string
+  sha256: string
+  byteSize: number
+}
+
 export interface ArtifactIntegrityV1 {
   path: string | null
   sha256: string | null
   byteSize: number | null
+  companion?: ArtifactCompanionIntegrityV1
 }
 
 export interface ArtifactRecordV1 {
@@ -192,9 +199,10 @@ function requireExactKeys(
   value: unknown,
   required: readonly string[],
   path: string,
+  optional: readonly string[] = [],
 ): asserts value is UnknownRecord {
   requireRecord(value, path)
-  const allowed = new Set(required)
+  const allowed = new Set([...required, ...optional])
   const unknown = Object.keys(value).filter((key) => !allowed.has(key))
   const missing = required.filter((key) => !Object.hasOwn(value, key))
   if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
@@ -339,14 +347,28 @@ function parseLicenseGate(value: unknown, path: string): ArtifactLicenseGateV1 {
   return value as ArtifactLicenseGateV1
 }
 
-function parseArtifact(value: unknown, status: ArtifactStatus, path: string): ArtifactIntegrityV1 {
+function parseCompanion(value: unknown, path: string): ArtifactCompanionIntegrityV1 {
   requireExactKeys(value, ['path', 'sha256', 'byteSize'], path)
+  requireSafeRelativePath(value.path, `${path}.path`)
+  requireNonEmptyString(value.sha256, `${path}.sha256`)
+  if (!SHA256_PATTERN.test(value.sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest')
+  requireSafeInteger(value.byteSize, `${path}.byteSize`)
+  return value as ArtifactCompanionIntegrityV1
+}
+
+function parseArtifact(value: unknown, status: ArtifactStatus, path: string): ArtifactIntegrityV1 {
+  requireExactKeys(value, ['path', 'sha256', 'byteSize'], path, ['companion'])
   if (value.path !== null) requireSafeRelativePath(value.path, `${path}.path`)
   if (value.sha256 !== null) {
     requireNonEmptyString(value.sha256, `${path}.sha256`)
     if (!SHA256_PATTERN.test(value.sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest or null')
   }
   if (value.byteSize !== null) requireSafeInteger(value.byteSize, `${path}.byteSize`)
+
+  if (Object.hasOwn(value, 'companion')) {
+    if (status !== 'available') fail(`${path}.companion`, `${status} records must not claim a companion artifact`)
+    parseCompanion(value.companion, `${path}.companion`)
+  }
 
   if (status === 'available') {
     if (value.path === null || value.sha256 === null || value.byteSize === null) {

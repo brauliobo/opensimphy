@@ -17,27 +17,29 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/CoolProp",
-        "revision": "4db89c1ce8d0",
+        "revision": "4db89c1ce8d0b0d98ba7f03594f58a845351cf6a",
         "files": [
           "CMakeLists.txt",
+          "cmake/dependencies.cmake",
           "src/CoolPropLib.cpp",
           "src/emscripten_interface.cxx",
           "LICENSE"
         ],
         "evidenceRefs": [
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:28"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28",
+          "scripts/awesomePhysics/wasm/coolprop/README.md"
         ]
       },
       "build": {
         "family": "emscripten",
-        "command": "cmake -S . -B build-wasm -DCOOLPROP_JAVASCRIPT_MODULE=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=\"$EMSDK/upstream/emscripten/cmake/Platform/Emscripten.cmake\" && cmake --build build-wasm --parallel 4",
-        "toolchain": "Emscripten SDK from EMSDK; record the exact SDK version and compiler flags in the build ledger before producing output.",
+        "command": "node scripts/awesomePhysics/wasm/coolprop/build.mjs --source <pinned CoolProp checkout> --output <empty out-of-tree directory> --cpm-cache <pinned CPM cache> --em-cache <pinned Emscripten cache>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; target-local -DEMSCRIPTEN; final link -sEXPORT_ES6=0 -sMODULARIZE=1 -sENVIRONMENT=web,worker,node.",
         "workingDirectory": "awesome-physics-repos/CoolProp"
       },
       "output": {
-        "module": "coolprop.js ES-module factory plus coolprop.wasm",
-        "workerBoundary": "A dedicated worker owns module initialization, PropsSI/AbstractState calls, cancellation, and copied typed-array results.",
+        "module": "coolprop.js classic factory plus coolprop.wasm",
+        "workerBoundary": "A local classic worker importScripts the verified factory, locates the adjacent WASM, initializes once, bounds F2K/PropsSI/AbstractState JSON calls, supports cancellation, and returns finite JSON-safe results.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
@@ -53,23 +55,30 @@
         "license": "MIT",
         "noticeRequirements": [
           "Retain the CoolProp LICENSE with any redistributed module.",
-          "Review the selected Emscripten output and embedded third-party notices before release."
+          "Retain the Emscripten/LLVM, Eigen/MPL-2.0, msgpack/Boost, nlohmann/json, valijson, IF97, REFPROP headers, multicomplex, fmt, and miniz notices listed in the CoolProp artifact NOTICE.md."
         ]
       },
       "proofRequirements": [
-        "Reproduce the pinned Emscripten build and record the compiler/toolchain revision.",
-        "Run PropsSI and AbstractState golden calls through the dedicated worker.",
-        "Prove cancellation, cache-first and first-load behavior, output-size budget, MIME delivery, and license compliance."
+        "Reproduce the pinned out-of-tree Emscripten build with the pinned CPM cache and fail on any output hash or byte-size drift.",
+        "Run F2K, PropsSI, and AbstractState golden calls through the local classic worker and prove cancellation plus finite JSON-safe output.",
+        "Verify local JavaScript/WASM MIME delivery, byte sizes, SHA-256 values, and the complete NOTICE.md gate."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/coolprop/coolprop.wasm",
+        "sha256": "14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762",
+        "byteSize": 9352503,
+        "companion": {
+          "path": "wasm/awesomePhysics/coolprop/coolprop.js",
+          "sha256": "0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6",
+          "byteSize": 171012
+        }
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:115",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:178"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+        "scripts/awesomePhysics/wasm/coolprop/README.md",
+        "public/wasm/awesomePhysics/coolprop/NOTICE.md"
       ]
     },
     {

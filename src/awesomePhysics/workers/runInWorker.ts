@@ -6,6 +6,7 @@ import {
   type AwesomePhysicsWorkerResponse,
   type AwesomePhysicsWorkerRunRequest,
 } from './protocol'
+import { COOLPROP_ADAPTER_ID } from '../adapters/wasm/coolprop'
 
 export interface AwesomePhysicsWorkerLike {
   postMessage(message: AwesomePhysicsWorkerRequest): void
@@ -19,6 +20,8 @@ export type AwesomePhysicsWorkerFactory = () => AwesomePhysicsWorkerLike
 export interface RunAwesomePhysicsInWorkerOptions {
   signal?: AbortSignal
   timeoutMs?: number
+  fetch?: typeof globalThis.fetch
+  basePath?: string
   createWorker?: AwesomePhysicsWorkerFactory
   workerFactory?: AwesomePhysicsWorkerFactory
   onProgress?: (progress: number) => void
@@ -53,16 +56,14 @@ function defaultWorkerFactory(): AwesomePhysicsWorkerLike {
   return new Worker(new URL('./awesomePhysics.worker.ts', import.meta.url), { type: 'module' })
 }
 
-export function runInWorker<TInput = unknown, TOutput = unknown>(
+export function runParsedInWorker<TInput = unknown, TOutput = unknown>(
   request: AwesomePhysicsWorkerRunRequest<TInput>,
   options: RunAwesomePhysicsInWorkerOptions = {},
+  fallbackWorkerFactory: AwesomePhysicsWorkerFactory = defaultWorkerFactory,
 ): Promise<TOutput> {
-  let parsedRequest: AwesomePhysicsWorkerRunRequest
+  const parsedRequest = request as AwesomePhysicsWorkerRunRequest
   let timeoutMs: number
   try {
-    const parsed = parseAwesomePhysicsWorkerRequest(request)
-    if (parsed.type !== 'run') throw new TypeError('Awesome Physics worker runner requires a run request')
-    parsedRequest = parsed
     timeoutMs = timeoutFor(parsedRequest, options)
   } catch (reason) {
     return Promise.reject(reason instanceof Error ? reason : new TypeError(reasonMessage(reason)))
@@ -72,7 +73,7 @@ export function runInWorker<TInput = unknown, TOutput = unknown>(
 
   let worker: AwesomePhysicsWorkerLike
   try {
-    worker = (options.createWorker ?? options.workerFactory ?? defaultWorkerFactory)()
+    worker = (options.createWorker ?? options.workerFactory ?? fallbackWorkerFactory)()
   } catch (reason) {
     return Promise.reject(reason instanceof Error ? reason : new Error(reasonMessage(reason)))
   }
@@ -199,6 +200,26 @@ export function runInWorker<TInput = unknown, TOutput = unknown>(
       finishFailure(reason instanceof Error ? reason : new Error(reasonMessage(reason)))
     }
   })
+}
+
+export function runInWorker<TInput = unknown, TOutput = unknown>(
+  request: AwesomePhysicsWorkerRunRequest<TInput>,
+  options: RunAwesomePhysicsInWorkerOptions = {},
+): Promise<TOutput> {
+  let parsedRequest: AwesomePhysicsWorkerRunRequest
+  try {
+    const parsed = parseAwesomePhysicsWorkerRequest(request)
+    if (parsed.type !== 'run') throw new TypeError('Awesome Physics worker runner requires a run request')
+    parsedRequest = parsed
+  } catch (reason) {
+    return Promise.reject(reason instanceof Error ? reason : new TypeError(reasonMessage(reason)))
+  }
+
+  if (parsedRequest.adapterId === COOLPROP_ADAPTER_ID) {
+    return import('../wasm/coolpropWorker').then(({ runCoolPropInWorker }) =>
+      runCoolPropInWorker(parsedRequest, options) as Promise<TOutput>)
+  }
+  return runParsedInWorker(parsedRequest, options)
 }
 
 export const runAwesomePhysicsInWorker = runInWorker

@@ -1,5 +1,5 @@
 import { artifactRecordById } from './artifactManifest'
-import type { ArtifactRecordV1 } from './artifactManifest'
+import type { ArtifactCompanionIntegrityV1, ArtifactRecordV1 } from './artifactManifest'
 
 export interface WasmArtifactLoadOptions {
   fetch?: typeof globalThis.fetch
@@ -28,7 +28,12 @@ function assertLocalRelativeArtifactPath(path: string): void {
 
 function assertAvailableWasmRecord(record: ArtifactRecordV1): asserts record is ArtifactRecordV1 & {
   status: 'available'
-  artifact: { path: string; sha256: string; byteSize: number }
+  artifact: {
+    path: string
+    sha256: string
+    byteSize: number
+    companion?: ArtifactCompanionIntegrityV1
+  }
 } {
   if (record.status !== 'available') rejectArtifact(`${record.id} is ${record.status}, not available`)
   if (record.output.artifactKind !== 'wasm-module') {
@@ -107,42 +112,85 @@ async function sha256Hex(bytes: Uint8Array): Promise<string> {
     .join('')
 }
 
+interface VerifiedArtifactIntegrity {
+  path: string
+  sha256: string
+  byteSize: number
+}
+
+async function loadVerifiedArtifactBytes(
+  integrity: VerifiedArtifactIntegrity,
+  options: WasmArtifactLoadOptions,
+  contentTypes: readonly string[],
+  label: string,
+): Promise<Uint8Array> {
+  const maxBytes = options.maxBytes
+  if (maxBytes === undefined || !Number.isSafeInteger(maxBytes) || maxBytes < 1) {
+    rejectArtifact('maxBytes must be a positive safe integer')
+  }
+  if (integrity.byteSize > maxBytes) {
+    rejectArtifact(`declared ${label} is ${integrity.byteSize} bytes, over the ${maxBytes}-byte limit`)
+  }
+
+  const fetcher = options.fetch ?? globalThis.fetch
+  if (typeof fetcher !== 'function') rejectArtifact('local fetch is unavailable')
+  const url = localArtifactUrl(integrity.path, options.basePath ?? import.meta.env.BASE_URL)
+  const response = await fetcher(url, { signal: options.signal })
+  if (!response.ok) rejectArtifact(`local fetch returned HTTP ${response.status}`)
+  const contentType = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
+  if (contentType === undefined || !contentTypes.includes(contentType)) {
+    if (contentTypes.length === 1) rejectArtifact(`response content-type must be ${contentTypes[0]}`)
+    rejectArtifact(`response content-type must be one of ${contentTypes.join(', ')}`)
+  }
+  const length = declaredContentLength(response)
+  if (length !== null && length > maxBytes) rejectArtifact(`response exceeds the ${maxBytes}-byte limit`)
+  if (length !== null && length !== integrity.byteSize) {
+    rejectArtifact(`response content-length ${length} does not match the declared ${integrity.byteSize} bytes`)
+  }
+
+  const bytes = await readBoundedBody(response, maxBytes)
+  if (bytes.byteLength !== integrity.byteSize) {
+    rejectArtifact(`response byte size ${bytes.byteLength} does not match the declared ${integrity.byteSize} bytes`)
+  }
+  const digest = await sha256Hex(bytes)
+  if (digest !== integrity.sha256) rejectArtifact(`response SHA-256 does not match the ${label} manifest`)
+  return bytes
+}
+
 export async function loadVerifiedWasmArtifact(
   record: ArtifactRecordV1,
   options: WasmArtifactLoadOptions = {},
 ): Promise<WebAssembly.Module> {
   assertAvailableWasmRecord(record)
   const maxBytes = options.maxBytes ?? record.runtime.maxArtifactBytes
-  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1) rejectArtifact('maxBytes must be a positive safe integer')
-  if (record.artifact.byteSize > maxBytes) {
-    rejectArtifact(`declared artifact is ${record.artifact.byteSize} bytes, over the ${maxBytes}-byte limit`)
-  }
-
-  const fetcher = options.fetch ?? globalThis.fetch
-  if (typeof fetcher !== 'function') rejectArtifact('local fetch is unavailable')
-  const url = localArtifactUrl(record.artifact.path, options.basePath ?? import.meta.env.BASE_URL)
-  const response = await fetcher(url, { signal: options.signal })
-  if (!response.ok) rejectArtifact(`local fetch returned HTTP ${response.status}`)
-  const contentType = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
-  if (contentType !== 'application/wasm') rejectArtifact('response content-type must be application/wasm')
-  const length = declaredContentLength(response)
-  if (length !== null && length > maxBytes) rejectArtifact(`response exceeds the ${maxBytes}-byte limit`)
-  if (length !== null && length !== record.artifact.byteSize) {
-    rejectArtifact(`response content-length ${length} does not match the declared ${record.artifact.byteSize} bytes`)
-  }
-
-  const bytes = await readBoundedBody(response, maxBytes)
-  if (bytes.byteLength !== record.artifact.byteSize) {
-    rejectArtifact(`response byte size ${bytes.byteLength} does not match the declared ${record.artifact.byteSize} bytes`)
-  }
-  const digest = await sha256Hex(bytes)
-  if (digest !== record.artifact.sha256) rejectArtifact('response SHA-256 does not match the manifest')
+  const bytes = await loadVerifiedArtifactBytes(
+    record.artifact,
+    { ...options, maxBytes },
+    ['application/wasm'],
+    'WASM artifact',
+  )
 
   try {
     return await WebAssembly.compile(bytes)
   } catch (reason) {
     rejectArtifact(`verified bytes are not a compilable WebAssembly module: ${reason instanceof Error ? reason.message : String(reason)}`)
   }
+}
+
+export async function loadVerifiedCompanionJavaScript(
+  record: ArtifactRecordV1,
+  options: WasmArtifactLoadOptions = {},
+): Promise<Uint8Array> {
+  assertAvailableWasmRecord(record)
+  const companion = record.artifact.companion
+  if (companion === undefined) rejectArtifact(`${record.id} has no verified companion JavaScript artifact`)
+  const maxBytes = options.maxBytes ?? record.runtime.maxArtifactBytes
+  return loadVerifiedArtifactBytes(
+    companion,
+    { ...options, maxBytes },
+    ['application/javascript', 'text/javascript'],
+    'companion JavaScript artifact',
+  )
 }
 
 export async function loadVerifiedWasmArtifactById(
