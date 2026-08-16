@@ -2,6 +2,11 @@ import { expect, test } from '@playwright/test'
 
 const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
+const GRAY_WORKER_CACHE = 'opensimphy-gray-worker'
+const GRAY_LUT_CACHE = 'opensimphy-gray-fem-lut'
+const GRAY_MODEL_INPUT_HASH = '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06'
+const GRAY_LUT_REVISION = `patent-3890548-illustrative-m1-fem1-${GRAY_MODEL_INPUT_HASH}`
+const GRAY_LUT_PATH = `/data/generated/edwin-gray/motor-fem-lut-v1.json?revision=${GRAY_LUT_REVISION}`
 const QUICK_INSTRUMENTS = [
   { path: QUICK_LESSON, instrument: 'dimension-builder', prediction: 'prediction-matches-target', reveal: 'reveal-dimension-result', result: 'dimension-result' },
   { path: '/tour/unit-bridges/photon-equivalent-scales?path=quick', instrument: 'photon-bridge', prediction: 'photon-prediction-wavelength-falls', reveal: 'reveal-photon-bridge', result: 'photon-bridge-result' },
@@ -13,10 +18,143 @@ const QUICK_INSTRUMENTS = [
   { path: '/tour/heat-matter/particle-to-mole?path=quick', instrument: 'molar-matter-scaler', prediction: 'molar-prediction-all-linear', reveal: 'reveal-molar-result', result: 'molar-result' },
 ] as const
 
+function compatibleGrayLut() {
+  const compatibility = {
+    machineContractId: 'patent-3890548-illustrative',
+    machineRevision: 1,
+    modelRevision: 1,
+    topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
+    turns: 100,
+    excitation: 'impressed-current-magnetostatic',
+    modelInputHash: GRAY_MODEL_INPUT_HASH,
+  }
+  return {
+    contract: 'edwin-gray-browser-result',
+    contractVersion: 1,
+    lutContract: 'motor-fem-lut-v1',
+    caseId: 'pwa-compatible-gray-lut',
+    status: 'complete',
+    expectedAnglesDeg: [0, 180],
+    compatibility,
+    entries: [0, 180].map((rotorAngleDeg, index) => ({
+      entryId: `pwa-angle-${rotorAngleDeg}`,
+      status: 'complete',
+      parameters: { rotorAngleDeg, meshSizeM: 0.01, driveCurrentA: 1 },
+      observables: {
+        magneticEnergyJ: { value: 0.1 + index * 0.01, unit: 'J' },
+        coEnergyJ: { value: 0.1 + index * 0.01, unit: 'J' },
+        inductanceH: { value: 0.2 + index * 0.02, unit: 'H' },
+      },
+      provenance: {
+        synthetic: false,
+        sourceFormat: 'solver-json',
+        solver: 'pwa-test-solver',
+        backend: 'production-preview-fixture',
+        modelInputHash: GRAY_MODEL_INPUT_HASH,
+        jobInputHash: String(index + 1).repeat(64),
+        symmetryApplied: false,
+        artifacts: [{ path: `angle-${rotorAngleDeg}.json`, sha256: String(index + 3).repeat(64) }],
+      },
+    })),
+    provenance: {
+      synthetic: false,
+      limitations: ['Production-preview fixture for compatible runtime-cache behavior only.'],
+      source: 'tests/e2e/pwa.spec.ts',
+    },
+  }
+}
+
+async function ensureServiceWorkerControl(page: import('@playwright/test').Page): Promise<void> {
+  await page.goto('/')
+  await expect(page.getByTestId('tour-ready')).toBeVisible()
+  await page.evaluate(() => navigator.serviceWorker.ready)
+  if (!await page.evaluate(() => Boolean(navigator.serviceWorker.controller))) await page.reload()
+  await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true)
+}
+
 function formatBytes(value: number): string {
   if (value < 1024) return `${value} B`
   return `${(value / 1024).toFixed(value < 1024 * 10 ? 1 : 0)} KB`
 }
+
+test('Gray payloads use bounded runtime caches and the warmed surrogate runs offline', async ({ context, page }) => {
+  await ensureServiceWorkerControl(page)
+
+  const precachedUrls = await page.evaluate(async () => {
+    const names = (await caches.keys()).filter((name) => name.includes('workbox-precache'))
+    return (await Promise.all(names.map(async (name) => (await (await caches.open(name)).keys()).map(({ url }) => url)))).flat()
+  })
+  expect(precachedUrls.some((url) => /edwinGray\.worker-[^/]+\.js$/.test(url))).toBe(false)
+  expect(precachedUrls.some((url) => url.includes('/data/generated/edwin-gray/'))).toBe(false)
+
+  const serviceWorker = await (await page.request.get('/sw.js')).text()
+  expect(serviceWorker).toContain(GRAY_WORKER_CACHE)
+  expect(serviceWorker).toContain(GRAY_LUT_CACHE)
+  expect(serviceWorker).toContain('maxEntries:2')
+  expect(serviceWorker).toContain('maxEntries:1')
+  expect(serviceWorker).toContain('networkTimeoutSeconds:5')
+  expect(serviceWorker).toContain('skipWaiting')
+  expect(serviceWorker).toContain('clientsClaim')
+
+  await page.goto('/labs/edwin-gray')
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+  await expect.poll(() => page.evaluate(async (cacheName) => {
+    const cache = await caches.open(cacheName)
+    return (await cache.keys()).filter(({ url }) => /\/assets\/edwinGray\.worker-[^/]+\.js$/.test(url)).length
+  }, GRAY_WORKER_CACHE)).toBe(1)
+
+  await context.setOffline(true)
+  await page.reload()
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+  await page.getByTestId('gray-run').click()
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
+  await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
+  await expect(page.getByTestId('gray-fem-runtime-status')).toContainText(/unavailable|failed|fetch/i)
+  await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+  expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_LUT_CACHE)).toBe(0)
+})
+
+test('a previously fetched compatible revisioned Gray LUT remains usable offline', async ({ context, page }) => {
+  await ensureServiceWorkerControl(page)
+  await page.goto('/labs/edwin-gray')
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  const lut = compatibleGrayLut()
+  await page.evaluate(async ({ cacheName, path, value }) => {
+    const cache = await caches.open(cacheName)
+    await cache.put(path, new Response(JSON.stringify(value), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+  }, { cacheName: GRAY_LUT_CACHE, path: GRAY_LUT_PATH, value: lut })
+
+  await context.setOffline(true)
+  await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
+  await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'ready')
+  await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('pwa-compatible-gray-lut')
+  await page.getByTestId('gray-magnetic-model').selectOption('fem-lookup')
+  await page.getByTestId('gray-run').click()
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  const cachedUrls = await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).map(({ url }) => url), GRAY_LUT_CACHE)
+  expect(cachedUrls).toHaveLength(1)
+  expect(cachedUrls[0]).toContain(`revision=${GRAY_LUT_REVISION}`)
+
+  const incompatibleLut = { ...lut, compatibility: { ...lut.compatibility, modelRevision: 2 } }
+  await page.evaluate(async ({ cacheName, path, value }) => {
+    const cache = await caches.open(cacheName)
+    await cache.put(path, new Response(JSON.stringify(value), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+  }, { cacheName: GRAY_LUT_CACHE, path: GRAY_LUT_PATH, value: incompatibleLut })
+  await page.getByRole('button', { name: 'Recheck FEM lookup' }).click()
+  await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'invalid')
+  await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('model revision mismatch')
+  await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+})
 
 test('explicit Guided pack supports offline lesson use and clear removes that capability', async ({ context, page }) => {
   await page.goto('/')

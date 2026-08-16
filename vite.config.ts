@@ -75,6 +75,7 @@ export default defineConfig({
           'data/generated/fiddles/registry.json',
           'data/generated/fiddles/runtime-verification.json',
           'data/generated/awesomePhysics/**/*.json',
+          'data/generated/edwin-gray/**/*.json',
           'data/generated/tour/**/*.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
@@ -87,6 +88,7 @@ export default defineConfig({
           'assets/core.worker-*.js',
           'assets/numberWall.worker-*.js',
           'assets/awesomePhysics.worker-*.js',
+          'assets/edwinGray.worker-*.js',
           'assets/plotly-*.js',
         ],
         navigateFallback: 'index.html',
@@ -143,6 +145,23 @@ export default defineConfig({
               cacheName: `opensimphy-fiddles-${runtimeRegistryRevision}`,
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 7 },
+            },
+          },
+          {
+            urlPattern: /\/assets\/edwinGray\.worker-[^/]+\.js$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'opensimphy-gray-worker',
+              expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+          {
+            urlPattern: /\/data\/generated\/edwin-gray\/motor-fem-lut-v1\.json(?:\?.*)?$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'opensimphy-gray-fem-lut',
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 30 },
             },
           },
           {

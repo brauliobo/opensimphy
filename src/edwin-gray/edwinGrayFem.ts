@@ -221,7 +221,18 @@ export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
     compatibility: { ...document.compatibility },
   }
   validateGrayMagneticLookup(lookup)
-  return lookup
+  Object.freeze(lookup.anglesDeg)
+  Object.freeze(lookup.inductanceH)
+  Object.freeze(lookup.coEnergyJ)
+  Object.freeze(lookup.provenance)
+  Object.freeze(lookup.compatibility)
+  return Object.freeze(lookup)
+}
+
+export function grayFemLookupRevision(machine: GrayMachineContract | GrayMachineContractId): string {
+  const contract = typeof machine === 'string' ? GRAY_MACHINE_CONTRACTS[machine] : machine
+  assert(contract.modelInputHash, 'FEM lookup model identity is unavailable for this machine contract')
+  return `${contract.machineContractId}-m${contract.machineRevision}-fem${contract.modelRevision}-${contract.modelInputHash}`
 }
 
 export function loadGrayMagneticLookup(
@@ -230,7 +241,8 @@ export function loadGrayMagneticLookup(
   signal?: AbortSignal,
 ): Promise<GrayMagneticLookup> {
   const path = 'data/generated/edwin-gray/motor-fem-lut-v1.json'
-  return fetcher(`${import.meta.env.BASE_URL}${path}`, { signal })
+  const revision = encodeURIComponent(grayFemLookupRevision(machine))
+  return fetcher(`${import.meta.env.BASE_URL}${path}?revision=${revision}`, { signal })
     .then((response) => {
       if (!response.ok) throw new Error(`FEM lookup request failed with ${response.status}`)
       return response.json() as Promise<unknown>
