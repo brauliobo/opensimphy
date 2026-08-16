@@ -190,7 +190,9 @@ test.describe('Edwin Gray Workbench', () => {
     await context.setOffline(true)
     await page.getByTestId('gray-calibration-recheck').click()
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
-    await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('must remain unavailable')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText(
+      /pilot and class-run provenance mismatch.*not uncertainty bounds.*assumption-only/,
+    )
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
     await expect(calibrationOption).toHaveAttribute('disabled', '')
   })
