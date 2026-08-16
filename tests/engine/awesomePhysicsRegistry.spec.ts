@@ -77,8 +77,9 @@ describe('Awesome Physics runtime registry', () => {
     expect(await registry.catalogItemById('awesome-matter-js')).toMatchObject({ canonicalName: 'matter-js' })
     expect(await registry.descriptorById('awesome-matter-js-capability')).toMatchObject({
       catalogItemId: 'awesome-matter-js',
-      runnable: false,
-      availability: 'unavailable',
+      runnable: true,
+      availability: 'available',
+      adapterId: 'matter-js-browser',
     })
     expect(await registry.descriptorByCatalogItemId('awesome-matter-js')).toMatchObject({ id: 'awesome-matter-js-capability' })
     expect(await registry.catalogItemById('not-a-catalog-item')).toBeNull()
@@ -138,22 +139,15 @@ describe('Awesome Physics runtime registry', () => {
   })
 
   it('rejects future adapters whose compatibility omits or mismatches a descriptor revision', async () => {
+    const availableDescriptor = simulations.items.find(({ availability }) => availability === 'available')
+    expect(availableDescriptor).toBeDefined()
     const runnableDescriptor = {
-      ...simulations.items[0]!,
-      availability: 'available' as const,
-      runnable: true,
+      ...availableDescriptor!,
       adapterId: 'future-adapter',
     }
     const fixtureSimulations = {
       ...simulations,
-      summary: {
-        ...simulations.summary,
-        runnable: 1,
-        available: 1,
-        unavailable: simulations.summary.unavailable - 1,
-        adapterCount: 1,
-      },
-      items: [runnableDescriptor, ...simulations.items.slice(1)],
+      items: simulations.items.map((item) => item.id === runnableDescriptor.id ? runnableDescriptor : item),
     }
     const factory = vi.fn(async () => ({
       adapterId: 'future-adapter',

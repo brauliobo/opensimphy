@@ -7,6 +7,11 @@ import type {
 
 const catalog = catalogJson as AwesomePhysicsCatalogArtifactV1
 const simulations = simulationsJson as AwesomePhysicsSimulationArtifactV1
+const PHASE_ZERO_IMPLEMENTATION_REVISION = 'phase-0-no-adapters'
+
+function isPhaseZeroOrExplicitlyGated(revision: string): boolean {
+  return revision === PHASE_ZERO_IMPLEMENTATION_REVISION || /(?:^|[-_])gated(?:$|[-_])/.test(revision)
+}
 
 function expectFiniteLimits(value: Record<string, number>): void {
   for (const limit of Object.values(value)) {
@@ -33,9 +38,23 @@ describe('Awesome Physics catalog foundation', () => {
     expect(catalog.items.filter(({ sourceKind }) => sourceKind === 'archive')).toHaveLength(1)
     expect(catalog.organizations).toHaveLength(10)
     expect(catalog.items.filter(({ access }) => access.status === 'cloned')).toHaveLength(74)
-    expect(simulations.summary.sourceCapabilities).toBe(76)
-    expect(simulations.summary.runnable).toBe(0)
-    expect(simulations.summary.adapterCount).toBe(0)
+    expect(simulations.summary).toEqual({
+      sourceCapabilities: 76,
+      runnable: 13,
+      available: 13,
+      unavailable: 59,
+      blocked: 4,
+      adapterCount: 13,
+      executionKinds: {
+        browser: 6,
+        wasm: 6,
+        'wasm-candidate': 8,
+        typescript: 44,
+        artifact: 8,
+        reference: 3,
+        blocked: 1,
+      },
+    })
   })
 
   it('keeps catalog and descriptor IDs unique', () => {
@@ -118,15 +137,23 @@ describe('Awesome Physics catalog foundation', () => {
       expectFiniteLimits(descriptor.artifactProvenance.byteSize === null ? {} : { byteSize: descriptor.artifactProvenance.byteSize })
       expect(descriptor.artifactProvenance.sha256).toBeNull()
       expect(descriptor.compatibilityRevision).toBe('awesome-physics-compatibility-v1')
-      expect(descriptor.implementationRevision).toBe('phase-0-no-adapters')
       expect(descriptor.outputRevision).toBe('awesome-physics-descriptor-v1')
     }
+    const availableDescriptors = simulations.items.filter(({ availability }) => availability === 'available')
+    expect(availableDescriptors).toHaveLength(13)
+    expect(availableDescriptors.every(({ implementationRevision }) => implementationRevision !== PHASE_ZERO_IMPLEMENTATION_REVISION)).toBe(true)
+    expect(simulations.items
+      .filter(({ availability }) => availability !== 'available')
+      .every(({ implementationRevision }) => isPhaseZeroOrExplicitlyGated(implementationRevision))).toBe(true)
   })
 
   it('does not attach adapter IDs to unavailable or blocked descriptors', () => {
-    expect(simulations.items.every(({ availability, adapterId, runnable }) => (
-      (availability !== 'available' && adapterId === undefined && runnable === false)
-    ))).toBe(true)
+    expect(simulations.items
+      .filter(({ availability }) => availability !== 'available')
+      .every(({ adapterId, runnable }) => adapterId === undefined && runnable === false)).toBe(true)
+    expect(simulations.items
+      .filter(({ availability }) => availability === 'available')
+      .every(({ adapterId, runnable }) => adapterId !== undefined && runnable === true)).toBe(true)
     expect(simulations.items.filter(({ execution }) => execution === 'wasm-candidate').every(({ availability }) => availability === 'unavailable')).toBe(true)
     expect(simulations.items.filter(({ execution }) => execution === 'blocked').every(({ availability }) => availability === 'blocked')).toBe(true)
   })
