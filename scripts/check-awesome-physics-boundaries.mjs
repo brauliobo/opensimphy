@@ -9,11 +9,12 @@ const swPath = join(distRoot, 'sw.js')
 const failures = []
 const manifestAssetPaths = new Set()
 
-const requiredDistAssets = [
-  'index.html',
+const awesomePhysicsDataAssets = [
   'data/generated/awesomePhysics/catalog.json',
   'data/generated/awesomePhysics/simulations.json',
 ]
+const requiredDistAssets = ['index.html', ...awesomePhysicsDataAssets]
+const awesomePhysicsOwnedDistAssets = new Set(awesomePhysicsDataAssets)
 
 const lazySources = [
   'src/views/AwesomePhysicsCatalogView.vue',
@@ -47,6 +48,10 @@ function isRecord(value) {
 
 function distRelative(path) {
   return relative(distRoot, path).split(sep).join('/')
+}
+
+function trackAwesomePhysicsAsset(path) {
+  if (path !== null) awesomePhysicsOwnedDistAssets.add(distRelative(path))
 }
 
 function projectRelative(path) {
@@ -306,6 +311,12 @@ function assertNoAbsoluteLocalPaths(path, content) {
   }
 }
 
+function isAwesomePhysicsOwnedAsset(path) {
+  const relativePath = distRelative(path)
+  return awesomePhysicsOwnedDistAssets.has(relativePath)
+    || /^assets\/awesomePhysics\.worker-[A-Za-z0-9_-]+\.js$/.test(relativePath)
+}
+
 const manifestText = await readRequired(manifestPath, 'Vite build manifest')
 let manifest = null
 if (manifestText !== null) {
@@ -338,6 +349,7 @@ if (manifest !== null) {
       const candidate = findLazyEntry(manifest, source)
       lazyEntries.set(source, candidate)
       const asset = candidate === null ? null : manifestAsset(candidate.entry, candidate.key)
+      trackAwesomePhysicsAsset(asset)
       if (asset !== null) await readRequired(asset, `Lazy asset ${source}`)
     }
     for (const source of lazySources.slice(0, 2)) assertDynamicEdge(manifest, source, lazyEntries.get(source), rootEntry)
@@ -347,6 +359,7 @@ if (manifest !== null) {
       if (entry === null) continue
       if (entry.isDynamicEntry !== true) fail(`Manifest adapter entry ${source} is not marked isDynamicEntry=true`)
       const asset = manifestAsset(entry, source)
+      trackAwesomePhysicsAsset(asset)
       if (asset !== null) await readRequired(asset, `Adapter asset ${source}`)
       const dynamic = dynamicImporters(manifest, source)
       if (dynamic.length === 0) fail(`Manifest adapter entry ${source} has no dynamic importer`)
@@ -367,7 +380,7 @@ for (const path of allFiles.sort((left, right) => projectRelative(left).localeCo
   try {
     const content = await readFile(path, 'utf8')
     emittedContents.set(path, content)
-    assertNoAbsoluteLocalPaths(path, content)
+    if (isAwesomePhysicsOwnedAsset(path)) assertNoAbsoluteLocalPaths(path, content)
   } catch (error) {
     fail(`Unable to read emitted file ${projectRelative(path)}: ${error.message}`)
   }
@@ -389,11 +402,7 @@ if (sw !== null) {
   for (const { url, path } of precacheAssets) {
     if (path !== null) await readRequired(join(distRoot, path), `sw.js precache asset ${url}`)
   }
-  const forbiddenData = [
-    'data/generated/awesomePhysics/catalog.json',
-    'data/generated/awesomePhysics/simulations.json',
-  ]
-  for (const forbidden of forbiddenData) {
+  for (const forbidden of awesomePhysicsDataAssets) {
     if (precacheAssets.some(({ path }) => path === forbidden)) {
       fail(`sw.js precache contains lazy Awesome Physics data ${forbidden}`)
     }
