@@ -90,7 +90,12 @@ describe('Awesome Physics astronomy and geophysics TypeScript adapters', () => {
     expect(galaAdapterFactory).toBe(createGalaAdapter)
     expect(emAdapterFactory).toBe(createEmAdapter)
     expect(createEMAdapter).toBe(createEmAdapter)
-    expect(GALA_SOURCE_CAVEATS.license).toContain('does not change availability')
+    const galaOutput = evaluateGalaOrbit(circularOrbit)
+    expect(galaOutput.integrationStatus).toBe('available')
+    expect(galaOutput.licenseCaveat).toContain('bounded local TypeScript adapter is available here')
+    expect(galaOutput.licenseCaveat).toContain('upstream gala runtime and external galactic data')
+    expect(galaOutput.provenanceCaveat).toContain('not a claim of numerical or scientific equivalence to gala')
+    expect(GALA_SOURCE_CAVEATS.data).toContain('No gala Python runtime')
     expect(EM_SOURCE_CAVEATS.license).toContain('third-party exceptions')
   })
 

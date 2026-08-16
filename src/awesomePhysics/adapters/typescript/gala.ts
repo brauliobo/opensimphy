@@ -10,7 +10,7 @@ export const GALA_KERNEL_REVISION = 'gala-orbit-velocity-verlet-typescript-v1'
 export const GALA_SOURCE_REVISION = '8bf0a1f574a4'
 export const GALA_SOURCE_CAVEATS = Object.freeze({
   upstream: 'https://github.com/adrn/gala',
-  license: 'gala is MIT-licensed; descriptor license and provenance review remains required before integration, and this provisional adapter does not change availability.',
+  license: 'gala is MIT-licensed; the bounded local TypeScript adapter is available here, independently of the upstream gala runtime and external galactic data, neither of which is bundled; descriptor license and provenance review remains required before any upstream integration.',
   data: 'No gala Python runtime, Astropy coupling, GSL/EXP potential, or external galactic data is bundled.',
   model: 'This is an independent normalized-unit educational orbit kernel, not a claim of numerical or scientific equivalence to gala.',
 })
@@ -99,7 +99,7 @@ export interface GalaOutputV1 {
   assumptions: readonly string[]
   numericalMethod: string
   doesNotEstablish: string
-  integrationStatus: 'provisional-adapter-not-registered'
+  integrationStatus: 'available'
   licenseCaveat: string
   provenanceCaveat: string
 }
@@ -462,7 +462,7 @@ function solve(input: ParsedInput, ...signals: readonly (AbortSignal | undefined
     ],
     numericalMethod: 'Direct pairwise Newtonian acceleration with bounded velocity-Verlet stepping.',
     doesNotEstablish: 'This provisional normalized N-body calculation does not establish equivalence to gala, a galactic model, or an observational validation claim.',
-    integrationStatus: 'provisional-adapter-not-registered',
+    integrationStatus: 'available',
     licenseCaveat: GALA_SOURCE_CAVEATS.license,
     provenanceCaveat: GALA_SOURCE_CAVEATS.model,
   }
