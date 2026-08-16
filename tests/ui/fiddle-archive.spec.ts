@@ -1,6 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import registryJson from '../../public/data/generated/fiddles/registry.json'
+import runtimeJson from '../../public/data/generated/fiddles/runtime-verification.json'
 import FiddleArchiveView from '../../src/views/FiddleArchiveView.vue'
 import FiddleRecordView from '../../src/views/FiddleRecordView.vue'
 import { resetFiddleRegistryForTests } from '../../src/registries/fiddleRegistry'
@@ -25,7 +26,9 @@ function createTestRouter() {
 describe('Fiddle archive and detail surfaces', () => {
   beforeEach(() => {
     resetFiddleRegistryForTests()
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(registry)))
+    vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => Promise.resolve(jsonResponse(
+      url.includes('runtime-verification') ? runtimeJson : registry,
+    ))))
   })
 
   afterEach(() => {
@@ -45,9 +48,46 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(wrapper.get('.fiddle-results-header h2').text()).toBe('Records 1-50')
     expect(wrapper.get('button[aria-label="Source profile page 16, records 750-780"]').text()).toContain('750-780')
     expect(wrapper.get('.fiddle-page-footer a').attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/')
-    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Archive integrity: verified 780 records / 16 pages / source hash checked')
-    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Scientific validation: not performed / false')
-    expect(wrapper.get('[data-testid="fiddle-card-1"]').text()).toContain('External runtime status pending')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('clean-rendered 710')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('28 rendered with errors')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('17 were empty')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('25 timed out')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Scientifically validated by this check: 0')
+    expect(wrapper.get('[data-testid="fiddle-card-1"]').text()).toContain('Runtime: clean-rendered / 1 attempt')
+  })
+
+  it('filters cards by recorded runtime status', async () => {
+    const router = createTestRouter()
+    await router.push('/labs/authors/chenopdodium')
+    const wrapper = mount(FiddleArchiveView, { global: { plugins: [router] } })
+    await flushPromises()
+
+    await wrapper.get('[data-testid="fiddle-runtime-filter"]').setValue('rendered-with-errors')
+    await flushPromises()
+
+    expect(router.currentRoute.value.query).toEqual({ runtime: 'rendered-with-errors' })
+    expect(wrapper.get('[data-testid="fiddle-result-count"]').text()).toContain('28 / 780')
+    const matchingRuntime = runtimeJson.records.find(({ status }) => status === 'rendered-with-errors')!
+    const matchingRecord = registry.records[matchingRuntime.position - 1]!
+    await wrapper.get(`button[aria-label^="Source profile page ${matchingRecord.page},"]`).trigger('click')
+    await flushPromises()
+    expect(wrapper.findAll('[data-runtime-status="rendered-with-errors"]').length).toBeGreaterThan(0)
+  })
+
+  it('shows retained runtime attempts, batch, and page errors on a record', async () => {
+    const runtimeRecord = runtimeJson.records.find(({ status, pageErrors }) => status === 'rendered-with-errors' && pageErrors.length > 0)!
+    const record = registry.records[runtimeRecord.position - 1]!
+    const router = createTestRouter()
+    await router.push(`/labs/authors/chenopdodium/${record.slug}`)
+    const wrapper = mount(FiddleRecordView, { props: { slug: record.slug }, global: { plugins: [router] } })
+    await flushPromises()
+
+    const detail = wrapper.get('[data-testid="fiddle-runtime-detail"]')
+    expect(detail.text()).toContain('Recorded status: rendered-with-errors')
+    expect(detail.text()).toContain(String(runtimeRecord.attempts))
+    expect(detail.text()).toContain(`Batch ${runtimeRecord.batch}`)
+    expect(detail.text()).toContain(runtimeRecord.pageErrors[0]!)
+    expect(detail.text()).toContain('not a local Vue port')
   })
 
   it('links the selected archive and record pages to their captured profile pages', async () => {
@@ -110,8 +150,10 @@ describe('Fiddle archive and detail surfaces', () => {
     await flushPromises()
 
     expect(wrapper.find('[data-testid="fiddle-live-iframe"]').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('External runtime: browser verification pending')
-    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('Scientific validation: not performed / false')
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('clean-rendered')
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('scientifically validated by this check: 0')
+    expect(wrapper.get('[data-testid="fiddle-runtime-detail"]').text()).toContain('1')
+    expect(wrapper.get('[data-testid="fiddle-runtime-detail"]').text()).toContain('Batch 001-195')
     await wrapper.get('[data-testid="fiddle-live-activate"]').trigger('click')
 
     const iframe = wrapper.get<HTMLIFrameElement>('[data-testid="fiddle-live-iframe"]')

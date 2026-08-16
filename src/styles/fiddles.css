@@ -14,7 +14,7 @@
 .fiddle-filter-console {
   display: grid;
   margin-top: 2rem;
-  grid-template-columns: minmax(260px, 2fr) minmax(210px, 1fr) minmax(190px, 0.8fr);
+  grid-template-columns: minmax(240px, 1.6fr) repeat(2, minmax(190px, 1fr)) minmax(180px, 0.8fr);
   gap: 1px;
   border: 1px solid var(--rule-bright);
   background: var(--rule);

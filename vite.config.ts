@@ -15,6 +15,7 @@ const runtimeRegistryFiles = [
   'data/generated/completion.json',
   'data/generated/registry.json',
   'data/generated/fiddles/registry.json',
+  'data/generated/fiddles/runtime-verification.json',
 ]
 
 function computeRuntimeRegistryRevision(): string {
@@ -72,6 +73,7 @@ export default defineConfig({
           'data/generated/completion.json',
           'data/generated/registry.json',
           'data/generated/fiddles/registry.json',
+          'data/generated/fiddles/runtime-verification.json',
           'data/generated/tour/**/*.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
@@ -133,12 +135,12 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /\/data\/generated\/fiddles\/registry\.json$/,
+            urlPattern: /\/data\/generated\/fiddles\/(?:registry|runtime-verification)\.json$/,
             handler: 'NetworkFirst',
             options: {
               cacheName: `opensimphy-fiddles-${runtimeRegistryRevision}`,
               networkTimeoutSeconds: 5,
-              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },
           },
           {

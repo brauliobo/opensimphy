@@ -13,7 +13,7 @@ const loading = ref(true)
 const error = ref('')
 
 const SAFE_SLUG = /^[A-Za-z0-9_-]{1,128}$/
-const archiveQueryKeys = ['q', 'viz', 'page'] as const
+const archiveQueryKeys = ['q', 'viz', 'runtime', 'page'] as const
 const backToArchive = computed(() => ({
   name: 'fiddle-archive',
   query: Object.fromEntries(archiveQueryKeys.flatMap((key) => typeof route.query[key] === 'string' ? [[key, route.query[key]]] : [])),
@@ -23,6 +23,8 @@ const recordProfileUrl = computed(() => record.value && source.value
   ? fiddleProfileUrl(source.value.author, record.value.page)
   : '')
 const records = computed(() => fiddleRegistry.records.value)
+const runtimeRecord = computed(() => record.value ? fiddleRegistry.getRuntimeBySlug(record.value.slug) : null)
+const runtimeLabel = computed(() => runtimeRecord.value?.status === 'verified' ? 'clean-rendered' : runtimeRecord.value?.status)
 const previousRecord = computed(() => adjacentRecord(-1))
 const nextRecord = computed(() => adjacentRecord(1))
 const flagDefinitions = [
@@ -54,6 +56,7 @@ watch(() => props.slug, async (slug) => {
   else {
     record.value = fiddleRegistry.getBySlug(slug)
     if (!record.value) error.value = 'This Fiddle slug is not present in the checked-in source archive.'
+    else if (!fiddleRegistry.getRuntimeBySlug(slug)) error.value = 'This Fiddle record has no associated runtime verification entry.'
   }
   loading.value = false
 }, { immediate: true })
@@ -95,7 +98,7 @@ function formatFlagValue(key: keyof FiddleFlags): string {
     strong Fiddle record unavailable
     p {{ error }}
     RouterLink.button-link(:to="backToArchive") Return to source archive
-  template(v-else-if="record")
+  template(v-else-if="record && runtimeRecord")
     header.fiddle-record-header
       .fiddle-record-index
         p.eyebrow Chenopdodium / external source record
@@ -109,13 +112,48 @@ function formatFlagValue(key: keyof FiddleFlags): string {
       .fiddle-record-status
         span CHENOPDODIUM
         span ARCHIVED METADATA
-        span EXTERNAL RUNTIME STATUS PENDING
+        span(:data-runtime-status="runtimeRecord.status") RUNTIME: {{ runtimeLabel }}
         span {{ record.documentType }}
         span {{ record.library }}
 
     section.caveat-banner(data-testid="fiddle-record-boundary")
-      strong METADATA FIRST / PREVIEW OPT-IN
-      p Archive integrity: verified within the 780-record / 16-page collection; source hash checked. External runtime: browser verification pending and reported separately; this record does not imply successful execution. Scientific validation: not performed / false.
+      strong RECORDED RUNTIME / PREVIEW OPT-IN
+      p This indexed external simulation was classified {{ runtimeLabel }} in the recorded Chromium pass. A clean render means only meaningful output with no observed uncaught page error. Browser runtime rendering is not scientific validation; scientifically validated by this check: 0.
+
+    section.fiddle-record-section(data-testid="fiddle-runtime-detail")
+      .section-heading
+        div
+          p.eyebrow Chromium runtime evidence
+          h2 Recorded status: {{ runtimeLabel }}
+        p This is retained browser evidence for the external iframe, not a local Vue port or a scientific correctness assessment.
+      .fiddle-metadata-grid
+        article
+          span Final status
+          strong(:data-runtime-status="runtimeRecord.status") {{ runtimeRecord.status }}
+        article
+          span Attempts
+          strong {{ runtimeRecord.attempts }}
+        article
+          span Tested / batch
+          strong {{ runtimeRecord.testedAt }}
+          small Batch {{ runtimeRecord.batch }}
+        article
+          span Page errors / failure
+          strong {{ runtimeRecord.pageErrors.length }}
+          small {{ runtimeRecord.failureSummary ?? 'No final-attempt failure recorded.' }}
+      details.fiddle-disclosure(v-if="runtimeRecord.pageErrors.length || runtimeRecord.failureSummary")
+        summary Runtime diagnostics
+          span.disclosure-action Open +
+        .fiddle-disclosure-body
+          .fiddle-list-block
+            h3 Uncaught page errors
+            ul(v-if="runtimeRecord.pageErrors.length")
+              li(v-for="pageError in runtimeRecord.pageErrors" :key="pageError")
+                code {{ pageError }}
+            p(v-else) No uncaught page errors were recorded on the final attempt.
+          .fiddle-list-block
+            h3 Failure summary
+            p {{ runtimeRecord.failureSummary ?? 'No navigation, frame, or runtime failure was recorded on the final attempt.' }}
 
     section.fiddle-record-section
       .section-heading

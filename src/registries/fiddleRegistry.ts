@@ -1,11 +1,13 @@
 import { readonly, shallowRef } from 'vue'
-import type { FiddleFlags, FiddlePanelBytes, FiddleRecord, FiddleRegistry, FiddleRegistrySource } from '../types/fiddle'
+import type { FiddleFlags, FiddlePanelBytes, FiddleRecord, FiddleRegistry, FiddleRegistrySource, FiddleRuntimeAggregate, FiddleRuntimeRecord } from '../types/fiddle'
+import { parseFiddleRuntimeLedger } from './fiddleRuntime'
 
 const JSFIDDLE_HOST = 'jsfiddle.net'
 const JSFIDDLE_AUTHOR_PATTERN = /^[A-Za-z0-9_-]+$/
 const FIDDLE_TOKEN_PATTERN = /^[A-Za-z0-9_-]+$/
 const SHA256_PATTERN = /^[a-f0-9]{64}$/
 const FIDDLE_REGISTRY_PATH = `${import.meta.env.BASE_URL}data/generated/fiddles/registry.json`
+const FIDDLE_RUNTIME_PATH = `${import.meta.env.BASE_URL}data/generated/fiddles/runtime-verification.json`
 
 export function fiddleProfileUrl(author: string, page: number): string {
   return `https://${JSFIDDLE_HOST}/u/${author}/fiddles/${page === 1 ? '' : `${page}/`}`
@@ -17,6 +19,8 @@ function versionPath(slug: string, version: number): string {
 
 const records = shallowRef<FiddleRecord[]>([])
 const source = shallowRef<FiddleRegistrySource | null>(null)
+const runtimeAggregate = shallowRef<FiddleRuntimeAggregate | null>(null)
+const runtimeRecords = shallowRef<FiddleRuntimeRecord[]>([])
 const ready = shallowRef(false)
 const loading = shallowRef(false)
 const error = shallowRef<Error | null>(null)
@@ -213,21 +217,32 @@ async function initialize(): Promise<void> {
   ready.value = false
   error.value = null
   records.value = []
+  runtimeAggregate.value = null
+  runtimeRecords.value = []
   let successful = false
   const pending = Promise.resolve().then(async () => {
     try {
-      const response = await fetch(FIDDLE_REGISTRY_PATH, { signal: attemptController.signal })
-      if (!response.ok) throw new Error(`Fiddle registry failed to load (${response.status})`)
-      const next = parseFiddleRegistry(await response.json())
+      const [registryResponse, runtimeResponse] = await Promise.all([
+        fetch(FIDDLE_REGISTRY_PATH, { signal: attemptController.signal }),
+        fetch(FIDDLE_RUNTIME_PATH, { signal: attemptController.signal }),
+      ])
+      if (!registryResponse.ok) throw new Error(`Fiddle registry failed to load (${registryResponse.status})`)
+      if (!runtimeResponse.ok) throw new Error(`Fiddle runtime ledger failed to load (${runtimeResponse.status})`)
+      const next = parseFiddleRegistry(await registryResponse.json())
+      const runtime = parseFiddleRuntimeLedger(await runtimeResponse.json(), next)
       if (attempt !== generation) return
       records.value = next.records
       source.value = next.source
+      runtimeAggregate.value = runtime.aggregate
+      runtimeRecords.value = runtime.records
       ready.value = true
       successful = true
     } catch (reason) {
       if (attempt !== generation) return
       records.value = []
       source.value = null
+      runtimeAggregate.value = null
+      runtimeRecords.value = []
       if (attemptController.signal.aborted || (reason instanceof Error && reason.name === 'AbortError')) {
         ready.value = false
         error.value = null
@@ -251,15 +266,22 @@ function getBySlug(slug: string): FiddleRecord | null {
   return records.value.find((record) => record.slug === slug) ?? null
 }
 
+function getRuntimeBySlug(slug: string): FiddleRuntimeRecord | null {
+  return runtimeRecords.value.find((record) => record.slug === slug) ?? null
+}
+
 export function useFiddleRegistry() {
   return {
     records: readonly(records),
     source:  readonly(source),
+    runtimeAggregate: readonly(runtimeAggregate),
+    runtimeRecords:   readonly(runtimeRecords),
     ready:   readonly(ready),
     loading: readonly(loading),
     error:   readonly(error),
     initialize,
     getBySlug,
+    getRuntimeBySlug,
   }
 }
 
@@ -270,6 +292,8 @@ export function resetFiddleRegistryForTests(): void {
   initialization = null
   records.value = []
   source.value = null
+  runtimeAggregate.value = null
+  runtimeRecords.value = []
   ready.value = false
   loading.value = false
   error.value = null

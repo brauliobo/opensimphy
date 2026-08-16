@@ -18,6 +18,7 @@ const runtimeRegistryFiles = [
   'data/generated/completion.json',
   'data/generated/registry.json',
   'data/generated/fiddles/registry.json',
+  'data/generated/fiddles/runtime-verification.json',
 ]
 
 const routes = {
@@ -348,7 +349,7 @@ function assertRuntimeRegistryPolicies(sw, revision) {
     { prefix: 'opensimphy-wall-index', marker: 'walls\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-completion', marker: 'completion\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-registry', marker: 'registry\\.json$', maxEntries: 1 },
-    { prefix: 'opensimphy-fiddles', marker: 'fiddles\\/registry\\.json$', maxEntries: 1 },
+    { prefix: 'opensimphy-fiddles', marker: 'fiddles\\/(?:registry|runtime-verification)\\.json$', maxEntries: 2 },
   ]
 
   for (const policy of policies) {
@@ -494,6 +495,7 @@ const excludedPrecacheUrls = [
   'data/generated/completion.json',
   'data/generated/registry.json',
   'data/generated/fiddles/registry.json',
+  'data/generated/fiddles/runtime-verification.json',
   ...tourJsonUrls,
 ]
 for (const url of excludedPrecacheUrls) {

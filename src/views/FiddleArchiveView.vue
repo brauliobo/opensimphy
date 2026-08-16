@@ -3,13 +3,14 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import FiddleCard from '../components/fiddles/FiddleCard.vue'
 import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
-import type { FiddleRecord } from '../types/fiddle'
+import type { FiddleRecord, FiddleRuntimeStatus } from '../types/fiddle'
 
 const route = useRoute()
 const router = useRouter()
 const fiddleRegistry = useFiddleRegistry()
 const query = ref('')
 const visualization = ref('all')
+const runtimeStatus = ref<'all' | FiddleRuntimeStatus>('all')
 const page = ref(1)
 const routeNotice = ref('')
 let preservingNotice = false
@@ -24,9 +25,12 @@ const registryError = computed(() => fiddleRegistry.error.value?.message
 const archiveReady = computed(() => !registryLoading.value
   && !registryError.value
   && fiddleRegistry.source.value !== null
+  && fiddleRegistry.runtimeAggregate.value !== null
+  && fiddleRegistry.runtimeRecords.value.length === fiddleRegistry.records.value.length
   && fiddleRegistry.records.value.length > 0)
 const records = computed(() => fiddleRegistry.records.value)
 const source = computed(() => fiddleRegistry.source.value)
+const runtimeAggregate = computed(() => fiddleRegistry.runtimeAggregate.value)
 const selectedProfileUrl = computed(() => source.value ? fiddleProfileUrl(source.value.author, page.value) : '')
 const visualizations = computed(() => [...new Set(records.value.map((record) => record.visualization))].sort((left, right) => left.localeCompare(right)))
 const sourcePages = computed(() => Array.from({ length: source.value?.profilePages ?? 0 }, (_, index) => index + 1))
@@ -36,6 +40,7 @@ const filteredRecords = computed(() => {
     const searchable = [record.title, record.slug, record.visualization, record.risk].join(' ').toLocaleLowerCase()
     return (!search || searchable.includes(search))
       && (visualization.value === 'all' || record.visualization === visualization.value)
+      && (runtimeStatus.value === 'all' || fiddleRegistry.getRuntimeBySlug(record.slug)?.status === runtimeStatus.value)
   })
 })
 const currentPageRecords = computed(() => records.value.filter((record) => record.page === page.value))
@@ -51,6 +56,7 @@ const resultStatus = computed(() => {
 const archiveQuery = computed<LocationQueryRaw>(() => ({
   ...(query.value === '' ? {} : { q: query.value }),
   ...(visualization.value === 'all' ? {} : { viz: visualization.value }),
+  ...(runtimeStatus.value === 'all' ? {} : { runtime: runtimeStatus.value }),
   ...(page.value === 1 ? {} : { page: String(page.value) }),
 }))
 
@@ -97,19 +103,26 @@ function sameRouteQuery(next: LocationQueryRaw): boolean {
 function hydrateFromRoute(): void {
   const search = safeSearch(scalarQuery('q'))
   const rawVisualization = scalarQuery('viz')
+  const rawRuntime = scalarQuery('runtime')
   const visualizationWarning = rawVisualization !== null && rawVisualization !== 'all' && !visualizations.value.includes(rawVisualization)
     ? `The visualization filter ${rawVisualization} is not in the archive; showing all visualizations.`
     : ''
   const nextVisualization = visualizationWarning ? 'all' : rawVisualization ?? 'all'
+  const allowedRuntimeStatuses = ['verified', 'rendered-with-errors', 'empty', 'blocked', 'timeout', 'failed']
+  const runtimeWarning = rawRuntime !== null && !allowedRuntimeStatuses.includes(rawRuntime)
+    ? `The runtime filter ${rawRuntime} is not valid; showing all runtime statuses.`
+    : ''
   const pageState = safePage(scalarQuery('page'), source.value?.profilePages ?? 1)
   query.value = search.value
   visualization.value = nextVisualization
+  runtimeStatus.value = runtimeWarning ? 'all' : (rawRuntime as FiddleRuntimeStatus | null) ?? 'all'
   page.value = pageState.value
-  const notice = [search.warning, visualizationWarning, pageState.warning].filter(Boolean).join(' ')
+  const notice = [search.warning, visualizationWarning, runtimeWarning, pageState.warning].filter(Boolean).join(' ')
   if (notice || !preservingNotice) routeNotice.value = notice
   const nextQuery: LocationQueryRaw = {
     ...(query.value === '' ? {} : { q: query.value }),
     ...(visualization.value === 'all' ? {} : { viz: visualization.value }),
+    ...(runtimeStatus.value === 'all' ? {} : { runtime: runtimeStatus.value }),
     ...(page.value === 1 ? {} : { page: String(page.value) }),
   }
   if (!sameRouteQuery(nextQuery)) {
@@ -155,6 +168,12 @@ function sourcePageLabel(pageNumber: number): string {
   return `Source profile page ${pageNumber}, records ${summary.first}-${summary.last}`
 }
 
+function runtimeFor(record: FiddleRecord) {
+  const runtime = fiddleRegistry.getRuntimeBySlug(record.slug)
+  if (!runtime) throw new Error(`Runtime status missing for ${record.slug}`)
+  return runtime
+}
+
 </script>
 
 <template lang="pug">
@@ -171,8 +190,8 @@ function sourcePageLabel(pageNumber: number): string {
       span source profile pages
 
   section.caveat-banner(data-testid="fiddle-source-boundary")
-    strong ARCHIVED METADATA / EXTERNAL EXECUTION
-    p Archive integrity: verified 780 records / 16 pages / source hash checked. External runtime: browser verification pending and reported separately; archive presence does not imply successful execution. Scientific validation: not performed / false.
+    strong INDEXED EXTERNAL RECORDS / CHROMIUM RUNTIME PASS
+    p All 780 simulations are migrated as indexed external simulations/source records. This pass clean-rendered 710; 28 rendered with errors; 17 were empty; 25 timed out; 0 were blocked; 0 failed inspection. Scientifically validated by this check: 0. Browser runtime rendering is not scientific validation.
 
   .loading-plate(v-if="registryLoading" data-testid="fiddle-archive-loading" aria-live="polite") Loading Fiddle source archive metadata...
   .empty-state(v-else-if="registryError" role="alert" data-testid="fiddle-archive-error")
@@ -202,6 +221,16 @@ function sourcePageLabel(pageNumber: number): string {
           select(v-model="visualization" data-testid="fiddle-visualization" @change="commitFilters")
             option(value="all") All visualizations
             option(v-for="option in visualizations" :key="option" :value="option") {{ option }}
+        label.field
+          span Runtime status
+          select(v-model="runtimeStatus" data-testid="fiddle-runtime-filter" @change="commitFilters")
+            option(value="all") All runtime statuses
+            option(value="verified") Clean-rendered ({{ runtimeAggregate?.verified }})
+            option(value="rendered-with-errors") Rendered with errors ({{ runtimeAggregate?.['rendered-with-errors'] }})
+            option(value="empty") Empty ({{ runtimeAggregate?.empty }})
+            option(value="timeout") Timeout ({{ runtimeAggregate?.timeout }})
+            option(value="blocked") Blocked ({{ runtimeAggregate?.blocked }})
+            option(value="failed") Failed ({{ runtimeAggregate?.failed }})
         .fiddle-filter-summary
           strong(data-testid="fiddle-result-count") {{ filteredRecords.length }} / {{ records.length }}
           span matching archived records
@@ -239,6 +268,7 @@ function sourcePageLabel(pageNumber: number): string {
           v-for="record in visibleRecords"
           :key="record.slug"
           :record="record"
+          :runtime="runtimeFor(record)"
           :archive-query="archiveQueryForCard()"
         )
       .empty-state.fiddle-page-empty(v-else)

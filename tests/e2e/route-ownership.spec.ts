@@ -10,6 +10,7 @@ const rootOwnerArtifacts = [
   '/data/generated/completion.json',
   '/data/generated/registry.json',
   '/data/generated/fiddles/registry.json',
+  '/data/generated/fiddles/runtime-verification.json',
 ] as const
 
 type WorkerOwner = 'formula' | 'core' | 'wall' | 'earth'
@@ -168,7 +169,10 @@ test('/labs/authors/chenopdodium owns only the Fiddle source archive and no work
   const activity = await gotoColdRoute(page, '/labs/authors/chenopdodium')
   await expect(page.getByTestId('fiddle-archive-ready')).toBeVisible()
 
-  expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
+  expectOwnerArtifacts(activity, [
+    '/data/generated/fiddles/registry.json',
+    '/data/generated/fiddles/runtime-verification.json',
+  ])
   expect(workerOwners(activity)).toEqual([])
   await expect(page.locator('#primary-navigation a[href="/labs"]')).toHaveAttribute('aria-current', 'location')
   await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
@@ -178,7 +182,10 @@ test('/labs/authors/chenopdodium/:slug owns only the Fiddle source archive and k
   const activity = await gotoColdRoute(page, '/labs/authors/chenopdodium/wqoycabp')
   await expect(page.getByTestId('fiddle-record-ready')).toBeVisible()
 
-  expectOwnerArtifacts(activity, ['/data/generated/fiddles/registry.json'])
+  expectOwnerArtifacts(activity, [
+    '/data/generated/fiddles/registry.json',
+    '/data/generated/fiddles/runtime-verification.json',
+  ])
   expect(workerOwners(activity)).toEqual([])
   await expect(page.getByTestId('fiddle-live-iframe')).toHaveCount(0)
 })

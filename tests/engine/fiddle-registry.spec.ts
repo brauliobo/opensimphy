@@ -1,17 +1,50 @@
 import { createHash } from 'node:crypto'
 import scanInput from '../../data/fiddles/chenopdodium-profile-scan.jsonl?raw'
 import registryJson from '../../public/data/generated/fiddles/registry.json'
+import runtimeJson from '../../public/data/generated/fiddles/runtime-verification.json'
 import { buildFiddleRegistry } from '../../scripts/generate-fiddle-registry.mjs'
 import { parseFiddleRegistry } from '../../src/registries/fiddleRegistry'
+import { parseFiddleRuntimeLedger } from '../../src/registries/fiddleRuntime'
 import type { FiddleRegistry } from '../../src/types/fiddle'
 
 const registry = parseFiddleRegistry(registryJson)
+const runtime = parseFiddleRuntimeLedger(runtimeJson, registry)
 
 function copyRegistry(): FiddleRegistry {
   return structuredClone(registry)
 }
 
 describe('JSFiddle archive registry', () => {
+  it('associates all runtime records and exact aggregate counts to the registry', () => {
+    expect(runtime.registry).toMatchObject({ sourceRevision: registry.source.sourceRevision, recordCount: 780 })
+    expect(runtime.aggregate).toEqual({
+      verified: 710,
+      'rendered-with-errors': 28,
+      empty: 17,
+      blocked: 0,
+      timeout: 25,
+      failed: 0,
+      total: 780,
+      scientificallyValidated: 0,
+    })
+    expect(runtime.records).toHaveLength(780)
+    expect(runtime.records.every((record, index) => record.slug === registry.records[index]!.slug)).toBe(true)
+  })
+
+  it('fails closed when runtime identity, source revision, or counts drift', () => {
+    const badIdentity = structuredClone(runtimeJson)
+    badIdentity.records[0]!.slug = 'wrong-slug'
+    expect(() => parseFiddleRuntimeLedger(badIdentity, registry)).toThrow(/associated registry record/)
+
+    const badRevision = structuredClone(runtimeJson)
+    badRevision.registry.sourceRevision = '0'.repeat(64)
+    expect(() => parseFiddleRuntimeLedger(badRevision, registry)).toThrow(/sourceRevision/)
+
+    const badCount = structuredClone(runtimeJson)
+    badCount.aggregate.verified -= 1
+    expect(() => parseFiddleRuntimeLedger(badCount, registry)).toThrow(/aggregate\.verified/)
+  })
+
   it('accepts the checked-in 780-record, 16-page artifact', () => {
     expect(registry).toMatchObject({
       schemaVersion: 1,

@@ -54,3 +54,58 @@ export interface FiddleRegistry {
   source: FiddleRegistrySource
   records: FiddleRecord[]
 }
+
+export type FiddleRuntimeStatus = 'verified' | 'rendered-with-errors' | 'empty' | 'blocked' | 'timeout' | 'failed'
+
+export interface FiddleRuntimeRecord {
+  position: number
+  slug: string
+  version: number
+  embedUrl: string
+  status: FiddleRuntimeStatus
+  attempts: number
+  testedAt: string
+  batch: string
+  pageErrors: string[]
+  failureSummary: string | null
+}
+
+export interface FiddleRuntimeAggregate {
+  verified: number
+  'rendered-with-errors': number
+  empty: number
+  blocked: number
+  timeout: number
+  failed: number
+  total: number
+  scientificallyValidated: 0
+}
+
+export interface FiddleRuntimeBatch {
+  id: string
+  firstPosition: number
+  lastPosition: number
+  startedAt: string
+  completedAt: string
+  engine: string
+  version: string
+  playwrightVersion: string
+}
+
+export interface FiddleRuntimeLedger {
+  schemaVersion: 1
+  registry: {
+    path: string
+    sourceRevision: string
+    recordCount: number
+  }
+  methodology: {
+    scope: string
+    classification: string
+    retryPolicy: string
+    caveat: string
+  }
+  environment: { batches: FiddleRuntimeBatch[] }
+  aggregate: FiddleRuntimeAggregate
+  records: FiddleRuntimeRecord[]
+}
