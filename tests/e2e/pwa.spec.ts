@@ -1,12 +1,13 @@
 import { expect, test } from '@playwright/test'
 import { grayFemLookupRevision } from '../../src/edwin-gray/edwinGrayFem'
 import { GRAY_MACHINE_CONTRACTS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
+import { runtimeRegistryRevision } from './runtime-registry-revision'
 
 const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
 const GRAY_WORKER_CACHE = 'opensimphy-gray-worker'
 const GRAY_LUT_CACHE = 'opensimphy-gray-fem-lut'
-const GRAY_CALIBRATION_CACHE = 'opensimphy-gray-fem-calibration-feee86c974cd'
+const GRAY_CALIBRATION_CACHE = `opensimphy-gray-fem-calibration-${runtimeRegistryRevision}`
 const GRAY_PATENT_CONTRACT = GRAY_MACHINE_CONTRACTS[GRAY_PATENT_MACHINE_ID]
 const GRAY_MODEL_INPUT_HASH = GRAY_PATENT_CONTRACT.modelInputHash
 if (!GRAY_MODEL_INPUT_HASH) throw new Error('Generated patent machine contract has no FEM model identity')
@@ -162,7 +163,10 @@ test('the production PWA rejects a corrupted cached calibration pack offline', a
 
   await page.evaluate(async ({ cacheName, path, value }) => {
     const cache = await caches.open(cacheName)
-    await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
+    await cache.put(path, new Response(JSON.stringify({
+      ...value,
+      evidence: { ...value.evidence, currentSpecificationSha256: '0'.repeat(64) },
+    }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     }))
@@ -171,7 +175,9 @@ test('the production PWA rejects a corrupted cached calibration pack offline', a
   await context.setOffline(true)
   await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
   await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
-  await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('must remain unavailable')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText(
+    /pilot and class-run provenance mismatch.*not uncertainty bounds.*assumption-only/,
+  )
   await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
   await expect(page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')).toHaveAttribute('disabled', '')
 })

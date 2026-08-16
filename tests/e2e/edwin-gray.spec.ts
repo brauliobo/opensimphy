@@ -1,5 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 import { GRAY_MACHINE_CONTRACTS, GRAY_MACHINE_IDS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
+import { runtimeRegistryRevision } from './runtime-registry-revision'
+
+const GRAY_CALIBRATION_CACHE = `opensimphy-gray-fem-calibration-${runtimeRegistryRevision}`
 
 const reflowViewports = [
   { width: 1440, height: 900, label: 'desktop' },
@@ -179,14 +182,17 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-calibration-boundary')).toContainText('exploratory and unbounded')
 
     const calibrationPack = await (await page.request.get('/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json')).json()
-    await page.evaluate(async (value) => {
+    await page.evaluate(async ({ cacheName, value }) => {
       const path = '/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
-      const cache = await caches.open('opensimphy-gray-fem-calibration-feee86c974cd')
-      await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
+      const cache = await caches.open(cacheName)
+      await cache.put(path, new Response(JSON.stringify({
+        ...value,
+        evidence: { ...value.evidence, currentSpecificationSha256: '0'.repeat(64) },
+      }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }))
-    }, calibrationPack)
+    }, { cacheName: GRAY_CALIBRATION_CACHE, value: calibrationPack })
     await context.setOffline(true)
     await page.getByTestId('gray-calibration-recheck').click()
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
