@@ -1,11 +1,15 @@
 import { expect, test } from '@playwright/test'
+import { grayFemLookupRevision } from '../../src/edwin-gray/edwinGrayFem'
+import { GRAY_MACHINE_CONTRACTS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
 
 const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
 const GRAY_WORKER_CACHE = 'opensimphy-gray-worker'
 const GRAY_LUT_CACHE = 'opensimphy-gray-fem-lut'
-const GRAY_MODEL_INPUT_HASH = '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06'
-const GRAY_LUT_REVISION = `patent-3890548-illustrative-m1-fem1-${GRAY_MODEL_INPUT_HASH}`
+const GRAY_PATENT_CONTRACT = GRAY_MACHINE_CONTRACTS[GRAY_PATENT_MACHINE_ID]
+const GRAY_MODEL_INPUT_HASH = GRAY_PATENT_CONTRACT.modelInputHash
+if (!GRAY_MODEL_INPUT_HASH) throw new Error('Generated patent machine contract has no FEM model identity')
+const GRAY_LUT_REVISION = grayFemLookupRevision(GRAY_PATENT_CONTRACT)
 const GRAY_LUT_PATH = `/data/generated/edwin-gray/motor-fem-lut-v1.json?revision=${GRAY_LUT_REVISION}`
 const QUICK_INSTRUMENTS = [
   { path: QUICK_LESSON, instrument: 'dimension-builder', prediction: 'prediction-matches-target', reveal: 'reveal-dimension-result', result: 'dimension-result' },
@@ -20,12 +24,12 @@ const QUICK_INSTRUMENTS = [
 
 function compatibleGrayLut() {
   const compatibility = {
-    machineContractId: 'patent-3890548-illustrative',
-    machineRevision: 1,
-    modelRevision: 1,
-    topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
-    turns: 100,
-    excitation: 'impressed-current-magnetostatic',
+    machineContractId: GRAY_PATENT_CONTRACT.machineContractId,
+    machineRevision: GRAY_PATENT_CONTRACT.machineRevision,
+    modelRevision: GRAY_PATENT_CONTRACT.modelRevision,
+    topologyIdentity: GRAY_PATENT_CONTRACT.topologyIdentity,
+    turns: GRAY_PATENT_CONTRACT.compatibleTurns,
+    excitation: GRAY_PATENT_CONTRACT.compatibleExcitation,
     modelInputHash: GRAY_MODEL_INPUT_HASH,
   }
   return {
@@ -39,7 +43,13 @@ function compatibleGrayLut() {
     entries: [0, 180].map((rotorAngleDeg, index) => ({
       entryId: `pwa-angle-${rotorAngleDeg}`,
       status: 'complete',
-      parameters: { rotorAngleDeg, meshSizeM: 0.01, driveCurrentA: 1 },
+      parameters: {
+        rotorAngleDeg,
+        eventIndex: index,
+        excitationContract: GRAY_PATENT_CONTRACT.compatibleExcitation,
+        meshSizeM: 0.01,
+        driveCurrentA: 1,
+      },
       observables: {
         magneticEnergyJ: { value: 0.1 + index * 0.01, unit: 'J' },
         coEnergyJ: { value: 0.1 + index * 0.01, unit: 'J' },
@@ -109,7 +119,7 @@ test('Gray payloads use bounded runtime caches and the warmed surrogate runs off
   await page.getByTestId('gray-run').click()
   await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
 
-  await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
+  await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
   await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
   await expect(page.getByTestId('gray-fem-runtime-status')).toContainText(/unavailable|failed|fetch/i)
   await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
@@ -131,7 +141,7 @@ test('a previously fetched compatible revisioned Gray LUT remains usable offline
   }, { cacheName: GRAY_LUT_CACHE, path: GRAY_LUT_PATH, value: lut })
 
   await context.setOffline(true)
-  await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
+  await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
   await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'ready')
   await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('pwa-compatible-gray-lut')
   await page.getByTestId('gray-magnetic-model').selectOption('fem-lookup')
@@ -142,7 +152,10 @@ test('a previously fetched compatible revisioned Gray LUT remains usable offline
   expect(cachedUrls).toHaveLength(1)
   expect(cachedUrls[0]).toContain(`revision=${GRAY_LUT_REVISION}`)
 
-  const incompatibleLut = { ...lut, compatibility: { ...lut.compatibility, modelRevision: 2 } }
+  const incompatibleLut = {
+    ...lut,
+    compatibility: { ...lut.compatibility, modelRevision: lut.compatibility.modelRevision + 1 },
+  }
   await page.evaluate(async ({ cacheName, path, value }) => {
     const cache = await caches.open(cacheName)
     await cache.put(path, new Response(JSON.stringify(value), {
