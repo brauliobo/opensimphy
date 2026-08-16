@@ -34,6 +34,9 @@ src/tour                pure Tour engines, progress model, and transactional off
 src/workbench           strict URL state, SHA-256, version-1 snapshots, and saved-run validation
 src/workers             dedicated formula, Core, number-wall, and isolated EARTH workers
 src/components/tour     lesson grammar, instruments, and ID-based lazy simulation dispatcher
+src/quantum-wave        bounded quantum-wave teaching engine and source-map guide
+src/edwin-gray          bounded Gray pulsed-motor engine and source-map guide
+src/components/quantum  reusable wave, operator, probability, tooltip, and equation instruments
 src/components          navigation, shared Workbench shell, coverage, Plotly, and canvas instruments
 src/views               lazy-routed tour, atlas, lab, EARTH dossier/program/data, and provenance views
 tests/ui                Vitest and Vue Test Utils contracts
@@ -53,6 +56,16 @@ Plotly is dynamically imported into its own lazy chunk and Formula sweeps mount 
 ### Physics Tour
 
 `/` provides orientation, Begin/Resume controls, all eight available station links, and Guided-pack controls. `/tour` presents the 20-chapter/four-act map; `/tour/:chapter` and `/tour/:chapter/:lesson` provide chapter and lesson routes with generated titles and real section anchors. `/evidence`, `/saved`, and `/not-found` provide scope guidance, local progress/offline-pack management, and recovery. Legacy `/topics/:id` links redirect to their mapped Tour chapters.
+
+`/labs/quantum-wave` is a standalone, browser-local teaching lab built from the downloaded and transcribed reference video `3QU-_PSbKlo`. It preserves the source video, Whisper outputs, scene samples, and curated frame inventory under `../research/opensimphy-video/`, while the app ships original SVG recreations for spectral lines, standing waves, operators, Fourier sums, complex-plane rotation, Schrodinger equation assembly, double-slit probability, and hydrogen/materials applications. The page links back to the established Tour, Atlas, Workbench, and Evidence surfaces and keeps all results explicitly modelled/computed rather than validated.
+
+`/labs/edwin-gray` is a second video-derived lab. It reconstructs the Cole/Hackenberger/Gray pulsed-capacitor motors from `Motor Edwin Gray.txt` and YouTube `nC740fpBs4M` as a classical RLC dump through open-core poles, with a presenter-reported 500 rpm quench reference and a COP ledger that does not treat historical COP-300 claims as established physics. Source media belong under `../research/opensimphy-edwin-gray/`.
+
+The post-Iteration-7 Gray checkpoint compiles seven versioned machine contracts into one deterministic 16,523-byte (16.5 KiB) runtime artifact. Its dedicated worker executes the complete 27-event-per-revolution motor schedule and keeps rotor geometry, circuit state, solved recovery branch, event and aggregate energy ledgers, strict URL state, explicit saves, and compatible two-snapshot comparison on one dispatched input/result boundary. A recorded seven-model, 100-revolution benchmark measured about 24.84 ms aggregate median on this host; this is a hardware-sensitive wall-clock observation, not a portable performance guarantee. A later documentation recheck measured 25.96 ms while preserving finite outputs, closed numerical energy boundaries, COP at or below one, and the 100-revolution completion gate.
+
+Gray provenance separates source statements from modifications. Patent-described topology and sequencing, presenter reports, retained captions, and prototype identities remain source records; dimensions, materials, winding/surrogate values, the classical RLC/recovery equations, and the zero-minimum-speed `modified-electronic-v1` quench rule are explicit assumptions or illustrative modifications. The presenter-reported original configuration retains its separate `original-500rpm-contact-v1` boundary, and the Schloff rewind/Zener-trigger/no-load reports are not merged into original-machine efficiency. The user-provided diagram's `7,460 W / 26.8 W` arithmetic is `278.358`, not its displayed 282; a COP-282 target at 26.8 W would require 7,557.6 W. The audit reports 7,433.2 W and 7,530.8 W unaccounted deficits for the observed output and displayed-COP target respectively until a complete energy boundary is supplied. It separately retains the presenter-attributed COP-300 claim and the ambiguous raw caption `7 12 kilowatts`; neither is imported into the motor ledger.
+
+No production Gray FEM lookup table exists. The production v1 pilot was rejected on mesh partition growth and outer-domain sensitivity; the v2 pilot passed its bounded source-formulation, mesh, energy/coenergy, current, periodicity, and observable-drift checks, including 1.1585% class-0 coarse/fine drift, but the v2 production convergence report is rejected because only 18 of 33 required samples are present. The fast publication design provides six-job, three-representative-plus-three-validation symmetry infrastructure, not a published production result. A separate three-class calibration pack path is `limited-not-validated`, `productionEligible: false`, bounds only inductance, magnetic energy, and coenergy, transfers the class-0 drift as an assumption to classes 1 and 2, and leaves torque unbounded; the current calibration run is not claimed complete. Prototype machine contracts remain descriptive and FEM-blocked because prototype-specific geometry is unavailable, while the patent contract and runtime are illustrative rather than a manufactured-machine replica or experimental validation.
 
 Guided or Technical depth persists locally, with Technical content added without replacing Guided material. Visits do not imply completion: quick-station and full-lesson progress are independent, and Resume points to the last real lesson anchor. The spine's instruments cover dimensions and SI/mechanical-CGS coordinates, physical scales, photon equivalents, current and historical electrical standards, hydrogen-like spectra, dependent particle representations, signed spin precession, ideal blackbody radiation, and particle-to-mole scaling.
 
@@ -94,6 +107,8 @@ The EARTH dossier uses canonical routes `/earth`, `/earth/corpus`, `/earth/corpu
 
 A release is complete only when all of the following are true at the same generated-data revision:
 
+`public/data/generated/completion.json` is narrowly the generated Formula/Number-Wall/Core registry audit. Its `complete: true` does not cover Tour lesson completion, EARTH method completion, Quantum or Gray labs, Gray FEM, PWA behavior, accessibility, CI, or scientific validation. EARTH has its own `public/data/generated/earth/completion.json`; release claims still require the independent checks listed below.
+
 - Formula coverage is exactly `source 288 / implemented 288 / evaluated 288 / graphed 288`.
 - Number-wall coverage is exactly `source 351 / implemented 351 / simulatable 351`.
 - Core coverage equals the exact core registry count for implemented, graphed, and simulatable cases; the registry must not be empty.
@@ -116,6 +131,8 @@ Each route registry starts independently, rejects stale in-flight results, expos
 
 The PWA precaches the app shell but excludes route-owner JSON, every generated Tour JSON artifact, and the dedicated formula, Core, and number-wall workers. Deterministic Atlas registries use content-revisioned `NetworkFirst` caches with a 5-second timeout and 7-day bound. Per-wall JSON, EARTH document shards, evidence shards, and Plotly retain their bounded runtime policies.
 
+Quantum and Gray remain adjacent, lazy lab routes rather than Tour chapter completions. Gray runtime assets use deliberate bounded runtime caching rather than being promoted into automatic Tour offline packs. Current Pages/frontend CI gates the generated Gray contract check, focused Gray tests, FEM validation, build/route boundaries, and the Chromium Gray journey. The Gray journey records keyboard operation, visible focus, 44 px targets, 320-1440 px reflow, reduced motion, forced-colors distinctions, worker progress association, URL rejection/recovery, and save/compare behavior. The verified core OpenSimPhy set contains 58 Vue SFCs and all 58 use Pug templates; the raw repository total of 66 also includes four Fiddle and four Awesome Physics adjacent-route bridge SFCs, which are outside that core count and also currently use Pug.
+
 Tour offline use is opt-in rather than automatic. The current Guided-only pack contains 31 validated resources totaling 485,129 bytes (about 474 KB) at content revision `2026-07-27`, including every station lesson and simulation. Installation is transactional, the included taxonomy provides a self-contained fallback, and `/` or `/saved` can install, refresh, inspect, or clear it. Generated Tour JSON is never automatically precached. Iteration 10 remains planned for richer packs, saved-run import/export and replay, migration/storage policy, and update warnings.
 
 ## Commands
@@ -130,6 +147,10 @@ npm run data:lock:earth
 npm run typecheck
 npm run test:engine
 npm run test:ui
+npm run test:gray
+npm run gray:compile:check
+npm run gray:benchmark
+npm run fem:validate
 npm test
 npm run e2e
 npm run e2e:chromium
@@ -141,7 +162,7 @@ npm run verify
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. It fails if the sibling EARTH corpus differs from `public/data/sources/earth-source-lock.json`. `npm run data:lock:earth` is the explicit acceptance path for a clean new EARTH revision. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; both update commands are intentionally excluded from routine verification so a source change cannot silently rewrite the corpus.
 
-UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour instruments, meaning-first Formula records, dependency/provenance audits, strict snapshots and URL state, the shared Workbench, responsive navigation, strict EARTH adapters, and worker lifecycles. Verification recorded on 2026-07-27: `npm run verify` passed with 63 Vitest files and 659 tests; generation, type checking, production build, and `check:routes` passed. The default Chromium suite passed 103 tests, and one production-preview Chromium PWA test passed. Independent scientific and UX acceptance reviews passed; these reviews confirm implementation boundaries, not scientific validation.
+UI tests cover fail-closed completion, route ownership, Tour progress and offline transactions, all nine Tour instruments, meaning-first Formula records, dependency/provenance audits, strict snapshots and URL state, the shared Workbench, responsive navigation, strict EARTH adapters, and worker lifecycles. The last recorded aggregate Iteration 7 verification remains the 2026-07-27 run: `npm run verify` passed with 63 Vitest files and 659 tests; generation, type checking, production build, and `check:routes` passed; the default Chromium suite passed 103 tests and the production-preview PWA suite passed one test. Post-Iteration-7 commits record focused Gray engine/UI contracts, the 10-test Chromium Gray workbench journey, FEM contract/convergence/calibration validation, generated-artifact checking, and CI gates; no newer aggregate full-suite count is claimed here. Scientific and UX acceptance statements confirm implementation boundaries, not scientific validation.
 
 ## Static Deployment
 

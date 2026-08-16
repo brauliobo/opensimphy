@@ -77,6 +77,8 @@ EARTH remains inside Evidence. Runnable EARTH methods can open in the shared Wor
 /labs/core                      mathematical/core workbench
 /labs/walls                     number-wall workbench
 /labs/earth/:programId          optional workbench-focused EARTH entry
+/labs/quantum-wave              adjacent bounded quantum teaching lab
+/labs/edwin-gray                adjacent bounded pulsed-motor teaching lab
 /evidence                       evidence model and scope
 /sources                        source ledger
 /earth/*                        EARTH dossier
@@ -85,6 +87,10 @@ EARTH remains inside Evidence. Runnable EARTH methods can open in the shared Wor
 ```
 
 Existing published routes remain aliases. `/topics/:id` redirects to the corresponding tour chapter when a mapping exists.
+
+### Adjacent lab boundary
+
+`/labs/quantum-wave` and `/labs/edwin-gray` may reuse the established navigation, Workbench grammar, provenance vocabulary, PWA policies, and accessibility requirements, but they are adjacent laboratories rather than numbered Tour chapters. Their implementation, testing, or route availability does not mark Iterations 8-11 complete and does not change the 20-chapter curriculum. Gray must keep patent-described/source-reported material separate from assumed or modified runtime behavior, keep original and modified machine states distinct, and label prototype and patent simulations illustrative unless matching evidence establishes a stronger status. A Gray FEM lookup remains unavailable until its own production convergence and compatibility gates pass; limited calibration or symmetry infrastructure is not a production LUT.
 
 ### Navigation
 
@@ -649,6 +655,8 @@ interface TourProgress {
 ```
 
 Completion is explicit. Visiting is not completion. Quick-station records are independent from chapter and lesson records, so completing a four-minute station does not imply lesson or chapter completion. State remains local, exportable, and clearable. There are no streaks, scores, or mastery claims. Registry revisions do not silently invalidate learning state.
+
+Generated completion artifacts are domain audits, not universal release certificates. In particular, top-level `public/data/generated/completion.json` covers Formula, Number Wall, and Core registry counts only; it does not attest Tour progress, EARTH execution, adjacent Quantum/Gray labs, FEM convergence, PWA/accessibility behavior, CI, or scientific validation. Each excluded domain keeps its own explicit evidence and gates.
 
 Knowledge checks ask for prediction and explanation rather than trivia. Users can reveal explanations without punishment.
 

@@ -15,7 +15,7 @@ No iteration is marked complete from file presence alone. Completion requires it
 
 ## Current baseline
 
-Date: 2026-07-27
+Date: 2026-08-16
 
 | Item | State |
 | --- | --- |
@@ -41,6 +41,10 @@ Date: 2026-07-27
 | EARTH datasets | 19 metadata-authenticated, 0 acquired/frozen |
 | Scientific validation | False |
 | Automated browser target | Chromium only |
+| Adjacent Quantum / Gray labs | Delivered outside the numbered Tour iteration ledger |
+| Gray machine contracts / generated artifact | 7 / 16,523 bytes (16.5 KiB) |
+| Gray production FEM LUT | Absent; production convergence rejected |
+| Core Vue SFC templates | 58/58 Pug; excludes 8 adjacent Fiddle/Awesome Physics bridge SFCs |
 
 Original baseline commit: `57e5b64 earth: add provenance-pure simulation dossier`
 
@@ -53,7 +57,7 @@ Original baseline verification:
 - All 134 runnable EARTH method defaults completed in dedicated workers.
 - `git diff --check`: passed.
 
-Current Iteration 7 checkpoint verification:
+Historical Iteration 7 checkpoint verification (2026-07-27):
 
 - `npm run verify`: passed.
 - Data generation: revision `2026-07-27`; 20 chapters, 9 lessons, 9 simulations, 27 glossary entries, 10 references, and 8/8 content-ready stations totaling 27 minutes.
@@ -66,6 +70,20 @@ Current Iteration 7 checkpoint verification:
 - `git diff --check`: passed.
 - Independent scientific acceptance: PASS.
 - Independent UX acceptance: PASS.
+
+Post-Iteration-7 Gray checkpoint (2026-08-16):
+
+- This is an adjacent-lab checkpoint, not completion of Tour Iterations 8, 9, 10, or 11. Their ledger states remain Planned.
+- Seven JSON machine contracts compile deterministically into the 16,523-byte generated runtime artifact. A recorded seven-model/100-revolution run measured about 24.84 ms aggregate median on this host; timing is hardware-sensitive. A later documentation recheck measured 25.96 ms and passed finite-result, energy-closure, COP-at-or-below-one, result-size, and revolution-count gates.
+- The dedicated worker returns the full ordered 27-event run boundary used by rotor, circuit, solved recovery, per-event/aggregate energy, URL-owned state, explicit save, and compatible two-snapshot comparison surfaces. Original 500 rpm contact behavior and the illustrative modified electronic rule are separately versioned.
+- Source records and modifications remain distinct: patent-described topology/schedule, retained captions, presenter statements, and prototype identities are source evidence; dimensions, materials, surrogate machine parameters, classical RLC/recovery equations, and the modified electronic quench rule are assumptions or illustrative modifications. Modified Schloff winding/trigger/no-load reports do not characterize original-machine efficiency.
+- The user-provided diagram reproduces `7,460 / 26.8 = 278.358208955...`, not 282. A 282 target requires 7,557.6 W; the open observed-output and target deficits are 7,433.2 W and 7,530.8 W. The retained source-pack COP-300 statement and raw ambiguous `7 12 kilowatts` caption remain separate and unresolved.
+- FEM v1 is immutable rejected evidence: its partition-growth and outer-domain gates failed. The v2 pilot passed its bounded formulation/mesh/energy/current/periodicity checks and records 1.1584935659% class-0 coarse/fine observable drift; source closure now uses a closed-surface equivalent-current-potential formulation instead of the rejected disconnected source. Production v2 remains rejected at 18/33 required samples, so no production LUT is published.
+- Fast publication infrastructure defines six serial jobs: representative event classes 0, 1, and 2 plus validation partners 3, 4, and 5 before exact 40-degree symmetry expansion. This infrastructure has not produced an accepted production publication in the current evidence.
+- The separate three-class calibration path can emit only `motor-fem-calibration-pack-v1.json`, with status `limited-not-validated` and `productionEligible: false`. It bounds inductance, magnetic energy, and coenergy only, transfers class-0 drift to classes 1 and 2 as an assumption, leaves torque unbounded, cannot write a production LUT, and has no currently claimed complete run.
+- Prototype contracts are descriptive/illustrative and FEM-blocked without prototype-specific geometry. The patent topology and runtime are explicitly illustrative, not a replica of a manufactured motor; the FEM model does not solve transient discharge, rotor motion, torque, load, arc physics, thermal effects, or energy recovery.
+- Deliberate Gray PWA runtime-cache behavior, Chromium accessibility/reflow/forced-colors coverage, and frontend/Pages CI Gray/FEM gates are recorded in the recent commits. The core OpenSimPhy SFC scope is 58/58 Pug; counting the four Fiddle and four Awesome Physics adjacent bridge SFCs produces the stale-for-this-scope raw total of 66.
+- Recent commits record focused Gray engine/UI contracts, 10 Chromium Gray workbench tests, FEM validation contracts, generated-machine checking, and CI wiring. No post-July aggregate `npm run verify` file/test total is asserted.
 
 Current generated simulation compatibility keys:
 
@@ -148,6 +166,8 @@ Current checkpoint production measurements:
 
 `src/App.vue` no longer invokes an aggregate Atlas initializer. Independent modules under `src/registries` give each route direct ownership: Tour loads its generated artifacts on demand; Formula Atlas/detail fetches `recipes.json`, `symbols.json`, and `registry.json`, hash-checks the exact bytes, and evaluates in `formula.worker`; Core evaluates only in `core.worker`; Number Walls defers payload and worker loading until Run. Formula assets use revisioned runtime caches and Formula closures contain no Tour JSON, Core/Wall evaluator, or aggregate worker. EARTH remains isolated behind its existing registries and worker.
 
+`/labs/quantum-wave` and `/labs/edwin-gray` are adjacent teaching labs linked from Labs, not generated Tour chapters or evidence that Iterations 8-11 are complete. Gray compiles seven machine contracts into a small generated artifact and dispatches full-motor work through its own worker. Strict machine/revision/model/topology/excitation/hash compatibility keeps absent or incompatible FEM data disabled instead of relabeling the illustrative surrogate as FEM.
+
 Registry initialization is generation-guarded so stale in-flight results cannot publish. Failed attempts clear their initialization promise and may be retried; successful registries remain session-cached. Formula and Core routes use owner counts, and release by the final owner cancels unfinished initialization. Each wall run owns a fresh deferred worker and terminates it on result, failure, or cancellation. The additive runtime audit session ledger records only domains that have loaded, and the completion registry uses the strict `completionReport` parser rather than rebuilding a global engine state.
 
 The Tour now has orientation, chapter map, chapter, lesson, evidence, saved, and not-found surfaces; legacy topics redirect into chapters. Guided/Technical depth and anchor-aware Resume persist locally. Station and lesson progress remain independent, explicit, exportable, and clearable. All eight quick stations are content-ready across eight conventional-physics chapters; 12 mathematical/research chapters remain planned. The nine lessons render Question, Observe, Explain, Equation ladder, Try, and Interpret stages, with Technical material additive to Guided content and no change to the verdict.
@@ -167,6 +187,8 @@ Core, Number Walls, and EARTH now share a capability-driven Workbench shell and 
 Generated Tour JSON is not automatically precached. The explicit Guided-only pack transactionally installs and validates 31 resources totaling 485,129 bytes at revision `2026-07-27`, includes all station lessons and simulations plus taxonomy as a self-contained fallback, preserves the prior complete pack on failure, and supports explicit clearing. Iteration 10 remains planned: richer packs, saved-run import/export and revision replay, migration/storage policy, and update warnings are not complete.
 
 Production closure checks cover all Tour, Formula Atlas, Core, and Number Wall route groups and six EARTH view groups, including canonical and legacy document navigation. Evaluator signatures occur only in their dedicated workers; no aggregate Atlas or shared simulation worker remains.
+
+The generated top-level `completion.json` reports only Formula, Number Wall, and Core registry coverage. Its `complete` field does not attest Tour learning completion, EARTH methods, Quantum/Gray labs, Gray FEM, PWA, accessibility, CI, or scientific validity; EARTH keeps a separate completion artifact and the other boundaries require their own tests and evidence.
 
 Later residuals do not reopen completed iterations: Formula detail still evaluates all 288 recipes; successful registries intentionally remain session-cached; strict current Tour summary/count validation must update deliberately with future content; Formula saved-run import/export, revision replay, migration, and richer storage behavior belong to Iteration 10; and final budgets, forced-colors, and editorial work belongs to Iteration 11. Chromium remains the sole automated browser target.
 
@@ -203,6 +225,13 @@ Required future abstractions:
 - Controlled and proprietary datasets cannot be publicly bundled without permission.
 
 ## Progress history
+
+### 2026-08-16: post-Iteration-7 Gray checkpoint recorded
+
+- Recorded the adjacent `/labs/edwin-gray` worker-backed 27-event workbench, seven compiled machine contracts, generated artifact and hardware-sensitive benchmark without changing the Iteration 8-11 statuses.
+- Recorded original-versus-modified and source-versus-assumption boundaries, corrected diagram arithmetic and deficits, retained COP-300/raw-caption ambiguity, and preserved `validatesTheory: false`.
+- Recorded rejected v1 and 18/33-rejected v2 production FEM evidence, the bounded v2 pilot, six-job symmetry infrastructure, the separate `limited-not-validated` calibration path, absent production LUT, blocked prototype FEM, and illustrative patent scope.
+- Recorded PWA, accessibility, CI, Pug, and completion-artifact boundaries. No new aggregate full-suite total is claimed.
 
 ### 2026-07-27: Shared Workbench accepted
 
