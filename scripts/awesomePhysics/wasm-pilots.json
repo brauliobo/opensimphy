@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 1,
+  "manifestKind": "wasm-pilots",
+  "manifestRevision": "awesome-physics-wasm-pilots-v1",
+  "sourcePlan": {
+    "path": "AWESOME_PHYSICS_MIGRATION_PLAN.md",
+    "revision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+    "evidenceRefs": [
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:111-124",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md:246-277"
+    ]
+  },
+  "records": [
+    {
+      "id": "coolprop",
+      "project": "CoolProp",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/CoolProp",
+        "revision": "4db89c1ce8d0",
+        "files": [
+          "CMakeLists.txt",
+          "src/CoolPropLib.cpp",
+          "src/emscripten_interface.cxx",
+          "LICENSE"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28"
+        ]
+      },
+      "build": {
+        "family": "emscripten",
+        "command": "cmake -S . -B build-wasm -DCOOLPROP_JAVASCRIPT_MODULE=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=\"$EMSDK/upstream/emscripten/cmake/Platform/Emscripten.cmake\" && cmake --build build-wasm --parallel 4",
+        "toolchain": "Emscripten SDK from EMSDK; record the exact SDK version and compiler flags in the build ledger before producing output.",
+        "workingDirectory": "awesome-physics-repos/CoolProp"
+      },
+      "output": {
+        "module": "coolprop.js ES-module factory plus coolprop.wasm",
+        "workerBoundary": "A dedicated worker owns module initialization, PropsSI/AbstractState calls, cancellation, and copied typed-array results.",
+        "artifactKind": "wasm-module"
+      },
+      "runtime": {
+        "memoryPolicy": "Allow Emscripten memory growth only inside a 128 MiB worker budget; reject requests that would exceed the budget.",
+        "threadPolicy": "Single-threaded; pthreads and shared memory are disabled until cross-origin isolation and mobile behavior are proven.",
+        "maxMemoryBytes": 134217728,
+        "maxArtifactBytes": 33554432,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "pass",
+        "license": "MIT",
+        "noticeRequirements": [
+          "Retain the CoolProp LICENSE with any redistributed module.",
+          "Review the selected Emscripten output and embedded third-party notices before release."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce the pinned Emscripten build and record the compiler/toolchain revision.",
+        "Run PropsSI and AbstractState golden calls through the dedicated worker.",
+        "Prove cancellation, cache-first and first-load behavior, output-size budget, MIME delivery, and license compliance."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:115",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:178"
+      ]
+    },
+    {
+      "id": "galpy",
+      "project": "galpy",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/galpy",
+        "revision": "3762e73ef845",
+        "files": [
+          ".github/workflows/build_pyodide_wheels.yml",
+          "setup.py",
+          "LICENSE",
+          "galpy/potential/mwpotentials.py",
+          "galpy/orbit/Orbit.py"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:69"
+        ]
+      },
+      "build": {
+        "family": "pyodide",
+        "command": "python -m pip install pyodide-build && export EMSCRIPTEN_VERSION=\"$(pyodide config get emscripten_version)\" && emconfigure ./configure --disable-shared --prefix=\"$PWD/.libs\" CFLAGS=-fPIC && emmake make --parallel 3 && CFLAGS=\"$(pkg-config --cflags-only-I --dont-define-prefix gsl)\" LDFLAGS=\"$(pkg-config --libs-only-L --dont-define-prefix gsl)\" pyodide build",
+        "toolchain": "CPython 3.12 or 3.13 with pyodide-build selecting its reported Emscripten version; build and statically link GSL 2.8 before pyodide build.",
+        "workingDirectory": "awesome-physics-repos/galpy"
+      },
+      "output": {
+        "module": "A pinned galpy Pyodide wheel loaded by the local Pyodide runtime",
+        "workerBoundary": "A dedicated worker owns Pyodide startup, numeric-array-only MWPotential/orbit calls, cancellation, and serialized traces.",
+        "artifactKind": "pyodide-wheel"
+      },
+      "runtime": {
+        "memoryPolicy": "Bound Pyodide and galpy allocations to 256 MiB; accept only bounded numeric arrays and reject larger orbit grids.",
+        "threadPolicy": "Single worker and single Python execution lane; no pthreads or shared-memory arrays.",
+        "maxMemoryBytes": 268435456,
+        "maxArtifactBytes": 67108864,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "pass",
+        "license": "BSD-3-Clause",
+        "noticeRequirements": [
+          "Retain the galpy LICENSE and AUTHORS metadata with the wheel or any extracted module.",
+          "Review GSL and Pyodide dependency notices before redistribution."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce the repository's pyodide-build workflow and record the Python, Pyodide, Emscripten, and GSL revisions.",
+        "Run a bounded MWPotential/orbit numeric-array smoke test inside a worker.",
+        "Prove cancellation, startup time, cache behavior, output-size budget, and license compliance."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:116",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:230"
+      ]
+    },
+    {
+      "id": "cantera",
+      "project": "cantera",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/cantera",
+        "revision": "11a2381011cb",
+        "files": [
+          "doc/sphinx/develop/distribution-packages/pyodide-wheel.md",
+          "interfaces/python_sdist/build_pyodide_wheel.py",
+          "interfaces/python_sdist/CMakeLists.txt",
+          "pixi.toml",
+          "LICENSE.txt"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27"
+        ]
+      },
+      "build": {
+        "family": "pyodide",
+        "command": "pixi run -e pyodide scons pyodide-wheel",
+        "toolchain": "The repository's pixi pyodide environment: Python 3.13, pyodide-build >=0.33.0,<0.34, CMake >=3.27,<4, Ninja, Boost, SCons, Cython, NumPy, ruamel.yaml, Node.js, and Make.",
+        "workingDirectory": "awesome-physics-repos/cantera"
+      },
+      "output": {
+        "module": "A pinned Cantera Pyodide wheel with the reduced CANTERA_PYODIDE static extension",
+        "workerBoundary": "A dedicated worker owns Pyodide startup, selected thermo/equilibrium and zero-D reactor calls, cancellation, and bounded YAML/data loading.",
+        "artifactKind": "pyodide-wheel"
+      },
+      "runtime": {
+        "memoryPolicy": "Bound the Pyodide runtime and selected mechanism/YAML data to 256 MiB; reject unbounded mechanism and flame requests.",
+        "threadPolicy": "Single worker and single Python execution lane; pthreads and shared memory are disabled.",
+        "maxMemoryBytes": 268435456,
+        "maxArtifactBytes": 67108864,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "review",
+        "license": "BSD-3-Clause with government notices",
+        "noticeRequirements": [
+          "Retain the Cantera BSD-3-Clause text and all required government notices.",
+          "Review selected YAML mechanism/data redistribution rights and Pyodide dependency notices."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce the documented two-stage sdist then Pyodide-wheel build in the pinned pixi environment.",
+        "Run thermo/equilibrium and one zero-D reactor smoke test through the worker with only selected YAML data.",
+        "Prove cancellation, startup and output-size budgets, cache behavior, and BSD/government notice compliance."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:117",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:177"
+      ]
+    },
+    {
+      "id": "spirit",
+      "project": "spirit",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/spirit",
+        "revision": "e82250d3b144",
+        "files": [
+          ".github/workflows/ci.yml",
+          "CMakeLists.txt",
+          "CMake/Emscripten.cmake",
+          "ui-web/CMakeLists.txt",
+          "LICENSE.txt"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45"
+        ]
+      },
+      "build": {
+        "family": "emscripten",
+        "command": "source \"$EMSDK/emsdk_env.sh\" && cmake -S . -B build-wasm -DCMAKE_BUILD_TYPE=Release -DSPIRIT_UI_USE_IMGUI=OFF -DSPIRIT_BUILD_FOR_JS=ON -DCMAKE_TOOLCHAIN_FILE=\"$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake\" && cmake --build build-wasm --parallel 2",
+        "toolchain": "Emscripten SDK 1.39.20 as used by the pinned webapp-mobile CI path; do not enable the ImGui/pthread desktop web path.",
+        "workingDirectory": "awesome-physics-repos/spirit"
+      },
+      "output": {
+        "module": "The SPIRIT_BUILD_FOR_JS ui-web module and its generated JavaScript/WASM files",
+        "workerBoundary": "A dedicated worker owns the serial web module, spin-state stepping, cancellation, and copied state snapshots; Vue owns rendering only.",
+        "artifactKind": "wasm-module"
+      },
+      "runtime": {
+        "memoryPolicy": "Cap Emscripten linear memory at 256 MiB and reject spin systems or snapshots that exceed the selected worker budget.",
+        "threadPolicy": "Serial webapp-mobile configuration; pthreads, ImGui, shared memory, and cross-origin-isolation requirements are out of scope for the first artifact.",
+        "maxMemoryBytes": 268435456,
+        "maxArtifactBytes": 67108864,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "review",
+        "license": "MIT root license",
+        "noticeRequirements": [
+          "Audit and retain bundled third-party notices from the old web toolchain.",
+          "Do not redistribute the ImGui desktop web output or any unreviewed bundled assets."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce the serial SPIRIT_BUILD_FOR_JS webapp-mobile build with the pinned Emscripten version.",
+        "Prove worker loading, cancellation, browser cache behavior, mobile startup, and bounded state/output transfer.",
+        "Resolve bundled notice obligations and deployment MIME/header requirements before release."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:118",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:200"
+      ]
+    },
+    {
+      "id": "nphysics",
+      "project": "nphysics",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/nphysics",
+        "revision": "65aa85c5470a",
+        "files": [
+          "Cargo.toml",
+          "build/nphysics2d/Cargo.toml",
+          "build/nphysics3d/Cargo.toml",
+          "README.md",
+          "CHANGELOG.md"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10"
+        ]
+      },
+      "build": {
+        "family": "rust-cargo-wasm",
+        "command": "cargo build --manifest-path build/nphysics2d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features use-wasm-bindgen && cargo build --manifest-path build/nphysics3d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features use-wasm-bindgen",
+        "toolchain": "Pinned Rust toolchain compatible with the legacy Rust 2018 crate, wasm32-unknown-unknown target, and wasm-bindgen 0.2; cargo-web/stdweb rendering is not part of the OpenSimPhy artifact.",
+        "workingDirectory": "awesome-physics-repos/nphysics"
+      },
+      "output": {
+        "module": "Separate bounded nphysics2d and nphysics3d wasm-bindgen modules with no testbed renderer",
+        "workerBoundary": "A dedicated worker owns one selected 2D or 3D engine instance, typed POD buffers, cancellation, and state snapshots; no kiss3d/stdweb UI crosses the boundary.",
+        "artifactKind": "wasm-module"
+      },
+      "runtime": {
+        "memoryPolicy": "Cap each dimension-specific module at 128 MiB and bound bodies, colliders, and simulation steps before allocation.",
+        "threadPolicy": "Single-threaded wasm32 execution; no parallel pipeline, pthreads, or shared-memory transfer.",
+        "maxMemoryBytes": 134217728,
+        "maxArtifactBytes": 33554432,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "review",
+        "license": "Apache-2.0",
+        "noticeRequirements": [
+          "Retain nphysics and ncollide Apache-2.0 notices with any module.",
+          "Document the superseded/legacy status and review the old Rust/WASM dependency closure."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce both dimension-specific wasm-bindgen builds with a recorded Rust and dependency lock state.",
+        "Replace testbed rendering with a typed headless ABI and run representative collision/dynamics fixtures in a worker.",
+        "Prove cancellation, cache behavior, output-size budget, and legacy toolchain/license compliance before treating the pilot as usable."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:119",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:160"
+      ]
+    },
+    {
+      "id": "pymunk",
+      "project": "pymunk",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/pymunk",
+        "revision": "6287ce6d9223",
+        "files": [
+          ".github/workflows/wheels.yml",
+          "pyproject.toml",
+          "setup.py",
+          "pymunk/pymunk_extension_build.py",
+          "LICENSE.txt"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:14"
+        ]
+      },
+      "build": {
+        "family": "pyodide",
+        "command": "CIBW_PLATFORM=pyodide python -m cibuildwheel --output-dir wheelhouse",
+        "toolchain": "The repository's cibuildwheel pyodide platform with submodules checked out and PYMUNK_BUILD_SLIM=1; build the wheel, not the desktop examples.",
+        "workingDirectory": "awesome-physics-repos/pymunk"
+      },
+      "output": {
+        "module": "A pinned pymunk Pyodide wheel containing the slim Chipmunk extension",
+        "workerBoundary": "A dedicated worker owns Pyodide startup and bounded headless 2D Space stepping; drawing utilities, pygame, and desktop callbacks stay outside the boundary.",
+        "artifactKind": "pyodide-wheel"
+      },
+      "runtime": {
+        "memoryPolicy": "Bound Pyodide and the Chipmunk space to 128 MiB with explicit body, shape, and step limits.",
+        "threadPolicy": "Single worker and single Python execution lane; threaded-space examples and pthreads are excluded.",
+        "maxMemoryBytes": 134217728,
+        "maxArtifactBytes": 33554432,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "pass",
+        "license": "MIT",
+        "noticeRequirements": [
+          "Retain the Pymunk MIT license and Chipmunk attribution with the wheel.",
+          "Review the cffi and Pyodide dependency notices before redistribution."
+        ]
+      },
+      "proofRequirements": [
+        "Reproduce the repository's CIBW_PLATFORM=pyodide wheel workflow with the pinned source revision.",
+        "Compare the Pyodide worker against a small direct TypeScript adapter using headless physics only.",
+        "Prove cancellation, cache behavior, output-size budget, and MIT/Chipmunk notice compliance."
+      ],
+      "status": "planned",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:120",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:164"
+      ]
+    },
+    {
+      "id": "fluids",
+      "project": "fluids",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/fluids",
+        "revision": "5fa218f9c15f",
+        "files": [
+          "pyproject.toml",
+          "README.rst",
+          "LICENSE.txt"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+        ]
+      },
+      "build": {
+        "family": "pyodide-deferred",
+        "command": "pyodide build --outdir dist/pyodide",
+        "toolchain": "A new repository-local Pyodide build hook and pinned pyodide-build/Emscripten environment are required; this checkout has no verified browser workflow.",
+        "workingDirectory": "awesome-physics-repos/fluids"
+      },
+      "output": {
+        "module": "A future reproducible fluids Pyodide wheel; current TypeScript-first formulas remain the only browser path",
+        "workerBoundary": "If proven, a dedicated worker must own the wheel and bounded Reynolds/friction/pump/pressure-drop calls; no main-thread or remote Python fallback.",
+        "artifactKind": "pyodide-wheel"
+      },
+      "runtime": {
+        "memoryPolicy": "Future Pyodide proof must cap the worker at 128 MiB and bound correlation inputs, tables, and output arrays.",
+        "threadPolicy": "Single worker and single Python execution lane; no pthreads or shared memory.",
+        "maxMemoryBytes": 134217728,
+        "maxArtifactBytes": 33554432,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 1048576
+      },
+      "licenseGate": {
+        "status": "pass",
+        "license": "MIT",
+        "noticeRequirements": [
+          "Retain the fluids MIT license with any future wheel.",
+          "Review all dependency and data-package notices before any browser redistribution."
+        ]
+      },
+      "proofRequirements": [
+        "Produce a reproducible browser wheel through a new custom Pyodide build hook.",
+        "Add a data-package test for every selected correlation/table used by the browser lesson.",
+        "Record the exact toolchain, wheel byte size, SHA-256, worker startup/cancellation evidence, and license review before unblocking."
+      ],
+      "status": "blocked",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:124",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:167"
+      ]
+    },
+    {
+      "id": "thermo",
+      "project": "thermo",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/thermo",
+        "revision": "2bb466e98439",
+        "files": [
+          "pyproject.toml",
+          "README.rst",
+          "LICENSE.txt"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+        ]
+      },
+      "build": {
+        "family": "pyodide-deferred",
+        "command": "pyodide build --outdir dist/pyodide",
+        "toolchain": "A new reproducible Pyodide build hook, dependency closure, data-package selection, and pinned pyodide-build/Emscripten environment are required; this checkout has no verified browser workflow.",
+        "workingDirectory": "awesome-physics-repos/thermo"
+      },
+      "output": {
+        "module": "A future reproducible thermo Pyodide wheel; current selected Chemical/EOS/flash work remains TypeScript-first",
+        "workerBoundary": "If proven, a dedicated worker must own the wheel, selected property/data calls, cancellation, and bounded phase-diagram output; no remote or main-thread fallback.",
+        "artifactKind": "pyodide-wheel"
+      },
+      "runtime": {
+        "memoryPolicy": "Future Pyodide proof must cap the worker at 256 MiB and bound property tables, dependency data, flash iterations, and output arrays.",
+        "threadPolicy": "Single worker and single Python execution lane; no pthreads or shared memory.",
+        "maxMemoryBytes": 268435456,
+        "maxArtifactBytes": 67108864,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "licenseGate": {
+        "status": "review",
+        "license": "MIT source license; dependency and data rights unresolved",
+        "noticeRequirements": [
+          "Retain the thermo MIT license with any future wheel.",
+          "Resolve broad dependency closure, alpha metadata, and data-package licensing before redistribution."
+        ]
+      },
+      "proofRequirements": [
+        "Produce a reproducible browser wheel through a new custom Pyodide build hook.",
+        "Add a data-package test covering the selected Chemical/EOS/flash surface and phase-diagram inputs.",
+        "Record dependency closure, exact toolchain, wheel byte size, SHA-256, worker startup/cancellation evidence, and license/data review before unblocking."
+      ],
+      "status": "blocked",
+      "artifact": {
+        "path": null,
+        "sha256": null,
+        "byteSize": null
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:124",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:180"
+      ]
+    }
+  ]
+}
