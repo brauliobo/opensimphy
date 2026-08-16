@@ -59,6 +59,18 @@ function sha256(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
+function stableJson(value) {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function sha256Value(value) {
+  return createHash("sha256").update(stableJson(value)).digest("hex");
+}
+
 function writeJson(path, value) {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
@@ -271,6 +283,60 @@ function eventIndexForAngle(spec, angle) {
   return spec.production.convergenceEventIndex + (periodic ? spec.production.periodicityEventIndexOffset : 0);
 }
 
+export function productionConvergenceAttestation(spec) {
+  const production = spec.production;
+  const base = production.baseDomainId;
+  const fine = production.meshLevels.at(-1).id;
+  const representative = production.representativeAngles.map((item) => item.angleDeg);
+  const angles = new Set([
+    ...representative,
+    ...production.torqueAnglesDeg,
+    ...production.periodicityPairsDeg.flat()
+  ].map((angle) => Number(angle).toFixed(10)));
+  const required = new Map();
+  const add = (domainId, meshLevelId, driveCurrentA, rotorAngleDeg) => {
+    const tuple = { domainId, meshLevelId, driveCurrentA, rotorAngleDeg, eventIndex: eventIndexForAngle(spec, rotorAngleDeg) };
+    required.set(sampleKey(tuple), tuple);
+  };
+  for (const mesh of production.meshLevels) {
+    for (const angle of angles) add(base, mesh.id, production.productionCurrentA, Number(angle));
+  }
+  for (const domain of production.domains) {
+    for (const angle of representative) add(domain.id, fine, production.productionCurrentA, angle);
+  }
+  for (const current of [production.productionCurrentA, production.linearityAuditCurrentA]) {
+    for (const angle of representative) add(base, fine, current, angle);
+  }
+  const profile = {
+    contract: "edwin-gray-production-convergence-profile",
+    contractVersion: 1,
+    profileId: "historical-33-sample-production-v2",
+    specificationSha256: sha256(SPEC_PATH),
+    requiredTuples: [...required.values()].sort((left, right) => sampleKey(left).localeCompare(sampleKey(right)))
+  };
+  assert(profile.requiredTuples.length === 33, "canonical production convergence profile must contain exactly 33 tuples");
+  return {
+    contract: profile.contract,
+    contractVersion: profile.contractVersion,
+    profileId: profile.profileId,
+    sha256: sha256Value(profile)
+  };
+}
+
+export function authorizePublicationReport(report, spec) {
+  const expectedProfile = productionConvergenceAttestation(spec);
+  assert(report.status === "approved", "publication requires an approved convergence report");
+  assert(report.contract === "edwin-gray-convergence-report" && report.contractVersion === 2, "publication convergence report contract is invalid");
+  assert(report.specification?.contract === spec.contract && report.specification?.contractVersion === spec.contractVersion
+      && report.specification.sha256 === sha256(SPEC_PATH),
+    "publication convergence report does not match the canonical production specification");
+  assert(report.profile?.contract === expectedProfile.contract
+      && report.profile?.contractVersion === expectedProfile.contractVersion
+      && report.profile?.profileId === expectedProfile.profileId
+      && report.profile?.sha256 === expectedProfile.sha256,
+    "publication requires the exact attested 33-sample production convergence profile");
+}
+
 export function sampleArguments({ sample, mesh, cases, runs, image, threads, meshThreads, cpus, memoryGiB, solverProfile, publication, source }) {
   const args = [
     RUNNER,
@@ -455,6 +521,9 @@ function runConvergence(options, spec, definitions, workDir) {
       evaluatorExitCode: evaluation.status
     };
   }
+  if (options.stage === "publication") {
+    authorizePublicationReport(readJson(resolve(workDir, "convergence-report.json"), "approved convergence report"), spec);
+  }
   const cases = caseVariants(workDir, spec);
   let completedBeforeRun = [];
   if (options["missing-only"] && existsSync(resolve(workDir, "runs"))) {
@@ -464,11 +533,6 @@ function runConvergence(options, spec, definitions, workDir) {
   if (options.plan) return studyPlan({ definitions, spec, cases, workDir, options });
   if (options.stage === "publication") {
     const convergenceReportPath = resolve(workDir, "convergence-report.json");
-    const convergenceReport = readJson(convergenceReportPath, "approved convergence report");
-    assert(convergenceReport.status === "approved", "publication requires an approved convergence report");
-    assert(convergenceReport.profile?.productionEligible === true, "reduced illustrative convergence cannot authorize LUT publication");
-    assert(convergenceReport.contract === "edwin-gray-convergence-report" && convergenceReport.contractVersion === 2, "publication convergence report contract is invalid");
-    assert(convergenceReport.specification?.sha256 === sha256(SPEC_PATH), "publication convergence report does not match convergence spec v2");
     const caseData = readJson(cases[spec.production.baseDomainId], "publication case");
     const profile = readJson(PUBLICATION_PROFILE_PATH, "fast publication profile");
     const selected = publicationDefinitions(profile, spec, caseData);
@@ -592,7 +656,7 @@ function main(argv) {
   assert(Number.isFinite(cpus) && cpus > 0 && cpus <= 2, "--cpus must be in (0, 2]");
   assert(Number.isFinite(memoryGiB) && memoryGiB > 0 && memoryGiB <= 24, "--memory-gib must be in (0, 24]");
   assert(Number.isInteger(meshThreads) && meshThreads >= 1 && meshThreads <= 2, "--mesh-threads must be an integer in [1, 2]");
-  assert(Number.isFinite(hardTimeoutSeconds) && hardTimeoutSeconds > 0, "--hard-timeout-seconds must be finite and positive");
+  if (!existingOnly) assert(Number.isFinite(hardTimeoutSeconds) && hardTimeoutSeconds > 0, "--hard-timeout-seconds must be finite and positive");
   if (options.stage === "publication") {
     assert(threads === 2 && meshThreads === 1 && cpus === 2 && memoryGiB === 24, "publication requires exactly 2 solver threads, 1 mesh thread, 2 CPUs, and 24 GiB");
   }
