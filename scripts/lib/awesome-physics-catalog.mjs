@@ -1,3 +1,7 @@
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
 const CATALOG_REVISION = "807186a1235f3b35aa969718e16b04480e4e5f6a";
 const DEFAULT_ACQUISITION_DATE = "2026-08-15";
 const CATALOG_PATH = "awesome-physics/README.md";
@@ -11,6 +15,8 @@ const EXPECTED_SIMULATION_CAPABILITIES = 76;
 const NO_ADAPTER_IMPLEMENTATION_REVISION = "phase-0-no-adapters";
 const OUTPUT_REVISION = "awesome-physics-descriptor-v1";
 const COMPATIBILITY_REVISION = "awesome-physics-compatibility-v1";
+const OPEN_SIMPHY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+const CORPUS_ROOT = resolve(OPEN_SIMPHY_ROOT, "..");
 
 const EXECUTION_KINDS = new Set([
   "browser",
@@ -484,6 +490,207 @@ const PLAN_POLICIES = Object.freeze({
   },
 });
 
+// Release allowlist. Every entry is a local bounded kernel with no external
+// package, data, or build requirement at runtime. The module and license
+// references are verified before an available descriptor is emitted.
+const AWESOME_PHYSICS_IMPLEMENTATION_MAP = Object.freeze({
+  "matter-js": {
+    adapterId: "matter-js-browser",
+    modulePath: "src/awesomePhysics/adapters/browser/matterJs.ts",
+    factoryExport: "createMatterJsAdapterFactory",
+    execution: "browser",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded explicit Euler stepping with pairwise circle collision impulses",
+    inputSchema: "matter-js-input-v1",
+    outputSchema: "matter-js-output-v1",
+    implementationRevision: "matter-js-browser-adapter-v1",
+    transformation: "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/browser/matterJs.ts"],
+    licenseRefs: ["awesome-physics-repos/matter-js/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  "cannon.js": {
+    adapterId: "cannon-js-browser",
+    modulePath: "src/awesomePhysics/adapters/browser/cannonJs.ts",
+    factoryExport: "createCannonJsAdapterFactory",
+    execution: "browser",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded explicit Euler stepping with pairwise sphere collision impulses",
+    inputSchema: "cannon-js-input-v1",
+    outputSchema: "cannon-js-output-v1",
+    implementationRevision: "cannon-js-browser-adapter-v1",
+    transformation: "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/browser/cannonJs.ts"],
+    licenseRefs: ["awesome-physics-repos/cannon.js/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  myphysicslab: {
+    adapterId: "awesome-myphysicslab-browser-v1",
+    modulePath: "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+    factoryExport: "createMyphysicslabAdapterFactory",
+    execution: "browser",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded classical fourth-order Runge-Kutta integration of a linear spring",
+    inputSchema: "myphysicslab-input-v1",
+    outputSchema: "myphysicslab-output-v1",
+    implementationRevision: "myphysicslab-headless-spring-adapter-v1",
+    transformation: "Independent bounded educational reimplementation of a single spring model; no upstream application, source code, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/browser/myphysicslab.ts"],
+    licenseRefs: ["awesome-physics-repos/myphysicslab/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  "webgl-ripples": {
+    adapterId: "awesome-webgl-ripples-browser-v1",
+    modulePath: "src/awesomePhysics/adapters/browser/webglRipples.ts",
+    factoryExport: "createWebglRipplesAdapterFactory",
+    execution: "browser",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded explicit second-order finite-difference wave update",
+    inputSchema: "webgl-ripples-input-v1",
+    outputSchema: "webgl-ripples-output-v1",
+    implementationRevision: "webgl-ripples-headless-adapter-v1",
+    transformation: "Independent bounded educational reimplementation of the finite-difference wave model; no upstream browser, shader, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/browser/webglRipples.ts"],
+    licenseRefs: ["awesome-physics-repos/webgl-ripples/LICENSE.txt"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  "particle-clicker": {
+    adapterId: "awesome-particle-clicker-browser-v1",
+    modulePath: "src/awesomePhysics/adapters/browser/particleClicker.ts",
+    factoryExport: "createParticleClickerAdapterFactory",
+    execution: "browser",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded deterministic click, upgrade, worker, and elapsed-time state transitions",
+    inputSchema: "particle-clicker-input-v1",
+    outputSchema: "particle-clicker-output-v1",
+    implementationRevision: "particle-clicker-bounded-progression-adapter-v1",
+    transformation: "Independent bounded educational reimplementation; no upstream application, source code, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/browser/particleClicker.ts"],
+    licenseRefs: ["awesome-physics-repos/particle-clicker/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  qmsolve: {
+    adapterId: "awesome-qmsolve-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+    factoryExport: "qmsolveAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "central finite-difference Crank-Nicolson stepping with a tridiagonal solve",
+    inputSchema: "qmsolve-input-v1",
+    outputSchema: "qmsolve-output-v1",
+    implementationRevision: "qmsolve-typescript-finite-difference-v1",
+    transformation: "Independent bounded educational reimplementation of a one-dimensional wave kernel; no upstream Python package, SciPy/CUDA runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/qmsolve.ts"],
+    licenseRefs: ["awesome-physics-repos/qmsolve/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  EMpy: {
+    adapterId: "awesome-empy-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/empy.ts",
+    factoryExport: "empyAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "independent bounded 2x2 characteristic-matrix multiplication for finite films",
+    inputSchema: "empy-input-v1",
+    outputSchema: "empy-output-v1",
+    implementationRevision: "empy-thin-film-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of a thin-film transfer-matrix subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/empy.ts"],
+    licenseRefs: ["awesome-physics-repos/EMpy/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  pyRT: {
+    adapterId: "awesome-pyrt-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/pyRt.ts",
+    factoryExport: "pyRtAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "bounded quadratic ray-sphere intersection using the nearest valid root",
+    inputSchema: "pyrt-input-v1",
+    outputSchema: "pyrt-output-v1",
+    implementationRevision: "pyrt-ray-sphere-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of a ray-sphere kernel; no upstream Python package, renderer, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/pyRt.ts"],
+    licenseRefs: ["awesome-physics-repos/pyRT/LICENSE.md"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  "scikit-rf": {
+    adapterId: "awesome-scikit-rf-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+    factoryExport: "scikitRfAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "direct complex scalar impedance-to-reflection conversion with voltage transmission",
+    inputSchema: "scikit-rf-input-v1",
+    outputSchema: "scikit-rf-output-v1",
+    implementationRevision: "scikit-rf-complex-conversion-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of a scalar RF conversion subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/scikitRf.ts"],
+    licenseRefs: ["awesome-physics-repos/scikit-rf/LICENSE.txt"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  fluids: {
+    adapterId: "awesome-fluids-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/fluids.ts",
+    factoryExport: "fluidsAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "direct bounded SI evaluation of sound speed, Reynolds number, and thermal diffusivity",
+    inputSchema: "fluids-input-v1",
+    outputSchema: "fluids-output-v1",
+    implementationRevision: "fluids-core-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of selected scalar correlations; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/fluids.ts"],
+    licenseRefs: ["awesome-physics-repos/fluids/LICENSE.txt"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  gala: {
+    adapterId: "awesome-gala-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/gala.ts",
+    factoryExport: "galaAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "direct pairwise Newtonian acceleration with bounded velocity-Verlet stepping",
+    inputSchema: "gala-input-v1",
+    outputSchema: "gala-output-v1",
+    implementationRevision: "gala-orbit-velocity-verlet-typescript-v1",
+    transformation: "Independent bounded educational reimplementation in normalized units; no upstream Python/Cython runtime, Astropy/GSL data, build output, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/gala.ts"],
+    licenseRefs: ["awesome-physics-repos/gala/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  "shut-up-and-calculate": {
+    adapterId: "awesome-shut-up-and-calculate-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+    factoryExport: "tightBindingAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "direct cosine band evaluation and bounded Fermi-Dirac occupancy on a uniform k grid",
+    inputSchema: "shut-up-and-calculate-input-v1",
+    outputSchema: "shut-up-and-calculate-output-v1",
+    implementationRevision: "tight-binding-1d-occupancy-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of a one-dimensional tight-binding subset; no upstream Python package, NumPy/SciPy/Numba runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/tightBinding.ts"],
+    licenseRefs: ["awesome-physics-repos/shut-up-and-calculate/LICENSE"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  poppy: {
+    adapterId: "awesome-poppy-typescript",
+    modulePath: "src/awesomePhysics/adapters/typescript/poppy.ts",
+    factoryExport: "poppyAdapterFactory",
+    execution: "typescript",
+    modelOrigin: "educational-reimplementation",
+    numericalMethod: "analytic normalized Airy or sinc amplitude for bounded Fraunhofer aperture slices",
+    inputSchema: "poppy-input-v1",
+    outputSchema: "poppy-output-v1",
+    implementationRevision: "poppy-fraunhofer-aperture-typescript-v1",
+    transformation: "Independent bounded educational reimplementation of circular and rectangular aperture slices; no upstream Python package, Astropy/SciPy runtime, build output, data, or assets are redistributed.",
+    sourceRefs: ["src/awesomePhysics/adapters/typescript/poppy.ts"],
+    licenseRefs: ["awesome-physics-repos/poppy/LICENSE.md"],
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+});
+
 const ORGANIZATION_METADATA = Object.freeze({
   CERN: { status: "listed", notes: "Organization profile only; the plan makes no build or runtime claim." },
   IOP: { status: "review", notes: "The plan flags the link as resolving to an unrelated individual account." },
@@ -735,6 +942,54 @@ function licenseGate(status) {
   return "review";
 }
 
+function implementationReferenceExists(reference) {
+  const root = reference.startsWith("src/") ? OPEN_SIMPHY_ROOT : CORPUS_ROOT;
+  return existsSync(resolve(root, reference));
+}
+
+function escapedRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function assertImplementationEntry(name, plan, implementation) {
+  const policy = PLAN_POLICIES[name];
+  assert(policy, `No policy for implementation ${name}`);
+  assert(licenseGate(policy.licenseStatus) === "pass", `Implementation ${name} requires a passing plan license gate`);
+  assert(plan.executionOptions[0] === implementation.execution,
+    `Implementation ${name} execution must match the migration plan`);
+  assert(!plan.executionOptions.includes("wasm") && !plan.executionOptions.includes("wasm-candidate"),
+    `Implementation ${name} cannot enable a WASM or wasm-candidate entry`);
+  assert(EXECUTION_KINDS.has(implementation.execution), `Implementation ${name} has an unsupported execution kind`);
+  assert(/^[A-Za-z0-9_-]+$/.test(implementation.adapterId), `Implementation ${name} has an unsafe adapter ID`);
+  assertRelativePath(implementation.modulePath, `${name}.implementation.modulePath`);
+  assert(implementation.modulePath.startsWith("src/"), `Implementation ${name} module must be under src`);
+  assert(existsSync(resolve(OPEN_SIMPHY_ROOT, implementation.modulePath)),
+    `Implementation ${name} points to a missing adapter module`);
+  const moduleText = readFileSync(resolve(OPEN_SIMPHY_ROOT, implementation.modulePath), "utf8");
+  const factoryPattern = new RegExp(`export\\s+(?:const|function)\\s+${escapedRegExp(implementation.factoryExport)}\\b`);
+  assert(factoryPattern.test(moduleText), `Implementation ${name} points to a missing exported factory ${implementation.factoryExport}`);
+  for (const reference of [...implementation.sourceRefs, ...implementation.licenseRefs]) {
+    assertRelativePath(reference, `${name}.implementation evidence`);
+    assert(implementationReferenceExists(reference), `Implementation ${name} evidence is missing ${reference}`);
+  }
+  assert(implementation.runtime.externalPackages.length === 0, `Implementation ${name} requires an external package`);
+  assert(implementation.runtime.externalData.length === 0, `Implementation ${name} requires external data`);
+  assert(implementation.runtime.requiresBuild === false, `Implementation ${name} requires an external build`);
+  for (const field of ["numericalMethod", "inputSchema", "outputSchema", "implementationRevision", "transformation"])
+    assert(typeof implementation[field] === "string" && implementation[field].trim().length > 0,
+      `Implementation ${name}.${field} must be a non-empty string`);
+}
+
+function assertImplementationMap(parsedCatalog, planByName) {
+  for (const [name, implementation] of Object.entries(AWESOME_PHYSICS_IMPLEMENTATION_MAP)) {
+    const catalogRow = parsedCatalog.projects.find((row) => canonicalName(row.title) === name);
+    assert(catalogRow, `Implementation map points to a missing catalog item ${name}`);
+    const plan = planByName.get(name);
+    assert(plan, `Implementation map points to a missing migration plan row ${name}`);
+    assertImplementationEntry(name, plan, implementation);
+  }
+}
+
 function modelOrigin(execution) {
   if (execution === "browser" || execution === "wasm" || execution === "wasm-candidate") return "upstream-adaptation";
   if (execution === "typescript") return "educational-reimplementation";
@@ -908,14 +1163,23 @@ function buildOrganization(row, planText) {
 function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
   const execution = plan?.executionOptions[0] ?? "artifact";
   const executionOptions = plan?.executionOptions ?? ["artifact", "reference"];
+  const implementation = plan ? AWESOME_PHYSICS_IMPLEMENTATION_MAP[plan.name] : null;
+  const hasImplementation = implementation !== undefined && implementation !== null;
   const policy = plan ? PLAN_POLICIES[plan.name] : {
     licenseStatus: "unclear",
     licenseText: "Archive rights require review.",
   };
   const gate = licenseGate(policy.licenseStatus);
-  const availability = execution === "blocked" || gate === "blocked" ? "blocked" : "unavailable";
+  if (hasImplementation) assertImplementationEntry(plan.name, plan, implementation);
+  const availability = hasImplementation
+    ? "available"
+    : execution === "blocked" || gate === "blocked"
+      ? "blocked"
+      : "unavailable";
   let availabilityReason;
-  if (execution === "blocked") {
+  if (hasImplementation) {
+    availabilityReason = "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.";
+  } else if (execution === "blocked") {
     availabilityReason = "Blocked: the source access attempt failed and no public canonical source or verified license is available.";
   } else if (gate === "blocked") {
     availabilityReason = "Blocked: the source or license gate has not passed; no adapter or redistributed artifact is permitted.";
@@ -933,15 +1197,17 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     ...item.evidence.sourceRefs,
     ...item.evidence.licenseRefs,
     ...item.evidence.maintenanceRefs,
+    ...(implementation?.sourceRefs ?? []),
+    ...(implementation?.licenseRefs ?? []),
   ])];
   const limits = limitsFor(execution);
   assertFiniteLimits(limits, item.id);
   const sourceRevision = item.upstreamRevision;
-  const transformation = item.sourceKind === "archive"
+  const transformation = implementation?.transformation ?? (item.sourceKind === "archive"
     ? "none: archive was not acquired or reconstructed"
     : item.accessFailure
       ? "none: source acquisition failed; no artifact was produced"
-      : "none: no artifact redistributed in Phase 0";
+      : "none: no artifact redistributed in Phase 0");
 
   return {
     id: `${item.id}-capability`,
@@ -951,14 +1217,14 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     execution,
     executionOptions,
     availability,
-    runnable: false,
+    runnable: hasImplementation,
     priority: plan?.priority ?? "P3",
-    modelOrigin: modelOrigin(execution),
-    numericalMethod: null,
-    inputSchema: null,
-    outputSchema: null,
+    modelOrigin: implementation?.modelOrigin ?? modelOrigin(execution),
+    numericalMethod: implementation?.numericalMethod ?? null,
+    inputSchema: implementation?.inputSchema ?? null,
+    outputSchema: implementation?.outputSchema ?? null,
     sourceRevision,
-    implementationRevision: NO_ADAPTER_IMPLEMENTATION_REVISION,
+    implementationRevision: implementation?.implementationRevision ?? NO_ADAPTER_IMPLEMENTATION_REVISION,
     licenseGate: gate,
     availabilityReason,
     planDisposition: plan?.disposition ?? "Preserve the archived links as attributed reference records; do not create placeholder artifacts.",
@@ -973,6 +1239,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
       evidenceRefs,
     },
     evidenceRefs,
+    ...(hasImplementation ? { adapterId: implementation.adapterId } : {}),
     compatibilityRevision: COMPATIBILITY_REVISION,
     modelRevision: `awesome-physics-plan-${catalogRevision}`,
     contentRevision: `awesome-physics-catalog-${catalogRevision}`,
@@ -1012,6 +1279,7 @@ export function buildAwesomePhysicsArtifacts({
   const plan = parsePlan(planText);
   const manifestByName = new Map(manifest.map((row) => [row.name, row]));
   const planByName = new Map(plan.map((row) => [row.name, row]));
+  assertImplementationMap(parsedCatalog, planByName);
 
   const items = parsedCatalog.projects.map((row) => {
     const name = canonicalName(row.title);
@@ -1058,7 +1326,10 @@ export function buildAwesomePhysicsArtifacts({
   const simulationsItems = items.map((item) => buildSimulation(item, planByName.get(item.canonicalName), catalogRevision, acquisitionDate));
   assert(simulationsItems.length === EXPECTED_SIMULATION_CAPABILITIES, `Expected ${EXPECTED_SIMULATION_CAPABILITIES} simulation capabilities`);
   assert(new Set(simulationsItems.map(({ id }) => id)).size === simulationsItems.length, "Simulation descriptor IDs must be unique");
-  assert(simulationsItems.every(({ runnable, adapterId }) => runnable === false && adapterId === undefined), "Unavailable descriptors must not declare adapters");
+  const inconsistentDescriptors = simulationsItems.filter(({ availability, runnable, adapterId }) => availability === "available"
+    ? !(runnable === true && adapterId !== undefined)
+    : !(runnable === false && adapterId === undefined));
+  assert(inconsistentDescriptors.length === 0, `Descriptor availability and adapter declarations must agree: ${inconsistentDescriptors.map(({ id, availability, runnable, adapterId }) => `${id}=${availability}/${runnable}/${adapterId ?? "none"}`).join(", ")}`);
   const executionKinds = Object.fromEntries([...EXECUTION_KINDS].map((kind) => [kind, simulationsItems.filter(({ execution }) => execution === kind).length]));
   const simulations = {
     schemaVersion: 1,
@@ -1082,6 +1353,7 @@ export function buildAwesomePhysicsArtifacts({
 }
 
 export {
+  AWESOME_PHYSICS_IMPLEMENTATION_MAP,
   CATALOG_REVISION,
   DEFAULT_ACQUISITION_DATE,
   EXPECTED_CLONED_REPOSITORIES,

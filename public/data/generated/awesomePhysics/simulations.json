@@ -15,11 +15,11 @@
   },
   "summary": {
     "sourceCapabilities": 76,
-    "runnable": 0,
-    "available": 0,
-    "unavailable": 72,
+    "runnable": 13,
+    "available": 13,
+    "unavailable": 59,
     "blocked": 4,
-    "adapterCount": 0,
+    "adapterCount": 13,
     "executionKinds": {
       "browser": 6,
       "wasm": 6,
@@ -144,17 +144,17 @@
       "executionOptions": [
         "browser"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
-      "modelOrigin": "upstream-adaptation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit Euler stepping with pairwise sphere collision impulses",
+      "inputSchema": "cannon-js-input-v1",
+      "outputSchema": "cannon-js-output-v1",
       "sourceRevision": "569730f94a1d",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "cannon-js-browser-adapter-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Typed browser adapter and one owned 3D lesson, preferably worker-stepped with OpenSimPhy rendering. MIT; stale upstream API.",
       "limits": {
         "maxGridSize": 256,
@@ -169,19 +169,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:37",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:4"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:4",
+          "src/awesomePhysics/adapters/browser/cannonJs.ts",
+          "awesome-physics-repos/cannon.js/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:37",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:4"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:4",
+        "src/awesomePhysics/adapters/browser/cannonJs.ts",
+        "awesome-physics-repos/cannon.js/LICENSE"
       ],
+      "adapterId": "cannon-js-browser",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -196,17 +201,17 @@
       "executionOptions": [
         "browser"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
-      "modelOrigin": "upstream-adaptation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit Euler stepping with pairwise circle collision impulses",
+      "inputSchema": "matter-js-input-v1",
+      "outputSchema": "matter-js-output-v1",
       "sourceRevision": "acb99b6f8784",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "matter-js-browser-adapter-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Direct adapter for collisions, constraints, and body controls; use a worker for repeatable stepping and a custom lesson surface. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -221,19 +226,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:38",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:5"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:5",
+          "src/awesomePhysics/adapters/browser/matterJs.ts",
+          "awesome-physics-repos/matter-js/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:38",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:5"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:5",
+        "src/awesomePhysics/adapters/browser/matterJs.ts",
+        "awesome-physics-repos/matter-js/LICENSE"
       ],
+      "adapterId": "matter-js-browser",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -300,17 +310,17 @@
       "executionOptions": [
         "browser"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
-      "modelOrigin": "upstream-adaptation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded classical fourth-order Runge-Kutta integration of a linear spring",
+      "inputSchema": "myphysicslab-input-v1",
+      "outputSchema": "myphysicslab-output-v1",
       "sourceRevision": "4b0bb8e1fa3b",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "myphysicslab-headless-spring-adapter-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Enumerate every simulation ID, adapt the TypeScript models into lazy OpenSimPhy descriptors, and retain source attribution. Apache-2.0; custom make/esbuild toolchain.",
       "limits": {
         "maxGridSize": 256,
@@ -325,19 +335,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a single spring model; no upstream application, source code, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:40",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:7"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:7",
+          "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+          "awesome-physics-repos/myphysicslab/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:40",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:7"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:7",
+        "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+        "awesome-physics-repos/myphysicslab/LICENSE"
       ],
+      "adapterId": "awesome-myphysicslab-browser-v1",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -822,17 +837,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P1",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "direct bounded SI evaluation of sound speed, Reynolds number, and thermal diffusivity",
+      "inputSchema": "fluids-input-v1",
+      "outputSchema": "fluids-output-v1",
       "sourceRevision": "5fa218f9c15f",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "fluids-core-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Worker-backed Reynolds, friction, pump, and pressure-drop lessons. Reassess Pyodide only after a reproducible build and data-package test. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -847,19 +862,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of selected scalar correlations; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:53",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17",
+          "src/awesomePhysics/adapters/typescript/fluids.ts",
+          "awesome-physics-repos/fluids/LICENSE.txt"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:53",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:17",
+        "src/awesomePhysics/adapters/typescript/fluids.ts",
+        "awesome-physics-repos/fluids/LICENSE.txt"
       ],
+      "adapterId": "awesome-fluids-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -1243,17 +1263,17 @@
       "executionOptions": [
         "browser"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
-      "modelOrigin": "upstream-adaptation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit second-order finite-difference wave update",
+      "inputSchema": "webgl-ripples-input-v1",
+      "outputSchema": "webgl-ripples-output-v1",
       "sourceRevision": "88eab79c98e8",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "webgl-ripples-headless-adapter-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Preserve the finite-difference shader or modernize to WebGL2/WebGPU, add source attribution and lesson controls. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -1268,19 +1288,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of the finite-difference wave model; no upstream browser, shader, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:72",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:25"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:25",
+          "src/awesomePhysics/adapters/browser/webglRipples.ts",
+          "awesome-physics-repos/webgl-ripples/LICENSE.txt"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:72",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:25"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:25",
+        "src/awesomePhysics/adapters/browser/webglRipples.ts",
+        "awesome-physics-repos/webgl-ripples/LICENSE.txt"
       ],
+      "adapterId": "awesome-webgl-ripples-browser-v1",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -1660,17 +1685,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P1",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "independent bounded 2x2 characteristic-matrix multiplication for finite films",
+      "inputSchema": "empy-input-v1",
+      "outputSchema": "empy-output-v1",
       "sourceRevision": "3ff20d88bd86",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "empy-thin-film-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Port thin-film transfer matrices and a small modesolver to a worker; do not bundle SciPy or Matplotlib. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -1685,19 +1710,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a thin-film transfer-matrix subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:89",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:33"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:33",
+          "src/awesomePhysics/adapters/typescript/empy.ts",
+          "awesome-physics-repos/EMpy/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:89",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:33"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:33",
+        "src/awesomePhysics/adapters/typescript/empy.ts",
+        "awesome-physics-repos/EMpy/LICENSE"
       ],
+      "adapterId": "awesome-empy-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -2130,17 +2160,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P1",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "direct complex scalar impedance-to-reflection conversion with voltage transmission",
+      "inputSchema": "scikit-rf-input-v1",
+      "outputSchema": "scikit-rf-output-v1",
       "sourceRevision": "34652721a23b",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "scikit-rf-complex-conversion-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Build a pure TypeScript Touchstone parser, transmission-line calculator, Smith chart, SWR, and network cascade worker. BSD-3-Clause.",
       "limits": {
         "maxGridSize": 256,
@@ -2155,19 +2185,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a scalar RF conversion subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:98",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:42"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:42",
+          "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+          "awesome-physics-repos/scikit-rf/LICENSE.txt"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:98",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:42"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:42",
+        "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+        "awesome-physics-repos/scikit-rf/LICENSE.txt"
       ],
+      "adapterId": "awesome-scikit-rf-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -2546,17 +2581,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P1",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "analytic normalized Airy or sinc amplitude for bounded Fraunhofer aperture slices",
+      "inputSchema": "poppy-input-v1",
+      "outputSchema": "poppy-output-v1",
       "sourceRevision": "a276feb4abf4",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "poppy-fraunhofer-aperture-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Port bounded Fresnel/Fraunhofer propagation, apertures, and PSF masks; leave Astropy units and large coronagraph workflows out. BSD-3-Clause.",
       "limits": {
         "maxGridSize": 256,
@@ -2571,19 +2606,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of circular and rectangular aperture slices; no upstream Python package, Astropy/SciPy runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:109",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:50"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:50",
+          "src/awesomePhysics/adapters/typescript/poppy.ts",
+          "awesome-physics-repos/poppy/LICENSE.md"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:109",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:50"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:50",
+        "src/awesomePhysics/adapters/typescript/poppy.ts",
+        "awesome-physics-repos/poppy/LICENSE.md"
       ],
+      "adapterId": "awesome-poppy-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -2598,17 +2638,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "bounded quadratic ray-sphere intersection using the nearest valid root",
+      "inputSchema": "pyrt-input-v1",
+      "outputSchema": "pyrt-output-v1",
       "sourceRevision": "6fc0ccbc6fb2",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "pyrt-ray-sphere-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Direct TypeScript worker port with progressive Canvas output; use independent pixel/intersection fixtures. MIT, but upstream is WIP/pre-alpha.",
       "limits": {
         "maxGridSize": 256,
@@ -2623,19 +2663,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a ray-sphere kernel; no upstream Python package, renderer, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:110",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:51"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:51",
+          "src/awesomePhysics/adapters/typescript/pyRt.ts",
+          "awesome-physics-repos/pyRT/LICENSE.md"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:110",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:51"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:51",
+        "src/awesomePhysics/adapters/typescript/pyRt.ts",
+        "awesome-physics-repos/pyRT/LICENSE.md"
       ],
+      "adapterId": "awesome-pyrt-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -3016,17 +3061,17 @@
       "executionOptions": [
         "browser"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
-      "modelOrigin": "upstream-adaptation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded deterministic click, upgrade, worker, and elapsed-time state transitions",
+      "inputSchema": "particle-clicker-input-v1",
+      "outputSchema": "particle-clicker-output-v1",
       "sourceRevision": "d6762d54eced",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "particle-clicker-bounded-progression-adapter-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Rewrite the game route in Vue/TypeScript, preserve educational content and attribution, replace CDN and synchronous JSON dependencies. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -3041,19 +3086,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation; no upstream application, source code, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:124",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:59"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:59",
+          "src/awesomePhysics/adapters/browser/particleClicker.ts",
+          "awesome-physics-repos/particle-clicker/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:124",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:59"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:59",
+        "src/awesomePhysics/adapters/browser/particleClicker.ts",
+        "awesome-physics-repos/particle-clicker/LICENSE"
       ],
+      "adapterId": "awesome-particle-clicker-browser-v1",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -3173,17 +3223,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P0",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "central finite-difference Crank-Nicolson stepping with a tridiagonal solve",
+      "inputSchema": "qmsolve-input-v1",
+      "outputSchema": "qmsolve-output-v1",
       "sourceRevision": "c69277da03bb",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "qmsolve-typescript-finite-difference-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Extend the existing quantum-wave engine with bounded 1D/2D oscillator, double-slit, packet, and probability workers; exclude 3D/Mayavi/CUDA. BSD-3-Clause.",
       "limits": {
         "maxGridSize": 256,
@@ -3198,19 +3248,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a one-dimensional wave kernel; no upstream Python package, SciPy/CUDA runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:127",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:61"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:61",
+          "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+          "awesome-physics-repos/qmsolve/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:127",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:61"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:61",
+        "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+        "awesome-physics-repos/qmsolve/LICENSE"
       ],
+      "adapterId": "awesome-qmsolve-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -3540,17 +3595,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P2",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "direct pairwise Newtonian acceleration with bounded velocity-Verlet stepping",
+      "inputSchema": "gala-input-v1",
+      "outputSchema": "gala-output-v1",
       "sourceRevision": "8bf0a1f574a4",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "gala-orbit-velocity-verlet-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Port selected analytic potentials and integrators into a bounded worker with Plotly traces; defer GSL/EXP and broad Astropy coupling. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -3565,19 +3620,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation in normalized units; no upstream Python/Cython runtime, Astropy/GSL data, build output, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:138",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:68"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:68",
+          "src/awesomePhysics/adapters/typescript/gala.ts",
+          "awesome-physics-repos/gala/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:138",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:68"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:68",
+        "src/awesomePhysics/adapters/typescript/gala.ts",
+        "awesome-physics-repos/gala/LICENSE"
       ],
+      "adapterId": "awesome-gala-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
@@ -3959,17 +4019,17 @@
       "executionOptions": [
         "typescript"
       ],
-      "availability": "unavailable",
-      "runnable": false,
+      "availability": "available",
+      "runnable": true,
       "priority": "P1",
       "modelOrigin": "educational-reimplementation",
-      "numericalMethod": null,
-      "inputSchema": null,
-      "outputSchema": null,
+      "numericalMethod": "direct cosine band evaluation and bounded Fermi-Dirac occupancy on a uniform k grid",
+      "inputSchema": "shut-up-and-calculate-input-v1",
+      "outputSchema": "shut-up-and-calculate-output-v1",
       "sourceRevision": "0896fe8ef4f4",
-      "implementationRevision": "phase-0-no-adapters",
+      "implementationRevision": "tight-binding-1d-occupancy-typescript-v1",
       "licenseGate": "pass",
-      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
       "planDisposition": "Port band functions, Fermi surfaces, and bounded susceptibility quadrature to a worker; use `src/tests/test_all.py` for fixtures. MIT.",
       "limits": {
         "maxGridSize": 256,
@@ -3984,19 +4044,24 @@
         "acquisitionDate": "2026-08-15",
         "byteSize": null,
         "sha256": null,
-        "transformation": "none: no artifact redistributed in Phase 0",
+        "transformation": "Independent bounded educational reimplementation of a one-dimensional tight-binding subset; no upstream Python package, NumPy/SciPy/Numba runtime, build output, data, or assets are redistributed.",
         "datasetLicense": null,
         "evidenceRefs": [
           "awesome-physics/README.md:152",
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:75"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:75",
+          "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+          "awesome-physics-repos/shut-up-and-calculate/LICENSE"
         ]
       },
       "evidenceRefs": [
         "awesome-physics/README.md:152",
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
-        "awesome-physics-repos/CLONE_MANIFEST.tsv:75"
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:75",
+        "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+        "awesome-physics-repos/shut-up-and-calculate/LICENSE"
       ],
+      "adapterId": "awesome-shut-up-and-calculate-typescript",
       "compatibilityRevision": "awesome-physics-compatibility-v1",
       "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
       "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
