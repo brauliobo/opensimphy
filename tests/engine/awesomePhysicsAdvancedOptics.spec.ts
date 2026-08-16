@@ -102,7 +102,7 @@ const rayoptInput: RayoptInputV1 = {
 }
 
 describe('Awesome Physics advanced optics TypeScript adapters', () => {
-  it('matches descriptors without claiming generated availability and exports stable factories', () => {
+  it('matches generated availability gates and exports stable factories', () => {
     const signal = new AbortController().signal
     const opticspyDescriptor = descriptorFor('awesome-opticspy')
     const poppyDescriptor = descriptorFor('awesome-poppy')
@@ -112,8 +112,12 @@ describe('Awesome Physics advanced optics TypeScript adapters', () => {
     const rayopt = createRayoptAdapter(rayoptDescriptor, signal)
 
     expect(opticspyDescriptor.availability).toBe('unavailable')
-    expect(poppyDescriptor.availability).toBe('unavailable')
+    expect(opticspyDescriptor.runnable).toBe(false)
+    expect(poppyDescriptor.availability).toBe('available')
+    expect(poppyDescriptor.runnable).toBe(true)
+    expect(poppyDescriptor.adapterId).toBe(POPPY_ADAPTER_ID)
     expect(rayoptDescriptor.availability).toBe('unavailable')
+    expect(rayoptDescriptor.runnable).toBe(false)
     expectDescriptorCompatibility(opticspy, opticspyDescriptor, OPTICSPY_ADAPTER_ID)
     expectDescriptorCompatibility(poppy, poppyDescriptor, POPPY_ADAPTER_ID)
     expectDescriptorCompatibility(rayopt, rayoptDescriptor, RAYOPT_ADAPTER_ID)

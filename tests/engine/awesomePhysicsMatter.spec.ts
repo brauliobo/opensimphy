@@ -69,7 +69,7 @@ describe('Awesome Physics Matter.js adapter', () => {
       implementationRevision: descriptor.implementationRevision,
       outputRevision: descriptor.outputRevision,
     })
-    expect(() => createMatterJsAdapter(sourceDescriptor)).toThrow(/adapterId/)
+    expect(createMatterJsAdapter(sourceDescriptor).adapterId).toBe('matter-js-browser')
     expect(() => createMatterJsAdapter({ ...descriptor, catalogItemId: 'awesome-cannon-js' })).toThrow(/matter-js/)
   })
 

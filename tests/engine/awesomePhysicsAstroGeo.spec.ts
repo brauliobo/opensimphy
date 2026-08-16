@@ -74,7 +74,7 @@ const circularOrbit: GalaInputV1 = {
 }
 
 describe('Awesome Physics astronomy and geophysics TypeScript adapters', () => {
-  it('matches both provisional descriptors without changing their unavailable gates', () => {
+  it('matches generated availability gates and stable factories', () => {
     const galaDescriptor = descriptorFor('awesome-gala')
     const emDescriptor = descriptorFor('awesome-em')
     const gala = createGalaAdapter(galaDescriptor, new AbortController().signal)
@@ -82,8 +82,9 @@ describe('Awesome Physics astronomy and geophysics TypeScript adapters', () => {
 
     expectCompatibility(gala, galaDescriptor)
     expectCompatibility(em, emDescriptor)
-    expect(galaDescriptor.availability).toBe('unavailable')
-    expect(galaDescriptor.runnable).toBe(false)
+    expect(galaDescriptor.availability).toBe('available')
+    expect(galaDescriptor.runnable).toBe(true)
+    expect(galaDescriptor.adapterId).toBe(GALA_ADAPTER_ID)
     expect(emDescriptor.availability).toBe('unavailable')
     expect(emDescriptor.runnable).toBe(false)
     expect(galaAdapterFactory).toBe(createGalaAdapter)
