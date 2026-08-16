@@ -32,6 +32,7 @@ const routes = [
   { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
   { path: '/earth/corpus/:slug', alias: '/earth/:slug', name: 'earth-document', component: { template: '<div />' } },
   { path: '/sources', name: 'sources', component: { template: '<div />' } },
+  { path: '/awesome-physics', name: 'awesome-physics-catalog', component: { template: '<div />' } },
 ]
 
 function createTestRouter() {
