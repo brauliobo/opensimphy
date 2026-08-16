@@ -4,6 +4,7 @@
 
 .gray-workbench {
   width: min(1480px, calc(100% - 2rem));
+  min-width: 0;
   padding: clamp(1rem, 3vw, 2rem);
   margin: 2rem auto 0;
   border: 1px solid var(--rule-bright);
@@ -90,7 +91,7 @@
 .gray-workbench select,
 .gray-workbench button {
   min-width: 0;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.55rem 0.7rem;
   color: var(--paper);
   font: inherit;
@@ -104,6 +105,14 @@
 }
 
 .gray-workbench button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+.gray-workbench input[type='checkbox'] {
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  accent-color: var(--cyan);
+}
 
 .gray-workbench__actions,
 .gray-snapshot-actions {
@@ -166,7 +175,14 @@
   border: 1px solid var(--rule);
 }
 
-.gray-technical summary { color: var(--cyan); font-family: var(--mono); cursor: pointer; }
+.gray-technical summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--cyan);
+  font-family: var(--mono);
+  cursor: pointer;
+}
 .gray-event-timeline .is-active,
 .gray-table-scroll tr.is-active { background: rgb(99 203 209 / 10%); }
 
@@ -209,9 +225,11 @@
 }
 
 .gray-table-scroll {
+  width: 100%;
   max-width: 100%;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
 }
 
 .gray-table-scroll table {
@@ -220,6 +238,25 @@
 
 .gray-table-scroll--wide table {
   min-width: 680px;
+}
+
+.gray-workbench,
+.gray-workbench *,
+.gray-machine-evidence,
+.gray-machine-evidence * {
+  overflow-wrap: anywhere;
+}
+
+.quantum-lab-view[data-testid='edwin-gray-lab-ready'] .quantum-result {
+  min-width: 0;
+  overflow-x: visible;
+}
+
+.quantum-lab-view[data-testid='edwin-gray-lab-ready'] .quantum-result svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .gray-topology-panel {
@@ -414,6 +451,7 @@
 }
 
 @media (max-width: 760px) {
+  .gray-workbench { width: 100%; }
   .gray-workbench__header,
   .gray-snapshots > header { align-items: start; flex-direction: column; }
   .gray-workbench__signal { width: 100%; }
@@ -429,5 +467,75 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .quantum-lab-view[data-testid='edwin-gray-lab-ready'] * { animation: none !important; transition: none !important; }
+  .quantum-lab-view[data-testid='edwin-gray-lab-ready'] *,
+  .quantum-lab-view[data-testid='edwin-gray-lab-ready'] *::before,
+  .quantum-lab-view[data-testid='edwin-gray-lab-ready'] *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .quantum-lab-view[data-testid='edwin-gray-lab-ready'] :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
+
+  .gray-workbench,
+  .gray-workbench__signal,
+  .gray-shared-timeline,
+  .gray-status,
+  .gray-fem-card,
+  .gray-claim-panel,
+  .gray-snapshot-comparison {
+    border-color: CanvasText;
+  }
+
+  .gray-status,
+  .gray-snapshot-comparison { border-left-style: solid; }
+  .gray-evidence-label { border-color: CanvasText; border-left-style: solid; }
+  .gray-assumption-label { border-color: CanvasText; border-left-style: dashed; }
+
+  .gray-machine-evidence article { border-color: CanvasText; }
+  .gray-machine-evidence article[data-testid='gray-original-evidence'] { border-top-style: solid; }
+  .gray-machine-evidence article[data-testid='gray-modified-evidence'] { border-top-style: double; }
+  .gray-machine-evidence article[data-testid='gray-recovery-evidence'] { border-top-style: dashed; }
+
+  .gray-event-timeline .is-active,
+  .gray-table-scroll tr.is-active {
+    color: HighlightText;
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  .gray-event-timeline .is-active > *,
+  .gray-table-scroll tr.is-active > * {
+    color: HighlightText;
+    border-color: HighlightText;
+  }
+
+  .gray-stator {
+    fill: Canvas;
+    stroke: CanvasText;
+    stroke-width: 2;
+    forced-color-adjust: none;
+  }
+
+  .gray-rotor {
+    fill: Highlight;
+    stroke: Highlight;
+    stroke-width: 2;
+    forced-color-adjust: none;
+  }
+
+  .gray-recovery {
+    fill: none;
+    stroke: CanvasText;
+    stroke-width: 3;
+    stroke-dasharray: 7 4;
+    forced-color-adjust: none;
+  }
 }

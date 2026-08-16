@@ -18,7 +18,7 @@ article.quantum-instrument(data-testid="gray-pulse-instrument")
     h3 Inspect the canonical schedule without recomputing it
     p Every row belongs to the same completed run. Select or animate an event in the shared timeline above to move all instruments together.
   .quantum-result(data-testid="gray-pulse-result")
-    p.gray-status(role="status" aria-live="polite" data-testid="gray-pulse-status") Event {{ (event?.eventIndex ?? 0) + 1 }}: {{ event?.quenchSucceeded ? 'arc quenched' : 'no successful quench' }} / phase {{ event?.phaseLabel }} / {{ event?.majorMinor }}.
+    p.gray-status(data-testid="gray-pulse-status") Event {{ (event?.eventIndex ?? 0) + 1 }}: {{ event?.quenchSucceeded ? 'arc quenched' : 'no successful quench' }} / phase {{ event?.phaseLabel }} / {{ event?.majorMinor }}.
     .gray-table-scroll.gray-table-scroll--wide
       table(data-testid="gray-event-timeline")
         caption Raw full-run event timeline
@@ -32,8 +32,15 @@ article.quantum-instrument(data-testid="gray-pulse-instrument")
             th(scope="col") Rule
             th(scope="col") Arc
         tbody
-          tr(v-for="row in result.events" :key="row.eventIndex" :class="{ 'is-active': row.eventIndex === event?.eventIndex }")
-            th(scope="row") {{ row.eventIndex + 1 }}
+          tr(
+            v-for="row in result.events"
+            :key="row.eventIndex"
+            :class="{ 'is-active': row.eventIndex === event?.eventIndex }"
+            :aria-current="row.eventIndex === event?.eventIndex ? 'true' : undefined"
+          )
+            th(scope="row")
+              span.sr-only(v-if="row.eventIndex === event?.eventIndex") Current event: 
+              | {{ row.eventIndex + 1 }}
             td {{ row.revolution + 1 }}
             td {{ row.scheduledAbsoluteAngleDeg.toFixed(2) }}
             td {{ (row.timeSeconds * 1e3).toFixed(3) }}

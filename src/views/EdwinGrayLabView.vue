@@ -439,7 +439,14 @@ onBeforeUnmount(() => {
         p.eyebrow Unified worker instrument
         h2#gray-workbench-title Edwin Gray Workbench
         p One URL-serializable input contract produces one immutable full-run result for every panel below.
-      .gray-workbench__signal(:data-status="runStatus")
+      .gray-workbench__signal(
+        id="gray-worker-status"
+        :data-status="runStatus"
+        :aria-busy="runStatus === 'running'"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      )
         strong {{ runStatus }}
         span {{ runStage }}
     .gray-workbench__controls
@@ -515,14 +522,19 @@ onBeforeUnmount(() => {
       button(type="button" :disabled="runStatus === 'running' || Boolean(revisionError)" data-testid="gray-run" @click="runWorkbench") Run full motor
       button(type="button" :disabled="runStatus !== 'running'" data-testid="gray-cancel" @click="cancelRun") Cancel
       button(type="button" data-testid="gray-reset" @click="resetWorkbench") Reset
-      progress(:value="runProgress" max="1" aria-label="Gray worker progress")
-      span {{ Math.round(runProgress * 100) }}%
+      progress(:value="runProgress" max="1" aria-label="Gray worker progress" aria-describedby="gray-worker-status gray-worker-progress-value")
+      span#gray-worker-progress-value {{ Math.round(runProgress * 100) }}%
     p.quantum-stale(v-if="stale" role="status" data-testid="gray-stale") Inputs changed. The visible result is stale until the worker completes another run.
     p.quantum-boundary(v-if="revisionError" role="alert" data-testid="gray-revision-error") {{ revisionError }}
     p.quantum-boundary(v-if="runError" role="alert") {{ runError }}
 
     .gray-shared-timeline(v-if="result" data-testid="gray-shared-timeline")
-      .gray-shared-timeline__readout
+      .gray-shared-timeline__readout(
+        role="status"
+        :aria-live="timelinePlaying ? 'off' : 'polite'"
+        aria-atomic="true"
+        data-testid="gray-event-summary"
+      )
         strong Event {{ (activeEvent?.eventIndex ?? 0) + 1 }} / {{ result.completedEventCount }}
         span {{ activeEvent?.scheduledAbsoluteAngleDeg.toFixed(2) }} deg / phase {{ activeEvent?.phaseLabel }} / {{ activeEvent?.after.arcState }}
       input(v-model.number="activeEventIndex" type="range" min="0" :max="Math.max(0, result.events.length - 1)" step="1" aria-label="Active motor event" data-testid="gray-event-slider")

@@ -34,7 +34,7 @@ article.quantum-instrument(data-testid="gray-geometry-instrument")
     h3 One rotor state, shared by every panel
     p The selected machine contract and canonical event index drive this cross-section. Geometry does not run a second model.
   .quantum-result(data-testid="gray-geometry-result")
-    p.gray-status(role="status" aria-live="polite" data-testid="gray-geometry-status") Contract {{ result.input.machineContractId }} / {{ result.motor.label }} engine row / event {{ (activeEvent?.eventIndex ?? 0) + 1 }} / {{ result.motor.statorPoles }} stator and {{ result.motor.rotorPoles }} rotor pole sets.
+    p.gray-status(data-testid="gray-geometry-status") Contract {{ result.input.machineContractId }} / {{ result.motor.label }} engine row / event {{ (activeEvent?.eventIndex ?? 0) + 1 }} / {{ result.motor.statorPoles }} stator and {{ result.motor.rotorPoles }} rotor pole sets.
     svg(viewBox="0 0 720 320" role="img" :aria-label="`${result.motor.label} rotor at ${activeEvent?.scheduledAbsoluteAngleDeg ?? 0} degrees`" data-testid="gray-rotor-stage")
       circle(cx="360" cy="160" r="148" fill="none" stroke="currentColor")
       circle(cx="360" cy="160" r="78" fill="none" stroke="currentColor" opacity="0.45")

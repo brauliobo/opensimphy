@@ -19,7 +19,7 @@ article.quantum-instrument(data-testid="gray-circuit-instrument")
     h3 Follow the same event through charge, dump, coil, and recovery
     p The circuit state below is the before/after state stored on the active full-run event.
   .quantum-result(v-if="event" data-testid="gray-circuit-result")
-    p.gray-status(role="status" aria-live="polite") {{ event.before.switchState }} → {{ event.after.switchState }} / arc {{ event.after.arcState }} / contact rule {{ event.contactRuleSatisfied ? 'satisfied' : 'not satisfied' }}.
+    p.gray-status {{ event.before.switchState }} → {{ event.after.switchState }} / arc {{ event.after.arcState }} / contact rule {{ event.contactRuleSatisfied ? 'satisfied' : 'not satisfied' }}.
     svg(viewBox="0 0 720 220" role="img" aria-label="Active event capacitor dump circuit")
       rect(x="20" y="70" width="90" height="80" fill="none" stroke="currentColor")
       text(x="32" y="116" fill="currentColor" font-size="13") source
