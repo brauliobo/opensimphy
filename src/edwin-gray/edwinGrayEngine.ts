@@ -3,7 +3,8 @@ import {
   SI_EXACT_CONSTANTS,
 } from '../tour/physicsConstants'
 
-export const GRAY_MOTOR_IDS = Object.freeze(['ema4', 'ema6', 'purple', 'gold', 'white', 'black'] as const)
+export const GRAY_PROTOTYPE_MOTOR_IDS = Object.freeze(['ema4', 'ema6', 'purple', 'gold', 'white', 'black'] as const)
+export const GRAY_MOTOR_IDS = Object.freeze([...GRAY_PROTOTYPE_MOTOR_IDS, 'patent-illustrative'] as const)
 export type GrayMotorId = typeof GRAY_MOTOR_IDS[number]
 
 export type GraySpeedMode = 'prescribed-speed' | 'prescribed' | 'dynamic'
@@ -94,6 +95,30 @@ export interface GrayMagneticLookup {
     backend: string
     inputHash: string
   }
+  compatibility: GrayEngineCompatibility
+}
+
+export interface GrayEngineCompatibility {
+  machineContractId: string
+  machineRevision: number
+  modelRevision: number
+  topologyIdentity: string
+  turns: number
+  excitation: string
+  modelInputHash: string
+}
+
+export interface GrayEngineProfile {
+  contractId: string
+  motorId: GrayMotorId
+  machineRevision: 1
+  modelRevision: 1
+  scenarioKind: 'source-described-prototype-illustrative-surrogate' | 'patent-described-illustrative-model'
+  compatibleTurns: number
+  compatibleExcitation: string
+  topologyIdentity: string
+  modelInputHash: string | null
+  femCompatible: boolean
 }
 
 export interface GrayMotorCatalogEntry {
@@ -564,6 +589,22 @@ export const GRAY_MOTORS: Readonly<Record<GrayMotorId, GrayMotorCatalogEntry>> =
     topology: GRAY_TOPOLOGY,
     provenance: GRAY_MODEL_PROVENANCE,
   },
+  'patent-illustrative': {
+    id: 'patent-illustrative',
+    label: 'US3890548A illustrative engine profile',
+    year: 1974,
+    designer: 'Patent-described / illustrative model',
+    statorPoles: 3,
+    rotorPoles: 3,
+    hasRecovery: true,
+    housing: 'prototype',
+    leakageCoupling: 0.05,
+    recoveryCoupling: 0.12,
+    observationWindow: false,
+    notes: 'Explicit illustrative engine profile for the patent topology; it is not the purple prototype.',
+    topology: GRAY_TOPOLOGY,
+    provenance: GRAY_MODEL_PROVENANCE,
+  },
 })
 
 export const GRAY_PRESETS: Readonly<Record<GrayMotorId, GrayMotorPreset>> = Object.freeze({
@@ -573,6 +614,46 @@ export const GRAY_PRESETS: Readonly<Record<GrayMotorId, GrayMotorPreset>> = Obje
   gold:   { motorId: 'gold',   chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 3, turns: 140 },
   white:  { motorId: 'white',  chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 3, turns: 140 },
   black:  { motorId: 'black',  chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 9, turns: 140 },
+  'patent-illustrative': {
+    motorId: 'patent-illustrative',
+    chargeVoltageV: 5000,
+    capacitanceF: 8.3e-8,
+    startRpm: 500,
+    quenchDeg: 3,
+    turns: 100,
+  },
+})
+
+export const GRAY_PATENT_MODEL_INPUT_HASH = '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06' as const
+
+export const GRAY_ENGINE_PROFILES: Readonly<Record<string, GrayEngineProfile>> = Object.freeze({
+  ...Object.fromEntries(GRAY_PROTOTYPE_MOTOR_IDS.map((motorId) => [
+    `edwin-gray-${motorId}`,
+    Object.freeze({
+      contractId: `edwin-gray-${motorId}`,
+      motorId,
+      machineRevision: 1,
+      modelRevision: 1,
+      scenarioKind: 'source-described-prototype-illustrative-surrogate',
+      compatibleTurns: GRAY_PRESETS[motorId].turns,
+      compatibleExcitation: 'capacitor-discharge-lumped-surrogate',
+      topologyIdentity: `prototype-${motorId}-unverified`,
+      modelInputHash: null,
+      femCompatible: false,
+    } satisfies GrayEngineProfile),
+  ])),
+  'patent-3890548-illustrative': Object.freeze({
+    contractId: 'patent-3890548-illustrative',
+    motorId: 'patent-illustrative',
+    machineRevision: 1,
+    modelRevision: 1,
+    scenarioKind: 'patent-described-illustrative-model',
+    compatibleTurns: 100,
+    compatibleExcitation: 'impressed-current-magnetostatic',
+    topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
+    modelInputHash: GRAY_PATENT_MODEL_INPUT_HASH,
+    femCompatible: true,
+  } satisfies GrayEngineProfile),
 })
 
 function finiteInRange(value: number, label: string, min: number, max: number): number {
@@ -700,6 +781,19 @@ export function validateGrayMagneticLookup(lookup: GrayMagneticLookup): void {
   }
   if (!/^[a-f0-9]{64}$/.test(lookup.provenance.inputHash)) {
     throw new Error('magneticLookup provenance inputHash must be a SHA-256 hash')
+  }
+  const compatibility = lookup.compatibility
+  if (!compatibility || typeof compatibility.machineContractId !== 'string'
+    || !Number.isInteger(compatibility.machineRevision)
+    || !Number.isInteger(compatibility.modelRevision)
+    || typeof compatibility.topologyIdentity !== 'string'
+    || !Number.isInteger(compatibility.turns)
+    || typeof compatibility.excitation !== 'string'
+    || !/^[a-f0-9]{64}$/.test(compatibility.modelInputHash)) {
+    throw new Error('magneticLookup compatibility metadata is incomplete')
+  }
+  if (compatibility.modelInputHash !== lookup.provenance.inputHash) {
+    throw new Error('magneticLookup compatibility hash must match provenance inputHash')
   }
   finiteInRange(lookup.referenceCurrentA, 'magneticLookup.referenceCurrentA', Number.MIN_VALUE, 1e9)
   if (lookup.anglesDeg.length < 2
@@ -1717,7 +1811,7 @@ export function evaluateGrayMotor(input: GrayMotorInput): GrayMotorResult {
 }
 
 export function evaluateGrayFamily(shared: Omit<GrayMotorInput, 'motorId'>): GrayMotorResult[] {
-  return GRAY_MOTOR_IDS.map((motorId) => evaluateGrayMotor({ ...shared, motorId }))
+  return GRAY_PROTOTYPE_MOTOR_IDS.map((motorId) => evaluateGrayMotor({ ...shared, motorId }))
 }
 
 export type GrayFullMotorMode = 'prescribed-diagnostic' | 'dynamic'
@@ -1886,6 +1980,7 @@ export interface GrayFullMotorResult {
   modelStatus: GrayModelStatus
   input: GrayFullMotorResolvedInput
   motor: GrayMotorCatalogEntry
+  engineProfile: GrayEngineProfile
   topology: GrayTopologyContract
   magneticScope: 'illustrative-lumped-surrogate' | 'hybrid-fem-magnetic-lumped-circuit'
   numericalMethod: 'bounded-midpoint-event-map-v2'
@@ -2210,7 +2305,14 @@ function grayFullMotorAdvanceAngle(
  * Runs the canonical event train as a bounded teaching model. It is deliberately
  * separate from the historical single-pulse API and contains no claim-power term.
  */
-export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorResult {
+export interface GrayFullMotorEvaluationOptions {
+  onEventCompleted?: (completedEventCount: number, scheduledEventCount: number) => void
+}
+
+export function evaluateGrayFullMotor(
+  input: GrayFullMotorInput,
+  options: GrayFullMotorEvaluationOptions = {},
+): GrayFullMotorResult {
   const motor = GRAY_MOTORS[input.motorId]
   if (!motor) throw new Error(`Unknown Gray motor: ${String(input.motorId)}`)
   const revolutions = positiveInteger(input.revolutions, 'revolutions')
@@ -2226,6 +2328,11 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
   if (!/^[a-z0-9][a-z0-9-]{0,127}$/.test(machineContractId)) {
     throw new Error('machineContractId must be a safe lowercase contract ID')
   }
+  const engineProfile = GRAY_ENGINE_PROFILES[machineContractId]
+  if (!engineProfile) throw new Error(`Unknown Gray machine contract: ${machineContractId}`)
+  if (engineProfile.motorId !== input.motorId) {
+    throw new Error(`Gray machine contract ${machineContractId} requires engine profile ${engineProfile.motorId}`)
+  }
   if (input.mode !== 'prescribed-diagnostic' && input.mode !== 'dynamic') {
     throw new Error('mode must be prescribed-diagnostic or dynamic')
   }
@@ -2233,7 +2340,20 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     && input.machineMode !== 'modified-electronic-v1') {
     throw new Error('machineMode must be original-500rpm-contact-v1 or modified-electronic-v1')
   }
-  if (input.magneticLookup) validateGrayMagneticLookup(input.magneticLookup)
+  if (input.magneticLookup) {
+    validateGrayMagneticLookup(input.magneticLookup)
+    const compatibility = input.magneticLookup.compatibility
+    if (!engineProfile.femCompatible) throw new Error(`Gray machine contract ${machineContractId} has no FEM compatibility`)
+    if (compatibility.machineContractId !== machineContractId
+      || compatibility.machineRevision !== engineProfile.machineRevision
+      || compatibility.modelRevision !== engineProfile.modelRevision
+      || compatibility.topologyIdentity !== engineProfile.topologyIdentity
+      || compatibility.turns !== turns
+      || compatibility.excitation !== engineProfile.compatibleExcitation
+      || compatibility.modelInputHash !== engineProfile.modelInputHash) {
+      throw new Error('FEM lookup is incompatible with the final submitted machine, turns, excitation, or model hash')
+    }
+  }
   const rotorInertiaKgM2 = finiteInRange(
     input.rotorInertiaKgM2 ?? DEFAULT_ROTOR_INERTIA_KG_M2,
     'rotorInertiaKgM2',
@@ -2528,6 +2648,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
       ledger,
     }
     events.push(event)
+    options.onEventCompleted?.(events.length, schedule.length)
     priorEventTimeSeconds = timeSeconds
   }
 
@@ -2626,6 +2747,7 @@ export function evaluateGrayFullMotor(input: GrayFullMotorInput): GrayFullMotorR
     modelStatus: GRAY_MODEL_STATUS,
     input: resolved,
     motor,
+    engineProfile,
     topology: GRAY_TOPOLOGY,
     magneticScope: input.magneticLookup
       ? 'hybrid-fem-magnetic-lumped-circuit'

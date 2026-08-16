@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import {
-  evaluateGrayCopClaim,
-  GRAY_COP_CLAIM_SCENARIOS,
+  type GrayCopClaimEvaluation,
   type GrayFullMotorResult,
 } from '../../edwin-gray/edwinGrayEngine'
 import type { ReadingDepth } from '../../types/tour'
 
-defineProps<{ depth: ReadingDepth; result: Readonly<GrayFullMotorResult> }>()
-const claimAudit = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282)
-const observedDeficitW = claimAudit.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
+const props = defineProps<{
+  depth: ReadingDepth
+  result: Readonly<GrayFullMotorResult>
+  claimEvidence: Readonly<{
+    diagramCop282: Readonly<GrayCopClaimEvaluation>
+    retainedTranscriptCop282: null
+    retainedTranscriptCop300: Readonly<GrayCopClaimEvaluation>
+  }>
+}>()
+const observedDeficitW = props.claimEvidence.diagramCop282.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
 const formatJ = (value: number): string => `${value.toExponential(4)} J`
 </script>
 
@@ -69,9 +75,19 @@ article.quantum-instrument(data-testid="gray-energy-instrument")
         dd 26.8 W in / 7,460 W out / displayed COP 282
       div
         dt Arithmetic COP
-        dd(data-testid="gray-claim-arithmetic-cop") {{ claimAudit.claim.arithmeticCop?.toFixed(2) }}
+        dd(data-testid="gray-claim-arithmetic-cop") {{ claimEvidence.diagramCop282.claim.arithmeticCop?.toFixed(2) }}
       div
         dt Required unaccounted power
         dd(data-testid="gray-claim-deficit") {{ observedDeficitW.toFixed(1) }} W
-    p.gray-claim-panel__boundary validatesTheory: {{ claimAudit.validatesTheory }}. This diagnostic is preserved only as an attributed source-claim boundary check.
+    p.gray-claim-panel__boundary validatesTheory: {{ claimEvidence.diagramCop282.validatesTheory }}. This diagnostic is preserved only as an attributed source-claim boundary check.
+    dl.gray-claim-metrics(data-testid="gray-retained-cop-evidence")
+      div
+        dt Retained transcript COP 282
+        dd Absent; COP 282 is available only from the separate user-provided diagram.
+      div
+        dt Retained transcript COP 300
+        dd {{ claimEvidence.retainedTranscriptCop300.status }}
+      div
+        dt Paired output
+        dd {{ claimEvidence.retainedTranscriptCop300.claim.attributedOutputPowerW === null ? 'Absent' : claimEvidence.retainedTranscriptCop300.claim.attributedOutputPowerW }}
 </template>

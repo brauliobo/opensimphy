@@ -235,11 +235,23 @@ describe('Edwin Gray continuous full motor teaching model', () => {
       provenance: {
         solver: 'test-solver',
         backend: 'test-backend',
-        inputHash: 'a'.repeat(64),
+        inputHash: '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06',
+      },
+      compatibility: {
+        machineContractId: 'patent-3890548-illustrative',
+        machineRevision: 1,
+        modelRevision: 1,
+        topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
+        turns: 100,
+        excitation: 'impressed-current-magnetostatic',
+        modelInputHash: '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06',
       },
     }
     const hybrid = evaluateGrayFullMotor({
       ...prescribedInput,
+      motorId: 'patent-illustrative',
+      machineContractId: 'patent-3890548-illustrative',
+      turns: 100,
       machineMode: 'modified-electronic-v1',
       magneticLookup: lookup,
     })
@@ -256,5 +268,37 @@ describe('Edwin Gray continuous full motor teaching model', () => {
     expect(hybrid.magneticScope).toBe('hybrid-fem-magnetic-lumped-circuit')
     expect(hybrid.findings.find((finding) => finding.code === 'magnetic-scope')!.statement)
       .toContain('FEM lookup values cover only the magnetic relation')
+    expect(() => evaluateGrayFullMotor({
+      ...hybrid.input,
+      turns: 101,
+      magneticLookup: lookup,
+    })).toThrow(/final submitted machine, turns, excitation, or model hash/)
+  })
+
+  it('enforces exact contract-to-engine mapping and isolates prototype surrogates from patent FEM', () => {
+    expect(() => evaluateGrayFullMotor({
+      ...prescribedInput,
+      machineContractId: 'patent-3890548-illustrative',
+    })).toThrow(/requires engine profile patent-illustrative/)
+    expect(evaluateGrayFullMotor(prescribedInput).engineProfile).toMatchObject({
+      contractId: 'edwin-gray-purple',
+      motorId: 'purple',
+      scenarioKind: 'source-described-prototype-illustrative-surrogate',
+      femCompatible: false,
+    })
+    expect(evaluateGrayFullMotor({
+      ...prescribedInput,
+      motorId: 'patent-illustrative',
+      machineContractId: 'patent-3890548-illustrative',
+      turns: 100,
+    }).motor.id).toBe('patent-illustrative')
+  })
+
+  it('reports monotonically completed event counts from the event loop', () => {
+    const completed: number[] = []
+    const result = evaluateGrayFullMotor(prescribedInput, {
+      onEventCompleted: (count) => completed.push(count),
+    })
+    expect(completed).toEqual(Array.from({ length: result.completedEventCount }, (_, index) => index + 1))
   })
 })

@@ -20,12 +20,21 @@ import {
 import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
 import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
 import { GRAY_MACHINE_CONTRACTS, GRAY_MACHINE_IDS } from '../edwin-gray/edwinGrayMachines'
-import type { GrayFullMotorResult, GrayMagneticLookup } from '../edwin-gray/edwinGrayEngine'
 import {
+  evaluateGrayCopClaim,
+  GRAY_COP_CLAIM_SCENARIOS,
+  type GrayFullMotorResult,
+  type GrayMagneticLookup,
+} from '../edwin-gray/edwinGrayEngine'
+import {
+  createGraySubmittedInput,
   defaultGrayWorkbenchInput,
   freezeGrayFullMotorResult,
+  freezeGrayValue,
+  grayFemCompatibilityReason,
   grayFemCanBeRequested,
-  grayFullMotorInput,
+  graySubmittedInputIdentity,
+  GrayWorkbenchRevisionError,
   GRAY_WORKBENCH_QUERY_KEYS,
   parseGrayWorkbenchQuery,
   serializeGrayWorkbenchInput,
@@ -34,12 +43,12 @@ import {
 import { resetGrayWorker, runGrayInWorker } from '../edwin-gray/edwinGrayWorkerProtocol'
 import {
   createGraySnapshot,
+  compareGraySnapshots,
   exportGraySnapshot,
   importGraySnapshot,
-  loadGraySnapshots,
+  loadGraySnapshotsWithRecovery,
   saveGraySnapshot,
 } from '../edwin-gray/edwinGrayPersistence'
-import { compareSnapshots } from '../workbench/snapshots'
 import type { WorkbenchSnapshotV1 } from '../types/workbench'
 import type { ReadingDepth } from '../types/tour'
 
@@ -49,8 +58,18 @@ if (!progress.hydrated.value) progress.hydrate()
 const depth = computed<ReadingDepth>(() => progress.depth.value)
 const route = useRoute()
 const router = useRouter()
-const input = ref<GrayWorkbenchInputState>(parseGrayWorkbenchQuery(route.query))
+let initialRevisionError = ''
+let initialInput: GrayWorkbenchInputState
+try {
+  initialInput = parseGrayWorkbenchQuery(route.query)
+} catch (reason) {
+  initialInput = defaultGrayWorkbenchInput()
+  initialRevisionError = reason instanceof Error ? reason.message : String(reason)
+}
+const input = ref<GrayWorkbenchInputState>(initialInput)
+const revisionError = ref(initialRevisionError)
 const result = ref<Readonly<GrayFullMotorResult> | null>(null)
+const resultInputIdentity = ref<string | null>(null)
 const runStatus = ref<'idle' | 'running' | 'completed' | 'cancelled' | 'failed'>('idle')
 const runProgress = ref(0)
 const runStage = ref('Ready to run')
@@ -67,12 +86,19 @@ const selectedSnapshotTimes = ref<string[]>([])
 const snapshotMessage = ref('')
 const snapshotError = ref('')
 let abortController: AbortController | null = null
+let femAbortController: AbortController | null = null
+let femRequestToken = 0
 let timelineTimer: ReturnType<typeof setInterval> | null = null
 const videoActivated = ref(false)
 const originalStarterEvidence = grayEvidenceRecord('gray-caption-original-500-rpm-starter')
 const modifiedWindingEvidence = grayEvidenceRecord('gray-caption-schloff-awg14-rewind')
 const modifiedPowerEvidence = grayEvidenceRecord('gray-caption-schloff-ten-kw-no-load')
 const recoveryEvidence = grayEvidenceRecord('gray-caption-purple-recovery-coils')
+const claimEvidence = freezeGrayValue({
+  diagramCop282: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282),
+  retainedTranscriptCop282: null,
+  retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
+})
 const instrumentComponents = {
   geometry: GeometryInstrument,
   circuit: CircuitInstrument,
@@ -86,8 +112,15 @@ const selectedSnapshots = computed(() => selectedSnapshotTimes.value
   .map((timestamp) => snapshots.value.find((snapshot) => snapshot.timestamp === timestamp))
   .filter((snapshot): snapshot is WorkbenchSnapshotV1 => Boolean(snapshot)))
 const snapshotComparison = computed(() => selectedSnapshots.value.length === 2
-  ? compareSnapshots(selectedSnapshots.value[0]!, selectedSnapshots.value[1]!)
+  ? compareGraySnapshots(selectedSnapshots.value[0]!, selectedSnapshots.value[1]!)
   : null)
+const currentInputIdentity = computed(() => graySubmittedInputIdentity(
+  input.value,
+  input.value.magneticModel === 'fem-lookup' ? femLookup.value ?? undefined : undefined,
+))
+const canSaveSnapshot = computed(() => Boolean(result.value)
+  && !stale.value
+  && resultInputIdentity.value === currentInputIdentity.value)
 
 function instrumentComponent(moduleId: string | undefined) {
   if (!moduleId) return undefined
@@ -98,7 +131,9 @@ function instrumentProps(moduleId: string | undefined) {
   if (!result.value) return {}
   return moduleId === 'geometry' || moduleId === 'circuit' || moduleId === 'pulse'
     ? { depth: depth.value, result: result.value, activeEventIndex: activeEventIndex.value }
-    : { depth: depth.value, result: result.value }
+    : moduleId === 'energy'
+      ? { depth: depth.value, result: result.value, claimEvidence }
+      : { depth: depth.value, result: result.value }
 }
 
 const shortcutSteps = Object.freeze([
@@ -153,6 +188,12 @@ function cancelRun(): void {
 
 async function runWorkbench(): Promise<void> {
   cancelRun()
+  if (revisionError.value) {
+    runStatus.value = 'failed'
+    runError.value = revisionError.value
+    runStage.value = 'Unsupported URL input revision'
+    return
+  }
   runError.value = ''
   runProgress.value = 0
   runStatus.value = 'running'
@@ -161,15 +202,25 @@ async function runWorkbench(): Promise<void> {
   abortController = controller
   try {
     const lookup = input.value.magneticModel === 'fem-lookup' ? femLookup.value ?? undefined : undefined
-    const completed = await runGrayInWorker(grayFullMotorInput(input.value, lookup), {
+    const submitted = createGraySubmittedInput(input.value, lookup)
+    const completed = await runGrayInWorker(submitted.engineInput, {
       signal: controller.signal,
+      inputIdentity: submitted.identity,
       onProgress(progressValue, stage) {
+        if (currentInputIdentity.value !== submitted.identity) return
         runProgress.value = progressValue
         runStage.value = stage
       },
     })
     if (controller.signal.aborted) return
+    if (currentInputIdentity.value !== submitted.identity) {
+      stale.value = true
+      runStatus.value = 'cancelled'
+      runStage.value = 'Discarded a late result because inputs changed after submission.'
+      return
+    }
     result.value = freezeGrayFullMotorResult(completed)
+    resultInputIdentity.value = submitted.identity
     runStatus.value = 'completed'
     runProgress.value = 1
     runStage.value = `Completed ${completed.completedEventCount} events`
@@ -186,24 +237,43 @@ async function runWorkbench(): Promise<void> {
 }
 
 async function refreshFem(): Promise<void> {
-  femLookup.value = null
+  femAbortController?.abort()
+  const requestToken = ++femRequestToken
+  const requestedMachineContractId = input.value.machineContractId
+  const controller = new AbortController()
+  femAbortController = controller
   if (!grayFemCanBeRequested(input.value)) {
+    femLookup.value = null
     femStatus.value = 'unavailable'
     femMessage.value = GRAY_MACHINE_CONTRACTS[input.value.machineContractId].femBlocker
     if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
+    if (femAbortController === controller) femAbortController = null
     return
   }
   femStatus.value = 'loading'
   femMessage.value = 'Loading and validating the generated FEM lookup contract.'
   try {
-    femLookup.value = await loadGrayMagneticLookup(input.value.machineContractId)
+    const lookup = await loadGrayMagneticLookup(requestedMachineContractId, fetch, controller.signal)
+    if (controller.signal.aborted || requestToken !== femRequestToken
+      || input.value.machineContractId !== requestedMachineContractId) return
+    const incompatibility = grayFemCompatibilityReason(input.value, lookup)
+    femLookup.value = lookup
+    if (incompatibility) {
+      femStatus.value = 'invalid'
+      femMessage.value = incompatibility
+      if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
+      return
+    }
     femStatus.value = 'ready'
     femMessage.value = `Compatible lookup ${femLookup.value.caseId} is ready; only its magnetic relation will be activated.`
   } catch (reason) {
+    if (controller.signal.aborted || requestToken !== femRequestToken) return
     const message = reason instanceof Error ? reason.message : String(reason)
     femStatus.value = /request failed with 404/.test(message) ? 'unavailable' : 'invalid'
     femMessage.value = message
     if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
+  } finally {
+    if (femAbortController === controller) femAbortController = null
   }
 }
 
@@ -223,6 +293,7 @@ async function resetWorkbench(): Promise<void> {
   }
   input.value = defaultGrayWorkbenchInput()
   result.value = null
+  resultInputIdentity.value = null
   stale.value = false
   runStatus.value = 'idle'
   runProgress.value = 0
@@ -233,8 +304,9 @@ async function resetWorkbench(): Promise<void> {
 
 function saveSnapshot(): void {
   snapshotError.value = ''
-  if (!result.value || stale.value) {
-    snapshotError.value = 'Run the current canonical input before saving a snapshot.'
+  snapshotMessage.value = ''
+  if (!result.value || !canSaveSnapshot.value) {
+    snapshotError.value = 'Snapshot rejected: the visible result identity does not match the current submitted input.'
     return
   }
   try {
@@ -264,6 +336,7 @@ function downloadSnapshot(snapshot: WorkbenchSnapshotV1): void {
 
 async function importSnapshot(event: Event): Promise<void> {
   snapshotError.value = ''
+  snapshotMessage.value = ''
   const file = (event.target as HTMLInputElement).files?.[0]
   if (!file) return
   try {
@@ -278,8 +351,17 @@ async function importSnapshot(event: Event): Promise<void> {
 }
 
 watch(input, (next) => {
-  if (result.value) stale.value = true
+  if (result.value || runStatus.value === 'running') stale.value = true
   stopTimeline()
+  if (femLookup.value) {
+    const incompatibility = grayFemCompatibilityReason(next, femLookup.value)
+    if (incompatibility) {
+      femStatus.value = 'invalid'
+      femMessage.value = incompatibility
+      if (next.magneticModel === 'fem-lookup') next.magneticModel = 'illustrative-surrogate'
+    }
+  }
+  if (revisionError.value) return
   const serialized = serializeGrayWorkbenchInput(next)
   const alreadyCanonical = GRAY_WORKBENCH_QUERY_KEYS.every((key) => route.query[key] === serialized[key])
   if (alreadyCanonical) return
@@ -290,18 +372,31 @@ watch(input, (next) => {
 }, { deep: true, immediate: true })
 
 watch(() => route.query, (query) => {
-  const parsed = parseGrayWorkbenchQuery(query)
-  if (JSON.stringify(serializeGrayWorkbenchInput(parsed))
-    !== JSON.stringify(serializeGrayWorkbenchInput(input.value))) {
-    input.value = parsed
-    void refreshFem()
+  try {
+    const parsed = parseGrayWorkbenchQuery(query)
+    revisionError.value = ''
+    if (JSON.stringify(serializeGrayWorkbenchInput(parsed))
+      !== JSON.stringify(serializeGrayWorkbenchInput(input.value))) {
+      input.value = parsed
+      void refreshFem()
+    }
+  } catch (reason) {
+    revisionError.value = reason instanceof GrayWorkbenchRevisionError
+      ? reason.message
+      : `Invalid Gray workbench URL: ${reason instanceof Error ? reason.message : String(reason)}`
+    cancelRun()
+    stale.value = Boolean(result.value)
   }
 })
 
 onMounted(async () => {
   document.title = 'Edwin Gray Motor Lab | OpenSimPhy Atlas'
   try {
-    snapshots.value = loadGraySnapshots()
+    const loaded = loadGraySnapshotsWithRecovery()
+    snapshots.value = loaded.snapshots
+    if (loaded.rejectedEntryCount > 0) {
+      snapshotError.value = `Recovered ${loaded.snapshots.length} valid snapshots and rejected ${loaded.rejectedEntryCount} corrupt entries.`
+    }
   } catch (reason) {
     snapshotError.value = reason instanceof Error ? reason.message : String(reason)
   }
@@ -311,6 +406,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   cancelRun()
+  femAbortController?.abort()
   stopTimeline()
 })
 </script>
@@ -353,6 +449,7 @@ onBeforeUnmount(() => {
           span Machine contract
           select(v-model="input.machineContractId" data-testid="gray-machine-contract" @change="selectMachine")
             option(v-for="id in GRAY_MACHINE_IDS" :key="id" :value="id") {{ GRAY_MACHINE_CONTRACTS[id].label }}
+        p.gray-fem-state(data-testid="gray-scenario-contract") Contract {{ input.machineContractId }}. Prototype contracts run only as illustrative surrogate scenarios and are never patent-FEM compatible.
         label
           span Full-run mode
           select(v-model="input.mode" data-testid="gray-run-mode")
@@ -415,12 +512,13 @@ onBeforeUnmount(() => {
           |  / {{ femMessage }}
         button(type="button" :disabled="!grayFemCanBeRequested(input) || femStatus === 'loading'" @click="refreshFem") Recheck FEM lookup
     .gray-workbench__actions
-      button(type="button" :disabled="runStatus === 'running'" data-testid="gray-run" @click="runWorkbench") Run full motor
+      button(type="button" :disabled="runStatus === 'running' || Boolean(revisionError)" data-testid="gray-run" @click="runWorkbench") Run full motor
       button(type="button" :disabled="runStatus !== 'running'" data-testid="gray-cancel" @click="cancelRun") Cancel
       button(type="button" data-testid="gray-reset" @click="resetWorkbench") Reset
       progress(:value="runProgress" max="1" aria-label="Gray worker progress")
       span {{ Math.round(runProgress * 100) }}%
     p.quantum-stale(v-if="stale" role="status" data-testid="gray-stale") Inputs changed. The visible result is stale until the worker completes another run.
+    p.quantum-boundary(v-if="revisionError" role="alert" data-testid="gray-revision-error") {{ revisionError }}
     p.quantum-boundary(v-if="runError" role="alert") {{ runError }}
 
     .gray-shared-timeline(v-if="result" data-testid="gray-shared-timeline")
@@ -437,7 +535,7 @@ onBeforeUnmount(() => {
           p.eyebrow Revisioned records
           h3#gray-snapshot-title Save, compare, import, and export
         .gray-snapshot-actions
-          button(type="button" :disabled="!result || stale" data-testid="gray-snapshot-save" @click="saveSnapshot") Save snapshot
+          button(type="button" :disabled="!canSaveSnapshot" data-testid="gray-snapshot-save" @click="saveSnapshot") Save snapshot
           label.gray-import-button
             span Import JSON
             input(type="file" accept="application/json" data-testid="gray-snapshot-import" @change="importSnapshot")
@@ -464,8 +562,37 @@ onBeforeUnmount(() => {
                 button(type="button" @click="downloadSnapshot(snapshot)") Export
       .gray-snapshot-comparison(v-if="snapshotComparison" data-testid="gray-snapshot-comparison")
         strong {{ snapshotComparison.compatible ? 'Compatible comparison' : 'Incompatible comparison' }}
-        p {{ selectedSnapshots[0]?.finding.changed }}
-        p {{ selectedSnapshots[1]?.finding.changed }}
+        p {{ snapshotComparison.reason }}
+        .gray-table-scroll
+          table(data-testid="gray-comparison-inputs")
+            caption Input and model differences
+            thead
+              tr
+                th(scope="col") Field
+                th(scope="col") Earlier
+                th(scope="col") Later
+            tbody
+              tr(v-for="difference in [...snapshotComparison.modelDifferences, ...snapshotComparison.inputDifferences]" :key="difference.field")
+                th(scope="row") {{ difference.field }}
+                td {{ difference.left }}
+                td {{ difference.right }}
+              tr(v-if="!snapshotComparison.modelDifferences.length && !snapshotComparison.inputDifferences.length")
+                td(colspan="3") No input or model differences.
+        .gray-table-scroll(v-if="snapshotComparison.numericalDeltas")
+          table(data-testid="gray-comparison-deltas")
+            caption Numerical deltas for compatible machine and model revisions
+            thead
+              tr
+                th(scope="col") Metric
+                th(scope="col") Earlier
+                th(scope="col") Later
+                th(scope="col") Delta
+            tbody
+              tr(v-for="delta in snapshotComparison.numericalDeltas" :key="delta.metric")
+                th(scope="row") {{ delta.metric }}
+                td {{ delta.left }}
+                td {{ delta.right }}
+                td {{ delta.delta }}
 
   .quantum-lab-layout
     main.quantum-lab-main

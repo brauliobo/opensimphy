@@ -174,11 +174,22 @@ describe('Edwin Gray FEM result provenance', () => {
 
   it('aggregates genuinely distinct jobs into the exact declared angle LUT', () => {
     const result = completeLookup()
+    result.compatibility = {
+      machineContractId: 'patent-3890548-illustrative',
+      machineRevision: 1,
+      modelRevision: 1,
+      topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
+      turns: 100,
+      excitation: 'impressed-current-magnetostatic',
+      modelInputHash,
+    }
 
     expect(result.entries.map((entry) => entry.provenance.jobInputHash)).toEqual([firstJobInputHash, secondJobInputHash])
     expect(result.entries.map((entry) => entry.parameters.rotorAngleDeg)).toEqual(anglesDeg)
     expect(result.expectedAnglesDeg).toEqual(anglesDeg)
-    expect(buildGrayMagneticLookup(result).provenance.inputHash).toBe(modelInputHash)
+    const runtimeLookup = buildGrayMagneticLookup(result)
+    expect(runtimeLookup.provenance.inputHash).toBe(modelInputHash)
+    expect(runtimeLookup.compatibility).toEqual(result.compatibility)
 
     const browserContract = structuredClone(result)
     for (const entry of browserContract.entries) delete entry.provenance.inputHash

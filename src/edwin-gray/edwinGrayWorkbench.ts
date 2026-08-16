@@ -66,7 +66,15 @@ export type GrayWorkbenchQuery = Partial<Record<GrayWorkbenchQueryKey, string>>
 
 function motorIdForContract(machineContractId: GrayMachineContractId): GrayMotorId {
   const contract = GRAY_MACHINE_CONTRACTS[machineContractId]
-  return contract.engineMotorId ?? 'purple'
+  if (!contract) throw new Error(`Unknown Gray machine contract: ${machineContractId}`)
+  return contract.engineMotorId
+}
+
+export class GrayWorkbenchRevisionError extends RangeError {
+  constructor(readonly receivedRevision: string) {
+    super(`Unsupported Gray workbench input revision "${receivedRevision}"; this runtime supports revision ${GRAY_WORKBENCH_INPUT_REVISION}.`)
+    this.name = 'GrayWorkbenchRevisionError'
+  }
 }
 
 export function defaultGrayWorkbenchInput(
@@ -116,6 +124,10 @@ function enumValue<T extends string>(value: unknown, values: readonly T[], fallb
 }
 
 export function parseGrayWorkbenchQuery(query: Record<string, unknown>): GrayWorkbenchInputState {
+  const revision = one(query.grayRevision)
+  if (revision !== undefined && revision !== String(GRAY_WORKBENCH_INPUT_REVISION)) {
+    throw new GrayWorkbenchRevisionError(revision)
+  }
   const machineContractId = enumValue(
     query.grayMachine,
     Object.keys(GRAY_MACHINE_CONTRACTS) as GrayMachineContractId[],
@@ -185,6 +197,8 @@ export function grayFullMotorInput(
   if (input.magneticModel === 'fem-lookup' && !magneticLookup) {
     throw new Error('A compatible ready FEM lookup is required when FEM magnetic mode is selected')
   }
+  const incompatibility = magneticLookup ? grayFemCompatibilityReason(input, magneticLookup) : null
+  if (incompatibility) throw new Error(incompatibility)
   return {
     motorId: motorIdForContract(input.machineContractId),
     machineContractId: input.machineContractId,
@@ -206,11 +220,63 @@ export function grayFullMotorInput(
   }
 }
 
+export function grayFemCompatibilityReason(
+  input: GrayWorkbenchInputState,
+  magneticLookup: GrayMagneticLookup,
+): string | null {
+  const contract = GRAY_MACHINE_CONTRACTS[input.machineContractId]
+  const compatibility = magneticLookup.compatibility
+  if (compatibility.machineContractId !== input.machineContractId) return 'FEM disabled: machine contract changed after lookup validation.'
+  if (compatibility.machineRevision !== contract.machineRevision) return 'FEM disabled: machine revision does not match the lookup.'
+  if (compatibility.modelRevision !== contract.modelRevision) return 'FEM disabled: model revision does not match the lookup.'
+  if (compatibility.topologyIdentity !== contract.topologyIdentity) return 'FEM disabled: topology identity does not match the lookup.'
+  if (compatibility.turns !== input.turns) return `FEM disabled: lookup requires exactly ${compatibility.turns} turns.`
+  if (compatibility.excitation !== contract.compatibleExcitation) return 'FEM disabled: excitation contract does not match the lookup.'
+  if (compatibility.modelInputHash !== contract.modelInputHash
+    || magneticLookup.provenance.inputHash !== contract.modelInputHash) return 'FEM disabled: model input hash does not match the lookup.'
+  return null
+}
+
+export interface GraySubmittedInput {
+  readonly identity: string
+  readonly workbenchInput: Readonly<GrayWorkbenchInputState>
+  readonly engineInput: Readonly<GrayFullMotorInput>
+}
+
+export function graySubmittedInputIdentity(
+  input: GrayWorkbenchInputState,
+  magneticLookup?: GrayMagneticLookup,
+): string {
+  return JSON.stringify({
+    contract: serializeGrayWorkbenchInput(input),
+    lookup: magneticLookup
+      ? {
+          caseId: magneticLookup.caseId,
+          compatibility: magneticLookup.compatibility,
+          inputHash: magneticLookup.provenance.inputHash,
+        }
+      : null,
+  })
+}
+
+export function createGraySubmittedInput(
+  input: GrayWorkbenchInputState,
+  magneticLookup?: GrayMagneticLookup,
+): GraySubmittedInput {
+  const workbenchInput = Object.freeze({ ...input })
+  const engineInput = grayFullMotorInput(workbenchInput, magneticLookup)
+  return Object.freeze({
+    identity: graySubmittedInputIdentity(workbenchInput, magneticLookup),
+    workbenchInput,
+    engineInput: Object.freeze(engineInput),
+  })
+}
+
 export function grayFemCanBeRequested(input: GrayWorkbenchInputState): boolean {
   return input.machineContractId === GRAY_PATENT_MACHINE_ID
 }
 
-export function freezeGrayFullMotorResult(result: GrayFullMotorResult): Readonly<GrayFullMotorResult> {
+export function freezeGrayValue<T>(result: T): Readonly<T> {
   const seen = new WeakSet<object>()
   const freeze = (value: unknown): void => {
     if (!value || typeof value !== 'object' || seen.has(value)) return
@@ -220,4 +286,8 @@ export function freezeGrayFullMotorResult(result: GrayFullMotorResult): Readonly
   }
   freeze(result)
   return result
+}
+
+export function freezeGrayFullMotorResult(result: GrayFullMotorResult): Readonly<GrayFullMotorResult> {
+  return freezeGrayValue(result)
 }

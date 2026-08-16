@@ -4,8 +4,13 @@ import EnergyLedgerInstrument from '../../src/components/edwin-gray/EnergyLedger
 import FamilyInstrument from '../../src/components/edwin-gray/FamilyInstrument.vue'
 import GeometryInstrument from '../../src/components/edwin-gray/GeometryInstrument.vue'
 import PulseCycleInstrument from '../../src/components/edwin-gray/PulseCycleInstrument.vue'
-import { evaluateGrayFullMotor, GRAY_PRESETS } from '../../src/edwin-gray/edwinGrayEngine'
-import { freezeGrayFullMotorResult } from '../../src/edwin-gray/edwinGrayWorkbench'
+import {
+  evaluateGrayCopClaim,
+  evaluateGrayFullMotor,
+  GRAY_COP_CLAIM_SCENARIOS,
+  GRAY_PRESETS,
+} from '../../src/edwin-gray/edwinGrayEngine'
+import { freezeGrayFullMotorResult, freezeGrayValue } from '../../src/edwin-gray/edwinGrayWorkbench'
 
 const result = freezeGrayFullMotorResult(evaluateGrayFullMotor({
   ...GRAY_PRESETS.purple,
@@ -15,6 +20,11 @@ const result = freezeGrayFullMotorResult(evaluateGrayFullMotor({
   rotorInertiaKgM2: 0.01,
   loadTorqueNm: 0.01,
 }))
+const claimEvidence = freezeGrayValue({
+  diagramCop282: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282),
+  retainedTranscriptCop282: null,
+  retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
+})
 
 describe('unified Edwin Gray result instruments', () => {
   it('uses one immutable event for geometry and circuit state', () => {
@@ -42,7 +52,7 @@ describe('unified Edwin Gray result instruments', () => {
       props: { depth: 'technical', result, activeEventIndex: 0 },
     })
     const energy = mount(EnergyLedgerInstrument, {
-      props: { depth: 'technical', result },
+      props: { depth: 'technical', result, claimEvidence },
     })
 
     expect(pulse.get('[data-testid="gray-event-timeline"] tbody').findAll('tr')).toHaveLength(result.completedEventCount)
@@ -50,6 +60,8 @@ describe('unified Edwin Gray result instruments', () => {
     expect(energy.get('[data-testid="gray-run-ledger"]').text()).toContain(result.ledger.totalLossesJ.toExponential(4))
     expect(energy.get('[data-testid="gray-system-cop"]').text()).toBe(result.ledger.wholeSystemCop.toFixed(6))
     expect(energy.get('[data-testid="gray-claim-reproduction"]').text()).toContain('explicitly separate')
+    expect(energy.get('[data-testid="gray-retained-cop-evidence"]').text()).toContain('COP 282Absent')
+    expect(Object.isFrozen(claimEvidence.diagramCop282.conservationClosure)).toBe(true)
   })
 
   it('keeps guided content and adds technical disclosure without evaluating family rows', () => {

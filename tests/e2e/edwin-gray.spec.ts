@@ -14,6 +14,8 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-run-ledger')).toBeVisible()
     await expect(page.getByTestId('gray-structured-findings')).toContainText('validatesTheory: false')
     await expect(page.getByTestId('gray-claim-reproduction')).toContainText('explicitly separate')
+    await expect(page.getByTestId('gray-retained-cop-evidence')).toContainText('COP 282')
+    await expect(page.getByTestId('gray-retained-cop-evidence')).toContainText('Absent')
 
     await page.getByTestId('gray-revolutions').fill('2')
     await expect(page.getByTestId('gray-stale')).toBeVisible()
@@ -42,6 +44,19 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
     await expect(page.getByTestId('gray-fem-status')).toContainText('never relabeled FEM')
+
+    await page.getByTestId('gray-machine-contract').selectOption('edwin-gray-gold')
+    await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'unavailable')
+    await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('No prototype-specific geometry')
+  })
+
+  test('visibly rejects invalid and future URL revisions', async ({ page }) => {
+    await page.goto('/labs/edwin-gray?grayRevision=2')
+    await expect(page.getByTestId('gray-revision-error')).toContainText('supports revision 1')
+    await expect(page.getByTestId('gray-run')).toBeDisabled()
+
+    await page.goto('/labs/edwin-gray?grayRevision=invalid')
+    await expect(page.getByTestId('gray-revision-error')).toContainText('Unsupported Gray workbench input revision')
   })
 
   test('saves and compares revisioned snapshots', async ({ page }) => {
@@ -56,6 +71,8 @@ test.describe('Edwin Gray Workbench', () => {
     await rows.nth(0).getByRole('checkbox').check()
     await rows.nth(1).getByRole('checkbox').check()
     await expect(page.getByTestId('gray-snapshot-comparison')).toContainText('Compatible comparison')
+    await expect(page.getByTestId('gray-comparison-inputs')).toContainText('loadTorqueNm')
+    await expect(page.getByTestId('gray-comparison-deltas')).toBeVisible()
   })
 
   test('preserves the local source lesson and optional external media gate', async ({ page }) => {

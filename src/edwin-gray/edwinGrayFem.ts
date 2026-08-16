@@ -199,6 +199,7 @@ export function requireCompatibleGrayFemLookup(
 
 export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
   const document = parseGrayFemLookupDocument(value)
+  assert(document.compatibility, 'FEM lookup compatibility metadata is required at runtime')
   const entries = [...document.entries].sort((left, right) => left.parameters.rotorAngleDeg - right.parameters.rotorAngleDeg)
   const referenceCurrentA = entries[0]!.parameters.driveCurrentA
   assert(entries.every((entry) => entry.parameters.driveCurrentA === referenceCurrentA), 'FEM lookup entries must share one reference current')
@@ -217,6 +218,7 @@ export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
       backend: firstProvenance.backend,
       inputHash: firstProvenance.modelInputHash,
     },
+    compatibility: { ...document.compatibility },
   }
   validateGrayMagneticLookup(lookup)
   return lookup
@@ -225,9 +227,10 @@ export function buildGrayMagneticLookup(value: unknown): GrayMagneticLookup {
 export function loadGrayMagneticLookup(
   machine: GrayMachineContract | GrayMachineContractId,
   fetcher: typeof fetch = fetch,
+  signal?: AbortSignal,
 ): Promise<GrayMagneticLookup> {
   const path = 'data/generated/edwin-gray/motor-fem-lut-v1.json'
-  return fetcher(`${import.meta.env.BASE_URL}${path}`)
+  return fetcher(`${import.meta.env.BASE_URL}${path}`, { signal })
     .then((response) => {
       if (!response.ok) throw new Error(`FEM lookup request failed with ${response.status}`)
       return response.json() as Promise<unknown>

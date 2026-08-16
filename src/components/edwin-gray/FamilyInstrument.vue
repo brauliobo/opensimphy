@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GRAY_MOTOR_IDS, GRAY_MOTORS, type GrayFullMotorResult } from '../../edwin-gray/edwinGrayEngine'
+import { GRAY_MOTORS, GRAY_PROTOTYPE_MOTOR_IDS, type GrayFullMotorResult } from '../../edwin-gray/edwinGrayEngine'
 import { grayEvidenceRecord } from '../../edwin-gray/edwinGrayEvidence'
 import type { ReadingDepth } from '../../types/tour'
 
@@ -26,7 +26,7 @@ article.quantum-instrument(data-testid="gray-family-instrument")
             th(scope="col") Recovery evidence
             th(scope="col") Result scope
         tbody
-          tr(v-for="id in GRAY_MOTOR_IDS" :key="id" :data-motor="id")
+          tr(v-for="id in GRAY_PROTOTYPE_MOTOR_IDS" :key="id" :data-motor="id")
             td {{ GRAY_MOTORS[id].label }}
             td {{ GRAY_MOTORS[id].year }}
             td {{ GRAY_MOTORS[id].designer }}
