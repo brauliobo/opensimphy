@@ -16,6 +16,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "build:pages": "npm run build && node scripts/create-pages-fallback.mjs",
     "check:routes": "node scripts/check-route-boundaries.mjs",
+    "check:awesome-physics": "node scripts/check-awesome-physics-boundaries.mjs",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
@@ -26,7 +27,7 @@
     "e2e:pwa": "npm run build && playwright test --config=playwright.pwa.config.ts",
     "fem:validate": "node --test --test-concurrency=4 fem/edwin-gray/ci/validate-lut.test.mjs && node fem/edwin-gray/ci/validate.mjs",
     "fem:test:runner": "node --test --test-concurrency=4 fem/edwin-gray/scripts/run.integrity.test.mjs",
-    "verify": "npm run data:generate && npm run data:generate:fiddles && npm run data:generate:fiddle-runtime && npm run typecheck && npm run test && npm run build && npm run check:routes"
+    "verify": "npm run data:generate && npm run data:generate:fiddles && npm run data:generate:fiddle-runtime && npm run typecheck && npm run test && npm run build && npm run check:routes && npm run check:awesome-physics"
   },
   "dependencies": {
     "plotly.js-dist-min": "2.35.3",
