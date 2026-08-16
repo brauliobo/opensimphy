@@ -17,9 +17,13 @@ scope.addEventListener('message', (event: MessageEvent<GrayWorkerRequest>) => {
   }
 
   try {
+    let lastProgressPercent = 0
     const result = evaluateGrayFullMotor(request.input, {
       onEventCompleted(completedEventCount, scheduledEventCount) {
         if (completedEventCount === scheduledEventCount) return
+        const progressPercent = Math.floor(completedEventCount * 100 / scheduledEventCount)
+        if (progressPercent <= lastProgressPercent) return
+        lastProgressPercent = progressPercent
         send({
           type: 'progress',
           requestId: request.requestId,

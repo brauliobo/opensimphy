@@ -3,6 +3,14 @@
   "contractVersion": 1,
   "contractId": "gold-v1",
   "machineKind": "engine-prototype",
+  "runtimeModel": {
+    "catalogOrder": 3,
+    "sourceClassification": { "kind": "source-described-prototype", "sourceStatus": "descriptive", "surrogateStatus": "illustrative-not-fem-calibrated" },
+    "catalog": { "engineMotorId": "gold", "label": "Gold 1979", "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.05, "recoveryCoupling": 0, "observationWindow": false, "notes": "Sister of purple without the recovery system. Al Franor drawings." },
+    "defaults": { "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 3, "turns": 140 },
+    "profile": { "machineContractId": "edwin-gray-gold", "scenarioKind": "source-described-prototype-illustrative-surrogate", "compatibleTurns": 140, "compatibleExcitation": "capacitor-discharge-lumped-surrogate", "topologyIdentity": "prototype-gold-unverified", "modelInputHash": null, "femCompatible": false },
+    "provenance": { "evidenceClass": "assumed", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-gold-without-recovery"], "note": "Descriptive prototype identity with illustrative bounded runtime parameters; not measured or FEM-calibrated." }
+  },
   "identity": {
     "machineId": { "value": "gold", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "Gold 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.gold.label"], "note": "Exact current engine catalog label." },

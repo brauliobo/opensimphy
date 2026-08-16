@@ -2,9 +2,10 @@ import {
   CODATA_2022_MEASURED_CONSTANTS,
   SI_EXACT_CONSTANTS,
 } from '../tour/physicsConstants'
+import { GRAY_MACHINE_ARTIFACT } from './generated/grayMachines.generated'
 
-export const GRAY_PROTOTYPE_MOTOR_IDS = Object.freeze(['ema4', 'ema6', 'purple', 'gold', 'white', 'black'] as const)
-export const GRAY_MOTOR_IDS = Object.freeze([...GRAY_PROTOTYPE_MOTOR_IDS, 'patent-illustrative'] as const)
+export const GRAY_PROTOTYPE_MOTOR_IDS = Object.freeze(GRAY_MACHINE_ARTIFACT.prototypeMotorIds)
+export const GRAY_MOTOR_IDS = Object.freeze(GRAY_MACHINE_ARTIFACT.motorIds)
 export type GrayMotorId = typeof GRAY_MOTOR_IDS[number]
 
 export type GraySpeedMode = 'prescribed-speed' | 'prescribed' | 'dynamic'
@@ -492,169 +493,23 @@ export const GRAY_MODEL_PROVENANCE: GrayModelProvenance = Object.freeze({
   excludedTerms: Object.freeze(['radiant-event force', 'free-energy source', 'non-classical force'] as const),
 })
 
-export const GRAY_MOTORS: Readonly<Record<GrayMotorId, GrayMotorCatalogEntry>> = Object.freeze({
-  ema4: {
-    id: 'ema4',
-    label: 'EMA4',
-    year: 1971,
-    designer: 'Marvin Cole',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: true,
-    housing: 'prototype',
-    leakageCoupling: 0.08,
-    recoveryCoupling: 0.12,
-    observationWindow: false,
-    notes: 'Cole machine with outer recovery cage; Crosby/JPL source-claim COP 300 at 26 W input.',
+export const GRAY_MOTORS: Readonly<Record<GrayMotorId, GrayMotorCatalogEntry>> = Object.freeze(
+  Object.fromEntries(GRAY_MOTOR_IDS.map((motorId) => [motorId, Object.freeze({
+    ...GRAY_MACHINE_ARTIFACT.motors[motorId],
     topology: GRAY_TOPOLOGY,
     provenance: GRAY_MODEL_PROVENANCE,
-  },
-  ema6: {
-    id: 'ema6',
-    label: 'EMA6',
-    year: 1976,
-    designer: 'Richard Hackenberger',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: false,
-    housing: 'aluminum',
-    leakageCoupling: 0.06,
-    recoveryCoupling: 0,
-    observationWindow: false,
-    notes: 'Conversion tubes removed; mechanical commutator. First demo about 2 hp.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-  purple: {
-    id: 'purple',
-    label: 'Purple 1979',
-    year: 1979,
-    designer: 'Hackenberger / Gray',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: true,
-    housing: 'aluminum',
-    leakageCoupling: 0.05,
-    recoveryCoupling: 0.18,
-    observationWindow: false,
-    notes: 'Full 1979 prototype with independent outer recovery coils and energy-recovery path.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-  gold: {
-    id: 'gold',
-    label: 'Gold 1979',
-    year: 1979,
-    designer: 'Hackenberger / Gray',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: false,
-    housing: 'aluminum',
-    leakageCoupling: 0.05,
-    recoveryCoupling: 0,
-    observationWindow: false,
-    notes: 'Sister of purple without the recovery system. Al Franor drawings.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-  white: {
-    id: 'white',
-    label: 'White 1979',
-    year: 1979,
-    designer: 'Hackenberger / Gray',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: false,
-    housing: 'plastic',
-    leakageCoupling: 0.012,
-    recoveryCoupling: 0,
-    observationWindow: false,
-    notes: 'All-plastic housing. Weaker magnetic return than the aluminum machines.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-  black: {
-    id: 'black',
-    label: 'Black 1979',
-    year: 1979,
-    designer: 'Hackenberger / Gray',
-    statorPoles: 1,
-    rotorPoles: 1,
-    hasRecovery: false,
-    housing: 'aluminum',
-    leakageCoupling: 0.05,
-    recoveryCoupling: 0,
-    observationWindow: true,
-    notes: 'Single pole set and a side window for watching commutation and the pole-face arc.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-  'patent-illustrative': {
-    id: 'patent-illustrative',
-    label: 'US3890548A illustrative engine profile',
-    year: 1974,
-    designer: 'Patent-described / illustrative model',
-    statorPoles: 3,
-    rotorPoles: 3,
-    hasRecovery: true,
-    housing: 'prototype',
-    leakageCoupling: 0.05,
-    recoveryCoupling: 0.12,
-    observationWindow: false,
-    notes: 'Explicit illustrative engine profile for the patent topology; it is not the purple prototype.',
-    topology: GRAY_TOPOLOGY,
-    provenance: GRAY_MODEL_PROVENANCE,
-  },
-})
+  })])) as unknown as Record<GrayMotorId, GrayMotorCatalogEntry>,
+)
 
-export const GRAY_PRESETS: Readonly<Record<GrayMotorId, GrayMotorPreset>> = Object.freeze({
-  ema4:   { motorId: 'ema4',   chargeVoltageV: 1500, capacitanceF: 2.3e-6, startRpm: 500, quenchDeg: 6, turns: 180 },
-  ema6:   { motorId: 'ema6',   chargeVoltageV: 3000, capacitanceF: 1.2e-6, startRpm: 500, quenchDeg: 6, turns: 160 },
-  purple: { motorId: 'purple', chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 3, turns: 140 },
-  gold:   { motorId: 'gold',   chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 3, turns: 140 },
-  white:  { motorId: 'white',  chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 3, turns: 140 },
-  black:  { motorId: 'black',  chargeVoltageV: 5000, capacitanceF: 8.3e-8, startRpm: 500, quenchDeg: 9, turns: 140 },
-  'patent-illustrative': {
-    motorId: 'patent-illustrative',
-    chargeVoltageV: 5000,
-    capacitanceF: 8.3e-8,
-    startRpm: 500,
-    quenchDeg: 3,
-    turns: 100,
-  },
-})
+export const GRAY_PRESETS = Object.freeze(
+  GRAY_MACHINE_ARTIFACT.presets,
+) satisfies Readonly<Record<GrayMotorId, GrayMotorPreset>>
 
-export const GRAY_PATENT_MODEL_INPUT_HASH = 'f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91' as const
+export const GRAY_PATENT_MODEL_INPUT_HASH = GRAY_MACHINE_ARTIFACT.patentModelInputHash
 
-export const GRAY_ENGINE_PROFILES: Readonly<Record<string, GrayEngineProfile>> = Object.freeze({
-  ...Object.fromEntries(GRAY_PROTOTYPE_MOTOR_IDS.map((motorId) => [
-    `edwin-gray-${motorId}`,
-    Object.freeze({
-      contractId: `edwin-gray-${motorId}`,
-      motorId,
-      machineRevision: 1,
-      modelRevision: 1,
-      scenarioKind: 'source-described-prototype-illustrative-surrogate',
-      compatibleTurns: GRAY_PRESETS[motorId].turns,
-      compatibleExcitation: 'capacitor-discharge-lumped-surrogate',
-      topologyIdentity: `prototype-${motorId}-unverified`,
-      modelInputHash: null,
-      femCompatible: false,
-    } satisfies GrayEngineProfile),
-  ])),
-  'patent-3890548-illustrative': Object.freeze({
-    contractId: 'patent-3890548-illustrative',
-    motorId: 'patent-illustrative',
-    machineRevision: 1,
-    modelRevision: 1,
-    scenarioKind: 'patent-described-illustrative-model',
-    compatibleTurns: 100,
-    compatibleExcitation: 'impressed-current-magnetostatic',
-    topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
-    modelInputHash: GRAY_PATENT_MODEL_INPUT_HASH,
-    femCompatible: true,
-  } satisfies GrayEngineProfile),
-})
+export const GRAY_ENGINE_PROFILES = Object.freeze(
+  GRAY_MACHINE_ARTIFACT.engineProfiles,
+) satisfies Readonly<Record<string, GrayEngineProfile>>
 
 function finiteInRange(value: number, label: string, min: number, max: number): number {
   if (!Number.isFinite(value) || value < min || value > max) {
@@ -754,6 +609,16 @@ const INDUCTANCE_PROFILE_ANGLES_DEG = Object.freeze(
 const INDUCTANCE_PROFILE_VALUES = Object.freeze(
   INDUCTANCE_PROFILE_ANGLES_DEG.map((angleDeg) => topologyInductanceFactor(angleDeg)),
 )
+const INDUCTANCE_PROFILE_STEP_DEG = 360 / PROFILE_POINT_COUNT
+
+function interpolateUniformInductanceProfile(angleDeg: number): number {
+  const position = normalizeAngleDeg(angleDeg) / INDUCTANCE_PROFILE_STEP_DEG
+  const index = Math.floor(position) % PROFILE_POINT_COUNT
+  const nextIndex = (index + 1) % PROFILE_POINT_COUNT
+  const fraction = position - Math.floor(position)
+  return INDUCTANCE_PROFILE_VALUES[index]!
+    + (INDUCTANCE_PROFILE_VALUES[nextIndex]! - INDUCTANCE_PROFILE_VALUES[index]!) * fraction
+}
 
 function coilInductanceScale(turns: number, coupling: number, sectorCount: number): number {
   return VACUUM_PERMEABILITY * turns * turns * POLE_AREA_M2 / CORE_LENGTH_M * coupling / sectorCount
@@ -769,7 +634,7 @@ export function grayInductanceAtAngle(
   finiteInRange(coupling, 'coupling', 0, 1)
   finiteInRange(sectorCount, 'sectorCount', 1, GRAY_TOPOLOGY.simultaneousSectors)
   return coilInductanceScale(turns, coupling, sectorCount)
-    * interpolateAngle(angleDeg, INDUCTANCE_PROFILE_ANGLES_DEG, INDUCTANCE_PROFILE_VALUES)
+    * interpolateUniformInductanceProfile(angleDeg)
 }
 
 export const inductanceAtAngle = grayInductanceAtAngle
@@ -899,73 +764,100 @@ export interface GrayEventScheduleOptions {
   revolutions?: number
 }
 
-export function buildGrayEventSchedule(revolutions = 1): GrayEvent[] {
-  positiveInteger(revolutions, 'revolutions')
-  const events: GrayEvent[] = []
-  for (let index = 0; index < revolutions * GRAY_TOPOLOGY.dischargesPerRevolution; index += 1) {
-    const stepInRevolution = index % GRAY_TOPOLOGY.dischargesPerRevolution
-    const revolution = Math.floor(index / GRAY_TOPOLOGY.dischargesPerRevolution)
-    const angleDeg = index * GRAY_TOPOLOGY.dischargeStepDeg
-    const sectors = Array.from({ length: GRAY_TOPOLOGY.simultaneousSectors }, (_, sectorIndex) => {
-      const sectorAngleDeg = angleDeg + sectorIndex * GRAY_TOPOLOGY.rotorAngularPitchDeg
-      const statorStationUnwrapped = Math.floor(
-        sectorAngleDeg / GRAY_TOPOLOGY.statorAngularPitchDeg,
-      )
-      const rotorStationUnwrapped = Math.floor(
-        sectorAngleDeg / GRAY_TOPOLOGY.rotorAngularPitchDeg,
-      )
-      const statorPairStation = ((statorStationUnwrapped % GRAY_TOPOLOGY.statorPairStations)
-        + GRAY_TOPOLOGY.statorPairStations) % GRAY_TOPOLOGY.statorPairStations
-      const rotorPairStation = ((rotorStationUnwrapped % GRAY_TOPOLOGY.rotorPairStations)
-        + GRAY_TOPOLOGY.rotorPairStations) % GRAY_TOPOLOGY.rotorPairStations
-      const phaseIndex = sectorIndex as GrayPhase
-      const phaseLabel = (['A', 'B', 'C'] as const)[phaseIndex]
-      const phase = phaseIndex
-      const majorAngleDeg = sectorAngleDeg
-      const minorAngleDeg = sectorAngleDeg + GRAY_TOPOLOGY.majorMinorOffsetDeg
-      const majorMinor: GrayMajorMinorElement = stepInRevolution % 3 === 1 ? 'major' : 'minor'
-      return Object.freeze({
-        sectorIndex,
-        angleDeg: sectorAngleDeg,
-        statorPairStation,
-        rotorPairStation,
-        majorAngleDeg,
-        minorAngleDeg,
-        phase,
-        phaseIndex,
-        phaseLabel,
-        majorMinor,
-        activeElement: majorMinor,
-        element: majorMinor,
-      })
-    })
-    const frozenSectors = Object.freeze(sectors)
-    const phaseIndex = (stepInRevolution % 3) as GrayPhase
+function buildGrayEventTemplate(stepInRevolution: number): GrayEvent {
+  const angleDeg = stepInRevolution * GRAY_TOPOLOGY.dischargeStepDeg
+  const sectors = Array.from({ length: GRAY_TOPOLOGY.simultaneousSectors }, (_, sectorIndex) => {
+    const sectorAngleDeg = angleDeg + sectorIndex * GRAY_TOPOLOGY.rotorAngularPitchDeg
+    const statorStationUnwrapped = Math.floor(
+      sectorAngleDeg / GRAY_TOPOLOGY.statorAngularPitchDeg,
+    )
+    const rotorStationUnwrapped = Math.floor(
+      sectorAngleDeg / GRAY_TOPOLOGY.rotorAngularPitchDeg,
+    )
+    const statorPairStation = ((statorStationUnwrapped % GRAY_TOPOLOGY.statorPairStations)
+      + GRAY_TOPOLOGY.statorPairStations) % GRAY_TOPOLOGY.statorPairStations
+    const rotorPairStation = ((rotorStationUnwrapped % GRAY_TOPOLOGY.rotorPairStations)
+      + GRAY_TOPOLOGY.rotorPairStations) % GRAY_TOPOLOGY.rotorPairStations
+    const phaseIndex = sectorIndex as GrayPhase
     const phaseLabel = (['A', 'B', 'C'] as const)[phaseIndex]
     const phase = phaseIndex
+    const majorAngleDeg = sectorAngleDeg
+    const minorAngleDeg = sectorAngleDeg + GRAY_TOPOLOGY.majorMinorOffsetDeg
     const majorMinor: GrayMajorMinorElement = stepInRevolution % 3 === 1 ? 'major' : 'minor'
-    events.push(Object.freeze({
-      stepIndex: index,
-      revolution,
-      angleDeg,
-      endAngleDeg: angleDeg + GRAY_TOPOLOGY.dischargeStepDeg,
-      stepDeg: GRAY_TOPOLOGY.dischargeStepDeg,
-      sectorCount: GRAY_TOPOLOGY.simultaneousSectors,
-      sectors: frozenSectors,
-      simultaneousSectors: frozenSectors,
-      majorMinorOffsetDeg: GRAY_TOPOLOGY.majorMinorOffsetDeg,
+    return Object.freeze({
+      sectorIndex,
+      angleDeg: sectorAngleDeg,
+      statorPairStation,
+      rotorPairStation,
+      majorAngleDeg,
+      minorAngleDeg,
       phase,
       phaseIndex,
       phaseLabel,
       majorMinor,
-    }))
+      activeElement: majorMinor,
+      element: majorMinor,
+    })
+  })
+  const frozenSectors = Object.freeze(sectors)
+  const phaseIndex = (stepInRevolution % 3) as GrayPhase
+  const phaseLabel = (['A', 'B', 'C'] as const)[phaseIndex]
+  const phase = phaseIndex
+  const majorMinor: GrayMajorMinorElement = stepInRevolution % 3 === 1 ? 'major' : 'minor'
+  return Object.freeze({
+    stepIndex: stepInRevolution,
+    revolution: 0,
+    angleDeg,
+    endAngleDeg: angleDeg + GRAY_TOPOLOGY.dischargeStepDeg,
+    stepDeg: GRAY_TOPOLOGY.dischargeStepDeg,
+    sectorCount: GRAY_TOPOLOGY.simultaneousSectors,
+    sectors: frozenSectors,
+    simultaneousSectors: frozenSectors,
+    majorMinorOffsetDeg: GRAY_TOPOLOGY.majorMinorOffsetDeg,
+    phase,
+    phaseIndex,
+    phaseLabel,
+    majorMinor,
+  })
+}
+
+const GRAY_EVENT_TEMPLATES = Object.freeze(
+  Array.from({ length: GRAY_TOPOLOGY.dischargesPerRevolution }, (_, index) => buildGrayEventTemplate(index)),
+)
+
+export function buildGrayEventSchedule(revolutions = 1): GrayEvent[] {
+  positiveInteger(revolutions, 'revolutions')
+  const events: GrayEvent[] = []
+  for (let revolution = 0; revolution < revolutions; revolution += 1) {
+    for (const template of GRAY_EVENT_TEMPLATES) {
+      if (revolution === 0) {
+        events.push(template)
+        continue
+      }
+      const revolutionOffsetDeg = revolution * 360
+      const sectors = Object.freeze(template.sectors.map((sector) => Object.freeze({
+        ...sector,
+        angleDeg: sector.angleDeg + revolutionOffsetDeg,
+        majorAngleDeg: sector.majorAngleDeg + revolutionOffsetDeg,
+        minorAngleDeg: sector.minorAngleDeg + revolutionOffsetDeg,
+      })))
+      events.push(Object.freeze({
+        ...template,
+        stepIndex: revolution * GRAY_TOPOLOGY.dischargesPerRevolution + template.stepIndex,
+        revolution,
+        angleDeg: template.angleDeg + revolutionOffsetDeg,
+        endAngleDeg: template.endAngleDeg + revolutionOffsetDeg,
+        sectors,
+        simultaneousSectors: sectors,
+      }))
+    }
   }
   return events
 }
 
 export const grayEventSchedule = buildGrayEventSchedule
 export const eventSchedule = buildGrayEventSchedule
-export const GRAY_EVENT_SCHEDULE: readonly GrayEvent[] = Object.freeze(buildGrayEventSchedule())
+export const GRAY_EVENT_SCHEDULE: readonly GrayEvent[] = GRAY_EVENT_TEMPLATES
 
 export function calculateEnergyBalance(input: GrayEnergyBalanceInput): GrayEnergyBalance {
   const nonNegativeValues: Array<[string, number]> = [
@@ -1818,6 +1710,7 @@ export type GrayFullMotorMode = 'prescribed-diagnostic' | 'dynamic'
 export type GrayFullMotorMachineMode = 'original-500rpm-contact-v1' | 'modified-electronic-v1'
 export type GrayFullMotorSwitchState = 'open' | 'contact-closed' | 'electronic-conducting'
 export type GrayFullMotorArcState = 'none' | 'quenched' | 'sustained'
+export const GRAY_FULL_MOTOR_METHOD_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.method
 
 export interface GrayFullMotorInput {
   motorId: GrayMotorId
@@ -1983,7 +1876,7 @@ export interface GrayFullMotorResult {
   engineProfile: GrayEngineProfile
   topology: GrayTopologyContract
   magneticScope: 'illustrative-lumped-surrogate' | 'hybrid-fem-magnetic-lumped-circuit'
-  numericalMethod: 'bounded-midpoint-event-map-v2'
+  numericalMethod: typeof GRAY_FULL_MOTOR_METHOD_REVISION
   quenchRule: {
     id: GrayFullMotorMachineMode
     version: 1
@@ -2752,7 +2645,7 @@ export function evaluateGrayFullMotor(
     magneticScope: input.magneticLookup
       ? 'hybrid-fem-magnetic-lumped-circuit'
       : 'illustrative-lumped-surrogate',
-    numericalMethod: 'bounded-midpoint-event-map-v2',
+    numericalMethod: GRAY_FULL_MOTOR_METHOD_REVISION,
     quenchRule: {
       id: input.machineMode,
       version: 1,

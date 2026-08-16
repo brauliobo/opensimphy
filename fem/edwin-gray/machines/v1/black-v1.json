@@ -3,6 +3,14 @@
   "contractVersion": 1,
   "contractId": "black-v1",
   "machineKind": "engine-prototype",
+  "runtimeModel": {
+    "catalogOrder": 5,
+    "sourceClassification": { "kind": "source-described-prototype", "sourceStatus": "descriptive", "surrogateStatus": "illustrative-not-fem-calibrated" },
+    "catalog": { "engineMotorId": "black", "label": "Black 1979", "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 1, "rotorPoles": 1, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.05, "recoveryCoupling": 0, "observationWindow": true, "notes": "Single pole set and a side window for watching commutation and the pole-face arc." },
+    "defaults": { "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 9, "turns": 140 },
+    "profile": { "machineContractId": "edwin-gray-black", "scenarioKind": "source-described-prototype-illustrative-surrogate", "compatibleTurns": 140, "compatibleExcitation": "capacitor-discharge-lumped-surrogate", "topologyIdentity": "prototype-black-unverified", "modelInputHash": null, "femCompatible": false },
+    "provenance": { "evidenceClass": "assumed", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-colored-machine-distinctions"], "note": "Descriptive prototype identity with illustrative bounded runtime parameters; not measured or FEM-calibrated." }
+  },
   "identity": {
     "machineId": { "value": "black", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "Black 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.black.label"], "note": "Exact current engine catalog label." },

@@ -3,6 +3,14 @@
   "contractVersion": 1,
   "contractId": "us3890548a-illustrative-topology-v1",
   "machineKind": "patent-illustrative-topology",
+  "runtimeModel": {
+    "catalogOrder": 6,
+    "sourceClassification": { "kind": "patent-described-illustrative-model", "sourceStatus": "patent-illustrative", "surrogateStatus": "patent-illustrative-runtime-not-replica" },
+    "catalog": { "engineMotorId": "patent-illustrative", "label": "US3890548A illustrative engine profile", "year": 1974, "designer": "Patent-described / illustrative model", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": true, "housing": "prototype", "leakageCoupling": 0.05, "recoveryCoupling": 0.12, "observationWindow": false, "notes": "Explicit illustrative engine profile for the patent topology; it is not the purple prototype." },
+    "defaults": { "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 3, "turns": 100 },
+    "profile": { "machineContractId": "patent-3890548-illustrative", "scenarioKind": "patent-described-illustrative-model", "compatibleTurns": 100, "compatibleExcitation": "impressed-current-magnetostatic", "topologyIdentity": "us3890548a-nine-stator-three-rotor-pair-topology", "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91", "femCompatible": true },
+    "provenance": { "evidenceClass": "patent-derived", "evidenceRefs": ["US3890548A:description", "fem/edwin-gray/cases/patent-3890548-illustrative.json"], "note": "Explicit patent-illustrative runtime profile; it is neither a historical prototype replica nor a FEM result." }
+  },
   "identity": {
     "machineId": {
       "value": "us3890548a",

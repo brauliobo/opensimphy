@@ -3,6 +3,14 @@
   "contractVersion": 1,
   "contractId": "ema6-v1",
   "machineKind": "engine-prototype",
+  "runtimeModel": {
+    "catalogOrder": 1,
+    "sourceClassification": { "kind": "source-described-prototype", "sourceStatus": "descriptive", "surrogateStatus": "illustrative-not-fem-calibrated" },
+    "catalog": { "engineMotorId": "ema6", "label": "EMA6", "year": 1976, "designer": "Richard Hackenberger", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "aluminum", "leakageCoupling": 0.06, "recoveryCoupling": 0, "observationWindow": false, "notes": "Conversion tubes removed; mechanical commutator. First demo about 2 hp." },
+    "defaults": { "chargeVoltageV": 3000, "capacitanceF": 0.0000012, "startRpm": 500, "quenchDeg": 6, "turns": 160 },
+    "profile": { "machineContractId": "edwin-gray-ema6", "scenarioKind": "source-described-prototype-illustrative-surrogate", "compatibleTurns": 160, "compatibleExcitation": "capacitor-discharge-lumped-surrogate", "topologyIdentity": "prototype-ema6-unverified", "modelInputHash": null, "femCompatible": false },
+    "provenance": { "evidenceClass": "assumed", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-ema6-two-horsepower"], "note": "Descriptive prototype identity with illustrative bounded runtime parameters; not measured or FEM-calibrated." }
+  },
   "identity": {
     "machineId": { "value": "ema6", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "EMA6", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.ema6.label"], "note": "Exact current engine catalog label." },

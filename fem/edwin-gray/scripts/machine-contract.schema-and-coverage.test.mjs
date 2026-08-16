@@ -5,10 +5,8 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const REPOSITORY_ROOT = resolve(ROOT, "../..");
 const MACHINE_ROOT = join(ROOT, "machines/v1");
 const SCHEMA_PATH = join(ROOT, "schema/motor-machine.schema.json");
-const ENGINE_PATH = join(REPOSITORY_ROOT, "src/edwin-gray/edwinGrayEngine.ts");
 const COMPATIBILITY_FIELDS = [
   "topology",
   "geometryRevision",
@@ -114,14 +112,11 @@ test("machine-contract IDs and machine identities are unique and cover the curre
   const actualIdentities = new Map(prototypes.map(({ identity }) => [identity.machineId.value, identity.name.value]));
   assert.deepEqual(actualIdentities, EXPECTED_ENGINE_IDENTITIES);
 
-  const engineSource = readFileSync(ENGINE_PATH, "utf8");
-  const idDeclaration = engineSource.match(/GRAY_PROTOTYPE_MOTOR_IDS = Object\.freeze\(\[([^\]]+)]/);
-  assert.ok(idDeclaration, "current engine ID declaration must remain discoverable");
-  const engineIds = [...idDeclaration[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.deepEqual(new Set(engineIds), new Set(EXPECTED_ENGINE_IDENTITIES.keys()));
-  for (const [id, label] of EXPECTED_ENGINE_IDENTITIES) {
-    assert.match(engineSource, new RegExp(`${id}: \\{[\\s\\S]*?id: '${id}',[\\s\\S]*?label: '${label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}'`));
-  }
+  const runtimeIdentities = new Map(prototypes.map(({ runtimeModel }) => [
+    runtimeModel.catalog.engineMotorId,
+    runtimeModel.catalog.label
+  ]));
+  assert.deepEqual(runtimeIdentities, EXPECTED_ENGINE_IDENTITIES);
 });
 
 test("machine-contract FEM compatibility is exclusive to the illustrative patent topology", () => {
@@ -148,6 +143,9 @@ test("machine-contract prototypes block unavailable physical identity without pa
     assert.equal(compatibilityIdentity.femAvailability.value.caseId, null);
     assert.equal(compatibilityIdentity.femAvailability.value.scope, "blocked-unavailable-identity");
     assert.deepEqual(compatibilityIdentity.femAvailability.value.blockedBy, BLOCKING_FIELDS);
-    assert.equal(contract.identity.engineModel.evidenceClass, "calibrated");
+    assert.equal(contract.runtimeModel.sourceClassification.sourceStatus, "descriptive");
+    assert.equal(contract.runtimeModel.sourceClassification.surrogateStatus, "illustrative-not-fem-calibrated");
+    assert.equal(contract.runtimeModel.profile.femCompatible, false);
+    assert.equal(contract.runtimeModel.profile.modelInputHash, null);
   }
 });

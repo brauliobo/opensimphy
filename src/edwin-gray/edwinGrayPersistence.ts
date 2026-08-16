@@ -202,6 +202,7 @@ export function compareGraySnapshots(
     modelRevision: [leftProfile.modelRevision, rightProfile.modelRevision],
     workbenchModelRevision: [left.modelRevision, right.modelRevision],
     numericalMethod: [left.methodId, right.methodId],
+    generatedModelKey: [left.compatibilityKey, right.compatibilityKey],
   } as const
   const modelDifferences = Object.freeze(Object.entries(modelFields)
     .filter(([, values]) => values[0] !== values[1])
@@ -211,12 +212,13 @@ export function compareGraySnapshots(
     && leftProfile.modelRevision === rightProfile.modelRevision
     && left.modelRevision === right.modelRevision
     && left.methodId === right.methodId
+    && left.compatibilityKey === right.compatibilityKey
     && typeof leftProfile.machineRevision === 'number'
     && typeof leftProfile.modelRevision === 'number'
   if (!compatible) {
     return Object.freeze({
       compatible: false,
-      reason: 'Numerical deltas require the same machine contract, machine revision, model revision, and numerical method.',
+      reason: 'Numerical deltas require the same generated model key, machine contract, revisions, and numerical method.',
       inputDifferences,
       modelDifferences,
       numericalDeltas: null,
@@ -241,7 +243,7 @@ export function compareGraySnapshots(
     })))
   return Object.freeze({
     compatible: true,
-    reason: 'Machine and model revisions match; numerical deltas are comparable.',
+    reason: 'Generated model key, machine, and model revisions match; numerical deltas are comparable.',
     inputDifferences,
     modelDifferences,
     numericalDeltas,

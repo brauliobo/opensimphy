@@ -3,6 +3,14 @@
   "contractVersion": 1,
   "contractId": "white-v1",
   "machineKind": "engine-prototype",
+  "runtimeModel": {
+    "catalogOrder": 4,
+    "sourceClassification": { "kind": "source-described-prototype", "sourceStatus": "descriptive", "surrogateStatus": "illustrative-not-fem-calibrated" },
+    "catalog": { "engineMotorId": "white", "label": "White 1979", "year": 1979, "designer": "Hackenberger / Gray", "statorPoles": 3, "rotorPoles": 3, "hasRecovery": false, "housing": "plastic", "leakageCoupling": 0.012, "recoveryCoupling": 0, "observationWindow": false, "notes": "All-plastic housing. Weaker magnetic return than the aluminum machines." },
+    "defaults": { "chargeVoltageV": 5000, "capacitanceF": 8.3e-8, "startRpm": 500, "quenchDeg": 3, "turns": 140 },
+    "profile": { "machineContractId": "edwin-gray-white", "scenarioKind": "source-described-prototype-illustrative-surrogate", "compatibleTurns": 140, "compatibleExcitation": "capacitor-discharge-lumped-surrogate", "topologyIdentity": "prototype-white-unverified", "modelInputHash": null, "femCompatible": false },
+    "provenance": { "evidenceClass": "assumed", "evidenceRefs": ["src/edwin-gray/edwinGrayEvidence.ts:gray-caption-colored-machine-distinctions"], "note": "Descriptive prototype identity with illustrative bounded runtime parameters; not measured or FEM-calibrated." }
+  },
   "identity": {
     "machineId": { "value": "white", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white.id"], "note": "Exact current engine catalog ID." },
     "name": { "value": "White 1979", "evidenceClass": "calibrated", "evidenceRefs": ["src/edwin-gray/edwinGrayEngine.ts:GRAY_MOTORS.white.label"], "note": "Exact current engine catalog label." },

@@ -9,6 +9,7 @@ import {
   parseGrayFemLookupDocument,
   requireCompatibleGrayFemLookup,
 } from '../../src/edwin-gray/edwinGrayFem'
+import { GRAY_MACHINE_ARTIFACT } from '../../src/edwin-gray/generated/grayMachines.generated'
 
 const artifactHash = 'a'.repeat(64)
 
@@ -74,6 +75,28 @@ describe('Edwin Gray machine contracts', () => {
       modelRevision: 1,
       femStatus: 'not-run',
     })
+  })
+
+  it('projects runtime identities and provenance from the generated contract artifact', () => {
+    expect(GRAY_MACHINE_ARTIFACT.prototypeMotorIds).toEqual(['ema4', 'ema6', 'purple', 'gold', 'white', 'black'])
+    expect(GRAY_MACHINE_ARTIFACT.metadata).toMatchObject({
+      sourceHash: expect.stringMatching(/^[a-f0-9]{64}$/),
+      modelKey: expect.stringMatching(/^[a-f0-9]{64}$/),
+      revisions: {
+        compiler: 'gray-machine-compiler-v1',
+        api: 1,
+        method: 'bounded-midpoint-event-map-v2',
+        event: 'us3890548a-27-event-v1',
+      },
+    })
+    expect(GRAY_MACHINE_ARTIFACT.metadata.compatibilityKeys.generatedModel)
+      .toBe(GRAY_MACHINE_ARTIFACT.metadata.modelKey)
+    for (const id of GRAY_MACHINE_ARTIFACT.prototypeMotorIds) {
+      expect(GRAY_MACHINE_ARTIFACT.machineContracts[`edwin-gray-${id}`].runtimeClassification)
+        .toMatchObject({ sourceStatus: 'descriptive', surrogateStatus: 'illustrative-not-fem-calibrated' })
+    }
+    expect(GRAY_MACHINE_ARTIFACT.machineContracts[GRAY_PATENT_MACHINE_ID].runtimeClassification)
+      .toMatchObject({ sourceStatus: 'patent-illustrative', surrogateStatus: 'patent-illustrative-runtime-not-replica' })
   })
 
   it('rejects patent FEM for an engine prototype contract', () => {

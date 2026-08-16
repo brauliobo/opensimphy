@@ -9,6 +9,7 @@
     "contractVersion",
     "contractId",
     "machineKind",
+    "runtimeModel",
     "identity",
     "compatibilityIdentity",
     "limitations"
@@ -26,6 +27,79 @@
     },
     "machineKind": {
       "enum": ["patent-illustrative-topology", "engine-prototype"]
+    },
+    "runtimeModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalogOrder", "sourceClassification", "catalog", "defaults", "profile", "provenance"],
+      "properties": {
+        "catalogOrder": { "type": "number" },
+        "sourceClassification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "sourceStatus", "surrogateStatus"],
+          "properties": {
+            "kind": { "enum": ["source-described-prototype", "patent-described-illustrative-model"] },
+            "sourceStatus": { "enum": ["descriptive", "patent-illustrative"] },
+            "surrogateStatus": { "enum": ["illustrative-not-fem-calibrated", "patent-illustrative-runtime-not-replica"] }
+          }
+        },
+        "catalog": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["engineMotorId", "label", "year", "designer", "statorPoles", "rotorPoles", "hasRecovery", "housing", "leakageCoupling", "recoveryCoupling", "observationWindow", "notes"],
+          "properties": {
+            "engineMotorId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+            "label": { "type": "string", "minLength": 1 },
+            "year": { "type": "number" },
+            "designer": { "type": "string", "minLength": 1 },
+            "statorPoles": { "type": "number" },
+            "rotorPoles": { "type": "number" },
+            "hasRecovery": { "type": "boolean" },
+            "housing": { "enum": ["aluminum", "plastic", "prototype"] },
+            "leakageCoupling": { "type": "number" },
+            "recoveryCoupling": { "type": "number" },
+            "observationWindow": { "type": "boolean" },
+            "notes": { "type": "string", "minLength": 1 }
+          }
+        },
+        "defaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["chargeVoltageV", "capacitanceF", "startRpm", "quenchDeg", "turns"],
+          "properties": {
+            "chargeVoltageV": { "type": "number" },
+            "capacitanceF": { "type": "number" },
+            "startRpm": { "type": "number" },
+            "quenchDeg": { "type": "number" },
+            "turns": { "type": "number" }
+          }
+        },
+        "profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["machineContractId", "scenarioKind", "compatibleTurns", "compatibleExcitation", "topologyIdentity", "modelInputHash", "femCompatible"],
+          "properties": {
+            "machineContractId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+            "scenarioKind": { "enum": ["source-described-prototype-illustrative-surrogate", "patent-described-illustrative-model"] },
+            "compatibleTurns": { "type": "number" },
+            "compatibleExcitation": { "type": "string", "minLength": 1 },
+            "topologyIdentity": { "type": "string", "minLength": 1 },
+            "modelInputHash": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+            "femCompatible": { "type": "boolean" }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidenceClass", "evidenceRefs", "note"],
+          "properties": {
+            "evidenceClass": { "enum": ["patent-described", "patent-derived", "assumed", "unavailable"] },
+            "evidenceRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "note": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
     },
     "identity": {
       "type": "object",

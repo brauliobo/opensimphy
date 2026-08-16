@@ -25,6 +25,7 @@ import {
   type GrayWorkerRequest,
   type GrayWorkerResponse,
 } from '../../src/edwin-gray/edwinGrayWorkerProtocol'
+import { GRAY_MACHINE_ARTIFACT } from '../../src/edwin-gray/generated/grayMachines.generated'
 
 class MockGrayWorker implements GrayWorkerLike {
   readonly listeners = new Map<string, Set<EventListener>>()
@@ -219,8 +220,28 @@ describe('Edwin Gray canonical workbench state', () => {
     expect(loadGraySnapshots()).toEqual([snapshot])
     expect(snapshot.modelRevision).toBe('gray-full-motor-v1')
     expect(snapshot.compatibilityKey).toMatch(/^[a-f0-9]{64}$/)
+    expect(snapshot.compatibilityKey).toBe(GRAY_MACHINE_ARTIFACT.metadata.modelKey)
     expect(importGraySnapshot(exportGraySnapshot(snapshot))).toEqual(snapshot)
     expect(snapshot.finding.validatesTheory).toBe(false)
+  })
+
+  it('limits a 100-revolution worker run to at most 100 intermediate progress events', async () => {
+    vi.resetModules()
+    let messageListener: ((event: MessageEvent<GrayWorkerRequest>) => void) | undefined
+    const postMessage = vi.fn()
+    vi.stubGlobal('self', {
+      addEventListener(type: string, listener: (event: MessageEvent<GrayWorkerRequest>) => void) {
+        if (type === 'message') messageListener = listener
+      },
+      postMessage,
+    })
+    await import('../../src/workers/edwinGray.worker')
+    const input = { ...grayFullMotorInput(defaultGrayWorkbenchInput()), revolutions: 100 }
+    messageListener!({ data: { type: 'run', requestId: 'benchmark', inputIdentity: 'input', input } } as MessageEvent<GrayWorkerRequest>)
+    const responses = postMessage.mock.calls.map(([response]) => response as GrayWorkerResponse)
+    expect(responses.filter(({ type }) => type === 'progress').length).toBeLessThanOrEqual(100)
+    expect(responses.at(-1)).toMatchObject({ type: 'completed', requestId: 'benchmark', progress: 1 })
+    vi.unstubAllGlobals()
   })
 
   it('recovers valid storage entries and reports corrupt entries', () => {

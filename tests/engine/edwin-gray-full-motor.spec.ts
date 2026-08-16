@@ -1,4 +1,5 @@
 import {
+  buildGrayEventSchedule,
   evaluateGrayFullMotor,
   GRAY_PRESETS,
   runGrayFullMotor,
@@ -14,6 +15,17 @@ const prescribedInput = {
 } satisfies GrayFullMotorInput
 
 describe('Edwin Gray continuous full motor teaching model', () => {
+  it('reuses frozen canonical sector templates across revolutions', () => {
+    const schedule = buildGrayEventSchedule(2)
+    const nextSchedule = buildGrayEventSchedule()
+    expect(Object.isFrozen(schedule[0])).toBe(true)
+    expect(Object.isFrozen(schedule[0]!.sectors)).toBe(true)
+    expect(schedule[0]).toBe(nextSchedule[0])
+    expect(schedule[0]!.sectors).toBe(nextSchedule[0]!.sectors)
+    expect(schedule[0]!.sectors).not.toBe(schedule[27]!.sectors)
+    expect(schedule[27]).toMatchObject({ stepIndex: 27, revolution: 1, angleDeg: 360 })
+  })
+
   it('executes the canonical ordered 27-event train per revolution', () => {
     const result = runGrayFullMotor({ ...prescribedInput, revolutions: 2 })
 

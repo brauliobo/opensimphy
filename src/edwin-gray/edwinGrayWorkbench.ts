@@ -12,12 +12,13 @@ import {
   GRAY_PATENT_MACHINE_ID,
   type GrayMachineContractId,
 } from './edwinGrayMachines'
+import { GRAY_MACHINE_ARTIFACT } from './generated/grayMachines.generated'
 
-export const GRAY_WORKBENCH_INPUT_REVISION = 1 as const
-export const GRAY_WORKBENCH_SOURCE_REVISION = 'US3890548A-and-Motor-Edwin-Gray-transcript-v1'
-export const GRAY_WORKBENCH_IMPLEMENTATION_REVISION = 'closed-form-event-map-v1'
-export const GRAY_WORKBENCH_MODEL_REVISION = 'gray-full-motor-v1'
-export const GRAY_WORKBENCH_COMPATIBILITY_KEY = '740be45305f25b10e90b0a4dbf0ca892cd924c2884d2d426b0676c04817a4fbf'
+export const GRAY_WORKBENCH_INPUT_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.workbenchInput
+export const GRAY_WORKBENCH_SOURCE_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.workbenchSource
+export const GRAY_WORKBENCH_IMPLEMENTATION_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.workbenchImplementation
+export const GRAY_WORKBENCH_MODEL_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.workbenchModel
+export const GRAY_WORKBENCH_COMPATIBILITY_KEY = GRAY_MACHINE_ARTIFACT.metadata.modelKey
 
 export type GrayMagneticModelSelection = 'illustrative-surrogate' | 'fem-lookup'
 
