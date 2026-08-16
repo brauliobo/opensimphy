@@ -20,6 +20,7 @@ import {
 import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
 import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
 import {
+  GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD,
   GRAY_CALIBRATION_TRANSFER_PROXY,
   loadGrayCalibrationMagneticLookup,
   type GrayCalibrationMagneticLookup,
@@ -139,6 +140,10 @@ const calibrationDisplayStatus = computed(() => calibrationStatus.value === 'rea
   ? 'active'
   : calibrationStatus.value)
 const calibrationAvailable = computed(() => input.value.machineContractId === GRAY_PATENT_MACHINE_ID)
+const selectedMachineContract = computed(() => GRAY_MACHINE_CONTRACTS[input.value.machineContractId])
+const selectedContractDisclosure = computed(() => selectedMachineContract.value.runtimeClassification.kind === 'source-described-prototype'
+  ? 'Source-described prototype identity; the runtime is an illustrative lumped surrogate, not a prototype-specific replica or FEM calibration.'
+  : 'Patent-illustrative topology; the runtime is an illustrative topology model, not a prototype replica or a seventh prototype.')
 const calibrationRunBlocked = computed(() => input.value.magneticModel === 'limited-fem-calibration'
   && (!calibrationAcknowledged.value || calibrationStatus.value !== 'ready'))
 
@@ -298,7 +303,7 @@ async function refreshCalibration(): Promise<void> {
       return
     }
     calibrationStatus.value = 'ready'
-    calibrationMessage.value = '27-point L/W/W′ relation ready. Class 0 transfer proxy is measured; classes 1–2 transfer it by assumption.'
+    calibrationMessage.value = '27-point L/W/W′ relation ready. Pilot drift transfer is assumption-only for all published class runs because their model and environment provenance differs from the pilot.'
   } catch (reason) {
     if (controller.signal.aborted || requestToken !== calibrationRequestToken) return
     const message = reason instanceof Error ? reason.message : String(reason)
@@ -545,7 +550,10 @@ onBeforeUnmount(() => {
           span Machine contract
           select(v-model="input.machineContractId" data-testid="gray-machine-contract" @change="selectMachine")
             option(v-for="id in GRAY_MACHINE_IDS" :key="id" :value="id") {{ GRAY_MACHINE_CONTRACTS[id].label }}
-        p.gray-fem-state(data-testid="gray-scenario-contract") Contract {{ input.machineContractId }}. Prototype contracts run only as illustrative surrogate scenarios and are never patent-FEM compatible.
+        p.gray-fem-state(
+          :data-kind="selectedMachineContract.runtimeClassification.kind"
+          data-testid="gray-scenario-contract"
+        ) Contract {{ input.machineContractId }}. {{ selectedContractDisclosure }}
         label
           span Full-run mode
           select(v-model="input.mode" data-testid="gray-run-mode")
@@ -634,8 +642,10 @@ onBeforeUnmount(() => {
             @click="refreshCalibration"
           ) Recheck limited calibration
           .gray-calibration-boundary(data-testid="gray-calibration-boundary")
-            strong ±{{ (GRAY_CALIBRATION_TRANSFER_PROXY * 100).toFixed(4) }}% transfer proxy for L / W / W′ only
-            span Class 0 measured; classes 1–2 assumed transfer. Torque has no validated bound.
+            strong Observed pilot coarse/fine drift: {{ (GRAY_CALIBRATION_TRANSFER_PROXY * 100).toFixed(4) }}%. This observation is not an uncertainty bound.
+            span The {{ (GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD * 100).toFixed(0) }}% pass criterion was an acceptance threshold, not an uncertainty bound.
+            span Pilot and published class runs have different model and environment provenance; applying the pilot drift to classes 0–2 for L / W / W′ is assumption-only.
+            span Torque has no validated bound.
             span Illustrative patent topology, not physical validation. Dynamic torque and mechanical results are exploratory and unbounded.
     .gray-workbench__actions
       button(type="button" :disabled="runStatus === 'running' || Boolean(revisionError) || calibrationRunBlocked" data-testid="gray-run" @click="runWorkbench") Run full motor
@@ -648,6 +658,10 @@ onBeforeUnmount(() => {
     p.quantum-boundary(v-if="runError" role="alert") {{ runError }}
 
     .gray-shared-timeline(v-if="result" data-testid="gray-shared-timeline")
+      p.gray-status(
+        :data-contract="result.input.machineContractId"
+        data-testid="gray-selected-result"
+      ) Selected result: contract {{ result.input.machineContractId }} / {{ result.completedEventCount }} worker events.
       .gray-shared-timeline__readout(
         role="status"
         :aria-live="timelinePlaying ? 'off' : 'polite'"

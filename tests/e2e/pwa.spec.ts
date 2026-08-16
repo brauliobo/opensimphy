@@ -131,25 +131,49 @@ test('Gray payloads use bounded runtime caches and the warmed surrogate runs off
   expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_CALIBRATION_CACHE)).toBe(0)
 })
 
-test('a warmed limited calibration pack remains explicit and fail-closed offline', async ({ context, page }) => {
+test('a warmed unavailable calibration pack remains fail-closed offline', async ({ context, page }) => {
   await ensureServiceWorkerControl(page)
   await page.goto('/labs/edwin-gray')
   await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
   await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
-  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('provenance mismatch')
   await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
   expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_CALIBRATION_CACHE)).toBe(1)
 
   await context.setOffline(true)
-  await page.getByTestId('gray-calibration-acknowledgement').check()
-  await page.getByTestId('gray-magnetic-model').selectOption('limited-fem-calibration')
-  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'active')
-  await page.getByTestId('gray-run').click()
-  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+  await page.getByTestId('gray-calibration-recheck').click()
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('provenance mismatch')
+  await expect(page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')).toHaveAttribute('disabled', '')
 
   const cached = await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).map(({ url }) => url), GRAY_CALIBRATION_CACHE)
   expect(cached).toHaveLength(1)
   expect(cached[0]).toContain(GRAY_CALIBRATION_PATH)
+})
+
+test('the production PWA rejects a corrupted cached calibration pack offline', async ({ context, page }) => {
+  await ensureServiceWorkerControl(page)
+  const response = await page.request.get(GRAY_CALIBRATION_PATH)
+  expect(response.ok()).toBe(true)
+  const calibrationPack = await response.json()
+  await page.goto('/labs/edwin-gray')
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  await page.evaluate(async ({ cacheName, path, value }) => {
+    const cache = await caches.open(cacheName)
+    await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+  }, { cacheName: GRAY_CALIBRATION_CACHE, path: GRAY_CALIBRATION_PATH, value: calibrationPack })
+
+  await context.setOffline(true)
+  await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('must remain unavailable')
+  await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+  await expect(page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')).toHaveAttribute('disabled', '')
 })
 
 test('a previously fetched compatible revisioned Gray LUT remains usable offline', async ({ context, page }) => {

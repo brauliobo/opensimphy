@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { GRAY_MOTORS, GRAY_PROTOTYPE_MOTOR_IDS, type GrayFullMotorResult } from '../../edwin-gray/edwinGrayEngine'
 import { grayEvidenceRecord } from '../../edwin-gray/edwinGrayEvidence'
+import { GRAY_MACHINE_CONTRACTS, GRAY_PATENT_MACHINE_ID } from '../../edwin-gray/edwinGrayMachines'
 import type { ReadingDepth } from '../../types/tour'
 
-defineProps<{ depth: ReadingDepth; result: Readonly<GrayFullMotorResult> }>()
+const props = defineProps<{ depth: ReadingDepth; result: Readonly<GrayFullMotorResult> }>()
 const recoveryEvidence = grayEvidenceRecord('gray-caption-purple-recovery-coils')
+const selectedContract = computed(() => GRAY_MACHINE_CONTRACTS[props.result.input.machineContractId as keyof typeof GRAY_MACHINE_CONTRACTS])
+const patentSelected = computed(() => props.result.input.machineContractId === GRAY_PATENT_MACHINE_ID)
 </script>
 
 <template lang="pug">
@@ -14,7 +18,7 @@ article.quantum-instrument(data-testid="gray-family-instrument")
     h3 Keep machine identity and evidence scope attached
     p The family table is catalog evidence, not six fresh simulations. Only the selected row carries the unified worker result.
   .quantum-result(data-testid="gray-family-result")
-    p.gray-status(role="status" aria-live="polite") Worker result belongs to {{ result.motor.label }} only. Other rows remain descriptive.
+    p.gray-status(role="status" aria-live="polite") Worker result belongs to contract {{ result.input.machineContractId }} / {{ selectedContract.label }} only. Other rows remain descriptive.
     .gray-table-scroll.gray-table-scroll--wide
       table
         caption Gray prototype family evidence; selected result identified explicitly
@@ -32,6 +36,10 @@ article.quantum-instrument(data-testid="gray-family-instrument")
             td {{ GRAY_MOTORS[id].designer }}
             td {{ GRAY_MOTORS[id].hasRecovery ? 'source-described path' : 'none in catalog row' }}
             td {{ result.input.machineContractId === `edwin-gray-${id}` ? `${result.completedEventCount} worker events` : 'not evaluated' }}
+    section.gray-findings(v-if="patentSelected" data-testid="gray-patent-selected-result")
+      h4 Selected patent-illustrative result
+      p Contract {{ result.input.machineContractId }} completed {{ result.completedEventCount }} worker events.
+      p This patent topology result is separate from the six source-described prototype rows and is not a prototype replica or a seventh prototype.
     section.gray-findings(data-testid="gray-structured-findings")
       h4 Structured findings
       dl

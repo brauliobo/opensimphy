@@ -16,6 +16,7 @@ const EVENT_COUNT = 27
 
 export const GRAY_CALIBRATION_PATH = 'data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
 export const GRAY_CALIBRATION_TRANSFER_PROXY = 0.011584935659327932
+export const GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD = 0.02
 
 export interface GrayCalibrationValue {
   value: number
@@ -67,13 +68,13 @@ export interface GrayCalibrationPack {
     symmetryProofSha256: string
     coarseFineDrift: {
       measured: typeof GRAY_CALIBRATION_TRANSFER_PROXY
-      maximum: 0.02
+      maximum: typeof GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD
       status: 'passed'
     }
   }
   classes: readonly GrayCalibrationClass[]
   uncertainty: {
-    relativeBound: 0.02
+    relativeBound: typeof GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD
     quantities: readonly ['L', 'W', "W'"]
     classBasis: Readonly<{ '0': 'measured'; '1': 'transfer-assumed'; '2': 'transfer-assumed' }>
   }
@@ -125,6 +126,37 @@ function finiteValue(value: unknown, unit: 'J' | 'H', label: string): GrayCalibr
   return { value: record.value, unit }
 }
 
+function rejectUnavailableCalibration(value: unknown): void {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return
+  const pack = value as Record<string, unknown>
+  if (pack.contract !== 'edwin-gray-motor-fem-calibration-pack') return
+  if (pack.contractVersion === 1) {
+    throw new Error('Limited FEM calibration unavailable: cached contract v1 has the known pilot provenance mismatch and cannot establish an uncertainty bound.')
+  }
+  if (pack.contractVersion !== 2) return
+  assert(pack.status === 'unavailable-provenance-mismatch' && pack.runtimeAvailable === false,
+    'Calibration contract v2 must remain unavailable when provenance does not match')
+  const evidence = object(pack.evidence, 'Unavailable calibration evidence', [
+    'modelInputHash', 'pilotModelInputHash', 'environmentIdentityHash', 'pilotReportSha256',
+    'pilotSpecificationSha256', 'currentSpecificationSha256', 'symmetryProofSha256', 'coarseFineDrift',
+  ])
+  assert(hash(evidence.modelInputHash, 'Calibration model input hash')
+    !== hash(evidence.pilotModelInputHash, 'Pilot model input hash'), 'Calibration v2 must declare the pilot model mismatch')
+  const drift = object(evidence.coarseFineDrift, 'Unavailable calibration pilot drift', [
+    'observed', 'passTolerance', 'status',
+  ])
+  assert(drift.observed === GRAY_CALIBRATION_TRANSFER_PROXY
+    && drift.passTolerance === GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD
+    && drift.status === 'legacy-pilot-only', 'Unavailable calibration pilot drift disclosure is invalid')
+  const uncertainty = object(pack.uncertainty, 'Unavailable calibration uncertainty', [
+    'established', 'relativeBound', 'passTolerance', 'reason', 'quantities', 'classBasis',
+  ])
+  assert(uncertainty.established === false && uncertainty.relativeBound === null
+    && uncertainty.passTolerance === GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD,
+  'Unavailable calibration must not declare an uncertainty bound')
+  throw new Error('Limited FEM calibration unavailable: pilot and class-run provenance mismatch; the observed pilot drift and 2% acceptance threshold are not uncertainty bounds, and class transfer is assumption-only.')
+}
+
 function parseClass(value: unknown, index: number): GrayCalibrationClass {
   const label = `Calibration class ${index}`
   const record = object(value, label, [
@@ -155,6 +187,7 @@ function parseClass(value: unknown, index: number): GrayCalibrationClass {
 }
 
 export function parseGrayCalibrationPack(value: unknown): GrayCalibrationPack {
+  rejectUnavailableCalibration(value)
   const pack = object(value, 'Calibration pack', [
     'contract', 'contractVersion', 'profileId', 'status', 'productionEligible',
     'fullConvergenceClaim', 'optIn', 'defaultEnabled', 'configuration', 'evidence',
@@ -190,13 +223,14 @@ export function parseGrayCalibrationPack(value: unknown): GrayCalibrationPack {
     'measured', 'maximum', 'status',
   ])
   assert(coarseFineDrift.measured === GRAY_CALIBRATION_TRANSFER_PROXY
-    && coarseFineDrift.maximum === 0.02 && coarseFineDrift.status === 'passed', 'Calibration coarse/fine drift evidence is invalid')
+    && coarseFineDrift.maximum === GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD
+    && coarseFineDrift.status === 'passed', 'Calibration coarse/fine drift evidence is invalid')
 
   assert(Array.isArray(pack.classes) && pack.classes.length === CLASS_COUNT, 'Calibration pack must contain exactly classes 0, 1, and 2')
   const classes = pack.classes.map(parseClass)
 
   const uncertainty = object(pack.uncertainty, 'Calibration uncertainty', ['relativeBound', 'quantities', 'classBasis'])
-  assert(uncertainty.relativeBound === 0.02, 'Calibration uncertainty bound is invalid')
+  assert(uncertainty.relativeBound === GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD, 'Calibration uncertainty bound is invalid')
   exactArray(uncertainty.quantities, ['L', 'W', "W'"], 'Calibration uncertainty quantities')
   const classBasis = object(uncertainty.classBasis, 'Calibration class basis', ['0', '1', '2'])
   assert(classBasis['0'] === 'measured' && classBasis['1'] === 'transfer-assumed'
@@ -229,11 +263,15 @@ export function parseGrayCalibrationPack(value: unknown): GrayCalibrationPack {
       environmentIdentityHash: hash(evidence.environmentIdentityHash, 'Calibration environment identity hash'),
       pilotReportSha256: hash(evidence.pilotReportSha256, 'Calibration pilot report hash'),
       symmetryProofSha256: hash(evidence.symmetryProofSha256, 'Calibration symmetry proof hash'),
-      coarseFineDrift: { measured: GRAY_CALIBRATION_TRANSFER_PROXY, maximum: 0.02, status: 'passed' },
+      coarseFineDrift: {
+        measured: GRAY_CALIBRATION_TRANSFER_PROXY,
+        maximum: GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD,
+        status: 'passed',
+      },
     },
     classes,
     uncertainty: {
-      relativeBound: 0.02,
+      relativeBound: GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD,
       quantities: ['L', 'W', "W'"],
       classBasis: { '0': 'measured', '1': 'transfer-assumed', '2': 'transfer-assumed' },
     },

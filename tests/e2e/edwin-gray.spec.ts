@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { GRAY_MACHINE_CONTRACTS, GRAY_MACHINE_IDS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
 
 const reflowViewports = [
   { width: 1440, height: 900, label: 'desktop' },
@@ -67,6 +68,46 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-shared-timeline')).toContainText('Event 1 / 54')
   })
 
+  test('selects and completes all seven honestly classified machine contracts', async ({ page }) => {
+    for (const id of GRAY_MACHINE_IDS) {
+      const contract = GRAY_MACHINE_CONTRACTS[id]
+      await test.step(id, async () => {
+        await page.getByTestId('gray-machine-contract').selectOption(id)
+        await expect(page.getByTestId('gray-scenario-contract')).toHaveAttribute('data-kind', contract.runtimeClassification.kind)
+        await expect(page.getByTestId('gray-scenario-contract')).toContainText(
+          id === GRAY_PATENT_MACHINE_ID ? 'not a prototype replica or a seventh prototype' : 'Source-described prototype identity',
+        )
+        await expect.poll(() => new URL(page.url()).searchParams.get('grayMachine')).toBe(id)
+
+        await page.getByTestId('gray-run').click()
+        await expect(page.getByTestId('gray-selected-result')).toHaveAttribute('data-contract', id)
+        await expect(page.getByTestId('gray-selected-result')).toContainText(`${id} / 27 worker events`)
+        await expect(page.getByTestId('gray-event-timeline').locator('tbody tr')).toHaveCount(27)
+        await expect(page.getByTestId('gray-stale')).toHaveCount(0)
+
+        if (id === GRAY_PATENT_MACHINE_ID) {
+          await expect(page.getByTestId('gray-patent-selected-result')).toContainText('not a prototype replica or a seventh prototype')
+        } else {
+          await expect(page.locator(`[data-motor="${contract.engineMotorId}"]`)).toContainText('27 worker events')
+          await expect(page.getByTestId('gray-patent-selected-result')).toHaveCount(0)
+        }
+      })
+    }
+  })
+
+  test('runs the prescribed diagnostic with the modified electronic contact contract', async ({ page }) => {
+    await page.getByTestId('gray-run-mode').selectOption('prescribed-diagnostic')
+    await page.getByTestId('gray-contact-mode').selectOption('modified-electronic-v1')
+    await expect.poll(() => new URL(page.url()).searchParams.get('grayMode')).toBe('prescribed-diagnostic')
+    await expect.poll(() => new URL(page.url()).searchParams.get('grayContact')).toBe('modified-electronic-v1')
+
+    await page.getByTestId('gray-run').click()
+    await expect(page.getByTestId('gray-stale')).toHaveCount(0)
+    await expect(page.getByTestId('gray-event-timeline').locator('tbody tr')).toHaveCount(27)
+    await expect(page.getByTestId('gray-structured-findings')).toContainText('illustrative electronic switch without the 500 rpm gate')
+    await expect(page.getByTestId('gray-run-ledger')).toContainText('Prescribed drive input')
+  })
+
   test('shares the active event across rotor, circuit, and timeline panels', async ({ page }) => {
     await page.getByTestId('gray-event-slider').fill('2')
 
@@ -101,13 +142,14 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(eventSummary).toHaveAttribute('aria-live', 'polite')
   })
 
-  test('keeps the absent production LUT separate from the ready opt-in calibration', async ({ page }) => {
+  test('keeps the absent production LUT separate from the unavailable calibration', async ({ page }) => {
     await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'unavailable')
     await expect(page.getByTestId('gray-magnetic-model').locator('option[value="fem-lookup"]')).toHaveAttribute('disabled', '')
 
     await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
     await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
-    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('provenance mismatch')
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
     await expect(page.getByTestId('gray-fem-status')).toContainText('never relabeled FEM')
 
@@ -117,45 +159,40 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')).toHaveCount(0)
   })
 
-  test('requires acknowledgement, activates limited calibration, and never silently falls back', async ({ context, page }) => {
+  test('discloses the provenance mismatch and rejects a corrupted cached pack without a page fetch race', async ({ context, page }) => {
     await page.evaluate(() => navigator.serviceWorker.ready)
     if (!await page.evaluate(() => Boolean(navigator.serviceWorker.controller))) await page.reload()
     await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
 
     const calibrationOption = page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')
-    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('provenance mismatch')
     await expect(calibrationOption).toHaveAttribute('disabled', '')
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
-    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('±1.1585% transfer proxy for L / W / W′ only')
-    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('Class 0 measured; classes 1–2 assumed transfer')
+    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('Observed pilot coarse/fine drift: 1.1585%')
+    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('This observation is not an uncertainty bound')
+    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('2% pass criterion was an acceptance threshold, not an uncertainty bound')
+    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('different model and environment provenance')
+    await expect(page.getByTestId('gray-calibration-boundary')).toContainText('classes 0–2 for L / W / W′ is assumption-only')
     await expect(page.getByTestId('gray-calibration-boundary')).toContainText('Torque has no validated bound')
     await expect(page.getByTestId('gray-calibration-boundary')).toContainText('not physical validation')
     await expect(page.getByTestId('gray-calibration-boundary')).toContainText('exploratory and unbounded')
 
-    await page.getByTestId('gray-calibration-acknowledgement').check()
-    await expect(calibrationOption).not.toHaveAttribute('disabled', '')
-    await page.getByTestId('gray-magnetic-model').selectOption('limited-fem-calibration')
-    await expect(page).toHaveURL(/grayMagnetic=limited-fem-calibration/)
-    await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'active')
-    await page.getByTestId('gray-run').click()
-    await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
-    await page.getByTestId('gray-snapshot-save').click()
-    await expect(page.getByTestId('gray-snapshot-table').locator('tbody tr')).toHaveCount(1)
-
-    await page.evaluate(async () => {
+    const calibrationPack = await (await page.request.get('/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json')).json()
+    await page.evaluate(async (value) => {
       const path = '/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
-      const value = await fetch(path).then((response) => response.json())
       const cache = await caches.open('opensimphy-gray-fem-calibration')
       await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }))
-    })
+    }, calibrationPack)
     await context.setOffline(true)
     await page.getByTestId('gray-calibration-recheck').click()
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
-    await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('limited-fem-calibration')
-    await expect(page.getByTestId('gray-run')).toBeDisabled()
+    await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('must remain unavailable')
+    await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+    await expect(calibrationOption).toHaveAttribute('disabled', '')
   })
 
   test('visibly rejects invalid and future URL revisions', async ({ page }) => {

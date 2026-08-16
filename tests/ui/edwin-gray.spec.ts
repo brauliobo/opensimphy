@@ -10,6 +10,7 @@ import {
   GRAY_COP_CLAIM_SCENARIOS,
   GRAY_PRESETS,
 } from '../../src/edwin-gray/edwinGrayEngine'
+import { GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
 import { freezeGrayFullMotorResult, freezeGrayValue } from '../../src/edwin-gray/edwinGrayWorkbench'
 
 const result = freezeGrayFullMotorResult(evaluateGrayFullMotor({
@@ -25,6 +26,15 @@ const claimEvidence = freezeGrayValue({
   retainedTranscriptCop282: null,
   retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
 })
+const patentResult = freezeGrayFullMotorResult(evaluateGrayFullMotor({
+  ...GRAY_PRESETS['patent-illustrative'],
+  machineContractId: GRAY_PATENT_MACHINE_ID,
+  revolutions: 1,
+  mode: 'dynamic',
+  machineMode: 'original-500rpm-contact-v1',
+  rotorInertiaKgM2: 0.01,
+  loadTorqueNm: 0.01,
+}))
 
 describe('unified Edwin Gray result instruments', () => {
   it('uses one immutable event for geometry and circuit state', () => {
@@ -74,5 +84,16 @@ describe('unified Edwin Gray result instruments', () => {
     expect(guided.find('.gray-technical').exists()).toBe(false)
     expect(technical.get('.gray-technical').text()).toContain(result.provenance.eventSchedule)
     expect(technical.get('[data-testid="gray-structured-findings"]').text()).toContain('validatesTheory: false')
+  })
+
+  it('shows a selected patent result separately from the six prototype rows', () => {
+    const family = mount(FamilyInstrument, { props: { depth: 'guided', result: patentResult } })
+
+    expect(family.get('tbody').findAll('tr')).toHaveLength(6)
+    expect(family.get('tbody').text()).not.toContain(`${patentResult.completedEventCount} worker events`)
+    expect(family.get('[data-testid="gray-patent-selected-result"]').text()).toContain(
+      `Contract ${GRAY_PATENT_MACHINE_ID} completed ${patentResult.completedEventCount} worker events`,
+    )
+    expect(family.get('[data-testid="gray-patent-selected-result"]').text()).toContain('not a prototype replica or a seventh prototype')
   })
 })
