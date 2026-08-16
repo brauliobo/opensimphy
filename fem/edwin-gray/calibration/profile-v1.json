@@ -17,8 +17,16 @@
   "hardDeadlineSeconds": 1720,
   "energyCoenergyRelativeTolerance": 0.01,
   "coarseFineDrift": {
-    "measured": 0.011584935659327932,
-    "maximum": 0.02
+    "observed": 0.011584935659327932,
+    "passTolerance": 0.02,
+    "sample": {
+      "domainId": "base",
+      "eventIndex": 0,
+      "rotorAngleDeg": 0,
+      "driveCurrentA": 10,
+      "coarseMeshLevelId": "coarse",
+      "fineMeshLevelId": "fine"
+    }
   },
   "outputFileName": "motor-fem-calibration-pack-v1.json"
 }

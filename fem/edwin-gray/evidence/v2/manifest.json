@@ -1,24 +1,28 @@
 {
   "contract": "edwin-gray-compact-calibration-evidence-manifest",
   "contractVersion": 1,
-  "status": "complete-limited-calibration-evidence",
+  "status": "retained-unavailable-provenance-mismatch",
   "pack": {
     "path": "motor-fem-calibration-pack-v1.json",
     "publicPath": "../../../../public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json",
-    "sha256": "3e4594defcb5414c023aa423226f6e35957e840dd9a5dcdf8fa2f63bb1dc5e48",
-    "scientificStatus": "limited-not-validated",
+    "sha256": "be2f70fe43223444f3db8df7477b0f5a6fb059ed17fc877e04dda6264caec842",
+    "scientificStatus": "unavailable-provenance-mismatch",
+    "runtimeAvailable": false,
     "productionEligible": false,
     "fullConvergenceClaim": false,
-    "optIn": true,
+    "optIn": false,
     "defaultEnabled": false
   },
   "validation": {
-    "builderReproducedPack": true,
+    "legacyBuilderReproducedPack": true,
+    "currentBuilderRebuildable": false,
+    "currentBuilderFailure": "Retained pilot evidence does not match the calibration model hash, current convergence specification hash, or calibration sample identity.",
     "builderSource": "calibration/build-calibration-pack.mjs",
     "builderValidatedOriginalArtifactsBeforeCleanup": true,
-    "rebuiltPackSha256": "3e4594defcb5414c023aa423226f6e35957e840dd9a5dcdf8fa2f63bb1dc5e48",
     "schema": "../../schema/motor-fem-calibration-pack.schema.json",
-    "browserParser": "src/edwin-gray/edwinGrayCalibration.ts"
+    "legacySchemaCompatible": false,
+    "browserParser": "src/edwin-gray/edwinGrayCalibration.ts",
+    "browserParserAcceptsPack": false
   },
   "run": {
     "profileId": "fast-limited-calibration-v1",
@@ -42,7 +46,26 @@
     "sha256": "a263a89f78ca5b420038498ae9c44b5de322448d42d6b5222f0eedd82cea9db4",
     "status": "passed",
     "coarseFineDrift": 0.011584935659327932,
-    "maximumDrift": 0.02
+    "passTolerance": 0.02,
+    "modelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+    "specificationSha256": "ee85e38a8e25281e0c2ca55db7c3f393b6da2a5cd531b3577e089392acfb428e",
+    "coarseFineSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 6.6666666667,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
+    }
+  },
+  "provenanceMismatch": {
+    "fields": ["modelInputHash", "specificationSha256", "sampleIdentity"],
+    "calibrationModelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+    "currentSpecificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
+    "calibrationSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 0,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
+    }
   },
   "productionConvergence": {
     "evidencePath": "convergence-evidence-rejected.json",
@@ -144,9 +167,10 @@
     }
   },
   "limitations": [
-    "This is a limited coarse calibration pack, not a production FEM lookup table.",
-    "Only class 0 has measured coarse/fine drift; classes 1 and 2 use a transfer assumption.",
-    "The relative bound applies only to inductance, magnetic energy, and coenergy.",
+    "The retained scalar solver values are audit data, not an available calibration pack or production FEM lookup table.",
+    "The pilot model hash, current specification hash, and calibration sample identity do not match.",
+    "The pilot pass tolerance is not an established uncertainty bound.",
+    "Classes 1 and 2 have only an unvalidated transfer assumption.",
     "No full mesh or outer-domain convergence claim is made.",
     "Torque and torque derivatives are unbounded.",
     "The illustrative magnetostatic model is not a manufactured-machine replica or experimental validation."

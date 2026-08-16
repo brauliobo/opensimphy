@@ -2,12 +2,15 @@
   "contract": "edwin-gray-motor-fem-calibration-test-scenarios",
   "contractVersion": 1,
   "scenarios": [
-    { "id": "pass", "mutation": null, "expected": "limited-not-validated" },
+    { "id": "pass", "mutation": null, "expected": "limited-assumption-only" },
     { "id": "blocked-current-inventory", "mode": "existing-only", "eventIndices": [0, 9], "expectedMissingClasses": [1, 2] },
     { "id": "tampering", "mutation": "artifact-bytes", "error": "artifact hash mismatch" },
     { "id": "mixed-environment", "mutation": "environment-identity", "error": "do not share one solver environment" },
     { "id": "resource-limit", "mutation": "memory-limit", "error": "resource limits are invalid" },
     { "id": "wall-limit", "mutation": "hard-deadline", "error": "resource/wall execution contract is invalid" },
-    { "id": "missing-class", "mutation": "remove-class-2", "error": "exactly three jobs" }
+    { "id": "missing-class", "mutation": "remove-class-2", "error": "exactly three jobs" },
+    { "id": "pilot-model-mismatch", "mutation": "pilot-model-input-hash", "error": "does not match the calibration model" },
+    { "id": "pilot-spec-mismatch", "mutation": "pilot-specification-hash", "error": "does not match the current convergence specification" },
+    { "id": "pilot-sample-mismatch", "mutation": "pilot-angle-event-current-mesh", "error": "sample identity does not match" }
   ]
 }

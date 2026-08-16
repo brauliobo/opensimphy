@@ -1,22 +1,27 @@
 # Limited FEM calibration pack
 
-This directory defines an opt-in, non-production calibration path. The completed
-limited run solved exactly
-event classes 0, 1, and 2 at `0.025 m` and `10 A`, serially, with the pinned
+This directory defines a non-production calibration evidence path. The retained
+limited run solved event classes 0, 1, and 2 at `0.025 m` and `10 A`, serially, with the pinned
 direct MUMPS publication profile, 24 GiB, two CPUs, one Gmsh mesh thread, two
 GetDP solver threads, and a 1,720 second hard wall deadline. The output is always
 `motor-fem-calibration-pack-v1.json`; this path cannot write
 `motor-fem-lut-v1.json`.
 
-The pack status is `limited-not-validated`. It does not establish full mesh,
-domain, torque-derivative, or production convergence. The measured class-0
-coarse/fine drift is transferred as an assumption to classes 1 and 2. The
-bounded uncertainty scope is only inductance (`L`), magnetic energy (`W`), and
-coenergy (`W'`); torque remains unbounded.
+The corrected builder requires a pilot report whose current specification hash,
+model input hash, and exact coarse/fine angle/event/current/mesh identity match
+the calibration class. A compatible build is `limited-assumption-only`: it may
+record an observed drift and the pilot pass criterion, but it does not emit that
+criterion as an uncertainty bound. Classes 1 and 2 remain transfer assumptions,
+and torque remains unbounded.
 
-The completed pack is published at
-`public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json`; its
-SHA-256 is `3e4594defcb5414c023aa423226f6e35957e840dd9a5dcdf8fa2f63bb1dc5e48`.
+The retained pack at
+`public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json` is audit
+data only. Its status is `unavailable-provenance-mismatch`, its
+`runtimeAvailable` flag is false, and its SHA-256 is
+`be2f70fe43223444f3db8df7477b0f5a6fb059ed17fc877e04dda6264caec842`.
+The retained pilot used a different model hash and specification hash and sampled
+`6.6666666667 deg/event 0`, not calibration class 0 at `0 deg/event 0`. No
+matching result has been fabricated.
 Compact class 0/1/2 checkpoints, results, solver metadata, logs, wrapper inputs,
 scalar tables, checksums, and the retention manifest are under
 `fem/edwin-gray/evidence/v2/`. The original large ignored run artifacts were
@@ -48,5 +53,5 @@ node fem/edwin-gray/calibration/run-calibration-pack.mjs \
 
 Remove `--plan true` to execute or resume three new jobs. The runner rejects
 different resource or deadline arguments and writes the pack only after all
-three checkpoints and their artifacts pass the builder. `--mesh-threads 1`
+three checkpoints, their artifacts, and exact pilot provenance pass the builder. `--mesh-threads 1`
 pins Gmsh meshing independently; `--threads 2` applies only to GetDP.

@@ -59,7 +59,7 @@ assumption records.
 | `excitation.currentPotentialModel` | assumption | A compactly supported local-radial current potential represents each selected winding as a closed surface current through `J = curl(T)`. |
 | `excitation.currentPotentialThicknessM` | derived | Equal to `geometry.coilRadialDepthM`, so integrating the winding sheet gives exactly turns times drive current. |
 | `sweep.symmetry.declared` | assumption | Exact symmetry is disabled by default; no reduction is applied unless explicitly declared. |
-| `results` | solver-derived | A completed three-class limited calibration pack and compact evidence are retained under `../evidence/v2/`; no production browser LUT is bundled. |
+| `results` | solver-derived | Three-class scalar results and compact evidence are retained under `../evidence/v2/`, but pilot provenance mismatches make the calibration unavailable; no production browser LUT is bundled. |
 
 ## Interpretation boundary
 
@@ -71,6 +71,7 @@ narrow classical field question for this declared illustrative geometry. It is
 not evidence that the historical machine had these dimensions or that any
 non-classical operating claim follows from the solve.
 
-The retained calibration is explicitly `limited-not-validated`: only class 0
-has a measured coarse/fine drift, classes 1 and 2 inherit a transfer assumption,
-and no torque or full production convergence bound is claimed.
+The retained calibration is explicitly `unavailable-provenance-mismatch`. Its
+pilot model/specification/sample identity does not bind to class 0, the pilot
+pass tolerance is not an uncertainty bound, classes 1 and 2 retain only an
+unvalidated transfer assumption, and no torque or production bound is claimed.

@@ -1,11 +1,12 @@
 {
   "contract": "edwin-gray-motor-fem-calibration-pack",
-  "contractVersion": 1,
+  "contractVersion": 2,
   "profileId": "fast-limited-calibration-v1",
-  "status": "limited-not-validated",
+  "status": "unavailable-provenance-mismatch",
+  "runtimeAvailable": false,
   "productionEligible": false,
   "fullConvergenceClaim": false,
-  "optIn": true,
+  "optIn": false,
   "defaultEnabled": false,
   "configuration": {
     "eventClasses": [
@@ -27,13 +28,35 @@
   },
   "evidence": {
     "modelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+    "pilotModelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
     "environmentIdentityHash": "7aa133cfdf55eb226ad87f9267df17052156d42e445c1d054fa81bc8ff756f5f",
     "pilotReportSha256": "a263a89f78ca5b420038498ae9c44b5de322448d42d6b5222f0eedd82cea9db4",
+    "pilotSpecificationSha256": "ee85e38a8e25281e0c2ca55db7c3f393b6da2a5cd531b3577e089392acfb428e",
+    "currentSpecificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
     "symmetryProofSha256": "b93b3b02372eaf929dcee5420deff4413caa9b112b1efe5fa90448b1532d10af",
     "coarseFineDrift": {
-      "measured": 0.011584935659327932,
-      "maximum": 0.02,
-      "status": "passed"
+      "observed": 0.011584935659327932,
+      "passTolerance": 0.02,
+      "status": "legacy-pilot-only"
+    }
+  },
+  "provenanceMismatch": {
+    "fields": [
+      "modelInputHash",
+      "specificationSha256",
+      "sampleIdentity"
+    ],
+    "expectedSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 0,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
+    },
+    "pilotSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 6.6666666667,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
     }
   },
   "classes": [
@@ -58,7 +81,7 @@
           "unit": "H"
         }
       },
-      "uncertaintyBasis": "measured"
+      "evidenceBasis": "unavailable-provenance-mismatch"
     },
     {
       "eventClass": 1,
@@ -81,7 +104,7 @@
           "unit": "H"
         }
       },
-      "uncertaintyBasis": "transfer-assumed"
+      "evidenceBasis": "unvalidated-transfer-assumption"
     },
     {
       "eventClass": 2,
@@ -104,20 +127,23 @@
           "unit": "H"
         }
       },
-      "uncertaintyBasis": "transfer-assumed"
+      "evidenceBasis": "unvalidated-transfer-assumption"
     }
   ],
   "uncertainty": {
-    "relativeBound": 0.02,
+    "established": false,
+    "relativeBound": null,
+    "passTolerance": 0.02,
+    "reason": "The pilot pass tolerance is an acceptance criterion and its evidence does not match the calibration model, current specification, or calibration sample identity.",
     "quantities": [
       "L",
       "W",
       "W'"
     ],
     "classBasis": {
-      "0": "measured",
-      "1": "transfer-assumed",
-      "2": "transfer-assumed"
+      "0": "unavailable-provenance-mismatch",
+      "1": "unvalidated-transfer-assumption",
+      "2": "unvalidated-transfer-assumption"
     }
   },
   "torque": {
@@ -125,8 +151,10 @@
     "reason": "No torque-derivative convergence evidence is included in this limited calibration pack."
   },
   "limitations": [
-    "Limited coarse calibration evidence only; not a production FEM lookup table.",
-    "Class 0 coarse/fine uncertainty is measured; classes 1 and 2 use an explicit transfer assumption.",
+    "Retained scalar solver values are preserved for audit only and are unavailable to the runtime.",
+    "The pilot model hash, specification hash, and sample angle do not match the calibration evidence.",
+    "The 0.02 pilot pass tolerance is not an established uncertainty bound.",
+    "Classes 1 and 2 have only an unvalidated transfer assumption.",
     "No full mesh, outer-domain, or torque convergence claim is made."
   ]
 }

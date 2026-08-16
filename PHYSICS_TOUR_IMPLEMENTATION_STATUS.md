@@ -44,7 +44,7 @@ Date: 2026-08-16
 | Adjacent Quantum / Gray labs | Delivered outside the numbered Tour iteration ledger |
 | Gray machine contracts / generated artifact | 7 / 16,523 bytes (16.5 KiB) |
 | Gray production FEM LUT | Absent; production convergence rejected |
-| Gray limited FEM calibration | Complete pack; opt-in, disabled by default, limited-not-validated |
+| Gray limited FEM calibration | Retained audit values; runtime unavailable on pilot provenance mismatch |
 | Core Vue SFC templates | 58/58 Pug; excludes 8 adjacent Fiddle/Awesome Physics bridge SFCs |
 
 Original baseline commit: `57e5b64 earth: add provenance-pure simulation dossier`
@@ -79,12 +79,12 @@ Post-Iteration-7 Gray checkpoint (2026-08-16):
 - The dedicated worker returns the full ordered 27-event run boundary used by rotor, circuit, solved recovery, per-event/aggregate energy, URL-owned state, explicit save, and compatible two-snapshot comparison surfaces. Original 500 rpm contact behavior and the illustrative modified electronic rule are separately versioned.
 - Source records and modifications remain distinct: patent-described topology/schedule, retained captions, presenter statements, and prototype identities are source evidence; dimensions, materials, surrogate machine parameters, classical RLC/recovery equations, and the modified electronic quench rule are assumptions or illustrative modifications. Modified Schloff winding/trigger/no-load reports do not characterize original-machine efficiency.
 - The user-provided diagram reproduces `7,460 / 26.8 = 278.358208955...`, not 282. A 282 target requires 7,557.6 W; the open observed-output and target deficits are 7,433.2 W and 7,530.8 W. The retained source-pack COP-300 statement and raw ambiguous `7 12 kilowatts` caption remain separate and unresolved.
-- FEM v1 is immutable rejected evidence: its partition-growth and outer-domain gates failed. The v2 pilot passed its bounded formulation/mesh/energy/current/periodicity checks and records 1.1584935659% class-0 coarse/fine observable drift; source closure now uses a closed-surface equivalent-current-potential formulation instead of the rejected disconnected source. Production v2 remains rejected at 18/33 required samples, so no production LUT is published.
+- FEM v1 is immutable rejected evidence: its partition-growth and outer-domain gates failed. The v2 pilot report passed its declared formulation/mesh/energy/current/periodicity criteria and records a 1.1584935659% coarse/fine observation, but its pass tolerance is not an uncertainty bound. Production v2 remains rejected at 18/33 required samples, so no production LUT is published.
 - Fast publication infrastructure defines six serial jobs: representative event classes 0, 1, and 2 plus validation partners 3, 4, and 5 before exact 40-degree symmetry expansion. This infrastructure has not produced an accepted production publication in the current evidence.
-- The separate three-class calibration run completed and published only `motor-fem-calibration-pack-v1.json`, with status `limited-not-validated`, `productionEligible: false`, explicit opt-in, and default disabled. It bounds inductance, magnetic energy, and coenergy only, transfers class-0 drift to classes 1 and 2 as an assumption, leaves torque unbounded, and cannot write a production LUT. Compact checksummed evidence is retained under `fem/edwin-gray/evidence/v2/`.
+- The separate three-class run retained useful scalar results, but its pilot model hash, current specification hash, and coarse/fine sample identity do not match. The published audit JSON is `unavailable-provenance-mismatch`, `runtimeAvailable: false`, and `productionEligible: false`; it establishes no uncertainty bound, class 1/2 transfer remains unvalidated, torque is unbounded, and the path cannot write a production LUT.
 - Prototype contracts are descriptive/illustrative and FEM-blocked without prototype-specific geometry. The patent topology and runtime are explicitly illustrative, not a replica of a manufactured motor; the FEM model does not solve transient discharge, rotor motion, torque, load, arc physics, thermal effects, or energy recovery.
 - Deliberate Gray PWA runtime-cache behavior, Chromium accessibility/reflow/forced-colors coverage, and frontend/Pages CI Gray/FEM gates are recorded in the recent commits. The core OpenSimPhy SFC scope is 58/58 Pug; counting the four Fiddle and four Awesome Physics adjacent bridge SFCs produces the stale-for-this-scope raw total of 66.
-- Recent commits record focused Gray engine/UI contracts, 10 Chromium Gray workbench tests, FEM validation contracts, generated-machine checking, and CI wiring. No post-July aggregate `npm run verify` file/test total is asserted.
+- Recent commits record focused Gray engine/UI contracts, 11 Chromium Gray workbench tests, FEM validation contracts, generated-machine checking, and CI wiring. No post-July aggregate `npm run verify` file/test total is asserted.
 
 Current generated simulation compatibility keys:
 
@@ -231,7 +231,7 @@ Required future abstractions:
 
 - Recorded the adjacent `/labs/edwin-gray` worker-backed 27-event workbench, seven compiled machine contracts, generated artifact and hardware-sensitive benchmark without changing the Iteration 8-11 statuses.
 - Recorded original-versus-modified and source-versus-assumption boundaries, corrected diagram arithmetic and deficits, retained COP-300/raw-caption ambiguity, and preserved `validatesTheory: false`.
-- Recorded rejected v1 and 18/33-rejected v2 production FEM evidence, the bounded v2 pilot, six-job symmetry infrastructure, the completed opt-in `limited-not-validated` calibration pack and compact evidence, absent production LUT, blocked prototype FEM, and illustrative patent scope.
+- Recorded rejected v1 and 18/33-rejected v2 production FEM evidence, the v2 pilot criteria, six-job symmetry infrastructure, retained but runtime-unavailable calibration values with explicit provenance mismatches, absent production LUT, blocked prototype FEM, and illustrative patent scope.
 - Recorded PWA, accessibility, CI, Pug, and completion-artifact boundaries. No new aggregate full-suite total is claimed.
 
 ### 2026-07-27: Shared Workbench accepted

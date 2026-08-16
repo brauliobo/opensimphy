@@ -13,6 +13,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROFILE_PATH = resolve(ROOT, "calibration/profile-v1.json");
 const SCENARIOS_PATH = resolve(ROOT, "calibration/fixtures/calibration-pack-scenarios-v1.json");
 const SCHEMA_PATH = resolve(ROOT, "schema/motor-fem-calibration-pack.schema.json");
+const SPEC_PATH = resolve(ROOT, "convergence/convergence-spec-v2.json");
 const EVIDENCE_PATH = resolve(ROOT, "evidence/v2/motor-fem-calibration-pack-v1.json");
 const MANIFEST_PATH = resolve(ROOT, "evidence/v2/manifest.json");
 const PUBLIC_PACK_PATH = resolve(ROOT, "../../public/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json");
@@ -288,9 +289,41 @@ function fixture(t) {
     }))
   });
   const pilotReportPath = join(root, "pilot-report.json");
+  const pilotSamples = [
+    {
+      id: "base-coarse-i10-a0-e0",
+      domainId: "base",
+      meshLevelId: "coarse",
+      driveCurrentA: 10,
+      rotorAngleDeg: 0,
+      eventIndex: 0,
+      observables: {
+        magneticEnergyJ: { value: 0.2532810462193057, unit: "J" },
+        coEnergyJ: { value: 0.2532810462193057, unit: "J" },
+        inductanceH: { value: 0.005065620924386578, unit: "H" }
+      },
+      modelInputHash: MODEL_HASH
+    },
+    {
+      id: "base-fine-i10-a0-e0",
+      domainId: "base",
+      meshLevelId: "fine",
+      driveCurrentA: 10,
+      rotorAngleDeg: 0,
+      eventIndex: 0,
+      observables: {
+        magneticEnergyJ: { value: 0.2562496823014917, unit: "J" },
+        coEnergyJ: { value: 0.2562496823014917, unit: "J" },
+        inductanceH: { value: 0.005124993646029731, unit: "H" }
+      },
+      modelInputHash: MODEL_HASH
+    }
+  ];
   writeJson(pilotReportPath, {
     contract: "edwin-gray-convergence-pilot",
     contractVersion: 2,
+    sourceFormulation: "closed-surface-equivalent-current-potential",
+    specification: { sha256: sha256(readFileSync(SPEC_PATH)) },
     status: "passed",
     failures: [],
     checks: [{
@@ -298,7 +331,8 @@ function fixture(t) {
       status: "passed",
       observed: 0.011584935659327932,
       tolerance: 0.02
-    }]
+    }],
+    samples: pilotSamples
   });
   const symmetryProofPath = join(root, "event-map-symmetry-proof-v1.json");
   writeJson(symmetryProofPath, expectedSymmetryProof());
@@ -337,28 +371,74 @@ test("calibration fixture declarations cover every required pass and failure mod
     "mixed-environment",
     "resource-limit",
     "wall-limit",
-    "missing-class"
+    "missing-class",
+    "pilot-model-mismatch",
+    "pilot-spec-mismatch",
+    "pilot-sample-mismatch"
   ]);
 });
 
-test("complete calibration evidence builds the deterministic limited contract", (t) => {
+test("exactly bound calibration evidence builds a deterministic assumption-only contract", (t) => {
   const context = fixture(t);
   const first = build(context);
   const second = build(context);
   assert.deepEqual(first, second);
-  assert.equal(first.status, "limited-not-validated");
+  assert.equal(first.contractVersion, 2);
+  assert.equal(first.status, "limited-assumption-only");
   assert.equal(first.productionEligible, false);
   assert.equal(first.fullConvergenceClaim, false);
   assert.equal(first.optIn, true);
   assert.equal(first.defaultEnabled, false);
   assert.deepEqual(first.classes.map((item) => item.eventClass), [0, 1, 2]);
   assert.deepEqual(first.uncertainty, {
-    relativeBound: 0.02,
+    established: false,
+    relativeBound: null,
+    reason: "A pilot pass tolerance is an acceptance criterion, not an established uncertainty bound.",
     quantities: ["L", "W", "W'"],
-    classBasis: { "0": "measured", "1": "transfer-assumed", "2": "transfer-assumed" }
+    classBasis: { "0": "single-pair-observation", "1": "transfer-assumption", "2": "transfer-assumption" }
   });
   assert.equal(first.torque.bounded, false);
-  assert.equal(first.evidence.coarseFineDrift.measured, 0.011584935659327932);
+  assert.equal(first.evidence.coarseFineDrift.observed, 0.011584935659327932);
+  assert.equal(first.evidence.coarseFineDrift.passTolerance, 0.02);
+  assert.equal(JSON.stringify(first).includes('"relativeBound":0.02'), false);
+});
+
+test("pilot provenance and sample identity mismatches fail closed", async (t) => {
+  await t.test("model input hash", () => {
+    const context = fixture(t);
+    const pilot = JSON.parse(readFileSync(context.pilotReportPath, "utf8"));
+    pilot.samples[0].modelInputHash = sha256("different model");
+    writeJson(context.pilotReportPath, pilot);
+    assert.throws(() => build(context), /pilot coarse sample model input hash does not match the calibration model/);
+  });
+  await t.test("convergence specification", () => {
+    const context = fixture(t);
+    const pilot = JSON.parse(readFileSync(context.pilotReportPath, "utf8"));
+    pilot.specification.sha256 = sha256("different specification");
+    writeJson(context.pilotReportPath, pilot);
+    assert.throws(() => build(context), /pilot specification does not match the current convergence specification/);
+  });
+  for (const [name, field, value] of [
+    ["angle", "rotorAngleDeg", 6.6666666667],
+    ["event", "eventIndex", 9],
+    ["current", "driveCurrentA", 1],
+    ["mesh", "meshLevelId", "medium"]
+  ]) {
+    await t.test(name, () => {
+      const context = fixture(t);
+      const pilot = JSON.parse(readFileSync(context.pilotReportPath, "utf8"));
+      pilot.samples[0][field] = value;
+      writeJson(context.pilotReportPath, pilot);
+      assert.throws(() => build(context), /pilot coarse sample identity does not match the calibration angle\/event\/current\/mesh pair/);
+    });
+  }
+  await t.test("reported drift", () => {
+    const context = fixture(t);
+    const pilot = JSON.parse(readFileSync(context.pilotReportPath, "utf8"));
+    pilot.samples[0].observables.inductanceH.value *= 0.9;
+    writeJson(context.pilotReportPath, pilot);
+    assert.throws(() => build(context), /pilot coarse\/fine drift does not match the bound sample pair/);
+  });
 });
 
 test("direct calibration solver evidence fails closed", async (t) => {
@@ -540,7 +620,7 @@ test("calibration runner rejects mesh and solver thread drift", () => {
   assert.match(result.stderr, /--threads must be 2/);
 });
 
-test("calibration schema fixes the non-production output contract", () => {
+test("legacy calibration schema cannot represent the provenance-safe contract", () => {
   const schema = JSON.parse(readFileSync(SCHEMA_PATH, "utf8"));
   assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
   assert.equal(schema.properties.status.const, "limited-not-validated");
@@ -552,21 +632,29 @@ test("calibration schema fixes the non-production output contract", () => {
   assert.equal(PROFILE.hardDeadlineSeconds, 1720);
   assert.equal(PROFILE.resources.meshThreads, 1);
   assert.equal(PROFILE.resources.solverThreads, 2);
+  assert.equal(PROFILE.coarseFineDrift.passTolerance, 0.02);
 });
 
-test("published calibration pack validates against the schema and retained builder evidence", () => {
+test("retained calibration values are published unavailable with explicit provenance mismatches", () => {
   const schema = JSON.parse(readFileSync(SCHEMA_PATH, "utf8"));
   const publishedBytes = readFileSync(PUBLIC_PACK_PATH);
   const published = JSON.parse(publishedBytes);
   const evidence = JSON.parse(readFileSync(EVIDENCE_PATH, "utf8"));
   const manifest = JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
 
-  validateSchema(published, schema, "published calibration pack", schema);
+  assert.equal(schemaMatches(published, schema, schema), false);
   assert.deepEqual(published, evidence);
   assert.equal(sha256(publishedBytes), manifest.pack.sha256);
-  assert.equal(manifest.validation.builderReproducedPack, true);
+  assert.equal(published.status, "unavailable-provenance-mismatch");
+  assert.equal(published.productionEligible, false);
+  assert.equal(published.runtimeAvailable, false);
+  assert.equal(published.optIn, false);
+  assert.equal(published.uncertainty.established, false);
+  assert.equal(published.uncertainty.relativeBound, null);
+  assert.equal(manifest.validation.currentBuilderRebuildable, false);
+  assert.equal(manifest.validation.legacyBuilderReproducedPack, true);
   assert.equal(manifest.validation.builderValidatedOriginalArtifactsBeforeCleanup, true);
-  assert.equal(manifest.validation.rebuiltPackSha256, manifest.pack.sha256);
+  assert.deepEqual(manifest.provenanceMismatch.fields, ["modelInputHash", "specificationSha256", "sampleIdentity"]);
   for (const calibrationClass of published.classes) {
     const retained = manifest.retention.classes[calibrationClass.eventClass];
     assert.equal(sha256(readFileSync(resolve(ROOT, "evidence/v2", retained.checkpoint))), calibrationClass.checkpointSha256);

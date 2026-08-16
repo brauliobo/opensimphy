@@ -71,9 +71,9 @@ energy claims.
   used as a magnetic solver; complete browser FEM values must come from the
   normalized external GetDP contract.
 - `source/README.md` is the static source and provenance ledger.
-- `evidence/v2/` retains the completed limited calibration pack, compact
-  per-class solver evidence, checksums, and the separate rejected production
-  convergence report.
+- `evidence/v2/` retains unavailable calibration values with explicit pilot
+  provenance mismatches, compact per-class solver evidence, checksums, and the
+  separate rejected production convergence report.
 
 ## Local commands
 
@@ -177,10 +177,11 @@ Each normalized job result uses `contract: "edwin-gray-browser-result"` and
 `contractVersion: 1`, and carries one `motor-fem-lut-v1` entry. The explicit
 aggregation command combines those job documents into one multi-angle LUT. A
 browser can reject an unknown contract version instead of guessing at field
-meanings. The browser-facing production LUT remains absent. A separate
-three-class calibration pack is published for explicit opt-in with status
-`limited-not-validated`; it is not the complete converged production sweep
-required by `convergence/convergence-spec-v2.json`. See `evidence/v2/`.
+meanings. The browser-facing production LUT remains absent. Retained three-class
+calibration values are published for audit with status
+`unavailable-provenance-mismatch` and `runtimeAvailable: false`: their pilot
+model/specification/sample identity does not match the calibration run. The
+pilot tolerance is not an uncertainty bound. See `evidence/v2/`.
 
 ## Pinned solver image
 

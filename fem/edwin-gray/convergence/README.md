@@ -10,8 +10,10 @@ The v1 numerical tolerances are retained.
 The retained v2 pilot passed its bounded checks, but the production report is
 rejected because only 18 of 33 required samples are present. Compact copies are
 stored under `../evidence/v2/`. No production LUT, full convergence result, or
-torque bound was published. The separate completed three-class calibration pack
-remains `limited-not-validated` and does not satisfy this production gate.
+torque bound was published. The retained three-class calibration values are
+`unavailable-provenance-mismatch`: their pilot evidence does not match the
+calibration model, current specification, or sample identity, and therefore
+does not satisfy this production gate or establish an uncertainty bound.
 
 Run the evaluator after all individual runner jobs are complete:
 

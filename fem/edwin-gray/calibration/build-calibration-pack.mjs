@@ -13,6 +13,7 @@ const DEFAULT_PROFILE = resolve(CALIBRATION_DIR, "profile-v1.json");
 const EVENT_MAP_PATH = resolve(ROOT, "excitation/v1/event-map-v1.json");
 const CASE_PATH = resolve(ROOT, "cases/patent-3890548-illustrative.json");
 const GEOMETRY_PATH = resolve(ROOT, "geometry/patent-3890548-3d.geo");
+const CONVERGENCE_SPEC_PATH = resolve(ROOT, "convergence/convergence-spec-v2.json");
 const SHA256 = /^[a-f0-9]{64}$/;
 const IMMUTABLE_IMAGE = /(?:@sha256:|^sha256:)[a-f0-9]{64}$/;
 
@@ -82,7 +83,15 @@ function validateProfile(profile) {
   assert(stableJson(profile.resources) === stableJson({ memoryGiB: 24, memorySwapGiB: 24, cpus: 2, meshThreads: 1, solverThreads: 2, serial: true }), "calibration resource profile is invalid");
   assert(Number.isInteger(profile.hardDeadlineSeconds) && profile.hardDeadlineSeconds > 0 && profile.hardDeadlineSeconds < 29 * 60, "calibration hard deadline must be below 29 minutes");
   assert(profile.energyCoenergyRelativeTolerance === 0.01, "energy/coenergy tolerance must be one percent");
-  assert(profile.coarseFineDrift?.measured === 0.011584935659327932 && profile.coarseFineDrift.maximum === 0.02, "calibration coarse/fine drift profile is invalid");
+  assert(profile.coarseFineDrift?.observed === 0.011584935659327932 && profile.coarseFineDrift.passTolerance === 0.02, "calibration coarse/fine drift profile is invalid");
+  assert(stableJson(profile.coarseFineDrift.sample) === stableJson({
+    domainId: "base",
+    eventIndex: 0,
+    rotorAngleDeg: 0,
+    driveCurrentA: 10,
+    coarseMeshLevelId: "coarse",
+    fineMeshLevelId: "fine"
+  }), "calibration pilot sample profile is invalid");
   assert(profile.outputFileName === "motor-fem-calibration-pack-v1.json", "calibration output file name is invalid");
 }
 
@@ -100,12 +109,45 @@ function expectedSymmetryProof() {
   });
 }
 
-function validatePilot(report, profile) {
+function validatePilot(report, profile, modelInputHash, calibrationClass) {
   assert(report.contract === "edwin-gray-convergence-pilot" && report.contractVersion === 2, "pilot report contract is invalid");
   assert(report.status === "passed" && Array.isArray(report.failures) && report.failures.length === 0, "pilot report did not pass");
+  const specification = readJson(CONVERGENCE_SPEC_PATH, "current convergence specification");
+  assert(report.specification?.sha256 === sha256File(CONVERGENCE_SPEC_PATH), "pilot specification does not match the current convergence specification");
+  assert(report.sourceFormulation === specification.sourceFormulation, "pilot source formulation does not match the current convergence specification");
+  const sampleIdentity = profile.coarseFineDrift.sample;
+  const expectedClass = calibrationClass.entry.parameters;
+  assert(sampleIdentity.eventIndex === expectedClass.eventIndex
+    && sameNumber(sampleIdentity.rotorAngleDeg, expectedClass.rotorAngleDeg)
+    && sampleIdentity.driveCurrentA === expectedClass.driveCurrentA,
+  "calibration pilot sample profile does not match calibration class 0");
+  const meshLevels = Object.fromEntries(specification.production?.meshLevels?.map((level) => [level.id, level]) || []);
+  assert(meshLevels[sampleIdentity.coarseMeshLevelId]?.meshSizeM === expectedClass.meshSizeM
+    && Number.isFinite(meshLevels[sampleIdentity.fineMeshLevelId]?.meshSizeM)
+    && meshLevels[sampleIdentity.fineMeshLevelId].meshSizeM < expectedClass.meshSizeM,
+  "calibration pilot mesh pair does not match the current convergence specification");
+
+  const samples = [sampleIdentity.coarseMeshLevelId, sampleIdentity.fineMeshLevelId].map((meshLevelId) => {
+    const matches = report.samples?.filter((sample) => sample.domainId === sampleIdentity.domainId
+      && sample.meshLevelId === meshLevelId
+      && sample.eventIndex === sampleIdentity.eventIndex
+      && sameNumber(sample.rotorAngleDeg, sampleIdentity.rotorAngleDeg)
+      && sample.driveCurrentA === sampleIdentity.driveCurrentA) || [];
+    assert(matches.length === 1, `pilot ${meshLevelId} sample identity does not match the calibration angle/event/current/mesh pair`);
+    assert(matches[0].modelInputHash === modelInputHash, `pilot ${meshLevelId} sample model input hash does not match the calibration model`);
+    return matches[0];
+  });
+  const observed = Math.max(...["magneticEnergyJ", "coEnergyJ", "inductanceH"].map((quantity) => {
+    const coarse = samples[0].observables?.[quantity]?.value;
+    const fine = samples[1].observables?.[quantity]?.value;
+    assert(Number.isFinite(coarse) && Number.isFinite(fine), `pilot coarse/fine ${quantity} values are invalid`);
+    return relativeDifference(coarse, fine);
+  }));
   const check = report.checks?.find((item) => item.id === "mesh-observable-coarse-fine");
   assert(check?.status === "passed", "pilot coarse/fine drift check did not pass");
-  assert(check.observed === profile.coarseFineDrift.measured && check.tolerance === profile.coarseFineDrift.maximum, "pilot coarse/fine drift is not the measured calibration value");
+  assert(sameNumber(check.observed, observed) && sameNumber(check.observed, profile.coarseFineDrift.observed), "pilot coarse/fine drift does not match the bound sample pair");
+  assert(check.tolerance === profile.coarseFineDrift.passTolerance, "pilot coarse/fine pass tolerance is invalid");
+  return { observed, passTolerance: check.tolerance, sampleIdentity, specificationSha256: report.specification.sha256 };
 }
 
 function artifactPath(jobDir, category, name) {
@@ -224,9 +266,6 @@ export function buildCalibrationPack({ inventoryPath, pilotReportPath, symmetryP
   const classes = inventory.jobs.map((job) => job.eventClass).sort((left, right) => left - right);
   assert(stableJson(classes) === stableJson(profile.eventClasses), "calibration inventory must cover exactly event classes 0, 1, and 2");
 
-  const pilotPath = resolve(pilotReportPath);
-  const pilot = readJson(pilotPath, "pilot report");
-  validatePilot(pilot, profile);
   const suppliedProof = readJson(resolve(symmetryProofPath), "event-map symmetry proof");
   validateEventMapSymmetryProof(suppliedProof);
   assert(stableJson(suppliedProof) === stableJson(expectedSymmetryProof()), "event-map 40-degree symmetry proof does not match current model inputs");
@@ -239,12 +278,15 @@ export function buildCalibrationPack({ inventoryPath, pilotReportPath, symmetryP
   const environmentHashes = new Set(verified.map((item) => item.checkpoint.environmentIdentityHash));
   assert(modelHashes.size === 1, "calibration jobs do not share one model input hash");
   assert(environmentHashes.size === 1, "calibration jobs do not share one solver environment");
+  const pilotPath = resolve(pilotReportPath);
+  const pilot = readJson(pilotPath, "pilot report");
+  const pilotEvidence = validatePilot(pilot, profile, verified[0].checkpoint.modelInputHash, verified[0]);
 
   return {
     contract: "edwin-gray-motor-fem-calibration-pack",
-    contractVersion: 1,
+    contractVersion: 2,
     profileId: profile.profileId,
-    status: "limited-not-validated",
+    status: "limited-assumption-only",
     productionEligible: false,
     fullConvergenceClaim: false,
     optIn: true,
@@ -267,8 +309,14 @@ export function buildCalibrationPack({ inventoryPath, pilotReportPath, symmetryP
       modelInputHash: verified[0].checkpoint.modelInputHash,
       environmentIdentityHash: verified[0].checkpoint.environmentIdentityHash,
       pilotReportSha256: sha256File(pilotPath),
+      pilotSpecificationSha256: pilotEvidence.specificationSha256,
       symmetryProofSha256: suppliedProof.proofSha256,
-      coarseFineDrift: { measured: profile.coarseFineDrift.measured, maximum: profile.coarseFineDrift.maximum, status: "passed" }
+      coarseFineDrift: {
+        observed: pilotEvidence.observed,
+        passTolerance: pilotEvidence.passTolerance,
+        status: "single-pair-observation",
+        sample: pilotEvidence.sampleIdentity
+      }
     },
     classes: verified.map((item) => ({
       eventClass: item.eventClass,
@@ -278,17 +326,20 @@ export function buildCalibrationPack({ inventoryPath, pilotReportPath, symmetryP
       checkpointSha256: sha256File(item.checkpointPath),
       resultSha256: sha256File(item.resultPath),
       observables: item.entry.observables,
-      uncertaintyBasis: item.eventClass === 0 ? "measured" : "transfer-assumed"
+      evidenceBasis: item.eventClass === 0 ? "single-pair-observation" : "transfer-assumption"
     })),
     uncertainty: {
-      relativeBound: profile.coarseFineDrift.maximum,
+      established: false,
+      relativeBound: null,
+      reason: "A pilot pass tolerance is an acceptance criterion, not an established uncertainty bound.",
       quantities: ["L", "W", "W'"],
-      classBasis: { "0": "measured", "1": "transfer-assumed", "2": "transfer-assumed" }
+      classBasis: { "0": "single-pair-observation", "1": "transfer-assumption", "2": "transfer-assumption" }
     },
     torque: { bounded: false, reason: "No torque-derivative convergence evidence is included in this limited calibration pack." },
     limitations: [
       "Limited coarse calibration evidence only; not a production FEM lookup table.",
-      "Class 0 coarse/fine uncertainty is measured; classes 1 and 2 use an explicit transfer assumption.",
+      "The class 0 pilot records one coarse/fine observation, not an established uncertainty bound.",
+      "Classes 1 and 2 have no matching mesh-pair evidence; transfer is an explicit assumption only.",
       "No full mesh, outer-domain, or torque convergence claim is made."
     ]
   };
