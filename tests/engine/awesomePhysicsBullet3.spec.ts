@@ -11,12 +11,15 @@ import {
   instantiateBullet3Module,
   parseBullet3Input,
 } from '../../src/awesomePhysics/adapters/wasm/bullet3'
+import { NATIVE_CANDIDATES } from '../../src/awesomePhysics/artifactManifest'
 import { awesomePhysicsAdapterFactoryMap } from '../../src/awesomePhysics/adapterFactories'
 import type { AwesomePhysicsSimulationArtifactV1 } from '../../src/types/awesomePhysics'
 
 const simulations = simulationsJson as AwesomePhysicsSimulationArtifactV1
 const descriptor = simulations.items.find(({ catalogItemId }) => catalogItemId === 'awesome-bullet3')
 if (!descriptor) throw new Error('Missing generated Bullet3 descriptor')
+const manifestRecord = NATIVE_CANDIDATES.find(({ id }) => id === 'bullet3')
+if (!manifestRecord) throw new Error('Missing Bullet3 native candidate record')
 
 const publicBullet3Root = resolve(process.cwd(), 'public/wasm/awesomePhysics/bullet3')
 const wasmBytes = new Uint8Array(readFileSync(resolve(publicBullet3Root, 'bullet3.wasm')))
@@ -51,6 +54,12 @@ describe('Bullet3 headless scalar WASM artifact', () => {
     expect(wasmBytes.byteLength).toBe(BULLET3_ARTIFACT_INTEGRITY.byteSize)
     expect(sha256(wasmBytes)).toBe(BULLET3_ARTIFACT_INTEGRITY.sha256)
     expect(BULLET3_ARTIFACT_INTEGRITY.path).toBe('wasm/awesomePhysics/bullet3/bullet3.wasm')
+    expect(manifestRecord).toMatchObject({
+      status: 'available',
+      licenseGate: { status: 'pass' },
+      source: { revision: BULLET3_SOURCE_REVISION },
+      artifact: BULLET3_ARTIFACT_INTEGRITY,
+    })
   })
 
   it('rejects malformed and oversized POD inputs', () => {
@@ -99,8 +108,13 @@ describe('Bullet3 headless scalar WASM artifact', () => {
     await expect(adapter.run({ operation: 'step' }, runController.signal)).rejects.toMatchObject({ name: 'AbortError' })
   })
 
-  it('fails closed while the central Bullet3 manifest record is unavailable', async () => {
-    const adapter = createBullet3Adapter(availableDescriptor, new AbortController().signal)
-    await expect(adapter.run({ operation: 'version' })).rejects.toThrow(/manifest record is planned, not available/)
+  it('keeps available raw evidence separate from the gated catalog descriptor', () => {
+    expect(descriptor).toMatchObject({
+      execution: 'wasm-candidate',
+      availability: 'unavailable',
+      runnable: false,
+    })
+    expect(descriptor).not.toHaveProperty('adapterId')
+    expect(awesomePhysicsAdapterFactoryMap.has(BULLET3_ADAPTER_ID)).toBe(false)
   })
 })

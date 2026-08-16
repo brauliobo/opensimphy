@@ -11,6 +11,7 @@ import {
   parseWasmPilotManifest,
 } from '../../src/awesomePhysics/artifactManifest'
 import { loadVerifiedCompanionJavaScript } from '../../src/awesomePhysics/wasmArtifactLoader'
+import { awesomePhysicsDefaultInput } from '../../src/awesomePhysics/defaultInputs'
 import { runInWorker } from '../../src/awesomePhysics/workers/runInWorker'
 import type {
   AwesomePhysicsWorkerRequest,
@@ -123,6 +124,7 @@ describe('CoolProp verified classic-worker artifact path', () => {
   it('publishes only the verified raw WASM plus an optional verified JS companion', () => {
     expect(coolpropRecord).toMatchObject({
       status: 'available',
+      licenseGate: { status: 'pass' },
       artifact: {
         path: 'wasm/awesomePhysics/coolprop/coolprop.wasm',
         sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
@@ -135,9 +137,17 @@ describe('CoolProp verified classic-worker artifact path', () => {
       },
     })
     expect(simulations.items.find(({ catalogItemId }) => catalogItemId === 'awesome-coolprop')).toMatchObject({
-      availability: 'unavailable',
-      runnable: false,
+      execution: 'wasm',
+      availability: 'available',
+      runnable: true,
+      adapterId: COOLPROP_ADAPTER_ID,
+      licenseGate: 'pass',
+      artifactProvenance: {
+        byteSize: 9352503,
+        sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
+      },
     })
+    expect(awesomePhysicsDefaultInput(COOLPROP_ADAPTER_ID)).toEqual({ operation: 'F2K', celsius: 0 })
 
     const legacyManifest = JSON.parse(JSON.stringify(WASM_PILOT_MANIFEST)) as typeof WASM_PILOT_MANIFEST
     delete legacyManifest.records[0]!.artifact.companion

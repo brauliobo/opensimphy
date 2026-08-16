@@ -60,15 +60,6 @@ describe('Awesome Physics runtime registry', () => {
         items: simulations.items.map((item, index) => index === 0 ? { ...item, limits: { ...item.limits, maxGridSize: Number.NaN } } : item),
       },
     )).toThrow(/maxGridSize.*finite/)
-    expect(() => parseAwesomePhysicsRegistryArtifacts(
-      catalog,
-      {
-        ...simulations,
-        items: simulations.items.map((item) => item.catalogItemId === 'awesome-positionbaseddynamics'
-          ? { ...item, sourceRevision: 'beafc921e215-not-a-revision' }
-          : item),
-      },
-    )).toThrow(/sourceRevision.*match or refine/)
   })
 
   it('loads both generated artifacts lazily and resolves catalog and descriptor IDs', async () => {

@@ -221,20 +221,21 @@ describe('PositionBasedDynamics headless WASM artifact', () => {
     })
   })
 
-  it('publishes the verified descriptor and central adapter registration', () => {
+  it('keeps verified raw evidence separate from the gated catalog descriptor', () => {
     expect(positionDescriptor).toMatchObject({
-      execution: 'wasm',
-      availability: 'available',
-      runnable: true,
-      adapterId: POSITION_BASED_DYNAMICS_ADAPTER_ID,
-      sourceRevision: POSITION_BASED_DYNAMICS_PROVENANCE.sourceRevision,
-      implementationRevision: POSITION_BASED_DYNAMICS_IMPLEMENTATION_REVISION,
+      execution: 'wasm-candidate',
+      availability: 'unavailable',
+      runnable: false,
+      sourceRevision: 'beafc921e215',
     })
+    expect(positionDescriptor).not.toHaveProperty('adapterId')
     expect(manifestRecord).toMatchObject({
       status: 'available',
+      licenseGate: { status: 'pass' },
+      source: { revision: POSITION_BASED_DYNAMICS_PROVENANCE.sourceRevision },
       artifact: POSITION_BASED_DYNAMICS_ARTIFACT_INTEGRITY,
     })
     const adapterFactories = readFileSync(resolve(process.cwd(), 'src/awesomePhysics/adapterFactories.ts'), 'utf8')
-    expect(adapterFactories).toContain(POSITION_BASED_DYNAMICS_ADAPTER_ID)
+    expect(adapterFactories).not.toContain(POSITION_BASED_DYNAMICS_ADAPTER_ID)
   })
 })

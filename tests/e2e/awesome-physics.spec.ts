@@ -9,7 +9,7 @@ test('loads the Awesome Physics catalog with deterministic counts and an accessi
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Projects + archive76')
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Organizations10')
   await expect(page.locator('.awesome-catalog-card')).toHaveCount(86)
-  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(13)
+  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(14)
   await expect(page.getByTestId('footer-awesome-physics')).toHaveAttribute('href', '/awesome-physics')
 })
 
@@ -56,4 +56,22 @@ test('navigates to an available detail with Run and an unavailable detail withou
   await expect(page.getByTestId('awesome-physics-no-run')).toBeVisible()
   await expect(page.getByTestId('awesome-physics-run-panel')).toHaveCount(0)
   await expect(page.getByTestId('awesome-physics-run')).toHaveCount(0)
+})
+
+test('runs the verified CoolProp classic-worker route with its typed default', async ({ page }) => {
+  await page.goto('/awesome-physics/awesome-coolprop')
+  await expect(page.getByTestId('awesome-physics-detail-ready')).toBeVisible()
+  await expect(page.getByTestId('awesome-physics-run-panel')).toBeVisible()
+
+  await page.getByTestId('awesome-physics-run').click()
+  const runStatus = page.getByTestId('awesome-physics-status')
+  await expect.poll(async () => (await runStatus.textContent())?.trim() ?? '', {
+    timeout: 30_000,
+    message: 'CoolProp classic worker did not complete; inspect the detail route for diagnostics',
+  }).toContain('completed')
+
+  const resultText = await page.getByTestId('awesome-physics-result').locator('code').textContent()
+  const output = JSON.parse(resultText ?? '') as { operation?: unknown; kelvin?: unknown }
+  expect(output.operation).toBe('F2K')
+  expect(output.kelvin).toBeCloseTo(255.3722222222, 10)
 })

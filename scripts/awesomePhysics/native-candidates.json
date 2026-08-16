@@ -117,11 +117,11 @@
         "maxOutputBytes": 4194304
       },
       "licenseGate": {
-        "status": "review",
-        "license": "zlib with third-party notices",
+        "status": "pass",
+        "license": "zlib with retained Bullet3, AUTHORS, zlib, and Emscripten/LLVM notices",
         "noticeRequirements": [
-          "Retain the zlib license and AUTHORS metadata.",
-          "Inventory and retain every selected third-party notice before binary redistribution."
+          "Retain the Bullet3 zlib license, AUTHORS attribution, and the selected zlib notice.",
+          "Retain the Emscripten/LLVM toolchain notice references recorded in the public notice and notice ledger."
         ]
       },
       "proofRequirements": [
@@ -129,15 +129,18 @@
         "Run deterministic collision and rigid-body fixtures through a dedicated worker.",
         "Record compiler flags, module hash and byte size, worker cancellation, and complete zlib/third-party notice review."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/bullet3/bullet3.wasm",
+        "sha256": "1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425",
+        "byteSize": 333983
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:153"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+        "scripts/awesomePhysics/wasm/bullet3/README.md",
+        "scripts/awesomePhysics/wasm/bullet3/NOTICE-LEDGER.md",
+        "public/wasm/awesomePhysics/bullet3/NOTICE.md"
       ]
     },
     {

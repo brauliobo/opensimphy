@@ -83,11 +83,54 @@ describe('Awesome Physics artifact manifests and loader', () => {
     const records = [...WASM_PILOTS, ...NATIVE_CANDIDATES]
     const available = records.filter(({ status }) => status === 'available')
     const unavailable = records.filter(({ status }) => status !== 'available')
-    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'position-based-dynamics'])
+    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'position-based-dynamics', 'bullet3'])
     for (const record of available) {
       expect(record.artifact.path).not.toBeNull()
       expect(record.artifact.sha256).toMatch(/^[a-f0-9]{64}$/)
       expect(record.artifact.byteSize).toBeGreaterThan(0)
+    }
+    expect(WASM_PILOTS.find(({ id }) => id === 'coolprop')).toMatchObject({
+      status: 'available',
+      licenseGate: { status: 'pass' },
+      artifact: {
+        path: 'wasm/awesomePhysics/coolprop/coolprop.wasm',
+        sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
+        byteSize: 9352503,
+        companion: {
+          path: 'wasm/awesomePhysics/coolprop/coolprop.js',
+          sha256: '0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6',
+          byteSize: 171012,
+        },
+      },
+    })
+    expect(NATIVE_CANDIDATES.find(({ id }) => id === 'position-based-dynamics')).toMatchObject({
+      status: 'available',
+      licenseGate: { status: 'pass' },
+      source: { revision: 'beafc921e21553515b4f406258e5b16054a45268' },
+      artifact: {
+        path: 'wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm',
+        sha256: '3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df',
+        byteSize: 1256,
+      },
+    })
+    expect(NATIVE_CANDIDATES.find(({ id }) => id === 'bullet3')).toMatchObject({
+      status: 'available',
+      licenseGate: { status: 'pass' },
+      source: { revision: '63c4d67e3370' },
+      artifact: {
+        path: 'wasm/awesomePhysics/bullet3/bullet3.wasm',
+        sha256: '1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425',
+        byteSize: 333983,
+      },
+    })
+    for (const project of ['PositionBasedDynamics', 'bullet3']) {
+      const descriptor = simulations.items.find(({ title }) => title === project)
+      expect(descriptor).toMatchObject({
+        execution: 'wasm-candidate',
+        availability: 'unavailable',
+        runnable: false,
+      })
+      expect(descriptor).not.toHaveProperty('adapterId')
     }
     for (const record of unavailable) {
       expect(['planned', 'blocked']).toContain(record.status)

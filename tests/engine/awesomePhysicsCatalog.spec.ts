@@ -47,8 +47,8 @@ describe('Awesome Physics catalog foundation', () => {
       adapterCount: 14,
       executionKinds: {
         browser: 6,
-        wasm: 7,
-        'wasm-candidate': 7,
+        wasm: 6,
+        'wasm-candidate': 8,
         typescript: 44,
         artifact: 8,
         reference: 3,
@@ -135,11 +135,11 @@ describe('Awesome Physics catalog foundation', () => {
     for (const descriptor of simulations.items) {
       expectFiniteLimits(descriptor.limits)
       expectFiniteLimits(descriptor.artifactProvenance.byteSize === null ? {} : { byteSize: descriptor.artifactProvenance.byteSize })
-      if (descriptor.catalogItemId === 'awesome-positionbaseddynamics') {
+      if (descriptor.catalogItemId === 'awesome-coolprop') {
         expect(descriptor.artifactProvenance).toMatchObject({
-          sourceRevision: 'beafc921e21553515b4f406258e5b16054a45268',
-          byteSize: 1256,
-          sha256: '3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df',
+          sourceRevision: '4db89c1ce8d0',
+          byteSize: 9352503,
+          sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
         })
       } else {
         expect(descriptor.artifactProvenance.sha256).toBeNull()

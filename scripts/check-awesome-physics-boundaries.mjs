@@ -18,6 +18,12 @@ const requiredDistAssets = [
   ...awesomePhysicsDataAssets,
   'wasm/awesomePhysics/position-based-dynamics/NOTICE.md',
   'wasm/awesomePhysics/position-based-dynamics/position-based-dynamics-headless.wasm',
+  'wasm/awesomePhysics/bullet3/NOTICE.md',
+  'wasm/awesomePhysics/bullet3/bullet3.wasm',
+  'wasm/awesomePhysics/coolprop/NOTICE.md',
+  'wasm/awesomePhysics/coolprop/coolprop.js',
+  'wasm/awesomePhysics/coolprop/coolprop.wasm',
+  'wasm/awesomePhysics/coolprop/coolprop.worker.js',
 ]
 const awesomePhysicsOwnedDistAssets = new Set(awesomePhysicsDataAssets)
 
@@ -41,7 +47,6 @@ const adapterSources = [
   'src/awesomePhysics/adapters/typescript/gala.ts',
   'src/awesomePhysics/adapters/typescript/tightBinding.ts',
   'src/awesomePhysics/adapters/typescript/poppy.ts',
-  'src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts',
 ]
 
 function fail(message) {

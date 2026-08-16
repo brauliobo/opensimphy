@@ -12,7 +12,7 @@ import type { PyRtInputV1 } from './adapters/typescript/pyRt'
 import type { QmsolveInput } from './adapters/typescript/qmsolve'
 import type { ScikitRfInputV1 } from './adapters/typescript/scikitRf'
 import type { TightBindingInputV1 } from './adapters/typescript/tightBinding'
-import type { PositionBasedDynamicsDistanceInputV1 } from './adapters/wasm/positionBasedDynamics'
+import type { CoolPropInputV1 } from './adapters/wasm/coolprop'
 
 export type AwesomePhysicsAdapterId = typeof AWESOME_PHYSICS_ADAPTER_IDS[keyof typeof AWESOME_PHYSICS_ADAPTER_IDS]
 
@@ -30,7 +30,7 @@ type AwesomePhysicsDefaultInputByAdapter = {
   [AWESOME_PHYSICS_ADAPTER_IDS.gala]: GalaInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.tightBinding]: TightBindingInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.poppy]: PoppyInputV1
-  [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics]: PositionBasedDynamicsDistanceInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: CoolPropInputV1
 }
 
 export type AwesomePhysicsDefaultInput = AwesomePhysicsDefaultInputByAdapter[AwesomePhysicsAdapterId]
@@ -164,14 +164,9 @@ export const AWESOME_PHYSICS_DEFAULT_INPUTS = {
     aperture: { shape: 'circular', radius: 1e-3 },
     positions: [-1e-3, -5e-4, 0, 5e-4, 1e-3],
   },
-  [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics]: {
-    operation: 'solve-distance',
-    x0: 0,
-    x1: 2,
-    restLength: 1,
-    inverseMass0: 1,
-    inverseMass1: 1,
-    stiffness: 1,
+  [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: {
+    operation: 'F2K',
+    celsius: 0,
   },
 } as const satisfies AwesomePhysicsDefaultInputByAdapter
 

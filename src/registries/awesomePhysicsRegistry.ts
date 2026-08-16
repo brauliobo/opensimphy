@@ -437,14 +437,7 @@ function parseDescriptor(
     if (value[field] !== null) requireNonEmptyString(value[field], `${path}.${field}`)
   }
   requireRevision(value.sourceRevision, `${path}.sourceRevision`, true)
-  const refinesCatalogRevision = typeof value.sourceRevision === 'string'
-    && typeof catalogItem.upstreamRevision === 'string'
-    && value.sourceRevision.length > catalogItem.upstreamRevision.length
-    && value.sourceRevision.startsWith(catalogItem.upstreamRevision)
-    && /^[a-f0-9]{7,64}$/.test(value.sourceRevision)
-  if (value.sourceRevision !== catalogItem.upstreamRevision && !refinesCatalogRevision) {
-    fail(`${path}.sourceRevision`, 'must match or refine the catalog item upstreamRevision')
-  }
+  if (value.sourceRevision !== catalogItem.upstreamRevision) fail(`${path}.sourceRevision`, 'must match the catalog item upstreamRevision')
   requireNonEmptyString(value.implementationRevision, `${path}.implementationRevision`)
   requireOneOf(value.licenseGate, LICENSE_GATES, `${path}.licenseGate`)
   requireNonEmptyString(value.availabilityReason, `${path}.availabilityReason`)
