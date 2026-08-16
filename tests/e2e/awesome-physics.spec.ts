@@ -23,6 +23,34 @@ test('navigates to an available detail with Run and an unavailable detail withou
   await expect(page.getByTestId('awesome-physics-run-panel')).toBeVisible()
   await expect(page.getByTestId('awesome-physics-run')).toBeVisible()
 
+  const runStatus = page.getByTestId('awesome-physics-status')
+  const runError = page.getByTestId('awesome-physics-error')
+  await page.getByTestId('awesome-physics-run').click()
+  await expect.poll(async () => {
+    const statusText = (await runStatus.textContent())?.trim() ?? ''
+    const errorCount = await runError.count()
+    const errorText = errorCount > 0 ? (await runError.textContent())?.trim() ?? '' : ''
+    return { statusText, errorText }
+  }, {
+    timeout: 15_000,
+    message: 'matter-js browser worker did not complete; inspect statusText and errorText for diagnostics',
+  }).toEqual({
+    statusText: expect.stringContaining('completed'),
+    errorText: '',
+  })
+
+  const result = page.getByTestId('awesome-physics-result')
+  await expect(result).toBeVisible({ timeout: 15_000 })
+  const resultText = await result.locator('code').textContent()
+  expect(resultText).not.toBeNull()
+  const output = JSON.parse(resultText ?? '') as {
+    schemaVersion?: unknown
+    dimension?: unknown
+    frames?: unknown
+  }
+  expect(output).toMatchObject({ schemaVersion: 1, dimension: 2 })
+  expect(Array.isArray(output.frames)).toBe(true)
+
   await page.goto('/awesome-physics/awesome-bullet3')
   await expect(page.getByTestId('awesome-physics-detail-ready')).toBeVisible()
   await expect(page.getByTestId('awesome-physics-no-run')).toBeVisible()
