@@ -3,7 +3,7 @@
 This directory is an isolated, solver-neutral finite-element workspace for a
 full 3D illustrative topology derived from US3890548A. It is not an exact
 reconstruction of a manufactured motor. The patent supplies the topology and
-sequence; dimensions, materials, and the homogenized source model are explicit
+sequence; dimensions, materials, and the equivalent source model are explicit
 assumptions in the case file.
 
 No files outside this directory are required or changed by this workspace.
@@ -51,7 +51,10 @@ energy claims.
   field, energy, and inductance-proxy postprocessing.
 - `excitation/v1/event-map-v1.json` is the excitation identity contract;
   `event-map-v1.pro` selects the twelve positive/negative coil regions for one
-  `EventIndex`.
+  `EventIndex`. Each selected volume carries a compactly supported local-radial
+  equivalent current potential. Its distributional curl is a closed surface
+  winding, including return sheets on the same envelope boundary, with exact
+  turns/current scaling and opposite front/back polarity.
 - `mesh-audit/audit-msh.mjs` independently checks physical-region coverage,
   exact material partitioning, connectivity, face conformity, element
   orientation, degeneracy, shape quality, and feature resolution.
@@ -173,7 +176,7 @@ aggregation command combines those job documents into one multi-angle LUT. A
 browser can reject an unknown contract version instead of guessing at field
 meanings. The browser-facing LUT remains absent: one successful smoke solve is
 solver-capability evidence, not the complete converged production sweep
-required by `convergence/convergence-spec-v1.json`.
+required by `convergence/convergence-spec-v2.json`.
 
 ## Pinned solver image
 
@@ -197,9 +200,10 @@ The GetDP file is intentionally conservative and clearly limited:
 - It is a linear, isotropic, magnetostatic vector-potential solve.
 - The core uses a configurable constant relative permeability; saturation,
   hysteresis, lamination loss, conductivity, and eddy currents are absent.
-- The source is a uniform homogenized current-density vector in the coil
-  regions. Individual winding turns, commutator contacts, spark gaps, and
-  capacitor charging are not resolved.
+- The source is a closed-surface homogenized equivalent current potential in
+  the coil regions, with `J = curl(T)` distributionally. Individual winding
+  conductors, commutator contacts, spark gaps, and capacitor charging are not
+  resolved.
 - Rotor motion, torque, force, mechanical load, air flow, arc physics, EMI,
   thermal effects, and energy recovery are not solved.
 - The reported inductance is the linear magnetic-energy proxy

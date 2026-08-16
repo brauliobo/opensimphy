@@ -6,7 +6,7 @@ import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const DEFAULT_SPEC = resolve(SCRIPT_DIR, "convergence-spec-v1.json");
+const DEFAULT_SPEC = resolve(SCRIPT_DIR, "convergence-spec-v2.json");
 const SHA256 = /^[a-f0-9]{64}$/;
 const OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
 const TABLES = {
@@ -95,6 +95,7 @@ function parseMesh(path) {
   assert(Number.isInteger(blockCount) && blockCount > 0 && Number.isInteger(nodeCount) && nodeCount > 0, "attested mesh node header is invalid");
   let parsedNodes = 0;
   let outerRadiusM = 0;
+  let axialHalfExtentM = 0;
   for (let block = 0; block < blockCount; block += 1) {
     const entityDimension = Number(nodeTokens[cursor++]);
     cursor += 1;
@@ -109,6 +110,7 @@ function parseMesh(path) {
       const z = Number(nodeTokens[cursor++]);
       assert([x, y, z].every(Number.isFinite), "attested mesh contains an invalid coordinate");
       outerRadiusM = Math.max(outerRadiusM, Math.hypot(x, y));
+      axialHalfExtentM = Math.max(axialHalfExtentM, Math.abs(z));
       if (parametric === 1) cursor += entityDimension;
     }
     parsedNodes += count;
@@ -133,7 +135,7 @@ function parseMesh(path) {
     parsedElements += count;
   }
   assert(parsedElements === elementCount && elementCursor === elementLines.length, "attested mesh element count is inconsistent");
-  return { nodeCount, elementCount, outerRadiusM };
+  return { nodeCount, elementCount, outerRadiusM, axialHalfExtentM };
 }
 
 function angleKey(angle) {
@@ -181,26 +183,33 @@ export function expectedSampleDefinitions(spec) {
 }
 
 function validateSpec(spec) {
-  assert(spec?.contract === "edwin-gray-convergence-spec" && spec.contractVersion === 1, "unsupported convergence specification");
-  assert(spec.evidenceContract === "edwin-gray-convergence-evidence@1", "unsupported evidence contract in specification");
-  assert(spec.reportContract === "edwin-gray-convergence-report@1", "unsupported report contract in specification");
+  assert(spec?.contract === "edwin-gray-convergence-spec" && spec.contractVersion === 2, "unsupported convergence specification");
+  assert(spec.evidenceContract === "edwin-gray-convergence-evidence@2", "unsupported evidence contract in specification");
+  assert(spec.reportContract === "edwin-gray-convergence-report@2", "unsupported report contract in specification");
   assert(spec.resultContract === "edwin-gray-browser-result@1", "unsupported normalized result contract in specification");
-  assert(spec.checkpointVersion === "fem-checkpoint-v5", "unsupported checkpoint version in specification");
+  assert(spec.checkpointVersion === "fem-checkpoint-v6", "unsupported checkpoint version in specification");
   assert(spec.excitationContract === "edwin-gray-fem-excitation-event-map/v1", "unsupported excitation contract in specification");
+  assert(spec.sourceFormulation === "closed-surface-equivalent-current-potential", "unsupported source formulation in specification");
+  assert(typeof spec.justification === "string" && spec.justification.includes("v1"), "v2 justification must identify the v1 rejection");
   const production = spec.production;
   assert(production?.ciSmoke === false, "production convergence specification cannot be a CI smoke sweep");
   assert(Array.isArray(production.meshLevels) && production.meshLevels.length >= 3, "at least three mesh levels are required");
   production.meshLevels.forEach((item, index) => {
     assert(typeof item.id === "string" && item.id.length > 0, "mesh level ID is required");
     finitePositive(item.meshSizeM, `mesh level ${item.id}`);
+    finitePositive(item.featureMeshSizeM, `mesh level ${item.id} feature size`);
+    assert(sameNumber(item.featureMeshSizeM, Math.min(0.002, 0.08 * item.meshSizeM)), `mesh level ${item.id} feature size does not match the geometry refinement law`);
     if (index > 0) assert(item.meshSizeM < production.meshLevels[index - 1].meshSizeM, "mesh levels must refine monotonically");
+    if (index > 0) assert(item.featureMeshSizeM < production.meshLevels[index - 1].featureMeshSizeM, "feature mesh levels must refine monotonically");
   });
   assert(new Set(production.meshLevels.map((item) => item.id)).size === production.meshLevels.length, "mesh level IDs must be unique");
   assert(Array.isArray(production.domains) && production.domains.length >= 3, "at least three outer domains are required");
   production.domains.forEach((item, index) => {
     assert(typeof item.id === "string" && item.id.length > 0, "domain ID is required");
     finitePositive(item.outerRadiusM, `domain ${item.id}`);
+    finitePositive(item.axialHalfExtentM, `domain ${item.id} axial half extent`);
     if (index > 0) assert(item.outerRadiusM > production.domains[index - 1].outerRadiusM, "outer domains must grow monotonically");
+    if (index > 0) assert(item.axialHalfExtentM > production.domains[index - 1].axialHalfExtentM, "axial domains must grow monotonically");
   });
   assert(production.domains.some((item) => item.id === production.baseDomainId), "base domain is not declared");
   finitePositive(production.productionCurrentA, "production current");
@@ -218,6 +227,7 @@ function validateSpec(spec) {
   assert(tolerances && typeof tolerances === "object", "convergence tolerances are required");
   const required = [
     tolerances.meshMetrics?.outerRadiusRelative,
+    tolerances.meshMetrics?.axialHalfExtentRelative,
     tolerances.meshMetrics?.minimumNodeGrowthRatio,
     tolerances.meshMetrics?.minimumElementGrowthRatio,
     tolerances.meshMetrics?.maximumElementNodeRatioDrift,
@@ -306,6 +316,8 @@ function verifySample(sample, expected, spec, evidenceDir) {
   const domain = spec.production.domains.find((item) => item.id === expected.domainId);
   const radiusError = relativeDifference(meshMetrics.outerRadiusM, domain.outerRadiusM);
   assert(radiusError <= spec.tolerances.meshMetrics.outerRadiusRelative, `sample ${sample.id} attested mesh radius does not match domain ${domain.id}`);
+  const axialError = relativeDifference(meshMetrics.axialHalfExtentM, domain.axialHalfExtentM);
+  assert(axialError <= spec.tolerances.meshMetrics.axialHalfExtentRelative, `sample ${sample.id} attested mesh axial extent does not match domain ${domain.id}`);
   return {
     id: sample.id,
     ...expected,
@@ -391,7 +403,7 @@ function evaluateMetrics(samples, spec) {
 export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) {
   const report = {
     contract: "edwin-gray-convergence-report",
-    contractVersion: 1,
+    contractVersion: 2,
     specification: {
       contract: spec?.contract || null,
       contractVersion: spec?.contractVersion || null,
@@ -408,7 +420,7 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
   };
   try {
     validateSpec(spec);
-    assert(evidence?.contract === "edwin-gray-convergence-evidence" && evidence.contractVersion === 1, "unsupported convergence evidence contract");
+    assert(evidence?.contract === "edwin-gray-convergence-evidence" && evidence.contractVersion === 2, "unsupported convergence evidence contract");
     assert(evidence.status === "complete", "convergence evidence is not complete");
     assert(evidence.caseId === spec.caseId, "convergence evidence case ID is invalid");
     assert(Array.isArray(evidence.samples), "convergence evidence samples are missing");

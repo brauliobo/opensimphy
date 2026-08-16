@@ -52,11 +52,11 @@
     "windingTurns": {
       "value": {
         "turns": 100,
-        "currentDensityModel": "uniform-homogenized-global-z"
+        "currentPotentialModel": "closed-surface-homogenized-local-radial"
       },
       "evidenceClass": "assumed",
       "evidenceRefs": ["fem/edwin-gray/cases/patent-3890548-illustrative.json:excitation"],
-      "note": "The homogenized winding is a numerical source proxy and not a documented patent winding."
+      "note": "The divergence-consistent closed equivalent winding is a numerical source proxy and not a documented patent winding."
     },
     "excitationEventSchedule": {
       "value": {

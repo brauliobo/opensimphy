@@ -1,0 +1,23 @@
+{
+  "contract": "edwin-gray-fast-publication-profile",
+  "contractVersion": 1,
+  "profileId": "fast-coarse-direct-mumps-v1",
+  "meshLevelId": "coarse",
+  "acceptedMesh": {
+    "meshSizeM": 0.025,
+    "measuredDegreesOfFreedom": 1335000
+  },
+  "solverProfile": "direct-mumps-publication-v1",
+  "resources": {
+    "dockerMemoryGiB": 24,
+    "dockerCpus": 2,
+    "solverThreads": 2,
+    "measuredDirectMumpsPeakGiB": 19.3
+  },
+  "representativeEvents": [0, 1, 2],
+  "validationPartners": [3, 4, 5],
+  "pairRelativeTolerance": 0.01,
+  "outputEventCount": 27,
+  "expectedSixJobSolveRuntimeMinutesMax": 30,
+  "experimentalNote": "The iterative CG/GAMG experiment was too slow for publication and is not production-eligible."
+}

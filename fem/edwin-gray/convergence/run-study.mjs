@@ -6,13 +6,21 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expectedSampleDefinitions } from "./evaluate-convergence.mjs";
+import { proveEventMapSymmetry } from "../scripts/event-map-symmetry.mjs";
+import { expandPublicationLut, publicationDefinitions } from "./publication.mjs";
+import { validateBundledLut } from "../ci/validate-lut.mjs";
 
 const CONVERGENCE_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(CONVERGENCE_DIR, "..");
 const RUNNER = resolve(ROOT, "scripts/run.mjs");
 const EVALUATOR = resolve(CONVERGENCE_DIR, "evaluate-convergence.mjs");
-const SPEC_PATH = resolve(CONVERGENCE_DIR, "convergence-spec-v1.json");
+const SPEC_PATH = resolve(CONVERGENCE_DIR, "convergence-spec-v2.json");
 const CASE_PATH = resolve(ROOT, "cases/patent-3890548-illustrative.json");
+const LUT_SCHEMA_PATH = resolve(ROOT, "schema/motor-fem-lut.schema.json");
+const EVENT_MAP_PATH = resolve(ROOT, "excitation/v1/event-map-v1.json");
+const GEOMETRY_PATH = resolve(ROOT, "geometry/patent-3890548-3d.geo");
+const PUBLICATION_PROFILE_PATH = resolve(CONVERGENCE_DIR, "publication-profile-v1.json");
+const DEFAULT_LUT_PATH = resolve(ROOT, "../../public/data/generated/edwin-gray/motor-fem-lut-v1.json");
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -61,6 +69,8 @@ function caseVariants(workDir, spec) {
   return Object.fromEntries(spec.production.domains.map((domain) => {
     const variant = structuredClone(source);
     variant.geometry.airOuterRadiusM = domain.outerRadiusM;
+    variant.geometry.airZMinM = -domain.axialHalfExtentM;
+    variant.geometry.airZMaxM = domain.axialHalfExtentM;
     const path = resolve(workDir, "cases", `${domain.id}.json`);
     writeJson(path, variant);
     return [domain.id, path];
@@ -86,7 +96,7 @@ function pilotDefinitions(definitions, spec) {
   ));
 }
 
-function executeSamples({ definitions, spec, cases, workDir, image, threads }) {
+function executeSamples({ definitions, spec, cases, workDir, image, threads, cpus, memoryGiB, solverProfile, publication = false }) {
   const runs = resolve(workDir, "runs");
   const completed = [];
   const meshSources = new Map();
@@ -99,6 +109,9 @@ function executeSamples({ definitions, spec, cases, workDir, image, threads }) {
       "--backend", "docker",
       "--docker-image", image,
       "--threads", String(threads),
+      "--cpus", String(cpus),
+      "--memory-gib", String(memoryGiB),
+      "--solver-profile", solverProfile,
       "--case", cases[sample.domainId],
       "--run-dir", runs,
       "--rotor-angle", String(sample.rotorAngleDeg),
@@ -106,6 +119,7 @@ function executeSamples({ definitions, spec, cases, workDir, image, threads }) {
       "--mesh-size", String(mesh.meshSizeM),
       "--drive-current", String(sample.driveCurrentA)
     ];
+    if (publication) args.splice(2, 0, "--publication");
     const source = meshSources.get(meshKey);
     if (source) args.push("--reuse-mesh-checkpoint", source);
     const output = JSON.parse(run(process.execPath, args, `sample ${sampleId(sample)}`));
@@ -180,12 +194,13 @@ function pilotReport(samples, workDir, spec) {
     lowCurrent.observables[name].value / auditCurrent ** 2
   ))), spec.tolerances.energyCurrentSquaredRelative);
   add("angle-periodicity", observableDifference(fine, periodic), spec.tolerances.anglePeriodicityRelative);
-  checks.push({ id: "expanded-domain-convergence", status: "not-run", reason: "pilot failure blocks full convergence study" });
-  checks.push({ id: "torque-derivative-stability", status: "not-run", reason: "pilot failure blocks full convergence study" });
+  checks.push({ id: "expanded-domain-convergence", status: "not-run", reason: "evaluated only by the full convergence study" });
+  checks.push({ id: "torque-derivative-stability", status: "not-run", reason: "evaluated only by the full convergence study" });
   const failures = checks.filter((check) => check.status === "failed").map((check) => check.id);
   return {
     contract: "edwin-gray-convergence-pilot",
-    contractVersion: 1,
+    contractVersion: 2,
+    sourceFormulation: spec.sourceFormulation,
     specification: { sha256: sha256(SPEC_PATH) },
     status: failures.length === 0 ? "passed" : "rejected",
     checks,
@@ -196,6 +211,62 @@ function pilotReport(samples, workDir, spec) {
 
 function runConvergence(options, spec, definitions, workDir) {
   const cases = caseVariants(workDir, spec);
+  if (options.stage === "publication") {
+    const convergenceReportPath = resolve(workDir, "convergence-report.json");
+    const convergenceReport = readJson(convergenceReportPath, "approved convergence report");
+    assert(convergenceReport.status === "approved", "publication requires an approved convergence report");
+    assert(convergenceReport.contract === "edwin-gray-convergence-report" && convergenceReport.contractVersion === 2, "publication convergence report contract is invalid");
+    assert(convergenceReport.specification?.sha256 === sha256(SPEC_PATH), "publication convergence report does not match convergence spec v2");
+    const caseData = readJson(cases[spec.production.baseDomainId], "publication case");
+    const profile = readJson(PUBLICATION_PROFILE_PATH, "fast publication profile");
+    const selected = publicationDefinitions(profile, spec, caseData);
+    const eventMapBytes = readFileSync(EVENT_MAP_PATH);
+    const caseBytes = readFileSync(cases[spec.production.baseDomainId]);
+    const geometryBytes = readFileSync(GEOMETRY_PATH);
+    const symmetryProof = proveEventMapSymmetry({
+      eventMap: JSON.parse(eventMapBytes),
+      caseData,
+      geometryText: geometryBytes.toString("utf8"),
+      eventMapBytes,
+      caseBytes,
+      geometryBytes
+    });
+    const samples = executeSamples({
+      definitions: selected,
+      spec,
+      cases,
+      workDir,
+      image: options["docker-image"],
+      threads: Number(options.threads),
+      cpus: Number(options.cpus),
+      memoryGiB: Number(options["memory-gib"]),
+      solverProfile: options["solver-profile"],
+      publication: true
+    });
+    const documents = samples.map((sample) => readJson(resolve(workDir, sample.result), `publication result ${sample.id}`));
+    const lut = expandPublicationLut({ documents, profile, caseData, symmetryProof });
+    validateBundledLut(lut, readJson(LUT_SCHEMA_PATH, "LUT schema"));
+    const reportHash = sha256(convergenceReportPath);
+    const specHash = sha256(SPEC_PATH);
+    lut.provenance.source += `; convergence-report sha256:${reportHash}; convergence-spec-v2 sha256:${specHash}`;
+    const lutPath = resolve(options["lut-out"] || DEFAULT_LUT_PATH);
+    writeJson(lutPath, lut);
+    const publicationEvidencePath = resolve(workDir, "publication-evidence.json");
+    writeJson(publicationEvidencePath, {
+      contract: "edwin-gray-production-publication-evidence",
+      contractVersion: 1,
+      status: "published",
+      independentlySolvedJobCount: samples.length,
+      symmetryDerivedEntryCount: lut.entries.length,
+      solvedEventIndices: samples.map((sample) => sample.eventIndex),
+      symmetryProofSha256: symmetryProof.proofSha256,
+      specificationSha256: specHash,
+      convergenceReportSha256: reportHash,
+      lutSha256: sha256(lutPath),
+      samples
+    });
+    return { status: "published", stage: "publication", independentlySolvedJobs: samples.length, symmetryDerivedEntries: lut.entries.length, lut: lutPath, lutSha256: sha256(lutPath), evidence: publicationEvidencePath };
+  }
   const selected = options.stage === "pilot" ? pilotDefinitions(definitions, spec) : definitions;
   const samples = executeSamples({
     definitions: selected,
@@ -203,7 +274,10 @@ function runConvergence(options, spec, definitions, workDir) {
     cases,
     workDir,
     image: options["docker-image"],
-    threads: Number(options.threads || 1)
+    threads: Number(options.threads || 1),
+    cpus: Number(options.cpus || 2),
+    memoryGiB: Number(options["memory-gib"] || 24),
+    solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1"
   });
   if (options.stage === "pilot") {
     const reportPath = resolve(workDir, "pilot-report.json");
@@ -215,7 +289,7 @@ function runConvergence(options, spec, definitions, workDir) {
   const reportPath = resolve(workDir, "convergence-report.json");
   writeJson(evidencePath, {
     contract: "edwin-gray-convergence-evidence",
-    contractVersion: 1,
+    contractVersion: 2,
     status: "complete",
     caseId: spec.caseId,
     samples
@@ -239,14 +313,29 @@ function runConvergence(options, spec, definitions, workDir) {
 
 function main(argv) {
   const options = parseArgs(argv);
-  assert(["pilot", "convergence"].includes(options.stage), "--stage must be pilot or convergence");
+  assert(["pilot", "convergence", "publication"].includes(options.stage), "--stage must be pilot, convergence, or publication");
   assert(options["docker-image"], "--docker-image is required");
-  const threads = Number(options.threads || 1);
-  assert(Number.isInteger(threads) && threads >= 1 && threads <= 4, "--threads must be an integer in [1, 4]");
+  if (options.stage === "publication") {
+    for (const required of ["solver-profile", "memory-gib", "cpus", "threads"]) {
+      assert(options[required], `publication requires explicit --${required}`);
+    }
+    assert(options["solver-profile"] === "direct-mumps-publication-v1", "publication requires solver profile direct-mumps-publication-v1");
+  }
+  const threads = Number(options.threads || 2);
+  const cpus = Number(options.cpus || 2);
+  const memoryGiB = Number(options["memory-gib"] || 24);
+  assert(Number.isInteger(threads) && threads >= 1 && threads <= 2, "--threads must be an integer in [1, 2]");
+  assert(Number.isFinite(cpus) && cpus > 0 && cpus <= 2, "--cpus must be in (0, 2]");
+  assert(Number.isFinite(memoryGiB) && memoryGiB > 0 && memoryGiB <= 24, "--memory-gib must be in (0, 24]");
+  if (options.stage === "publication") {
+    assert(threads === 2 && cpus === 2 && memoryGiB === 24, "publication requires exactly 2 threads, 2 CPUs, and 24 GiB");
+  }
   const workDir = resolve(options["work-dir"] || "edwin-gray-study");
   mkdirSync(workDir, { recursive: true });
   const spec = readJson(SPEC_PATH, "convergence specification");
+  const started = Date.now();
   const result = runConvergence(options, spec, expectedSampleDefinitions(spec), workDir);
+  result.runtimeSeconds = (Date.now() - started) / 1000;
   console.log(JSON.stringify(result, null, 2));
   if (result.status === "rejected") process.exitCode = 1;
 }

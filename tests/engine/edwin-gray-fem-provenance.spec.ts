@@ -3,7 +3,9 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { aggregateNormalizedResults, normalizeResults } from '../../fem/edwin-gray/scripts/normalize-results.mjs'
-import { buildGrayMagneticLookup, parseGrayFemLookupDocument } from '../../src/edwin-gray/edwinGrayFem'
+import { expandPublicationLut } from '../../fem/edwin-gray/convergence/publication.mjs'
+import { proveEventMapSymmetry } from '../../fem/edwin-gray/scripts/event-map-symmetry.mjs'
+import { buildGrayMagneticLookup, parseGrayFemLookupDocument, requireCompatibleGrayFemLookup } from '../../src/edwin-gray/edwinGrayFem'
 
 const sourceCase = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/cases/patent-3890548-illustrative.json'), 'utf8'))
 const resultSchema = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/schema/motor-fem-lut.schema.json'), 'utf8'))
@@ -49,7 +51,7 @@ describe('Edwin Gray FEM result provenance', () => {
     for (const [fileName, value] of Object.entries(outputs)) writeFileSync(join(jobDir, fileName), value)
     writeFileSync(join(jobDir, 'mesh-audit.json'), '{"valid":true}\n')
     writeFileSync(join(jobDir, 'checkpoint.json'), JSON.stringify({
-      checkpointVersion: 'fem-checkpoint-v5',
+      checkpointVersion: 'fem-checkpoint-v6',
       jobId: name,
       modelInputHash,
       jobInputHash,
@@ -247,5 +249,51 @@ describe('Edwin Gray FEM result provenance', () => {
     const unhashed = structuredClone(result)
     unhashed.entries[0]!.provenance.artifacts = ['observables.dat']
     expect(() => parseGrayFemLookupDocument(unhashed)).toThrow(/artifact hashes/)
+  })
+
+  it('round-trips a proof-gated six-job publication through the browser contract', () => {
+    const eventMapBytes = readFileSync(join(process.cwd(), 'fem/edwin-gray/excitation/v1/event-map-v1.json'))
+    const geometryBytes = readFileSync(join(process.cwd(), 'fem/edwin-gray/geometry/patent-3890548-3d.geo'))
+    const caseBytes = readFileSync(join(process.cwd(), 'fem/edwin-gray/cases/patent-3890548-illustrative.json'))
+    const profile = JSON.parse(readFileSync(join(process.cwd(), 'fem/edwin-gray/convergence/publication-profile-v1.json'), 'utf8'))
+    const base = completeLookup()
+    const documents = [0, 1, 2, 3, 4, 5].map((eventIndex) => {
+      const document = structuredClone(base)
+      const entry = structuredClone(base.entries[0]!)
+      entry.entryId = `solved-${eventIndex}`
+      entry.parameters.rotorAngleDeg = sourceCase.sweep.anglesDeg[eventIndex]
+      entry.parameters.eventIndex = eventIndex
+      entry.provenance.jobInputHash = (eventIndex + 1).toString(16).repeat(64)
+      entry.provenance.inputHash = entry.provenance.jobInputHash
+      document.entries = [entry]
+      return document
+    })
+    const symmetryProof = proveEventMapSymmetry({
+      eventMap: JSON.parse(eventMapBytes.toString('utf8')),
+      caseData: sourceCase,
+      geometryText: geometryBytes.toString('utf8'),
+      eventMapBytes,
+      caseBytes,
+      geometryBytes,
+    })
+    const produced = expandPublicationLut({ documents, profile, caseData: sourceCase, symmetryProof })
+    const parsed = parseGrayFemLookupDocument(JSON.parse(JSON.stringify(produced)))
+    expect(parsed.entries).toHaveLength(27)
+    expect(parsed.entries.every((entry) => entry.provenance.derivation === 'symmetry-derived-from-job')).toBe(true)
+    expect(() => requireCompatibleGrayFemLookup(parsed, {
+      machineContractId: 'patent-3890548-illustrative',
+      machineRevision: 1,
+      modelRevision: 1,
+      engineMotorId: 'patent-3890548-illustrative',
+      label: 'fixture',
+      claimStatus: 'patent-described-illustrative-model',
+      evidenceAvailability: 'patent-and-model-inputs',
+      topologyIdentity: produced.compatibility.topologyIdentity,
+      compatibleTurns: produced.compatibility.turns,
+      compatibleExcitation: produced.compatibility.excitation,
+      modelInputHash: produced.compatibility.modelInputHash,
+      femStatus: 'not-run',
+      femBlocker: 'fixture',
+    })).not.toThrow()
   })
 })

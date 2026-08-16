@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "edwin-gray-petsc-solver-profiles-v1",
+  "defaultProfile": "direct-mumps-publication-v1",
+  "profiles": {
+    "iterative-cg-gamg-v1": {
+      "mode": "iterative",
+      "publicationAllowed": false,
+      "experimentStatus": "rejected-too-slow-for-publication",
+      "kspType": "cg",
+      "pcType": "gamg",
+      "relativeTolerance": 0.001,
+      "absoluteTolerance": 1e-12,
+      "maximumIterations": 750,
+      "petscOptions": [
+        "-ksp_type", "cg",
+        "-pc_type", "gamg",
+        "-ksp_rtol", "1e-3",
+        "-ksp_atol", "1e-12",
+        "-ksp_max_it", "750",
+        "-ksp_norm_type", "unpreconditioned",
+        "-ksp_monitor_true_residual",
+        "-ksp_converged_reason",
+        "-ksp_error_if_not_converged"
+      ]
+    },
+    "direct-mumps-publication-v1": {
+      "mode": "direct",
+      "publicationAllowed": true,
+      "publicationProfile": "fast-coarse-direct-mumps-v1",
+      "safeMinimumMeshSizeM": 0.025,
+      "requiredMeshSizeM": 0.025,
+      "measuredDegreesOfFreedom": 1335000,
+      "measuredPeakMemoryGiB": 19.3,
+      "requiredMemoryGiB": 24,
+      "requiredCpus": 2,
+      "requiredThreads": 2,
+      "kspType": "preonly",
+      "pcType": "lu",
+      "factorSolverType": "mumps",
+      "petscOptions": [
+        "-ksp_type", "preonly",
+        "-pc_type", "lu",
+        "-pc_factor_mat_solver_type", "mumps",
+        "-ksp_monitor_true_residual",
+        "-ksp_converged_reason",
+        "-ksp_error_if_not_converged"
+      ]
+    },
+    "direct-mumps-smoke-v1": {
+      "mode": "direct",
+      "publicationAllowed": false,
+      "safeMinimumMeshSizeM": 0.04,
+      "kspType": "preonly",
+      "pcType": "lu",
+      "factorSolverType": "mumps",
+      "petscOptions": [
+        "-ksp_type", "preonly",
+        "-pc_type", "lu",
+        "-pc_factor_mat_solver_type", "mumps",
+        "-ksp_monitor_true_residual",
+        "-ksp_converged_reason",
+        "-ksp_error_if_not_converged"
+      ]
+    }
+  }
+}

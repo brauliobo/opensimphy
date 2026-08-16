@@ -1,8 +1,11 @@
 # FEM convergence gate
 
-`convergence-spec-v1.json` is the immutable production study definition. It is
-deliberately separate from CI smoke fixtures: CI only exercises the evaluator,
-while approval requires every production tuple declared by the specification.
+`convergence-spec-v1.json` and `pilot-failure-report-v1.json` are immutable
+rejected evidence. `convergence-spec-v2.json` is the active production study
+definition. It replaces disconnected axial volume currents with a closed
+equivalent current potential, couples local feature resolution to each mesh
+level, starts at the v1 far radius, and expands both radial and axial air bounds.
+The v1 numerical tolerances are retained.
 
 Run the evaluator after all individual runner jobs are complete:
 
@@ -17,7 +20,7 @@ The evidence document has this shape:
 ```json
 {
   "contract": "edwin-gray-convergence-evidence",
-  "contractVersion": 1,
+  "contractVersion": 2,
   "status": "complete",
   "caseId": "patent-3890548-illustrative",
   "samples": [
@@ -62,13 +65,50 @@ nice -n 10 node fem/edwin-gray/convergence/run-study.mjs \
   --stage convergence \
   --docker-image IMAGE_ID \
   --work-dir /tmp/edwin-gray-study
+
+nice -n 10 node fem/edwin-gray/convergence/run-study.mjs \
+  --stage publication \
+  --docker-image IMMUTABLE_IMAGE_ID_OR_DIGEST \
+  --work-dir /tmp/edwin-gray-study \
+  --solver-profile direct-mumps-publication-v1 \
+  --memory-gib 24 \
+  --cpus 2 \
+  --threads 2
 ```
 
 Torque-refinement samples hold event 0 fixed. The 120-degree periodicity
 partners use event 9, preserving the event-specific excitation after rotating
-the complete three-sector source pattern. The runner is intentionally serial;
-each pinned-container job uses at most the requested four solver threads.
+the complete three-sector source pattern. The runner is intentionally serial.
+Publication uses `publication-profile-v1.json`: accepted coarse mesh `0.025 m`
+(measured 1,335,000 DOF), direct MUMPS (measured 19.3 GiB peak), an exact Docker
+hard cap of 24 GiB, and exactly two CPUs/threads. Missing or different
+publication resource/profile arguments fail closed. The six-job solve-time
+planning ceiling is 30 minutes, plus mesh generation and normalization.
 
-`pilot-failure-report-v1.json` is the compact retained report from the latest
-real pinned-container pilot. Its failed partition-growth and outer-domain gates
-blocked the full study and the 27-angle publication slice; no LUT was emitted.
+`pilot-failure-report-v1.json` is the compact retained report from the rejected
+v1 pinned-container pilot. Its failed partition-growth and outer-domain gates
+blocked the full study and the 27-angle publication slice. The publication
+stage now fails closed unless the v2 report is approved and hash-matches the v2
+specification. It then solves representatives 0, 1, 2 and validation partners
+3, 4, 5. Each pair must agree within the predeclared one-percent tolerance.
+Only after those gates pass does the runner derive all 27 entries from the exact
+40-degree classes. Every entry is marked `symmetry-derived-from-job` and carries
+its rotation plus source event, job, and artifact hashes; the six jobs are never
+reported as 27 independent solves.
+
+Detached publication, using a work directory that already contains its approved
+`convergence-report.json`:
+
+```sh
+export IMAGE_ID='sha256:REPLACE_WITH_PINNED_IMAGE_ID'
+nohup nice -n 10 \
+  node fem/edwin-gray/convergence/run-study.mjs \
+  --stage publication \
+  --docker-image "$IMAGE_ID" \
+  --work-dir /tmp/edwin-gray-study \
+  --solver-profile direct-mumps-publication-v1 \
+  --memory-gib 24 \
+  --cpus 2 \
+  --threads 2 \
+  > /tmp/edwin-gray-study/publication.log 2>&1 &
+```

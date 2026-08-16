@@ -6,9 +6,10 @@
      getdp magnetostatic.pro -msh motor.msh -pos MagnetostaticResults
 
    Limitations are intentional: this is a linear isotropic H(curl) solve with
-   an event-selected impressed current density in homogenized coil envelopes.
-   Front/back envelope pairs carry equal and opposing axial contributions, so
-   this is a balanced source approximation, not a resolved winding. It does
+   an event-selected equivalent current potential in homogenized coil
+   envelopes. The compactly supported radial potential represents a closed
+   surface winding through J = Curl T; front/back pairs carry opposite winding
+   polarity. This is not a resolved conductor winding. It does
    not solve the capacitor discharge transient, spark gaps, commutator,
    winding turns, motion, torque, mechanical load, saturation, hysteresis,
    lamination loss, eddy currents, thermal effects, or energy recovery. The
@@ -45,8 +46,8 @@ Function {
   If(!Exists(Turns))
     Turns = DefineNumber[100., Name "Parameters/Turns"];
   EndIf
-  If(!Exists(EffectiveCoilCrossSectionM2))
-    EffectiveCoilCrossSectionM2 = DefineNumber[1.e-4, Name "Parameters/Effective coil cross-section (m^2)"];
+   If(!Exists(CoilRadialDepthM))
+     CoilRadialDepthM = DefineNumber[0.008, Name "Parameters/Coil radial depth (m)"];
   EndIf
   If(!Exists(EventIndex))
     EventIndex = DefineNumber[0, Name "Parameters/Excitation event index", Min 0, Max 26, Step 1];
@@ -58,9 +59,13 @@ Include "../excitation/v1/event-map-v1.pro";
 Function {
   nu[Region[{Air, AllCoils}]] = 1. / mu0;
   nu[AllCores] = 1. / (CoreRelativePermeability * mu0);
-  HomogenizedCurrentDensity = Turns * DriveCurrentA / EffectiveCoilCrossSectionM2;
-  SourceCurrentDensity[EventSourcePositive] = Vector[0., 0., HomogenizedCurrentDensity];
-  SourceCurrentDensity[EventSourceNegative] = Vector[0., 0., -HomogenizedCurrentDensity];
+   // T has units A/m. Its jump to zero on each closed envelope boundary gives
+   // K = T x n, including the return portions, and exactly NI ampere-turns
+   // across the radial envelope thickness.
+   EquivalentCurrentPotential = Turns * DriveCurrentA / CoilRadialDepthM;
+   LocalRadialDirection[] = Vector[X[], Y[], 0.] / Sqrt[X[]^2 + Y[]^2];
+   SourceCurrentPotential[EventSourcePositive] = EquivalentCurrentPotential * LocalRadialDirection[];
+   SourceCurrentPotential[EventSourceNegative] = -EquivalentCurrentPotential * LocalRadialDirection[];
 }
 
 Constraint {
@@ -118,8 +123,10 @@ Formulation {
     Equation {
       Integral { [nu[] * Dof{Curl a}, {Curl a}];
                  In Domain; Jacobian Vol; Integration Int_1; }
-      Integral { [-SourceCurrentDensity[], {a}];
-                 In DomainWithSourceCurrentDensity;
+       // Distributionally J = Curl T, so this weak curl source is closed and
+       // Div J = Div Curl T = 0 without disconnected volume-current terminals.
+       Integral { [-SourceCurrentPotential[], {Curl a}];
+                  In DomainWithSourceCurrentPotential;
                  Jacobian Vol; Integration Int_1; }
     }
   }

@@ -17,6 +17,7 @@ import { spawnSync } from "node:child_process";
 import { delimiter, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { aggregateNormalizedResults, normalizeResults } from "./normalize-results.mjs";
+import { proveEventMapSymmetry, validateEventMapSymmetryProof } from "./event-map-symmetry.mjs";
 import {
   environmentManifest,
   identifyDockerEnvironment,
@@ -31,18 +32,21 @@ const ROOT = resolve(SCRIPT_DIR, "..");
 const RUN_SCRIPT = fileURLToPath(import.meta.url);
 const ENVIRONMENT_MODULE = resolve(SCRIPT_DIR, "solver-environment.mjs");
 const NORMALIZE_SCRIPT = resolve(SCRIPT_DIR, "normalize-results.mjs");
+const SYMMETRY_SCRIPT = resolve(SCRIPT_DIR, "event-map-symmetry.mjs");
 const DEFAULT_CASE = resolve(ROOT, "cases/patent-3890548-illustrative.json");
 const DEFAULT_GEO = resolve(ROOT, "geometry/patent-3890548-3d.geo");
 const DEFAULT_PRO = resolve(ROOT, "getdp/magnetostatic.pro");
+const DEFAULT_SOLVER_CONFIG = resolve(ROOT, "getdp/solver-profiles-v1.json");
 const DEFAULT_EVENT_MAP = resolve(ROOT, "excitation/v1/event-map-v1.json");
 const DEFAULT_EVENT_SELECTOR = resolve(ROOT, "excitation/v1/event-map-v1.pro");
 const DEFAULT_MESH_AUDIT = resolve(ROOT, "mesh-audit/audit-msh.mjs");
 const DEFAULT_RUNS = resolve(ROOT, "runs");
-const CHECKPOINT_VERSION = "fem-checkpoint-v5";
+const CHECKPOINT_VERSION = "fem-checkpoint-v6";
 const SWEEP_MANIFEST_VERSION = "motor-fem-sweep-v3";
 const RESULT_CONTRACT = "edwin-gray-browser-result";
 const RESULT_CONTRACT_VERSION = 1;
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
+const SOLVER_CONVERGENCE = "solver-convergence.json";
 const RESULT_OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
 const MESH_QUALITY_FAILURES = [
   "No elements in volume",
@@ -92,7 +96,11 @@ function usage() {
     "  --docker-bin PATH                  Override Docker executable",
     "  --docker-image IMAGE               Enable the optional Docker backend",
     "  --publication                      Require a resolved immutable Docker image digest",
-    "  --threads COUNT                    Solver thread count (default: 1)",
+    "  --solver-profile NAME              PETSc profile (required for publication)",
+    "  --solver-config PATH               Versioned PETSc profile configuration",
+    "  --memory-gib GIB                   Docker hard memory/swap limit (default: 24)",
+    "  --cpus COUNT                       Docker CPU quota (default: thread count)",
+    "  --threads COUNT                    Solver thread count (default: 2 for Docker)",
     "  --case PATH                        Case JSON path",
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
@@ -251,6 +259,7 @@ function validateNormalizedProvenance(result, job) {
     job.meshPath,
     job.auditPath,
     join(job.jobDir, "getdp.log"),
+    join(job.jobDir, SOLVER_CONVERGENCE),
     ...commandOutputs(job)
   ].map((path) => relative(job.jobDir, path));
   assert(Array.isArray(entry.provenance.artifacts), "normalized result artifact provenance is missing");
@@ -410,6 +419,7 @@ function validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaDa
   assert(caseData.results.noSyntheticOutput === true, "Synthetic output must be disabled");
   assert(caseData.excitation.contract === "edwin-gray-fem-excitation-event-map/v1", "Excitation contract is invalid");
   assert(Number.isInteger(caseData.excitation.eventIndex) && caseData.excitation.eventIndex >= 0 && caseData.excitation.eventIndex <= 26, "Excitation event index is invalid");
+  assert(caseData.excitation.currentPotentialThicknessM === geometry.coilRadialDepthM, "Current-potential thickness must equal the coil radial depth");
   assert(caseData.provenance.ledgerVersion === "source-ledger-v1", "Provenance ledger must be version 1");
   assert(Array.isArray(caseData.provenance.fieldEntries) && caseData.provenance.fieldEntries.length > 0, "Provenance entries are required");
   for (const entry of caseData.provenance.fieldEntries) {
@@ -434,6 +444,8 @@ function validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaDa
   assert(getdpText.includes("Magnetostatics3D"), "GetDP magnetostatic formulation is missing");
   assert(getdpText.includes("MagneticEnergyJ"), "GetDP energy postprocessing is missing");
   assert(getdpText.includes("InductanceH"), "GetDP inductance postprocessing is missing");
+  assert(getdpText.includes("J = Curl T") && getdpText.includes("{Curl a}"), "GetDP must use the closed equivalent current-potential source");
+  assert(!getdpText.includes("SourceCurrentDensity"), "GetDP must not retain disconnected volume-current sources");
   assert(!getdpText.includes("radiant") && !getdpText.includes("Radiant"), "GetDP must not include a non-Maxwell force term");
 }
 
@@ -446,18 +458,22 @@ function loadInputs(options) {
   const eventMapPath = DEFAULT_EVENT_MAP;
   const eventSelectorPath = DEFAULT_EVENT_SELECTOR;
   const meshAuditPath = resolve(options["mesh-audit"] || DEFAULT_MESH_AUDIT);
+  const solverConfigPath = resolve(options["solver-config"] || DEFAULT_SOLVER_CONFIG);
   const caseData = readJson(casePath, "case");
   const geometryText = readFileSync(geoPath, "utf8");
   const getdpText = readFileSync(proPath, "utf8");
   const schemaData = readJson(schemaPath, "case schema");
   const lutSchemaData = readJson(lutSchemaPath, "result schema");
   const eventMapData = readJson(eventMapPath, "excitation event map");
+  const solverConfigData = readJson(solverConfigPath, "PETSc solver configuration");
+  assert(solverConfigData.schemaVersion === "edwin-gray-petsc-solver-profiles-v1", "Unsupported PETSc solver configuration");
+  assert(solverConfigData.profiles?.[solverConfigData.defaultProfile], "Default PETSc solver profile is missing");
   assert(eventMapData.contractVersion === caseData.excitation.contract, "Case excitation contract does not match the event map");
   assert(eventMapData.eventCount === 27 && eventMapData.events?.length === 27, "Excitation event map must define 27 events");
   assert(existsSync(eventSelectorPath), `Excitation selector does not exist: ${eventSelectorPath}`);
   assert(existsSync(meshAuditPath), `Mesh audit does not exist: ${meshAuditPath}`);
   validateCase(caseData, geometryText, getdpText, schemaData, lutSchemaData);
-  return { casePath, geoPath, proPath, schemaPath, lutSchemaPath, eventMapPath, eventSelectorPath, meshAuditPath, caseData, geometryText, getdpText, schemaData, lutSchemaData, eventMapData };
+  return { casePath, geoPath, proPath, schemaPath, lutSchemaPath, eventMapPath, eventSelectorPath, meshAuditPath, solverConfigPath, solverConfigData, caseData, geometryText, getdpText, schemaData, lutSchemaData, eventMapData };
 }
 
 function canonicalAngle(angle, order) {
@@ -526,7 +542,7 @@ function inputHash(inputs, caseData, parameters, environmentIdentityHash) {
 
 function baseInputHash(inputs, caseData) {
   const payload = {
-    case: sha256File(inputs.casePath),
+    case: sha256Bytes(Buffer.from(stableJson(caseData))),
     geometry: sha256File(inputs.geoPath),
     getdp: sha256File(inputs.proPath),
     schema: sha256File(inputs.schemaPath),
@@ -535,6 +551,7 @@ function baseInputHash(inputs, caseData) {
     excitationSelector: sha256File(inputs.eventSelectorPath),
     meshAudit: sha256File(inputs.meshAuditPath),
     normalizer: sha256File(NORMALIZE_SCRIPT),
+    eventMapSymmetryProof: sha256File(SYMMETRY_SCRIPT),
     caseId: caseData.caseId
   };
   return sha256Bytes(Buffer.from(stableJson(payload)));
@@ -576,7 +593,7 @@ function getdpOverrides(parameters, caseData) {
     ["CoreRelativePermeability", caseData.materials.core.relativePermeability],
     ["DriveCurrentA", parameters.driveCurrentA],
     ["Turns", caseData.excitation.turns],
-    ["EffectiveCoilCrossSectionM2", caseData.excitation.effectiveCoilCrossSectionM2],
+    ["CoilRadialDepthM", caseData.excitation.currentPotentialThicknessM],
     ["EventIndex", parameters.eventIndex]
   ];
 }
@@ -687,6 +704,32 @@ function positiveInteger(value, label) {
   return parsed;
 }
 
+function positiveNumber(value, label) {
+  const parsed = Number(value);
+  assert(Number.isFinite(parsed) && parsed > 0, `${label} must be finite and positive`);
+  return parsed;
+}
+
+function solverProfile(inputs, options) {
+  if (options.publication) {
+    assert(options["solver-profile"], "Publication requires an explicit --solver-profile");
+  }
+  const name = options["solver-profile"] || inputs.solverConfigData.defaultProfile;
+  const profile = inputs.solverConfigData.profiles[name];
+  assert(profile, `Unknown PETSc solver profile: ${name}`);
+  assert(["iterative", "direct"].includes(profile.mode), `Solver profile ${name} has an invalid mode`);
+  assert(Array.isArray(profile.petscOptions) && profile.petscOptions.length > 0, `Solver profile ${name} has no PETSc options`);
+  if (options.publication) {
+    assert(profile.mode === "direct" && profile.publicationAllowed === true, "Publication requires a publication-eligible direct solver profile");
+  }
+  return {
+    configSchemaVersion: inputs.solverConfigData.schemaVersion,
+    configSha256: sha256File(inputs.solverConfigPath),
+    name,
+    ...profile
+  };
+}
+
 function runnerRevision() {
   if (process.env.SOLVER_RUNNER_REVISION) {
     return process.env.SOLVER_RUNNER_REVISION;
@@ -699,18 +742,33 @@ function runnerRevision() {
   return result.status === 0 ? result.stdout.trim() : "unknown";
 }
 
-function identifyBackend(plan, options) {
-  const threads = positiveInteger(options.threads || process.env.SOLVER_THREADS || "1", "--threads");
+function identifyBackend(plan, options, inputs) {
+  const threads = positiveInteger(options.threads || process.env.SOLVER_THREADS || (plan.kind === "docker" ? "2" : "1"), "--threads");
+  const cpus = positiveNumber(options.cpus || threads, "--cpus");
+  const memoryGiB = plan.kind === "docker" ? positiveNumber(options["memory-gib"] || "24", "--memory-gib") : null;
+  const solver = solverProfile(inputs, options);
+  if (options.publication) {
+    assert(plan.kind === "docker", "Publication requires the memory-bounded Docker backend");
+    assert(options["memory-gib"] && options.cpus && options.threads, "Publication requires explicit --memory-gib, --cpus, and --threads limits");
+    assert(memoryGiB === solver.requiredMemoryGiB && memoryGiB === 24, "Publication Docker memory must be exactly 24 GiB");
+    assert(cpus === solver.requiredCpus && threads === solver.requiredThreads && cpus === 2 && threads === 2,
+      "Publication CPU and thread limits must be exactly 2");
+  }
+  const resources = { memoryGiB, cpus, memorySwapGiB: memoryGiB };
   const runner = runnerIdentity({
     revision: runnerRevision(),
     runScript: RUN_SCRIPT,
-    environmentModule: ENVIRONMENT_MODULE
+    environmentModule: ENVIRONMENT_MODULE,
+    solverConfig: inputs.solverConfigPath
   });
   if (plan.kind === "host") {
     return {
       ...plan,
       threads,
-      environment: identifyHostEnvironment({ gmsh: plan.gmsh, getdp: plan.getdp, threads, runner })
+      cpus,
+      memoryGiB,
+      solver,
+      environment: identifyHostEnvironment({ gmsh: plan.gmsh, getdp: plan.getdp, threads, solver, resources, runner })
     };
   }
   if (plan.kind === "docker") {
@@ -721,13 +779,19 @@ function identifyBackend(plan, options) {
       requestedImage: image.requestedImage,
       imageDigest: image.digest,
       threads,
-      environment: identifyDockerEnvironment({ image, threads, runner })
+      cpus,
+      memoryGiB,
+      solver,
+      environment: identifyDockerEnvironment({ image, threads, solver, resources, runner })
     };
   }
   return {
     ...plan,
     threads,
-    environment: identifyUnavailableEnvironment({ reason: plan.reason, threads, runner })
+    cpus,
+    memoryGiB,
+    solver,
+    environment: identifyUnavailableEnvironment({ reason: plan.reason, threads, solver, resources, runner })
   };
 }
 
@@ -760,6 +824,12 @@ function dockerCommand(plan, root, cwd, command, args, runRoot) {
     plan.docker,
     "run",
     "--rm",
+    "--memory",
+    `${plan.memoryGiB}g`,
+    "--memory-swap",
+    `${plan.memoryGiB}g`,
+    "--cpus",
+    String(plan.cpus),
     "--user",
     `${process.getuid()}:${process.getgid()}`,
     "--read-only",
@@ -842,6 +912,7 @@ function solveCheckpointValid(job, checkpoint) {
     return false;
   }
   return artifactMatches(join(job.jobDir, "getdp.log"), checkpoint.artifacts?.logs?.getdp)
+    && artifactMatches(join(job.jobDir, SOLVER_CONVERGENCE), checkpoint.artifacts?.convergence)
     && commandOutputs(job).every((path) => artifactMatches(path, checkpoint.artifacts?.outputs?.[relative(job.jobDir, path)]));
 }
 
@@ -874,6 +945,9 @@ function checkpointMatches(checkpoint, job) {
     && checkpoint.excitationContract === job.parameters.excitationContract
     && checkpoint.eventIndex === job.parameters.eventIndex
     && checkpoint.backend === job.plan.kind
+    && checkpoint.solverProfile?.configSha256 === job.plan.solver.configSha256
+    && checkpoint.solverProfile?.name === job.plan.solver.name
+    && stableJson(checkpoint.resourceLimits) === stableJson(job.plan.environment.identity.resources)
     && checkpoint.resultContract === `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`
     && checkpoint.phases && typeof checkpoint.phases === "object"
     && checkpoint.artifacts && typeof checkpoint.artifacts === "object"
@@ -897,6 +971,8 @@ function resetPhase(checkpoint, phase) {
   if (phase === "mesh" || phase === "solve") {
     checkpoint.artifacts.outputs = {};
     checkpoint.artifacts.logs.getdp = null;
+    checkpoint.artifacts.convergence = null;
+    checkpoint.solverConvergence = null;
   }
   checkpoint.artifacts.result = null;
   checkpoint.result = null;
@@ -913,6 +989,7 @@ function removePhaseArtifacts(job, phase) {
       rmSync(path, { force: true });
     }
     rmSync(join(job.jobDir, "getdp.log"), { force: true });
+    rmSync(join(job.jobDir, SOLVER_CONVERGENCE), { force: true });
   }
   rmSync(join(job.jobDir, "result.json"), { force: true });
 }
@@ -927,10 +1004,15 @@ function reuseMesh(job, checkpoint, sourceCheckpointPath, commands) {
     excitationContract,
     meshSizeM
   });
-  assert(source.checkpointVersion === CHECKPOINT_VERSION, "Reusable mesh checkpoint version is invalid");
+  assert(["fem-checkpoint-v5", CHECKPOINT_VERSION].includes(source.checkpointVersion), "Reusable mesh checkpoint version is invalid");
   assert(source.phases?.mesh === "complete" && source.meshQuality === "passed", "Reusable mesh checkpoint is incomplete");
-  assert(source.modelInputHash === job.modelInputHash, "Reusable mesh model input hash does not match the job");
-  assert(source.environmentIdentityHash === job.plan.environment.identityHash, "Reusable mesh solver environment does not match the job");
+  assert(source.artifacts?.inputs?.geometry === sha256File(job.geoWrapperPath), "Reusable mesh geometry input does not match the job");
+  assert(source.backend === job.plan.kind, "Reusable mesh backend does not match the job");
+  if (job.plan.kind === "docker") {
+    assert(source.solverEnvironment?.identity?.image?.digest === job.plan.environment.identity.image.digest, "Reusable mesh Docker image does not match the job");
+  } else {
+    assert(stableJson(source.solverEnvironment?.identity?.tools) === stableJson(job.plan.environment.identity.tools), "Reusable mesh tool binaries do not match the job");
+  }
   assert(stableJson(meshParameters(source.parameters || {})) === stableJson(meshParameters(job.parameters)), "Reusable mesh parameters do not match the job geometry");
   const sourceMesh = join(sourceDir, "motor.msh");
   const sourceLog = join(sourceDir, "gmsh.log");
@@ -977,7 +1059,8 @@ function commandPlan(job) {
     "-solve",
     "Magnetostatics3D",
     "-pos",
-    "MagnetostaticResults"
+    "MagnetostaticResults",
+    ...plan.solver.petscOptions
   ];
   const auditArgs = [
     inputs.meshAuditPath,
@@ -1019,7 +1102,51 @@ function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = f
   const geoWrapperPath = join(jobDir, "geometry-wrapper.geo");
   const proWrapperPath = join(jobDir, "getdp-wrapper.pro");
   const checkpoint = readCheckpoint(jobDir);
+  if (plan.solver.publicationProfile) {
+    assert(parameters.meshSizeM === plan.solver.requiredMeshSizeM,
+      `Solver profile ${plan.solver.name} requires mesh size ${plan.solver.requiredMeshSizeM} m`);
+  }
+  if (plan.solver.mode === "direct") {
+    assert(parameters.meshSizeM >= plan.solver.safeMinimumMeshSizeM, `Direct MUMPS profile is restricted to smoke meshes >= ${plan.solver.safeMinimumMeshSizeM} m`);
+  }
   return { hash, modelInputHash, jobId, jobDir, meshPath, auditPath, parametersPath, geoWrapperPath, proWrapperPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
+}
+
+function parseSolverConvergence(logPath, solver) {
+  const log = readFileSync(logPath, "utf8");
+  const selected = [...log.matchAll(/Info\s+: N: (\d+) - (\S+) (\S+)(?: (\S+))?/g)].at(-1);
+  assert(selected, "GetDP log does not record the selected PETSc KSP/PC");
+  assert(selected[2] === solver.kspType && selected[3] === solver.pcType, `GetDP selected ${selected[2]}/${selected[3]} instead of ${solver.kspType}/${solver.pcType}`);
+  if (solver.factorSolverType) {
+    assert(selected[4] === solver.factorSolverType, `GetDP selected ${selected[4] || "no factor solver"} instead of ${solver.factorSolverType}`);
+  }
+  const reason = [...log.matchAll(/Linear solve (did not converge|converged) due to (\S+) iterations (\d+)/g)].at(-1);
+  assert(reason, "GetDP log does not contain a PETSc convergence reason");
+  assert(reason[1] === "converged" && reason[2].startsWith("CONVERGED_"), `PETSc solve did not converge: ${reason[2]}`);
+  const residual = [...log.matchAll(/(\d+) KSP unpreconditioned resid norm ([\deE+.-]+) true resid norm ([\deE+.-]+) \|\|r\(i\)\|\|\/\|\|b\|\| ([\deE+.-]+)/g)].at(-1);
+  assert(residual, "GetDP log does not contain the final true residual");
+  const memory = [...log.matchAll(/Mem = ([\d.]+)Mb/g)].map((match) => Number(match[1]));
+  const wall = [...log.matchAll(/Wall = ([\deE+.-]+)s/g)].map((match) => Number(match[1]));
+  return {
+    schemaVersion: "edwin-gray-solver-convergence-v1",
+    status: "converged",
+    profile: solver.name,
+    configSha256: solver.configSha256,
+    kspType: selected[2],
+    pcType: selected[3],
+    factorSolverType: solver.factorSolverType || null,
+    reason: reason[2],
+    iterations: Number(reason[3]),
+    finalResidualNorm: Number(residual[3]),
+    finalRelativeResidual: Number(residual[4]),
+    tolerances: solver.mode === "iterative" ? {
+      relative: solver.relativeTolerance,
+      absolute: solver.absoluteTolerance,
+      maximumIterations: solver.maximumIterations
+    } : null,
+    peakGetdpMemoryMiB: memory.length ? Math.max(...memory) : null,
+    runtimeSeconds: wall.length ? Math.max(...wall) : null
+  };
 }
 
 function runJob(job) {
@@ -1043,6 +1170,8 @@ function runJob(job) {
       jobInputHash: hash,
       parameters,
       backend: plan.kind,
+      solverProfile: plan.solver,
+      resourceLimits: plan.environment.identity.resources,
       environmentIdentityHash: plan.environment.identityHash,
       solverEnvironment: plan.environment,
       resultContract: `${RESULT_CONTRACT}@${RESULT_CONTRACT_VERSION}`,
@@ -1056,6 +1185,7 @@ function runJob(job) {
         mesh: null,
         audit: null,
         logs: { gmsh: null, getdp: null },
+        convergence: null,
         outputs: {},
         result: null
       },
@@ -1120,8 +1250,12 @@ function runJob(job) {
       runRoot
     });
     assert(outputsComplete(job), "GetDP completed without producing all declared table outputs");
+    const convergence = parseSolverConvergence(solveRun.log, plan.solver);
+    writeAtomic(join(jobDir, SOLVER_CONVERGENCE), convergence);
     checkpoint.phases.solve = "complete";
     checkpoint.artifacts.logs.getdp = sha256File(solveRun.log);
+    checkpoint.artifacts.convergence = sha256File(join(jobDir, SOLVER_CONVERGENCE));
+    checkpoint.solverConvergence = convergence;
     checkpoint.artifacts.outputs = Object.fromEntries(commandOutputs(job).map((path) => [relative(job.jobDir, path), sha256File(path)]));
     saveCheckpoint(jobDir, checkpoint);
   }
@@ -1139,7 +1273,7 @@ function runJob(job) {
       jobInputHash: hash,
       solver: "getdp",
       backend: plan.kind,
-      artifacts: [job.meshPath, job.auditPath, join(jobDir, "getdp.log"), ...commandOutputs(job)],
+      artifacts: [job.meshPath, job.auditPath, join(jobDir, "getdp.log"), join(jobDir, SOLVER_CONVERGENCE), ...commandOutputs(job)],
       resultSchema: inputs.lutSchemaData,
       symmetryApplied: job.symmetryApplied
     });
@@ -1173,7 +1307,15 @@ function printPlan(inputs, options, host, plan, parameters) {
 function validateOnly(options) {
   const inputs = loadInputs(options);
   validateSchemaValue(inputs.caseData, inputs.schemaData, "case", inputs.schemaData);
-  const asciiPaths = [inputs.casePath, inputs.geoPath, inputs.proPath, inputs.schemaPath, inputs.lutSchemaPath];
+  validateEventMapSymmetryProof(proveEventMapSymmetry({
+    eventMap: inputs.eventMapData,
+    caseData: inputs.caseData,
+    geometryText: inputs.geometryText,
+    eventMapBytes: readFileSync(inputs.eventMapPath),
+    caseBytes: readFileSync(inputs.casePath),
+    geometryBytes: readFileSync(inputs.geoPath)
+  }));
+  const asciiPaths = [inputs.casePath, inputs.geoPath, inputs.proPath, inputs.schemaPath, inputs.lutSchemaPath, inputs.solverConfigPath, SYMMETRY_SCRIPT];
   for (const path of asciiPaths) {
     const bytes = readFileSync(path);
     assert(!bytes.some((byte) => byte > 127), `Non-ASCII byte found in ${path}`);
@@ -1303,6 +1445,7 @@ function aggregateManifest(inputs, manifestPath, options) {
     const checkpoint = readCheckpoint(resolve(runRoot, item.jobId));
     const job = planJob(inputs, item.parameters, options, {
       kind: checkpoint?.backend,
+      solver: checkpoint?.solverProfile,
       environment: checkpoint?.solverEnvironment
     }, runRoot, item.symmetryApplied === true);
     return validateCompleteJob(job, manifestPath, item.result);
@@ -1374,11 +1517,11 @@ function main(argv) {
   }
   const host = detectHost(options);
   if (options["dry-run"]) {
-    const plan = identifyBackend(backendPlan(options, host, { allowUnavailable: true }), options);
+    const plan = identifyBackend(backendPlan(options, host, { allowUnavailable: true }), options, inputs);
     printPlan(inputs, options, host, plan, defaultParameters(inputs.caseData, options));
     return;
   }
-  const plan = identifyBackend(backendPlan(options, host), options);
+  const plan = identifyBackend(backendPlan(options, host), options, inputs);
   const manifestPath = options.manifest ? resolve(options.manifest) : null;
   if (manifestPath) {
     runManifest(inputs, manifestPath, options, plan);
@@ -1398,3 +1541,5 @@ if (entryPath === fileURLToPath(import.meta.url)) {
     process.exitCode = 1;
   }
 }
+
+export { baseInputHash, loadInputs };

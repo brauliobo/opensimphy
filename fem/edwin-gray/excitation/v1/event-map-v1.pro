@@ -3,8 +3,8 @@
 
    Required physical volume IDs are coil-envelope-only regions documented in
    event-map-v1.json. They must not include core material. Each event excites
-   exactly three stator/rotor sectors. Positive IDs are front envelopes (+z),
-   and negative IDs are their congruent back envelopes (-z).
+   exactly three stator/rotor sectors. Positive IDs are front closed-winding
+   envelopes and negative IDs are their opposite-polarity back counterparts.
 */
 
 Group {
@@ -91,5 +91,5 @@ Group {
     EventSourceNegative = Region[{2134, 2110, 2122, 2210, 2202, 2206}];
   EndIf
 
-  DomainWithSourceCurrentDensity = Region[{EventSourcePositive, EventSourceNegative}];
+  DomainWithSourceCurrentPotential = Region[{EventSourcePositive, EventSourceNegative}];
 }

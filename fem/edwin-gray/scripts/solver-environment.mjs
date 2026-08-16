@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { arch, platform } from "node:os";
 
-export const SOLVER_ENVIRONMENT_VERSION = "solver-environment-v1";
+export const SOLVER_ENVIRONMENT_VERSION = "solver-environment-v2";
 export const SOLVER_SOURCE = Object.freeze({
   kind: "debian-snapshot+getdp-official-sha256",
   baseImage: "debian@sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143",
@@ -29,7 +29,7 @@ export function sha256(value) {
 }
 
 export function isImmutableImageReference(image) {
-  return /@sha256:[a-f0-9]{64}$/.test(image || "");
+  return /(?:@sha256:|^sha256:)[a-f0-9]{64}$/.test(image || "");
 }
 
 function inspectDocker(docker, image, template) {
@@ -42,7 +42,7 @@ export function resolveDockerImageReference(docker, requestedImage, { publicatio
     return {
       requestedImage,
       image: requestedImage,
-      digest: requestedImage.slice(requestedImage.indexOf("@") + 1),
+      digest: requestedImage.includes("@") ? requestedImage.slice(requestedImage.indexOf("@") + 1) : requestedImage,
       mutableReference: false
     };
   }
@@ -72,19 +72,22 @@ export function resolveDockerImageReference(docker, requestedImage, { publicatio
   };
 }
 
-export function runnerIdentity({ revision, runScript, environmentModule }) {
+export function runnerIdentity({ revision, runScript, environmentModule, solverConfig }) {
   return {
     revision: revision || "unknown",
     runScriptSha256: sha256(readFileSync(runScript)),
-    environmentModuleSha256: sha256(readFileSync(environmentModule))
+    environmentModuleSha256: sha256(readFileSync(environmentModule)),
+    solverConfigSha256: sha256(readFileSync(solverConfig))
   };
 }
 
-export function identifyHostEnvironment({ gmsh, getdp, threads, runner }) {
+export function identifyHostEnvironment({ gmsh, getdp, threads, solver, resources, runner }) {
   return identify({
     backend: "host",
     architecture: `${platform()}/${arch()}`,
     threadCount: threads,
+    solver,
+    resources,
     tools: {
       gmsh: { sha256: sha256(readFileSync(gmsh)) },
       getdp: { sha256: sha256(readFileSync(getdp)) }
@@ -93,11 +96,13 @@ export function identifyHostEnvironment({ gmsh, getdp, threads, runner }) {
   });
 }
 
-export function identifyDockerEnvironment({ image, threads, runner }) {
+export function identifyDockerEnvironment({ image, threads, solver, resources, runner }) {
   return identify({
     backend: "docker",
     architecture: SOLVER_SOURCE.testedArchitecture,
     threadCount: threads,
+    solver,
+    resources,
     image,
     software: {
       gmsh: SOLVER_SOURCE.gmshPackage,
@@ -108,11 +113,13 @@ export function identifyDockerEnvironment({ image, threads, runner }) {
   });
 }
 
-export function identifyUnavailableEnvironment({ reason, threads, runner }) {
+export function identifyUnavailableEnvironment({ reason, threads, solver, resources, runner }) {
   return identify({
     backend: "unavailable",
     architecture: `${platform()}/${arch()}`,
     threadCount: threads,
+    solver,
+    resources,
     reason,
     runner
   });
@@ -133,6 +140,8 @@ export function environmentManifest(environment, commands) {
     ...environment.identity,
     execution: {
       threadCount: environment.identity.threadCount,
+      resources: environment.identity.resources,
+      solver: environment.identity.solver,
       commands: Object.fromEntries(Object.entries(commands).map(([phase, command]) => [phase, {
         command: command[0],
         options: command.slice(1)

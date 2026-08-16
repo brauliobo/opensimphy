@@ -624,7 +624,7 @@ export const GRAY_PRESETS: Readonly<Record<GrayMotorId, GrayMotorPreset>> = Obje
   },
 })
 
-export const GRAY_PATENT_MODEL_INPUT_HASH = '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06' as const
+export const GRAY_PATENT_MODEL_INPUT_HASH = 'f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91' as const
 
 export const GRAY_ENGINE_PROFILES: Readonly<Record<string, GrayEngineProfile>> = Object.freeze({
   ...Object.fromEntries(GRAY_PROTOTYPE_MOTOR_IDS.map((motorId) => [

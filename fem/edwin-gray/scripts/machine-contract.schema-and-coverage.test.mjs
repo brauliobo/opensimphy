@@ -115,7 +115,7 @@ test("machine-contract IDs and machine identities are unique and cover the curre
   assert.deepEqual(actualIdentities, EXPECTED_ENGINE_IDENTITIES);
 
   const engineSource = readFileSync(ENGINE_PATH, "utf8");
-  const idDeclaration = engineSource.match(/GRAY_MOTOR_IDS = Object\.freeze\(\[([^\]]+)]/);
+  const idDeclaration = engineSource.match(/GRAY_PROTOTYPE_MOTOR_IDS = Object\.freeze\(\[([^\]]+)]/);
   assert.ok(idDeclaration, "current engine ID declaration must remain discoverable");
   const engineIds = [...idDeclaration[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
   assert.deepEqual(new Set(engineIds), new Set(EXPECTED_ENGINE_IDENTITIES.keys()));

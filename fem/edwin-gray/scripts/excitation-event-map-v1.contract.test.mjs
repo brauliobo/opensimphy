@@ -78,10 +78,13 @@ test("excitation v1 requires stable explicit coil-only region identities", () =>
   }
 });
 
-test("every participating winding envelope is front/back balanced", () => {
-  assert.equal(contract.approximation.kind, "homogenized-axial-current-density");
+test("every participating closed winding is front/back balanced", () => {
+  assert.equal(contract.approximation.kind, "closed-surface-equivalent-current-potential");
   assert.equal(contract.approximation.resolvedWinding, false);
-  assert.match(contract.approximation.description, /not resolved/i);
+  assert.match(contract.approximation.fieldDefinition, /J = curl\(T\)/i);
+  assert.match(contract.approximation.closureIdentity, /div\(curl\(T\)\) = 0/i);
+  assert.match(contract.approximation.description, /closed surface winding/i);
+  assert.doesNotMatch(contract.approximation.description, /fallback/i);
 
   for (const event of contract.events) {
     let eventContribution = 0;
@@ -120,8 +123,44 @@ test("GetDP selects only the twelve coil regions belonging to one event", () => 
   assert.deepEqual(coveredIds, requiredIds);
 
   assert.match(formulation, /EventIndex = DefineNumber\[0, Name "Parameters\/Excitation event index", Min 0, Max 26, Step 1];/);
-  assert.match(formulation, /SourceCurrentDensity\[EventSourcePositive] = Vector\[0\., 0\., HomogenizedCurrentDensity];/);
-  assert.match(formulation, /SourceCurrentDensity\[EventSourceNegative] = Vector\[0\., 0\., -HomogenizedCurrentDensity];/);
-  assert.doesNotMatch(formulation, /SourceCurrentDensity\[AllCoils]/);
-  assert.match(getdpMap, /DomainWithSourceCurrentDensity = Region\[\{EventSourcePositive, EventSourceNegative}];/);
+  assert.match(formulation, /EquivalentCurrentPotential = Turns \* DriveCurrentA \/ CoilRadialDepthM;/);
+  assert.match(formulation, /LocalRadialDirection\[\] = Vector\[X\[\], Y\[\], 0\.] \/ Sqrt\[X\[\]\^2 \+ Y\[\]\^2];/);
+  assert.match(formulation, /SourceCurrentPotential\[EventSourcePositive] = EquivalentCurrentPotential \* LocalRadialDirection\[\];/);
+  assert.match(formulation, /SourceCurrentPotential\[EventSourceNegative] = -EquivalentCurrentPotential \* LocalRadialDirection\[\];/);
+  assert.match(formulation, /\[-SourceCurrentPotential\[\], \{Curl a}];/);
+  assert.doesNotMatch(formulation, /SourceCurrentDensity/);
+  assert.match(getdpMap, /DomainWithSourceCurrentPotential = Region\[\{EventSourcePositive, EventSourceNegative}];/);
+});
+
+test("equivalent current potential is closed, divergence-consistent, and exactly NI-scaled", () => {
+  const turns = 100;
+  const current = 10;
+  const radialDepth = 0.008;
+  const axialLength = 0.038;
+  const tangentialWidth = 0.016;
+  const potential = turns * current / radialDepth;
+  const radial = [1, 0, 0];
+  const faces = [
+    { normal: [1, 0, 0], area: tangentialWidth * axialLength },
+    { normal: [-1, 0, 0], area: tangentialWidth * axialLength },
+    { normal: [0, 1, 0], area: radialDepth * axialLength },
+    { normal: [0, -1, 0], area: radialDepth * axialLength },
+    { normal: [0, 0, 1], area: radialDepth * tangentialWidth },
+    { normal: [0, 0, -1], area: radialDepth * tangentialWidth }
+  ];
+  const cross = (left, right) => [
+    left[1] * right[2] - left[2] * right[1],
+    left[2] * right[0] - left[0] * right[2],
+    left[0] * right[1] - left[1] * right[0]
+  ];
+  const integratedSurfaceCurrent = faces.reduce((sum, face) => {
+    const sheet = cross(radial.map((value) => value * potential), face.normal);
+    return sum.map((value, index) => value + sheet[index] * face.area);
+  }, [0, 0, 0]);
+
+  assert.deepEqual(integratedSurfaceCurrent, [0, 0, 0], "a closed envelope has no net current terminal");
+  assert.equal(potential * radialDepth, turns * current, "an axial winding sheet integrates to exactly NI");
+  assert.equal((-potential) * radialDepth, -(turns * current), "opposite polarity preserves exact signed NI scaling");
+  assert.match(formulation, /Div J = Div Curl T = 0/);
+  assert.match(formulation, /In DomainWithSourceCurrentPotential/);
 });

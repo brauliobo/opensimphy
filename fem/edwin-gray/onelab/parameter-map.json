@@ -29,7 +29,7 @@
     { "sourcePath": "materials.core.relativePermeability", "client": "getdp", "symbol": "CoreRelativePermeability", "onelabName": "Parameters/Core relative permeability" },
     { "sourcePath": "excitation.driveCurrentA", "client": "getdp", "symbol": "DriveCurrentA", "onelabName": "Parameters/Drive current (A)" },
     { "sourcePath": "excitation.turns", "client": "getdp", "symbol": "Turns", "onelabName": "Parameters/Turns" },
-    { "sourcePath": "excitation.effectiveCoilCrossSectionM2", "client": "getdp", "symbol": "EffectiveCoilCrossSectionM2", "onelabName": "Parameters/Effective coil cross-section (m^2)" },
+    { "sourcePath": "excitation.currentPotentialThicknessM", "client": "getdp", "symbol": "CoilRadialDepthM", "onelabName": "Parameters/Coil radial depth (m)" },
     { "sourcePath": "excitation.eventIndex", "client": "getdp", "symbol": "EventIndex", "onelabName": "Parameters/Excitation event index" }
   ]
 }

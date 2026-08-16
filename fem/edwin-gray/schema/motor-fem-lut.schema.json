@@ -50,6 +50,20 @@
     },
     "provenance": {
       "$ref": "#/$defs/provenance"
+    },
+    "compatibility": {
+      "$ref": "#/$defs/compatibility"
+    },
+    "publicationProfile": {
+      "$ref": "#/$defs/publicationProfile"
+    },
+    "symmetryProof": {
+      "$ref": "#/$defs/symmetryProof"
+    },
+    "validationPairs": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/validationPair" }
     }
   },
   "$defs": {
@@ -169,6 +183,28 @@
           "items": {
             "$ref": "#/$defs/artifact"
           }
+        },
+        "derivation": {
+          "const": "symmetry-derived-from-job"
+        },
+        "rotationDeg": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 360
+        },
+        "sourceEventIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "sourceJobInputHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sourceArtifactHashes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/artifact" }
         }
       }
     },
@@ -185,6 +221,106 @@
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["machineContractId", "machineRevision", "modelRevision", "topologyIdentity", "turns", "excitation", "modelInputHash"],
+      "properties": {
+        "machineContractId": { "type": "string", "minLength": 1 },
+        "machineRevision": { "type": "integer", "minimum": 1 },
+        "modelRevision": { "type": "integer", "minimum": 1 },
+        "topologyIdentity": { "type": "string", "minLength": 1 },
+        "turns": { "type": "integer", "minimum": 1 },
+        "excitation": { "type": "string", "minLength": 1 },
+        "modelInputHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "publicationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "solvedEventIndices", "independentlySolvedJobCount", "symmetryDerivedEntryCount"],
+      "properties": {
+        "profileId": { "const": "fast-coarse-direct-mumps-v1" },
+        "solvedEventIndices": { "type": "array", "minItems": 6, "uniqueItems": true, "items": { "type": "integer", "minimum": 0, "maximum": 5 } },
+        "independentlySolvedJobCount": { "const": 6 },
+        "symmetryDerivedEntryCount": { "const": 27 }
+      }
+    },
+    "symmetryProof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract", "contractVersion", "status", "transformation", "inputs", "checks", "proofSha256"],
+      "properties": {
+        "contract": { "const": "edwin-gray-event-map-symmetry-proof" },
+        "contractVersion": { "const": 1 },
+        "status": { "const": "complete" },
+        "transformation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eventOffset", "rotationDeg", "representativeEvents", "validationPartners", "classCount", "eventsPerClass"],
+          "properties": {
+            "eventOffset": { "const": 3 },
+            "rotationDeg": { "const": 40 },
+            "representativeEvents": { "const": [0, 1, 2] },
+            "validationPartners": { "const": [3, 4, 5] },
+            "classCount": { "const": 3 },
+            "eventsPerClass": { "const": 9 }
+          }
+        },
+        "inputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eventMapSha256", "caseSha256", "geometrySha256"],
+          "properties": {
+            "eventMapSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "caseSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "geometrySha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          }
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 79,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "status", "evidence"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "status": { "const": "passed" },
+              "evidence": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "proofSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "validationPair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["representativeEvent", "validationEvent", "rotationDeg", "tolerance", "differences", "maximumRelativeDifference", "status", "representativeJobInputHash", "validationJobInputHash", "representativeArtifactHashes", "validationArtifactHashes"],
+      "properties": {
+        "representativeEvent": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "validationEvent": { "type": "integer", "minimum": 3, "maximum": 5 },
+        "rotationDeg": { "const": 40 },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0 },
+        "differences": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["magneticEnergyJ", "coEnergyJ", "inductanceH"],
+          "properties": {
+            "magneticEnergyJ": { "type": "number", "minimum": 0 },
+            "coEnergyJ": { "type": "number", "minimum": 0 },
+            "inductanceH": { "type": "number", "minimum": 0 }
+          }
+        },
+        "maximumRelativeDifference": { "type": "number", "minimum": 0 },
+        "status": { "const": "passed" },
+        "representativeJobInputHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "validationJobInputHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "representativeArtifactHashes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/artifact" } },
+        "validationArtifactHashes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/artifact" } }
       }
     },
     "provenance": {

@@ -18,6 +18,8 @@ export interface GrayFemLookupEntry {
   status: 'complete'
   parameters: {
     rotorAngleDeg: number
+    eventIndex: number
+    excitationContract: string
     meshSizeM: number
     driveCurrentA: number
   }
@@ -39,6 +41,14 @@ export interface GrayFemLookupEntry {
       path: string
       sha256: string
     }[]
+    derivation?: 'symmetry-derived-from-job'
+    rotationDeg?: number
+    sourceEventIndex?: number
+    sourceJobInputHash?: string
+    sourceArtifactHashes?: readonly {
+      path: string
+      sha256: string
+    }[]
   }
 }
 
@@ -51,11 +61,45 @@ export interface GrayFemLookupDocument {
   expectedAnglesDeg: readonly number[]
   entries: readonly GrayFemLookupEntry[]
   compatibility?: GrayFemCompatibility
+  publicationProfile?: {
+    profileId: 'fast-coarse-direct-mumps-v1'
+    solvedEventIndices: readonly number[]
+    independentlySolvedJobCount: 6
+    symmetryDerivedEntryCount: 27
+  }
+  symmetryProof?: GrayFemSymmetryProof
+  validationPairs?: readonly GrayFemValidationPair[]
   provenance: {
     synthetic: false
     limitations: readonly string[]
     source: string
   }
+}
+
+export interface GrayFemSymmetryProof {
+  contract: 'edwin-gray-event-map-symmetry-proof'
+  contractVersion: 1
+  status: 'complete'
+  transformation: {
+    eventOffset: 3
+    rotationDeg: 40
+    representativeEvents: readonly [0, 1, 2]
+    validationPartners: readonly [3, 4, 5]
+    classCount: 3
+    eventsPerClass: 9
+  }
+  inputs: Record<'eventMapSha256' | 'caseSha256' | 'geometrySha256', string>
+  checks: readonly { id: string; status: 'passed'; evidence: string }[]
+  proofSha256: string
+}
+
+export interface GrayFemValidationPair {
+  representativeEvent: number
+  validationEvent: number
+  rotationDeg: 40
+  tolerance: number
+  maximumRelativeDifference: number
+  status: 'passed'
 }
 
 export interface GrayFemCompatibility {
@@ -108,6 +152,8 @@ function parseEntry(value: unknown, index: number): GrayFemLookupEntry {
   assert(entry.parameters.rotorAngleDeg >= 0 && entry.parameters.rotorAngleDeg < 360, `FEM entry ${index} angle is out of range`)
   assert(entry.parameters && Number.isFinite(entry.parameters.meshSizeM) && entry.parameters.meshSizeM > 0, `FEM entry ${index} has no mesh size`)
   assert(entry.parameters && Number.isFinite(entry.parameters.driveCurrentA) && entry.parameters.driveCurrentA > 0, `FEM entry ${index} has no current`)
+  assert(Number.isInteger(entry.parameters.eventIndex) && entry.parameters.eventIndex >= 0 && entry.parameters.eventIndex <= 26, `FEM entry ${index} has no event index`)
+  assert(typeof entry.parameters.excitationContract === 'string' && entry.parameters.excitationContract.length > 0, `FEM entry ${index} has no excitation contract`)
   assert(entry.observables && typeof entry.observables === 'object', `FEM entry ${index} has no observables`)
   assert(entry.provenance?.synthetic === false, `FEM entry ${index} is synthetic or unmarked`)
   assert(entry.provenance.sourceFormat === 'getdp-table' || entry.provenance.sourceFormat === 'solver-json', `FEM entry ${index} source format is invalid`)
@@ -127,6 +173,36 @@ function parseEntry(value: unknown, index: number): GrayFemLookupEntry {
   numberValue(entry.observables.coEnergyJ, 'J', `FEM entry ${index} coEnergyJ`)
   numberValue(entry.observables.inductanceH, 'H', `FEM entry ${index} inductanceH`)
   return entry as GrayFemLookupEntry
+}
+
+function validateSymmetryPublication(document: Partial<GrayFemLookupDocument>, entries: readonly GrayFemLookupEntry[]): void {
+  const derived = entries.filter((entry) => entry.provenance.derivation === 'symmetry-derived-from-job')
+  if (derived.length === 0) {
+    assert(new Set(entries.map((entry) => entry.provenance.jobInputHash)).size === entries.length, 'independently solved FEM entries must have distinct job input hashes')
+    return
+  }
+  const proof = document.symmetryProof
+  assert(proof?.contract === 'edwin-gray-event-map-symmetry-proof' && proof.contractVersion === 1 && proof.status === 'complete', 'FEM symmetry proof contract is invalid')
+  assert(proof.transformation.eventOffset === 3 && proof.transformation.rotationDeg === 40
+    && JSON.stringify(proof.transformation.representativeEvents) === JSON.stringify([0, 1, 2])
+    && JSON.stringify(proof.transformation.validationPartners) === JSON.stringify([3, 4, 5]), 'FEM symmetry proof transformation is invalid')
+  assert(Object.values(proof.inputs).every((hash) => /^[a-f0-9]{64}$/.test(hash)), 'FEM symmetry proof input hashes are invalid')
+  assert(proof.checks.length === 79 && proof.checks.every((check) => check.status === 'passed' && check.id.length > 0 && check.evidence.length > 0), 'FEM symmetry proof checks are incomplete')
+  assert(/^[a-f0-9]{64}$/.test(proof.proofSha256), 'FEM symmetry proof hash is invalid')
+  assert(entries.length === 27 && derived.length === 27, 'FEM fast publication must mark all 27 entries as symmetry-derived')
+  assert(document.publicationProfile?.profileId === 'fast-coarse-direct-mumps-v1'
+    && document.publicationProfile.independentlySolvedJobCount === 6
+    && document.publicationProfile.symmetryDerivedEntryCount === 27
+    && JSON.stringify(document.publicationProfile.solvedEventIndices) === JSON.stringify([0, 1, 2, 3, 4, 5]), 'FEM fast publication profile is incomplete')
+  assert(document.validationPairs?.length === 3
+    && document.validationPairs.every((pair) => pair.status === 'passed' && pair.rotationDeg === 40
+      && pair.maximumRelativeDifference <= pair.tolerance && pair.tolerance <= 0.01), 'FEM symmetry validation pairs are incomplete or outside tolerance')
+  assert(derived.every((entry) => entry.provenance.symmetryApplied === true
+    && entry.provenance.sourceEventIndex === entry.parameters.eventIndex % 3
+    && entry.provenance.rotationDeg === Math.floor(entry.parameters.eventIndex / 3) * 40
+    && entry.provenance.sourceJobInputHash === entry.provenance.jobInputHash
+    && JSON.stringify(entry.provenance.sourceArtifactHashes) === JSON.stringify(entry.provenance.artifacts)), 'FEM symmetry-derived provenance is incomplete')
+  assert(new Set(derived.map((entry) => entry.provenance.sourceJobInputHash)).size === 3, 'FEM symmetry expansion must reference exactly three representative jobs')
 }
 
 export function parseGrayFemLookupDocument(value: unknown): GrayFemLookupDocument {
@@ -153,7 +229,7 @@ export function parseGrayFemLookupDocument(value: unknown): GrayFemLookupDocumen
   assert(entries.every((entry) => entry.parameters.driveCurrentA === first.parameters.driveCurrentA), 'FEM lookup entries must share one reference current')
   assert(entries.every((entry) => entry.provenance.modelInputHash === first.provenance.modelInputHash), 'FEM lookup entries must share one model input hash')
   assert(entries.every((entry) => entry.provenance.solver === first.provenance.solver && entry.provenance.backend === first.provenance.backend), 'FEM lookup entries must share one solver environment')
-  assert(new Set(entries.map((entry) => entry.provenance.jobInputHash)).size === entries.length, 'FEM lookup entries must have distinct job input hashes')
+  validateSymmetryPublication(document, entries)
   const actualAngles = [...entries].map((entry) => entry.parameters.rotorAngleDeg).sort((left, right) => left - right)
   assert(new Set(actualAngles.map((angle) => angle.toFixed(10))).size === actualAngles.length, 'FEM lookup entries contain duplicate angles')
   const declaredAngles = [...document.expectedAnglesDeg].sort((left, right) => left - right)
@@ -168,6 +244,9 @@ export function parseGrayFemLookupDocument(value: unknown): GrayFemLookupDocumen
     expectedAnglesDeg: document.expectedAnglesDeg,
     entries,
     ...(compatibility ? { compatibility } : {}),
+    ...(document.publicationProfile ? { publicationProfile: document.publicationProfile } : {}),
+    ...(document.symmetryProof ? { symmetryProof: document.symmetryProof } : {}),
+    ...(document.validationPairs ? { validationPairs: document.validationPairs } : {}),
     provenance: document.provenance,
   }
 }

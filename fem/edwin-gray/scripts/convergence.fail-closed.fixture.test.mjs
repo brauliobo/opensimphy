@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { evaluateConvergence, expectedSampleDefinitions } from "../convergence/evaluate-convergence.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SPEC_PATH = join(ROOT, "convergence/convergence-spec-v1.json");
+const SPEC_PATH = join(ROOT, "convergence/convergence-spec-v2.json");
 const SPEC_BYTES = readFileSync(SPEC_PATH);
 const SPEC = JSON.parse(SPEC_BYTES);
 const ENVIRONMENT_HASH = sha256("one deterministic solver environment");
@@ -22,12 +22,13 @@ function writeJson(path, value) {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
-function meshText(nodeCount, elementCount, radius) {
+function meshText(nodeCount, elementCount, radius, axialHalfExtent) {
   const tags = Array.from({ length: nodeCount }, (_, index) => index + 1);
   const coordinates = tags.map((tag, index) => {
     const angle = 2 * Math.PI * index / nodeCount;
     const radial = index === 0 ? radius : radius * (0.2 + 0.7 * index / nodeCount);
-    return `${radial * Math.cos(angle)} ${radial * Math.sin(angle)} ${index % 2 ? 0.05 : -0.05}`;
+    const z = index === 0 ? axialHalfExtent : index === 1 ? -axialHalfExtent : (index % 2 ? 0.05 : -0.05);
+    return `${radial * Math.cos(angle)} ${radial * Math.sin(angle)} ${z}`;
   });
   const elements = Array.from({ length: elementCount }, (_, index) => {
     const nodes = [0, 1, 2, 3].map((offset) => tags[(index + offset) % tags.length]);
@@ -74,8 +75,8 @@ function writeSample(root, definition, index) {
     medium: [30, 62],
     fine: [45, 95]
   }[definition.meshLevelId];
-  const radius = SPEC.production.domains.find((item) => item.id === definition.domainId).outerRadiusM;
-  const mesh = meshText(meshCounts[0], meshCounts[1], radius);
+  const domain = SPEC.production.domains.find((item) => item.id === definition.domainId);
+  const mesh = meshText(meshCounts[0], meshCounts[1], domain.outerRadiusM, domain.axialHalfExtentM);
   const meshAudit = `${JSON.stringify({ valid: true, source: { meshSha256: sha256(mesh) } })}\n`;
   const values = observableValues(definition);
   const files = {
@@ -192,7 +193,7 @@ function fixture(t) {
   const samples = expectedSampleDefinitions(SPEC).map((definition, index) => writeSample(root, definition, index));
   const evidence = {
     contract: "edwin-gray-convergence-evidence",
-    contractVersion: 1,
+    contractVersion: 2,
     status: "complete",
     caseId: SPEC.caseId,
     samples
@@ -260,6 +261,21 @@ test("required convergence tuples bind fixed torque and rotated periodicity even
   assert.deepEqual(eventAt(126.6666666667), new Set([9]));
 });
 
+test("v2 responds to v1 failures without loosening numerical acceptance", () => {
+  const v1 = JSON.parse(readFileSync(join(ROOT, "convergence/convergence-spec-v1.json"), "utf8"));
+  assert.match(SPEC.justification, /v1.*rejected/i);
+  assert.deepEqual(SPEC.tolerances.energyCoEnergyRelative, v1.tolerances.energyCoEnergyRelative);
+  assert.deepEqual(SPEC.tolerances.meshObservableRelative, v1.tolerances.meshObservableRelative);
+  assert.deepEqual(SPEC.tolerances.outerDomainObservableRelative, v1.tolerances.outerDomainObservableRelative);
+  assert.deepEqual(SPEC.tolerances.inductanceCurrentRelative, v1.tolerances.inductanceCurrentRelative);
+  assert.deepEqual(SPEC.tolerances.energyCurrentSquaredRelative, v1.tolerances.energyCurrentSquaredRelative);
+  assert.deepEqual(SPEC.tolerances.anglePeriodicityRelative, v1.tolerances.anglePeriodicityRelative);
+  assert.deepEqual(SPEC.tolerances.torqueDerivative, v1.tolerances.torqueDerivative);
+  assert(SPEC.production.meshLevels.every((level, index, levels) => index === 0 || level.featureMeshSizeM < levels[index - 1].featureMeshSizeM));
+  assert(SPEC.production.domains[0].outerRadiusM >= v1.production.domains.at(-1).outerRadiusM);
+  assert(SPEC.production.domains.every((domain) => domain.axialHalfExtentM > 0.12));
+});
+
 test("CLI writes the deterministic convergence-report.json contract", (t) => {
   const context = fixture(t);
   const reportPath = join(context.root, "convergence-report.json");
@@ -271,6 +287,7 @@ test("CLI writes the deterministic convergence-report.json contract", (t) => {
   assert.equal(run.status, 0, run.stderr);
   const report = JSON.parse(readFileSync(reportPath, "utf8"));
   assert.equal(report.contract, "edwin-gray-convergence-report");
+  assert.equal(report.contractVersion, 2);
   assert.equal(report.status, "approved");
   assert.equal(report.specification.sha256, sha256(SPEC_BYTES));
   assert(!JSON.stringify(report).includes(context.root), "report must not contain fixture paths");

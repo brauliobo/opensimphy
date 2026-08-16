@@ -309,9 +309,9 @@
         "kind",
         "driveCurrentA",
         "turns",
-        "currentDensityModel",
-        "effectiveCoilCrossSectionM2",
-        "sourceDirection",
+        "currentPotentialModel",
+        "currentPotentialThicknessM",
+        "sourceDirectionBasis",
         "sourceClass"
       ],
       "properties": {
@@ -334,15 +334,15 @@
           "type": "integer",
           "minimum": 1
         },
-        "currentDensityModel": {
-          "const": "uniform-homogenized-global-z"
+        "currentPotentialModel": {
+          "const": "closed-surface-homogenized-local-radial"
         },
-        "effectiveCoilCrossSectionM2": {
+        "currentPotentialThicknessM": {
           "type": "number",
           "exclusiveMinimum": 0
         },
-        "sourceDirection": {
-          "const": [0, 0, 1]
+        "sourceDirectionBasis": {
+          "const": "local-radial"
         },
         "sourceClass": {
           "const": "assumption"

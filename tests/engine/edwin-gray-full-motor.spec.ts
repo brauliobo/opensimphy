@@ -235,7 +235,7 @@ describe('Edwin Gray continuous full motor teaching model', () => {
       provenance: {
         solver: 'test-solver',
         backend: 'test-backend',
-        inputHash: '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06',
+        inputHash: 'f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91',
       },
       compatibility: {
         machineContractId: 'patent-3890548-illustrative',
@@ -244,7 +244,7 @@ describe('Edwin Gray continuous full motor teaching model', () => {
         topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
         turns: 100,
         excitation: 'impressed-current-magnetostatic',
-        modelInputHash: '6509fee5eb2bb5ecfb856a15461db7de23d7fbcf7514aaee58ceec108aa38c06',
+        modelInputHash: 'f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91',
       },
     }
     const hybrid = evaluateGrayFullMotor({

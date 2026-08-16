@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { validateEventMapSymmetryProof } from "../scripts/event-map-symmetry.mjs";
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -71,7 +72,26 @@ export function validateBundledLut(document, schema) {
   assert(document.entries.every((entry) => entry.parameters.driveCurrentA === first.parameters.driveCurrentA), "LUT entries must share one drive current");
   assert(document.entries.every((entry) => entry.provenance.modelInputHash === first.provenance.modelInputHash), "LUT entries must share one model input hash");
   assert(document.entries.every((entry) => entry.provenance.solver === first.provenance.solver && entry.provenance.backend === first.provenance.backend), "LUT entries must share one solver environment");
-  assert(new Set(document.entries.map((entry) => entry.provenance.jobInputHash)).size === document.entries.length, "LUT entries must have distinct job input hashes");
+  const derived = document.entries.filter((entry) => entry.provenance.derivation === "symmetry-derived-from-job");
+  if (derived.length > 0) {
+    validateEventMapSymmetryProof(document.symmetryProof);
+    assert(document.publicationProfile?.independentlySolvedJobCount === 6, "symmetry-derived LUT requires the six-job publication profile");
+    assert(document.publicationProfile.symmetryDerivedEntryCount === document.entries.length, "symmetry-derived entry count is invalid");
+    assert(document.entries.length === 27 && derived.length === 27, "fast publication must explicitly mark all 27 entries as symmetry-derived");
+    assert(Array.isArray(document.validationPairs) && document.validationPairs.length === 3
+      && document.validationPairs.every((pair) => pair.status === "passed" && pair.maximumRelativeDifference <= pair.tolerance),
+    "symmetry-derived LUT requires three passed validation pairs");
+    assert(derived.every((entry) => entry.provenance.symmetryApplied === true
+      && entry.provenance.sourceEventIndex === entry.parameters.eventIndex % 3
+      && entry.provenance.rotationDeg === Math.floor(entry.parameters.eventIndex / 3) * 40
+      && entry.provenance.sourceJobInputHash === entry.provenance.jobInputHash
+      && stableJson(entry.provenance.sourceArtifactHashes) === stableJson(entry.provenance.artifacts)),
+    "symmetry-derived entry provenance is incomplete");
+    assert(new Set(derived.map((entry) => entry.provenance.sourceJobInputHash)).size === 3, "symmetry expansion must reference exactly three representative jobs");
+    assert(document.compatibility?.modelInputHash === first.provenance.modelInputHash, "compatibility must use the actual approved model hash");
+  } else {
+    assert(new Set(document.entries.map((entry) => entry.provenance.jobInputHash)).size === document.entries.length, "independently solved LUT entries must have distinct job input hashes");
+  }
 }
 
 export function readJson(path, label) {

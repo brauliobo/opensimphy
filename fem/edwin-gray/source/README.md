@@ -56,8 +56,8 @@ assumption records.
 | `geometry.coilRadialMarginM` | assumption | Keeps the homogenized coil shell separated from the core in the illustrative geometry. |
 | `geometry.frontPlaneZM` | assumption | Axial placement is illustrative because the patent does not provide a dimensioned axial layout. |
 | `materials.core.relativePermeability` | assumption | Linear constant permeability is a solver simplification; no material curve is claimed. |
-| `excitation.currentDensityModel` | assumption | Homogenized source replaces unresolved turns and the capacitor discharge circuit. |
-| `excitation.effectiveCoilCrossSectionM2` | assumption | Required only to convert the declared current and turns into a source density. |
+| `excitation.currentPotentialModel` | assumption | A compactly supported local-radial current potential represents each selected winding as a closed surface current through `J = curl(T)`. |
+| `excitation.currentPotentialThicknessM` | derived | Equal to `geometry.coilRadialDepthM`, so integrating the winding sheet gives exactly turns times drive current. |
 | `sweep.symmetry.declared` | assumption | Exact symmetry is disabled by default; no reduction is applied unless explicitly declared. |
 | `results` | not-run | Generated solver artifacts are excluded from the source workspace; no browser LUT is bundled. |
 

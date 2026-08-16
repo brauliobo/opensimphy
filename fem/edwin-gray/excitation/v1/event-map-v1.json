@@ -5,10 +5,13 @@
   "angleStep": { "numeratorDeg": 40, "denominator": 3 },
   "scheduleSource": "browser buildGrayEventSchedule patent-described/patent-derived topology",
   "approximation": {
-    "kind": "homogenized-axial-current-density",
+    "kind": "closed-surface-equivalent-current-potential",
     "resolvedWinding": false,
-    "description": "Each selected coil envelope uses equal-magnitude opposing axial current density in congruent front/back regions; end turns and conductor paths are not resolved.",
-    "balanceRequirement": "Every selected stator or rotor front region must have one equal-volume back counterpart with the opposite currentContribution."
+    "fieldDefinition": "T = polarity * turns * driveCurrentA / coilRadialDepthM * e_r inside each selected envelope and T = 0 outside; the impressed distributional current is J = curl(T).",
+    "description": "Each selected envelope represents a closed surface winding. The jump of compactly supported radial T produces axial winding sheets and their tangential return sheets on the same closed boundary.",
+    "closureIdentity": "div(J) = div(curl(T)) = 0 distributionally, and the boundary of every selected envelope is closed.",
+    "scalingRequirement": "Integrating the axial surface-current sheet across the coil radial depth gives exactly polarity * turns * driveCurrentA ampere-turns.",
+    "balanceRequirement": "Every selected stator or rotor front winding must have one congruent back winding with opposite currentContribution."
   },
   "requiredPhysicalRegionContract": {
     "dimension": 3,

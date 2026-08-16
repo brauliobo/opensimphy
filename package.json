@@ -25,7 +25,8 @@
     "e2e": "playwright test",
     "e2e:chromium": "playwright test --project=chromium",
     "e2e:pwa": "npm run build && playwright test --config=playwright.pwa.config.ts",
-    "fem:validate": "node --test --test-concurrency=4 fem/edwin-gray/ci/validate-lut.test.mjs && node fem/edwin-gray/ci/validate.mjs",
+    "fem:test": "node --test --test-concurrency=4 fem/edwin-gray/ci/*.test.mjs fem/edwin-gray/scripts/*.test.mjs fem/edwin-gray/convergence/*.test.mjs",
+    "fem:validate": "npm run fem:test && node fem/edwin-gray/ci/validate.mjs",
     "fem:test:runner": "node --test --test-concurrency=4 fem/edwin-gray/scripts/run.integrity.test.mjs",
     "verify": "npm run data:generate && npm run data:generate:fiddles && npm run data:generate:fiddle-runtime && npm run typecheck && npm run test && npm run build && npm run check:routes && npm run check:awesome-physics"
   },

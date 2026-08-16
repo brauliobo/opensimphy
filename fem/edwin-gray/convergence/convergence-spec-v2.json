@@ -1,0 +1,105 @@
+{
+  "contract": "edwin-gray-convergence-spec",
+  "contractVersion": 2,
+  "caseId": "patent-3890548-illustrative",
+  "evidenceContract": "edwin-gray-convergence-evidence@2",
+  "reportContract": "edwin-gray-convergence-report@2",
+  "resultContract": "edwin-gray-browser-result@1",
+  "checkpointVersion": "fem-checkpoint-v6",
+  "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+  "sourceFormulation": "closed-surface-equivalent-current-potential",
+  "justification": "v1 was rejected because its fixed 2 mm feature field masked air-mesh refinement and its disconnected axial source retained 2.63 percent base-to-far sensitivity. v2 couples feature and air refinement, uses a distributionally divergence-free closed source, and starts at the v1 far radius with proportionally expanded axial bounds.",
+  "production": {
+    "ciSmoke": false,
+    "meshLevels": [
+      {
+        "id": "coarse",
+        "meshSizeM": 0.025,
+        "featureMeshSizeM": 0.002
+      },
+      {
+        "id": "medium",
+        "meshSizeM": 0.022,
+        "featureMeshSizeM": 0.00176
+      },
+      {
+        "id": "fine",
+        "meshSizeM": 0.019,
+        "featureMeshSizeM": 0.00152
+      }
+    ],
+    "domains": [
+      {
+        "id": "base",
+        "outerRadiusM": 0.21,
+        "axialHalfExtentM": 0.18
+      },
+      {
+        "id": "expanded",
+        "outerRadiusM": 0.28,
+        "axialHalfExtentM": 0.24
+      },
+      {
+        "id": "far",
+        "outerRadiusM": 0.35,
+        "axialHalfExtentM": 0.3
+      }
+    ],
+    "baseDomainId": "base",
+    "productionCurrentA": 10,
+    "linearityAuditCurrentA": 1,
+    "convergenceEventIndex": 0,
+    "periodicityEventIndexOffset": 9,
+    "representativeAngles": [
+      {
+        "role": "aligned",
+        "angleDeg": 0
+      },
+      {
+        "role": "transition",
+        "angleDeg": 6.6666666667
+      },
+      {
+        "role": "unaligned",
+        "angleDeg": 13.3333333333
+      }
+    ],
+    "torqueAnglesDeg": [
+      0,
+      3.3333333333,
+      6.6666666667,
+      10,
+      13.3333333333
+    ],
+    "periodicityPairsDeg": [
+      [0, 120],
+      [6.6666666667, 126.6666666667],
+      [13.3333333333, 133.3333333333]
+    ]
+  },
+  "tolerances": {
+    "meshMetrics": {
+      "outerRadiusRelative": 0.005,
+      "axialHalfExtentRelative": 0.005,
+      "minimumNodeGrowthRatio": 1.05,
+      "minimumElementGrowthRatio": 1.05,
+      "maximumElementNodeRatioDrift": 0.35
+    },
+    "energyCoEnergyRelative": 0.01,
+    "meshObservableRelative": {
+      "coarseToFine": 0.02,
+      "mediumToFine": 0.01
+    },
+    "outerDomainObservableRelative": {
+      "baseToFar": 0.015,
+      "expandedToFar": 0.005
+    },
+    "inductanceCurrentRelative": 0.01,
+    "energyCurrentSquaredRelative": 0.01,
+    "anglePeriodicityRelative": 0.01,
+    "torqueDerivative": {
+      "normalizedLinf": 0.08,
+      "absoluteFloorNm": 1e-9
+    }
+  }
+}

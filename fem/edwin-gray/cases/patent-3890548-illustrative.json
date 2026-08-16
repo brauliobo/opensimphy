@@ -84,9 +84,9 @@
     "kind": "impressed-current-magnetostatic",
     "driveCurrentA": 1,
     "turns": 100,
-    "currentDensityModel": "uniform-homogenized-global-z",
-    "effectiveCoilCrossSectionM2": 0.0001,
-    "sourceDirection": [0, 0, 1],
+    "currentPotentialModel": "closed-surface-homogenized-local-radial",
+    "currentPotentialThicknessM": 0.008,
+    "sourceDirectionBasis": "local-radial",
     "sourceClass": "assumption"
   },
   "sweep": {
@@ -262,16 +262,16 @@
         "note": "A constant linear permeability is used only to keep the basic solve reproducible."
       },
       {
-        "path": "excitation.currentDensityModel",
+        "path": "excitation.currentPotentialModel",
         "status": "assumption",
         "evidenceRefs": ["source/README.md:field-map"],
-        "note": "The source is homogenized and does not resolve turns, commutators, or capacitor pulses."
+        "note": "The compactly supported current potential represents a closed surface winding through J = curl(T); it does not resolve conductors, commutators, or capacitor pulses."
       },
       {
-        "path": "excitation.effectiveCoilCrossSectionM2",
-        "status": "assumption",
-        "evidenceRefs": ["source/README.md:field-map"],
-        "note": "This proxy converts current and turns into a uniform source density."
+        "path": "excitation.currentPotentialThicknessM",
+        "status": "derived",
+        "evidenceRefs": ["geometry.coilRadialDepthM", "source/README.md:field-map"],
+        "note": "The potential thickness equals the declared radial envelope depth, making the integrated winding sheet exactly turns times current."
       },
       {
         "path": "sweep.symmetry.declared",

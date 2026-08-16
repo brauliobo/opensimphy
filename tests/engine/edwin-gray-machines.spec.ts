@@ -33,7 +33,13 @@ function patentLookup() {
     entries: [0, 13.3333333333].map((rotorAngleDeg, index) => ({
       entryId: `entry-${index}`,
       status: 'complete',
-      parameters: { rotorAngleDeg, meshSizeM: 0.025, driveCurrentA: 1 },
+      parameters: {
+        rotorAngleDeg,
+        eventIndex: index,
+        excitationContract: 'edwin-gray-fem-excitation-event-map/v1',
+        meshSizeM: 0.025,
+        driveCurrentA: 1,
+      },
       observables: {
         magneticEnergyJ: { value: 0.1, unit: 'J' },
         coEnergyJ: { value: 0.1, unit: 'J' },
@@ -90,7 +96,7 @@ describe('Edwin Gray machine contracts', () => {
       source: 'fem-lookup',
       caseId: GRAY_PATENT_MACHINE_ID,
     })
-    await expect(loadGrayMagneticLookup('edwin-gray-purple', fetcher)).rejects.toThrow(/machine contract ID mismatch/)
+    expect(() => loadGrayMagneticLookup('edwin-gray-purple', fetcher)).toThrow(/model identity is unavailable/)
   })
 
   it.each([

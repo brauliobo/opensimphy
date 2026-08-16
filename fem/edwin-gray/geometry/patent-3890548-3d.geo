@@ -287,7 +287,9 @@ Physical Surface("OuterBoundary", 300) = {outerBoundary[]};
 Mesh.MeshSizeFromPoints = 0;
 Mesh.MeshSizeFromCurvature = 0;
 Mesh.MeshSizeExtendFromBoundary = 0;
-localFeatureSize = FeatureMeshSizeM;
+// Couple local and far-field refinement so every declared mesh level resolves
+// material features more finely instead of being masked by one fixed halo.
+localFeatureSize = Min(FeatureMeshSizeM, 0.08 * MeshSizeValue);
 localAirSize = MeshSizeValue;
 If(SmokeMesh)
   localFeatureSize = 0.005;

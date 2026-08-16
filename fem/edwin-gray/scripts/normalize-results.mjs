@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 export const RESULT_CONTRACT = "edwin-gray-browser-result";
 export const RESULT_CONTRACT_VERSION = 1;
 export const LUT_CONTRACT = "motor-fem-lut-v1";
-const CHECKPOINT_VERSION = "fem-checkpoint-v5";
+const CHECKPOINT_VERSION = "fem-checkpoint-v6";
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 
@@ -207,6 +207,14 @@ function validateResultSchema(result, schema) {
     assert(SHA256_PATTERN.test(entry.provenance.jobInputHash || ""), "normalized job input hash is invalid");
     assert(entry.provenance.inputHash === undefined || entry.provenance.inputHash === entry.provenance.jobInputHash, "normalized legacy input hash must match the job input hash");
     assert(Array.isArray(entry.provenance.artifacts) && entry.provenance.artifacts.length > 0, "normalized artifact hashes are missing");
+    if (entry.provenance.derivation !== undefined) {
+      assert(entry.provenance.derivation === "symmetry-derived-from-job", "normalized symmetry derivation is invalid");
+      assert(entry.provenance.symmetryApplied === true, "normalized symmetry-derived entry must mark symmetry applied");
+      assert(Number.isFinite(entry.provenance.rotationDeg), "normalized symmetry rotation is invalid");
+      assert(Number.isInteger(entry.provenance.sourceEventIndex), "normalized symmetry source event is invalid");
+      assert(SHA256_PATTERN.test(entry.provenance.sourceJobInputHash || ""), "normalized symmetry source job hash is invalid");
+      assert(Array.isArray(entry.provenance.sourceArtifactHashes) && entry.provenance.sourceArtifactHashes.length > 0, "normalized symmetry source artifact hashes are missing");
+    }
     for (const observable of ["magneticEnergyJ", "coEnergyJ", "inductanceH"]) {
       assert(Number.isFinite(entry.observables[observable]?.value), `${observable} is missing from normalized output`);
     }
@@ -384,7 +392,7 @@ export function normalizeResults({
       synthetic: false,
       limitations: [
         "Linear isotropic magnetostatic snapshot only",
-        "Homogenized impressed-current source; no capacitor discharge transient",
+        "Closed-surface homogenized equivalent current-potential source; no capacitor discharge transient",
         "Inductance is the magnetic-energy proxy 2 W / I^2",
         "No motion, torque, saturation, hysteresis, losses, or energy-recovery model"
       ],

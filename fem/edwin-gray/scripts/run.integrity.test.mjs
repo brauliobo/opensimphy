@@ -25,7 +25,10 @@ function writeExecutable(path, source) {
 function fixture(t) {
   const temporary = mkdtempSync(join(tmpdir(), "edwin-gray-runner-"));
   const root = join(temporary, "edwin-gray");
-  cpSync(SOURCE_ROOT, root, { recursive: true });
+  cpSync(SOURCE_ROOT, root, {
+    recursive: true,
+    filter: (source) => source === SOURCE_ROOT || !source.startsWith(join(SOURCE_ROOT, "runs"))
+  });
   t.after(() => rmSync(temporary, { recursive: true, force: true }));
 
   const casePath = join(root, "cases/patent-3890548-illustrative.json");
@@ -59,9 +62,18 @@ import { appendFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 appendFileSync(process.env.GETDP_COUNT, "run\\n");
 if (existsSync(process.env.GETDP_NO_OUTPUT)) process.exit(0);
+console.log("Info    : N: 100 - preonly lu mumps");
+console.log("  0 KSP unpreconditioned resid norm 1.0e+00 true resid norm 1.0e+00 ||r(i)||/||b|| 1.0e+00");
 writeFileSync(join(process.cwd(), "observables.dat"), "MagneticEnergyJ 1.25\\n");
 writeFileSync(join(process.cwd(), "coenergy.dat"), "CoEnergyJ 1.25\\n");
 writeFileSync(join(process.cwd(), "inductance.dat"), "InductanceH 2.5\\n");
+if (existsSync(process.env.GETDP_NONCONVERGE)) {
+  console.log("Linear solve did not converge due to DIVERGED_ITS iterations 750");
+  process.exit(0);
+}
+console.log("  12 KSP unpreconditioned resid norm 5.0e-04 true resid norm 5.0e-04 ||r(i)||/||b|| 5.0e-04");
+console.log("Linear solve converged due to CONVERGED_RTOL iterations 12");
+console.log("Info    : (Wall = 2.5s, CPU = 2.0s, Mem = 64.0Mb)");
 `);
   writeExecutable(audit, `
 import { createHash } from "node:crypto";
@@ -80,6 +92,7 @@ if (!valid) process.exit(1);
     GMSH_COUNT: join(counters, "gmsh"),
     GETDP_COUNT: join(counters, "getdp"),
     GETDP_NO_OUTPUT: join(temporary, "getdp-no-output"),
+    GETDP_NONCONVERGE: join(temporary, "getdp-nonconverge"),
     AUDIT_REJECT: join(temporary, "audit-reject")
   };
   return { root, runs, manifest, output, gmsh, getdp, audit, environment };
@@ -256,6 +269,44 @@ test("runner rejects a quantitative mesh-audit failure before GetDP", (t) => {
   assert.equal(count(context.environment.GETDP_COUNT), 0);
 });
 
+test("runner rejects PETSc nonconvergence even when GetDP exits zero", (t) => {
+  const context = fixture(t);
+  writeFileSync(context.environment.GETDP_NONCONVERGE, "reject\n", "utf8");
+  const result = run(
+    context,
+    "--resume",
+    "--backend", "host",
+    "--gmsh-bin", context.gmsh,
+    "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
+    "--run-dir", context.runs
+  );
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /PETSc solve did not converge: DIVERGED_ITS/);
+});
+
+test("direct MUMPS publication is explicit and restricted to the accepted coarse mesh", (t) => {
+  const context = fixture(t);
+  const common = [
+    "--dry-run",
+    "--backend", "host",
+    "--gmsh-bin", context.gmsh,
+    "--getdp-bin", context.getdp,
+    "--solver-profile", "direct-mumps-publication-v1"
+  ];
+  let result = run(context, ...common);
+  assert.equal(result.status, 0, result.stderr);
+  result = run(context, ...common, "--mesh-size", "0.025");
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /-pc_factor_mat_solver_type/);
+  result = run(context, ...common, "--mesh-size", "0.019");
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /requires mesh size 0.025 m/);
+  result = run(context, ...common, "--mesh-size", "0.025", "--publication");
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /memory-bounded Docker backend/);
+});
+
 test("aggregation rejects an incomplete declared manifest slice", (t) => {
   const context = fixture(t);
   const manifest = generateAndRun(context);
@@ -287,7 +338,7 @@ test("single-job overrides reuse only an attested geometry-identical mesh", (t) 
     "--run-dir", context.runs,
     "--rotor-angle", "6.6666666667",
     "--event-index", "0",
-    "--mesh-size", "0.01875"
+    "--mesh-size", "0.025"
   ];
   const production = run(context, ...common, "--drive-current", "10");
   assert.equal(production.status, 0, production.stderr);
