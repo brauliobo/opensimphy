@@ -135,6 +135,30 @@
 
 .gray-fem-state strong { color: var(--amber); text-transform: uppercase; }
 .gray-fem-state[data-state='ready'] strong { color: var(--green); }
+.gray-fem-state[data-state='active'] strong { color: var(--cyan); }
+
+.gray-workbench label.gray-calibration-ack {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--amber);
+  line-height: 1.45;
+}
+
+.gray-calibration-boundary {
+  display: grid;
+  padding: 0.8rem;
+  gap: 0.35rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  border-left: 3px dashed var(--amber);
+  background: rgb(230 184 92 / 5%);
+}
+
+.gray-calibration-boundary strong { color: var(--amber); }
 
 .gray-shared-timeline {
   display: grid;
@@ -493,6 +517,7 @@
   }
 
   .gray-status,
+  .gray-calibration-boundary,
   .gray-snapshot-comparison { border-left-style: solid; }
   .gray-evidence-label { border-color: CanvasText; border-left-style: solid; }
   .gray-assumption-label { border-color: CanvasText; border-left-style: dashed; }

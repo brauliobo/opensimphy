@@ -20,7 +20,7 @@ export const GRAY_WORKBENCH_IMPLEMENTATION_REVISION = GRAY_MACHINE_ARTIFACT.meta
 export const GRAY_WORKBENCH_MODEL_REVISION = GRAY_MACHINE_ARTIFACT.metadata.revisions.workbenchModel
 export const GRAY_WORKBENCH_COMPATIBILITY_KEY = GRAY_MACHINE_ARTIFACT.metadata.modelKey
 
-export type GrayMagneticModelSelection = 'illustrative-surrogate' | 'fem-lookup'
+export type GrayMagneticModelSelection = 'illustrative-surrogate' | 'fem-lookup' | 'limited-fem-calibration'
 
 export interface GrayWorkbenchInputState {
   revision: typeof GRAY_WORKBENCH_INPUT_REVISION
@@ -146,7 +146,7 @@ export function parseGrayWorkbenchQuery(query: Record<string, unknown>): GrayWor
     ),
     magneticModel: enumValue(
       query.grayMagnetic,
-      ['illustrative-surrogate', 'fem-lookup'],
+      ['illustrative-surrogate', 'fem-lookup', 'limited-fem-calibration'],
       defaults.magneticModel,
     ),
     revolutions: integer(query.grayRevolutions, defaults.revolutions, 1, 100),
@@ -195,8 +195,12 @@ export function grayFullMotorInput(
   input: GrayWorkbenchInputState,
   magneticLookup?: GrayMagneticLookup,
 ): GrayFullMotorInput {
-  if (input.magneticModel === 'fem-lookup' && !magneticLookup) {
-    throw new Error('A compatible ready FEM lookup is required when FEM magnetic mode is selected')
+  if (input.magneticModel !== 'illustrative-surrogate' && !magneticLookup) {
+    const label = input.magneticModel === 'fem-lookup' ? 'FEM' : 'limited FEM calibration'
+    throw new Error(`A compatible ready ${label} lookup is required when that magnetic mode is selected`)
+  }
+  if (magneticLookup && magneticLookup.source !== input.magneticModel) {
+    throw new Error(`The selected magnetic model ${input.magneticModel} does not match lookup source ${magneticLookup.source}`)
   }
   const incompatibility = magneticLookup ? grayFemCompatibilityReason(input, magneticLookup) : null
   if (incompatibility) throw new Error(incompatibility)
@@ -252,6 +256,7 @@ export function graySubmittedInputIdentity(
     contract: serializeGrayWorkbenchInput(input),
     lookup: magneticLookup
       ? {
+          source: magneticLookup.source,
           caseId: magneticLookup.caseId,
           compatibility: magneticLookup.compatibility,
           inputHash: magneticLookup.provenance.inputHash,

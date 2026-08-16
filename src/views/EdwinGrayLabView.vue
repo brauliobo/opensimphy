@@ -19,7 +19,16 @@ import {
 } from '../edwin-gray/edwinGrayGuide'
 import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
 import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
-import { GRAY_MACHINE_CONTRACTS, GRAY_MACHINE_IDS } from '../edwin-gray/edwinGrayMachines'
+import {
+  GRAY_CALIBRATION_TRANSFER_PROXY,
+  loadGrayCalibrationMagneticLookup,
+  type GrayCalibrationMagneticLookup,
+} from '../edwin-gray/edwinGrayCalibration'
+import {
+  GRAY_MACHINE_CONTRACTS,
+  GRAY_MACHINE_IDS,
+  GRAY_PATENT_MACHINE_ID,
+} from '../edwin-gray/edwinGrayMachines'
 import {
   evaluateGrayCopClaim,
   GRAY_COP_CLAIM_SCENARIOS,
@@ -81,13 +90,19 @@ const motionNotice = ref('')
 const femStatus = ref<'unavailable' | 'loading' | 'invalid' | 'ready'>('unavailable')
 const femMessage = ref('The selected machine contract has no compatible FEM lookup.')
 const femLookup = ref<GrayMagneticLookup | null>(null)
+const calibrationStatus = ref<'absent' | 'loading' | 'invalid' | 'ready'>('absent')
+const calibrationMessage = ref('The limited FEM calibration pack has not been loaded.')
+const calibrationLookup = ref<GrayCalibrationMagneticLookup | null>(null)
+const calibrationAcknowledged = ref(false)
 const snapshots = ref<readonly WorkbenchSnapshotV1[]>([])
 const selectedSnapshotTimes = ref<string[]>([])
 const snapshotMessage = ref('')
 const snapshotError = ref('')
 let abortController: AbortController | null = null
 let femAbortController: AbortController | null = null
+let calibrationAbortController: AbortController | null = null
 let femRequestToken = 0
+let calibrationRequestToken = 0
 let timelineTimer: ReturnType<typeof setInterval> | null = null
 const videoActivated = ref(false)
 const originalStarterEvidence = grayEvidenceRecord('gray-caption-original-500-rpm-starter')
@@ -116,8 +131,25 @@ const snapshotComparison = computed(() => selectedSnapshots.value.length === 2
   : null)
 const currentInputIdentity = computed(() => graySubmittedInputIdentity(
   input.value,
-  input.value.magneticModel === 'fem-lookup' ? femLookup.value ?? undefined : undefined,
+  selectedMagneticLookup(),
 ))
+const calibrationDisplayStatus = computed(() => calibrationStatus.value === 'ready'
+  && input.value.magneticModel === 'limited-fem-calibration'
+  && calibrationAcknowledged.value
+  ? 'active'
+  : calibrationStatus.value)
+const calibrationAvailable = computed(() => input.value.machineContractId === GRAY_PATENT_MACHINE_ID)
+const calibrationRunBlocked = computed(() => input.value.magneticModel === 'limited-fem-calibration'
+  && (!calibrationAcknowledged.value || calibrationStatus.value !== 'ready'))
+
+function selectedMagneticLookup(): GrayMagneticLookup | undefined {
+  if (input.value.magneticModel === 'fem-lookup') return femLookup.value ?? undefined
+  if (input.value.magneticModel === 'limited-fem-calibration'
+    && calibrationAcknowledged.value && calibrationStatus.value === 'ready') {
+    return calibrationLookup.value ?? undefined
+  }
+  return undefined
+}
 const canSaveSnapshot = computed(() => Boolean(result.value)
   && !stale.value
   && resultInputIdentity.value === currentInputIdentity.value)
@@ -201,7 +233,10 @@ async function runWorkbench(): Promise<void> {
   const controller = new AbortController()
   abortController = controller
   try {
-    const lookup = input.value.magneticModel === 'fem-lookup' ? femLookup.value ?? undefined : undefined
+    if (input.value.magneticModel === 'limited-fem-calibration' && !calibrationAcknowledged.value) {
+      throw new Error('Acknowledge the limited, non-validation calibration boundary before running it.')
+    }
+    const lookup = selectedMagneticLookup()
     const submitted = createGraySubmittedInput(input.value, lookup)
     const completed = await runGrayInWorker(submitted.engineInput, {
       signal: controller.signal,
@@ -234,6 +269,50 @@ async function runWorkbench(): Promise<void> {
   } finally {
     if (abortController === controller) abortController = null
   }
+}
+
+async function refreshCalibration(): Promise<void> {
+  calibrationAbortController?.abort()
+  const requestToken = ++calibrationRequestToken
+  const requestedMachineContractId = input.value.machineContractId
+  const controller = new AbortController()
+  calibrationAbortController = controller
+  if (requestedMachineContractId !== GRAY_PATENT_MACHINE_ID) {
+    calibrationLookup.value = null
+    calibrationStatus.value = 'absent'
+    calibrationMessage.value = 'Limited FEM calibration is offered only for the patent illustrative machine.'
+    if (calibrationAbortController === controller) calibrationAbortController = null
+    return
+  }
+  calibrationStatus.value = 'loading'
+  calibrationMessage.value = 'Loading and strictly validating the separate limited calibration contract.'
+  try {
+    const lookup = await loadGrayCalibrationMagneticLookup(requestedMachineContractId, fetch, controller.signal)
+    if (controller.signal.aborted || requestToken !== calibrationRequestToken
+      || input.value.machineContractId !== requestedMachineContractId) return
+    const incompatibility = grayFemCompatibilityReason(input.value, lookup)
+    calibrationLookup.value = lookup
+    if (incompatibility) {
+      calibrationStatus.value = 'invalid'
+      calibrationMessage.value = incompatibility.replace('FEM disabled:', 'Limited calibration invalid:')
+      return
+    }
+    calibrationStatus.value = 'ready'
+    calibrationMessage.value = '27-point L/W/W′ relation ready. Class 0 transfer proxy is measured; classes 1–2 transfer it by assumption.'
+  } catch (reason) {
+    if (controller.signal.aborted || requestToken !== calibrationRequestToken) return
+    const message = reason instanceof Error ? reason.message : String(reason)
+    calibrationLookup.value = null
+    calibrationStatus.value = /request failed with 404/.test(message) ? 'absent' : 'invalid'
+    calibrationMessage.value = message
+  } finally {
+    if (calibrationAbortController === controller) calibrationAbortController = null
+  }
+}
+
+function refreshMagneticSources(): void {
+  void refreshFem()
+  void refreshCalibration()
 }
 
 async function refreshFem(): Promise<void> {
@@ -280,7 +359,8 @@ async function refreshFem(): Promise<void> {
 function selectMachine(): void {
   const machineContractId = input.value.machineContractId
   input.value = defaultGrayWorkbenchInput(machineContractId)
-  void refreshFem()
+  calibrationAcknowledged.value = false
+  refreshMagneticSources()
 }
 
 async function resetWorkbench(): Promise<void> {
@@ -298,7 +378,8 @@ async function resetWorkbench(): Promise<void> {
   runStatus.value = 'idle'
   runProgress.value = 0
   runStage.value = 'Reset to canonical defaults'
-  void refreshFem()
+  calibrationAcknowledged.value = false
+  refreshMagneticSources()
   await runWorkbench()
 }
 
@@ -361,6 +442,13 @@ watch(input, (next) => {
       if (next.magneticModel === 'fem-lookup') next.magneticModel = 'illustrative-surrogate'
     }
   }
+  if (calibrationLookup.value) {
+    const incompatibility = grayFemCompatibilityReason(next, calibrationLookup.value)
+    if (incompatibility) {
+      calibrationStatus.value = 'invalid'
+      calibrationMessage.value = incompatibility.replace('FEM disabled:', 'Limited calibration invalid:')
+    }
+  }
   if (revisionError.value) return
   const serialized = serializeGrayWorkbenchInput(next)
   const alreadyCanonical = GRAY_WORKBENCH_QUERY_KEYS.every((key) => route.query[key] === serialized[key])
@@ -378,7 +466,7 @@ watch(() => route.query, (query) => {
     if (JSON.stringify(serializeGrayWorkbenchInput(parsed))
       !== JSON.stringify(serializeGrayWorkbenchInput(input.value))) {
       input.value = parsed
-      void refreshFem()
+      refreshMagneticSources()
     }
   } catch (reason) {
     revisionError.value = reason instanceof GrayWorkbenchRevisionError
@@ -400,13 +488,14 @@ onMounted(async () => {
   } catch (reason) {
     snapshotError.value = reason instanceof Error ? reason.message : String(reason)
   }
-  await refreshFem()
+  await Promise.all([refreshFem(), refreshCalibration()])
   await runWorkbench()
 })
 
 onBeforeUnmount(() => {
   cancelRun()
   femAbortController?.abort()
+  calibrationAbortController?.abort()
   stopTimeline()
 })
 </script>
@@ -514,12 +603,42 @@ onBeforeUnmount(() => {
           select(v-model="input.magneticModel" data-testid="gray-magnetic-model")
             option(value="illustrative-surrogate") Illustrative lumped surrogate
             option(value="fem-lookup" :disabled="femStatus !== 'ready'") Compatible FEM lookup
+            option(
+              v-if="calibrationAvailable"
+              value="limited-fem-calibration"
+              :disabled="calibrationStatus !== 'ready' || !calibrationAcknowledged"
+            ) Limited FEM calibration (exploratory)
         p.gray-fem-state(:data-state="femStatus" role="status" data-testid="gray-fem-runtime-status")
           strong {{ femStatus }}
-          |  / {{ femMessage }}
+          |  / Production FEM: {{ femMessage }}
         button(type="button" :disabled="!grayFemCanBeRequested(input) || femStatus === 'loading'" @click="refreshFem") Recheck FEM lookup
+        template(v-if="calibrationAvailable")
+          label.gray-calibration-ack
+            input(
+              v-model="calibrationAcknowledged"
+              type="checkbox"
+              data-testid="gray-calibration-acknowledgement"
+            )
+            span I acknowledge this is limited illustrative calibration, not physical validation.
+          p.gray-fem-state(
+            :data-state="calibrationDisplayStatus"
+            role="status"
+            data-testid="gray-calibration-runtime-status"
+          )
+            strong {{ calibrationDisplayStatus }}
+            |  / {{ calibrationMessage }}
+          button(
+            type="button"
+            :disabled="calibrationStatus === 'loading'"
+            data-testid="gray-calibration-recheck"
+            @click="refreshCalibration"
+          ) Recheck limited calibration
+          .gray-calibration-boundary(data-testid="gray-calibration-boundary")
+            strong ±{{ (GRAY_CALIBRATION_TRANSFER_PROXY * 100).toFixed(4) }}% transfer proxy for L / W / W′ only
+            span Class 0 measured; classes 1–2 assumed transfer. Torque has no validated bound.
+            span Illustrative patent topology, not physical validation. Dynamic torque and mechanical results are exploratory and unbounded.
     .gray-workbench__actions
-      button(type="button" :disabled="runStatus === 'running' || Boolean(revisionError)" data-testid="gray-run" @click="runWorkbench") Run full motor
+      button(type="button" :disabled="runStatus === 'running' || Boolean(revisionError) || calibrationRunBlocked" data-testid="gray-run" @click="runWorkbench") Run full motor
       button(type="button" :disabled="runStatus !== 'running'" data-testid="gray-cancel" @click="cancelRun") Cancel
       button(type="button" data-testid="gray-reset" @click="resetWorkbench") Reset
       progress(:value="runProgress" max="1" aria-label="Gray worker progress" aria-describedby="gray-worker-status gray-worker-progress-value")
@@ -717,6 +836,7 @@ onBeforeUnmount(() => {
           p.eyebrow Local finite-element workspace
           h2#gray-fem-title Runtime FEM status: {{ femStatus }}
           p {{ femMessage }} FEM is activated only for an exact machine compatibility match. The surrogate remains explicitly labeled and is never relabeled FEM.
+          p(v-if="calibrationAvailable" data-testid="gray-calibration-summary") Limited calibration: {{ calibrationDisplayStatus }}. It is separate from production FEM, limited-not-validated, non-production, and never enabled by default. Torque and all dynamic mechanical outputs have no validated bound.
         .gray-fem-card__links
           a(:href="GRAY_FEM_PROVENANCE.workspace" target="_blank" rel="noreferrer") Open fem/edwin-gray provenance
           a(:href="GRAY_FEM_PROVENANCE.sourceLedger" target="_blank" rel="noreferrer") Open source ledger

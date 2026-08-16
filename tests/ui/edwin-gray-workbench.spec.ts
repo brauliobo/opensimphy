@@ -70,6 +70,11 @@ describe('Edwin Gray canonical workbench state', () => {
     }
 
     expect(parseGrayWorkbenchQuery(serializeGrayWorkbenchInput(input))).toEqual(input)
+    const calibration = {
+      ...defaultGrayWorkbenchInput('patent-3890548-illustrative'),
+      magneticModel: 'limited-fem-calibration' as const,
+    }
+    expect(parseGrayWorkbenchQuery(serializeGrayWorkbenchInput(calibration))).toEqual(calibration)
   })
 
   it('requires a ready lookup before constructing FEM input and freezes completed output', () => {

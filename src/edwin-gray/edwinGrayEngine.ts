@@ -85,7 +85,7 @@ export interface GrayModelProvenance {
 }
 
 export interface GrayMagneticLookup {
-  source: 'fem-lookup'
+  source: 'fem-lookup' | 'limited-fem-calibration'
   caseId: string
   referenceCurrentA: number
   anglesDeg: readonly number[]
@@ -351,7 +351,7 @@ export interface GrayMotorResult {
   motor: GrayMotorCatalogEntry
   input: GrayResolvedMotorInput
   modelStatus: GrayModelStatus
-  magneticModel: 'fem-lookup' | 'illustrative-surrogate'
+  magneticModel: 'fem-lookup' | 'limited-fem-calibration' | 'illustrative-surrogate'
   provenance: GrayModelProvenance
   topology: GrayTopologyContract
   eventSchedule: readonly GrayEvent[]
@@ -640,7 +640,9 @@ export function grayInductanceAtAngle(
 export const inductanceAtAngle = grayInductanceAtAngle
 
 export function validateGrayMagneticLookup(lookup: GrayMagneticLookup): void {
-  if (lookup.source !== 'fem-lookup') throw new Error('magneticLookup.source must be fem-lookup')
+  if (lookup.source !== 'fem-lookup' && lookup.source !== 'limited-fem-calibration') {
+    throw new Error('magneticLookup.source must identify a supported lookup')
+  }
   if (!lookup.caseId || !lookup.provenance?.solver || !lookup.provenance.backend) {
     throw new Error('magneticLookup provenance is incomplete')
   }
@@ -1652,7 +1654,7 @@ export function evaluateGrayMotor(input: GrayMotorInput): GrayMotorResult {
     motor,
     input: resolved,
     modelStatus: GRAY_MODEL_STATUS,
-    magneticModel: magneticLookup ? 'fem-lookup' : 'illustrative-surrogate',
+    magneticModel: magneticLookup?.source ?? 'illustrative-surrogate',
     provenance: GRAY_MODEL_PROVENANCE,
     topology: GRAY_TOPOLOGY,
     eventSchedule: GRAY_EVENT_SCHEDULE,
@@ -1875,7 +1877,10 @@ export interface GrayFullMotorResult {
   motor: GrayMotorCatalogEntry
   engineProfile: GrayEngineProfile
   topology: GrayTopologyContract
-  magneticScope: 'illustrative-lumped-surrogate' | 'hybrid-fem-magnetic-lumped-circuit'
+  magneticScope:
+    | 'illustrative-lumped-surrogate'
+    | 'hybrid-fem-magnetic-lumped-circuit'
+    | 'limited-fem-calibration-magnetic-lumped-circuit'
   numericalMethod: typeof GRAY_FULL_MOTOR_METHOD_REVISION
   quenchRule: {
     id: GrayFullMotorMachineMode
@@ -2617,9 +2622,11 @@ export function evaluateGrayFullMotor(
     },
     {
       code: 'magnetic-scope',
-      statement: input.magneticLookup
-        ? 'FEM lookup values cover only the magnetic relation; circuit, switching, recovery, and mechanics remain lumped and illustrative.'
-        : 'Magnetic, circuit, switching, recovery, and mechanics are illustrative lumped surrogates.',
+      statement: input.magneticLookup?.source === 'limited-fem-calibration'
+        ? 'Limited FEM calibration values cover only L/W/W′; torque and dynamic mechanics remain exploratory, unbounded, lumped, and illustrative.'
+        : input.magneticLookup
+          ? 'FEM lookup values cover only the magnetic relation; circuit, switching, recovery, and mechanics remain lumped and illustrative.'
+          : 'Magnetic, circuit, switching, recovery, and mechanics are illustrative lumped surrogates.',
     },
     {
       code: 'energy-boundary',
@@ -2642,9 +2649,11 @@ export function evaluateGrayFullMotor(
     motor,
     engineProfile,
     topology: GRAY_TOPOLOGY,
-    magneticScope: input.magneticLookup
-      ? 'hybrid-fem-magnetic-lumped-circuit'
-      : 'illustrative-lumped-surrogate',
+    magneticScope: input.magneticLookup?.source === 'limited-fem-calibration'
+      ? 'limited-fem-calibration-magnetic-lumped-circuit'
+      : input.magneticLookup
+        ? 'hybrid-fem-magnetic-lumped-circuit'
+        : 'illustrative-lumped-surrogate',
     numericalMethod: GRAY_FULL_MOTOR_METHOD_REVISION,
     quenchRule: {
       id: input.machineMode,

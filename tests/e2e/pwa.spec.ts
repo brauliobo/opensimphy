@@ -1,16 +1,19 @@
 import { expect, test } from '@playwright/test'
 import { grayFemLookupRevision } from '../../src/edwin-gray/edwinGrayFem'
 import { GRAY_MACHINE_CONTRACTS, GRAY_PATENT_MACHINE_ID } from '../../src/edwin-gray/edwinGrayMachines'
+import { compatibleGrayCalibrationPack } from '../helpers/edwinGrayCalibration'
 
 const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
 const GRAY_WORKER_CACHE = 'opensimphy-gray-worker'
 const GRAY_LUT_CACHE = 'opensimphy-gray-fem-lut'
+const GRAY_CALIBRATION_CACHE = 'opensimphy-gray-fem-calibration'
 const GRAY_PATENT_CONTRACT = GRAY_MACHINE_CONTRACTS[GRAY_PATENT_MACHINE_ID]
 const GRAY_MODEL_INPUT_HASH = GRAY_PATENT_CONTRACT.modelInputHash
 if (!GRAY_MODEL_INPUT_HASH) throw new Error('Generated patent machine contract has no FEM model identity')
 const GRAY_LUT_REVISION = grayFemLookupRevision(GRAY_PATENT_CONTRACT)
 const GRAY_LUT_PATH = `/data/generated/edwin-gray/motor-fem-lut-v1.json?revision=${GRAY_LUT_REVISION}`
+const GRAY_CALIBRATION_PATH = '/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
 const QUICK_INSTRUMENTS = [
   { path: QUICK_LESSON, instrument: 'dimension-builder', prediction: 'prediction-matches-target', reveal: 'reveal-dimension-result', result: 'dimension-result' },
   { path: '/tour/unit-bridges/photon-equivalent-scales?path=quick', instrument: 'photon-bridge', prediction: 'photon-prediction-wavelength-falls', reveal: 'reveal-photon-bridge', result: 'photon-bridge-result' },
@@ -100,6 +103,8 @@ test('Gray payloads use bounded runtime caches and the warmed surrogate runs off
   const serviceWorker = await (await page.request.get('/sw.js')).text()
   expect(serviceWorker).toContain(GRAY_WORKER_CACHE)
   expect(serviceWorker).toContain(GRAY_LUT_CACHE)
+  expect(serviceWorker).toContain(GRAY_CALIBRATION_CACHE)
+  expect(serviceWorker).toContain('motor-fem-calibration-pack-v1')
   expect(serviceWorker).toContain('maxEntries:2')
   expect(serviceWorker).toContain('maxEntries:1')
   expect(serviceWorker).toContain('networkTimeoutSeconds:5')
@@ -124,6 +129,39 @@ test('Gray payloads use bounded runtime caches and the warmed surrogate runs off
   await expect(page.getByTestId('gray-fem-runtime-status')).toContainText(/unavailable|failed|fetch/i)
   await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
   expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_LUT_CACHE)).toBe(0)
+  expect(await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).length, GRAY_CALIBRATION_CACHE)).toBe(0)
+})
+
+test('a warmed limited calibration pack remains explicit and fail-closed offline', async ({ context, page }) => {
+  await ensureServiceWorkerControl(page)
+  await page.goto('/labs/edwin-gray')
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  await page.evaluate(async ({ cacheName, path, value }) => {
+    const cache = await caches.open(cacheName)
+    await cache.put(path, new Response(JSON.stringify(value), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+  }, {
+    cacheName: GRAY_CALIBRATION_CACHE,
+    path: GRAY_CALIBRATION_PATH,
+    value: compatibleGrayCalibrationPack(),
+  })
+
+  await context.setOffline(true)
+  await page.getByTestId('gray-machine-contract').selectOption(GRAY_PATENT_MACHINE_ID)
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'ready')
+  await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
+  await page.getByTestId('gray-calibration-acknowledgement').check()
+  await page.getByTestId('gray-magnetic-model').selectOption('limited-fem-calibration')
+  await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'active')
+  await page.getByTestId('gray-run').click()
+  await expect(page.getByTestId('gray-workbench').locator('[data-status="completed"]')).toBeVisible()
+
+  const cached = await page.evaluate(async (cacheName) => (await (await caches.open(cacheName)).keys()).map(({ url }) => url), GRAY_CALIBRATION_CACHE)
+  expect(cached).toHaveLength(1)
+  expect(cached[0]).toContain(GRAY_CALIBRATION_PATH)
 })
 
 test('a previously fetched compatible revisioned Gray LUT remains usable offline', async ({ context, page }) => {
