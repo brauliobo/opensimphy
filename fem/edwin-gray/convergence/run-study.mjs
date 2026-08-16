@@ -2,10 +2,10 @@
 
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { expectedSampleDefinitions } from "./evaluate-convergence.mjs";
+import { convergenceSymmetryProof, expectedSampleDefinitions } from "./evaluate-convergence.mjs";
 import { proveEventMapSymmetry } from "../scripts/event-map-symmetry.mjs";
 import { expandPublicationLut, publicationDefinitions } from "./publication.mjs";
 import { validateBundledLut } from "../ci/validate-lut.mjs";
@@ -81,6 +81,158 @@ function sampleId(sample) {
   return [sample.domainId, sample.meshLevelId, `i${sample.driveCurrentA}`, `a${sample.rotorAngleDeg}`, `e${sample.eventIndex}`]
     .join("-")
     .replaceAll(".", "p");
+}
+
+function sameNumber(left, right) {
+  return Math.abs(left - right) <= 1e-12 * Math.max(1, Math.abs(left), Math.abs(right));
+}
+
+function sampleKey(sample) {
+  return `${sample.domainId}|${sample.meshLevelId}|${Number(sample.driveCurrentA).toPrecision(15)}|${Number(sample.rotorAngleDeg).toFixed(10)}`;
+}
+
+function wrapperNumber(text, name) {
+  const match = text.match(new RegExp(`SetNumber\\("${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}", ([^)]+)\\);`));
+  const value = Number(match?.[1]);
+  assert(Number.isFinite(value), `existing geometry wrapper has no finite ${name}`);
+  return value;
+}
+
+function existingJob(workDir, spec, jobId) {
+  const jobDir = resolve(workDir, "runs", jobId);
+  const checkpointPath = resolve(jobDir, "checkpoint.json");
+  const checkpoint = readJson(checkpointPath, `existing checkpoint ${jobId}`);
+  const wrapper = readFileSync(resolve(jobDir, "geometry-wrapper.geo"), "utf8");
+  const radius = wrapperNumber(wrapper, "Parameters/Air outer radius (m)");
+  const axialMinimum = wrapperNumber(wrapper, "Parameters/Air z minimum (m)");
+  const axialMaximum = wrapperNumber(wrapper, "Parameters/Air z maximum (m)");
+  const domain = spec.production.domains.find((item) => sameNumber(item.outerRadiusM, radius)
+    && sameNumber(-item.axialHalfExtentM, axialMinimum) && sameNumber(item.axialHalfExtentM, axialMaximum));
+  assert(domain, `existing checkpoint ${jobId} does not match a declared domain`);
+  const meshLevel = spec.production.meshLevels.find((item) => sameNumber(item.meshSizeM, checkpoint.parameters?.meshSizeM));
+  assert(meshLevel, `existing checkpoint ${jobId} does not match a declared mesh level`);
+  return {
+    id: sampleId({
+      domainId: domain.id,
+      meshLevelId: meshLevel.id,
+      driveCurrentA: checkpoint.parameters.driveCurrentA,
+      rotorAngleDeg: checkpoint.parameters.rotorAngleDeg,
+      eventIndex: checkpoint.parameters.eventIndex
+    }),
+    domainId: domain.id,
+    meshLevelId: meshLevel.id,
+    driveCurrentA: checkpoint.parameters.driveCurrentA,
+    rotorAngleDeg: checkpoint.parameters.rotorAngleDeg,
+    eventIndex: checkpoint.parameters.eventIndex,
+    jobDir,
+    checkpointPath,
+    checkpoint,
+    result: relative(workDir, resolve(jobDir, "result.json")),
+    checkpointRelative: relative(workDir, checkpointPath)
+  };
+}
+
+function resultAttestation(workDir, sample) {
+  const result = readJson(resolve(workDir, sample.result), `existing result ${sample.id}`);
+  const entry = result.entries?.[0];
+  assert(result.status === "complete" && result.entries?.length === 1 && entry.status === "complete", `existing result ${sample.id} is incomplete`);
+  return {
+    sampleId: sample.id,
+    jobInputHash: entry.provenance.jobInputHash,
+    artifactHashes: entry.provenance.artifacts
+  };
+}
+
+function maximumObservableDifference(workDir, left, right) {
+  const leftEntry = readJson(resolve(workDir, left.result), `existing result ${left.id}`).entries[0];
+  const rightEntry = readJson(resolve(workDir, right.result), `existing result ${right.id}`).entries[0];
+  return Math.max(...["magneticEnergyJ", "coEnergyJ", "inductanceH"].map((name) => relativeDifference(
+    leftEntry.observables[name].value,
+    rightEntry.observables[name].value
+  )));
+}
+
+function verifyIncompleteTargetAttempt(target, source) {
+  const checkpoint = target.checkpoint;
+  assert(checkpoint.phases?.mesh === "complete" && checkpoint.meshQuality === "passed", "declared derived target has no complete mesh checkpoint");
+  assert(checkpoint.phases?.solve !== "complete" && checkpoint.phases?.normalize !== "complete" && checkpoint.result === null,
+    "declared derived target is not the one incomplete solve attempt");
+  assert(checkpoint.modelInputHash === source.checkpoint.modelInputHash, "derived target and source model identities differ");
+  assert(checkpoint.environmentIdentityHash === source.checkpoint.environmentIdentityHash, "derived target and source solver environments differ");
+  for (const [path, expectedHash] of [
+    ["motor.msh", checkpoint.artifacts?.mesh],
+    ["mesh-audit.json", checkpoint.artifacts?.audit],
+    ["solver-environment.json", checkpoint.artifacts?.environment],
+    ["geometry-wrapper.geo", checkpoint.artifacts?.inputs?.geometry],
+    ["getdp-wrapper.pro", checkpoint.artifacts?.inputs?.getdp]
+  ]) {
+    assert(expectedHash && sha256(resolve(target.jobDir, path)) === expectedHash, `derived target ${path} hash mismatch`);
+  }
+}
+
+function collectExistingEvidence(workDir, spec, definitions) {
+  const runs = resolve(workDir, "runs");
+  assert(existsSync(runs), "existing-only convergence requires a runs directory");
+  const jobs = readdirSync(runs, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(resolve(runs, entry.name, "checkpoint.json")))
+    .map((entry) => existingJob(workDir, spec, entry.name));
+  const complete = new Map(jobs
+    .filter((job) => job.checkpoint.phases?.mesh === "complete" && job.checkpoint.phases?.solve === "complete"
+      && job.checkpoint.phases?.normalize === "complete" && existsSync(resolve(workDir, job.result)))
+    .map((job) => [sampleKey(job), job]));
+  const samples = definitions.filter((definition) => complete.has(sampleKey(definition))).map((definition) => {
+    const job = complete.get(sampleKey(definition));
+    assert(job.eventIndex === definition.eventIndex, `existing sample ${job.id} has the wrong event index`);
+    return {
+      id: job.id,
+      ...definition,
+      result: job.result,
+      checkpoint: job.checkpointRelative
+    };
+  });
+
+  const declaration = spec.production.symmetryDerivedConvergenceSample;
+  if (!complete.has(sampleKey(declaration.target))) {
+    const source = complete.get(sampleKey(declaration.source));
+    const validationSource = complete.get(sampleKey({ ...declaration.source, meshLevelId: declaration.validationMeshLevelId }));
+    const validationPartner = complete.get(sampleKey({ ...declaration.target, meshLevelId: declaration.validationMeshLevelId }));
+    const targetAttempt = jobs.find((job) => sampleKey(job) === sampleKey(declaration.target));
+    assert(source, "declared fine symmetry source is not complete");
+    assert(validationSource && validationPartner, "declared coarse symmetry validation pair is not complete");
+    assert(targetAttempt, "declared derived target has no matching failed solve attempt");
+    verifyIncompleteTargetAttempt(targetAttempt, source);
+    const validationDifference = maximumObservableDifference(workDir, validationSource, validationPartner);
+    assert(validationDifference <= declaration.validationRelativeTolerance,
+      `coarse symmetry validation differs by ${validationDifference}, above ${declaration.validationRelativeTolerance}`);
+    const proof = convergenceSymmetryProof();
+    samples.push({
+      id: sampleId(declaration.target),
+      kind: declaration.kind,
+      ...declaration.target,
+      derivation: {
+        symmetryProofSha256: proof.proofSha256,
+        rotationDeg: declaration.rotationDeg,
+        source: resultAttestation(workDir, source),
+        validation: {
+          maximumRelativeDifference: validationDifference,
+          tolerance: declaration.validationRelativeTolerance,
+          source: resultAttestation(workDir, validationSource),
+          partner: resultAttestation(workDir, validationPartner)
+        }
+      }
+    });
+  }
+  return samples.sort((left, right) => sampleKey(left).localeCompare(sampleKey(right)));
+}
+
+function evaluateEvidence(workDir, evidencePath, reportPath) {
+  const evaluation = spawnSync(process.execPath, [EVALUATOR, "--evidence", evidencePath, "--out", reportPath], {
+    cwd: ROOT,
+    encoding: "utf8"
+  });
+  assert(existsSync(reportPath), "convergence evaluator did not write a report");
+  const report = readJson(reportPath, "convergence report");
+  return { report, evaluation };
 }
 
 function pilotDefinitions(definitions, spec) {
@@ -210,6 +362,29 @@ function pilotReport(samples, workDir, spec) {
 }
 
 function runConvergence(options, spec, definitions, workDir) {
+  if (options["existing-only"] === "true") {
+    const evidencePath = resolve(workDir, "convergence-evidence.json");
+    const reportPath = resolve(workDir, "convergence-report.json");
+    const samples = collectExistingEvidence(workDir, spec, definitions);
+    writeJson(evidencePath, {
+      contract: "edwin-gray-convergence-evidence",
+      contractVersion: 2,
+      status: "complete",
+      caseId: spec.caseId,
+      samples
+    });
+    const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath);
+    return {
+      status: report.status,
+      stage: "convergence",
+      execution: "existing-artifacts-only",
+      jobs: samples.length,
+      report: reportPath,
+      reportSha256: sha256(reportPath),
+      evidenceSha256: sha256(evidencePath),
+      evaluatorExitCode: evaluation.status
+    };
+  }
   const cases = caseVariants(workDir, spec);
   if (options.stage === "publication") {
     const convergenceReportPath = resolve(workDir, "convergence-report.json");
@@ -294,12 +469,7 @@ function runConvergence(options, spec, definitions, workDir) {
     caseId: spec.caseId,
     samples
   });
-  const evaluation = spawnSync(process.execPath, [EVALUATOR, "--evidence", evidencePath, "--out", reportPath], {
-    cwd: ROOT,
-    encoding: "utf8"
-  });
-  assert(existsSync(reportPath), "convergence evaluator did not write a report");
-  const report = readJson(reportPath, "convergence report");
+  const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath);
   return {
     status: report.status,
     stage: "convergence",
@@ -314,7 +484,9 @@ function runConvergence(options, spec, definitions, workDir) {
 function main(argv) {
   const options = parseArgs(argv);
   assert(["pilot", "convergence", "publication"].includes(options.stage), "--stage must be pilot, convergence, or publication");
-  assert(options["docker-image"], "--docker-image is required");
+  const existingOnly = options["existing-only"] === "true";
+  assert(options["existing-only"] === undefined || (existingOnly && options.stage === "convergence"), "--existing-only true is valid only for convergence");
+  if (!existingOnly) assert(options["docker-image"], "--docker-image is required");
   if (options.stage === "publication") {
     for (const required of ["solver-profile", "memory-gib", "cpus", "threads"]) {
       assert(options[required], `publication requires explicit --${required}`);

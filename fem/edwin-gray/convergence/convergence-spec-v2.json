@@ -6,6 +6,7 @@
   "reportContract": "edwin-gray-convergence-report@2",
   "resultContract": "edwin-gray-browser-result@1",
   "checkpointVersion": "fem-checkpoint-v6",
+  "compatibleCheckpointVersions": ["fem-checkpoint-v5"],
   "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
   "sourceFormulation": "closed-surface-equivalent-current-potential",
   "justification": "v1 was rejected because its fixed 2 mm feature field masked air-mesh refinement and its disconnected axial source retained 2.63 percent base-to-far sensitivity. v2 couples feature and air refinement, uses a distributionally divergence-free closed source, and starts at the v1 far radius with proportionally expanded axial bounds.",
@@ -75,7 +76,27 @@
       [0, 120],
       [6.6666666667, 126.6666666667],
       [13.3333333333, 133.3333333333]
-    ]
+    ],
+    "symmetryDerivedConvergenceSample": {
+      "kind": "symmetry-derived-convergence-sample",
+      "source": {
+        "domainId": "base",
+        "meshLevelId": "fine",
+        "driveCurrentA": 10,
+        "rotorAngleDeg": 0,
+        "eventIndex": 0
+      },
+      "target": {
+        "domainId": "base",
+        "meshLevelId": "fine",
+        "driveCurrentA": 10,
+        "rotorAngleDeg": 120,
+        "eventIndex": 9
+      },
+      "validationMeshLevelId": "coarse",
+      "rotationDeg": 120,
+      "validationRelativeTolerance": 0.01
+    }
   },
   "tolerances": {
     "meshMetrics": {

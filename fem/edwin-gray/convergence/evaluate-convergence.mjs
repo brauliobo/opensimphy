@@ -4,9 +4,14 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { proveEventMapSymmetry, validateEventMapSymmetryProof } from "../scripts/event-map-symmetry.mjs";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(SCRIPT_DIR, "..");
 const DEFAULT_SPEC = resolve(SCRIPT_DIR, "convergence-spec-v2.json");
+const CASE_PATH = resolve(ROOT, "cases/patent-3890548-illustrative.json");
+const EVENT_MAP_PATH = resolve(ROOT, "excitation/v1/event-map-v1.json");
+const GEOMETRY_PATH = resolve(ROOT, "geometry/patent-3890548-3d.geo");
 const SHA256 = /^[a-f0-9]{64}$/;
 const OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
 const TABLES = {
@@ -146,6 +151,24 @@ function sampleKey(domainId, meshLevelId, current, angle) {
   return `${domainId}|${meshLevelId}|${Number(current).toPrecision(15)}|${angleKey(angle)}`;
 }
 
+function definitionKey(definition) {
+  return sampleKey(definition.domainId, definition.meshLevelId, definition.driveCurrentA, definition.rotorAngleDeg);
+}
+
+export function convergenceSymmetryProof() {
+  const eventMapBytes = readFileSync(EVENT_MAP_PATH);
+  const caseBytes = readFileSync(CASE_PATH);
+  const geometryBytes = readFileSync(GEOMETRY_PATH);
+  return validateEventMapSymmetryProof(proveEventMapSymmetry({
+    eventMap: JSON.parse(eventMapBytes),
+    caseData: JSON.parse(caseBytes),
+    geometryText: geometryBytes.toString("utf8"),
+    eventMapBytes,
+    caseBytes,
+    geometryBytes
+  }));
+}
+
 function eventIndexForAngle(spec, angle) {
   const periodicityRightAngles = new Set(spec.production.periodicityPairsDeg.map((pair) => angleKey(pair[1])));
   return periodicityRightAngles.has(angleKey(angle))
@@ -188,6 +211,7 @@ function validateSpec(spec) {
   assert(spec.reportContract === "edwin-gray-convergence-report@2", "unsupported report contract in specification");
   assert(spec.resultContract === "edwin-gray-browser-result@1", "unsupported normalized result contract in specification");
   assert(spec.checkpointVersion === "fem-checkpoint-v6", "unsupported checkpoint version in specification");
+  assert(stableJson(spec.compatibleCheckpointVersions) === stableJson(["fem-checkpoint-v5"]), "unsupported compatible checkpoint versions in specification");
   assert(spec.excitationContract === "edwin-gray-fem-excitation-event-map/v1", "unsupported excitation contract in specification");
   assert(spec.sourceFormulation === "closed-surface-equivalent-current-potential", "unsupported source formulation in specification");
   assert(typeof spec.justification === "string" && spec.justification.includes("v1"), "v2 justification must identify the v1 rejection");
@@ -225,6 +249,28 @@ function validateSpec(spec) {
   assert(Array.isArray(production.periodicityPairsDeg) && production.periodicityPairsDeg.length >= 3, "at least three periodicity pairs are required");
   const tolerances = spec.tolerances;
   assert(tolerances && typeof tolerances === "object", "convergence tolerances are required");
+  const derivation = production.symmetryDerivedConvergenceSample;
+  const firstPeriodicityPair = production.periodicityPairsDeg[0];
+  assert(derivation?.kind === "symmetry-derived-convergence-sample", "one declared symmetry-derived convergence sample is required");
+  assert(stableJson(derivation.source) === stableJson({
+    domainId: production.baseDomainId,
+    meshLevelId: production.meshLevels.at(-1).id,
+    driveCurrentA: production.productionCurrentA,
+    rotorAngleDeg: firstPeriodicityPair[0],
+    eventIndex: production.convergenceEventIndex
+  }), "symmetry-derived convergence source is invalid");
+  assert(stableJson(derivation.target) === stableJson({
+    domainId: production.baseDomainId,
+    meshLevelId: production.meshLevels.at(-1).id,
+    driveCurrentA: production.productionCurrentA,
+    rotorAngleDeg: firstPeriodicityPair[1],
+    eventIndex: production.convergenceEventIndex + production.periodicityEventIndexOffset
+  }), "symmetry-derived convergence target is invalid");
+  assert(derivation.validationMeshLevelId === production.meshLevels[0].id, "symmetry-derived convergence validation must use the coarse mesh");
+  assert(sameNumber(derivation.rotationDeg, firstPeriodicityPair[1] - firstPeriodicityPair[0]), "symmetry-derived convergence rotation is invalid");
+  assert(sameNumber(derivation.validationRelativeTolerance, tolerances.anglePeriodicityRelative)
+      && derivation.validationRelativeTolerance <= 0.01,
+    "symmetry-derived convergence validation tolerance is invalid");
   const required = [
     tolerances.meshMetrics?.outerRadiusRelative,
     tolerances.meshMetrics?.axialHalfExtentRelative,
@@ -257,7 +303,7 @@ function verifySample(sample, expected, spec, evidenceDir) {
   const jobDir = dirname(checkpointPath);
   assert(dirname(resultPath) === jobDir, `sample ${sample.id} result and checkpoint must share a job directory`);
 
-  assert(checkpoint.checkpointVersion === spec.checkpointVersion, `sample ${sample.id} checkpoint version is invalid`);
+  assert([spec.checkpointVersion, ...spec.compatibleCheckpointVersions].includes(checkpoint.checkpointVersion), `sample ${sample.id} checkpoint version is invalid`);
   assert(checkpoint.phases?.mesh === "complete" && checkpoint.phases?.solve === "complete" && checkpoint.phases?.normalize === "complete", `sample ${sample.id} checkpoint phases are incomplete`);
   assert(checkpoint.meshQuality === "passed", `sample ${sample.id} mesh quality was not passed`);
   assert(checkpoint.result === "result.json" && resultPath === resolve(jobDir, "result.json"), `sample ${sample.id} result path is not checkpoint-attested`);
@@ -325,7 +371,10 @@ function verifySample(sample, expected, spec, evidenceDir) {
     meshMetrics,
     modelInputHash: entry.provenance.modelInputHash,
     jobInputHash: entry.provenance.jobInputHash,
-    environmentIdentityHash: checkpoint.environmentIdentityHash
+    environmentIdentityHash: checkpoint.environmentIdentityHash,
+    backend: entry.provenance.backend,
+    solver: entry.provenance.solver,
+    artifactHashes: entry.provenance.artifacts
   };
 }
 
@@ -335,6 +384,85 @@ function relativeDifference(left, right) {
 
 function maxObservableDifference(left, right) {
   return Math.max(...OBSERVABLES.map((name) => relativeDifference(left.observables[name], right.observables[name])));
+}
+
+function sampleAttestation(sample) {
+  return {
+    sampleId: sample.id,
+    jobInputHash: sample.jobInputHash,
+    artifactHashes: sample.artifactHashes
+  };
+}
+
+function verifyDerivedSample(sample, expected, spec, directByKey, symmetryProof) {
+  const declaration = spec.production.symmetryDerivedConvergenceSample;
+  assert(sample?.kind === declaration.kind, `sample ${sample?.id || "unknown"} is not an independently solved convergence sample`);
+  assert(definitionKey(expected) === definitionKey(declaration.target), `sample ${sample.id} is not the one declared symmetry-derived convergence target`);
+  assert(sample.domainId === expected.domainId && sample.meshLevelId === expected.meshLevelId, `sample ${sample.id} labels do not match its required tuple`);
+  assert(sameNumber(sample.driveCurrentA, expected.driveCurrentA) && sameNumber(sample.rotorAngleDeg, expected.rotorAngleDeg), `sample ${sample.id} declared parameters do not match its required tuple`);
+  assert(sample.eventIndex === expected.eventIndex, `sample ${sample.id} event index does not match the convergence excitation schedule`);
+
+  const source = directByKey.get(definitionKey(declaration.source));
+  const validationSource = directByKey.get(sampleKey(
+    declaration.source.domainId,
+    declaration.validationMeshLevelId,
+    declaration.source.driveCurrentA,
+    declaration.source.rotorAngleDeg
+  ));
+  const validationPartner = directByKey.get(sampleKey(
+    declaration.target.domainId,
+    declaration.validationMeshLevelId,
+    declaration.target.driveCurrentA,
+    declaration.target.rotorAngleDeg
+  ));
+  assert(source, `sample ${sample.id} complete fine source is missing`);
+  assert(validationSource && validationPartner, `sample ${sample.id} independent coarse validation pair is missing`);
+  assert(source.domainId === expected.domainId && source.meshLevelId === expected.meshLevelId
+      && sameNumber(source.driveCurrentA, expected.driveCurrentA),
+    `sample ${sample.id} source geometry, domain, mesh, or current identity differs`);
+  assert(source.modelInputHash === validationSource.modelInputHash && source.modelInputHash === validationPartner.modelInputHash,
+    `sample ${sample.id} source and validation model identities differ`);
+  assert(source.environmentIdentityHash === validationSource.environmentIdentityHash
+      && source.environmentIdentityHash === validationPartner.environmentIdentityHash,
+    `sample ${sample.id} source and validation solver environments differ`);
+  assert(source.backend === validationSource.backend && source.backend === validationPartner.backend
+      && source.solver === validationSource.solver && source.solver === validationPartner.solver,
+    `sample ${sample.id} source and validation solver identities differ`);
+  const validationDifference = maxObservableDifference(validationSource, validationPartner);
+  assert(validationDifference <= declaration.validationRelativeTolerance,
+    `sample ${sample.id} coarse symmetry validation differs by ${validationDifference}, above ${declaration.validationRelativeTolerance}`);
+
+  const symmetrySteps = declaration.rotationDeg / symmetryProof.transformation.rotationDeg;
+  assert(Number.isInteger(symmetrySteps) && symmetrySteps > 0, `sample ${sample.id} rotation is not in the proved 40-degree class`);
+  assert(declaration.target.eventIndex - declaration.source.eventIndex === symmetrySteps * symmetryProof.transformation.eventOffset,
+    `sample ${sample.id} event mapping is not implied by the symmetry proof`);
+  assert(sameNumber(declaration.target.rotorAngleDeg - declaration.source.rotorAngleDeg, declaration.rotationDeg),
+    `sample ${sample.id} angle mapping is not implied by its declared rotation`);
+  const expectedDerivation = {
+    symmetryProofSha256: symmetryProof.proofSha256,
+    rotationDeg: declaration.rotationDeg,
+    source: sampleAttestation(source),
+    validation: {
+      maximumRelativeDifference: validationDifference,
+      tolerance: declaration.validationRelativeTolerance,
+      source: sampleAttestation(validationSource),
+      partner: sampleAttestation(validationPartner)
+    }
+  };
+  assert(stableJson(sample.derivation) === stableJson(expectedDerivation), `sample ${sample.id} derivation attestation is absent or tampered`);
+  return {
+    id: sample.id,
+    ...expected,
+    observables: source.observables,
+    meshMetrics: source.meshMetrics,
+    modelInputHash: source.modelInputHash,
+    jobInputHash: null,
+    environmentIdentityHash: source.environmentIdentityHash,
+    backend: source.backend,
+    solver: source.solver,
+    artifactHashes: source.artifactHashes,
+    derivation: expectedDerivation
+  };
 }
 
 function derivative(points, index) {
@@ -412,7 +540,13 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
     evidence: {
       contract: evidence?.contract || null,
       contractVersion: evidence?.contractVersion || null,
-      sampleCount: Array.isArray(evidence?.samples) ? evidence.samples.length : 0
+      sampleCount: Array.isArray(evidence?.samples) ? evidence.samples.length : 0,
+      independentlySolvedSampleCount: Array.isArray(evidence?.samples)
+        ? evidence.samples.filter((sample) => sample?.kind !== "symmetry-derived-convergence-sample").length
+        : 0,
+      symmetryDerivedSampleCount: Array.isArray(evidence?.samples)
+        ? evidence.samples.filter((sample) => sample?.kind === "symmetry-derived-convergence-sample").length
+        : 0
     },
     status: "rejected",
     checks: [],
@@ -436,8 +570,25 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
       declared.set(key, sample);
     }
     assert(expected.every((item) => declared.has(sampleKey(item.domainId, item.meshLevelId, item.driveCurrentA, item.rotorAngleDeg))), "evidence does not provide exact production coverage");
-    const verified = expected.map((item) => verifySample(declared.get(sampleKey(item.domainId, item.meshLevelId, item.driveCurrentA, item.rotorAngleDeg)), item, spec, evidenceDir));
-    assert(new Set(verified.map((item) => item.jobInputHash)).size === verified.length, "attested job input hashes are not unique");
+    const direct = [];
+    const directByKey = new Map();
+    const derived = [];
+    for (const item of expected) {
+      const sample = declared.get(definitionKey(item));
+      if (sample.kind === "symmetry-derived-convergence-sample") {
+        derived.push([sample, item]);
+      } else {
+        const verifiedSample = verifySample(sample, item, spec, evidenceDir);
+        direct.push(verifiedSample);
+        directByKey.set(definitionKey(item), verifiedSample);
+      }
+    }
+    assert(derived.length <= 1, "only one declared symmetry-derived convergence sample is permitted");
+    const symmetryProof = derived.length === 1 ? convergenceSymmetryProof() : null;
+    const verifiedDerived = derived.map(([sample, item]) => verifyDerivedSample(sample, item, spec, directByKey, symmetryProof));
+    const verifiedByKey = new Map([...direct, ...verifiedDerived].map((item) => [definitionKey(item), item]));
+    const verified = expected.map((item) => verifiedByKey.get(definitionKey(item)));
+    assert(new Set(direct.map((item) => item.jobInputHash)).size === direct.length, "attested job input hashes are not unique");
     assert(new Set(verified.map((item) => item.environmentIdentityHash)).size === 1, "convergence samples use different solver environments");
     for (const domain of spec.production.domains) {
       const hashes = new Set(verified.filter((item) => item.domainId === domain.id).map((item) => item.modelInputHash));
@@ -445,6 +596,8 @@ export function evaluateConvergence({ spec, specBytes, evidence, evidenceDir }) 
     }
     const domainHashes = spec.production.domains.map((domain) => verified.find((item) => item.domainId === domain.id).modelInputHash);
     assert(new Set(domainHashes).size === domainHashes.length, "outer-domain variants are not distinguished by model input hashes");
+    report.evidence.independentlySolvedSampleCount = direct.length;
+    report.evidence.symmetryDerivedSampleCount = verifiedDerived.length;
     report.checks.push({ id: "evidence-integrity-and-coverage", status: "passed", observed: verified.length, tolerance: expected.length, comparison: "exact" });
     report.checks.push(...evaluateMetrics(verified, spec));
     report.failures = report.checks.filter((check) => check.status === "failed").map((check) => check.id);

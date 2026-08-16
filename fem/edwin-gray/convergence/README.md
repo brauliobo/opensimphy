@@ -51,6 +51,28 @@ The resulting `convergence-report.json` is deterministic: it contains no clock
 or absolute-path data. A rejected report is still written and the command exits
 nonzero.
 
+To assemble evidence and evaluate only checkpoints already present in a
+persistent work directory, without invoking Docker, Gmsh, or GetDP:
+
+```sh
+node fem/edwin-gray/convergence/run-study.mjs \
+  --stage convergence \
+  --existing-only true \
+  --work-dir fem/edwin-gray/runs/study-v2
+```
+
+The existing-only path recognizes exactly one spec-declared exception:
+`base/fine/10 A/120 deg/event 9` may be a
+`symmetry-derived-convergence-sample` from the complete `0 deg/event 0` fine
+job. It reconstructs and validates the machine-checked event-map proof, requires
+the complete independent coarse `0/event 0` and `120/event 9` pair to agree
+within one percent, verifies the failed target's mesh checkpoint, and requires
+model, environment, solver, domain, mesh, and current identities to match. The
+evidence records the 120-degree rotation and source/validation job and artifact
+hashes. No other absent tuple is filled or waived. The persisted v2 jobs use the
+older `fem-checkpoint-v5` envelope, which v2 accepts explicitly; all artifact,
+parameter, environment, and normalized-result checks remain mandatory.
+
 The integrated study runner generates domain-specific case copies, executes
 exact event-attested single jobs through `scripts/run.mjs`, reuses a verified
 mesh for the 1 A audit, and resumes from content-addressed checkpoints:

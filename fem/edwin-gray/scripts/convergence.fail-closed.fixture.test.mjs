@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { evaluateConvergence, expectedSampleDefinitions } from "../convergence/evaluate-convergence.mjs";
+import { convergenceSymmetryProof, evaluateConvergence, expectedSampleDefinitions } from "../convergence/evaluate-convergence.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SPEC_PATH = join(ROOT, "convergence/convergence-spec-v2.json");
@@ -244,6 +244,67 @@ function reattestObservables(files, values) {
   writeJson(files.checkpointPath, files.checkpoint);
 }
 
+function attestation(context, predicate) {
+  const files = sampleFiles(context, predicate);
+  return {
+    sampleId: files.sample.id,
+    jobInputHash: files.result.entries[0].provenance.jobInputHash,
+    artifactHashes: files.result.entries[0].provenance.artifacts
+  };
+}
+
+function applyFinePeriodicityDerivation(context) {
+  const declaration = SPEC.production.symmetryDerivedConvergenceSample;
+  const targetIndex = context.evidence.samples.findIndex((sample) => (
+    sample.domainId === declaration.target.domainId
+      && sample.meshLevelId === declaration.target.meshLevelId
+      && sample.driveCurrentA === declaration.target.driveCurrentA
+      && sample.rotorAngleDeg === declaration.target.rotorAngleDeg
+  ));
+  assert.notEqual(targetIndex, -1, "fixture derivation target not found");
+  const sourcePredicate = (sample) => (
+    sample.domainId === declaration.source.domainId
+      && sample.meshLevelId === declaration.source.meshLevelId
+      && sample.driveCurrentA === declaration.source.driveCurrentA
+      && sample.rotorAngleDeg === declaration.source.rotorAngleDeg
+  );
+  const validation = (angle) => (sample) => (
+    sample.domainId === declaration.source.domainId
+      && sample.meshLevelId === declaration.validationMeshLevelId
+      && sample.driveCurrentA === declaration.source.driveCurrentA
+      && sample.rotorAngleDeg === angle
+  );
+  const validationSourceFiles = sampleFiles(context, validation(declaration.source.rotorAngleDeg));
+  const validationPartnerFiles = sampleFiles(context, validation(declaration.target.rotorAngleDeg));
+  const sourceObservables = validationSourceFiles.result.entries[0].observables;
+  const partnerObservables = validationPartnerFiles.result.entries[0].observables;
+  const maximumRelativeDifference = Math.max(...Object.keys(sourceObservables).map((name) => relativeDifference(
+    sourceObservables[name].value,
+    partnerObservables[name].value
+  )));
+  context.evidence.samples[targetIndex] = {
+    id: "derived-fine-120-event-9",
+    kind: declaration.kind,
+    ...declaration.target,
+    derivation: {
+      symmetryProofSha256: convergenceSymmetryProof().proofSha256,
+      rotationDeg: declaration.rotationDeg,
+      source: attestation(context, sourcePredicate),
+      validation: {
+        maximumRelativeDifference,
+        tolerance: declaration.validationRelativeTolerance,
+        source: attestation(context, validation(declaration.source.rotorAngleDeg)),
+        partner: attestation(context, validation(declaration.target.rotorAngleDeg))
+      }
+    }
+  };
+  return context.evidence.samples[targetIndex];
+}
+
+function relativeDifference(left, right) {
+  return Math.abs(left - right) / Math.max(Math.abs(left), Math.abs(right), Number.MIN_VALUE);
+}
+
 test("complete attested production coverage is approved deterministically", (t) => {
   const context = fixture(t);
   const first = evaluate(context);
@@ -299,6 +360,52 @@ test("missing production evidence is rejected", (t) => {
   const report = evaluate(context);
   assert.equal(report.status, "rejected");
   assert.match(report.failures[0], /sample count/);
+});
+
+test("the one declared fine periodic partner may use an exactly attested symmetry derivation", (t) => {
+  const context = fixture(t);
+  applyFinePeriodicityDerivation(context);
+  const first = evaluate(context);
+  const second = evaluate(context);
+  assert.equal(first.status, "approved");
+  assert.deepEqual(first, second);
+  assert.equal(first.evidence.independentlySolvedSampleCount, expectedSampleDefinitions(SPEC).length - 1);
+  assert.equal(first.evidence.symmetryDerivedSampleCount, 1);
+});
+
+test("a symmetry derivation without the event-map proof hash is rejected", (t) => {
+  const context = fixture(t);
+  const derived = applyFinePeriodicityDerivation(context);
+  delete derived.derivation.symmetryProofSha256;
+  const report = evaluate(context);
+  assert.equal(report.status, "rejected");
+  assert.match(report.failures[0], /derivation attestation is absent or tampered/);
+});
+
+test("a tampered event-map proof hash is rejected", (t) => {
+  const context = fixture(t);
+  const derived = applyFinePeriodicityDerivation(context);
+  derived.derivation.symmetryProofSha256 = "f".repeat(64);
+  const report = evaluate(context);
+  assert.equal(report.status, "rejected");
+  assert.match(report.failures[0], /derivation attestation is absent or tampered/);
+});
+
+test("a coarse validation pair above one percent cannot authorize derivation", (t) => {
+  const context = fixture(t);
+  const declaration = SPEC.production.symmetryDerivedConvergenceSample;
+  const files = sampleFiles(context, (sample) => (
+    sample.domainId === declaration.target.domainId
+      && sample.meshLevelId === declaration.validationMeshLevelId
+      && sample.driveCurrentA === declaration.target.driveCurrentA
+      && sample.rotorAngleDeg === declaration.target.rotorAngleDeg
+  ));
+  const current = files.result.entries[0].observables;
+  reattestObservables(files, Object.fromEntries(Object.entries(current).map(([name, item]) => [name, item.value * 1.02])));
+  applyFinePeriodicityDerivation(context);
+  const report = evaluate(context);
+  assert.equal(report.status, "rejected");
+  assert.match(report.failures[0], /coarse symmetry validation differs.*above 0.01/);
 });
 
 test("tampered checkpoint artifact is rejected", (t) => {
