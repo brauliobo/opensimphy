@@ -60,6 +60,21 @@ describe('Awesome Physics runtime registry', () => {
         items: simulations.items.map((item, index) => index === 0 ? { ...item, limits: { ...item.limits, maxGridSize: Number.NaN } } : item),
       },
     )).toThrow(/maxGridSize.*finite/)
+    const positionDescriptor = simulations.items.find(({ catalogItemId }) => catalogItemId === 'awesome-positionbaseddynamics')
+    expect(positionDescriptor).toBeDefined()
+    expect(() => parseAwesomePhysicsRegistryArtifacts(
+      catalog,
+      {
+        ...simulations,
+        items: simulations.items.map((item) => item.id === positionDescriptor?.id
+          ? {
+            ...item,
+            sourceRevision: `beafc921e215${'Z'.repeat(28)}`,
+            artifactProvenance: { ...item.artifactProvenance, sourceRevision: `beafc921e215${'Z'.repeat(28)}` },
+          }
+          : item),
+      },
+    )).toThrow(/sourceRevision.*lowercase hexadecimal prefix extension/)
   })
 
   it('loads both generated artifacts lazily and resolves catalog and descriptor IDs', async () => {
@@ -132,8 +147,10 @@ describe('Awesome Physics runtime registry', () => {
 
     await registry.initialize()
     expect(registry.ready.value).toBe(true)
-    expect(await registry.descriptorById('awesome-bullet3-capability')).toMatchObject({ runnable: false })
-    await expect(registry.loadAdapter('awesome-bullet3-capability')).rejects.toThrow(/not runnable/)
+    const unavailableDescriptor = simulations.items.find(({ availability }) => availability === 'unavailable')
+    expect(unavailableDescriptor).toBeDefined()
+    expect(await registry.descriptorById(unavailableDescriptor!.id)).toMatchObject({ runnable: false })
+    await expect(registry.loadAdapter(unavailableDescriptor!.id)).rejects.toThrow(/not runnable/)
     expect(factory).not.toHaveBeenCalled()
     expect(await registry.loadAdapter('missing-descriptor')).toBeNull()
   })

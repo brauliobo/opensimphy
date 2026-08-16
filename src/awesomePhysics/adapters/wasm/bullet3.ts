@@ -10,7 +10,7 @@ import type {
 
 export const BULLET3_ADAPTER_ID = 'awesome-bullet3-wasm'
 export const BULLET3_MANIFEST_ID = 'bullet3'
-export const BULLET3_SOURCE_REVISION = '63c4d67e3370'
+export const BULLET3_SOURCE_REVISION = '63c4d67e337017f9d8b298c900e9aabdb69296e7'
 export const BULLET3_IMPLEMENTATION_REVISION = 'bullet3-headless-scalar-wasm-v1'
 export const BULLET3_OUTPUT_REVISION = 'bullet3-headless-scalar-output-v1'
 export const BULLET3_ARTIFACT_INTEGRITY = Object.freeze({

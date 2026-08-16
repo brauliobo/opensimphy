@@ -91,6 +91,8 @@ const ADAPTER_COMPATIBILITY_KEYS: readonly (keyof AwesomePhysicsAdapterCompatibi
   'implementationRevision',
   'outputRevision',
 ]
+const CATALOG_CLONE_REVISION_PATTERN = /^[a-f0-9]{12}$/
+const FULL_ARTIFACT_REVISION_PATTERN = /^[a-f0-9]{40}$/
 
 const catalog = shallowRef<AwesomePhysicsCatalogArtifactV1 | null>(null)
 const simulations = shallowRef<AwesomePhysicsSimulationArtifactV1 | null>(null)
@@ -174,6 +176,14 @@ function requireDate(value: unknown, path: string): asserts value is string {
 function requireRevision(value: unknown, path: string, nullable = false): asserts value is string | null {
   if (nullable && value === null) return
   requireNonEmptyString(value, path)
+}
+
+function refinesCatalogCloneRevision(sourceRevision: string | null, catalogRevision: string | null): boolean {
+  return sourceRevision !== null
+    && catalogRevision !== null
+    && CATALOG_CLONE_REVISION_PATTERN.test(catalogRevision)
+    && FULL_ARTIFACT_REVISION_PATTERN.test(sourceRevision)
+    && sourceRevision.startsWith(catalogRevision)
 }
 
 function requireRelativePath(value: unknown, path: string, nullable = false): asserts value is string | null {
@@ -437,7 +447,10 @@ function parseDescriptor(
     if (value[field] !== null) requireNonEmptyString(value[field], `${path}.${field}`)
   }
   requireRevision(value.sourceRevision, `${path}.sourceRevision`, true)
-  if (value.sourceRevision !== catalogItem.upstreamRevision) fail(`${path}.sourceRevision`, 'must match the catalog item upstreamRevision')
+  if (value.sourceRevision !== catalogItem.upstreamRevision
+    && !refinesCatalogCloneRevision(value.sourceRevision, catalogItem.upstreamRevision)) {
+    fail(`${path}.sourceRevision`, 'must match or refine the catalog item upstreamRevision with a lowercase hexadecimal prefix extension')
+  }
   requireNonEmptyString(value.implementationRevision, `${path}.implementationRevision`)
   requireOneOf(value.licenseGate, LICENSE_GATES, `${path}.licenseGate`)
   requireNonEmptyString(value.availabilityReason, `${path}.availabilityReason`)

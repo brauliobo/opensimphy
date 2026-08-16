@@ -47,6 +47,8 @@ const adapterSources = [
   'src/awesomePhysics/adapters/typescript/gala.ts',
   'src/awesomePhysics/adapters/typescript/tightBinding.ts',
   'src/awesomePhysics/adapters/typescript/poppy.ts',
+  'src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts',
+  'src/awesomePhysics/adapters/wasm/bullet3.ts',
 ]
 
 function fail(message) {

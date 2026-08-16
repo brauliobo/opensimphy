@@ -9,11 +9,11 @@ test('loads the Awesome Physics catalog with deterministic counts and an accessi
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Projects + archive76')
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Organizations10')
   await expect(page.locator('.awesome-catalog-card')).toHaveCount(86)
-  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(14)
+  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(16)
   await expect(page.getByTestId('footer-awesome-physics')).toHaveAttribute('href', '/awesome-physics')
 })
 
-test('navigates to an available detail with Run and an unavailable detail without Run', async ({ page }) => {
+test('navigates to an available detail and runs the verified Bullet3 default', async ({ page }) => {
   await page.goto('/awesome-physics')
   await expect(page.getByTestId('awesome-physics-catalog-ready')).toBeVisible()
 
@@ -53,9 +53,19 @@ test('navigates to an available detail with Run and an unavailable detail withou
 
   await page.goto('/awesome-physics/awesome-bullet3')
   await expect(page.getByTestId('awesome-physics-detail-ready')).toBeVisible()
-  await expect(page.getByTestId('awesome-physics-no-run')).toBeVisible()
-  await expect(page.getByTestId('awesome-physics-run-panel')).toHaveCount(0)
-  await expect(page.getByTestId('awesome-physics-run')).toHaveCount(0)
+  await expect(page.getByTestId('awesome-physics-run-panel')).toBeVisible()
+
+  await page.getByTestId('awesome-physics-run').click()
+  const bulletStatus = page.getByTestId('awesome-physics-status')
+  await expect.poll(async () => (await bulletStatus.textContent())?.trim() ?? '', {
+    timeout: 15_000,
+    message: 'Bullet3 generic worker did not complete; inspect the detail route for diagnostics',
+  }).toContain('completed')
+
+  const bulletResultText = await page.getByTestId('awesome-physics-result').locator('code').textContent()
+  const bulletOutput = JSON.parse(bulletResultText ?? '') as { operation?: unknown; y?: unknown }
+  expect(bulletOutput.operation).toBe('step')
+  expect(bulletOutput.y).toBeCloseTo(9.997221946716309, 6)
 })
 
 test('runs the verified CoolProp classic-worker route with its typed default', async ({ page }) => {

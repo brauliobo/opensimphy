@@ -50,7 +50,7 @@ describe('Bullet3 headless scalar WASM artifact', () => {
   })
 
   it('matches the fixed artifact size and SHA-256 metadata', () => {
-    expect(BULLET3_SOURCE_REVISION).toBe('63c4d67e3370')
+    expect(BULLET3_SOURCE_REVISION).toBe('63c4d67e337017f9d8b298c900e9aabdb69296e7')
     expect(wasmBytes.byteLength).toBe(BULLET3_ARTIFACT_INTEGRITY.byteSize)
     expect(sha256(wasmBytes)).toBe(BULLET3_ARTIFACT_INTEGRITY.sha256)
     expect(BULLET3_ARTIFACT_INTEGRITY.path).toBe('wasm/awesomePhysics/bullet3/bullet3.wasm')
@@ -71,7 +71,7 @@ describe('Bullet3 headless scalar WASM artifact', () => {
     expect(() => parseBullet3Input({ operation: 'step', padding: 'x'.repeat(BULLET3_BOUNDS.maximumInputBytes) })).toThrow(/input limit/)
   })
 
-  it('returns descriptor compatibility and remains unregistered until central integration', () => {
+  it('returns descriptor compatibility and remains on the generic worker factory path', () => {
     const adapter = createBullet3Adapter(availableDescriptor, new AbortController().signal)
     expect(adapter).toMatchObject({
       adapterId: BULLET3_ADAPTER_ID,
@@ -83,12 +83,13 @@ describe('Bullet3 headless scalar WASM artifact', () => {
         outputRevision: descriptor.outputRevision,
       },
     })
-    expect(awesomePhysicsAdapterFactoryMap.has(BULLET3_ADAPTER_ID)).toBe(false)
+    expect(awesomePhysicsAdapterFactoryMap.has(BULLET3_ADAPTER_ID)).toBe(true)
     expect(descriptor).toMatchObject({
-      execution: 'wasm-candidate',
-      availability: 'unavailable',
-      runnable: false,
-      sourceRevision: '63c4d67e3370',
+      execution: 'wasm',
+      availability: 'available',
+      runnable: true,
+      adapterId: BULLET3_ADAPTER_ID,
+      sourceRevision: BULLET3_SOURCE_REVISION,
     })
   })
 
@@ -108,13 +109,15 @@ describe('Bullet3 headless scalar WASM artifact', () => {
     await expect(adapter.run({ operation: 'step' }, runController.signal)).rejects.toMatchObject({ name: 'AbortError' })
   })
 
-  it('keeps available raw evidence separate from the gated catalog descriptor', () => {
+  it('publishes the verified descriptor and generic worker registration', () => {
     expect(descriptor).toMatchObject({
-      execution: 'wasm-candidate',
-      availability: 'unavailable',
-      runnable: false,
+      execution: 'wasm',
+      availability: 'available',
+      runnable: true,
+      adapterId: BULLET3_ADAPTER_ID,
+      sourceRevision: BULLET3_SOURCE_REVISION,
     })
-    expect(descriptor).not.toHaveProperty('adapterId')
-    expect(awesomePhysicsAdapterFactoryMap.has(BULLET3_ADAPTER_ID)).toBe(false)
+    expect(descriptor).toHaveProperty('adapterId', BULLET3_ADAPTER_ID)
+    expect(awesomePhysicsAdapterFactoryMap.has(BULLET3_ADAPTER_ID)).toBe(true)
   })
 })

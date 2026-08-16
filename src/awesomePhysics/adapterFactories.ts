@@ -20,6 +20,8 @@ export const AWESOME_PHYSICS_ADAPTER_IDS = Object.freeze({
   tightBinding: 'awesome-shut-up-and-calculate-typescript',
   poppy: 'awesome-poppy-typescript',
   coolprop: 'awesome-coolprop-wasm',
+  positionBasedDynamics: 'awesome-positionbaseddynamics-wasm',
+  bullet3: 'awesome-bullet3-wasm',
 })
 
 type AdapterFactoryModuleLoader = (
@@ -84,6 +86,14 @@ export const awesomePhysicsAdapterFactoryMap: ReadonlyMap<string, AdapterFactory
   [AWESOME_PHYSICS_ADAPTER_IDS.coolprop, async (descriptor, signal) => {
     const module = await import('./adapters/wasm/coolprop')
     return module.createCoolPropAdapter(descriptor, signal)
+  }],
+  [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics, async (descriptor, signal) => {
+    const module = await import('./adapters/wasm/positionBasedDynamics')
+    return module.positionBasedDynamicsAdapterFactory(descriptor, signal)
+  }],
+  [AWESOME_PHYSICS_ADAPTER_IDS.bullet3, async (descriptor, signal) => {
+    const module = await import('./adapters/wasm/bullet3')
+    return module.createBullet3AdapterFactory(descriptor, signal)
   }],
 ])
 

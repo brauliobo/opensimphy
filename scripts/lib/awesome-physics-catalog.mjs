@@ -9,6 +9,7 @@ const CATALOG_PATH = "awesome-physics/README.md";
 const MANIFEST_PATH = "awesome-physics-repos/CLONE_MANIFEST.tsv";
 const PLAN_PATH = "AWESOME_PHYSICS_MIGRATION_PLAN.md";
 const WASM_PILOT_MANIFEST_PATH = "scripts/awesomePhysics/wasm-pilots.json";
+const NATIVE_CANDIDATE_MANIFEST_PATH = "scripts/awesomePhysics/native-candidates.json";
 const EXPECTED_PROJECT_ENTRIES = 75;
 const EXPECTED_CLONED_REPOSITORIES = 74;
 const EXPECTED_ORGANIZATIONS = 10;
@@ -694,10 +695,13 @@ const AWESOME_PHYSICS_IMPLEMENTATION_MAP = Object.freeze({
 });
 
 // This path is intentionally separate from local implementations and native
-// candidates. Only this named pilot can become runnable through verified WASM.
+// candidates. Only these named records can become runnable through verified
+// WASM, and every entry is checked against its central artifact manifest.
 const AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP = Object.freeze({
   CoolProp: {
-    pilotId: "coolprop",
+    manifestKind: "wasm-pilots",
+    manifestPath: WASM_PILOT_MANIFEST_PATH,
+    manifestId: "coolprop",
     sourceRevision: "4db89c1ce8d0b0d98ba7f03594f58a845351cf6a",
     adapterId: "awesome-coolprop-wasm",
     modulePath: "src/awesomePhysics/adapters/wasm/coolprop.ts",
@@ -709,6 +713,7 @@ const AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP = Object.freeze({
     outputSchema: "coolprop-output-v1",
     implementationRevision: "coolprop-classic-worker-v1",
     transformation: "Verified pinned CoolProp Emscripten artifact dispatched through a local classic worker; no remote runtime, package, or data fallback is used.",
+    availabilityReason: "Available: the pinned CoolProp WASM pilot passed its availability, license, local integrity, and classic-worker gates.",
     sourceRefs: [
       "src/awesomePhysics/adapters/wasm/coolprop.ts",
       "src/awesomePhysics/wasm/coolpropWorker.ts",
@@ -720,6 +725,63 @@ const AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP = Object.freeze({
       "public/wasm/awesomePhysics/coolprop/NOTICE.md",
       WASM_PILOT_MANIFEST_PATH,
     ],
+    noticeRef: "public/wasm/awesomePhysics/coolprop/NOTICE.md",
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  PositionBasedDynamics: {
+    manifestKind: "native-candidates",
+    manifestPath: NATIVE_CANDIDATE_MANIFEST_PATH,
+    manifestId: "position-based-dynamics",
+    sourceRevision: "beafc921e21553515b4f406258e5b16054a45268",
+    adapterId: "awesome-positionbaseddynamics-wasm",
+    modulePath: "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+    factoryExport: "positionBasedDynamicsAdapterFactory",
+    execution: "wasm",
+    modelOrigin: "upstream-adaptation",
+    numericalMethod: "PositionBasedDynamics scalar distance-constraint correction",
+    inputSchema: "position-based-dynamics-distance-input-v1",
+    outputSchema: "position-based-dynamics-distance-output-v1",
+    implementationRevision: "position-based-dynamics-headless-v1",
+    transformation: "Pinned PositionBasedDynamics CPU solver translation units and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+    sourceRefs: [
+      "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/build-ledger.json",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/README.md",
+    ],
+    licenseRefs: [
+      "awesome-physics-repos/PositionBasedDynamics/LICENSE",
+      "scripts/awesomePhysics/wasm/position-based-dynamics/NOTICE.md",
+      "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md",
+    ],
+    noticeRef: "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md",
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
+  bullet3: {
+    manifestKind: "native-candidates",
+    manifestPath: NATIVE_CANDIDATE_MANIFEST_PATH,
+    manifestId: "bullet3",
+    sourceRevision: "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+    adapterId: "awesome-bullet3-wasm",
+    modulePath: "src/awesomePhysics/adapters/wasm/bullet3.ts",
+    factoryExport: "createBullet3AdapterFactory",
+    execution: "wasm",
+    modelOrigin: "upstream-adaptation",
+    numericalMethod: "Pinned Bullet3 headless scalar collision/dynamics ABI through the generic module worker",
+    inputSchema: "bullet3-input-v1",
+    outputSchema: "bullet3-output-v1",
+    implementationRevision: "bullet3-headless-scalar-wasm-v1",
+    transformation: "Pinned Bullet3 CPU collision/dynamics subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+    sourceRefs: [
+      "src/awesomePhysics/adapters/wasm/bullet3.ts",
+      "scripts/awesomePhysics/wasm/bullet3/README.md",
+      "scripts/awesomePhysics/wasm/bullet3/NOTICE-LEDGER.md",
+    ],
+    licenseRefs: [
+      "awesome-physics-repos/bullet3/LICENSE.txt",
+      "scripts/awesomePhysics/wasm/bullet3/NOTICE-LEDGER.md",
+      "public/wasm/awesomePhysics/bullet3/NOTICE.md",
+    ],
+    noticeRef: "public/wasm/awesomePhysics/bullet3/NOTICE.md",
     runtime: { externalPackages: [], externalData: [], requiresBuild: false },
   },
 });
@@ -984,24 +1046,25 @@ function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
 }
 
-function readWasmPilotRecord(pilotId) {
-  const manifestPath = resolve(OPEN_SIMPHY_ROOT, WASM_PILOT_MANIFEST_PATH);
-  assert(existsSync(manifestPath), `WASM pilot manifest is missing at ${WASM_PILOT_MANIFEST_PATH}`);
+function readVerifiedWasmRecord(manifestKind, manifestPath, manifestId) {
+  const absoluteManifestPath = resolve(OPEN_SIMPHY_ROOT, manifestPath);
+  assert(existsSync(absoluteManifestPath), `Verified WASM manifest is missing at ${manifestPath}`);
   let manifest;
   try {
-    manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+    manifest = JSON.parse(readFileSync(absoluteManifestPath, "utf8"));
   } catch (reason) {
-    throw new Error(`WASM pilot manifest is not valid JSON: ${reason instanceof Error ? reason.message : String(reason)}`);
+    throw new Error(`Verified WASM manifest is not valid JSON: ${reason instanceof Error ? reason.message : String(reason)}`);
   }
-  assert(manifest?.manifestKind === "wasm-pilots", "WASM pilot manifest kind is not wasm-pilots");
-  assert(Array.isArray(manifest.records), "WASM pilot manifest records are missing");
-  const record = manifest.records.find(({ id }) => id === pilotId);
-  assert(record, `WASM pilot manifest is missing ${pilotId}`);
+  assert(manifest?.manifestKind === manifestKind, `Verified WASM manifest kind is not ${manifestKind}`);
+  assert(Array.isArray(manifest.records), `Verified WASM manifest ${manifestPath} records are missing`);
+  const record = manifest.records.find(({ id }) => id === manifestId);
+  assert(record, `Verified WASM manifest ${manifestPath} is missing ${manifestId}`);
   return record;
 }
 
 function verifyLocalWasmArtifact(integrity, label) {
   assert(integrity && typeof integrity === "object" && !Array.isArray(integrity), `${label} integrity is missing`);
+  assert(typeof integrity.path === "string", `${label}.path must be a non-empty path`);
   assertRelativePath(integrity.path, `${label}.path`);
   assert(integrity.path.startsWith("wasm/"), `${label}.path must be under the public WASM directory`);
   assert(typeof integrity.sha256 === "string" && /^[a-f0-9]{64}$/.test(integrity.sha256), `${label}.sha256 must be a lowercase SHA-256 digest`);
@@ -1020,14 +1083,21 @@ function verifyLocalWasmArtifact(integrity, label) {
 }
 
 function assertVerifiedWasmImplementationEntry(name, plan, implementation) {
-  assert(name === "CoolProp", `Verified WASM implementation ${name} is not an explicit pilot`);
-  assert(implementation.pilotId === "coolprop", "CoolProp must use the CoolProp WASM pilot record");
+  const manifestPaths = {
+    "wasm-pilots": WASM_PILOT_MANIFEST_PATH,
+    "native-candidates": NATIVE_CANDIDATE_MANIFEST_PATH,
+  };
+  assert(Object.hasOwn(manifestPaths, implementation.manifestKind),
+    `Verified WASM implementation ${name} has an unsupported artifact manifest kind`);
+  assert(implementation.manifestPath === manifestPaths[implementation.manifestKind],
+    `Verified WASM implementation ${name} must use its declared artifact manifest`);
   const policy = PLAN_POLICIES[name];
   assert(policy, `No policy for verified WASM implementation ${name}`);
-  assert(licenseGate(policy.licenseStatus) === "pass", `Verified WASM implementation ${name} requires a passing plan license gate`);
-  assert(plan.executionOptions.length === 1 && plan.executionOptions[0] === "wasm",
-    `Verified WASM implementation ${name} requires an explicit wasm-only migration route`);
+  assert(plan.executionOptions.length === 1 && (plan.executionOptions[0] === "wasm" || plan.executionOptions[0] === "wasm-candidate"),
+    `Verified WASM implementation ${name} requires an explicit wasm or wasm-candidate migration route`);
   assert(implementation.execution === "wasm", `Verified WASM implementation ${name} must execute as wasm`);
+  assert(/^[a-f0-9]{40}$/.test(implementation.sourceRevision),
+    `Verified WASM implementation ${name} requires a full lowercase source revision`);
   assert(/^[A-Za-z0-9_-]+$/.test(implementation.adapterId), `Verified WASM implementation ${name} has an unsafe adapter ID`);
   assertRelativePath(implementation.modulePath, `${name}.implementation.modulePath`);
   assert(implementation.modulePath.startsWith("src/"), `Verified WASM implementation ${name} module must be under src`);
@@ -1048,21 +1118,27 @@ function assertVerifiedWasmImplementationEntry(name, plan, implementation) {
       `Verified WASM implementation ${name}.${field} must be a non-empty string`);
   }
 
-  const record = readWasmPilotRecord(implementation.pilotId);
-  assert(record.project === name, `WASM pilot ${implementation.pilotId} does not identify ${name}`);
-  assert(record.status === "available", `WASM pilot ${implementation.pilotId} is not available`);
-  assert(record.licenseGate?.status === "pass", `WASM pilot ${implementation.pilotId} does not have a passing license gate`);
-  assert(record.output?.artifactKind === "wasm-module", `WASM pilot ${implementation.pilotId} must declare a wasm-module output`);
+  const record = readVerifiedWasmRecord(implementation.manifestKind, implementation.manifestPath, implementation.manifestId);
+  assert(record.project === name, `Verified WASM record ${implementation.manifestId} does not identify ${name}`);
+  assert(record.status === "available", `Verified WASM record ${implementation.manifestId} is not available`);
+  assert(record.licenseGate?.status === "pass", `Verified WASM record ${implementation.manifestId} does not have a passing license gate`);
+  assert(record.output?.artifactKind === "wasm-module", `Verified WASM record ${implementation.manifestId} must declare a wasm-module output`);
   assert(record.source?.revision === implementation.sourceRevision,
-    `WASM pilot ${implementation.pilotId} source revision does not match the verified implementation`);
+    `Verified WASM record ${implementation.manifestId} source revision does not match the verified implementation`);
   for (const field of ["maxMemoryBytes", "maxArtifactBytes", "maxWorkerTimeMs", "maxOutputBytes"]) {
     assert(Number.isSafeInteger(record.runtime?.[field]) && record.runtime[field] > 0,
-      `WASM pilot ${implementation.pilotId}.runtime.${field} must be a positive safe integer`);
+      `Verified WASM record ${implementation.manifestId}.runtime.${field} must be a positive safe integer`);
   }
-  const artifact = verifyLocalWasmArtifact(record.artifact, `${implementation.pilotId} WASM artifact`);
-  const companion = verifyLocalWasmArtifact(record.artifact?.companion, `${implementation.pilotId} JavaScript companion`);
-  assert(record.evidenceRefs?.includes("public/wasm/awesomePhysics/coolprop/NOTICE.md"),
-    `WASM pilot ${implementation.pilotId} must retain its public notice evidence`);
+  const artifact = verifyLocalWasmArtifact(record.artifact, `${implementation.manifestId} WASM artifact`);
+  let companion = null;
+  if (implementation.manifestKind === "wasm-pilots") {
+    companion = verifyLocalWasmArtifact(record.artifact?.companion, `${implementation.manifestId} JavaScript companion`);
+  } else {
+    assert(record.artifact?.companion === undefined,
+      `Verified WASM record ${implementation.manifestId} must not claim a companion artifact`);
+  }
+  assert(record.evidenceRefs?.includes(implementation.noticeRef),
+    `Verified WASM record ${implementation.manifestId} must retain its public notice evidence`);
   return { record, artifact, companion };
 }
 
@@ -1100,7 +1176,12 @@ function assertImplementationEntry(name, plan, implementation) {
 }
 
 function assertImplementationMap(parsedCatalog, planByName) {
+  const verifiedNames = Object.keys(AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP).sort();
+  assert(JSON.stringify(verifiedNames) === JSON.stringify(["CoolProp", "PositionBasedDynamics", "bullet3"].sort()),
+    "Verified WASM implementation allowlist must contain exactly CoolProp, PositionBasedDynamics, and bullet3");
   for (const [name, implementation] of Object.entries(AWESOME_PHYSICS_IMPLEMENTATION_MAP)) {
+    assert(!Object.hasOwn(AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP, name),
+      `Implementation ${name} must not also appear in the verified WASM allowlist`);
     const catalogRow = parsedCatalog.projects.find((row) => canonicalName(row.title) === name);
     assert(catalogRow, `Implementation map points to a missing catalog item ${name}`);
     const plan = planByName.get(name);
@@ -1301,7 +1382,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     licenseStatus: "unclear",
     licenseText: "Archive rights require review.",
   };
-  const gate = licenseGate(policy.licenseStatus);
+  const gate = verifiedWasm?.record.licenseGate.status ?? licenseGate(policy.licenseStatus);
   if (hasImplementation && verifiedWasm === null) assertImplementationEntry(plan.name, plan, implementation);
   const availability = hasImplementation
     ? "available"
@@ -1311,7 +1392,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
   let availabilityReason;
   if (hasImplementation) {
     availabilityReason = verifiedWasm
-      ? "Available: the pinned CoolProp WASM pilot passed its availability, license, local integrity, and classic-worker gates."
+      ? implementation.availabilityReason ?? `Available: the pinned ${plan.name} WASM artifact passed its availability, license, local integrity, and worker-boundary gates.`
       : "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.";
   } else if (execution === "blocked") {
     availabilityReason = "Blocked: the source access attempt failed and no public canonical source or verified license is available.";
@@ -1333,7 +1414,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     ...item.evidence.maintenanceRefs,
     ...(implementation?.sourceRefs ?? []),
     ...(implementation?.licenseRefs ?? []),
-    ...(verifiedWasm ? [WASM_PILOT_MANIFEST_PATH, ...verifiedWasm.record.source.evidenceRefs, ...verifiedWasm.record.evidenceRefs] : []),
+    ...(verifiedWasm ? [verifiedWasmImplementation.manifestPath, ...verifiedWasm.record.source.evidenceRefs, ...verifiedWasm.record.evidenceRefs] : []),
   ])];
   const limits = verifiedWasm ? {
     ...limitsFor(execution),
@@ -1342,7 +1423,7 @@ function buildSimulation(item, plan, catalogRevision, acquisitionDate) {
     maxOutputBytes: verifiedWasm.record.runtime.maxOutputBytes,
   } : limitsFor(execution);
   assertFiniteLimits(limits, item.id);
-  const sourceRevision = item.upstreamRevision;
+  const sourceRevision = verifiedWasm?.record.source.revision ?? item.upstreamRevision;
   const transformation = implementation?.transformation ?? (item.sourceKind === "archive"
     ? "none: archive was not acquired or reconstructed"
     : item.accessFailure

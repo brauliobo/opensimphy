@@ -83,7 +83,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/bullet3",
-        "revision": "63c4d67e3370",
+        "revision": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
         "files": [
           "CMakeLists.txt",
           "src/BulletCollision",

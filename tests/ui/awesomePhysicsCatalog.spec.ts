@@ -70,7 +70,7 @@ describe('Awesome Physics catalog and detail surfaces', () => {
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Projects + archive76')
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Organizations10')
     expect(wrapper.findAll('.awesome-catalog-card')).toHaveLength(86)
-    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(14)
+    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(16)
     expect(runnerMock).not.toHaveBeenCalled()
     wrapper.unmount()
   })
@@ -96,14 +96,14 @@ describe('Awesome Physics catalog and detail surfaces', () => {
     wrapper.unmount()
   })
 
-  it('exposes Run only for available descriptors and hides it for gated records', async () => {
+  it('exposes Run for verified Bullet3 and hides it for gated records', async () => {
     const router = testRouter()
     await router.push('/awesome-physics')
     const wrapper = mount(AwesomePhysicsCatalogView, { global: { plugins: [router] } })
     await flushPromises()
 
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-matter-js"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
-    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-bullet3"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-bullet3"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-mujoco-py"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-solid-state-simulations-archive"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
     wrapper.unmount()

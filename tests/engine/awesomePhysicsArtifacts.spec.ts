@@ -94,8 +94,8 @@ describe('Awesome Physics artifact manifests and loader', () => {
       licenseGate: { status: 'pass' },
       artifact: {
         path: 'wasm/awesomePhysics/coolprop/coolprop.wasm',
-        sha256: '14a7efa251ea9bd443d37a6629206434689894d12f123202dc9d698a5607f762',
-        byteSize: 9352503,
+        sha256: '57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829',
+        byteSize: 9352013,
         companion: {
           path: 'wasm/awesomePhysics/coolprop/coolprop.js',
           sha256: '0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6',
@@ -116,7 +116,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
     expect(NATIVE_CANDIDATES.find(({ id }) => id === 'bullet3')).toMatchObject({
       status: 'available',
       licenseGate: { status: 'pass' },
-      source: { revision: '63c4d67e3370' },
+      source: { revision: '63c4d67e337017f9d8b298c900e9aabdb69296e7' },
       artifact: {
         path: 'wasm/awesomePhysics/bullet3/bullet3.wasm',
         sha256: '1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425',
@@ -126,11 +126,11 @@ describe('Awesome Physics artifact manifests and loader', () => {
     for (const project of ['PositionBasedDynamics', 'bullet3']) {
       const descriptor = simulations.items.find(({ title }) => title === project)
       expect(descriptor).toMatchObject({
-        execution: 'wasm-candidate',
-        availability: 'unavailable',
-        runnable: false,
+        execution: 'wasm',
+        availability: 'available',
+        runnable: true,
       })
-      expect(descriptor).not.toHaveProperty('adapterId')
+      expect(descriptor?.adapterId).toBeTruthy()
     }
     for (const record of unavailable) {
       expect(['planned', 'blocked']).toContain(record.status)
