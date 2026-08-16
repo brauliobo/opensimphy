@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "generatedAt": "2026-07-17",
   "policy": {
     "publicSourceRecordsCopied": true,
@@ -12,28 +12,28 @@
     "sourceArtifacts": [
       {
         "id": "constants-yaml",
-        "originalPath": "/home/braulio/.local/share/opencode/tool-output/tool_f70257ac8001812KX98v3Yixbl",
+        "sourceIdentifier": "physics-monastery/constants.yaml",
         "preservedPath": "sources/constants.yaml",
         "sha256": "835a383b36bb21d9cd2dff6bb44cec9f2515a01e0fb5740f31f7053735c2bcf9",
         "bytes": 164459
       },
       {
         "id": "symbols-csv",
-        "originalPath": "/tmp/opencode/physics-monastery/symbols.csv",
+        "sourceIdentifier": "physics-monastery/symbols.csv",
         "preservedPath": "sources/symbols.csv",
         "sha256": "3ee17b931be8c76b33d2e9e5aacb5b6ccee82ff438d14200fadb68ad52c7d02f",
         "bytes": 8696
       },
       {
         "id": "published-output",
-        "originalPath": "/tmp/opencode/physics-monastery/latest-output.txt",
+        "sourceIdentifier": "physics-monastery/latest-output.txt",
         "preservedPath": "sources/latest-output.txt",
         "sha256": "eb0308a1a8687d9e01c98be5142da1abef3310ccc618c30e293689def428c210",
         "bytes": 82761
       },
       {
         "id": "number-walls-index",
-        "originalPath": "/tmp/opencode/physics-monastery/number-walls-index.json",
+        "sourceIdentifier": "physics-monastery/number-walls-index.json",
         "preservedPath": "sources/number-walls-index.json",
         "sha256": "201763c4903eeb3d77e09742cae889e1516ac06093210e231dcb39ff2db456ea",
         "bytes": 232012
@@ -42,7 +42,7 @@
     "recoveredSitePdfs": [
       {
         "id": "physics-monastery-288",
-        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/288.pdf",
+        "sourcePath": "data/physics_monastery/site/288.pdf",
         "title": "288",
         "pages": 1,
         "bytes": 4867557,
@@ -56,7 +56,7 @@
       },
       {
         "id": "physics-monastery-combinatorics",
-        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/combinatorics.pdf",
+        "sourcePath": "data/physics_monastery/site/combinatorics.pdf",
         "title": "combinatorics",
         "pages": 1,
         "bytes": 6899660,
@@ -73,7 +73,7 @@
       },
       {
         "id": "physics-monastery-transform_dictionary",
-        "localSourcePath": "/home/braulio/Projects/physics/opensimphy/data/physics_monastery/site/transform_dictionary.pdf",
+        "sourcePath": "data/physics_monastery/site/transform_dictionary.pdf",
         "title": "transform dictionary",
         "pages": 169,
         "bytes": 1904320,

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "artifactRevision": "external-corpus-generated-v1",
+  "expected": {
+    "awesomePhysics": {
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "catalogEntries": 86,
+      "projectEntries": 75,
+      "simulationCapabilities": 76
+    },
+    "earth": {
+      "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+      "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+      "documents": 63,
+      "formulas": 2123,
+      "codeBlocks": 153,
+      "simulationCandidates": 146,
+      "programs": 130,
+      "datasets": 19,
+      "disputedClaims": 4
+    },
+    "provenance": {
+      "contextualPdfs": 15,
+      "earthMarkdown": 63
+    }
+  },
+  "files": [
+    {
+      "path": "generated/awesomePhysics/catalog.json",
+      "sha256": "75b1e7babe46f385d99acde78d956167593ff7fa663b0aa3a58493f8d7b9c596"
+    },
+    {
+      "path": "generated/awesomePhysics/simulations.json",
+      "sha256": "04def7b9fa919d5330dc0a84134813349190bffb7e0acfa03290bdcf34f375c6"
+    },
+    {
+      "path": "generated/earth/manifest.json",
+      "sha256": "af456c6763dc83e0c646c46bbe8c2538ba178abd7539eb03f2fe0069513d3e64"
+    },
+    {
+      "path": "generated/earth/formulas.json",
+      "sha256": "22a3e3c02b93b460d5c82e930c459e4a32f3ca18421c6ef473ccebdd9fde470c"
+    },
+    {
+      "path": "generated/earth/claims.json",
+      "sha256": "d2b4645ca9cec2d967e17a8bd5e06541bbd33c8164343ffbfa602df0de8a49d8"
+    },
+    {
+      "path": "generated/earth/code.json",
+      "sha256": "7d2278fdc8e016e93665fab16f71323a82995b03ad72f71ca24c06780b3ba168"
+    },
+    {
+      "path": "generated/earth/simulations.json",
+      "sha256": "dc3064cb6f384a68557a1ae73b6185efb468a614af4cb870571670925823d108"
+    },
+    {
+      "path": "generated/earth/scientific-simulations.json",
+      "sha256": "414422969d094a070c5e93033f8cf3e130e0270f9d5df9f305c83f2df8e785a1"
+    },
+    {
+      "path": "generated/earth/scientific-coverage.json",
+      "sha256": "1e2dc6f9de0641ae86ada0c3666159efa38d2e89c1a1bd454358984c5796c724"
+    },
+    {
+      "path": "generated/earth/datasets.json",
+      "sha256": "99c65e52b6451da88ced5feabe993dfed9d4ecd3503726d898f427d0989d025e"
+    },
+    {
+      "path": "generated/earth/completion.json",
+      "sha256": "36548084f72c76267f2070b2828bcdbd5100325bef0fb4622283bb21628ed802"
+    },
+    {
+      "path": "generated/provenance.json",
+      "sha256": "e1f8510a9d46a3ea14e2f19e82a23b221e7261f00e6176b6d3afd1654d96b3d1"
+    }
+  ],
+  "directories": [
+    {
+      "path": "generated/earth/documents",
+      "extension": ".json",
+      "count": 63,
+      "sha256": "00f156cb0d775ddfd972be07781bc08fc6b3303346349f31a9902a5014c60406"
+    }
+  ]
+}

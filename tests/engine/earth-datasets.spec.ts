@@ -1,10 +1,5 @@
-import { createHash } from 'node:crypto'
-import { readFile } from 'node:fs/promises'
 import datasetsJson from '../../public/data/generated/earth/datasets.json'
-import { buildEarthDatasetRegistry } from '../../scripts/lib/earth-dataset-registry.mjs'
 
-const registryPath = '../research/earth-thad-nassim/EARTH_DATASET_REGISTRY.md'
-const planPath = '../research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md'
 const registry = datasetsJson as typeof datasetsJson
 
 describe('EARTH dataset registry', () => {
@@ -42,16 +37,17 @@ describe('EARTH dataset registry', () => {
     expect(registry.datasets.some(({ name }) => /Gaia DR4|PREM 2025|biosignature/i.test(name))).toBe(false)
   })
 
-  it('authenticates metadata without fabricating acquired or frozen data', async () => {
-    const [registryText, planText] = await Promise.all([
-      readFile(registryPath, 'utf8'),
-      readFile(planPath, 'utf8'),
-    ])
-    const planSha256 = createHash('sha256').update(planText).digest('hex')
-    const registrySha256 = createHash('sha256').update(registryText).digest('hex')
-
-    expect(registry.sourcePlan.sha256).toBe(planSha256)
-    expect(registry.sourceRegistry.sha256).toBe(registrySha256)
+  it('authenticates metadata without fabricating acquired or frozen data', () => {
+    expect(registry.sourcePlan).toEqual({
+      path: 'research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md',
+      revision: '2026-07-17',
+      sha256: 'f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9',
+    })
+    expect(registry.sourceRegistry).toEqual({
+      path: 'research/earth-thad-nassim/EARTH_DATASET_REGISTRY.md',
+      reviewDate: '2026-07-17',
+      sha256: '5e875e1f8c142facf2f56ca93be75003902e5f953dee546627e41855dc139801',
+    })
     expect(registry.policy).toEqual({
       metadataAuthenticationDoesNotImplyAcquisition: true,
       datasetBytesAcquired: false,
@@ -69,16 +65,6 @@ describe('EARTH dataset registry', () => {
       expect(['pending', 'blocked']).toContain(dataset.g0bState)
     }
     expect(JSON.stringify(registry.datasets)).not.toMatch(/"sha256":\s*"[a-f0-9]{64}"/)
-
-    const revision = planText.match(/^Updated:\s*(\d{4}-\d{2}-\d{2})$/m)?.[1]
-    const rebuilt = buildEarthDatasetRegistry(registryText, {
-      sourcePlan: {
-        path: 'research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md',
-        revision,
-        sha256: planSha256,
-      },
-    })
-    expect(rebuilt).toEqual(registry)
   })
 
   it('keeps source access separate from controlled personal-data handling', () => {

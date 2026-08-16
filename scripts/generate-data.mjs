@@ -3,7 +3,7 @@
 import { createHash } from "node:crypto";
 import { execFile, spawn } from "node:child_process";
 import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import { buildConstantTaxonomy } from "./lib/constant-taxonomy.mjs";
@@ -13,6 +13,7 @@ import { buildEarthEvidenceArtifacts } from "./lib/earth-evidence.mjs";
 import { buildEarthSimulationCoverage } from "./lib/earth-simulation-coverage.mjs";
 import { buildEarthSimulationRegistry } from "./lib/earth-simulation-registry.mjs";
 import { buildAwesomePhysicsArtifacts } from "./lib/awesome-physics-catalog.mjs";
+import { readExternalCorpusArtifacts } from "./lib/external-corpus-artifacts.mjs";
 import { bindPublishedResults, parseConstantsYaml, parsePublishedOutput, parseSymbolsCsv, readJson } from "./lib/source-parser.mjs";
 import { buildTourArtifacts, readTourSource } from "./lib/tour-content.mjs";
 
@@ -23,6 +24,38 @@ const generatedDirectory = join(root, "public", "data", "generated");
 const sitePdfDirectory = join(root, "data", "physics_monastery", "site");
 const tourSourceDirectory = join(root, "content", "tour");
 const run = promisify(execFile);
+const externalCorpusModeArgument = process.argv.find((argument) => argument.startsWith("--external-corpus-mode="));
+const externalCorpusMode = externalCorpusModeArgument?.slice("--external-corpus-mode=".length) ?? "full";
+if (!new Set(["full", "artifact"]).has(externalCorpusMode)) {
+  throw new Error(`Unsupported external corpus mode: ${externalCorpusMode}. Use full or artifact.`);
+}
+if (externalCorpusMode === "artifact" && process.argv.includes("--update-earth-lock")) {
+  throw new Error("--update-earth-lock requires --external-corpus-mode=full");
+}
+
+const EXPECTED_EXTERNAL_CORPUS = Object.freeze({
+  awesomePhysics: {
+    catalogRevision: "807186a1235f3b35aa969718e16b04480e4e5f6a",
+    catalogEntries: 86,
+    projectEntries: 75,
+    simulationCapabilities: 76,
+  },
+  earth: {
+    sourceRevision: "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+    sourceLockSha256: "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+    documents: 63,
+    formulas: 2123,
+    codeBlocks: 153,
+    simulationCandidates: 146,
+    programs: 130,
+    datasets: 19,
+    disputedClaims: 4,
+  },
+  provenance: {
+    contextualPdfs: 15,
+    earthMarkdown: 63,
+  },
+});
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -124,9 +157,11 @@ async function sitePdfMetadata(path) {
   const bytes = await readFile(path);
   const content = bytes.toString("latin1");
   const filename = path.slice(path.lastIndexOf("/") + 1);
+  const sourcePath = relative(root, path).split(sep).join("/");
+  assert(!sourcePath.startsWith("/") && !sourcePath.split("/").includes(".."), `Invalid site PDF source path: ${sourcePath}`);
   return {
     id: `physics-monastery-${filename.replace(/\.pdf$/i, "")}`,
-    localSourcePath: path,
+    sourcePath,
     title: filename.replace(/[-_]/g, " ").replace(/\.pdf$/i, ""),
     pages: content.match(/\/Type\s*\/Page\b/g)?.length ?? null,
     bytes: bytes.byteLength,
@@ -140,6 +175,22 @@ async function sitePdfMetadata(path) {
   };
 }
 
+function assertStableProvenance(value, path = "provenance") {
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => assertStableProvenance(entry, `${path}[${index}]`));
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  for (const [key, entry] of Object.entries(value)) {
+    assert(key !== "localSourcePath" && key !== "originalPath", `${path}.${key} is not a stable provenance field`);
+    if (typeof entry === "string" && (/Path$/.test(key) || key === "sourceIdentifier")) {
+      assert(!entry.startsWith("/") && !/^[A-Za-z]:[\\/]/.test(entry), `${path}.${key} must not be an absolute path`);
+      assert(!entry.includes("\\") && !entry.split("/").includes(".."), `${path}.${key} must be a safe POSIX path`);
+    }
+    assertStableProvenance(entry, `${path}.${key}`);
+  }
+}
+
 await mkdir(generatedDirectory, { recursive: true });
 
 const constantsText = await readFile(join(sourceDirectory, "constants.yaml"), "utf8");
@@ -148,14 +199,25 @@ const publishedText = await readFile(join(sourceDirectory, "latest-output.txt"),
 const wallIndex = await readJson(join(sourceDirectory, "number-walls-index.json"));
 const sourceManifest = await readJson(join(sourceDirectory, "manifest.json"));
 const generatedAt = process.env.SOURCE_DATE || sourceManifest.acquisitionDate;
-const awesomePhysicsCatalogText = await readFile(join(corpusRoot, "awesome-physics", "README.md"), "utf8");
-const awesomePhysicsManifestText = await readFile(join(corpusRoot, "awesome-physics-repos", "CLONE_MANIFEST.tsv"), "utf8");
-const awesomePhysicsPlanText = await readFile(join(corpusRoot, "AWESOME_PHYSICS_MIGRATION_PLAN.md"), "utf8");
-const awesomePhysics = buildAwesomePhysicsArtifacts({
-  catalogText: awesomePhysicsCatalogText,
-  manifestText: awesomePhysicsManifestText,
-  planText: awesomePhysicsPlanText,
-});
+const externalCorpusArtifacts = externalCorpusMode === "artifact"
+  ? await readExternalCorpusArtifacts({ root, sourceDirectory })
+  : null;
+let awesomePhysics;
+if (externalCorpusArtifacts) {
+  awesomePhysics = {
+    catalog: externalCorpusArtifacts.json("generated/awesomePhysics/catalog.json"),
+    simulations: externalCorpusArtifacts.json("generated/awesomePhysics/simulations.json"),
+  };
+} else {
+  const awesomePhysicsCatalogText = await readFile(join(corpusRoot, "awesome-physics", "README.md"), "utf8");
+  const awesomePhysicsManifestText = await readFile(join(corpusRoot, "awesome-physics-repos", "CLONE_MANIFEST.tsv"), "utf8");
+  const awesomePhysicsPlanText = await readFile(join(corpusRoot, "AWESOME_PHYSICS_MIGRATION_PLAN.md"), "utf8");
+  awesomePhysics = buildAwesomePhysicsArtifacts({
+    catalogText: awesomePhysicsCatalogText,
+    manifestText: awesomePhysicsManifestText,
+    planText: awesomePhysicsPlanText,
+  });
+}
 const recipes = parseConstantsYaml(constantsText);
 const symbols = parseSymbolsCsv(symbolsText);
 const published = parsePublishedOutput(publishedText);
@@ -191,66 +253,147 @@ const wallRegistry = wallIndex.map((entry) => ({
   provenanceUrl: `${sourceManifest.walls.find((wall) => wall.id === entry.id)?.url ?? ""}`,
 }));
 
-const indexText = await readFile(join(corpusRoot, "INDEX.md"), "utf8");
-const corpusPdfs = parseIndexPdfs(indexText);
 const sitePdfPaths = (await filesBelow(sitePdfDirectory, ".pdf")).filter((path) => ["288.pdf", "combinatorics.pdf", "transform_dictionary.pdf"].includes(path.slice(path.lastIndexOf("/") + 1)));
 const sitePdfs = await Promise.all(sitePdfPaths.map(sitePdfMetadata));
-const earthRoot = join(corpusRoot, "EARTH");
+assert(sitePdfs.length === 3, `Expected 3 recovered site PDFs, found ${sitePdfs.length}`);
 const earthLockPath = join(sourceDirectory, "earth-source-lock.json");
-const earthDocuments = await readEarthCorpus(earthRoot);
 let earthLock;
-if (process.argv.includes("--update-earth-lock")) {
-  earthLock = createEarthSourceLock(earthDocuments, {
-    lockedAt: generatedAt,
-    sourceRevision: await earthRevision(earthRoot),
-  });
-  await writeFile(earthLockPath, stableJson(earthLock));
-} else {
+let corpusPdfs;
+let earthArtifacts;
+let earthSimulationArtifacts;
+let earthSimulationCoverage;
+let earthDatasetRegistry;
+let earthEvidenceArtifacts;
+let earthDocumentWrites;
+let earthInventory;
+if (externalCorpusArtifacts) {
+  const artifactProvenance = externalCorpusArtifacts.json("generated/provenance.json");
+  const expected = externalCorpusArtifacts.manifest.expected;
+  assert(JSON.stringify(expected) === JSON.stringify(EXPECTED_EXTERNAL_CORPUS), "External corpus artifact expectations are not the pinned release set");
+  assertStableProvenance(artifactProvenance);
+  assert(artifactProvenance.schemaVersion === 2, "External corpus provenance artifact schema is unsupported");
+  assert(Array.isArray(artifactProvenance.contextualPdfs), "External corpus provenance is missing contextual PDFs");
+  assert(Array.isArray(artifactProvenance.earthMarkdown), "External corpus provenance is missing EARTH metadata");
+  assert(artifactProvenance.contextualPdfs.length === expected.provenance.contextualPdfs, "External corpus provenance PDF coverage is incomplete");
+  assert(artifactProvenance.earthMarkdown.length === expected.provenance.earthMarkdown, "External corpus provenance EARTH coverage is incomplete");
+  assert(JSON.stringify(artifactProvenance.physicsMonastery.sourceArtifacts) === JSON.stringify(sourceManifest.preserved), "External corpus provenance source artifact metadata drifted");
+  assert(JSON.stringify(artifactProvenance.physicsMonastery.recoveredSitePdfs) === JSON.stringify(sitePdfs), "External corpus provenance site PDF metadata drifted");
+  corpusPdfs = artifactProvenance.contextualPdfs;
+  earthInventory = artifactProvenance.earthMarkdown;
   earthLock = await readJson(earthLockPath);
+  const manifest = externalCorpusArtifacts.json("generated/earth/manifest.json");
+  const formulas = externalCorpusArtifacts.json("generated/earth/formulas.json");
+  const claims = externalCorpusArtifacts.json("generated/earth/claims.json");
+  const code = externalCorpusArtifacts.json("generated/earth/code.json");
+  const simulations = externalCorpusArtifacts.json("generated/earth/simulations.json");
+  const registry = externalCorpusArtifacts.json("generated/earth/scientific-simulations.json");
+  const coverage = externalCorpusArtifacts.json("generated/earth/scientific-coverage.json");
+  const datasets = externalCorpusArtifacts.json("generated/earth/datasets.json");
+  const completion = externalCorpusArtifacts.json("generated/earth/completion.json");
+  assert(awesomePhysics.catalog.schemaVersion === 1, "External corpus Awesome Physics catalog schema is unsupported");
+  assert(awesomePhysics.catalog.catalogRevision === expected.awesomePhysics.catalogRevision, "External corpus Awesome Physics catalog revision drifted");
+  assert(awesomePhysics.catalog.summary.totalEntries === expected.awesomePhysics.catalogEntries, "External corpus Awesome Physics catalog coverage is incomplete");
+  assert(awesomePhysics.catalog.summary.projectEntries === expected.awesomePhysics.projectEntries, "External corpus Awesome Physics project coverage is incomplete");
+  assert(awesomePhysics.simulations.schemaVersion === 1, "External corpus Awesome Physics simulation schema is unsupported");
+  assert(awesomePhysics.simulations.catalogRevision === expected.awesomePhysics.catalogRevision, "External corpus Awesome Physics simulation revision drifted");
+  assert(awesomePhysics.simulations.summary.sourceCapabilities === expected.awesomePhysics.simulationCapabilities, "External corpus Awesome Physics simulation coverage is incomplete");
+  assert(manifest.sourceRevision === expected.earth.sourceRevision, "External corpus EARTH source revision drifted");
+  assert(manifest.sourceLockSha256 === expected.earth.sourceLockSha256, "External corpus EARTH source lock drifted");
+  assert(manifest.summary.documents === expected.earth.documents, "External corpus EARTH document coverage is incomplete");
+  assert(manifest.summary.formulas === expected.earth.formulas, "External corpus EARTH formula coverage is incomplete");
+  assert(manifest.summary.codeBlocks === expected.earth.codeBlocks, "External corpus EARTH code coverage is incomplete");
+  assert(manifest.summary.simulationCandidates === expected.earth.simulationCandidates, "External corpus EARTH simulation coverage is incomplete");
+  assert(registry.items.length === expected.earth.programs, "External corpus EARTH program coverage is incomplete");
+  assert(datasets.datasets.length === expected.earth.datasets, "External corpus EARTH dataset coverage is incomplete");
+  assert(datasets.disputedClaims.length === expected.earth.disputedClaims, "External corpus EARTH disputed-claim coverage is incomplete");
+  assert(completion.complete === true, "External corpus EARTH completion artifact is incomplete");
+  assert(coverage.summary.exact === true, "External corpus EARTH scientific coverage is not exact");
+  assert(earthLock.source?.revision === manifest.sourceRevision, "External corpus EARTH lock revision does not match its artifact");
+  assert(earthLock.files.length === expected.earth.documents, "External corpus EARTH source lock is incomplete");
+  assert(sha256(Buffer.from(stableJson(earthLock))) === manifest.sourceLockSha256, "External corpus EARTH source lock bytes do not match its artifact");
+  const lockedPaths = new Map(earthLock.files.map(({ path, sha256: digest, bytes }) => [path, { sha256: digest, bytes }]));
+  for (const document of manifest.documents) {
+    const locked = lockedPaths.get(document.source.path);
+    assert(locked?.sha256 === document.source.sha256 && locked.bytes === document.source.bytes, `External corpus EARTH document lock drifted: ${document.source.path}`);
+  }
+  assert(new Set(earthInventory.map(({ id }) => id)).size === expected.earth.documents, "External corpus EARTH provenance IDs are incomplete");
+  assert(new Set(manifest.documents.map(({ id }) => id)).size === expected.earth.documents, "External corpus EARTH document IDs are incomplete");
+  assert(JSON.stringify([...earthInventory].map(({ id }) => id).sort()) === JSON.stringify(manifest.documents.map(({ id }) => id).sort()), "External corpus EARTH provenance IDs drifted");
+  earthArtifacts = { manifest, formulas, claims, code, simulations, shards: [] };
+  earthSimulationArtifacts = { registry, completion };
+  earthSimulationCoverage = coverage;
+  earthDatasetRegistry = datasets;
+  earthEvidenceArtifacts = buildEarthEvidenceArtifacts({
+    manifest: earthArtifacts.manifest,
+    coverage: earthSimulationCoverage,
+    registry: earthSimulationArtifacts.registry,
+    datasets: earthDatasetRegistry,
+  });
+  const documentPrefix = "generated/earth/documents/";
+  earthDocumentWrites = [...externalCorpusArtifacts.files.entries()]
+    .filter(([path]) => path.startsWith(documentPrefix))
+    .map(([path, bytes]) => ({ slug: path.slice(documentPrefix.length, -5), bytes }));
+  assert(earthDocumentWrites.length === expected.earth.documents, "External corpus EARTH document shards are incomplete");
+} else {
+  const indexText = await readFile(join(corpusRoot, "INDEX.md"), "utf8");
+  corpusPdfs = parseIndexPdfs(indexText);
+  assert(corpusPdfs.length === EXPECTED_EXTERNAL_CORPUS.provenance.contextualPdfs, `Expected ${EXPECTED_EXTERNAL_CORPUS.provenance.contextualPdfs} contextual PDFs, found ${corpusPdfs.length}`);
+  const earthRoot = join(corpusRoot, "EARTH");
+  const earthDocuments = await readEarthCorpus(earthRoot);
+  if (process.argv.includes("--update-earth-lock")) {
+    earthLock = createEarthSourceLock(earthDocuments, {
+      lockedAt: generatedAt,
+      sourceRevision: await earthRevision(earthRoot),
+    });
+    await writeFile(earthLockPath, stableJson(earthLock));
+  } else {
+    earthLock = await readJson(earthLockPath);
+  }
+  verifyEarthSourceLock(earthDocuments, earthLock);
+  assert(earthDocuments.length === 63, `Expected 63 locked EARTH documents, found ${earthDocuments.length}`);
+  earthArtifacts = buildEarthArtifacts(earthDocuments, earthLock);
+  const earthPlanPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_SIMULATION_PLAN.md");
+  const earthPlanText = await readFile(earthPlanPath, "utf8");
+  earthSimulationArtifacts = buildEarthSimulationRegistry(earthPlanText, earthArtifacts.manifest);
+  earthSimulationCoverage = buildEarthSimulationCoverage({
+    manifest: earthArtifacts.manifest,
+    formulas: earthArtifacts.formulas,
+    code: earthArtifacts.code,
+    simulations: earthArtifacts.simulations,
+    registry: earthSimulationArtifacts.registry,
+  });
+  const earthDatasetRegistryPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_DATASET_REGISTRY.md");
+  const earthDatasetRegistryText = await readFile(earthDatasetRegistryPath, "utf8");
+  earthDatasetRegistry = buildEarthDatasetRegistry(earthDatasetRegistryText, {
+    sourcePlan: earthSimulationArtifacts.registry.sourcePlan,
+  });
+  earthEvidenceArtifacts = buildEarthEvidenceArtifacts({
+    manifest: earthArtifacts.manifest,
+    coverage: earthSimulationCoverage,
+    registry: earthSimulationArtifacts.registry,
+    datasets: earthDatasetRegistry,
+  });
+  earthDocumentWrites = earthArtifacts.shards.map(({ slug, artifact }) => ({ slug, artifact }));
+  earthInventory = earthArtifacts.manifest.documents.map((document) => ({
+    id: document.id,
+    localPath: `EARTH/${document.source.path}`,
+    title: document.title,
+    bytes: document.source.bytes,
+    sha256: document.source.sha256,
+    family: "earth-local-markdown",
+    contextOnly: true,
+    licenseClaim: earthLock.license.identifier,
+    conceptLinks: conceptLinks(document.title),
+  }));
 }
-verifyEarthSourceLock(earthDocuments, earthLock);
-assert(earthDocuments.length === 63, `Expected 63 locked EARTH documents, found ${earthDocuments.length}`);
-const earthArtifacts = buildEarthArtifacts(earthDocuments, earthLock);
-const earthPlanPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_SIMULATION_PLAN.md");
-const earthPlanText = await readFile(earthPlanPath, "utf8");
-const earthSimulationArtifacts = buildEarthSimulationRegistry(earthPlanText, earthArtifacts.manifest);
-const earthSimulationCoverage = buildEarthSimulationCoverage({
-  manifest: earthArtifacts.manifest,
-  formulas: earthArtifacts.formulas,
-  code: earthArtifacts.code,
-  simulations: earthArtifacts.simulations,
-  registry: earthSimulationArtifacts.registry,
-});
-const earthDatasetRegistryPath = join(corpusRoot, "research", "earth-thad-nassim", "EARTH_DATASET_REGISTRY.md");
-const earthDatasetRegistryText = await readFile(earthDatasetRegistryPath, "utf8");
-const earthDatasetRegistry = buildEarthDatasetRegistry(earthDatasetRegistryText, {
-  sourcePlan: earthSimulationArtifacts.registry.sourcePlan,
-});
-const earthEvidenceArtifacts = buildEarthEvidenceArtifacts({
-  manifest: earthArtifacts.manifest,
-  coverage: earthSimulationCoverage,
-  registry: earthSimulationArtifacts.registry,
-  datasets: earthDatasetRegistry,
-});
 const tourSource = await readTourSource(tourSourceDirectory);
 const tourArtifacts = buildTourArtifacts(tourSource, {
   recipeIds: recipeRegistry.map(({ constant_id: id }) => id),
   programIds: earthSimulationArtifacts.registry.items.map(({ id }) => id),
 });
-const earthInventory = earthArtifacts.manifest.documents.map((document) => ({
-  id: document.id,
-  localPath: `EARTH/${document.source.path}`,
-  title: document.title,
-  bytes: document.source.bytes,
-  sha256: document.source.sha256,
-  family: "earth-local-markdown",
-  contextOnly: true,
-  licenseClaim: earthLock.license.identifier,
-  conceptLinks: conceptLinks(document.title),
-}));
 
 const provenance = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   generatedAt,
   policy: {
     publicSourceRecordsCopied: true,
@@ -266,6 +409,7 @@ const provenance = {
   contextualPdfs: corpusPdfs,
   earthMarkdown: earthInventory,
 };
+assertStableProvenance(provenance);
 
 const earthGeneratedDirectory = join(generatedDirectory, "earth");
 const earthDocumentDirectory = join(earthGeneratedDirectory, "documents");
@@ -280,6 +424,7 @@ const tourSimulationDirectory = join(tourGeneratedDirectory, "simulations");
 await rm(earthDocumentDirectory, { recursive: true, force: true });
 await rm(earthEvidenceDirectory, { recursive: true, force: true });
 await rm(tourGeneratedDirectory, { recursive: true, force: true });
+await rm(awesomePhysicsGeneratedDirectory, { recursive: true, force: true });
 await mkdir(earthDocumentDirectory, { recursive: true });
 await mkdir(earthEvidenceProgramDirectory, { recursive: true });
 await mkdir(earthEvidenceDocumentDirectory, { recursive: true });
@@ -310,7 +455,7 @@ await Promise.all([
   writeFile(join(tourGeneratedDirectory, "glossary.json"), stableJson(tourArtifacts.glossary)),
   writeFile(join(tourGeneratedDirectory, "references.json"), stableJson(tourArtifacts.references)),
   writeFile(join(tourGeneratedDirectory, "claim-vocabulary.json"), stableJson(tourArtifacts.claimVocabulary)),
-  ...earthArtifacts.shards.map(({ slug, artifact }) => writeFile(join(earthDocumentDirectory, `${slug}.json`), stableJson(artifact))),
+  ...earthDocumentWrites.map(({ slug, bytes, artifact }) => writeFile(join(earthDocumentDirectory, `${slug}.json`), bytes ?? stableJson(artifact))),
   ...earthEvidenceArtifacts.programShards.map(({ id, artifact }) => writeFile(join(earthEvidenceProgramDirectory, `${id}.json`), stableJson(artifact))),
   ...earthEvidenceArtifacts.documentShards.map(({ slug, artifact }) => writeFile(join(earthEvidenceDocumentDirectory, `${slug}.json`), stableJson(artifact))),
   ...tourArtifacts.chapters.map((artifact) => writeFile(join(tourChapterDirectory, `${artifact.id}.json`), stableJson(artifact))),
@@ -319,4 +464,4 @@ await Promise.all([
 ]);
 await generateCompletion();
 
-console.log(JSON.stringify({ recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, awesomePhysics: { catalog: awesomePhysics.catalog.summary, simulations: awesomePhysics.simulations.summary }, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary, tour: tourArtifacts.summary }));
+console.log(JSON.stringify({ externalCorpusMode, recipes: recipes.length, symbols: symbols.length, walls: wallIndex.length, corpusPdfs: corpusPdfs.length, sitePdfs: sitePdfs.length, awesomePhysics: { catalog: awesomePhysics.catalog.summary, simulations: awesomePhysics.simulations.summary }, earth: earthArtifacts.manifest.summary, earthScientificSimulations: earthSimulationArtifacts.registry.summary, earthScientificCoverage: earthSimulationCoverage.summary, earthDatasets: earthDatasetRegistry.summary, earthEvidence: earthEvidenceArtifacts.manifest.summary, tour: tourArtifacts.summary }));

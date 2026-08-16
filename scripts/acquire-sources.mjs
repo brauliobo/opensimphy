@@ -113,7 +113,7 @@ for (const input of inputs) {
   await writeFile(join(sourceDirectory, input.target), bytes);
   preserved.push({
     id: input.id,
-    originalPath: input.source,
+    sourceIdentifier: `physics-monastery/${input.target}`,
     preservedPath: `sources/${input.target}`,
     sha256: sha256(bytes),
     bytes: bytes.byteLength,
@@ -143,7 +143,7 @@ const walls = await mapConcurrent(wallIndex, 8, fetchPayload);
 assert(walls.length === 351, `Expected 351 downloaded walls, found ${walls.length}`);
 
 const manifest = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   acquisitionDate,
   sourcePolicy: "Original source bytes are preserved; generated artifacts are stored separately.",
   recipeCount,

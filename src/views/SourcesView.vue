@@ -20,7 +20,7 @@ interface PdfRecord {
   bytes: number
   sha256: string
   sourceUrl?: string | null
-  localPath?: string
+  sourcePath?: string
   accessNote?: string
 }
 

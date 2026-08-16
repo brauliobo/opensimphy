@@ -30,7 +30,7 @@ jobs:
         run: nice -n 10 npm ci
       - name: Generate deterministic data
         run: |
-          nice -n 10 npm run data:generate
+          nice -n 10 npm run data:generate -- --external-corpus-mode=artifact
           nice -n 10 npm run data:generate:fiddles
           nice -n 10 npm run data:generate:fiddle-runtime
           nice -n 10 npm run gray:compile:check
