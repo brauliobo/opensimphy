@@ -181,7 +181,7 @@ test.describe('Edwin Gray Workbench', () => {
     const calibrationPack = await (await page.request.get('/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json')).json()
     await page.evaluate(async (value) => {
       const path = '/data/generated/edwin-gray/motor-fem-calibration-pack-v1.json'
-      const cache = await caches.open('opensimphy-gray-fem-calibration')
+      const cache = await caches.open('opensimphy-gray-fem-calibration-feee86c974cd')
       await cache.put(path, new Response(JSON.stringify({ ...value, status: 'complete' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

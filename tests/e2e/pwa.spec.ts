@@ -6,7 +6,7 @@ const QUICK_LESSON = '/tour/units/physical-quantities?path=quick'
 const GUIDED_CACHE_PREFIX = 'opensimphy-guided-tour-'
 const GRAY_WORKER_CACHE = 'opensimphy-gray-worker'
 const GRAY_LUT_CACHE = 'opensimphy-gray-fem-lut'
-const GRAY_CALIBRATION_CACHE = 'opensimphy-gray-fem-calibration'
+const GRAY_CALIBRATION_CACHE = 'opensimphy-gray-fem-calibration-feee86c974cd'
 const GRAY_PATENT_CONTRACT = GRAY_MACHINE_CONTRACTS[GRAY_PATENT_MACHINE_ID]
 const GRAY_MODEL_INPUT_HASH = GRAY_PATENT_CONTRACT.modelInputHash
 if (!GRAY_MODEL_INPUT_HASH) throw new Error('Generated patent machine contract has no FEM model identity')

@@ -168,7 +168,7 @@ export default defineConfig({
             urlPattern: /\/data\/generated\/edwin-gray\/motor-fem-calibration-pack-v1\.json(?:\?.*)?$/,
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'opensimphy-gray-fem-calibration',
+              cacheName: `opensimphy-gray-fem-calibration-${runtimeRegistryRevision}`,
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 30 },
             },
