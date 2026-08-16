@@ -79,7 +79,7 @@ function validateProfile(profile) {
   assert(stableJson(profile.eventClasses) === stableJson([0, 1, 2]), "calibration profile must contain exactly event classes 0, 1, and 2");
   assert(profile.meshSizeM === 0.025 && profile.driveCurrentA === 10, "calibration mesh/current profile is invalid");
   assert(profile.solverProfile === "direct-mumps-publication-v1", "calibration solver profile is invalid");
-  assert(stableJson(profile.resources) === stableJson({ memoryGiB: 24, memorySwapGiB: 24, cpus: 2, threads: 2, serial: true }), "calibration resource profile is invalid");
+  assert(stableJson(profile.resources) === stableJson({ memoryGiB: 24, memorySwapGiB: 24, cpus: 2, meshThreads: 1, solverThreads: 2, serial: true }), "calibration resource profile is invalid");
   assert(Number.isInteger(profile.hardDeadlineSeconds) && profile.hardDeadlineSeconds > 0 && profile.hardDeadlineSeconds < 29 * 60, "calibration hard deadline must be below 29 minutes");
   assert(profile.energyCoenergyRelativeTolerance === 0.01, "energy/coenergy tolerance must be one percent");
   assert(profile.coarseFineDrift?.measured === 0.011584935659327932 && profile.coarseFineDrift.maximum === 0.02, "calibration coarse/fine drift profile is invalid");
@@ -112,6 +112,17 @@ function artifactPath(jobDir, category, name) {
   if (category === "inputs") return join(jobDir, name === "geometry" ? "geometry-wrapper.geo" : "getdp-wrapper.pro");
   if (category === "logs") return join(jobDir, `${name}.log`);
   return join(jobDir, name);
+}
+
+function validateCommandThreads(environment, eventClass) {
+  for (const [phase, executable, threads] of [["mesh", "gmsh", 1], ["solve", "getdp", 2]]) {
+    const command = environment.execution?.commands?.[phase];
+    const args = [command?.command, ...(command?.options || [])];
+    const executableIndex = args.lastIndexOf(executable);
+    const threadIndex = args.indexOf("-nt", executableIndex);
+    assert(executableIndex >= 0 && threadIndex > executableIndex && args[threadIndex + 1] === String(threads)
+      && args.includes(`OMP_NUM_THREADS=${threads}`), `event class ${eventClass} ${executable} command thread count is invalid`);
+  }
 }
 
 function validateCheckpointArtifacts(jobDir, checkpoint) {
@@ -162,12 +173,17 @@ function validateJob(job, inventoryDir, profile, eventMap) {
   assert(checkpoint.inputHash === checkpoint.jobInputHash, `event class ${job.eventClass} input hash is invalid`);
   assert(checkpoint.backend === "docker", `event class ${job.eventClass} backend is not resource-bounded Docker`);
   assert(checkpoint.solverProfile?.name === profile.solverProfile && SHA256.test(checkpoint.solverProfile.configSha256 || ""), `event class ${job.eventClass} solver profile is invalid`);
-  assert(stableJson(checkpoint.resourceLimits) === stableJson({ memoryGiB: 24, cpus: 2, memorySwapGiB: 24 }), `event class ${job.eventClass} resource limits are invalid`);
+  const expectedResources = { memoryGiB: 24, cpus: 2, memorySwapGiB: 24, meshThreads: 1, solverThreads: 2 };
+  const expectedCommandPlan = {
+    mesh: ["gmsh", "{geometry}", "-3", "-nt", "1", "-format", "msh4", "-o", "{mesh}"],
+    solve: ["getdp", "{problem}", "-nt", "2", "-name", "{solution}", "-msh", "{mesh}", "-solve", "Magnetostatics3D", "-pos", "MagnetostaticResults", ...checkpoint.solverProfile.petscOptions]
+  };
+  assert(stableJson(checkpoint.resourceLimits) === stableJson(expectedResources), `event class ${job.eventClass} resource limits are invalid`);
   assert(checkpoint.solverEnvironment?.identityHash === checkpoint.environmentIdentityHash && SHA256.test(checkpoint.environmentIdentityHash || ""), `event class ${job.eventClass} environment identity is invalid`);
-  assert(checkpoint.solverEnvironment.schemaVersion === "solver-environment-v2", `event class ${job.eventClass} environment version is invalid`);
+  assert(checkpoint.solverEnvironment.schemaVersion === "solver-environment-v3", `event class ${job.eventClass} environment version is invalid`);
   assert(checkpoint.environmentIdentityHash === sha256Bytes(Buffer.from(stableJson(checkpoint.solverEnvironment.identity))), `event class ${job.eventClass} environment identity hash mismatch`);
   assert(checkpoint.solverEnvironment.identity?.backend === "docker", `event class ${job.eventClass} environment backend is invalid`);
-  assert(checkpoint.solverEnvironment.identity?.threadCount === 2, `event class ${job.eventClass} solver thread count is invalid`);
+  assert(stableJson(checkpoint.solverEnvironment.identity?.commandPlan) === stableJson(expectedCommandPlan), `event class ${job.eventClass} command plan is invalid`);
   assert(stableJson(checkpoint.solverEnvironment.identity?.solver) === stableJson(checkpoint.solverProfile), `event class ${job.eventClass} environment solver profile differs from checkpoint`);
   assert(stableJson(checkpoint.solverEnvironment.identity?.resources) === stableJson(checkpoint.resourceLimits), `event class ${job.eventClass} environment resources differ from checkpoint limits`);
   assert(IMMUTABLE_IMAGE.test(checkpoint.solverEnvironment.identity?.image?.image || "")
@@ -177,6 +193,9 @@ function validateJob(job, inventoryDir, profile, eventMap) {
 
   const environment = readJson(join(jobDir, "solver-environment.json"), `event class ${job.eventClass} environment`);
   assert(environment.identityHash === checkpoint.environmentIdentityHash, `event class ${job.eventClass} environment manifest identity differs`);
+  assert(stableJson(environment.resources) === stableJson(expectedResources)
+    && stableJson(environment.commandPlan) === stableJson(expectedCommandPlan), `event class ${job.eventClass} environment manifest plan differs`);
+  validateCommandThreads(environment, job.eventClass);
   const entry = result.entries?.[0];
   assert(result.contract === "edwin-gray-browser-result" && result.contractVersion === 1 && result.status === "complete" && result.entries?.length === 1 && entry?.status === "complete", `event class ${job.eventClass} normalized result is incomplete`);
   assert(stableJson(entry.parameters) === stableJson(parameters), `event class ${job.eventClass} result parameters differ from checkpoint`);
@@ -235,7 +254,13 @@ export function buildCalibrationPack({ inventoryPath, pilotReportPath, symmetryP
       meshSizeM: profile.meshSizeM,
       driveCurrentA: profile.driveCurrentA,
       solverProfile: profile.solverProfile,
-      resources: profile.resources,
+      resources: {
+        memoryGiB: profile.resources.memoryGiB,
+        memorySwapGiB: profile.resources.memorySwapGiB,
+        cpus: profile.resources.cpus,
+        threads: profile.resources.solverThreads,
+        serial: profile.resources.serial
+      },
       hardDeadlineSeconds: profile.hardDeadlineSeconds
     },
     evidence: {

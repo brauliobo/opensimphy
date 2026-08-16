@@ -34,7 +34,7 @@ test("publication image references are immutable or resolved to a repository dig
   );
 });
 
-test("host binary content and thread count participate in environment identity", (t) => {
+test("host binary content, phase thread resources, and command plans participate in environment identity", (t) => {
   const directory = mkdtempSync(join(tmpdir(), "solver-environment-"));
   t.after(() => rmSync(directory, { recursive: true, force: true }));
   const gmsh = join(directory, "gmsh");
@@ -45,16 +45,26 @@ test("host binary content and thread count participate in environment identity",
   chmodSync(getdp, 0o755);
   const runner = { revision: "test", runScriptSha256: "1", environmentModuleSha256: "2" };
   const solver = { name: "iterative-cg-gamg-v1", configSha256: "3" };
-  const resources = { memoryGiB: null, memorySwapGiB: null, cpus: 1 };
-  const first = identifyHostEnvironment({ gmsh, getdp, threads: 1, solver, resources, runner });
-  const repeated = identifyHostEnvironment({ gmsh, getdp, threads: 1, solver, resources, runner });
+  const resources = { memoryGiB: null, memorySwapGiB: null, cpus: 1, meshThreads: 1, solverThreads: 1 };
+  const commandPlan = { mesh: ["gmsh", "-nt", "1"], solve: ["getdp", "-nt", "1"] };
+  const first = identifyHostEnvironment({ gmsh, getdp, solver, resources, commandPlan, runner });
+  const repeated = identifyHostEnvironment({ gmsh, getdp, solver, resources, commandPlan, runner });
   assert.equal(first.identityHash, repeated.identityHash);
 
   writeFileSync(gmsh, "gmsh-b\n");
-  const changedBinary = identifyHostEnvironment({ gmsh, getdp, threads: 1, solver, resources, runner });
-  const changedThreads = identifyHostEnvironment({ gmsh, getdp, threads: 2, solver, resources: { ...resources, cpus: 2 }, runner });
+  const changedBinary = identifyHostEnvironment({ gmsh, getdp, solver, resources, commandPlan, runner });
+  const changedThreads = identifyHostEnvironment({
+    gmsh,
+    getdp,
+    solver,
+    resources: { ...resources, meshThreads: 2 },
+    commandPlan: { ...commandPlan, mesh: ["gmsh", "-nt", "2"] },
+    runner
+  });
+  const changedPlan = identifyHostEnvironment({ gmsh, getdp, solver, resources, commandPlan: { ...commandPlan, mesh: [...commandPlan.mesh, "-algo", "delaunay"] }, runner });
   assert.notEqual(first.identityHash, changedBinary.identityHash);
   assert.notEqual(changedBinary.identityHash, changedThreads.identityHash);
+  assert.notEqual(changedBinary.identityHash, changedPlan.identityHash);
 });
 
 test("environment manifest separates commands from options", () => {
@@ -62,8 +72,8 @@ test("environment manifest separates commands from options", () => {
     identityHash: "a".repeat(64),
     identity: {
       backend: "docker",
-      threadCount: 2,
-      resources: { memoryGiB: 24, memorySwapGiB: 24, cpus: 2 },
+      resources: { memoryGiB: 24, memorySwapGiB: 24, cpus: 2, meshThreads: 1, solverThreads: 2 },
+      commandPlan: { mesh: ["gmsh", "-nt", "1"], solve: ["getdp", "-nt", "2"] },
       solver: { name: "iterative-cg-gamg-v1" },
       runner: { revision: "abc" }
     }
@@ -72,7 +82,8 @@ test("environment manifest separates commands from options", () => {
     mesh: ["docker", "run", "gmsh", "model.geo", "-3"],
     solve: ["docker", "run", "getdp", "model.pro", "-solve", "Magnetostatics3D"]
   });
-  assert.equal(manifest.execution.threadCount, 2);
+  assert.equal(manifest.execution.meshThreads, 1);
+  assert.equal(manifest.execution.solverThreads, 2);
   assert.equal(manifest.execution.resources.memoryGiB, 24);
   assert.equal(manifest.execution.solver.name, "iterative-cg-gamg-v1");
   assert.equal(manifest.execution.commands.mesh.command, "docker");
@@ -126,6 +137,7 @@ test("Docker publication plan hard-caps memory and CPU and selects direct MUMPS"
     "--solver-profile", "direct-mumps-publication-v1",
     "--memory-gib", "24",
     "--cpus", "2",
+    "--mesh-threads", "1",
     "--threads", "2"
   ], { cwd: ROOT, encoding: "utf8" });
   assert.equal(result.status, 0, result.stderr);
@@ -136,6 +148,10 @@ test("Docker publication plan hard-caps memory and CPU and selects direct MUMPS"
   assert.ok(plan.commands.solve.includes("-ksp_type"));
   assert.ok(plan.commands.solve.includes("mumps"));
   assert.ok(plan.commands.solve.includes("-ksp_error_if_not_converged"));
+  assert.equal(plan.commands.mesh[plan.commands.mesh.indexOf("-nt") + 1], "1");
+  assert.equal(plan.commands.solve[plan.commands.solve.indexOf("-nt") + 1], "2");
+  assert.ok(plan.commands.mesh.includes("OMP_NUM_THREADS=1"));
+  assert.ok(plan.commands.solve.includes("OMP_NUM_THREADS=2"));
 });
 
 test("publication fails when the solver profile or exact resource cap is missing", () => {
@@ -144,15 +160,45 @@ test("publication fails when the solver profile or exact resource cap is missing
     join(ROOT, "scripts/run.mjs"), "--dry-run", "--backend", "docker",
     "--docker-bin", "/bin/true", "--docker-image", image, "--publication", ...args
   ], { cwd: ROOT, encoding: "utf8" });
-  let result = run("--memory-gib", "24", "--cpus", "2", "--threads", "2");
+  let result = run("--memory-gib", "24", "--cpus", "2", "--mesh-threads", "1", "--threads", "2");
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /explicit --solver-profile/);
-  result = run("--solver-profile", "direct-mumps-publication-v1", "--memory-gib", "23", "--cpus", "2", "--threads", "2");
+  result = run("--solver-profile", "direct-mumps-publication-v1", "--memory-gib", "23", "--cpus", "2", "--mesh-threads", "1", "--threads", "2");
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /exactly 24 GiB/);
-  result = run("--solver-profile", "direct-mumps-publication-v1", "--memory-gib", "24", "--cpus", "1", "--threads", "2");
+  result = run("--solver-profile", "direct-mumps-publication-v1", "--memory-gib", "24", "--cpus", "1", "--mesh-threads", "1", "--threads", "2");
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /exactly 2/);
+  result = run("--solver-profile", "direct-mumps-publication-v1", "--memory-gib", "24", "--cpus", "2", "--mesh-threads", "2", "--threads", "2");
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /mesh thread limit must be exactly 1/);
+});
+
+test("normal runner defaults mesh threads to solver threads unless explicitly separated", (t) => {
+  const directory = mkdtempSync(join(tmpdir(), "solver-thread-plan-"));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  const gmsh = join(directory, "gmsh");
+  const getdp = join(directory, "getdp");
+  writeFileSync(gmsh, "#!/bin/sh\nexit 0\n");
+  writeFileSync(getdp, "#!/bin/sh\nexit 0\n");
+  chmodSync(gmsh, 0o755);
+  chmodSync(getdp, 0o755);
+  const plan = (...args) => {
+    const result = spawnSync(process.execPath, [
+      join(ROOT, "scripts/run.mjs"), "--dry-run", "--backend", "host",
+      "--gmsh-bin", gmsh, "--getdp-bin", getdp, "--threads", "2", ...args
+    ], { cwd: ROOT, encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr);
+    return JSON.parse(result.stdout);
+  };
+  const compatible = plan();
+  const separated = plan("--mesh-threads", "1");
+  assert.equal(compatible.commands.mesh[compatible.commands.mesh.indexOf("-nt") + 1], "2");
+  assert.equal(separated.commands.mesh[separated.commands.mesh.indexOf("-nt") + 1], "1");
+  assert.equal(separated.commands.solve[separated.commands.solve.indexOf("-nt") + 1], "2");
+  assert.equal(compatible.jobId, separated.jobId);
+  assert.notEqual(compatible.environmentIdentityHash, separated.environmentIdentityHash);
+  assert.notEqual(compatible.inputHash, separated.inputHash);
 });
 
 test("solver configuration bytes and resource budgets change immutable environment identity", (t) => {

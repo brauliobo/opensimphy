@@ -10,7 +10,8 @@
     "memoryGiB": 24,
     "memorySwapGiB": 24,
     "cpus": 2,
-    "threads": 2,
+    "meshThreads": 1,
+    "solverThreads": 2,
     "serial": true
   },
   "hardDeadlineSeconds": 1720,

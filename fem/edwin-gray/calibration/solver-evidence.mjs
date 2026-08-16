@@ -141,7 +141,8 @@ export function validateSolveForAttestation(jobDir, checkpoint, getdpExitStatus)
   assert(checkpoint.parameters?.meshSizeM === 0.025 && checkpoint.parameters.driveCurrentA === 10,
     "calibration solve checkpoint mesh/current is invalid");
   assert(checkpoint.resourceLimits?.memoryGiB === 24 && checkpoint.resourceLimits.memorySwapGiB === 24
-    && checkpoint.resourceLimits.cpus === 2, "calibration solve checkpoint resource limits are invalid");
+    && checkpoint.resourceLimits.cpus === 2 && checkpoint.resourceLimits.meshThreads === 1
+    && checkpoint.resourceLimits.solverThreads === 2, "calibration solve checkpoint resource limits are invalid");
   assert(checkpoint.artifacts?.logs?.getdp == null && checkpoint.artifacts?.convergence == null
     && Object.keys(checkpoint.artifacts?.outputs || {}).length === 0 && checkpoint.solverConvergence == null,
     "calibration solve checkpoint already contains unattested solve evidence");

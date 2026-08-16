@@ -2,8 +2,8 @@
 
 This directory is an opt-in, non-production calibration path. It solves exactly
 event classes 0, 1, and 2 at `0.025 m` and `10 A`, serially, with the pinned
-direct MUMPS publication profile, 24 GiB, two CPUs/threads, and a 1,720 second
-hard wall deadline. The output is always
+direct MUMPS publication profile, 24 GiB, two CPUs, one Gmsh mesh thread, two
+GetDP solver threads, and a 1,720 second hard wall deadline. The output is always
 `motor-fem-calibration-pack-v1.json`; this path cannot write
 `motor-fem-lut-v1.json`.
 
@@ -32,10 +32,11 @@ node fem/edwin-gray/calibration/run-calibration-pack.mjs \
   --work-dir /tmp/edwin-gray-calibration \
   --out /tmp/edwin-gray-calibration/motor-fem-calibration-pack-v1.json \
   --solver-profile direct-mumps-publication-v1 \
-  --memory-gib 24 --cpus 2 --threads 2 \
+  --memory-gib 24 --cpus 2 --mesh-threads 1 --threads 2 \
   --hard-timeout-seconds 1720
 ```
 
-Remove `--plan true` to execute the three fresh jobs. The runner rejects
+Remove `--plan true` to execute or resume the three fresh jobs. The runner rejects
 different resource or deadline arguments and writes the pack only after all
-three checkpoints and their artifacts pass the builder.
+three checkpoints and their artifacts pass the builder. `--mesh-threads 1`
+pins Gmsh meshing independently; `--threads 2` applies only to GetDP.

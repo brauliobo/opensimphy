@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { arch, platform } from "node:os";
 
-export const SOLVER_ENVIRONMENT_VERSION = "solver-environment-v2";
+export const SOLVER_ENVIRONMENT_VERSION = "solver-environment-v3";
 export const SOLVER_SOURCE = Object.freeze({
   kind: "debian-snapshot+getdp-official-sha256",
   baseImage: "debian@sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143",
@@ -81,13 +81,13 @@ export function runnerIdentity({ revision, runScript, environmentModule, solverC
   };
 }
 
-export function identifyHostEnvironment({ gmsh, getdp, threads, solver, resources, runner }) {
+export function identifyHostEnvironment({ gmsh, getdp, solver, resources, commandPlan, runner }) {
   return identify({
     backend: "host",
     architecture: `${platform()}/${arch()}`,
-    threadCount: threads,
     solver,
     resources,
+    commandPlan,
     tools: {
       gmsh: { sha256: sha256(readFileSync(gmsh)) },
       getdp: { sha256: sha256(readFileSync(getdp)) }
@@ -96,13 +96,13 @@ export function identifyHostEnvironment({ gmsh, getdp, threads, solver, resource
   });
 }
 
-export function identifyDockerEnvironment({ image, threads, solver, resources, runner }) {
+export function identifyDockerEnvironment({ image, solver, resources, commandPlan, runner }) {
   return identify({
     backend: "docker",
     architecture: SOLVER_SOURCE.testedArchitecture,
-    threadCount: threads,
     solver,
     resources,
+    commandPlan,
     image,
     software: {
       gmsh: SOLVER_SOURCE.gmshPackage,
@@ -113,13 +113,13 @@ export function identifyDockerEnvironment({ image, threads, solver, resources, r
   });
 }
 
-export function identifyUnavailableEnvironment({ reason, threads, solver, resources, runner }) {
+export function identifyUnavailableEnvironment({ reason, solver, resources, commandPlan, runner }) {
   return identify({
     backend: "unavailable",
     architecture: `${platform()}/${arch()}`,
-    threadCount: threads,
     solver,
     resources,
+    commandPlan,
     reason,
     runner
   });
@@ -139,7 +139,8 @@ export function environmentManifest(environment, commands) {
     identityHash: environment.identityHash,
     ...environment.identity,
     execution: {
-      threadCount: environment.identity.threadCount,
+      meshThreads: environment.identity.resources.meshThreads,
+      solverThreads: environment.identity.resources.solverThreads,
       resources: environment.identity.resources,
       solver: environment.identity.solver,
       commands: Object.fromEntries(Object.entries(commands).map(([phase, command]) => [phase, {

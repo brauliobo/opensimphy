@@ -100,7 +100,8 @@ function usage() {
     "  --solver-config PATH               Versioned PETSc profile configuration",
     "  --memory-gib GIB                   Docker hard memory/swap limit (default: 24)",
     "  --cpus COUNT                       Docker CPU quota (default: thread count)",
-    "  --threads COUNT                    Solver thread count (default: 2 for Docker)",
+    "  --threads COUNT                    GetDP solver thread count (default: 2 for Docker)",
+    "  --mesh-threads COUNT               Gmsh thread count (default: --threads)",
     "  --case PATH                        Case JSON path",
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
@@ -743,18 +744,25 @@ function runnerRevision() {
 }
 
 function identifyBackend(plan, options, inputs) {
-  const threads = positiveInteger(options.threads || process.env.SOLVER_THREADS || (plan.kind === "docker" ? "2" : "1"), "--threads");
-  const cpus = positiveNumber(options.cpus || threads, "--cpus");
+  const solverThreads = positiveInteger(options.threads || process.env.SOLVER_THREADS || (plan.kind === "docker" ? "2" : "1"), "--threads");
+  const meshThreads = positiveInteger(options["mesh-threads"] || solverThreads, "--mesh-threads");
+  const cpus = positiveNumber(options.cpus || solverThreads, "--cpus");
   const memoryGiB = plan.kind === "docker" ? positiveNumber(options["memory-gib"] || "24", "--memory-gib") : null;
   const solver = solverProfile(inputs, options);
+  const commandPlan = {
+    mesh: ["gmsh", "{geometry}", "-3", "-nt", String(meshThreads), "-format", "msh4", "-o", "{mesh}"],
+    solve: ["getdp", "{problem}", "-nt", String(solverThreads), "-name", "{solution}", "-msh", "{mesh}", "-solve", "Magnetostatics3D", "-pos", "MagnetostaticResults", ...solver.petscOptions]
+  };
   if (options.publication) {
     assert(plan.kind === "docker", "Publication requires the memory-bounded Docker backend");
-    assert(options["memory-gib"] && options.cpus && options.threads, "Publication requires explicit --memory-gib, --cpus, and --threads limits");
+    assert(options["memory-gib"] && options.cpus && options.threads && options["mesh-threads"],
+      "Publication requires explicit --memory-gib, --cpus, --threads, and --mesh-threads limits");
     assert(memoryGiB === solver.requiredMemoryGiB && memoryGiB === 24, "Publication Docker memory must be exactly 24 GiB");
-    assert(cpus === solver.requiredCpus && threads === solver.requiredThreads && cpus === 2 && threads === 2,
-      "Publication CPU and thread limits must be exactly 2");
+    assert(cpus === solver.requiredCpus && solverThreads === solver.requiredThreads && cpus === 2 && solverThreads === 2,
+      "Publication CPU and solver thread limits must be exactly 2");
+    assert(meshThreads === 1, "Publication mesh thread limit must be exactly 1");
   }
-  const resources = { memoryGiB, cpus, memorySwapGiB: memoryGiB };
+  const resources = { memoryGiB, cpus, memorySwapGiB: memoryGiB, meshThreads, solverThreads };
   const runner = runnerIdentity({
     revision: runnerRevision(),
     runScript: RUN_SCRIPT,
@@ -764,11 +772,12 @@ function identifyBackend(plan, options, inputs) {
   if (plan.kind === "host") {
     return {
       ...plan,
-      threads,
+      meshThreads,
+      solverThreads,
       cpus,
       memoryGiB,
       solver,
-      environment: identifyHostEnvironment({ gmsh: plan.gmsh, getdp: plan.getdp, threads, solver, resources, runner })
+      environment: identifyHostEnvironment({ gmsh: plan.gmsh, getdp: plan.getdp, solver, resources, commandPlan, runner })
     };
   }
   if (plan.kind === "docker") {
@@ -778,20 +787,22 @@ function identifyBackend(plan, options, inputs) {
       image: image.image,
       requestedImage: image.requestedImage,
       imageDigest: image.digest,
-      threads,
+      meshThreads,
+      solverThreads,
       cpus,
       memoryGiB,
       solver,
-      environment: identifyDockerEnvironment({ image, threads, solver, resources, runner })
+      environment: identifyDockerEnvironment({ image, solver, resources, commandPlan, runner })
     };
   }
   return {
     ...plan,
-    threads,
+    meshThreads,
+    solverThreads,
     cpus,
     memoryGiB,
     solver,
-    environment: identifyUnavailableEnvironment({ reason: plan.reason, threads, solver, resources, runner })
+    environment: identifyUnavailableEnvironment({ reason: plan.reason, solver, resources, commandPlan, runner })
   };
 }
 
@@ -809,7 +820,7 @@ function dockerPath(path, root, runRoot) {
   return `/workspace/${relative(root, path)}`;
 }
 
-function dockerCommand(plan, root, cwd, command, args, runRoot) {
+function dockerCommand(plan, root, cwd, command, args, runRoot, threadCount) {
   const mountCwd = "/workspace";
   const translatedArgs = args.map((arg) => {
     if (typeof arg !== "string") {
@@ -846,7 +857,7 @@ function dockerCommand(plan, root, cwd, command, args, runRoot) {
     "-v",
     `${runRoot}:/output:rw`,
     "-e",
-    `OMP_NUM_THREADS=${plan.threads}`,
+    `OMP_NUM_THREADS=${threadCount}`,
     "-e",
     `SOLVER_IMAGE_REFERENCE=${plan.image}`,
     "-e",
@@ -862,7 +873,8 @@ function dockerCommand(plan, root, cwd, command, args, runRoot) {
 }
 
 function runCommand({ plan, root, cwd, command, args, logName, runRoot, commandLine }) {
-  const fullArgs = commandLine || (plan.kind === "docker" ? dockerCommand(plan, root, cwd, command, args, runRoot) : [command, ...args]);
+  const threadCount = command === plan.gmsh ? plan.meshThreads : plan.solverThreads;
+  const fullArgs = commandLine || (plan.kind === "docker" ? dockerCommand(plan, root, cwd, command, args, runRoot, threadCount) : [command, ...args]);
   const executable = fullArgs[0];
   const executableArgs = fullArgs.slice(1);
   const result = spawnSync(executable, executableArgs, {
@@ -1008,6 +1020,10 @@ function reuseMesh(job, checkpoint, sourceCheckpointPath, commands) {
   assert(source.phases?.mesh === "complete" && source.meshQuality === "passed", "Reusable mesh checkpoint is incomplete");
   assert(source.artifacts?.inputs?.geometry === sha256File(job.geoWrapperPath), "Reusable mesh geometry input does not match the job");
   assert(source.backend === job.plan.kind, "Reusable mesh backend does not match the job");
+  assert(source.solverEnvironment?.identity?.resources?.meshThreads === job.plan.meshThreads,
+    "Reusable mesh thread count does not match the job");
+  assert(stableJson(source.solverEnvironment?.identity?.commandPlan?.mesh) === stableJson(job.plan.environment.identity.commandPlan.mesh),
+    "Reusable mesh command plan does not match the job");
   if (job.plan.kind === "docker") {
     assert(source.solverEnvironment?.identity?.image?.digest === job.plan.environment.identity.image.digest, "Reusable mesh Docker image does not match the job");
   } else {
@@ -1047,11 +1063,11 @@ function commandPlan(job) {
   const geoPath = job.geoWrapperPath;
   const proPath = job.proWrapperPath;
   const outputName = join(jobDir, "motor.msh");
-  const gmshArgs = [geoPath, "-3", "-nt", String(plan.threads), "-format", "msh4", "-o", outputName];
+  const gmshArgs = [geoPath, "-3", "-nt", String(plan.meshThreads), "-format", "msh4", "-o", outputName];
   const getdpArgs = [
     proPath,
     "-nt",
-    String(plan.threads),
+    String(plan.solverThreads),
     "-name",
     join(jobDir, "solve"),
     "-msh",
@@ -1070,10 +1086,19 @@ function commandPlan(job) {
     "--geometry-sha256", sha256File(inputs.geoPath),
     "--command", [plan.gmsh, ...gmshArgs].join(" ")
   ];
+  const identityPlan = {
+    mesh: ["gmsh", "{geometry}", ...gmshArgs.slice(1, -1), "{mesh}"],
+    solve: ["getdp", "{problem}", ...getdpArgs.slice(1).map((value) => {
+      if (value === join(jobDir, "solve")) return "{solution}";
+      if (value === meshPath) return "{mesh}";
+      return value;
+    })]
+  };
+  assert(stableJson(identityPlan) === stableJson(plan.environment.identity.commandPlan), "Command plan differs from the solver environment identity");
   return {
-    mesh: plan.kind === "docker" ? dockerCommand(plan, ROOT, ROOT, "gmsh", gmshArgs, runRoot) : [plan.gmsh, ...gmshArgs],
+    mesh: plan.kind === "docker" ? dockerCommand(plan, ROOT, ROOT, "gmsh", gmshArgs, runRoot, plan.meshThreads) : [plan.gmsh, ...gmshArgs],
     audit: [process.execPath, ...auditArgs],
-    solve: plan.kind === "docker" ? dockerCommand(plan, ROOT, jobDir, "getdp", getdpArgs, runRoot) : [plan.getdp, ...getdpArgs]
+    solve: plan.kind === "docker" ? dockerCommand(plan, ROOT, jobDir, "getdp", getdpArgs, runRoot, plan.solverThreads) : [plan.getdp, ...getdpArgs]
   };
 }
 

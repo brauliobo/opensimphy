@@ -19,6 +19,14 @@ const SCENARIOS = JSON.parse(readFileSync(SCENARIOS_PATH, "utf8"));
 const MODEL_HASH = sha256("one calibration model");
 const SOLVER_CONFIG_HASH = sha256("direct MUMPS fixture profile");
 const IMAGE_DIGEST = `sha256:${"d".repeat(64)}`;
+const PETSC_OPTIONS = [
+  "-ksp_type", "preonly",
+  "-pc_type", "lu",
+  "-pc_factor_mat_solver_type", "mumps",
+  "-ksp_monitor_true_residual",
+  "-ksp_converged_reason",
+  "-ksp_error_if_not_converged"
+];
 
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
@@ -52,25 +60,40 @@ function jobFixture(root, eventClass) {
     mode: "direct",
     kspType: "preonly",
     pcType: "lu",
-    factorSolverType: "mumps"
+    factorSolverType: "mumps",
+    petscOptions: PETSC_OPTIONS
+  };
+  const resources = { memoryGiB: 24, cpus: 2, memorySwapGiB: 24, meshThreads: 1, solverThreads: 2 };
+  const commandPlan = {
+    mesh: ["gmsh", "{geometry}", "-3", "-nt", "1", "-format", "msh4", "-o", "{mesh}"],
+    solve: ["getdp", "{problem}", "-nt", "2", "-name", "{solution}", "-msh", "{mesh}", "-solve", "Magnetostatics3D", "-pos", "MagnetostaticResults", ...PETSC_OPTIONS]
   };
   const environmentIdentity = {
     backend: "docker",
-    threadCount: 2,
     solver: solverProfile,
-    resources: { memoryGiB: 24, cpus: 2, memorySwapGiB: 24 },
+    resources,
+    commandPlan,
     image: { image: IMAGE_DIGEST, digest: IMAGE_DIGEST }
   };
   const environmentHash = sha256(stableJson(environmentIdentity));
   const environment = {
-    schemaVersion: "solver-environment-v2",
+    schemaVersion: "solver-environment-v3",
     identityHash: environmentHash,
     backend: "docker",
-    threadCount: 2,
     solver: solverProfile,
-    resources: environmentIdentity.resources,
+    resources,
+    commandPlan,
     image: environmentIdentity.image,
-    execution: { threadCount: 2 }
+    execution: {
+      meshThreads: 1,
+      solverThreads: 2,
+      resources,
+      solver: solverProfile,
+      commands: {
+        mesh: { command: "docker", options: ["run", "-e", "OMP_NUM_THREADS=1", IMAGE_DIGEST, "gmsh", "/workspace/geometry.geo", "-3", "-nt", "1"] },
+        solve: { command: "docker", options: ["run", "-e", "OMP_NUM_THREADS=2", IMAGE_DIGEST, "getdp", "/output/problem.pro", "-nt", "2"] }
+      }
+    }
   };
   const files = {
     "solver-environment.json": `${JSON.stringify(environment)}\n`,
@@ -145,10 +168,10 @@ function jobFixture(root, eventClass) {
     parameters,
     backend: "docker",
     solverProfile,
-    resourceLimits: { memoryGiB: 24, cpus: 2, memorySwapGiB: 24 },
+    resourceLimits: resources,
     environmentIdentityHash: environmentHash,
     solverEnvironment: {
-      schemaVersion: "solver-environment-v2",
+      schemaVersion: "solver-environment-v3",
       identityHash: environmentHash,
       identity: environmentIdentity
     },
@@ -393,6 +416,13 @@ test("resource and hard wall limit drift fail closed", async (t) => {
     writeJson(context.inventoryPath, inventory);
     assert.throws(() => build(context), /resource\/wall execution contract is invalid/);
   });
+  await t.test("mesh command plan", () => {
+    const context = fixture(t);
+    rewriteCheckpoint(context.jobs[1], (checkpoint) => {
+      checkpoint.solverEnvironment.identity.commandPlan.mesh[4] = "2";
+    });
+    assert.throws(() => build(context), /environment identity hash mismatch/);
+  });
 });
 
 test("missing event class cannot produce a calibration pack", (t) => {
@@ -415,6 +445,7 @@ test("runner plan is serial, resource-bounded, deadline-bounded, and LUT-safe", 
     "--solver-profile", "direct-mumps-publication-v1",
     "--memory-gib", "24",
     "--cpus", "2",
+    "--mesh-threads", "1",
     "--threads", "2",
     "--hard-timeout-seconds", "1720"
   ], { cwd: ROOT, encoding: "utf8" });
@@ -425,7 +456,32 @@ test("runner plan is serial, resource-bounded, deadline-bounded, and LUT-safe", 
   assert(plan.commands.every((item) => item.timeout.includes("1720s")));
   assert(plan.commands.every((item) => item.command.includes("--publication")));
   assert(plan.commands.every((item) => item.command.includes("direct-mumps-publication-v1")));
+  assert(plan.commands.every((item) => item.command.includes("--mesh-threads") && item.command.includes("1")));
   assert(!JSON.stringify(plan).includes("motor-fem-lut-v1.json"));
+});
+
+test("calibration runner rejects mesh and solver thread drift", () => {
+  const image = `fixture@sha256:${"a".repeat(64)}`;
+  const run = (meshThreads, solverThreads) => spawnSync(process.execPath, [
+    RUNNER_PATH,
+    "--plan", "true",
+    "--docker-image", image,
+    "--pilot-report", "/not-read-in-plan.json",
+    "--work-dir", "/tmp/calibration-plan",
+    "--out", "/tmp/calibration-plan/motor-fem-calibration-pack-v1.json",
+    "--solver-profile", "direct-mumps-publication-v1",
+    "--memory-gib", "24",
+    "--cpus", "2",
+    "--mesh-threads", String(meshThreads),
+    "--threads", String(solverThreads),
+    "--hard-timeout-seconds", "1720"
+  ], { cwd: ROOT, encoding: "utf8" });
+  let result = run(2, 2);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /--mesh-threads must be 1/);
+  result = run(1, 1);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /--threads must be 2/);
 });
 
 test("calibration schema fixes the non-production output contract", () => {
@@ -438,4 +494,6 @@ test("calibration schema fixes the non-production output contract", () => {
   assert.deepEqual(schema.properties.configuration.properties.eventClasses.const, [0, 1, 2]);
   assert.equal(schema.properties.configuration.properties.hardDeadlineSeconds.exclusiveMaximum, 1740);
   assert.equal(PROFILE.hardDeadlineSeconds, 1720);
+  assert.equal(PROFILE.resources.meshThreads, 1);
+  assert.equal(PROFILE.resources.solverThreads, 2);
 });

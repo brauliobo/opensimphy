@@ -44,7 +44,8 @@ function fixedConfiguration(options, profile) {
   assert(options["solver-profile"] === profile.solverProfile, `--solver-profile must be ${profile.solverProfile}`);
   assert(Number(options["memory-gib"]) === profile.resources.memoryGiB, `--memory-gib must be ${profile.resources.memoryGiB}`);
   assert(Number(options.cpus) === profile.resources.cpus, `--cpus must be ${profile.resources.cpus}`);
-  assert(Number(options.threads) === profile.resources.threads, `--threads must be ${profile.resources.threads}`);
+  assert(Number(options["mesh-threads"]) === profile.resources.meshThreads, `--mesh-threads must be ${profile.resources.meshThreads}`);
+  assert(Number(options.threads) === profile.resources.solverThreads, `--threads must be ${profile.resources.solverThreads}`);
   assert(Number(options["hard-timeout-seconds"]) === profile.hardDeadlineSeconds, `--hard-timeout-seconds must be ${profile.hardDeadlineSeconds}`);
   assert(profile.resources.serial === true && profile.hardDeadlineSeconds < 29 * 60, "profile is not a serial sub-29-minute execution contract");
 }
@@ -64,7 +65,8 @@ function runArguments({ options, profile, event, runDir }) {
     "--solver-profile", profile.solverProfile,
     "--memory-gib", String(profile.resources.memoryGiB),
     "--cpus", String(profile.resources.cpus),
-    "--threads", String(profile.resources.threads)
+    "--mesh-threads", String(profile.resources.meshThreads),
+    "--threads", String(profile.resources.solverThreads)
   ];
 }
 
