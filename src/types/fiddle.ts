@@ -85,6 +85,7 @@ export interface FiddleRuntimeBatch {
   id: string
   firstPosition: number
   lastPosition: number
+  sha256: string
   startedAt: string
   completedAt: string
   engine: string

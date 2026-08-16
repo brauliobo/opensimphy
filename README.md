@@ -137,7 +137,7 @@ npm run e2e:pwa
 npm run verify
 ```
 
-`npm run verify` runs deterministic data generation, type checking, all Vitest suites, the production build, and `check:routes`. The route check inspects built transitive closures, dedicated worker isolation, and PWA ownership boundaries. Playwright is separate because it requires Chromium: `npm run e2e` and `npm run e2e:chromium` run the default development-server suite, while `npm run e2e:pwa` builds and runs the service-worker test against production preview.
+`npm run verify` runs deterministic data generation, regenerates the Chenopdodium Fiddle registry and normalized runtime ledger from the committed evidence, then runs type checking, all Vitest suites, the production build, and `check:routes`. The route check inspects built transitive closures, dedicated worker isolation, and PWA ownership boundaries. Playwright is separate because it requires Chromium: `npm run e2e` and `npm run e2e:chromium` run the default development-server suite, while `npm run e2e:pwa` builds and runs the service-worker test against production preview.
 
 `npm run data:generate` rebuilds the deterministic browser registries and completion audit from retained source artifacts. It fails if the sibling EARTH corpus differs from `public/data/sources/earth-source-lock.json`. `npm run data:lock:earth` is the explicit acceptance path for a clean new EARTH revision. `npm run data:acquire` is the explicit network refresh path for the 351 source payloads; both update commands are intentionally excluded from routine verification so a source change cannot silently rewrite the corpus.
 

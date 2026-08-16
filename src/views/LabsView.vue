@@ -50,8 +50,8 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
       p Preserved external-source indexes are separated from OpenSimPhy-owned laboratories and do not imply local execution or scientific validation.
     .topic-featured-grid.author-collection-grid
       RouterLink(:to="{ name: 'fiddle-archive' }")
-        span Chenopdodium / Chantal Roth
+        span Chenopdodium author collection
         strong Fiddle source archive
-        p 780 external source records / 16 profile pages. External runtime status pending.
+        p 780 external source records / 16 profile pages. Recorded Chromium pass: 710 rendered without uncaught page errors; retained failed requests may still exist. Scientific validations: 0.
         small Open the author collection ->
 </template>

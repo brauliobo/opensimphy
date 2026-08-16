@@ -7,9 +7,9 @@
   },
   "methodology": {
     "scope": "Chromium runtime rendering of all 780 indexed external Chenopdodium JSFiddle records.",
-    "classification": "verified means meaningful rendered content with no observed uncaught page error; rendered-with-errors is never clean-rendered.",
-    "retryPolicy": "Every non-verified first attempt was retried exactly once; the final attempt determines status.",
-    "caveat": "Browser runtime rendering is not scientific validation. No record was scientifically validated by this check."
+    "classification": "The schema key verified means meaningful rendered content with no observed uncaught page errors. Retained failed requests may still exist for records in this class.",
+    "retryPolicy": "Every first attempt outside that rendered-without-uncaught-page-errors class was retried exactly once; the final attempt determines status.",
+    "caveat": "Browser runtime rendering is not scientific validation. No record was scientifically validated by this check. This published ledger contains normalized summaries; detailed evidence is retained in data/fiddles/runtime/."
   },
   "environment": {
     "batches": [
@@ -17,6 +17,7 @@
         "id": "001-195",
         "firstPosition": 1,
         "lastPosition": 195,
+        "sha256": "ba4d9c5348204186f25ef42e7105acbf02e1683d834e8c0350878100e7544d28",
         "startedAt": "2026-08-15T23:42:00.245Z",
         "completedAt": "2026-08-15T23:46:26.016Z",
         "engine": "Chromium",
@@ -27,6 +28,7 @@
         "id": "196-390",
         "firstPosition": 196,
         "lastPosition": 390,
+        "sha256": "bbaec621adc1bf036cd6be79bc8a5d3faaf80c1659434f04c149b354bee44a1f",
         "startedAt": "2026-08-15T23:41:50.085Z",
         "completedAt": "2026-08-15T23:47:30.991Z",
         "engine": "chromium",
@@ -37,6 +39,7 @@
         "id": "391-585",
         "firstPosition": 391,
         "lastPosition": 585,
+        "sha256": "d08592c2f6eaba0c68713b86cbbafb672bd5474fb76fc44c965e5cb3b79f924d",
         "startedAt": "2026-08-15T23:45:46.722Z",
         "completedAt": "2026-08-15T23:48:26.535Z",
         "engine": "Chromium",
@@ -47,6 +50,7 @@
         "id": "586-780",
         "firstPosition": 586,
         "lastPosition": 780,
+        "sha256": "f3a2698675187672ce6d0320861ec3e73bcaf2434888f6ba2a11fbcc28c6655e",
         "startedAt": "2026-08-15T23:42:28.801Z",
         "completedAt": "2026-08-15T23:48:36.225Z",
         "engine": "Chromium",

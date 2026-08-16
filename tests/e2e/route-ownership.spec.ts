@@ -302,7 +302,7 @@ test('/labs owns only the completion report', async ({ page }) => {
   await expect(page.locator('.lab-choice-grid > a')).toHaveCount(3)
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('.lab-choice-grid a[href*="chenopdodium"]')).toHaveCount(0)
-  await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('Chenopdodium / Chantal Roth')
+  await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('Chenopdodium author collection')
   await expect(page.locator('.author-collection-grid a[href="/labs/authors/chenopdodium"]')).toContainText('780 external source records / 16 profile pages')
   await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')
 })

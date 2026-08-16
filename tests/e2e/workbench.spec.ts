@@ -53,7 +53,8 @@ test('/labs presents three owned labs and a separate author collection without e
     '/labs/earth/EARTH-PLAN-008',
   ])
   await expect(page.locator('.author-collection-grid > a')).toHaveAttribute('href', '/labs/authors/chenopdodium')
-  await expect(page.locator('.author-collection-grid > a')).toContainText(/external runtime status pending/i)
+  await expect(page.locator('.author-collection-grid > a')).toContainText(/710 rendered without uncaught page errors/i)
+  await expect(page.locator('.author-collection-grid > a')).toContainText(/retained failed requests may still exist/i)
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('a[href="/earth/programs"]')).toContainText('Program Registry')
   expect([...new Set(requests.filter((path) => path.startsWith('/data/')))]).toEqual(['/data/generated/completion.json'])

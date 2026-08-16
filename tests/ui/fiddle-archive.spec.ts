@@ -48,12 +48,13 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(wrapper.get('.fiddle-results-header h2').text()).toBe('Records 1-50')
     expect(wrapper.get('button[aria-label="Source profile page 16, records 750-780"]').text()).toContain('750-780')
     expect(wrapper.get('.fiddle-page-footer a').attributes('href')).toBe('https://jsfiddle.net/u/Chenopdodium/fiddles/')
-    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('clean-rendered 710')
-    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('28 rendered with errors')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('710 rendered meaningful content without uncaught page errors')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('retained failed requests may still exist')
+    expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('28 rendered with uncaught page errors')
     expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('17 were empty')
     expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('25 timed out')
     expect(wrapper.get('[data-testid="fiddle-source-boundary"]').text()).toContain('Scientifically validated by this check: 0')
-    expect(wrapper.get('[data-testid="fiddle-card-1"]').text()).toContain('Runtime: clean-rendered / 1 attempt')
+    expect(wrapper.get('[data-testid="fiddle-card-1"]').text()).toContain('Runtime: rendered without uncaught page errors / 1 attempt')
   })
 
   it('filters cards by recorded runtime status', async () => {
@@ -67,6 +68,7 @@ describe('Fiddle archive and detail surfaces', () => {
 
     expect(router.currentRoute.value.query).toEqual({ runtime: 'rendered-with-errors' })
     expect(wrapper.get('[data-testid="fiddle-result-count"]').text()).toContain('28 / 780')
+    expect(wrapper.get('.fiddle-filter-summary').attributes()).toMatchObject({ role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' })
     const matchingRuntime = runtimeJson.records.find(({ status }) => status === 'rendered-with-errors')!
     const matchingRecord = registry.records[matchingRuntime.position - 1]!
     await wrapper.get(`button[aria-label^="Source profile page ${matchingRecord.page},"]`).trigger('click')
@@ -88,6 +90,8 @@ describe('Fiddle archive and detail surfaces', () => {
     expect(detail.text()).toContain(`Batch ${runtimeRecord.batch}`)
     expect(detail.text()).toContain(runtimeRecord.pageErrors[0]!)
     expect(detail.text()).toContain('not a local Vue port')
+    expect(detail.text()).toContain('published ledger contains normalized summaries')
+    expect(detail.text()).toContain('data/fiddles/runtime/')
   })
 
   it('links the selected archive and record pages to their captured profile pages', async () => {
@@ -150,7 +154,8 @@ describe('Fiddle archive and detail surfaces', () => {
     await flushPromises()
 
     expect(wrapper.find('[data-testid="fiddle-live-iframe"]').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('clean-rendered')
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('rendered without uncaught page errors')
+    expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('Retained failed requests may still exist')
     expect(wrapper.get('[data-testid="fiddle-record-boundary"]').text()).toContain('scientifically validated by this check: 0')
     expect(wrapper.get('[data-testid="fiddle-runtime-detail"]').text()).toContain('1')
     expect(wrapper.get('[data-testid="fiddle-runtime-detail"]').text()).toContain('Batch 001-195')

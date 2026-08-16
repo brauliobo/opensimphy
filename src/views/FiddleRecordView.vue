@@ -24,7 +24,9 @@ const recordProfileUrl = computed(() => record.value && source.value
   : '')
 const records = computed(() => fiddleRegistry.records.value)
 const runtimeRecord = computed(() => record.value ? fiddleRegistry.getRuntimeBySlug(record.value.slug) : null)
-const runtimeLabel = computed(() => runtimeRecord.value?.status === 'verified' ? 'clean-rendered' : runtimeRecord.value?.status)
+const runtimeLabel = computed(() => runtimeRecord.value?.status === 'verified'
+  ? 'rendered without uncaught page errors'
+  : runtimeRecord.value?.status)
 const previousRecord = computed(() => adjacentRecord(-1))
 const nextRecord = computed(() => adjacentRecord(1))
 const flagDefinitions = [
@@ -56,7 +58,7 @@ watch(() => props.slug, async (slug) => {
   else {
     record.value = fiddleRegistry.getBySlug(slug)
     if (!record.value) error.value = 'This Fiddle slug is not present in the checked-in source archive.'
-    else if (!fiddleRegistry.getRuntimeBySlug(slug)) error.value = 'This Fiddle record has no associated runtime verification entry.'
+    else if (!fiddleRegistry.getRuntimeBySlug(slug)) error.value = 'This Fiddle record has no associated runtime ledger entry.'
   }
   loading.value = false
 }, { immediate: true })
@@ -118,18 +120,18 @@ function formatFlagValue(key: keyof FiddleFlags): string {
 
     section.caveat-banner(data-testid="fiddle-record-boundary")
       strong RECORDED RUNTIME / PREVIEW OPT-IN
-      p This indexed external simulation was classified {{ runtimeLabel }} in the recorded Chromium pass. A clean render means only meaningful output with no observed uncaught page error. Browser runtime rendering is not scientific validation; scientifically validated by this check: 0.
+      p This indexed external simulation {{ runtimeLabel }} in the recorded Chromium pass. Retained failed requests may still exist. Browser runtime rendering is not scientific validation; scientifically validated by this check: 0.
 
     section.fiddle-record-section(data-testid="fiddle-runtime-detail")
       .section-heading
         div
           p.eyebrow Chromium runtime evidence
           h2 Recorded status: {{ runtimeLabel }}
-        p This is retained browser evidence for the external iframe, not a local Vue port or a scientific correctness assessment.
+        p The published ledger contains normalized summaries for the external iframe, not every raw field. Detailed evidence is retained in data/fiddles/runtime/. This is not a local Vue port or a scientific correctness assessment.
       .fiddle-metadata-grid
         article
           span Final status
-          strong(:data-runtime-status="runtimeRecord.status") {{ runtimeRecord.status }}
+          strong(:data-runtime-status="runtimeRecord.status") {{ runtimeLabel }}
         article
           span Attempts
           strong {{ runtimeRecord.attempts }}

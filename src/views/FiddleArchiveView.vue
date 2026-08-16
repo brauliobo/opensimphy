@@ -182,7 +182,7 @@ function runtimeFor(record: FiddleRecord) {
     div
       p.eyebrow Author collection / Chenopdodium
       h1 Fiddle source archive
-      p Archive metadata for the Chenopdodium / Chantal Roth JSFiddle profile. It is an external source index, not a local OpenSimPhy simulation catalogue.
+      p Archive metadata for the Chenopdodium author collection. It is an external source index, not a local OpenSimPhy simulation catalogue.
     .header-stat(v-if="archiveReady")
       strong {{ source?.recordCount }}
       span archived records
@@ -191,7 +191,7 @@ function runtimeFor(record: FiddleRecord) {
 
   section.caveat-banner(data-testid="fiddle-source-boundary")
     strong INDEXED EXTERNAL RECORDS / CHROMIUM RUNTIME PASS
-    p All 780 simulations are migrated as indexed external simulations/source records. This pass clean-rendered 710; 28 rendered with errors; 17 were empty; 25 timed out; 0 were blocked; 0 failed inspection. Scientifically validated by this check: 0. Browser runtime rendering is not scientific validation.
+    p All 780 records are indexed external simulations/source records. In the recorded pass, 710 rendered meaningful content without uncaught page errors; retained failed requests may still exist. Another 28 rendered with uncaught page errors; 17 were empty; 25 timed out; 0 were blocked; 0 failed inspection. Scientifically validated by this check: 0. Browser runtime rendering is not scientific validation.
 
   .loading-plate(v-if="registryLoading" data-testid="fiddle-archive-loading" aria-live="polite") Loading Fiddle source archive metadata...
   .empty-state(v-else-if="registryError" role="alert" data-testid="fiddle-archive-error")
@@ -225,13 +225,13 @@ function runtimeFor(record: FiddleRecord) {
           span Runtime status
           select(v-model="runtimeStatus" data-testid="fiddle-runtime-filter" @change="commitFilters")
             option(value="all") All runtime statuses
-            option(value="verified") Clean-rendered ({{ runtimeAggregate?.verified }})
+            option(value="verified") Rendered without uncaught page errors ({{ runtimeAggregate?.verified }})
             option(value="rendered-with-errors") Rendered with errors ({{ runtimeAggregate?.['rendered-with-errors'] }})
             option(value="empty") Empty ({{ runtimeAggregate?.empty }})
             option(value="timeout") Timeout ({{ runtimeAggregate?.timeout }})
             option(value="blocked") Blocked ({{ runtimeAggregate?.blocked }})
             option(value="failed") Failed ({{ runtimeAggregate?.failed }})
-        .fiddle-filter-summary
+        .fiddle-filter-summary(role="status" aria-live="polite" aria-atomic="true")
           strong(data-testid="fiddle-result-count") {{ filteredRecords.length }} / {{ records.length }}
           span matching archived records
           small {{ resultStatus }}

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -42,6 +43,22 @@ async function readJson(path) {
   }
 }
 
+async function readEvidence(path) {
+  let bytes
+  try {
+    bytes = await readFile(path)
+  } catch (error) {
+    fail(`Unable to read JSON ${path}: ${error instanceof Error ? error.message : String(error)}`)
+  }
+  try {
+    const value = JSON.parse(bytes.toString('utf8'))
+    validateEvidenceUnicode(value, path)
+    return { value, sha256: createHash('sha256').update(bytes).digest('hex') }
+  } catch (error) {
+    fail(`Unable to read JSON ${path}: ${error instanceof Error ? error.message : String(error)}`)
+  }
+}
+
 function status(value, path) {
   if (!STATUSES.includes(value)) fail(`${path} has unsupported classification ${JSON.stringify(value)}`)
   return value
@@ -55,6 +72,29 @@ function integer(value, path, minimum = 0) {
 function string(value, path) {
   if (typeof value !== 'string' || value.length === 0) fail(`${path} must be a non-empty string`)
   return value
+}
+
+export function validateEvidenceUnicode(value, path = 'evidence') {
+  if (typeof value === 'string') {
+    for (let index = 0; index < value.length; index += 1) {
+      const codeUnit = value.charCodeAt(index)
+      if (codeUnit >= 0xd800 && codeUnit <= 0xdbff) {
+        const next = value.charCodeAt(index + 1)
+        if (!(next >= 0xdc00 && next <= 0xdfff)) fail(`${path} contains an unpaired UTF-16 surrogate`)
+        index += 1
+      } else if (codeUnit >= 0xdc00 && codeUnit <= 0xdfff) {
+        fail(`${path} contains an unpaired UTF-16 surrogate`)
+      }
+    }
+    return
+  }
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => validateEvidenceUnicode(entry, `${path}[${index}]`))
+    return
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) validateEvidenceUnicode(child, `${path}.${key}`)
+  }
 }
 
 function isoTimestamp(value, path) {
@@ -197,7 +237,8 @@ function normalizeRecord(record, registryRecord, batchId, batchCompletedAt, path
 export async function consolidateFiddleRuntime({ registryPath, batchPaths, outputPath, evidenceDir = null }) {
   const registry = await readJson(registryPath)
   validateRegistry(registry)
-  const batches = await Promise.all(batchPaths.map(readJson))
+  const evidence = await Promise.all(batchPaths.map(readEvidence))
+  const batches = evidence.map(({ value }) => value)
   const allRecords = []
   const batchMetadata = []
 
@@ -216,7 +257,15 @@ export async function consolidateFiddleRuntime({ registryPath, batchPaths, outpu
     const id = `${String(first).padStart(3, '0')}-${last}`
     const startedAt = isoTimestamp(batch.startedAt, `${path}.startedAt`)
     const completedAt = isoTimestamp(batch.completedAt, `${path}.completedAt`)
-    batchMetadata.push({ id, firstPosition: first, lastPosition: last, startedAt, completedAt, ...browserMetadata(batch) })
+    batchMetadata.push({
+      id,
+      firstPosition: first,
+      lastPosition: last,
+      sha256: evidence[batchIndex].sha256,
+      startedAt,
+      completedAt,
+      ...browserMetadata(batch),
+    })
     for (const record of batch.records) {
       allRecords.push(normalizeRecord(record, registry.records[record.position - 1], id, completedAt, `${path}.records[${record.position - first}]`))
     }
@@ -240,9 +289,9 @@ export async function consolidateFiddleRuntime({ registryPath, batchPaths, outpu
     },
     methodology: {
       scope: 'Chromium runtime rendering of all 780 indexed external Chenopdodium JSFiddle records.',
-      classification: 'verified means meaningful rendered content with no observed uncaught page error; rendered-with-errors is never clean-rendered.',
-      retryPolicy: 'Every non-verified first attempt was retried exactly once; the final attempt determines status.',
-      caveat: 'Browser runtime rendering is not scientific validation. No record was scientifically validated by this check.',
+      classification: 'The schema key verified means meaningful rendered content with no observed uncaught page errors. Retained failed requests may still exist for records in this class.',
+      retryPolicy: 'Every first attempt outside that rendered-without-uncaught-page-errors class was retried exactly once; the final attempt determines status.',
+      caveat: 'Browser runtime rendering is not scientific validation. No record was scientifically validated by this check. This published ledger contains normalized summaries; detailed evidence is retained in data/fiddles/runtime/.',
     },
     environment: { batches: batchMetadata },
     aggregate,

@@ -3423,7 +3423,7 @@
           "inspection": {
             "documentTitle": "",
             "bodyTextLength": 1457,
-            "bodyTextSample": "ESU - Spinless Electron Wave (orientation independent) in an elastic solid lattice\nu(x,t) = radial eigenstrain + bound breathing (no transverse polarization)\nℹ Info\nReset view\n𝜌\n=\n‖\n𝑥\n−\n𝑅\n(\n𝑡\n)\n‖\n,\n𝜌\n^\n=\n𝑥\n−\n𝑅\n(\n𝑡\n)\n𝜌\n.\nMode A (defect-size oscillator): \n \n𝑢\n𝑟\n(\n𝜌\n,\n𝑡\n)\n=\n𝑄\n(\n𝑡\n)\n𝜎\n𝑄\n2\n𝜌\n𝑒\n−\n𝜌\n2\n/\n(\n2\n𝜎\n𝑄\n2\n)\n,\n𝑄\n(\n𝑡\n)\n=\n𝑄\n0\n+\nΔ\n𝑄\ncos\n⁡\n(\nΩ\n𝑡\n−\n𝜑\n0\n)\n.\nMode B (bound breather): \n \n𝑢\n𝑟\n(\n𝜌\n,\n𝑡\n)\n=\n𝐴\n𝜌\n𝑒\n−\n𝜅\n𝜌\ncos\n⁡\n(\n𝑘\n𝜌\n−\nΩ\n𝑡\n+\n𝜑\n0\n)\n.\n𝑢\n(\n𝑥\n,\n𝑡\n)\n=\n𝑢\n\ud835",
+            "bodyTextSample": "ESU - Spinless Electron Wave (orientation independent) in an elastic solid lattice\nu(x,t) = radial eigenstrain + bound breathing (no transverse polarization)\nℹ Info\nReset view\n𝜌\n=\n‖\n𝑥\n−\n𝑅\n(\n𝑡\n)\n‖\n,\n𝜌\n^\n=\n𝑥\n−\n𝑅\n(\n𝑡\n)\n𝜌\n.\nMode A (defect-size oscillator): \n \n𝑢\n𝑟\n(\n𝜌\n,\n𝑡\n)\n=\n𝑄\n(\n𝑡\n)\n𝜎\n𝑄\n2\n𝜌\n𝑒\n−\n𝜌\n2\n/\n(\n2\n𝜎\n𝑄\n2\n)\n,\n𝑄\n(\n𝑡\n)\n=\n𝑄\n0\n+\nΔ\n𝑄\ncos\n⁡\n(\nΩ\n𝑡\n−\n𝜑\n0\n)\n.\nMode B (bound breather): \n \n𝑢\n𝑟\n(\n𝜌\n,\n𝑡\n)\n=\n𝐴\n𝜌\n𝑒\n−\n𝜅\n𝜌\ncos\n⁡\n(\n𝑘\n𝜌\n−\nΩ\n𝑡\n+\n𝜑\n0\n)\n.\n𝑢\n(\n𝑥\n,\n𝑡\n)\n=\n𝑢\n\ufffd",
             "canvasCount": 1,
             "svgCount": 0,
             "imgCount": 0,
@@ -3895,7 +3895,7 @@
           "inspection": {
             "documentTitle": "Electron Waves",
             "bodyTextLength": 1563,
-            "bodyTextSample": "ESU — Electron (no spin‑½): standing displacement modes on an elastic lattice\nLattice points move by a prescribed displacement field \n𝑚\n𝑎\n𝑡\nℎ\n𝑏\n𝑓\n𝑢\n(\n𝑚\n𝑎\n𝑡\nℎ\n𝑏\n𝑓\n𝑟\n,\n𝑡\n)\n plus an optional static “charge eigenstrain” bulge/dip. Modes include spherical breathing (longitudinal) and several purely tangential shell shear (“toroidal”) modes, including tiny circular shell motion.\n𝑢\n(\n𝑟\n,\n𝑡\n)\n=\n𝑢\ns\nt\na\nt\ni\nc\n(\n𝑟\n)\n+\n𝑢\nd\ny\nn\n(\n𝑟\n,\n𝑡\n)\n,\n𝑢\ns\nt\na\nt\ni\nc\n(\n𝑟\n)\n=\n𝑠\n𝛼\n𝑒\n−\n𝑟\n2\n/\n(\n2\n\ud835",
+            "bodyTextSample": "ESU — Electron (no spin‑½): standing displacement modes on an elastic lattice\nLattice points move by a prescribed displacement field \n𝑚\n𝑎\n𝑡\nℎ\n𝑏\n𝑓\n𝑢\n(\n𝑚\n𝑎\n𝑡\nℎ\n𝑏\n𝑓\n𝑟\n,\n𝑡\n)\n plus an optional static “charge eigenstrain” bulge/dip. Modes include spherical breathing (longitudinal) and several purely tangential shell shear (“toroidal”) modes, including tiny circular shell motion.\n𝑢\n(\n𝑟\n,\n𝑡\n)\n=\n𝑢\ns\nt\na\nt\ni\nc\n(\n𝑟\n)\n+\n𝑢\nd\ny\nn\n(\n𝑟\n,\n𝑡\n)\n,\n𝑢\ns\nt\na\nt\ni\nc\n(\n𝑟\n)\n=\n𝑠\n𝛼\n𝑒\n−\n𝑟\n2\n/\n(\n2\n\ufffd",
             "canvasCount": 1,
             "svgCount": 0,
             "imgCount": 0,
@@ -6962,7 +6962,7 @@
           "inspection": {
             "documentTitle": "",
             "bodyTextLength": 2006,
-            "bodyTextSample": "i\nClick a cube to select it. Use sliders to rotate. Watch the helices.\nSelected: (i,j,k)=(2,2,2) | rot(deg)=(0, 0, 0)\nMicropolar vs Connected Solid (twist-memory)\n×\n\nThis demo shows two different mechanical ideas for “gyroscope-like” micro-rotation fields.\n\nLeft: Micropolar / orientation medium\n\nEach lattice cell carries an orientation quaternion \n𝑞\n𝑖\n. Neighbor coupling depends on the relative rotation \n𝑞\n𝑖\n−\n1\n𝑞\n𝑗\n, interpreted on the rotation group (modulo).\n\n\n\n𝐸\nm\ni\nc\nr\no\n=\n𝑘\n2\n∑\n⟨\n\ud835",
+            "bodyTextSample": "i\nClick a cube to select it. Use sliders to rotate. Watch the helices.\nSelected: (i,j,k)=(2,2,2) | rot(deg)=(0, 0, 0)\nMicropolar vs Connected Solid (twist-memory)\n×\n\nThis demo shows two different mechanical ideas for “gyroscope-like” micro-rotation fields.\n\nLeft: Micropolar / orientation medium\n\nEach lattice cell carries an orientation quaternion \n𝑞\n𝑖\n. Neighbor coupling depends on the relative rotation \n𝑞\n𝑖\n−\n1\n𝑞\n𝑗\n, interpreted on the rotation group (modulo).\n\n\n\n𝐸\nm\ni\nc\nr\no\n=\n𝑘\n2\n∑\n⟨\n\ufffd",
             "canvasCount": 1,
             "svgCount": 0,
             "imgCount": 0,

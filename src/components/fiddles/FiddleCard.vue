@@ -15,7 +15,9 @@ const detailLocation = computed(() => ({
   query: props.archiveQuery ?? {},
 }))
 
-const runtimeLabel = computed(() => props.runtime.status === 'verified' ? 'clean-rendered' : props.runtime.status)
+const runtimeLabel = computed(() => props.runtime.status === 'verified'
+  ? 'rendered without uncaught page errors'
+  : props.runtime.status)
 </script>
 
 <template lang="pug">

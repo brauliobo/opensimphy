@@ -47,11 +47,14 @@ function parseStatus(value: unknown, path: string): FiddleRuntimeStatus {
 
 function parseBatch(value: unknown, index: number): FiddleRuntimeBatch {
   const path = `fiddle runtime.environment.batches[${index}]`
-  exactKeys(value, ['id', 'firstPosition', 'lastPosition', 'startedAt', 'completedAt', 'engine', 'version', 'playwrightVersion'], path)
+  exactKeys(value, ['id', 'firstPosition', 'lastPosition', 'sha256', 'startedAt', 'completedAt', 'engine', 'version', 'playwrightVersion'], path)
+  const sha256 = text(value.sha256, `${path}.sha256`)
+  if (!SHA256_PATTERN.test(sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 hash')
   return {
     id:                text(value.id, `${path}.id`),
     firstPosition:     integer(value.firstPosition, `${path}.firstPosition`, 1),
     lastPosition:      integer(value.lastPosition, `${path}.lastPosition`, 1),
+    sha256,
     startedAt:         timestamp(value.startedAt, `${path}.startedAt`),
     completedAt:       timestamp(value.completedAt, `${path}.completedAt`),
     engine:            text(value.engine, `${path}.engine`),
