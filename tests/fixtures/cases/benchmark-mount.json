@@ -1,0 +1,7 @@
+{
+  "source": "public/data/generated/awesomePhysics/benchmark-cases.json",
+  "results": "public/data/generated/awesomePhysics/benchmark-results.json",
+  "grayCaseId": "gray-motor",
+  "runnableAwesome": 19,
+  "note": "UI mounts the published harness JSON. Gray COP appears when the results artifact includes metrics.cop for gray-motor."
+}
