@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "artifact": {
+    "name": "fluid-engine-dev.wasm",
+    "path": "wasm/awesomePhysics/fluid-engine-dev/fluid-engine-dev.wasm",
+    "byteSize": 230684,
+    "sha256": "d8bdd5c4841ab009e0b008cacbee88660c09bf8906714c388decd548934e389e",
+    "y0": 1,
+    "y1": 0.9972777962684631
+  },
+  "source": {
+    "checkout": "awesome-physics-repos/fluid-engine-dev",
+    "revision": "94c300ff5ad8a2f588e5e27e8e9746a424b29863"
+  },
+  "golden": {
+    "step0": 1,
+    "step1": 0.9972777962684631,
+    "step60": -3.981663703918457
+  },
+  "toolchain": {
+    "emscripten": "6.0.6-git",
+    "revision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245",
+    "maxMemoryBytes": 134217728
+  }
+}
