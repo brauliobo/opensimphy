@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
+import FailClosedGraph from '../components/FailClosedGraph.vue'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
@@ -337,9 +338,11 @@ function snapshotInputs(snapshot: WorkbenchSnapshotV1): { case: string; projecti
           :figure="activeGraph.figure"
           :label="`${selected.title}: ${activeGraph.label}, ${projection}`"
         )
-        .fail-closed-graph(v-else)
-          strong CORE GRAPH NOT READY
-          p This registry case has no engine figure. Coverage remains incomplete.
+        FailClosedGraph(
+          v-else
+          title="CORE GRAPH NOT READY"
+          message="This registry case has no engine figure. Coverage remains incomplete."
+        )
         .invariant-strip
           span Bounded local evaluation
           strong(:class="graphReady ? 'signal-ok' : 'signal-error'") {{ graphReady ? 'ENGINE REPORTED' : 'UNAVAILABLE' }}

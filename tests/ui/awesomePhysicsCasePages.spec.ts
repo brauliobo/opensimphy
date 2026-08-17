@@ -17,6 +17,7 @@ import {
   raysectFigure,
   scikitBeamFigure,
 } from '../../src/awesomePhysics/caseFigures'
+import { pointsOf } from '../../src/simphy/plot'
 import { awesomePhysicsDefaultInput } from '../../src/awesomePhysics/defaultInputs'
 import { resetAwesomePhysicsAdapterRegistrationsForTests } from '../../src/awesomePhysics/registerAdapters'
 import { runAwesomePhysicsInWorker } from '../../src/awesomePhysics/workers/runInWorker'
@@ -111,7 +112,7 @@ describe('Awesome Physics case pages', () => {
       ],
       firstMinimumQNmInv: 0.9,
     })
-    expect(sphere?.series[0]?.points[0]).toEqual({ x: 0, y: 1 })
+    expect(sphere?.series[0] && pointsOf(sphere.series[0])[0]).toEqual({ x: 0, y: 1 })
     expect(sphere?.metrics.find(({ label }) => label === 'I(0)')?.value).toBe('1')
 
     const prism = raysectFigure({
@@ -130,7 +131,7 @@ describe('Awesome Physics case pages', () => {
       peakExcitedPopulation: 1,
       samples: [{ step: 0, time: 0, excitedPopulation: 1, cavityPhotons: 0, inversion: 1 }],
     })
-    expect(jc?.series[0]?.points[0]).toEqual({ x: 0, y: 1 })
+    expect(jc?.series[0] && pointsOf(jc.series[0])[0]).toEqual({ x: 0, y: 1 })
 
     const units = astropyFigure({ operation: 'unit-convert', value: 3.0856775814913673e16, dimension: 'length' })
     expect(units?.operation).toBe('unit-convert')
@@ -145,7 +146,7 @@ describe('Awesome Physics case pages', () => {
       invariants: { energyRelativeDrift: 1e-8, LzRelativeDrift: 1e-8 },
       samples: [{ time: 0, R: 1, z: 0.1, phi: 0, energy: -1 }],
     })
-    expect(orbit?.series[0]?.points[0]).toEqual({ x: 1, y: 0.1 })
+    expect(orbit?.series[0] && pointsOf(orbit.series[0])[0]).toEqual({ x: 1, y: 0.1 })
     expect(galpyFigure({ operation: 'circular-velocity', value: 1 })?.metrics[0]?.value).toBe('1')
 
     const physx = physxFigure({ operation: 'step', y: 9.997, value: 9.997, units: 'world-units' })

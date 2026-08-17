@@ -1,3 +1,4 @@
+import { fail, record, exactKeys } from '../simphy/contract'
 import type {
   JsonObject,
   JsonValue,
@@ -46,33 +47,19 @@ export type SnapshotComparison = CompatibleSnapshotComparison | IncompatibleSnap
 
 export class WorkbenchSnapshotValidationError extends TypeError {
   constructor(path: string, message: string) {
-    super(`Invalid workbench snapshot at ${path}: ${message}`)
+    super(`${path} ${message}`)
     this.name = 'WorkbenchSnapshotValidationError'
   }
 }
 
-function fail(path: string, message: string): never {
-  throw new WorkbenchSnapshotValidationError(path, message)
-}
-
 function plainRecord(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'expected a plain object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'expected a plain object prototype')
-  for (const key of Reflect.ownKeys(value)) {
+  const object = record(value, path, 'plain')
+  for (const key of Reflect.ownKeys(object)) {
     if (typeof key !== 'string') fail(path, 'symbol keys are not JSON')
-    const descriptor = Object.getOwnPropertyDescriptor(value, key)
+    const descriptor = Object.getOwnPropertyDescriptor(object, key)
     if (!descriptor?.enumerable || !Object.hasOwn(descriptor, 'value')) fail(`${path}.${key}`, 'expected an enumerable data property')
   }
-  return value as Record<string, unknown>
-}
-
-function exactKeys(object: Record<string, unknown>, expected: readonly string[], path: string): void {
-  const actual = Object.keys(object).sort()
-  const wanted = [...expected].sort()
-  if (actual.length !== wanted.length || actual.some((key, index) => key !== wanted[index])) {
-    fail(path, `expected exactly these fields: ${expected.join(', ')}`)
-  }
+  return object
 }
 
 function safeId(value: unknown, path: string): string {

@@ -258,4 +258,14 @@ describe('WorkbenchCompare', () => {
     expect(wrapper.text().toLowerCase()).not.toContain('residual')
     expect(wrapper.find('script').exists()).toBe(false)
   })
+
+  it('emits remove for a selected snapshot when removable', async () => {
+    const pair = createSnapshotPair([
+      snapshot('Baseline', '2026-07-27T10:00:00.000Z'),
+      snapshot('Variant', '2026-07-27T10:01:00.000Z'),
+    ])
+    const wrapper = mount(WorkbenchCompare, { props: { pair, removable: true } })
+    await wrapper.get('[data-testid="remove-comparison-0"]').trigger('click')
+    expect(wrapper.emitted('remove')).toEqual([[0]])
+  })
 })

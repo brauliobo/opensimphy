@@ -841,11 +841,10 @@
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--awesome-line);
   background: var(--awesome-panel);
 }
 
-.awesome-case-plot figcaption {
+.awesome-case-plot .plot-caption {
   max-width: 72ch;
   margin: 0.7rem 0 0;
   color: var(--awesome-muted);

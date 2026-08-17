@@ -6,7 +6,9 @@ import { compareSnapshotPair, type SnapshotPair } from '../../workbench/snapshot
 const props = withDefaults(defineProps<{
   pair: SnapshotPair
   headingLevel?: 'h3' | 'h4' | 'h5'
-}>(), { headingLevel: 'h3' })
+  removable?: boolean
+}>(), { headingLevel: 'h3', removable: false })
+const emit = defineEmits<{ remove: [index: number] }>()
 const comparison = computed(() => props.pair.length === 2 ? compareSnapshotPair(props.pair) : null)
 
 function snapshotLabel(snapshot: WorkbenchSnapshotV1, index: number): string {
@@ -42,6 +44,12 @@ section.workbench-compare(aria-label="Snapshot comparison" data-testid="workbenc
       article(v-for="(snapshot, index) in comparison.snapshots" :key="snapshot.timestamp")
         component(:is="headingLevel") {{ snapshotLabel(snapshot, index) }}
         pre(data-testid="workbench-compare-finding") {{ findingText(snapshot) }}
+        button.text-link(
+          v-if="removable"
+          type="button"
+          :data-testid="`remove-comparison-${index}`"
+          @click="emit('remove', index)"
+        ) Remove
     .workbench-domain-comparison(
       v-if="comparison.compatible"
       data-testid="workbench-domain-comparison"

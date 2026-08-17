@@ -1,15 +1,13 @@
 import type { CaseMetric, CaseTableColumn } from '../cases/types'
+import type { PlotLineSeries } from '../types/plot'
+import {
+  boundsOf,
+  projectPolyline,
+  seriesFromPoints,
+  type PlotPoint,
+} from '../simphy/plot'
 
-export interface PlotPoint {
-  x: number
-  y: number
-}
-
-export interface PlotSeries {
-  id: string
-  points: readonly PlotPoint[]
-  testId?: string
-}
+export { boundsOf, projectPolyline, seriesFromPoints, type PlotPoint }
 
 export interface CaseFigureTable {
   caption: string
@@ -21,7 +19,7 @@ export interface CaseFigureTable {
 export interface ScikitBeamFigure {
   operation: 'sphere-form-factor' | 'lag-correlation'
   metrics: readonly CaseMetric[]
-  series: readonly PlotSeries[]
+  series: readonly PlotLineSeries[]
   xLabel: string
   yLabel: string
   table: CaseFigureTable
@@ -35,7 +33,7 @@ export interface RaysectFigure {
 
 export interface QuantumOpticsJlFigure {
   metrics: readonly CaseMetric[]
-  series: readonly PlotSeries[]
+  series: readonly PlotLineSeries[]
   table: CaseFigureTable
 }
 
@@ -55,7 +53,7 @@ export interface PymunkFigure {
 export interface GalpyFigure {
   operation: 'integrate-orbit' | 'circular-velocity'
   metrics: readonly CaseMetric[]
-  series: readonly PlotSeries[]
+  series: readonly PlotLineSeries[]
   table: CaseFigureTable | null
 }
 
@@ -104,46 +102,6 @@ export function formatCaseScalar(value: number): string {
   return value.toFixed(6)
 }
 
-export function projectPolyline(
-  points: readonly PlotPoint[],
-  bounds: { minX: number, maxX: number, minY: number, maxY: number },
-  viewport = { width: 640, height: 280, pad: 48 },
-): string {
-  const spanX = bounds.maxX - bounds.minX || 1
-  const spanY = bounds.maxY - bounds.minY || 1
-  const innerW = viewport.width - viewport.pad * 2
-  const innerH = viewport.height - viewport.pad * 2
-  return points.map((point) => {
-    const x = viewport.pad + (point.x - bounds.minX) / spanX * innerW
-    const y = viewport.height - viewport.pad - (point.y - bounds.minY) / spanY * innerH
-    return `${x.toFixed(2)},${y.toFixed(2)}`
-  }).join(' ')
-}
-
-export function boundsOf(points: readonly PlotPoint[], equalAspect = false): { minX: number, maxX: number, minY: number, maxY: number } {
-  const first = points[0]
-  if (!first) return { minX: 0, maxX: 1, minY: 0, maxY: 1 }
-  let minX = first.x
-  let maxX = first.x
-  let minY = first.y
-  let maxY = first.y
-  for (const point of points) {
-    minX = Math.min(minX, point.x)
-    maxX = Math.max(maxX, point.x)
-    minY = Math.min(minY, point.y)
-    maxY = Math.max(maxY, point.y)
-  }
-  if (!equalAspect) {
-    if (minX === maxX) { minX -= 1; maxX += 1 }
-    if (minY === maxY) { minY -= 1; maxY += 1 }
-    return { minX, maxX, minY, maxY }
-  }
-  const span = Math.max(maxX - minX, maxY - minY, 1)
-  const midX = (minX + maxX) / 2
-  const midY = (minY + maxY) / 2
-  return { minX: midX - span / 2, maxX: midX + span / 2, minY: midY - span / 2, maxY: midY + span / 2 }
-}
-
 function sampleRow(index: number, cells: Record<string, string | number>): Record<string, string | number> {
   return { id: String(index), ...cells }
 }
@@ -176,7 +134,7 @@ export function scikitBeamFigure(result: unknown): ScikitBeamFigure | null {
         { label: 'I(0)', value: points[0] ? formatCaseScalar(points[0].y) : 'n/a', tone: 'ok' },
         { label: 'First minimum q', value: firstMinimum === null ? 'none' : formatCaseScalar(firstMinimum) },
       ],
-      series:  [{ id: 'intensity', points, testId: 'awesome-case-scikit-beam-curve' }],
+      series:  [seriesFromPoints('intensity', points, { testId: 'awesome-case-scikit-beam-curve' })],
       xLabel:  'q (nm⁻¹)',
       yLabel:  'I(q)',
       table:   {
@@ -208,7 +166,7 @@ export function scikitBeamFigure(result: unknown): ScikitBeamFigure | null {
         { label: 'C(0)', value: points[0] ? formatCaseScalar(points[0].y) : 'n/a', tone: 'ok' },
         { label: 'Peak lag', value: peakLag === null ? 'n/a' : String(peakLag) },
       ],
-      series:  [{ id: 'correlation', points, testId: 'awesome-case-scikit-beam-curve' }],
+      series:  [seriesFromPoints('correlation', points, { testId: 'awesome-case-scikit-beam-curve' })],
       xLabel:  'lag',
       yLabel:  'C(k)',
       table:   {
@@ -285,7 +243,7 @@ export function quantumOpticsJlFigure(result: unknown): QuantumOpticsJlFigure | 
       { label: 'Peak P_e', value: peak === null ? 'n/a' : formatCaseScalar(peak) },
       { label: 'Samples', value: String(points.length) },
     ],
-    series: [{ id: 'excited', points, testId: 'awesome-case-quantumoptics-jl-curve' }],
+    series: [seriesFromPoints('excited', points, { testId: 'awesome-case-quantumoptics-jl-curve' })],
     table:  {
       caption: 'Jaynes-Cummings samples',
       columns: [
@@ -400,7 +358,7 @@ export function galpyFigure(result: unknown): GalpyFigure | null {
       { label: 'ΔL_z/L_z', value: lzDrift === null ? 'n/a' : formatCaseScalar(lzDrift) },
       { label: 'v_c(R₀)', value: circular === null ? 'n/a' : formatCaseScalar(circular) },
     ],
-    series: [{ id: 'meridional', points: rz, testId: 'awesome-case-galpy-curve' }],
+    series: [seriesFromPoints('meridional', rz, { testId: 'awesome-case-galpy-curve' })],
     table:  {
       caption: 'MWPotential2014 orbit samples',
       columns: [

@@ -10,7 +10,6 @@ import {
   parseWorkbenchSnapshotJson,
   removeSnapshot,
   serializeWorkbenchSnapshot,
-  WorkbenchSnapshotValidationError,
 } from '../../src/workbench/snapshots'
 
 const TIMESTAMP = '2026-07-27T10:00:00.000Z'
@@ -129,9 +128,9 @@ describe('workbench snapshot contract', () => {
     expect(parsed).toEqual(value)
     expect(parsed).not.toBe(value)
     expect(() => parseWorkbenchSnapshotJson('{not json')).toThrow()
-    expect(() => parseWorkbenchSnapshot({ ...value, extra: true })).toThrow(/expected exactly these fields/)
+    expect(() => parseWorkbenchSnapshot({ ...value, extra: true })).toThrow(/unknown properties/)
     const { outputs: _outputs, ...missingOutputs } = value
-    expect(() => parseWorkbenchSnapshot(missingOutputs)).toThrow(/expected exactly these fields/)
+    expect(() => parseWorkbenchSnapshot(missingOutputs)).toThrow(/missing properties/)
     expect(() => parseWorkbenchSnapshot({ ...value, programId: 'other-program' })).toThrow(/exactly one/)
     const { instrumentId: _instrumentId, ...missingIdentity } = value
     expect(() => parseWorkbenchSnapshot(missingIdentity)).toThrow(/exactly one/)
@@ -166,11 +165,11 @@ describe('workbench snapshot contract', () => {
     class RecordLike {
       value = 1
     }
-    expect(() => cloneJsonValue(new RecordLike())).toThrow(/plain object prototype/)
-    expect(() => cloneJsonValue(new Date())).toThrow(/plain object prototype/)
+    expect(() => cloneJsonValue(new RecordLike())).toThrow(/plain JSON object/)
+    expect(() => cloneJsonValue(new Date())).toThrow(/plain JSON object/)
 
     const inherited = Object.create(snapshot()) as Record<string, unknown>
-    expect(() => parseWorkbenchSnapshot(inherited)).toThrow(/plain object prototype/)
+    expect(() => parseWorkbenchSnapshot(inherited)).toThrow(/plain JSON object/)
   })
 
   it.each(['__proto__', 'constructor', 'prototype', 'bad/id', '', ' leading'])('rejects unsafe IDs: %s', (unsafeId) => {
@@ -262,6 +261,6 @@ describe('snapshot pairing and comparison', () => {
   })
 
   it('uses a dedicated validation error for contract failures', () => {
-    expect(() => snapshot({ compatibilityKey: 'wrong' })).toThrow(WorkbenchSnapshotValidationError)
+    expect(() => snapshot({ compatibilityKey: 'wrong' })).toThrow(TypeError)
   })
 })

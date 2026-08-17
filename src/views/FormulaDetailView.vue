@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import FailClosedGraph from '../components/FailClosedGraph.vue'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
+import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import { useFormulaRegistry, validateFormulaTaxonomyCompatibility, type FormulaRecord } from '../registries/formulaRegistry'
 import { useSavedRunRegistry } from '../registries/savedRunRegistry'
 import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
@@ -182,23 +184,22 @@ const selectedRealDelta = computed(() => {
 const figure = computed<PlotFigure | null>(() => {
   if (!formula.value?.graph) return null
   const point = selectedSweepPoint.value
-  const traces = [...formula.value.graph.data]
+  const series = [...formula.value.graph.series]
   if (point) {
-    traces.push({
-      x: [point.x],
-      y: [point.y],
-      type: 'scatter',
-      mode: 'markers',
-      name: 'selected sweep point',
-      marker: { color: '#e6b85c', size: 10, symbol: 'circle-open' },
+    series.push({
+      kind:   'markers',
+      name:   'selected sweep point',
+      x:      [point.x],
+      y:      [point.y],
+      marker: { color: '#e6b85c', size: 10, shape: 'open-circle' },
     })
   }
   return {
     ...formula.value.graph,
-    data: traces,
+    series,
     layout: {
-      xaxis: { title: { text: 'inversion-boundary scale' } },
-      yaxis: { title: { text: formula.value.meaning.unit } },
+      xTitle: 'inversion-boundary scale',
+      yTitle: formula.value.meaning.unit,
       ...formula.value.graph.layout,
     },
   }
@@ -619,9 +620,12 @@ function resetComparison(): void {
             :label="`${formula.name} synthetic inversion-boundary sensitivity sweep`"
             test-id="formula-graph-ready"
           )
-          .fail-closed-graph(v-else-if="graphOpen" data-testid="formula-graph-missing")
-            strong GRAPH NOT READY
-            p The textual finding and complete point table remain available above.
+          FailClosedGraph(
+            v-else-if="graphOpen"
+            title="GRAPH NOT READY"
+            message="The textual finding and complete point table remain available above."
+            test-id="formula-graph-missing"
+          )
 
     section.formula-workbench(data-testid="formula-workbench" aria-labelledby="formula-workbench-title")
       p.eyebrow Explicit local capture
@@ -644,21 +648,11 @@ function resetComparison(): void {
         header
           strong In-session comparison / {{ comparisonPair.length }} of 2 states
           button.text-link(v-if="comparisonPair.length" type="button" data-testid="reset-comparison" @click="resetComparison") Reset
-        p(v-if="comparisonPair.length === 0") Freeze up to two selected scale states. A third state is disabled until one is removed.
-        article(v-for="(snapshot, index) in comparisonPair" :key="`${snapshot.timestamp}-${index}`")
-          div
-            span State {{ index + 1 }}
-            strong Scale {{ formatNumber(formulaSnapshotOutputs(snapshot).selectedSweepPoint.scale) }}
-            small Real {{ formatNumber(formulaSnapshotOutputs(snapshot).selectedSweepPoint.real) }}
-          button.text-link(type="button" :data-testid="`remove-comparison-${index}`" @click="removeComparisonSnapshot(index)") Remove
-        .comparison-finding(v-if="comparison?.compatible" data-testid="compatible-comparison")
-          strong Compatible formula snapshots
-          p Domain-specific residual / selected-real delta (state 2 − state 1): {{ formatNumber(selectedRealDelta ?? 0) }} {{ formula.meaning.unit }}
-        .comparison-finding(v-else-if="comparison" data-testid="incompatible-comparison")
-          strong Incompatible formula snapshots
-          p No residual is computed. The findings are shown in parallel because the formula compatibility keys differ.
-          p {{ JSON.stringify(comparison.findings[0]) }}
-          p {{ JSON.stringify(comparison.findings[1]) }}
+        WorkbenchCompare(:pair="comparisonPair" removable @remove="removeComparisonSnapshot")
+          template(#domain-comparison)
+            .comparison-finding(data-testid="compatible-comparison")
+              strong Compatible formula snapshots
+              p Domain-specific residual / selected-real delta (state 2 − state 1): {{ formatNumber(selectedRealDelta ?? 0) }} {{ formula.meaning.unit }}
 
     details.detail-disclosure.raw-anatomy(data-testid="raw-anatomy")
       summary

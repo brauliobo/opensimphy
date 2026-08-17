@@ -131,7 +131,7 @@ describe('workbench input URL envelope', () => {
     class InputRecord {
       value = 1
     }
-    expect(() => encodeWorkbenchInputEnvelope(new InputRecord())).toThrow(/plain object prototype/)
+    expect(() => encodeWorkbenchInputEnvelope(new InputRecord())).toThrow(/plain JSON object/)
     expect(() => encodeWorkbenchInputEnvelope({ value: Number.NaN })).toThrow(/finite JSON number/)
     expect(() => decodeWorkbenchInputEnvelope(
       encodeRawJson('{"version":1,"inputs":{"value":1e999}}'),
