@@ -3,6 +3,10 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import {
+  EARTH_PARTICLE_CAMPAIGN_CARDS,
+  isParticleCampaignProgram,
+} from '../earth/particleCampaign'
+import {
   loadScientificSimulationBundle,
   type ScientificSimulationBundle,
   type ScientificSimulationRecord,
@@ -235,6 +239,15 @@ onBeforeUnmount(() => controller.abort())
     p.is-validation-caveat
       strong Scientific validation not established
       span Execution coverage does not establish agreement with nature or EARTH theory validation.
+
+  section.earth-campaign-strip(v-if="bundle" data-testid="earth-campaign-strip" aria-label="Particle and quantum campaign models")
+    p Particle / quantum models — card, then table, then run
+    RouterLink(
+      v-for="card in EARTH_PARTICLE_CAMPAIGN_CARDS"
+      :key="card.slug"
+      :to="`/earth/programs/${encodeURIComponent(card.programId)}`"
+      :class="{ 'is-campaign': isParticleCampaignProgram(card.programId) }"
+    ) {{ card.slug }}
 
   section.filter-console.earth-simulation-filters(aria-label="Primary program filters")
     label.field.field-search

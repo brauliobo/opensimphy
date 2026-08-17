@@ -18,6 +18,7 @@ import {
   DEFAULT_EARTH_SIMULATION_INPUTS,
   SUPPORTED_EARTH_SIMULATION_IDS,
 } from '../../src/engine/earth'
+import { extractPredictions, predictionOutcomeLabel } from '../../src/earth/predictions'
 import EarthSimulationDetailView from '../../src/views/EarthSimulationDetailView.vue'
 import EarthSimulationsView from '../../src/views/EarthSimulationsView.vue'
 
@@ -174,6 +175,9 @@ describe('EARTH scientific simulation registry', () => {
     expect(wrapper.findAll('.program-domain-group').map((group) => group.attributes('data-domain'))).toEqual(
       [...wrapper.findAll('.program-domain-group').map((group) => group.attributes('data-domain'))].sort(),
     )
+    expect(wrapper.get('[data-testid="earth-campaign-strip"]').text()).toContain('SIM-NUC-PROTON')
+    expect(wrapper.get('[data-testid="earth-campaign-strip"]').text()).toContain('SIM-FLD')
+    expect(wrapper.get('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
   })
 
   it('retains schema v2 source and method metadata in the owning UI record contract', async () => {
@@ -337,6 +341,83 @@ describe('EARTH scientific simulation registry', () => {
     expect(wrapper.get(`[data-testid="simulation-record-${multipleMethods.id}"] .program-row-methods`).text()).toContain(
       `${multipleMethods.executionMethods.length} declared methods`,
     )
+  })
+
+  it('shows a plain-language proton card and an empty four-column table before run', async () => {
+    mockGeneratedRegistryFetch()
+    const wrapper = await mountDetail('EARTH-NUC-004')
+
+    expect(wrapper.get('[data-testid="earth-model-path"]').text()).toContain('Model → claim → table → run')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('SM 0.84075 fm')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('Nassim 0.84124 fm')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('Thad 0.84343 fm')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('EARTH ξ₀ routes fail')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('validatesEarthTheory: false')
+    expect(wrapper.get('[data-testid="earth-prediction-table"]').text()).toContain('EARTH | Thad | Nassim | SM')
+    expect(wrapper.get('[data-testid="earth-prediction-table"]').text()).toContain('No predictions[] yet')
+    expect(wrapper.get('[data-testid="earth-prediction-table"]').text()).toContain('validatesEarthTheory: false')
+  })
+
+  it('says Thad and Nassim have none on the field and decoherence cards', async () => {
+    mockGeneratedRegistryFetch()
+    const field = await mountDetail('EARTH-FLD-001')
+    expect(field.get('[data-testid="earth-model-card-SIM-FLD"]').text()).toContain('Thad and Nassim columns show none')
+    field.unmount()
+    const decoherence = await mountDetail('EARTH-FLD-005')
+    expect(decoherence.get('[data-testid="earth-model-card-SIM-QM-DECOHERENCE"]').text()).toContain('Thad and Nassim columns show none')
+  })
+
+  it('renders predictions[] as EARTH | Thad | Nassim | SM | residual and keeps falsified rows failed', async () => {
+    mockGeneratedRegistryFetch()
+    runnerMock.mockResolvedValue({
+      schemaVersion: 2,
+      programId: 'EARTH-NUC-004',
+      methodId: 'earth-source-reproduction-v1',
+      executionStatus: 'completed',
+      id: 'EARTH-NUC-004',
+      status: 'completed',
+      method: 'source method',
+      diagnostics: { finite: true },
+      output: { residualMetres: 1 },
+      relationship: 'earth-source-reproduction',
+      modelOrigin: 'earth-corpus',
+      earthDerived: true,
+      validatesEarthTheory: false,
+      predictions: [{
+        claimId: 'NUC-004-RP',
+        observable: 'proton radius',
+        unit: 'fm',
+        earth: { printed: 0.15, evaluated: 0.15, formula: 'ξ₀' },
+        thad: { value: 0.84343, formula: 'Catalan' },
+        nassim: { value: 0.84124, formula: '4λ_p' },
+        sm: { value: 0.84075, uncertainty: 0.00039, source: 'CODATA', release: '2022' },
+        residual: { earthEvalVsSm: -0.69075 },
+        auditStatus: 'falsified',
+      }],
+      provenance: {
+        kind: 'reproduction',
+        precision: 'float64',
+        model: 'source model',
+        relationship: 'earth-source-reproduction',
+        modelOrigin: 'earth-corpus',
+        earthDerived: true,
+        validatesEarthTheory: false,
+      },
+    } as never)
+    const wrapper = await mountDetail('EARTH-NUC-004')
+    await wrapper.get('[data-testid="workbench-run"]').trigger('click')
+    await flushPromises()
+
+    const table = wrapper.get('[data-testid="earth-prediction-table"]')
+    expect(table.text()).toContain('proton radius')
+    expect(table.text()).toContain('0.15')
+    expect(table.text()).toContain('0.84343')
+    expect(table.text()).toContain('0.84124')
+    expect(table.text()).toContain('0.84075')
+    expect(table.text()).toContain('Failed')
+    expect(table.get('tr[data-audit="falsified"]').classes()).toContain('is-failed')
+    expect(table.get('tr.is-failed').text()).not.toMatch(/Confirmed|validated/i)
+    expect(wrapper.text()).toContain('validatesEarthTheory: false')
   })
 
   it('does not expose a Run control for a blocked record', async () => {
@@ -684,5 +765,31 @@ describe('EARTH scientific simulation registry', () => {
     wrapper.unmount()
     await flushPromises()
     expect(signals[3]?.aborted).toBe(true)
+  })
+})
+
+describe('earth-prediction/v1 display', () => {
+  it('maps falsified and missing columns without calling them confirmed', () => {
+    const rows = extractPredictions({
+      schemaVersion: 2,
+      validatesEarthTheory: false,
+      predictions: [{
+        claimId: 'FLD-001-HOPF',
+        observable: 'Hopf sector',
+        unit: '',
+        earth: { evaluated: 0, formula: 'π₃(S¹)' },
+        thad: { status: 'missing' },
+        nassim: null,
+        sm: { value: 0, source: 'Derrick' },
+        residual: { earthEvalVsSm: 0 },
+        auditStatus: 'falsified',
+      }],
+    })
+
+    expect(rows).toHaveLength(1)
+    expect(rows[0]).toMatchObject({ earth: '0', thad: 'none', nassim: 'none', outcome: 'Failed' })
+    expect(predictionOutcomeLabel('falsified')).toBe('Failed')
+    expect(predictionOutcomeLabel('missing')).toBe('None')
+    expect(predictionOutcomeLabel('testable')).toBe('Testable, not confirmed')
   })
 })

@@ -26,6 +26,7 @@ describe('EARTH dossier overview', () => {
         { path: '/earth', name: 'earth', component: EarthOverviewView },
         { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
         { path: '/earth/programs', name: 'earth-simulations', component: { template: '<div />' } },
+        { path: '/earth/programs/:id', name: 'earth-simulation', component: { template: '<div />' } },
         { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
       ],
     })
@@ -41,10 +42,23 @@ describe('EARTH dossier overview', () => {
     expect(ledger.text()).toContain('19')
     expect(ledger.text()).toContain('frozen datasets0')
     expect(ledger.text()).toContain('scientificallyValidated: false')
-    expect(wrapper.text()).toContain('Source evidence → program → methods → results')
+    expect(wrapper.text()).toContain('Model → what it claims → EARTH | Thad | Nassim | SM → run')
     expect(wrapper.text()).toContain('EXECUTION ≠ VALIDATION')
+    expect(wrapper.text()).toContain('Proton radius is four competing numbers, not one')
+    expect(wrapper.text()).toContain('SM 0.84075 fm')
+    expect(wrapper.text()).toContain('Nassim 0.84124 fm')
+    expect(wrapper.text()).toContain('Thad 0.84343 fm')
+    expect(wrapper.text()).toContain('EARTH ξ₀ routes fail')
+    expect(wrapper.text()).toContain('Thad is a constants constructor')
+    expect(wrapper.text()).toContain('r_p=4λ_p')
+    expect(wrapper.text()).toContain('EARTH printed α/Bohr/ħ/φ⁶ fail literal arithmetic')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-FLD"]').text()).toContain('Thad and Nassim columns show none')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-QM-DECOHERENCE"]').text()).toContain('Thad and Nassim columns show none')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-CHEM-SPECTRA"]').text()).toContain('Thad and Nassim columns show none')
+    expect(wrapper.get('[data-testid="earth-model-card-SIM-NUC-PROTON"]').text()).toContain('validatesEarthTheory: false')
     expect(wrapper.findAll('a[href="/earth/corpus"]').length).toBeGreaterThan(0)
     expect(wrapper.findAll('a[href="/earth/programs"]').length).toBeGreaterThan(0)
     expect(wrapper.findAll('a[href="/earth/datasets"]').length).toBeGreaterThan(0)
+    expect(wrapper.get('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
   })
 })

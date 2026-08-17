@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
+import EarthModelCard from '../components/EarthModelCard.vue'
 import { loadEarthManifest, type EarthManifest } from '../earth/corpus'
 import { loadEarthDatasetRegistry, type EarthDatasetRegistry } from '../earth/datasets'
+import {
+  EARTH_BLOCKED_SOURCE_MODELS,
+  EARTH_PARTICLE_CAMPAIGN_CARDS,
+} from '../earth/particleCampaign'
 import { loadScientificSimulationBundle, type ScientificSimulationBundle } from '../earth/simulations'
 
 const manifest = ref<EarthManifest | null>(null)
@@ -48,7 +53,7 @@ onBeforeUnmount(() => controller.abort())
     .earth-dossier-title
       p.eyebrow Instrument 03/A / evidence dossier
       h1 EARTH Evidence Dossier
-      p.lede A read-only map from preserved source claims to reproducible browser programs, their declared methods, and result records. The dossier reports what is present and executable without promoting execution to scientific validation.
+      p.lede One path: open a model card, read what it claims, compare EARTH | Thad | Nassim | SM, then run. Execution is not validation.
     aside.earth-dossier-stamp
       span.plate-index DOSSIER / 03-A
       dl
@@ -95,41 +100,46 @@ onBeforeUnmount(() => controller.abort())
     section.earth-chain-section
       header.section-heading
         div
-          p.eyebrow Evidence chain / reading order
-          h2 Source evidence → program → methods → results
-        p Each layer preserves a different claim. Follow the chain forward to inspect provenance, then backward to audit what a result actually depends on.
-      .earth-chain
-        RouterLink(to="/earth/corpus")
-          span 01 / SOURCE EVIDENCE
-          strong Preserved claims and hashes
-          p The corpus records the submitted Markdown and structural candidates. It is evidence of what the source says, not evidence that the source is correct.
-          small Open 03/B Corpus →
-        RouterLink(to="/earth/programs")
-          span 02 / PROGRAM
-          strong Registered scientific task
-          p A program binds source records, goals, dependencies, gate states, and execution status into an auditable work item.
-          small Open 03/C Programs →
-        RouterLink(to="/earth/programs")
-          span 03 / METHODS
-          strong Declared comparison paths
-          p The registry identifies {{ methodCount }} declared methods, of which {{ runnableMethodCount }} have an integrity-matched browser adapter. Unavailable source formulations remain metadata only.
-          small Inspect method records →
-        RouterLink(to="/earth/datasets")
-          span 04 / RESULTS
-          strong Outputs require provenance
-          p Worker output is a reproduction record. Dataset metadata and gate ledgers show why no empirical validation result is currently asserted.
-          small Open 03/D Data →
+          p.eyebrow Reading order
+          h2 Model → what it claims → EARTH | Thad | Nassim | SM → run
+        p Thad is a constants constructor, not a field theory. Nassim’s only clean particle prediction is r_p=4λ_p. EARTH printed α/Bohr/ħ/φ⁶ fail literal arithmetic. Failed rows stay failed.
+      ol.earth-path
+        li Open the model card
+        li Read what it is and what it is not
+        li Compare EARTH | Thad | Nassim | SM
+        li Run. A result is not confirmation.
+
+    section.earth-campaign-models(data-testid="earth-campaign-models" aria-label="Particle and quantum models")
+      header.section-heading
+        div
+          p.eyebrow Particle / quantum models
+          h2 Ten runnable cards
+        p Same programs as the campaign slugs. No extra dashboard.
+      .earth-campaign-grid
+        RouterLink.earth-campaign-link(
+          v-for="card in EARTH_PARTICLE_CAMPAIGN_CARDS"
+          :key="card.slug"
+          :to="`/earth/programs/${card.programId}`"
+        )
+          EarthModelCard(:card="card")
+      header.section-heading
+        div
+          p.eyebrow Blocked source models
+          h2 Stay blocked
+        p Missing operators stay missing. Do not treat a gap as a result.
+      .earth-campaign-grid.is-blocked
+        EarthModelCard(v-for="card in EARTH_BLOCKED_SOURCE_MODELS" :key="card.slug" :card="card")
 
     section.earth-execution-note
       strong EXECUTION ≠ VALIDATION
       div
-        h2 What the browser can establish
-        p Successful execution establishes that a registered method can produce finite, inspectable output under its recorded inputs and runtime. It supports reproduction and implementation audit.
+        h2 What a run can show
+        p A method can print finite numbers and fill the prediction table. That is reproduction, not agreement with nature.
       div
-        h2 What remains unproven
-        p Execution alone does not establish source-model closure, agreement with nature, acquired or frozen data, independent replication, or scientific truth. The validated registries therefore retain #[code scientificallyValidated: false].
+        h2 What stays unproven
+        p Registries keep #[code scientificallyValidated: false]. Falsified arithmetic is failed, not confirmed physics.
 
-    section.earth-section-index(aria-label="EARTH dossier sections")
+    nav.earth-section-index(aria-label="EARTH dossier sections")
       RouterLink(to="/earth/corpus")
         span 03/B
         strong Corpus · {{ manifest.summary.documents }}
@@ -137,9 +147,9 @@ onBeforeUnmount(() => controller.abort())
       RouterLink(to="/earth/programs")
         span 03/C
         strong Programs · {{ programCount }}
-        small Program and method registry
+        small All 130 program records
       RouterLink(to="/earth/datasets")
         span 03/D
         strong Data · {{ datasets.summary.metadataAuthenticated }}
-        small Metadata-authenticated ledger
+        small Metadata only
 </template>

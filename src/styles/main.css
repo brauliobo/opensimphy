@@ -3084,6 +3084,199 @@ main {
   color: var(--paper-dim);
 }
 
+.earth-path {
+  display: grid;
+  margin-top: 1.5rem;
+  padding: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  border-top: 1px solid var(--rule-bright);
+  border-left: 1px solid var(--rule-bright);
+}
+
+.earth-path li {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  border-right: 1px solid var(--rule-bright);
+  border-bottom: 1px solid var(--rule-bright);
+}
+
+.earth-campaign-models {
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+
+.earth-campaign-grid {
+  display: grid;
+  margin: 1.25rem 0 2.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.earth-campaign-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.earth-campaign-strip {
+  display: flex;
+  margin: 1.25rem 0 1.75rem;
+  padding: 0.9rem 0;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.85rem;
+  align-items: baseline;
+  border-top: 1px solid var(--rule-bright);
+  border-bottom: 1px solid var(--rule-bright);
+}
+
+.earth-campaign-strip p {
+  margin: 0 0.6rem 0 0;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.earth-campaign-strip a {
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.earth-model-path {
+  display: grid;
+  margin: 1.5rem 0 2rem;
+  gap: 1rem;
+}
+
+.earth-model-card {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-0);
+}
+
+.earth-model-card header {
+  display: flex;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.8rem;
+  align-items: baseline;
+}
+
+.earth-model-card code,
+.earth-model-card span {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+}
+
+.earth-model-card code {
+  color: var(--cyan);
+}
+
+.earth-model-card strong {
+  flex: 1 1 12rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
+.earth-model-card .is-runnable {
+  color: var(--amber);
+}
+
+.earth-model-card .is-blocked {
+  color: var(--red);
+}
+
+.earth-model-card dl {
+  margin: 0;
+}
+
+.earth-model-card dl div {
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.earth-model-card dt {
+  margin-bottom: 0.25rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+}
+
+.earth-model-card dd {
+  margin: 0;
+  color: var(--paper);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.earth-prediction-panel {
+  padding: 1rem 0 0.25rem;
+}
+
+.earth-prediction-panel h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.earth-prediction-panel > p,
+.earth-prediction-empty {
+  margin: 0 0 0.75rem;
+  color: var(--paper-dim);
+  font-size: 0.78rem;
+}
+
+.earth-prediction-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.earth-prediction-table th,
+.earth-prediction-table td {
+  padding: 0.65rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--rule);
+}
+
+.earth-prediction-table thead th {
+  color: var(--amber);
+  text-transform: uppercase;
+}
+
+.earth-prediction-table tbody th span,
+.earth-prediction-table tbody td strong {
+  display: block;
+}
+
+.earth-prediction-table small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--paper-dim);
+}
+
+.earth-prediction-table tr.is-failed td,
+.earth-prediction-table tr.is-failed th {
+  color: var(--red);
+}
+
+.earth-validation-stamp {
+  margin: 0.75rem 0 0;
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+}
+
 .earth-lock {
   display: flex;
   padding: 0.8rem 1rem;
@@ -5337,7 +5530,9 @@ main {
   .topic-door-grid,
   .topic-category-grid,
   .topic-featured-grid,
-  .earth-chain {
+  .earth-chain,
+  .earth-path,
+  .earth-campaign-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -5642,6 +5837,8 @@ main {
   .earth-dossier-header,
   .earth-evidence-ledger,
   .earth-chain,
+  .earth-path,
+  .earth-campaign-grid,
   .earth-execution-note,
   .earth-section-index,
   .program-registry-statement,

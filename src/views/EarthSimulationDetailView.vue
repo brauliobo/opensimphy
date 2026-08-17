@@ -2,12 +2,16 @@
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
+import EarthModelCard from '../components/EarthModelCard.vue'
+import EarthPredictionTable from '../components/EarthPredictionTable.vue'
 import EarthStructuredValue from '../components/EarthStructuredValue.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
 import WorkbenchShell from '../components/workbench/WorkbenchShell.vue'
 import type { EarthDocumentRecord } from '../earth/corpus'
 import { loadEarthDatasetRegistry, type EarthDatasetRegistry } from '../earth/datasets'
+import { cardsForProgram } from '../earth/particleCampaign'
+import { extractPredictions } from '../earth/predictions'
 import {
   loadEarthEvidenceManifest,
   loadEarthProgramEvidence,
@@ -226,6 +230,8 @@ const methodAvailabilityLabel = computed(() => {
         : 'LOCAL CONTRACT AUDIT READY')
   return `${count} DECLARED ${count === 1 ? 'METHOD' : 'METHODS'} · ${runnableCount} RUNNABLE · ${unavailableCount} UNAVAILABLE${readyKinds.length ? ` · ${[...new Set(readyKinds)].join(' · ')}` : ''}`
 })
+const modelCards = computed(() => simulation.value ? cardsForProgram(simulation.value.id) : [])
+const predictionRows = computed(() => extractPredictions(selectedResult.value))
 const scalarOutputs = computed(() => resultScalarOutputs(selectedResult.value))
 const structuredOutputs = computed(() => resultStructuredOutputs(selectedResult.value))
 const resultDiagnostics = computed(() => Object.entries(selectedResult.value?.diagnostics ?? {}))
@@ -889,6 +895,11 @@ onUnmounted(abortExecution)
         strong(:class="{ 'is-source-blocked': simulation.sourceState.status === 'blocked' }") {{ sourceReadinessLabel }}
         span {{ scientificReadinessLabel }}
         span {{ methodAvailabilityLabel }}
+
+    section.earth-model-path(v-if="modelCards.length" data-testid="earth-model-path")
+      p.eyebrow Model → claim → table → run
+      EarthModelCard(v-for="card in modelCards" :key="card.slug" :card="card")
+      EarthPredictionTable(:rows="predictionRows")
 
     section.simulation-goal-section(v-if="!isWorkbenchSurface" aria-labelledby="program-question-heading")
       p.eyebrow 01 / Question
