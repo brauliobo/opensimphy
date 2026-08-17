@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "checkout": "awesome-physics-repos/pymunk",
+    "revision": "6287ce6d9223d1d79d28b2c26f37499f45b445b8",
+    "chipmunkRevision": "47b0e6b200c1aedb7b9ee09a998a2ef0bbad8f82",
+    "abiSource": "scripts/awesomePhysics/wasm/pymunk/abi/pymunk_headless.c",
+    "abiScope": "One static ground segment and one dynamic ball; snapshot x/y/angle after a bounded step count."
+  },
+  "toolchain": {
+    "emscripten": "6.0.6-git",
+    "emscriptenRevision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245",
+    "family": "emscripten-headless",
+    "maxMemoryBytes": 134217728,
+    "initialMemoryBytes": 16777216,
+    "compileVirtualMemoryKb": 4194304
+  },
+  "abi": {
+    "sourceSha256": "36a6eb6b9887cf976fe0ce6395daf16d30c00d36fa491c86b6d8252fc03ba031",
+    "exports": [
+      "pymunk_version",
+      "pymunk_step",
+      "pymunk_x",
+      "pymunk_angle",
+      "pymunk_steps"
+    ],
+    "limits": {
+      "maximumStepsPerCall": 600
+    }
+  },
+  "artifact": {
+    "wasm": {
+      "name": "pymunk.wasm",
+      "path": "wasm/awesomePhysics/pymunk/pymunk.wasm",
+      "byteSize": 76555,
+      "sha256": "0166b68c54e17b3892ca675749afdc065806e8df5636fc55e89d8d4badb67158"
+    }
+  },
+  "build": {
+    "script": "scripts/awesomePhysics/wasm/pymunk/build.mjs",
+    "output": "empty .wasm-build/pymunk directory",
+    "munk2d": "cloned out-of-tree at the pymunk Munk2D gitlink; pinned checkout is not modified",
+    "sourceCheckout": "read-only; clean before and after build"
+  },
+  "verification": [
+    "Full pymunk revision, Munk2D gitlink, and Emscripten pins are checked.",
+    "ABI source hash, exports, byte size, and SHA-256 values are checked.",
+    "Initial, falling, settled, and per-call step-limit smoke calls are checked.",
+    "Host paths /home/braulio and /tmp/opencode are remapped and rejected in the generated WASM.",
+    "Temporary files stay under the output TMPDIR; pygame, drawing, and Pyodide are not shipped."
+  ]
+}
