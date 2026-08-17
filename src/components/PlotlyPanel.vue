@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref, toRaw, watch } from 'vue'
-import type { PlotFigure } from '../types/plot'
+import FigurePanel from './FigurePanel.vue'
+import { PLOTLY_UI_CONFIG, toPlotlyFigure } from '../render/plotly'
+import type { PlotFigure, PlotPanelStatus } from '../types/plot'
 
 function unwrapVueProxies<T>(value: T, seen = new WeakMap<object, unknown>()): T {
   if (value === null || typeof value !== 'object') return value
@@ -37,7 +39,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{ ready: []; error: [reason: Error] }>()
 const target = ref<HTMLDivElement | null>(null)
-const status = ref<'loading' | 'ready' | 'error'>('loading')
+const status = ref<PlotPanelStatus>('loading')
 let plotly: typeof import('plotly.js-dist-min').default | null = null
 let renderGeneration = 0
 let mounted = false
@@ -65,7 +67,7 @@ async function render(): Promise<void> {
   status.value = 'loading'
   let currentPlotly = plotly
   try {
-    const figure = structuredClone(unwrapVueProxies(props.figure))
+    const figure = structuredClone(unwrapVueProxies(toPlotlyFigure(props.figure)))
     if (!currentPlotly) {
       currentPlotly = (await import('plotly.js-dist-min')).default
       plotly ??= currentPlotly
@@ -85,24 +87,7 @@ async function render(): Promise<void> {
       if (plottedTarget !== renderTarget) purgeTarget(currentPlotly, plottedTarget)
     }
     plottedTargets.add(renderTarget)
-    const reaction = currentPlotly.react(
-      renderTarget,
-      figure.data,
-      {
-        autosize: true,
-        paper_bgcolor: '#15191b',
-        plot_bgcolor: '#15191b',
-        font: { color: '#d8d1bf', family: 'ui-monospace, SFMono-Regular, Menlo, monospace', size: 11 },
-        margin: { l: 56, r: 24, t: 42, b: 48 },
-        ...figure.layout,
-      },
-      {
-        responsive: true,
-        displaylogo: false,
-        scrollZoom: true,
-        ...figure.config,
-      },
-    )
+    const reaction = currentPlotly.react(renderTarget, figure.data, figure.layout, PLOTLY_UI_CONFIG)
     if (reaction && typeof (reaction as PromiseLike<unknown>).then === 'function') await reaction
     if (!isCurrentRender(generation, renderTarget)) {
       purgeDetachedTarget(currentPlotly, renderTarget)
@@ -137,10 +122,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template lang="pug">
-.plot-panel(:aria-busy="status === 'loading'")
-  .plot-header
-    span {{ label }}
-    span.plot-state(:class="`is-${status}`") {{ status }}
+FigurePanel(:label="label" :status="status")
   .plot-target(
     ref="target"
     role="img"
@@ -148,5 +130,4 @@ onBeforeUnmount(() => {
     :data-testid="status === 'ready' ? testId : undefined"
     :data-plot-state="status"
   )
-  p.inline-error(v-if="status === 'error'") Interactive plot failed to initialize.
 </template>

@@ -1,16 +1,9 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import Plotly from 'plotly.js-dist-min'
-import type { PlotData } from 'plotly.js'
 import { isProxy, isReadonly, readonly } from 'vue'
 import PlotlyPanel from '../../src/components/PlotlyPanel.vue'
-import type { PlotFigure } from '../../src/types/plot'
+import type { PlotFigure, PlotSurfaceSeries } from '../../src/types/plot'
 import { figure } from './fixtures'
-
-interface SurfaceFigure {
-  data: Partial<PlotData>[]
-  layout?: PlotFigure['layout']
-  config?: PlotFigure['config']
-}
 
 function deepFreeze<T>(value: T): T {
   if (value && typeof value === 'object') {
@@ -21,22 +14,22 @@ function deepFreeze<T>(value: T): T {
   return value
 }
 
-function surfaceFigure(color: string, ratio: number): SurfaceFigure {
+function surfaceFigure(color: string, ratio: number): PlotFigure {
+  const series: PlotSurfaceSeries = {
+    kind:       'surface',
+    x:          new Float64Array([0]),
+    y:          [0],
+    z:          [1],
+    custom:     [[new Date('2026-01-01T00:00:00Z'), null]],
+    colorScale: [{ at: 0, color }, { at: 1, color: '#ffffff' }],
+  }
   return {
-    data: [{
-      x: new Float64Array([0]),
-      y: [0],
-      z: [1],
-      customdata: [[new Date('2026-01-01T00:00:00Z'), null]],
-      type: 'mesh3d',
-      colorscale: [[0, color], [1, '#ffffff']],
-    }],
-    layout: { scene: { aspectratio: { x: ratio, y: 1, z: 1 } } },
-    config: { scrollZoom: true, modeBarButtonsToRemove: ['zoom2d'] },
+    series: [series],
+    layout: { scene: { aspect: { x: ratio, y: 1, z: 1 } } },
   }
 }
 
-function immutableFigure(color: string, ratio: number): SurfaceFigure {
+function immutableFigure(color: string, ratio: number): PlotFigure {
   return deepFreeze(surfaceFigure(color, ratio))
 }
 
@@ -81,7 +74,7 @@ describe('PlotlyPanel', () => {
         colorscale: Array<[number, string]>
       }>
       const layout = args[2] as unknown as { scene: { aspectratio: { x: number } } }
-      const config = args[3] as unknown as { modeBarButtonsToRemove: string[] }
+      const config = args[3] as unknown as { scrollZoom: boolean }
       expect(ArrayBuffer.isView(data[0]?.x)).toBe(true)
       expect(data[0]?.x.constructor.name).toBe('Float64Array')
       expect(Object.prototype.toString.call(data[0]?.x.buffer)).toBe('[object ArrayBuffer]')
@@ -90,7 +83,7 @@ describe('PlotlyPanel', () => {
       data[0]!.x[0] = 7
       data[0]!.colorscale[0]![1] = '#plotly-normalized'
       layout.scene.aspectratio.x = 9
-      config.modeBarButtonsToRemove.push('pan2d')
+      config.scrollZoom = false
       expect(data[0]!.colorscale[0]![1]).toBe('#plotly-normalized')
       expect(layout.scene.aspectratio.x).toBe(9)
       return Promise.resolve(args[0] as Plotly.PlotlyHTMLElement)
@@ -101,15 +94,11 @@ describe('PlotlyPanel', () => {
     const secondSource = surfaceFigure('#222222', 2)
     const nestedReadonlyFigure = {
       ...secondSource,
-      data: [readonly(secondSource.data[0]!)],
+      series: [readonly(secondSource.series[0]!)],
       layout: { ...secondSource.layout, scene: readonly(secondSource.layout!.scene!) },
-      config: {
-        ...secondSource.config,
-        modeBarButtonsToRemove: readonly(secondSource.config!.modeBarButtonsToRemove!),
-      },
     } as unknown as PlotFigure
     expect(isProxy(nestedReadonlyFigure)).toBe(false)
-    expect(isReadonly(nestedReadonlyFigure.data[0])).toBe(true)
+    expect(isReadonly(nestedReadonlyFigure.series[0])).toBe(true)
     expect(isReadonly(nestedReadonlyFigure.layout?.scene)).toBe(true)
     const wrapper = mount(PlotlyPanel, {
       props: { figure: readonly(firstSource) as unknown as PlotFigure, label: 'Readonly surface' },
@@ -118,22 +107,26 @@ describe('PlotlyPanel', () => {
 
     expect(wrapper.emitted('error')).toBeUndefined()
     expect(wrapper.get('[data-testid="plot-ready"]').attributes('data-plot-state')).toBe('ready')
-    expect(firstSource.data[0]?.colorscale).toEqual([[0, '#111111'], [1, '#ffffff']])
-    expect(firstSource.data[0]?.x?.[0]).toBe(0)
-    expect(firstSource.layout?.scene?.aspectratio?.x).toBe(1)
-    expect(firstSource.config?.modeBarButtonsToRemove).toEqual(['zoom2d'])
+    expect(firstSource.series[0]).toMatchObject({
+      kind:       'surface',
+      colorScale: [{ at: 0, color: '#111111' }, { at: 1, color: '#ffffff' }],
+    })
+    expect(firstSource.series[0]?.x[0]).toBe(0)
+    expect(firstSource.layout?.scene?.aspect?.x).toBe(1)
 
     await wrapper.setProps({ figure: nestedReadonlyFigure })
     await flushPromises()
 
     expect(wrapper.get('[data-testid="plot-ready"]').attributes('data-plot-state')).toBe('ready')
     expect(wrapper.emitted('ready')).toHaveLength(2)
-    expect(secondSource.data[0]?.colorscale).toEqual([[0, '#222222'], [1, '#ffffff']])
-    expect(secondSource.data[0]?.x?.[0]).toBe(0)
-    expect(secondSource.layout?.scene?.aspectratio?.x).toBe(2)
+    expect(secondSource.series[0]).toMatchObject({
+      kind:       'surface',
+      colorScale: [{ at: 0, color: '#222222' }, { at: 1, color: '#ffffff' }],
+    })
+    expect(secondSource.series[0]?.x[0]).toBe(0)
+    expect(secondSource.layout?.scene?.aspect?.x).toBe(2)
     expect(react).toHaveBeenCalledTimes(2)
-    expect(react.mock.calls[0]?.[1]).not.toBe(firstSource.data)
-    expect(react.mock.calls[0]?.[3]).not.toBe(firstSource.config)
+    expect(react.mock.calls[0]?.[1]).not.toBe(firstSource.series)
     expect(react.mock.calls[1]?.[1]).not.toBe(react.mock.calls[0]?.[1])
 
     const target = wrapper.get('.plot-target').element

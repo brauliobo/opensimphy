@@ -6,7 +6,7 @@ import type { TaxonomyArtifact } from '../../src/types/engine'
 import type { PlotFigure } from '../../src/types/plot'
 
 export const figure: PlotFigure = {
-  data: [{ x: [0, 1, 2], y: [1, 2, 3], type: 'scatter', mode: 'lines' }],
+  series: [{ kind: 'line', x: [0, 1, 2], y: [1, 2, 3] }],
 }
 
 export function formula(ordinal: number, overrides: Partial<FormulaRecord> = {}): FormulaRecord {
