@@ -1,0 +1,13 @@
+public/data/
+public/wasm/
+data/
+fem/
+content/
+*.wasm
+dev-dist/
+dist/
+node_modules/
+.wasm-build/
+tools/wasm/.cache/
+tools/wasm/out/
+release/

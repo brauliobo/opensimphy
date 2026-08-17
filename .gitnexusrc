@@ -1,0 +1,13 @@
+{
+  "analyze": {
+    "name":                    "opensimphy",
+    "skipAgentsMd":            true,
+    "skipSkills":              true,
+    "indexOnly":               true,
+    "embeddingBaseUrl":        "http://localhost:11434/v1",
+    "embeddingModel":          "qwen3-embedding:4b",
+    "embeddingBatchSize":      "64",
+    "embeddingSubBatchSize":   "64",
+    "workers":                 "4"
+  }
+}
