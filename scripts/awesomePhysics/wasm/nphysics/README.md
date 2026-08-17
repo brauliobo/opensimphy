@@ -15,6 +15,7 @@ snapshot and step surface to the OpenSimPhy module worker.
 - Cargo parallelism: `4` jobs maximum
 - WASM linker memory maximum: `134217728` bytes (128 MiB)
 - Cargo mode: release, `--locked`, `debug=true`, LTO, one codegen unit
+- Path remap: rustc `--remap-path-prefix` for cargo, rustup, source, and build roots; artifacts must not embed `/home/braulio` or `/tmp/opencode`
 - Scope: `nphysics2d` only, with `use-wasm-bindgen`; no testbed, `kiss3d`,
   `stdweb`, nphysics3d, 3D artifact, remote package, or CDN fallback
 
@@ -41,7 +42,7 @@ the verified module in a Node smoke check, and verifies the exact outputs:
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| `nphysics2d_worker_probe.wasm` | `367036` | `ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1` |
+| `nphysics2d_worker_probe.wasm` | `366856` | `e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba` |
 | `nphysics2d_worker_probe.js` | `12916` | `364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26` |
 
 The generated JavaScript retains wasm-bindgen's default adjacent `_bg.wasm`

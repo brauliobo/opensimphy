@@ -102,10 +102,13 @@ describe('nphysics2d verified WASM pilot', () => {
       byteSize: NPHYSICS2D_ARTIFACT_INTEGRITY.javascript.byteSize,
       sha256: NPHYSICS2D_ARTIFACT_INTEGRITY.javascript.sha256,
     })
-    expect(wasmBytes.byteLength).toBe(367036)
+    expect(wasmBytes.byteLength).toBe(366856)
     expect(javascriptBytes.byteLength).toBe(12916)
     expect(sha256(wasmBytes)).toBe(NPHYSICS2D_ARTIFACT_INTEGRITY.wasm.sha256)
     expect(sha256(javascriptBytes)).toBe(NPHYSICS2D_ARTIFACT_INTEGRITY.javascript.sha256)
+    const wasmText = Buffer.from(wasmBytes).toString('latin1')
+    expect(wasmText.includes('/home/braulio')).toBe(false)
+    expect(wasmText.includes('/tmp/opencode')).toBe(false)
     expect(manifestRecord).toMatchObject({
       status: 'available',
       licenseGate: { status: 'pass' },

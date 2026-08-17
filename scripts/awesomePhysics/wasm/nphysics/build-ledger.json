@@ -36,8 +36,8 @@
     "wasm": {
       "name": "nphysics2d_worker_probe.wasm",
       "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm",
-      "byteSize": 367036,
-      "sha256": "ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1"
+      "byteSize": 366856,
+      "sha256": "e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba"
     },
     "javascript": {
       "name": "nphysics2d_worker_probe.js",
@@ -65,6 +65,7 @@
     "Full source revision, Cargo.lock, Rust, Cargo, target, and wasm-bindgen pins are checked.",
     "ABI source hash, generated companion contract, 2D exports, byte sizes, and SHA-256 values are checked.",
     "Initial, falling, settled, per-call step-limit, and cumulative step-limit smoke calls are checked.",
-    "No 3D ABI or artifact is generated or promoted by this pilot."
+    "No 3D ABI or artifact is generated or promoted by this pilot.",
+    "Host paths /home/braulio and /tmp/opencode are remapped and rejected in both generated artifacts."
   ]
 }

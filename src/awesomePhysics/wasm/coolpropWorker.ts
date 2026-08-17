@@ -1,9 +1,5 @@
 import { artifactRecordById } from '../artifactManifest'
 import {
-  COOLPROP_ADAPTER_ID,
-  parseCoolPropInput,
-} from '../adapters/wasm/coolprop'
-import {
   loadVerifiedCompanionJavaScript,
   loadVerifiedWasmArtifact,
 } from '../wasmArtifactLoader'
@@ -34,6 +30,7 @@ export async function runCoolPropInWorker<TInput = unknown, TOutput = unknown>(
   request: AwesomePhysicsWorkerRunRequest<TInput>,
   options: RunAwesomePhysicsInWorkerOptions = {},
 ): Promise<TOutput> {
+  const { COOLPROP_ADAPTER_ID, parseCoolPropInput } = await import('../adapters/wasm/coolprop')
   if (request.adapterId !== COOLPROP_ADAPTER_ID) {
     throw new TypeError('The CoolProp runner received an incompatible adapter ID')
   }

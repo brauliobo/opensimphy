@@ -6,7 +6,6 @@ import {
   type AwesomePhysicsWorkerResponse,
   type AwesomePhysicsWorkerRunRequest,
 } from './protocol'
-import { COOLPROP_ADAPTER_ID } from '../adapters/wasm/coolprop'
 
 export interface AwesomePhysicsWorkerLike {
   postMessage(message: AwesomePhysicsWorkerRequest): void
@@ -215,7 +214,7 @@ export function runInWorker<TInput = unknown, TOutput = unknown>(
     return Promise.reject(reason instanceof Error ? reason : new TypeError(reasonMessage(reason)))
   }
 
-  if (parsedRequest.adapterId === COOLPROP_ADAPTER_ID) {
+  if (parsedRequest.adapterId === 'awesome-coolprop-wasm') {
     return import('../wasm/coolpropWorker').then(({ runCoolPropInWorker }) =>
       runCoolPropInWorker(parsedRequest, options) as Promise<TOutput>)
   }

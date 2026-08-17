@@ -20,8 +20,8 @@ export const NPHYSICS2D_OUTPUT_REVISION = 'nphysics2d-worker-output-v1'
 export const NPHYSICS2D_ARTIFACT_INTEGRITY = Object.freeze({
   wasm: Object.freeze({
     path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm',
-    sha256: 'ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1',
-    byteSize: 367036,
+    sha256: 'e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba',
+    byteSize: 366856,
   }),
   javascript: Object.freeze({
     path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js',

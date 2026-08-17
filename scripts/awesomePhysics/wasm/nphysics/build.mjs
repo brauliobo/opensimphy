@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFile } from "node:child_process";
-import { copyFile, mkdir, readFile, readdir, rename, stat, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, readdir, rename, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
@@ -11,6 +11,8 @@ import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, "../../../../");
+const persistRoot = resolve(repositoryRoot, ".wasm-build");
+const publicArtifactDirectory = resolve(repositoryRoot, "public/wasm/awesomePhysics/nphysics");
 const abiDirectory = resolve(scriptDirectory, "abi");
 const defaultSource = resolve(repositoryRoot, "../awesome-physics-repos/nphysics");
 
@@ -21,13 +23,15 @@ const WASM_BINDGEN_VERSION = "0.2.127";
 const WASM_TARGET = "wasm32-unknown-unknown";
 const CARGO_JOBS = 4;
 const MAX_MEMORY_BYTES = 134217728;
+const CARGO_VIRTUAL_MEMORY_KB = 16 * 1024 * 1024;
 const ABI_SOURCE_SHA256 = "5fad2ed31879ce0125ccb39445b2b69967d8968d8e21635a586df53ff5f4c46c";
 const CARGO_LOCK_SHA256 = "e49337e39729eb355a9c337d78185bd41d6ff677071a7792b0928938e4cda8ba";
+const HOST_PATH_NEEDLES = Object.freeze(["/home/braulio", "/tmp/opencode"]);
 const EXPECTED = Object.freeze({
   wasm: Object.freeze({
     name: "nphysics2d_worker_probe.wasm",
-    byteSize: 367036,
-    sha256: "ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1",
+    byteSize: 366856,
+    sha256: "e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba",
   }),
   javascript: Object.freeze({
     name: "nphysics2d_worker_probe.js",
@@ -59,15 +63,19 @@ function optionValue(argumentsList, name) {
 }
 
 function parseOptions(argumentsList) {
-  const supported = new Set(["--source", "--output"]);
+  const supported = new Set(["--source", "--output", "--record-artifact", "--install"]);
   for (const argument of argumentsList) {
     if (argument.startsWith("--") && !supported.has(argument)) fail(`unsupported option ${argument}`);
   }
   const source = resolve(optionValue(argumentsList, "--source") ?? defaultSource);
   const outputArgument = optionValue(argumentsList, "--output");
-  if (outputArgument === null) fail("--output must identify a new or empty out-of-tree directory");
-  const output = resolve(outputArgument);
-  return { source, output };
+  if (outputArgument === null) fail("--output must identify a new or empty persist directory under .wasm-build");
+  return {
+    source,
+    output: resolve(outputArgument),
+    recordArtifact: argumentsList.includes("--record-artifact"),
+    install: argumentsList.includes("--install"),
+  };
 }
 
 async function run(command, argumentsList, options = {}) {
@@ -87,8 +95,10 @@ async function run(command, argumentsList, options = {}) {
 }
 
 async function ensureEmptyOutput(output, source) {
-  if (inside(repositoryRoot, output) || inside(source, output)) {
-    fail("output must be outside the repository and pinned source checkout");
+  if (inside(source, output)) fail("output must be outside the pinned source checkout");
+  if (inside(publicArtifactDirectory, output)) fail("output must not overwrite the public artifact directory");
+  if (inside(repositoryRoot, output) && !inside(persistRoot, output)) {
+    fail("in-repo output must stay under .wasm-build");
   }
   try {
     const outputStat = await stat(output);
@@ -118,7 +128,7 @@ async function verifyToolchain() {
   if (!targets.split(/\r?\n/).includes(WASM_TARGET)) fail(`Rust target ${WASM_TARGET} is not installed`);
 }
 
-async function verifyLedger() {
+async function verifyLedger(recordArtifact) {
   const ledgerPath = resolve(scriptDirectory, "build-ledger.json");
   const ledger = JSON.parse(await readFile(ledgerPath, "utf8"));
   if (ledger.source.revision !== SOURCE_REVISION) fail("build ledger source revision drifted");
@@ -128,18 +138,21 @@ async function verifyLedger() {
   if (ledger.toolchain.maxMemoryBytes !== MAX_MEMORY_BYTES) fail("build ledger WASM memory pin drifted");
   if (ledger.abi.sourceSha256 !== ABI_SOURCE_SHA256) fail("build ledger ABI source hash drifted");
   if (ledger.lock.sha256 !== CARGO_LOCK_SHA256) fail("build ledger Cargo.lock hash drifted");
+  if (recordArtifact) return;
   if (ledger.artifact.wasm.sha256 !== EXPECTED.wasm.sha256 || ledger.artifact.wasm.byteSize !== EXPECTED.wasm.byteSize) fail("build ledger WASM integrity drifted");
   if (ledger.artifact.javascript.sha256 !== EXPECTED.javascript.sha256 || ledger.artifact.javascript.byteSize !== EXPECTED.javascript.byteSize) fail("build ledger JavaScript integrity drifted");
 }
 
 async function stageAbi(output, source) {
   const stagedAbi = join(output, "abi");
+  const vendor = join(output, "vendor");
   await mkdir(join(stagedAbi, "src"), { recursive: true });
+  await mkdir(vendor, { recursive: true });
+  await symlink(source, join(vendor, "nphysics"));
   const cargoTemplate = await readFile(join(abiDirectory, "Cargo.toml"), "utf8");
-  const sourceForCargo = source.split(sep).join("/");
   const cargo = cargoTemplate.replace(
     /nphysics2d = \{ path = "[^"]+\/build\/nphysics2d"/,
-    `nphysics2d = { path = "${sourceForCargo}/build/nphysics2d"`,
+    'nphysics2d = { path = "../vendor/nphysics/build/nphysics2d"',
   );
   if (cargo === cargoTemplate) fail("ABI Cargo.toml has no replaceable nphysics2d source path");
   await writeStaged(join(stagedAbi, "Cargo.toml"), cargo);
@@ -158,24 +171,49 @@ async function writeStaged(path, contents) {
   await writeFile(path, contents);
 }
 
-async function verifyArtifact(path, expected, label) {
-  const bytes = await readFile(path);
-  if (bytes.byteLength !== expected.byteSize) fail(`${label} size is ${bytes.byteLength}, expected ${expected.byteSize}`);
-  const digest = sha256(bytes);
-  if (digest !== expected.sha256) fail(`${label} SHA-256 is ${digest}, expected ${expected.sha256}`);
-  return bytes;
+function remapPathPrefixes(source, output) {
+  const cargoHome = resolve(process.env.CARGO_HOME ?? join(process.env.HOME ?? "/home", ".cargo"));
+  const rustupHome = resolve(process.env.RUSTUP_HOME ?? join(process.env.HOME ?? "/home", ".rustup"));
+  const prefixes = [
+    [source, "/src/nphysics"],
+    [output, "/build/nphysics"],
+    [cargoHome, "/cargo"],
+    [rustupHome, "/rustup"],
+    ["/tmp/opencode", "/tmp/build"],
+    ["/home/braulio", "/home"],
+  ];
+  return prefixes
+    .map(([from, to]) => `--remap-path-prefix=${from}=${to}`)
+    .join(" ");
 }
 
-async function verifyAbi(wasmPath, javascriptPath) {
-  const wasmBytes = await verifyArtifact(wasmPath, EXPECTED.wasm, "nphysics2d WASM");
-  const javascriptBytes = await verifyArtifact(javascriptPath, EXPECTED.javascript, "nphysics2d JavaScript companion");
-  const javascript = javascriptBytes.toString("utf8");
-  if (!javascript.includes("export class World2d") || !javascript.includes("initSync") || !javascript.includes("world2d_step")) {
+function assertNoHostPaths(bytes, label) {
+  const text = Buffer.from(bytes).toString("latin1");
+  const hits = HOST_PATH_NEEDLES.filter((needle) => text.includes(needle));
+  if (hits.length > 0) fail(`${label} embeds host paths: ${hits.join(", ")}`);
+}
+
+async function verifyArtifact(path, expected, label, recordArtifact) {
+  const bytes = await readFile(path);
+  const digest = sha256(bytes);
+  if (!recordArtifact) {
+    if (bytes.byteLength !== expected.byteSize) fail(`${label} size is ${bytes.byteLength}, expected ${expected.byteSize}`);
+    if (digest !== expected.sha256) fail(`${label} SHA-256 is ${digest}, expected ${expected.sha256}`);
+  }
+  assertNoHostPaths(bytes, label);
+  return { bytes, digest, byteSize: bytes.byteLength };
+}
+
+async function verifyAbi(wasmPath, javascriptPath, recordArtifact) {
+  const wasm = await verifyArtifact(wasmPath, EXPECTED.wasm, "nphysics2d WASM", recordArtifact);
+  const javascript = await verifyArtifact(javascriptPath, EXPECTED.javascript, "nphysics2d JavaScript companion", recordArtifact);
+  const javascriptText = javascript.bytes.toString("utf8");
+  if (!javascriptText.includes("export class World2d") || !javascriptText.includes("initSync") || !javascriptText.includes("world2d_step")) {
     fail("generated JavaScript companion does not expose the pinned 2D ABI");
   }
-  if (javascript.includes("World3d") || javascript.includes("world3d_")) fail("generated companion contains an unapproved 3D ABI");
+  if (javascriptText.includes("World3d") || javascriptText.includes("world3d_")) fail("generated companion contains an unapproved 3D ABI");
 
-  const module = await WebAssembly.compile(wasmBytes);
+  const module = await WebAssembly.compile(wasm.bytes);
   const exports = WebAssembly.Module.exports(module).map(({ name }) => name);
   for (const name of ["world2d_new", "world2d_snapshot", "world2d_step"]) {
     if (!exports.includes(name)) fail(`WASM is missing ABI export ${name}`);
@@ -201,11 +239,21 @@ async function verifyAbi(wasmPath, javascriptPath) {
   } finally {
     world.free();
   }
+  return {
+    wasm: { path: wasmPath, name: EXPECTED.wasm.name, byteSize: wasm.byteSize, sha256: wasm.digest },
+    javascript: { path: javascriptPath, name: EXPECTED.javascript.name, byteSize: javascript.byteSize, sha256: javascript.digest },
+  };
+}
+
+async function installPublicArtifacts(artifacts) {
+  await mkdir(publicArtifactDirectory, { recursive: true });
+  await copyFile(artifacts.wasm.path, join(publicArtifactDirectory, artifacts.wasm.name));
+  await copyFile(artifacts.javascript.path, join(publicArtifactDirectory, artifacts.javascript.name));
 }
 
 async function main() {
-  const { source, output } = parseOptions(process.argv.slice(2));
-  await verifyLedger();
+  const { source, output, recordArtifact, install } = parseOptions(process.argv.slice(2));
+  await verifyLedger(recordArtifact);
   await ensureEmptyOutput(output, source);
   await sourceRevisionAndStatus(source);
   await verifyToolchain();
@@ -214,16 +262,17 @@ async function main() {
   const targetDirectory = join(output, "cargo-target");
   const generatedDirectory = join(output, "generated");
   await mkdir(generatedDirectory, { recursive: true });
-  const cargoEnvironment = { ...process.env, CARGO_BUILD_JOBS: String(CARGO_JOBS), CARGO_TARGET_DIR: targetDirectory };
-  cargoEnvironment.RUSTFLAGS = `-C link-arg=--max-memory=${MAX_MEMORY_BYTES}`;
+  const cargoEnvironment = {
+    ...process.env,
+    CARGO_BUILD_JOBS: String(CARGO_JOBS),
+    CARGO_TARGET_DIR: targetDirectory,
+    CARGO_INCREMENTAL: "0",
+  };
+  cargoEnvironment.RUSTFLAGS = `${remapPathPrefixes(source, output)} -C link-arg=--max-memory=${MAX_MEMORY_BYTES}`;
   delete cargoEnvironment.CARGO_ENCODED_RUSTFLAGS;
-  await run("cargo", [
-    "build",
-    "--manifest-path", join(stagedAbi, "Cargo.toml"),
-    "--target", WASM_TARGET,
-    "--release",
-    "--locked",
-    "--jobs", String(CARGO_JOBS),
+  await run("bash", [
+    "-lc",
+    `ulimit -v ${CARGO_VIRTUAL_MEMORY_KB} && exec cargo build --manifest-path ${JSON.stringify(join(stagedAbi, "Cargo.toml"))} --target ${WASM_TARGET} --release --locked --jobs ${CARGO_JOBS}`,
   ], { cwd: output, env: cargoEnvironment });
 
   const rawWasm = join(targetDirectory, WASM_TARGET, "release", "nphysics2d_worker_probe.wasm");
@@ -236,7 +285,8 @@ async function main() {
   const wasmPath = join(generatedDirectory, EXPECTED.wasm.name);
   await rename(generatedJavaScript, javascriptPath);
   await rename(generatedWasm, wasmPath);
-  await verifyAbi(wasmPath, javascriptPath);
+  const artifacts = await verifyAbi(wasmPath, javascriptPath, recordArtifact);
+  if (install) await installPublicArtifacts(artifacts);
 
   const finalStatus = (await run("git", ["-C", source, "status", "--porcelain", "--untracked-files=all"])).trim();
   if (finalStatus.length > 0) fail("pinned source checkout changed during the build");
@@ -246,11 +296,13 @@ async function main() {
     status: "PASS",
     sourceRevision: SOURCE_REVISION,
     output: generatedDirectory,
-    wasm: { path: wasmPath, ...EXPECTED.wasm },
-    javascript: { path: javascriptPath, ...EXPECTED.javascript },
+    hostPaths: "absent",
+    wasm: artifacts.wasm,
+    javascript: artifacts.javascript,
     cargoJobs: CARGO_JOBS,
     target: WASM_TARGET,
     wasmBindgen: WASM_BINDGEN_VERSION,
+    virtualMemoryKb: CARGO_VIRTUAL_MEMORY_KB,
   }, null, 2));
 }
 

@@ -8,5 +8,6 @@ playwright-report/
 public/simulation/
 tools/wasm/.cache/
 tools/wasm/out/
+.wasm-build/
 release/
 .wasm-release-download-*/
