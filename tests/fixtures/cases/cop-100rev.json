@@ -1,0 +1,80 @@
+{
+  "contract": "edwin-gray-cop-100rev",
+  "version": 1,
+  "magneticLookup": null,
+  "productionLutPublished": false,
+  "lutBlocker": "fem/edwin-gray/convergence/production-lut-blocker.json",
+  "energyModel": "bounded-classical-lumped-surrogate",
+  "doesNotModify": "public/data/generated/awesomePhysics/simulations.json",
+  "status": "passed",
+  "models": 7,
+  "revolutionsPerModel": 100,
+  "rounds": 3,
+  "artifactBytes": 16523,
+  "resultBytes": {
+    "ema4": 6761079,
+    "ema6": 6704373,
+    "purple": 6761103,
+    "gold": 6704371,
+    "white": 6704383,
+    "black": 6704394,
+    "patent-illustrative": 6761285
+  },
+  "resultSizeMetric": "node:v8 serialized bytes (preserves shared frozen event templates)",
+  "modelMediansMs": {
+    "ema4": 4.759951999999998,
+    "ema6": 5.011664999999994,
+    "purple": 7.057104999999979,
+    "gold": 5.825343999999973,
+    "white": 4.119775000000004,
+    "black": 3.546856999999818,
+    "patent-illustrative": 4.093664999999987
+  },
+  "aggregateMedianMs": 34.39632899999992,
+  "closure": {
+    "ema4": {
+      "normalizedResidual": 2.3392695837537087e-14,
+      "wholeSystemCop": 0.026006101059471973
+    },
+    "ema6": {
+      "normalizedResidual": 3.751016143823275e-16,
+      "wholeSystemCop": 0.01723120332836288
+    },
+    "purple": {
+      "normalizedResidual": -1.509394323211976e-14,
+      "wholeSystemCop": 0.01412129784381191
+    },
+    "gold": {
+      "normalizedResidual": 1.5482060774665283e-14,
+      "wholeSystemCop": 0.008486956233800665
+    },
+    "white": {
+      "normalizedResidual": -7.266477385613358e-15,
+      "wholeSystemCop": 0.008455854947167687
+    },
+    "black": {
+      "normalizedResidual": -1.4763095979371413e-14,
+      "wholeSystemCop": 0.02488035869472378
+    },
+    "patent-illustrative": {
+      "normalizedResidual": 2.186368522122079e-15,
+      "wholeSystemCop": 0.013938229440630402
+    }
+  },
+  "peakWholeSystemCop": 0.026006101059471973,
+  "meanWholeSystemCop": 0.01616000022113847,
+  "copRange": [
+    0.008455854947167687,
+    0.026006101059471973
+  ],
+  "claimedCop": {
+    "presenter300": 300,
+    "whisperArithmetic26p8W_7p5kW": 279.8507462686567,
+    "status": "source-claim-only"
+  },
+  "timingTargets": {
+    "individualMs": 1000,
+    "aggregateMs": 5000
+  },
+  "timingFailures": []
+}

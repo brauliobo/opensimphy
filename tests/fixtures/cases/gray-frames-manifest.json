@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourcePack": "research/opensimphy-edwin-gray",
+  "sourceRange": { "startSeconds": 470, "endSeconds": 770 },
+  "limitation": "Sampled JPEGs from the retained 00:07:50-00:12:50 segment. They are presentation evidence, not measured machine geometry.",
+  "frames": [
+    { "id": "segment-start", "src": "data/generated/edwin-gray/frames/genealogy-001.jpg", "file": "genealogy-001.jpg" },
+    { "id": "ema", "src": "data/generated/edwin-gray/frames/genealogy-004.jpg", "file": "genealogy-004.jpg" },
+    { "id": "ema3-slide", "src": "data/generated/edwin-gray/frames/genealogy-012.jpg", "file": "genealogy-012.jpg" },
+    { "id": "ema4-slide", "src": "data/generated/edwin-gray/frames/genealogy-019.jpg", "file": "genealogy-019.jpg" },
+    { "id": "ema4-supplies", "src": "data/generated/edwin-gray/frames/genealogy-040.jpg", "file": "genealogy-040.jpg" },
+    { "id": "colors", "src": "data/generated/edwin-gray/frames/genealogy-084.jpg", "file": "genealogy-084.jpg" },
+    { "id": "segment-end", "src": "data/generated/edwin-gray/frames/genealogy-100.jpg", "file": "genealogy-100.jpg" }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "contract": "edwin-gray-schematic",
+  "version": 1,
+  "status": "source-bounded-presenter-reconstruction",
+  "modelChangeRequired": false,
+  "pendingLocalWhisper": false,
+  "video": {
+    "id": "nC740fpBs4M",
+    "url": "https://www.youtube.com/watch?v=nC740fpBs4M",
+    "retainedSegment": "source/media/nC740fpBs4M-470-770.mp4",
+    "captions": "source/media/nC740fpBs4M.en-orig.vtt",
+    "framesGenealogy": "frames/genealogy-001.jpg..genealogy-100.jpg"
+  },
+  "circuit": {
+    "holdCapacitors": 2,
+    "dumpBankCapacitors": 4,
+    "commutatorContacts": 15,
+    "unusedContactsUnknown": true,
+    "originalTrigger": ["thyratron", "ignitron"],
+    "modifiedTrigger": ["zener-string-5kV-to-1.5kV", "ignitron"],
+    "dump": "capacitor-bank into paralleled open-core stator coils",
+    "quench": "presenter-reported elongating pole-face arc"
+  },
+  "topology": {
+    "patent": {
+      "statorPairStations": 9,
+      "rotorPairStations": 3,
+      "eventsPerRevolution": 27,
+      "simultaneousSectors": 3,
+      "statorPitchDeg": 40,
+      "rotorPitchDeg": 120,
+      "source": "US3890548A"
+    },
+    "colored1979": {
+      "visibleStatorPoles": 3,
+      "purpleRecovery": true,
+      "goldRecovery": false,
+      "whiteHousing": "plastic",
+      "black": "one pole set plus viewing opening"
+    }
+  },
+  "timing": {
+    "originalMinimumRpm": 500,
+    "originalStartFromZero": false,
+    "schloffStartFromZero": true,
+    "quenchUniversal": false
+  },
+  "claims": {
+    "cop300": { "kind": "presenter-attribution", "machine": "EMA4" },
+    "inputW": 26.8,
+    "whisperOutputW": 7500,
+    "whisperArithmeticCop": 279.8507462686567,
+    "outputCaptionAuto": "7 12 kilowatts",
+    "outputCaptionWhisper": "7.5 kilowatts out",
+    "outputCaptionStatus": "whisper-resolved-still-source-claim",
+    "cop282": "absent-from-this-pack",
+    "recoveryFraction": { "value": 0.67, "kind": "secondhand-Hackenberger" }
+  },
+  "productionLut": {
+    "published": false,
+    "blocker": "/home/braulio/Projects/physics/opensimphy/fem/edwin-gray/convergence/production-lut-blocker.json",
+    "note": "COP ledgers use the existing lumped Gray engine. No fake LUT."
+  },
+  "enginePresets": {
+    "note": "Illustrative lumped surrogates already compiled in opensimphy/src/edwin-gray/generated/grayMachines.generated.ts",
+    "units": { "chargeVoltage": "V", "capacitance": "F", "quench": "deg", "start": "rpm" }
+  }
+}

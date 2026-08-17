@@ -13,7 +13,9 @@ Compact copies are stored under `../evidence/v2/`. The current
 `reduced-profile-v1.json` instead declares exactly 23 independently solved
 tuples for illustrative linear numerical convergence. It is not production
 eligible and cannot authorize LUT publication. No production LUT, full
-production convergence result, or torque bound was published. The retained
+production convergence result, or torque bound was published. A 2026-08-16
+recheck with the pinned solver image and the 24 GiB GetDP cap left this
+unchanged; see `production-lut-blocker.json`. The retained
 three-class calibration values are
 `unavailable-provenance-mismatch`: their pilot evidence does not match the
 calibration model, current specification, or sample identity, and therefore

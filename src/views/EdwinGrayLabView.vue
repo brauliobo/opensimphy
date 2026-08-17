@@ -8,6 +8,30 @@ import CircuitInstrument from '../components/edwin-gray/CircuitInstrument.vue'
 import PulseCycleInstrument from '../components/edwin-gray/PulseCycleInstrument.vue'
 import EnergyLedgerInstrument from '../components/edwin-gray/EnergyLedgerInstrument.vue'
 import FamilyInstrument from '../components/edwin-gray/FamilyInstrument.vue'
+import CaseNav from '../components/cases/CaseNav.vue'
+import CopDisplay from '../components/cases/CopDisplay.vue'
+import MetricStrip from '../components/cases/MetricStrip.vue'
+import ResultTable from '../components/cases/ResultTable.vue'
+import SchematicViewer from '../components/cases/SchematicViewer.vue'
+import { GRAY_CASE, STATIC_CASE_LINKS } from '../cases/caseRegistry'
+import {
+  GRAY_CLAIMS_CLIP,
+  GRAY_COP_100REV,
+  GRAY_SCHEMATIC,
+  GRAY_WHISPER_FILES,
+  grayClaimsClipHref,
+  grayClaimsClipMetrics,
+  grayClaimsWindowCueRows,
+  grayCopCatalogClaims,
+  grayCopCatalogHasProductionLut,
+  grayCopCatalogMetrics,
+  grayCopCatalogRows,
+  graySchematicCueRefs,
+  graySchematicMetrics,
+  grayWhisperCueRows,
+} from '../cases/grayArtifacts'
+import { graySchematicRefs, loadGrayFrameManifest } from '../cases/grayFrames'
+import { grayBenchmarkResults, useBenchmarkRegistry } from '../cases/benchmarkRegistry'
 import {
   GRAY_FEM_PROVENANCE,
   GRAY_GUIDE_SECTIONS,
@@ -19,6 +43,11 @@ import {
 } from '../edwin-gray/edwinGrayGuide'
 import { grayEvidenceRecord } from '../edwin-gray/edwinGrayEvidence'
 import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
+import {
+  GRAY_PRODUCTION_LUT_BLOCKER,
+  grayProductionLutBlocked,
+  grayProductionLutBlockReason,
+} from '../edwin-gray/edwinGrayProductionLut'
 import {
   GRAY_CALIBRATION_ACCEPTANCE_THRESHOLD,
   GRAY_CALIBRATION_TRANSFER_PROXY,
@@ -115,6 +144,57 @@ const claimEvidence = freezeGrayValue({
   retainedTranscriptCop282: null,
   retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
 })
+const benchmark = useBenchmarkRegistry()
+void benchmark.initialize()
+const schematicEntries = ref(graySchematicRefs())
+const frameMessage = ref('')
+const machineColumns = Object.freeze([
+  { key: 'id', label: 'Contract' },
+  { key: 'label', label: 'Machine' },
+  { key: 'kind', label: 'Classification' },
+  { key: 'evidence', label: 'Evidence' },
+])
+const machineRows = GRAY_MACHINE_IDS.map((id) => ({
+  id,
+  label:    GRAY_MACHINE_CONTRACTS[id].label,
+  kind:     GRAY_MACHINE_CONTRACTS[id].runtimeClassification.kind,
+  evidence: GRAY_MACHINE_CONTRACTS[id].evidenceAvailability,
+}))
+const copClaims = grayCopCatalogClaims()
+const copCatalogMetrics = grayCopCatalogMetrics()
+const copCatalogRows = grayCopCatalogRows()
+const copCatalogColumns = Object.freeze([
+  { key: 'model', label: 'Machine' },
+  { key: 'cop', label: 'Whole-system COP' },
+  { key: 'residual', label: 'Normalized residual' },
+])
+const schematicMetrics = graySchematicMetrics()
+const schematicCueEntries = graySchematicCueRefs()
+const whisperCueRows = grayWhisperCueRows()
+const assetBase = import.meta.env.BASE_URL
+const whisperCueColumns = Object.freeze([
+  { key: 'time', label: 'Time' },
+  { key: 'section', label: 'Section' },
+  { key: 'why', label: 'Why retained' },
+  { key: 'text', label: 'Whisper cue' },
+])
+const claimsClipMetrics = grayClaimsClipMetrics()
+const claimsWindowCueRows = grayClaimsWindowCueRows()
+const claimsClipHref = grayClaimsClipHref()
+const harnessColumns = [
+  { key: 'runtime', label: 'Runtime' },
+  { key: 'status', label: 'Status' },
+  { key: 'elapsed', label: 'Elapsed' },
+  { key: 'cop', label: 'Harness COP' },
+]
+const harnessRows = computed(() => grayBenchmarkResults().map((row) => ({
+  id:      row.runtime,
+  runtime: row.runtime,
+  status:  row.status,
+  elapsed: `${row.metrics.elapsedMs.toFixed(3)} ms`,
+  cop:     row.metrics.cop === undefined ? 'n/a' : row.metrics.cop.toFixed(6),
+})))
+const harnessCop = computed(() => grayBenchmarkResults().map((row) => row.metrics.cop).find((value) => value !== undefined) ?? null)
 const instrumentComponents = {
   geometry: GeometryInstrument,
   circuit: CircuitInstrument,
@@ -326,16 +406,16 @@ async function refreshFem(): Promise<void> {
   const requestedMachineContractId = input.value.machineContractId
   const controller = new AbortController()
   femAbortController = controller
-  if (!grayFemCanBeRequested(input.value)) {
+  if (!grayFemCanBeRequested(input.value) || grayProductionLutBlocked()) {
     femLookup.value = null
     femStatus.value = 'unavailable'
-    femMessage.value = GRAY_MACHINE_CONTRACTS[input.value.machineContractId].femBlocker
+    femMessage.value = grayFemCanBeRequested(input.value)
+      ? grayProductionLutBlockReason()
+      : GRAY_MACHINE_CONTRACTS[input.value.machineContractId].femBlocker
     if (input.value.magneticModel === 'fem-lookup') input.value.magneticModel = 'illustrative-surrogate'
     if (femAbortController === controller) femAbortController = null
     return
   }
-  femStatus.value = 'loading'
-  femMessage.value = 'Loading and validating the generated FEM lookup contract.'
   try {
     const lookup = await loadGrayMagneticLookup(requestedMachineContractId, fetch, controller.signal)
     if (controller.signal.aborted || requestToken !== femRequestToken
@@ -493,6 +573,9 @@ onMounted(async () => {
   } catch (reason) {
     snapshotError.value = reason instanceof Error ? reason.message : String(reason)
   }
+  void loadGrayFrameManifest()
+    .then(() => { schematicEntries.value = graySchematicRefs() })
+    .catch((reason) => { frameMessage.value = reason instanceof Error ? reason.message : String(reason) })
   await Promise.all([refreshFem(), refreshCalibration()])
   await runWorkbench()
 })
@@ -507,6 +590,7 @@ onBeforeUnmount(() => {
 
 <template lang="pug">
 .quantum-lab-view(data-testid="edwin-gray-lab-ready")
+  CaseNav(:cases="STATIC_CASE_LINKS" :current-id="GRAY_CASE.id")
   header.quantum-lab-header
     .quantum-lab-header__index
       span OpenSimPhy / Lab 05
@@ -619,7 +703,7 @@ onBeforeUnmount(() => {
         p.gray-fem-state(:data-state="femStatus" role="status" data-testid="gray-fem-runtime-status")
           strong {{ femStatus }}
           |  / Production FEM: {{ femMessage }}
-        button(type="button" :disabled="!grayFemCanBeRequested(input) || femStatus === 'loading'" @click="refreshFem") Recheck FEM lookup
+        button(type="button" :disabled="!grayFemCanBeRequested(input) || grayProductionLutBlocked() || femStatus === 'loading'" @click="refreshFem") Recheck FEM lookup
         template(v-if="calibrationAvailable")
           label.gray-calibration-ack
             input(
@@ -653,6 +737,33 @@ onBeforeUnmount(() => {
       button(type="button" data-testid="gray-reset" @click="resetWorkbench") Reset
       progress(:value="runProgress" max="1" aria-label="Gray worker progress" aria-describedby="gray-worker-status gray-worker-progress-value")
       span#gray-worker-progress-value {{ Math.round(runProgress * 100) }}%
+    CopDisplay(
+      v-if="result"
+      :observed="result.ledger.wholeSystemCop"
+      :scope="result.ledger.copScope"
+      :claims="copClaims"
+      note="Live worker COP is this run's classical ledger. The 100-rev catalog peak is 0.026 (ema4), mean 0.016, range 0.0085–0.026. Claimed 300 is source-claim only. No production FEM LUT."
+    )
+    MetricStrip(:metrics="copCatalogMetrics" test-id="gray-cop-catalog-metrics")
+    ResultTable(
+      caption="Persisted 100-revolution classical COP catalog. magneticLookup is null; production LUT is not published."
+      :columns="copCatalogColumns"
+      :rows="copCatalogRows"
+      test-id="gray-cop-catalog"
+    )
+    ResultTable(
+      caption="All published Gray motor contracts on this page"
+      :columns="machineColumns"
+      :rows="machineRows"
+      test-id="gray-published-machines"
+    )
+    ResultTable(
+      v-if="harnessRows.length"
+      caption="Published awesome-benchmark Gray motor slot"
+      :columns="harnessColumns"
+      :rows="harnessRows"
+      test-id="gray-benchmark-results"
+    )
     p.quantum-stale(v-if="stale" role="status" data-testid="gray-stale") Inputs changed. The visible result is stale until the worker completes another run.
     p.quantum-boundary(v-if="revisionError" role="alert" data-testid="gray-revision-error") {{ revisionError }}
     p.quantum-boundary(v-if="runError" role="alert") {{ runError }}
@@ -817,7 +928,42 @@ onBeforeUnmount(() => {
         .quantum-source-map__heading
           p.eyebrow Media / talk sequence
           h2#gray-source-map-title The frame map behind this lab
-          p Every card is a checkpoint from the source talk and the local transcript. The app redraws the machines in SVG instead of copying video frames.
+          p Every card is a checkpoint from the source talk and the local transcript. Retained research-pack frames mount when present; the app still redraws the machines in SVG.
+        p.quantum-boundary(v-if="frameMessage" role="alert") {{ frameMessage }}
+        p(data-testid="gray-schematic-status") {{ GRAY_SCHEMATIC.status }}. Circuit: {{ GRAY_SCHEMATIC.circuit.dump }}. Production LUT published: {{ grayCopCatalogHasProductionLut() }}.
+        MetricStrip(:metrics="schematicMetrics" test-id="gray-schematic-metrics")
+        SchematicViewer(:entries="schematicEntries" title="Retained frames and caption references")
+        SchematicViewer(:entries="schematicCueEntries" title="Whisper schematic cue frames")
+        ResultTable(
+          caption="Local Whisper cues from nC740fpBs4M. Presentation evidence, not measured COP."
+          :columns="whisperCueColumns"
+          :rows="whisperCueRows"
+          test-id="gray-whisper-cues"
+        )
+        p.quantum-provenance(data-testid="gray-whisper-transcripts")
+          a.text-link(
+            v-for="file in GRAY_WHISPER_FILES"
+            :key="file.href"
+            :href="`${assetBase}${file.href}`"
+          ) {{ file.label }}
+          |  100-rev catalog: {{ GRAY_COP_100REV.energyModel }}. Claimed {{ GRAY_COP_100REV.claimedCop.presenter300 }} remains {{ GRAY_COP_100REV.claimedCop.status }}.
+        section.gray-claims-clip(data-testid="gray-claims-clip" aria-labelledby="gray-claims-clip-title")
+          p.eyebrow Claims window / research-pack media
+          h3#gray-claims-clip-title Local claims clip is indexed, not bundled
+          p The 00:55–01:13 window stays in the research pack ({{ GRAY_CLAIMS_CLIP.sizeLabel }}, {{ GRAY_CLAIMS_CLIP.width }}×{{ GRAY_CLAIMS_CLIP.height }} {{ GRAY_CLAIMS_CLIP.videoCodec }}+{{ GRAY_CLAIMS_CLIP.audioCodec }}). The lab does not copy the 131 MiB mkv into the app tree.
+          p
+            code(data-testid="gray-claims-clip-path") {{ GRAY_CLAIMS_CLIP.path }}
+          p
+            | sha256
+            code(data-testid="gray-claims-clip-sha256") {{ GRAY_CLAIMS_CLIP.sha256 }}
+          MetricStrip(:metrics="claimsClipMetrics" test-id="gray-claims-clip-metrics")
+          ResultTable(
+            caption="Whisper cues inside the claims clip window. Source-claim evidence only."
+            :columns="whisperCueColumns"
+            :rows="claimsWindowCueRows"
+            test-id="gray-claims-clip-cues"
+          )
+          a.text-link(:href="claimsClipHref" target="_blank" rel="noreferrer") Open claims window on YouTube ->
         .quantum-timeline
           a(v-for="entry in GRAY_VIDEO_TIMELINE" :key="entry.id" :href="videoAt(entry.seconds)" target="_blank" rel="noreferrer")
             time(:datetime="`PT${entry.seconds}S`") {{ entry.timestamp }}
@@ -843,13 +989,16 @@ onBeforeUnmount(() => {
           p(role="status" aria-live="polite") {{ videoActivated ? 'External YouTube player loaded by user request.' : 'External YouTube player is not loaded.' }} Close it for an entirely local lesson; the five instruments run without a network request.
         p.quantum-provenance
           strong Reproducibility note.
-          |  Transcript: {{ GRAY_VIDEO.transcript }}. Downloaded media, when present: {{ GRAY_VIDEO.downloadedSource }}.
+          |  Transcript: {{ GRAY_VIDEO.transcript }}. Downloaded media, when present: {{ GRAY_VIDEO.downloadedSource }}. Claims clip (not bundled): {{ GRAY_CLAIMS_CLIP.path }}.
 
       section.gray-fem-card(aria-labelledby="gray-fem-title" data-testid="gray-fem-status")
         div
           p.eyebrow Local finite-element workspace
           h2#gray-fem-title Runtime FEM status: {{ femStatus }}
           p {{ femMessage }} FEM is activated only for an exact machine compatibility match. The surrogate remains explicitly labeled and is never relabeled FEM.
+          p(data-testid="gray-production-lut-blocker")
+            strong Production LUT: blocked / not published.
+            |  {{ GRAY_PRODUCTION_LUT_BLOCKER.retainedEvidence.presentSamples }}/{{ GRAY_PRODUCTION_LUT_BLOCKER.retainedEvidence.requiredSamples }} retained samples. {{ grayProductionLutBlockReason() }}
           p(v-if="calibrationAvailable" data-testid="gray-calibration-summary") Limited calibration: {{ calibrationDisplayStatus }}. It is separate from production FEM, limited-not-validated, non-production, and never enabled by default. Torque and all dynamic mechanical outputs have no validated bound.
         .gray-fem-card__links
           a(:href="GRAY_FEM_PROVENANCE.workspace" target="_blank" rel="noreferrer") Open fem/edwin-gray provenance

@@ -2,6 +2,17 @@
 .gray-rotor { fill: #ffb34733; stroke: #ffb347; }
 .gray-recovery { fill: none; stroke: #6ee7b7; stroke-dasharray: 4 3; }
 
+[data-testid="gray-whisper-transcripts"] .text-link { margin-right: 1rem; }
+
+.gray-claims-clip {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.gray-claims-clip h3 { margin: 0; font-size: 1.15rem; }
+.gray-claims-clip code { display: inline-block; margin-left: 0.4rem; word-break: break-all; }
+
 .gray-workbench {
   width: min(1480px, calc(100% - 2rem));
   min-width: 0;

@@ -1,0 +1,226 @@
+{
+  "video_id": "nC740fpBs4M",
+  "whisper": "analysis/whisper/nC740fpBs4M.whisper.json",
+  "language": "en",
+  "entries": 2414,
+  "coverage_end_seconds": 4458.25,
+  "source_duration_seconds": 4568,
+  "cues": [
+    {
+      "id": "cop-300",
+      "why": "presenter COP 300 claim",
+      "start": 379.81,
+      "finish": 381.87,
+      "text": "COP of 300.",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "caltech-crosby",
+      "why": "Caltech/Crosby test attribution",
+      "start": 540.1800000000001,
+      "finish": 546.4300000000001,
+      "text": "This device was tested at Caltech by a company called Crosby",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "thyratron-ignitron",
+      "why": "original thyratron->ignitron trigger",
+      "start": 1049.53,
+      "finish": 1053.6200000000001,
+      "text": "And the original motor itself had thyrotrons on it that",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "awg14-10kw",
+      "why": "Schloff AWG14 rewind and 10 kW no-load",
+      "start": 1100.16,
+      "finish": 1102.84,
+      "text": "But he figured that he needed 14 gauge wire in there.",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "output-7p5kw",
+      "why": "26.8 W in / 7.5 kW out claim",
+      "start": 1754.24,
+      "finish": 1757.78,
+      "text": "and came up with 7. 5 kilowatts out.",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "gold-schematics",
+      "why": "Al Francoeur gold-motor schematics",
+      "start": 1848.99,
+      "finish": 1852.5,
+      "text": "and drawing schematics up, detailed schematics,",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "commentator",
+      "why": "commutator/commentator",
+      "start": 1880.68,
+      "finish": 1883.4,
+      "text": "Okay, the gold motor has the commentator,",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "ignitron-array",
+      "why": "ignitron array close-up",
+      "start": 1956.42,
+      "finish": 1960.27,
+      "text": "Here's the ignitron array, which looks just like this.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "schematic-together",
+      "why": "how the schematic went together",
+      "start": 1981.97,
+      "finish": 1983.71,
+      "text": "of how the schematic went together.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "hv-5kv-50kw",
+      "why": "5000 V from 50 kW cart",
+      "start": 2007.71,
+      "finish": 2011.04,
+      "text": "That 5,000 volts came from a 50-kilowatt cart",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "zener-trigger",
+      "why": "Zener string 5 kV to 1.5 kV ignitron trigger",
+      "start": 2058.01,
+      "finish": 2060.07,
+      "text": "where he took a Zener diodes,",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "cap-network",
+      "why": "two hold capacitors then four dump capacitors",
+      "start": 2096.17,
+      "finish": 2099.1,
+      "text": "is this capacitor charging network.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "500-rpm",
+      "why": "minimum 500 RPM start",
+      "start": 2227.18,
+      "finish": 2229.86,
+      "text": "You have to speed it up to a minimum of 500 RPM.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "open-core",
+      "why": "open-core coils",
+      "start": 2310.2200000000003,
+      "finish": 2311.52,
+      "text": "These are open core coils.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "three-stator-poles",
+      "why": "three stator poles on 1979 engines",
+      "start": 2419.4700000000003,
+      "finish": 2422.21,
+      "text": "They all have three stator poles.",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "purple-recovery",
+      "why": "purple energy recovery coils",
+      "start": 2443.71,
+      "finish": 2445.59,
+      "text": "This is an energy recovery",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "patent-1975-recovery",
+      "why": "1975 patent energy recovery illustration",
+      "start": 2608.67,
+      "finish": 2610.92,
+      "text": "in the 1975 patent,",
+      "video_id": "nC740fpBs4M",
+      "section": "schematic"
+    },
+    {
+      "id": "hidden-secret-1",
+      "why": "hidden secret 1: not simple solenoids",
+      "start": 2816.51,
+      "finish": 2817.23,
+      "text": "patent, in the",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "hidden-secret-2",
+      "why": "hidden secret 2: pole-face arc quench",
+      "start": 2983.83,
+      "finish": 2985.23,
+      "text": "to hidden secret",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "hidden-secret-3",
+      "why": "hidden secret 3: second battery",
+      "start": 3181.34,
+      "finish": 3182.66,
+      "text": "into hidden secret",
+      "video_id": "nC740fpBs4M",
+      "section": "other"
+    },
+    {
+      "id": "patent-1986-two-batteries",
+      "why": "1986 patent two batteries",
+      "start": 3637.39,
+      "finish": 3639.33,
+      "text": "in the 1986 patent.",
+      "video_id": "nC740fpBs4M",
+      "section": "claims"
+    },
+    {
+      "id": "patent-1975-battery-array",
+      "why": "1975 patent battery-array schematic",
+      "start": 3669.76,
+      "finish": 3671.04,
+      "text": "Here's a schematic",
+      "video_id": "nC740fpBs4M",
+      "section": "claims"
+    },
+    {
+      "id": "hidden-secret-4",
+      "why": "hidden secret 4: iron wire",
+      "start": 3695.11,
+      "finish": 3696.4500000000003,
+      "text": "to hidden secret number four.",
+      "video_id": "nC740fpBs4M",
+      "section": "claims"
+    },
+    {
+      "id": "q-spark-gaps",
+      "why": "Q&A spark gaps and 500 RPM quench",
+      "start": 4187.52,
+      "finish": 4188.91,
+      "text": "in the commentator.",
+      "video_id": "nC740fpBs4M",
+      "section": "claims"
+    }
+  ]
+}

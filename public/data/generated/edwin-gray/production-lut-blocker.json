@@ -1,0 +1,69 @@
+{
+  "contract": "edwin-gray-production-lut-blocker",
+  "contractVersion": 1,
+  "checkedAt": "2026-08-16",
+  "lutPath": null,
+  "productionLutPublished": false,
+  "status": "blocked",
+  "failClosed": true,
+  "reason": "GetDP cannot honestly complete the attested 33-sample production convergence inside the 24 GiB publication cap, and the publication gate rejects incomplete or reduced-profile reports before any LUT write.",
+  "blockers": [
+    {
+      "id": "missing-approved-33-sample-report",
+      "detail": "Publication requires an approved edwin-gray-convergence-report@2 whose profile is historical-33-sample-production-v2. Retained evidence is rejected at 18/33 samples. No runnable job tree remains under fem/edwin-gray/runs/."
+    },
+    {
+      "id": "reduced-profile-cannot-authorize-publication",
+      "detail": "The live evaluator only accepts illustrative-linear-numerical-convergence-v1 (23 independently solved tuples, productionEligible false, lutPublication false). Completing that reduced study cannot satisfy authorizePublicationReport."
+    },
+    {
+      "id": "direct-mumps-mesh-floor-and-ram-cap",
+      "detail": "direct-mumps-publication-v1 is the only publication-eligible solver. It requires mesh size 0.025 m, measured 1,335,000 DOF and 19.3 GiB peak, and a hard Docker cap of exactly 24 GiB. Direct MUMPS refuses meshes finer than 0.025 m. Medium 0.022 m, fine 0.019 m, expanded, and far tuples therefore cannot be solved with the publication solver under the cap."
+    },
+    {
+      "id": "iterative-solver-not-publication-eligible",
+      "detail": "iterative-cg-gamg-v1 is publicationAllowed false and experimentStatus rejected-too-slow-for-publication. Using it would not unlock motor-fem-lut-v1.json."
+    }
+  ],
+  "identities": {
+    "specificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
+    "reducedProfileId": "illustrative-linear-numerical-convergence-v1",
+    "reducedProfileSha256": "568802906e8fc87e283c3e9ff29cfa5913d5c4ce03505c805fd21d857ca844bd",
+    "productionProfileId": "historical-33-sample-production-v2",
+    "productionProfileSha256": "63b7a77e8e6535aff470ffcf5e4368f570241ffaf07a7f3f271dbf69d3413ce4",
+    "publicationProfileId": "fast-coarse-direct-mumps-v1",
+    "publicationProfileSha256": "a7fe41b6cbfdf60f26207e37cfed93dbc0228e08452408e006a981a0d918b338",
+    "rejectedReportSha256": "5429d381ea1015e21027f6d2a5d3ea41ce0d5df2add1a68827d2f9b793866c89",
+    "solverImage": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d"
+  },
+  "resources": {
+    "publicationMemoryGiB": 24,
+    "publicationCpus": 2,
+    "publicationSolverThreads": 2,
+    "publicationMeshThreads": 1,
+    "hostMemAvailableGiBObserved": 94,
+    "hostGetdp": false,
+    "dockerImagePresent": true
+  },
+  "retainedEvidence": {
+    "presentSamples": 18,
+    "requiredSamples": 33,
+    "independentlySolvedSampleCount": 17,
+    "symmetryDerivedSampleCount": 1,
+    "reportStatus": "rejected",
+    "reportPath": "../evidence/v2/convergence-report-rejected.json"
+  },
+  "verification": {
+    "publicationAgainstRejectedReport": {
+      "exitCode": 1,
+      "stderr": "run-study: publication requires an approved convergence report",
+      "lutWritten": false,
+      "casesWritten": false
+    },
+    "femValidate": {
+      "tests": 91,
+      "passed": 91,
+      "bundledLut": "absent"
+    }
+  }
+}

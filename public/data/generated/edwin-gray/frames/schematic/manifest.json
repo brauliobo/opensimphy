@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourcePack": "research/opensimphy-edwin-gray",
+  "sourceRange": { "startSeconds": 1800, "endSeconds": 2760 },
+  "limitation": "Sampled JPEGs from the retained 00:30:00-00:46:00 schematic segment. They are presentation evidence, not measured machine geometry.",
+  "frames": [
+    { "id": "gold-schematics", "src": "data/generated/edwin-gray/frames/schematic/cue-gold-schematics.jpg", "file": "cue-gold-schematics.jpg" },
+    { "id": "commentator", "src": "data/generated/edwin-gray/frames/schematic/cue-commentator.jpg", "file": "cue-commentator.jpg" },
+    { "id": "ignitron-array", "src": "data/generated/edwin-gray/frames/schematic/cue-ignitron-array.jpg", "file": "cue-ignitron-array.jpg" },
+    { "id": "schematic-together", "src": "data/generated/edwin-gray/frames/schematic/cue-schematic-together.jpg", "file": "cue-schematic-together.jpg" },
+    { "id": "hv-5kv-50kw", "src": "data/generated/edwin-gray/frames/schematic/cue-hv-5kv-50kw.jpg", "file": "cue-hv-5kv-50kw.jpg" },
+    { "id": "zener-trigger", "src": "data/generated/edwin-gray/frames/schematic/cue-zener-trigger.jpg", "file": "cue-zener-trigger.jpg" },
+    { "id": "cap-network", "src": "data/generated/edwin-gray/frames/schematic/cue-cap-network.jpg", "file": "cue-cap-network.jpg" },
+    { "id": "500-rpm", "src": "data/generated/edwin-gray/frames/schematic/cue-500-rpm.jpg", "file": "cue-500-rpm.jpg" },
+    { "id": "open-core", "src": "data/generated/edwin-gray/frames/schematic/cue-open-core.jpg", "file": "cue-open-core.jpg" },
+    { "id": "three-stator-poles", "src": "data/generated/edwin-gray/frames/schematic/cue-three-stator-poles.jpg", "file": "cue-three-stator-poles.jpg" },
+    { "id": "purple-recovery", "src": "data/generated/edwin-gray/frames/schematic/cue-purple-recovery.jpg", "file": "cue-purple-recovery.jpg" },
+    { "id": "patent-1975-recovery", "src": "data/generated/edwin-gray/frames/schematic/cue-patent-1975-recovery.jpg", "file": "cue-patent-1975-recovery.jpg" }
+  ]
+}
