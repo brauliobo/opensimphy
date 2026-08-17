@@ -196,7 +196,6 @@ import { decoherenceCollapseTime } from "./particle/decoherenceCollapseTime.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
 import { surgeryFloquetTls } from "./particle/surgeryFloquetTls.js";
 import { fermionSgKink } from "./particle/fermionSgKink.js";
-import { fermionSgKink } from "./particle/fermionSgKink.js";
 
 export * from "./audits.js";
 export * from "./astroAudits.js";
