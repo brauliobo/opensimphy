@@ -532,7 +532,7 @@ function generatedRegistryAt(object: Record<string, unknown>): RegistryParseResu
     fail('registry.summary', 'expected exact 130-record source, registration, and source-link coverage')
   }
   if (summary.runnable + summary.blocked !== 130) fail('registry.summary', 'runnable and blocked counts must total 130')
-  if (summary.runnableMethods !== 135) fail('registry.summary.runnableMethods', 'expected exactly 135 runnable methods')
+  if (summary.runnableMethods !== 136) fail('registry.summary.runnableMethods', 'expected exactly 136 runnable methods')
 
   const records = object.items.map((item, index) => generatedRecordAt(item, index, gateIds))
   validateRecords(records)

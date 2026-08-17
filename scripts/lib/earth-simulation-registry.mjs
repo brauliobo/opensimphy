@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 
 const EXPECTED_PROGRAMS = 130;
-const EXPECTED_RUNNABLE_METHODS = 135;
+const EXPECTED_RUNNABLE_METHODS = 136;
 const EXPECTED_PREFIXES = 17;
 const NO_EXECUTION_ADAPTER_BLOCKER = "No verified execution adapter or immutable offline artifact is available.";
 
@@ -421,6 +421,24 @@ function executionMethodsFor(id) {
         {
           id: "chem6-chiral-lines-v1",
           title: "CHEM-6 chiral-spiral line ledger",
+          relationship: "earth-source-reproduction",
+          modelOrigin: "earth-corpus",
+          runtime: "browser-worker",
+          runnable: true,
+          earthDerived: true,
+          validatesEarthTheory: false,
+        },
+      ],
+    };
+  }
+  if (id === "EARTH-NUC-004") {
+    return {
+      defaultMethodId: "earth-source-reproduction-v1",
+      executionMethods: [
+        methodSummary("earth-source-reproduction"),
+        {
+          id: "coupling-force-hierarchy",
+          title: "coupling force hierarchy",
           relationship: "earth-source-reproduction",
           modelOrigin: "earth-corpus",
           runtime: "browser-worker",

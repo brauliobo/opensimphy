@@ -24,8 +24,8 @@
     "sourceLinked": 130,
     "runnable": 130,
     "blocked": 0,
-    "totalMethods": 221,
-    "runnableMethods": 135
+    "totalMethods": 222,
+    "runnableMethods": 136
   },
   "items": [
     {
@@ -2268,6 +2268,16 @@
         {
           "id": "earth-source-reproduction-v1",
           "title": "earth source reproduction",
+          "relationship": "earth-source-reproduction",
+          "modelOrigin": "earth-corpus",
+          "runtime": "browser-worker",
+          "runnable": true,
+          "earthDerived": true,
+          "validatesEarthTheory": false
+        },
+        {
+          "id": "coupling-force-hierarchy",
+          "title": "coupling force hierarchy",
           "relationship": "earth-source-reproduction",
           "modelOrigin": "earth-corpus",
           "runtime": "browser-worker",

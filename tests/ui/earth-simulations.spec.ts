@@ -168,8 +168,8 @@ describe('EARTH scientific simulation registry', () => {
     expect(wrapper.findAll('.earth-program-row')).toHaveLength(36)
     expect(wrapper.text()).toContain('Canonical constants and dimensions')
     expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('130 canonical programs')
-    expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('220 declared methods')
-    expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('134 runnable: 37 source reproductions / 97 traditional comparisons or contract validators; 86 unavailable source formulations')
+    expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('222 declared methods')
+    expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('136 runnable: 39 source reproductions / 97 traditional comparisons or contract validators; 86 unavailable source formulations')
     expect(wrapper.get('[data-testid="program-registry-statement"]').text()).toContain('Scientific validation not established')
     expect(wrapper.findAll('.program-domain-group').length).toBeGreaterThan(1)
     expect(wrapper.findAll('.program-domain-group').map((group) => group.attributes('data-domain'))).toEqual(
@@ -185,8 +185,8 @@ describe('EARTH scientific simulation registry', () => {
     const bundle = await loadScientificSimulationBundle()
     const sourceBlocked = bundle.registry.records.find(({ id }) => id === 'EARTH-FLD-005')
 
-    expect(bundle.registry.summary).toMatchObject({ totalMethods: 221, runnableMethods: 135 })
-    expect(bundle.registry.records.flatMap(({ executionMethods }) => executionMethods)).toHaveLength(221)
+    expect(bundle.registry.summary).toMatchObject({ totalMethods: 222, runnableMethods: 136 })
+    expect(bundle.registry.records.flatMap(({ executionMethods }) => executionMethods)).toHaveLength(222)
     expect(sourceBlocked).toMatchObject({
       runnable: true,
       scientificStatus: 'blocked-source',
