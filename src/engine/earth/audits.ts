@@ -5,6 +5,7 @@ import {
   relativeError,
   type EarthKernelResult,
 } from "./common.js";
+import { buildElectronBohrRydbergLedger, ELECTRON_BOHR_RYDBERG_PLAIN_LANGUAGE } from "./particle/electronBohrRydberg.js";
 
 export const EARTH_GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 export const EARTH_SPEED_OF_LIGHT = 299_792_458;
@@ -666,35 +667,41 @@ export function electronBohrRydbergAudit(
     message: "Printed Bohr, electron, and Rydberg outputs are canonical-looking constants not obtained from the printed intermediate formulas",
     relativeResidual: null,
   });
+  const output = {
+    dependencies: { phi: EARTH_GOLDEN_RATIO, actualPhi18, claimedPhi18, computedAlphaInverse, claimedAlphaInverse },
+    bohr: { unit: "m" as const, canonical: canonicalBohrRadiusM / atomicNumber, bareActualDependencies, effectiveActualDependencies, effectiveClaimedDependencies, sourcePrintedResult: sourcePrintedBohr },
+    electron: { unit: "MeV/c^2" as const, canonical: canonicalElectronEnergyMeV, actualDependencies: actualElectron, claimedDependencies: claimedElectron, sourcePrintedResult: sourcePrintedElectron },
+    rydberg: { unit: "m^-1" as const, canonical: canonicalRydbergPerM, fromActualElectronFormula, fromClaimedElectronFormula, sourcePrintedResult: sourcePrintedRydberg },
+    findings,
+    graph: {
+      nodes: ["xi0", "phi", "alpha", "proton-energy", "bohr-radius", "electron-energy", "rydberg", "h", "c"],
+      edges: [
+        { from: "xi0", to: "bohr-radius" },
+        { from: "phi", to: "bohr-radius" },
+        { from: "alpha", to: "bohr-radius" },
+        { from: "proton-energy", to: "electron-energy" },
+        { from: "phi", to: "electron-energy" },
+        { from: "alpha", to: "electron-energy" },
+        { from: "electron-energy", to: "rydberg" },
+        { from: "alpha", to: "rydberg" },
+        { from: "h", to: "rydberg" },
+        { from: "c", to: "rydberg" },
+      ],
+    },
+  };
+  const predictionLedger = buildElectronBohrRydbergLedger(output);
   return {
     method: "Literal EARTH electron/Bohr formulas followed by SI Rydberg conversion and canonical residuals",
     diagnostics: reproductionDiagnostics({
       failedClaims: findings.filter(({ status }) => status === "failure").length,
       atomicNumber,
       unitsExplicit: true,
+      validatesEarthTheory: false,
+      plainLanguage: ELECTRON_BOHR_RYDBERG_PLAIN_LANGUAGE,
     }),
-    output: {
-      dependencies: { phi: EARTH_GOLDEN_RATIO, actualPhi18, claimedPhi18, computedAlphaInverse, claimedAlphaInverse },
-      bohr: { unit: "m", canonical: canonicalBohrRadiusM / atomicNumber, bareActualDependencies, effectiveActualDependencies, effectiveClaimedDependencies, sourcePrintedResult: sourcePrintedBohr },
-      electron: { unit: "MeV/c^2", canonical: canonicalElectronEnergyMeV, actualDependencies: actualElectron, claimedDependencies: claimedElectron, sourcePrintedResult: sourcePrintedElectron },
-      rydberg: { unit: "m^-1", canonical: canonicalRydbergPerM, fromActualElectronFormula, fromClaimedElectronFormula, sourcePrintedResult: sourcePrintedRydberg },
-      findings,
-      graph: {
-        nodes: ["xi0", "phi", "alpha", "proton-energy", "bohr-radius", "electron-energy", "rydberg", "h", "c"],
-        edges: [
-          { from: "xi0", to: "bohr-radius" },
-          { from: "phi", to: "bohr-radius" },
-          { from: "alpha", to: "bohr-radius" },
-          { from: "proton-energy", to: "electron-energy" },
-          { from: "phi", to: "electron-energy" },
-          { from: "alpha", to: "electron-energy" },
-          { from: "electron-energy", to: "rydberg" },
-          { from: "alpha", to: "rydberg" },
-          { from: "h", to: "rydberg" },
-          { from: "c", to: "rydberg" },
-        ],
-      },
-    },
+    output,
+    predictions: predictionLedger.predictions,
+    predictionLedger,
   };
 }
 

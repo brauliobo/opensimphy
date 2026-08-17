@@ -100,6 +100,21 @@ describe('EARTH method registry', () => {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-005-VAR'])
         } else if (programId === 'EARTH-FLD-007') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-007-FLOQ'])
+        } else if (programId === 'EARTH-NUC-004' && methodId === 'earth-source-reproduction-v1') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'NUC-004-XI', 'NUC-004-RP', 'NUC-004-MP', 'NUC-004-CHI', 'NUC-004-MS',
+          ])
+        } else if (programId === 'EARTH-PRT-001') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'PRT-001-PHI18', 'PRT-001-ALPHA', 'PRT-001-A0', 'PRT-001-ME', 'PRT-001-RYD',
+            'PRT-001-E', 'PRT-001-RE', 'PRT-001-GE',
+          ])
+        } else if (programId === 'EARTH-PRT-005' && methodId === 'earth-source-reproduction-v1') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'PRT-005-U', 'PRT-005-D', 'PRT-005-E', 'PRT-005-NU', 'PRT-005-GAMMA',
+            'PRT-005-MUE', 'PRT-005-VUS', 'PRT-005-SIN2W', 'PRT-005-GF', 'FND-011-HBAR',
+            'PRT-005-MMU', 'PRT-005-MTAU', 'PRT-005-MN', 'PRT-005-MWZ', 'PRT-005-GP',
+          ])
         } else {
           expect(result.predictions, `${programId}/${methodId}`).toEqual([])
         }
