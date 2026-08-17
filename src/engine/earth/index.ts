@@ -12,7 +12,6 @@ import {
   DEFAULT_SOURCE_SEQUENCE_AUDIT_INPUTS,
   DEFAULT_STANDING_WAVE_SPECTRUM_AUDIT_INPUTS,
   electronBohrRydbergAudit,
-  nuclearPairEnumerationAudit,
   protonFormulaAudit,
   shellCapacityAudit,
   sourceSequenceAudit,
@@ -21,7 +20,6 @@ import {
   type CanonicalConstantAuditInputs,
   type CriticalTemperatureAuditInputs,
   type ElectronBohrRydbergAuditInputs,
-  type NuclearPairEnumerationInputs,
   type ProtonFormulaAuditInputs,
   type ShellCapacityAuditInputs,
   type SourceSequenceAuditInputs,
@@ -38,6 +36,7 @@ import {
   type EarthRunOptions,
   type EarthSimulationResult,
 } from "./common.js";
+import { earthMethodPredictions } from "./particle/ledger.js";
 import {
   compactnessKottlerInterface,
   DEFAULT_COMPACTNESS_KOTTLER_INPUTS,
@@ -193,6 +192,7 @@ import {
   type StandardPlanckEntropyInputs,
   type StandardUniformSphereBindingInputs,
 } from "./pilotMethods.js";
+import { nuclearPqEnergyAudit, type NuclearPqEnergyInputs } from "./particle/nuclearPqEnergy.js";
 
 export * from "./audits.js";
 export * from "./astroAudits.js";
@@ -208,6 +208,7 @@ export * from "./extendedNumerics.js";
 export * from "./fields.js";
 export * from "./foundations.js";
 export * from "./physicalComparators.js";
+export * from "./particle/ledger.js";
 export * from "./pilotMethods.js";
 
 const EARTH_BIO_NEURO_COMPARATORS = {
@@ -1141,7 +1142,7 @@ export function runEarthMethod<Id extends EarthProgramId>(
     relationship: definition.relationship,
     modelOrigin: definition.modelOrigin,
     earthDerived: definition.earthDerived,
-    validatesEarthTheory: definition.validatesEarthTheory,
+    validatesEarthTheory: false as const,
   };
   return {
     ...kernel,
@@ -1154,8 +1155,9 @@ export function runEarthMethod<Id extends EarthProgramId>(
     relationship: definition.relationship,
     modelOrigin: definition.modelOrigin,
     earthDerived: definition.earthDerived,
-    validatesEarthTheory: definition.validatesEarthTheory,
+    validatesEarthTheory: false,
     provenance,
+    predictions: earthMethodPredictions(kernel),
   };
 }
 

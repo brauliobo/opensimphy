@@ -70,7 +70,11 @@ describe('EARTH method registry', () => {
     expectFiniteJson(DEFAULT_EARTH_METHOD_INPUTS)
 
     const untypedDefaultInputs = getEarthMethodDefaultInputs as (programId: string, methodId: string) => unknown
-    const untypedRun = runEarthMethod as (programId: string, methodId: string, inputs: unknown) => { status: string }
+    const untypedRun = runEarthMethod as (programId: string, methodId: string, inputs: unknown) => {
+      status: string
+      validatesEarthTheory: false
+      predictions: unknown[]
+    }
     for (const programId of SUPPORTED_EARTH_SIMULATION_IDS) {
       for (const { id: methodId } of listEarthMethods(programId)) {
         const first = untypedDefaultInputs(programId, methodId)
@@ -79,6 +83,8 @@ describe('EARTH method registry', () => {
         expect(first).not.toBe(second)
         const result = untypedRun(programId, methodId, first)
         expect(result.status, `${programId}/${methodId} must complete`).toBe('completed')
+        expect(result.validatesEarthTheory, `${programId}/${methodId}`).toBe(false)
+        expect(result.predictions, `${programId}/${methodId}`).toEqual([])
         expectFiniteJson(result, `${programId}/${methodId}`)
         expect(() => JSON.parse(JSON.stringify(result))).not.toThrow()
       }
@@ -182,6 +188,8 @@ describe('EARTH method registry', () => {
       executionStatus: 'completed',
       id: programId,
       status: 'completed',
+      validatesEarthTheory: false,
+      predictions: [],
     })
     expect(result.provenance).toMatchObject({
       relationship: result.relationship,

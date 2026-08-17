@@ -1,3 +1,5 @@
+import type { EarthPredictionLedger, EarthPredictionRow } from "./particle/ledger.js";
+
 export type EarthProvenanceKind = "reproduction" | "comparison";
 
 export type EarthMethodRelationship =
@@ -32,6 +34,8 @@ export interface EarthKernelResult<Output> {
   method: string;
   diagnostics: EarthDiagnostics;
   output: Output;
+  predictions?: readonly EarthPredictionRow[];
+  predictionLedger?: EarthPredictionLedger;
 }
 
 export interface EarthMethodDefinition<
@@ -71,6 +75,7 @@ export interface EarthSimulationResult<Id extends string, Output, MethodId exten
   earthDerived: boolean;
   validatesEarthTheory: false;
   provenance: EarthMethodProvenance;
+  predictions: readonly EarthPredictionRow[];
 }
 
 export class EarthCancellationError extends Error {
