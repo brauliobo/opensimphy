@@ -1,0 +1,29 @@
+{
+  "source": {
+    "path": "awesome-physics-repos/cantera",
+    "revision": "11a2381011cb6d42e61cc4c195e0f920864bf8d3"
+  },
+  "toolchain": {
+    "emscripten": "6.0.6-git",
+    "revision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245"
+  },
+  "artifact": {
+    "wasm": {
+      "name": "cantera.wasm",
+      "path": "wasm/awesomePhysics/cantera/cantera.wasm",
+      "byteSize": 3220251,
+      "sha256": "f09ed0cdef7892938820208ca94a4940d58d2466ecf1e4b428b046ed4c2ac2e9"
+    },
+    "javascript": {
+      "name": "cantera.js",
+      "path": "wasm/awesomePhysics/cantera/cantera.js",
+      "byteSize": 380,
+      "sha256": "d4aa7a5ded8cfb70abc178de1f30e3c12a2c75998a8afbef97d48c6d68de0a61"
+    }
+  },
+  "smoke": {
+    "enthalpy": 1014178.1955232112,
+    "equilibriumTemperature": 2666.2990478917604,
+    "reactorTemperature": 2665.6190222451105
+  }
+}

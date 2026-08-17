@@ -1,0 +1,5 @@
+#pragma once
+
+static const char kElementEntropiesYaml[] = R"ELENT(
+@ELEMENT_ENTROPIES_YAML_TEXT@
+)ELENT";

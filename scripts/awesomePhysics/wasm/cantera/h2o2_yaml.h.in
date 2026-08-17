@@ -1,0 +1,5 @@
+#pragma once
+
+static const char kH2o2Yaml[] = R"H2O2YAML(
+@H2O2_YAML_TEXT@
+)H2O2YAML";

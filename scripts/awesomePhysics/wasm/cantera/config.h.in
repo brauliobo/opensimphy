@@ -1,0 +1,27 @@
+#ifndef CT_CONFIG_H
+#define CT_CONFIG_H
+
+#include <stddef.h>
+
+#define CANTERA_VERSION "@CANTERA_VERSION@"
+#define CANTERA_SHORT_VERSION "@CANTERA_SHORT_VERSION@"
+
+typedef double doublereal;
+typedef int integer;
+typedef int ftnlen;
+typedef size_t ftnlen_t;
+
+#define STRING_LEN_AT_END
+#define FTN_TRAILING_UNDERSCORE 1
+#define LAPACK_FTN_STRING_LEN_AT_END 1
+#define LAPACK_FTN_TRAILING_UNDERSCORE 1
+#define CT_USE_LAPACK 0
+#define CT_USE_SYSTEM_EIGEN 1
+/* #undef CT_USE_SYSTEM_EIGEN_PREFIXED */
+#define CT_USE_SYSTEM_FMT 1
+#define CT_USE_SYSTEM_YAMLCPP 1
+#define CT_SUNDIALS_USE_LAPACK 0
+#define CT_USE_HDF5 0
+#define CT_USE_SYSTEM_HIGHFIVE 0
+
+#endif
