@@ -100,6 +100,10 @@ describe('EARTH method registry', () => {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-005-VAR'])
         } else if (programId === 'EARTH-FLD-007') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-007-FLOQ'])
+        } else if (programId === 'EARTH-FLD-008') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'FLD-008-SG', 'FLD-008-E', 'FLD-008-W',
+          ])
         } else if (programId === 'EARTH-NUC-004' && methodId === 'earth-source-reproduction-v1') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
             'NUC-004-XI', 'NUC-004-RP', 'NUC-004-MP', 'NUC-004-CHI', 'NUC-004-MS',
