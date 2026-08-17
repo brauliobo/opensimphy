@@ -1,0 +1,11 @@
+
+if(OPENSIMPHY_NATIVE_TRACE)
+  target_link_libraries(getdp "-Wl,--start-group"
+    ${OPENSIMPHY_GMSH_STATIC_DEPENDENCIES} "-Wl,--end-group")
+  add_executable(phase5_native_trace ${OPENSIMPHY_NATIVE_TRACE})
+  target_include_directories(phase5_native_trace PRIVATE
+    ${OPENSIMPHY_GMSH_SOURCE}/api ${OPENSIMPHY_GMSH_SOURCE}/src/common)
+  target_link_libraries(phase5_native_trace lib ${LINK_LIBRARIES}
+    "-Wl,--start-group" ${OPENSIMPHY_GMSH_LIBRARY}
+    ${OPENSIMPHY_GMSH_STATIC_DEPENDENCIES} "-Wl,--end-group")
+endif()

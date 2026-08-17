@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "path": "tutorials/view2.pos",
+  "purpose": "Authentic upstream five-timestep Gmsh list-view coverage; not GetDP transient coverage.",
+  "source": {
+    "url": "https://gitlab.onelab.info/gmsh/gmsh/-/blob/29726e7237db13ff77ef3f2db2d7fb9499c4e65c/tutorials/view2.pos",
+    "commit": "29726e7237db13ff77ef3f2db2d7fb9499c4e65c",
+    "tree": "e25f712811bbf9147f58863b2ef8fc07e057fb86"
+  },
+  "bytes": 34163,
+  "sha256": "d6c5cc6b10b5ad12673e10644072399ea6a819c09482d771e2cccd92bbc76f1f",
+  "steps": 5,
+  "times": [100, 200, 300, 400, 500]
+}

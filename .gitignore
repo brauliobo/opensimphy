@@ -5,3 +5,8 @@ coverage/
 test-results/
 playwright-report/
 *.tsbuildinfo
+public/simulation/
+tools/wasm/.cache/
+tools/wasm/out/
+release/
+.wasm-release-download-*/

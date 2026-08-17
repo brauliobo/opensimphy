@@ -90,6 +90,7 @@ export default defineConfig({
           'assets/awesomePhysics.worker-*.js',
           'assets/edwinGray.worker-*.js',
           'assets/plotly-*.js',
+          'simulation/**',
         ],
         navigateFallback: 'index.html',
         runtimeCaching: [

@@ -1,0 +1,471 @@
+{
+  "schema": 3,
+  "provenance": {
+    "generation": {
+      "command": "JOBS=4 nice npm run wasm:reference",
+      "date": "2026-08-13T00:00:00Z"
+    },
+    "compiler": {
+      "image": "emscripten/emsdk@sha256:90b757eb11fa9a0e3ce4d2d9f76d932a56018e4accc37b5a28b2783751e60eb7",
+      "native": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+      "executableSha256": "fb60c5945ce785d0cb2ef0303dac5249f25bd0d0324317a0734aae6aa24f609b",
+      "scalarType": "real-double",
+      "petscConfigSha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
+      "getdpConfigSha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "blasLapack": {
+        "url": "https://web.cels.anl.gov/projects/petsc/download/externalpackages/f2cblaslapack-3.8.0.q2.tar.gz",
+        "sha256": "12fa8d5001e313aeeea22eb2054883f59e3e3c656f11129f31abb02ddbf8ad60"
+      }
+    },
+    "sources": {
+      "gmsh": {
+        "url": "https://gitlab.onelab.info/gmsh/gmsh.git",
+        "commit": "29726e7237db13ff77ef3f2db2d7fb9499c4e65c",
+        "tree": "e25f712811bbf9147f58863b2ef8fc07e057fb86"
+      },
+      "getdp": {
+        "url": "https://gitlab.onelab.info/getdp/getdp.git",
+        "commit": "8850e98c4aa6d96468c76ba5ee0feb881953f853",
+        "tree": "d80a7ed3922572b72e5ec4c39d8694b2dbbdd189"
+      },
+      "petsc": {
+        "url": "https://gitlab.com/petsc/petsc.git",
+        "commit": "d2a0018167bbba9fbc1f09828039a44e18cc4d99",
+        "tree": "7e9e0e1716177e4cc19d23519fd22eb9b2c02472"
+      }
+    },
+    "inputs": {
+      "workspace/package.json": "3e6781e9a983e615f93b1458d201b2622397834f90536262e79f473519b3067e",
+      "workspace/package-lock.json": "773b2abc8e34aea9b5213e5b42b40bad6eea27dabab03ee85604eebe24ffc8d8",
+      "versions.env": "b2ffa18764eb332be4fbd1a8e24a6218f6a28da8b90fe609baa51d5d1fbff5c1",
+      "build.sh": "42cf2400ac2e4a65d41d754e2752c45dda21a9a3e6e5f81565b1428476adc6cf",
+      "container-build.sh": "80f525fa8c114386dc5fd25c43c42404fbb0365b5cb1168d6b797b11e1198336",
+      "acquire-sources.sh": "6b375451b90bcc53a919a2639064437aa6b9799c3f03038e9a34a40f655971d7",
+      "stage-assets.mjs": "9361d1760c480352e70d27c1a9616b1f6338c79b4e872f41deb60cd68fc356f6",
+      "verify-staged-assets.mjs": "d1e339301e4cb59c405c24b2efa237d89283a8a037db30c6168554b6e6447485",
+      "update-artifact-lock.mjs": "bb38c4367a6bab51a51952738ba9ba78ba7f8ecede63462260f9bc7dc5b8c56a",
+      "verify-reproducible-build.sh": "37af8fa190cfde92d21a6661aaa866cfa2c3afb453a3d2f91a078e9f62a2e5cc",
+      "compare-builds.mjs": "8c93e4c9aaa90472384adc6c4bf1dc8a511f182746c36a71f568c3c4e838258c",
+      "native-reference.sh": "12438f3d221f12348bd5e890e1e988119e7dc7855fdcd70662f679c5e0581154",
+      "container-native-reference.sh": "62f26b53333f0ca3bdf17d6c3eb9e56dff14f695c9ecf9f6bc8f1ac388b3796b",
+      "summarize-phase4.mjs": "2196f6ca114e2c12abab18bd56175e60d34927a7c19a99507ae4ba1a474d2d8d",
+      "summarize-phase5.mjs": "952ba5bbe701072e33a4937ecd5139337f844cf83f104c5cc99df81233dd8a7d",
+      "native-convergence.mjs": "6f63d0a8c3b4d569dd37475f928d6dea2f9c8d29c67f2155fe27dc850fdbe60c",
+      "measure-profiles.mjs": "76ad4f6fd9e8ce5ab614d0bc4ffac88aed7b0d2d16b5680cf40392d17a2538f9",
+      "check-forbidden-boundary.mjs": "9b42ccc8b93499a3fa430510fe0fc6cb2d3c02ed3fe886753f6cc008b4dc5df7",
+      "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
+      "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
+      "gmsh/persistent-parser-number.patch": "1f94fdbe7de30123c326688fc7be4f5ff531f0a588860d13b4cade766638a6be",
+      "gmsh/wasm-boundaries.patch": "1b67516d2753ab76874b939e6b9ba7a0901016480d62785937bbc726cf0bd1a3",
+      "occt/wasm-boundaries.patch": "a1d14307e7c7ae7bf10938cec25bc7df6bc56e1f9e3f1b04c582f2b116023214",
+      "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
+      "fixtures/phase4-onelab.patch": "0949b3d2f25e37b5b0c59545ae254b678334a8e913292d5f2f67b70214bf0873",
+      "fixtures/phase5-onelab.patch": "c15dc469448f697cffa24dab7b1ccb4928281733054c02489a110224705c06ba",
+      "fixtures/projects.json": "48db6bed08cbe53ccc708d0fb4fec5c9f417f20114fbaf0759749a255b5643fd",
+      "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
+      "getdp/CMakeLists.append.txt": "699cb58bd13c7bcfbddcd9385f35ee70eee5f3ef94ecaac0cff57bcfe1e77a6a",
+      "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b",
+      "getdp/wasm-boundaries.patch": "b00d909a93b31f256eb0d7871974c5870dcfc099514fcc3026715b0a0b56064a",
+      "petsc/wasm-boundaries.patch": "f66e0d8dd18a47b5f6725511fe39702b25c37a7b973ead0d54dd26ec195a0047",
+      "getdp/combined-bridge.cpp": "42b54455636c2bf4db155bcb803f28efd44e6a42e36ae0de1983502d7c5b56be",
+      "getdp/CMakeLists.combined.txt": "4f76f572ea02a18e36a765f7825f9accfbadaddcb693c6886c439c9905bf1f6f",
+      "getdp/combined-runtime.mjs": "0f41aeefa908df321bb810511ffbbc1d126cf6f57acfd50f86aa21e412e10bd4",
+      "native-probe.cpp": "bf86f077e775ae0e789a56209a860e0ff792abfb90fefbc8948bae18bd2bd72a",
+      "phase5-native-trace.cpp": "57cd7d8894c049f0bc1d39c4b077ee403f9307f49721ff1d45c40cefb9cb2598",
+      "getdp/CMakeLists.native-trace.txt": "f865269c7b418d094500aea68a43873fbc95f7b74010e757794421a848775a91"
+    },
+    "fixtures": {
+      "microstrip/microstrip.geo": {
+        "bytes": 3259,
+        "sha256": "6b6e881d25575e8250a111a7715afba0cdc86bacdf4f14a85ed8e6caadf132fc"
+      },
+      "microstrip/microstrip.pro": {
+        "bytes": 16136,
+        "sha256": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+      },
+      "microstrip/microstrip.json": {
+        "bytes": 1064,
+        "sha256": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083"
+      },
+      "cube/cube.geo": {
+        "bytes": 1248,
+        "sha256": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2"
+      },
+      "cube/cube.step": {
+        "bytes": 8705,
+        "sha256": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180"
+      },
+      "cube/cube.provenance.json": {
+        "bytes": 478,
+        "sha256": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2"
+      },
+      "radiator/README.md": {
+        "bytes": 1056,
+        "sha256": "92951b27a0827c6ffb208245d3c28bdea43f49f56f83ffd7c921e4b4c414f379"
+      },
+      "radiator/radiator.geo": {
+        "bytes": 4557,
+        "sha256": "28835804d5dcc56e1ae5a36e0e6abf3b9e37abaef0cdffeb4056ddc860c4fa93"
+      },
+      "radiator/radiator.pro": {
+        "bytes": 8907,
+        "sha256": "af5f7107adce6a7f9ba852a134ed6bd9318b95900ef53c0862a246b80b260314"
+      },
+      "radiator/radiator_common.pro": {
+        "bytes": 213,
+        "sha256": "52d6840c5bfb5204b2d77e70155e9dc447c26e3b4bce306da0cd2a5e6a2dd548"
+      },
+      "radiator/reference.msh": {
+        "bytes": 52926,
+        "sha256": "2f582f48a0cf384df1796b642f49a896ada5a039fda5aaea959a3b7396b822fc"
+      },
+      "electromagnet/README.md": {
+        "bytes": 869,
+        "sha256": "0ad399941c0641bc2d943b6f63dda6b1ef897b5b587b3533ab78ee5b2e7257f2"
+      },
+      "electromagnet/electromagnet.geo": {
+        "bytes": 4899,
+        "sha256": "b500c422657ac2d8bc6931906223b2c937e9c25896e9ba1247d382863394d0c9"
+      },
+      "electromagnet/electromagnet.pro": {
+        "bytes": 20518,
+        "sha256": "4a32f90ebd031da6e7a585a3c36e120c98a0f517e74bae61a21011d1ee183a0b"
+      },
+      "electromagnet/electromagnet_common.pro": {
+        "bytes": 304,
+        "sha256": "f33d1198b865352a3e1bd98bed29a437ae3291d601504c22f9e9ad37f2a6e409"
+      },
+      "electromagnet/reference.msh": {
+        "bytes": 11078,
+        "sha256": "46d84ead1bcf078d853dc943b1ef02d8877d73414200345a02a5c233aa19fe9e"
+      },
+      "full-wave/README.md": {
+        "bytes": 1127,
+        "sha256": "9e46ec252e10720b26316363cc3b4491041e8a5ed19b569c9ea78614cc883c88"
+      },
+      "full-wave/full_wave.geo": {
+        "bytes": 3206,
+        "sha256": "4f59b3f487d0f3035ef18b73109ec4201fc2ff40bb0acfc51fce6fa9df1e1d77"
+      },
+      "full-wave/full_wave.pro": {
+        "bytes": 15649,
+        "sha256": "1911df4ac115e3feed974bfd964ec58b050f87c5ad72c4d57d16373931a8eaa9"
+      },
+      "full-wave/full_wave_common.pro": {
+        "bytes": 425,
+        "sha256": "97b2a032c263414f89807922352f72c74caaf2b02b5360171bd67913ac57bb9e"
+      },
+      "full-wave/reference.msh": {
+        "bytes": 7813,
+        "sha256": "e07661bfe7666c12ede4c3b8046f236eb79f660f2ea233be92395d48fc968897"
+      },
+      "global-quantity/README.md": {
+        "bytes": 854,
+        "sha256": "8d5cbc41c370af199b7282a95e27618ecf3ffd6d0ff673bd3df156bca00cbfa8"
+      },
+      "global-quantity/microstrip.geo": {
+        "bytes": 1157,
+        "sha256": "60c9df1a39c6e1c10a9ca0968220d725ca5869df9457bb1c23f861cfd73fd90f"
+      },
+      "global-quantity/microstrip.pro": {
+        "bytes": 16418,
+        "sha256": "23d7450e358ecc95169ac5e03352736cba84b997669f9ec01082ee10a5fbac3e"
+      },
+      "global-quantity/microstrip.pro.orig": {
+        "bytes": 16169,
+        "sha256": "315dead0019f2b3b74ef099f1fd3211310e233b4b976be37f56a25a9a8d210e5"
+      },
+      "transfo/Lib_Magnetoquasistatics_av_2D_Cir.pro": {
+        "bytes": 18990,
+        "sha256": "02ae5ac76208c70bbf1998d211fef788e5eb2059c2eb7f0973ebe9a56d47cbec"
+      },
+      "transfo/transfo.geo": {
+        "bytes": 2336,
+        "sha256": "d75a3d9c109fc27b63ece3c3cda096f1f6542eadd8c8f3159d443499ac2b201f"
+      },
+      "transfo/transfo.pro": {
+        "bytes": 14790,
+        "sha256": "e7587f8be167ecdbade549884057642b223494b2166c0966935f31ce39af88ea"
+      },
+      "transfo/transfo.pro.orig": {
+        "bytes": 14793,
+        "sha256": "c916a99d79c69374f290ba8898995e2b97046ca50dfee5672fbf72e89868fd29"
+      },
+      "transfo/transfo_common.pro": {
+        "bytes": 824,
+        "sha256": "14ca2d6d4b072d983c60043f509df4272641702c3b4e984adbed5841782c6600"
+      },
+      "gmsh-rendering/test_displ.geo": {
+        "bytes": 303,
+        "sha256": "dee521a9394f7799aa8f686e01178f2eb3e68e786eef463d93747e948c5b44be"
+      },
+      "gmsh-rendering/test_displ.pos": {
+        "bytes": 41206,
+        "sha256": "b09dd8432b9b02558d0e878f776a10c367a92ed16e9507a0a0c948b4d76fd893"
+      },
+      "gmsh-rendering/test_field.pos": {
+        "bytes": 26962,
+        "sha256": "83fbdad7db8c29febd5b574a96468bd519ebe95d6dfe2d349691db76eacccd2f"
+      }
+    },
+    "outputs": {
+      "1": {
+        "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
+        "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+      },
+      "2": {
+        "v.pos": "347ccca33f4d9b00efdac524ceb33a57ccdc3decf02172a7c9e168093ec005d2",
+        "e.pos": "e05f35198f9cee7cac6c2dd5c43aba323eea439d76775228f3f5f2841c5ad296"
+      }
+    }
+  },
+  "runs": [
+    {
+      "meshSizeFactor": 1,
+      "nodes": 727,
+      "elements": 1428,
+      "meshSha256": "54aad440720d0dd28f0f76ee6e162b23c92288a1ada311f2c6792ea6255af935",
+      "degreesOfFreedom": 634,
+      "initialResidual": 4.99605494016e-13,
+      "residual": 4.503046812882e-28,
+      "scalar": {
+        "min": 0,
+        "max": 0.001,
+        "mean": 0.00040308882893143094,
+        "samples": 4011
+      },
+      "vector": {
+        "min": 0.0001061256691573193,
+        "max": 4.597184906290814,
+        "mean": 0.4476392714302638,
+        "samples": 4011
+      },
+      "samples": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0004030899034343237,
+            0.0001378576869545549,
+            0
+          ],
+          "scalar": 0.0001377134268606462,
+          "vector": [
+            0.0007914287551726851,
+            -0.9991287961796949,
+            0
+          ],
+          "magnitude": 0.9991291096324642
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.00123608771272033,
+            0.0006350812492402686,
+            0
+          ],
+          "scalar": 0.0006311123968681924,
+          "vector": [
+            0.01527740140514011,
+            -1.011959759856491,
+            0
+          ],
+          "magnitude": 1.012075073580266
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.003191894433968417,
+            0.0005736175644244714,
+            0
+          ],
+          "scalar": 0.0001509865472837525,
+          "vector": [
+            0.1296027187386902,
+            -0.2282312954668196,
+            0
+          ],
+          "magnitude": 0.26246216667345174
+        }
+      ],
+      "probes": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0004,
+            0.0002,
+            0
+          ],
+          "scalar": 0.00019980404672399215,
+          "vector": [
+            0.0007914287551726851,
+            -0.9991287961796949,
+            0
+          ],
+          "magnitude": 0.9991291096324642
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.0013,
+            0.0007,
+            0
+          ],
+          "scalar": 0.0006958311466297015,
+          "vector": [
+            0.015277401405140112,
+            -1.0119597598564911,
+            0
+          ],
+          "magnitude": 1.0120750735802662
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.0032,
+            0.00055,
+            0
+          ],
+          "scalar": 0.0001445457765647752,
+          "vector": [
+            0.1296027187386902,
+            -0.2282312954668196,
+            0
+          ],
+          "magnitude": 0.26246216667345174
+        }
+      ],
+      "outputSha256": {
+        "v.pos": "8558f0152325ab75c7c95e8f78c4e8bdb7aafd0833bfda2607434180be8ad24f",
+        "e.pos": "c2201124ffa4367a520afc806f32b5387c0c44694ffc51d6d6ad8673edd9fc3d"
+      }
+    },
+    {
+      "meshSizeFactor": 2,
+      "nodes": 233,
+      "elements": 451,
+      "meshSha256": "b7fe870c1cc5dee19489b81c77778d26a2332f4c7bfd5ff84ea3483f0511a524",
+      "degreesOfFreedom": 183,
+      "initialResidual": 3.783610381091e-13,
+      "residual": 1.976636391401e-28,
+      "scalar": {
+        "min": 0,
+        "max": 0.001,
+        "mean": 0.00040869329221405917,
+        "samples": 1209
+      },
+      "vector": {
+        "min": 0.0001109736376839275,
+        "max": 2.934663851243454,
+        "mean": 0.4538436132200118,
+        "samples": 1209
+      },
+      "samples": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0003362114520776277,
+            0.0001807653081030408,
+            0
+          ],
+          "scalar": 0.0001806035407379527,
+          "vector": [
+            0.0004709126397492991,
+            -0.9993159424718594,
+            0
+          ],
+          "magnitude": 0.9993160534271102
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.001343652620070134,
+            0.00058014896611791,
+            0
+          ],
+          "scalar": 0.0005741727515742077,
+          "vector": [
+            0.02250394655170113,
+            -1.004783249863728,
+            0
+          ],
+          "magnitude": 1.0050352266548257
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.003220798545418045,
+            0.0004802553158908154,
+            0
+          ],
+          "scalar": 0.000133961499528771,
+          "vector": [
+            0.1488622901269367,
+            -0.2398452349088491,
+            0
+          ],
+          "magnitude": 0.2822865886476318
+        }
+      ],
+      "probes": [
+        {
+          "key": "ground-near",
+          "coordinate": [
+            0.0004,
+            0.0002,
+            0
+          ],
+          "scalar": 0.00019977087628614417,
+          "vector": [
+            0.0009049230209262626,
+            -0.9994992057407045,
+            0
+          ],
+          "magnitude": 0.9994996153886069
+        },
+        {
+          "key": "substrate",
+          "coordinate": [
+            0.0013,
+            0.0007,
+            0
+          ],
+          "scalar": 0.0006956642143904734,
+          "vector": [
+            0.009531289337082582,
+            -1.010215708136236,
+            0
+          ],
+          "magnitude": 1.0102606705408381
+        },
+        {
+          "key": "air",
+          "coordinate": [
+            0.0032,
+            0.00055,
+            0
+          ],
+          "scalar": 0.0001533471935912629,
+          "vector": [
+            0.2359598811345082,
+            -0.2075867421696841,
+            0
+          ],
+          "magnitude": 0.3142758677175741
+        }
+      ],
+      "outputSha256": {
+        "v.pos": "347ccca33f4d9b00efdac524ceb33a57ccdc3decf02172a7c9e168093ec005d2",
+        "e.pos": "e05f35198f9cee7cac6c2dd5c43aba323eea439d76775228f3f5f2841c5ad296"
+      }
+    }
+  ],
+  "tolerance": {
+    "residualAbsolute": 2e-29,
+    "residualRelative": 1e-10,
+    "scalarSampleAbsolute": 1e-12,
+    "scalarAggregateAbsolute": 1e-13,
+    "vectorAbsolute": 1e-10,
+    "relative": 1e-9,
+    "coordinateAbsolute": 1e-15
+  }
+}

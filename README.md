@@ -137,7 +137,7 @@ Tour offline use is opt-in rather than automatic. The current Guided-only pack c
 
 ## Commands
 
-Node 20.19 or newer is required.
+Node 22.18 or newer is required.
 
 ```bash
 npm install
@@ -175,11 +175,15 @@ npx vite preview --host 127.0.0.1
 
 Deploy the contents of `dist/`. `netlify.toml` supplies the build command, publish directory, and SPA history fallback. Other static hosts must route unknown navigation paths to `index.html` while serving asset and data URLs normally. No Node, Python, database, API process, or server-side rendering is used in production.
 
-For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from the deployment workflow and generates `dist/404.html` as an SPA deep-link fallback.
+For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from the deployment workflow, generates directory `index.html` copies for every concrete router path and alias, and retains `dist/404.html` as the SPA fallback for unknown paths. The route manifest shared by Vue Router and the Pages generator is `src/router/page-paths.json`; parameterized routes continue through the unknown-path fallback because they cannot be enumerated statically.
 
 ## Browser Support
 
 The tested target is current stable Chromium with ES2022 modules, Web Workers, service workers, canvas, dynamic imports, and BigInt support. Interactive 3D plots require WebGL. The layout supports narrow mobile viewports, keyboard focus, labeled controls, reduced-motion preferences, and touch navigation. A browser that blocks WebGL can still inspect formula/audit text, but graph readiness will not be represented as a successfully rendered Plotly panel.
+
+## Future Simulation Workbench
+
+The validated browser ONELAB/GetDP migration, meshStep-based renderer architecture, alternatives, and phased feature-parity plan are documented in [Browser ONELAB Roadmap](docs/browser-onelab-roadmap.md).
 
 ## Provenance
 

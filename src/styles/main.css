@@ -5007,6 +5007,236 @@ main {
   background: var(--ink-0);
 }
 
+.onelab-lab .section-heading {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule-bright);
+}
+
+.simulation-caveat {
+  display: grid;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  grid-template-columns: minmax(240px, 0.7fr) 2fr;
+  gap: 1rem;
+  color: var(--ink-0);
+  background: var(--amber);
+}
+
+.simulation-caveat strong,
+.simulation-caveat span,
+.viewer-status,
+.scene-overlay,
+.scene-mobile-controls {
+  font-family: var(--mono);
+  font-size: 0.67rem;
+}
+
+.result-controls {
+  display: grid;
+  padding: 0.75rem;
+  grid-template-columns: repeat(3, minmax(130px, 1fr)) auto auto;
+  gap: 0.65rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  border-top: 1px solid var(--rule-bright);
+  background: var(--ink-1);
+}
+
+.result-controls label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.result-controls select,
+.result-controls input,
+.result-controls button {
+  min-height: 42px;
+  padding: 0.55rem;
+  color: var(--paper);
+  font: inherit;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-0);
+}
+
+.result-legend {
+  display: grid;
+  min-width: 150px;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.result-legend i {
+  height: 12px;
+  background: linear-gradient(90deg, #004cff, #20d9a3, #ffd23f, #ff3200);
+}
+
+.viewer-workbench {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule-bright);
+}
+
+.viewer-heading,
+.viewer-status,
+.viewer-handoff,
+.onelab-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.viewer-status {
+  padding: 0.75rem;
+  color: var(--cyan);
+  border: 1px solid var(--rule-bright);
+  border-bottom: 0;
+}
+
+.scene-shell {
+  position: relative;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-0);
+}
+
+.scene-target {
+  width: 100%;
+  height: min(62vh, 680px);
+}
+
+.scene-target canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.scene-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  padding: 0.65rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  color: var(--paper-dim);
+  background: rgb(12 14 15 / 82%);
+  pointer-events: none;
+}
+
+.scene-overlay strong {
+  color: var(--amber);
+}
+
+.scene-mobile-controls {
+  display: flex;
+  min-height: 50px;
+  align-items: stretch;
+  border-top: 1px solid var(--rule-bright);
+}
+
+.scene-mobile-controls button,
+.scene-mobile-controls label {
+  min-height: 48px;
+  padding: 0.7rem;
+  color: var(--paper);
+  border: 0;
+  border-right: 1px solid var(--rule-bright);
+  background: var(--ink-1);
+}
+
+.scene-mobile-controls button {
+  cursor: pointer;
+}
+
+.scene-mobile-controls button[aria-pressed='true'] {
+  color: var(--ink-0);
+  background: var(--cyan);
+}
+
+.scene-mobile-controls label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.scene-mobile-controls input {
+  width: 100%;
+  accent-color: var(--amber);
+}
+
+.viewer-handoff {
+  justify-content: flex-start;
+  padding-top: 0.75rem;
+}
+
+.onelab-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 2rem 0 1rem;
+}
+
+.onelab-parameters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1rem 0 2rem;
+  border: 1px solid var(--rule-bright);
+  background: var(--rule-bright);
+}
+
+.onelab-parameter {
+  display: flex;
+  min-width: 0;
+  padding: 1rem;
+  flex-direction: column;
+  gap: 0.55rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  background: var(--ink-1);
+}
+
+.onelab-parameter.is-changed {
+  box-shadow: inset 3px 0 var(--amber);
+}
+
+.onelab-parameter.is-readonly {
+  background: var(--ink-2);
+}
+
+.onelab-parameter input,
+.onelab-parameter select {
+  min-height: 44px;
+  padding: 0.65rem;
+  color: var(--paper);
+  font: inherit;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-0);
+}
+
+.onelab-parameter small {
+  line-height: 1.45;
+}
+
+.onelab-result {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.4fr) 2fr;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+.onelab-result dt,
+.onelab-result dd {
+  padding: 0.65rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--rule);
+}
+
 @media (max-width: 1050px) {
   .nav-link {
     min-width: 92px;
@@ -5139,8 +5369,44 @@ main {
 }
 
 @media (max-width: 760px) {
+  .onelab-parameters {
+    grid-template-columns: 1fr;
+  }
   body::before {
     background-size: 24px 24px;
+  }
+
+  .simulation-caveat {
+    grid-template-columns: 1fr;
+  }
+
+  .viewer-heading,
+  .viewer-status,
+  .viewer-handoff,
+  .onelab-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scene-target {
+    height: 54vh;
+  }
+
+  .scene-mobile-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .scene-mobile-controls label {
+    grid-column: 1 / -1;
+  }
+
+  .result-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .result-legend {
+    grid-column: 1 / -1;
   }
 
   .app-header {

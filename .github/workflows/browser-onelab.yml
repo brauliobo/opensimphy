@@ -1,0 +1,33 @@
+name: Browser ONELAB
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  clean-build-and-e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Recompile twice and prove source reproducibility
+        run: JOBS=4 nice npm run wasm:reproducibility
+      - name: Stage source-built runtime
+        run: npm run simulation:stage -- --verify-lock && npm run simulation:verify
+      - name: Independent native reference drift
+        run: JOBS=4 nice npm run wasm:reference
+      - name: No-recompile deployment build
+        run: nice npm run build:deploy
+      - name: Unit and type checks
+        run: nice npm run typecheck && nice npm test
+      - name: Clean-deployment production E2E
+        run: nice npx playwright test --config playwright.simulation.config.ts
+      - name: Separate-profile Phase 0-4 production E2E
+        run: nice npm run test:simulation:separate

@@ -12,6 +12,7 @@ const registryError = computed(() => completionRegistry.error.value?.message
   ?? (completionRegistry.ready.value && !registryReady.value ? 'The generated completion report is unavailable.' : ''))
 const core = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'core'))
 const walls = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'walls'))
+const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
 </script>
 
 <template lang="pug">
@@ -61,7 +62,12 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
     .topic-featured-grid.author-collection-grid
       RouterLink(:to="{ name: 'fiddle-archive' }")
         span Chenopdodium author collection
-        strong Fiddle source archive
-        p 780 external source records / 16 profile pages. Recorded Chromium pass: 710 rendered without uncaught page errors; retained failed requests may still exist. Scientific validations: 0.
-        small Open the author collection ->
+      strong Fiddle source archive
+      p 780 external source records / 16 profile pages. Recorded Chromium pass: 710 rendered without uncaught page errors; retained failed requests may still exist. Scientific validations: 0.
+      small Open the author collection ->
+    RouterLink(v-if="onelabEnabled" to="/labs/onelab" data-testid="onelab-nav")
+      span 04 / FIELD SOLVER
+      strong Browser ONELAB
+      p Serial Gmsh mesh generation and real-double GetDP/PETSc solving with native-reference checks.
+      small Open the microstrip proof →
 </template>

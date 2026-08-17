@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "provenance": "pinned linked native Gmsh/GetDP singleton loop trace",
+  "tolerance": {
+    "absolute": 1e-15,
+    "relative": 0.0001
+  },
+  "projects": {
+    "global-quantity-real-loop": [
+      {
+        "values": {
+          "Parameters/1Value": 0.0005,
+          "Parameters/Loop inner": 3,
+          "Parameters/Loop middle": 10
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            3.175788748176795e-17
+          ],
+          "}Output/Ground/Charge [C]": [
+            -1.257444505589636e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            1.270315499270728e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.0005
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.0005,
+          "Parameters/Loop inner": 4,
+          "Parameters/Loop middle": 10
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            3.175788748176795e-17
+          ],
+          "}Output/Ground/Charge [C]": [
+            -1.257444505589636e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            1.270315499270728e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.0005
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.0005,
+          "Parameters/Loop inner": 3,
+          "Parameters/Loop middle": 20
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            3.175788748176795e-17
+          ],
+          "}Output/Ground/Charge [C]": [
+            -1.257444505589636e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            1.270315499270728e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.0005
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.0005,
+          "Parameters/Loop inner": 4,
+          "Parameters/Loop middle": 20
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            3.175788748176795e-17
+          ],
+          "}Output/Ground/Charge [C]": [
+            -1.257444505589636e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            1.270315499270728e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.0005
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.001,
+          "Parameters/Loop inner": 3,
+          "Parameters/Loop middle": 10
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            1.270315499270718e-16
+          ],
+          "}Output/Ground/Charge [C]": [
+            -2.514889011179272e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            2.540630998541455e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.001
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.001,
+          "Parameters/Loop inner": 4,
+          "Parameters/Loop middle": 10
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            1.270315499270718e-16
+          ],
+          "}Output/Ground/Charge [C]": [
+            -2.514889011179272e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            2.540630998541455e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.001
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.001,
+          "Parameters/Loop inner": 3,
+          "Parameters/Loop middle": 20
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            1.270315499270718e-16
+          ],
+          "}Output/Ground/Charge [C]": [
+            -2.514889011179272e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            2.540630998541455e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.001
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/1Value": 0.001,
+          "Parameters/Loop inner": 4,
+          "Parameters/Loop middle": 20
+        },
+        "outputs": {
+          "}Output/Global/Capacitance [F]": [
+            2.540630998541455e-10
+          ],
+          "}Output/Global/Energy [J]": [
+            1.270315499270718e-16
+          ],
+          "}Output/Ground/Charge [C]": [
+            -2.514889011179272e-13
+          ],
+          "}Output/Microstrip/Charge [C]": [
+            2.540630998541455e-13
+          ],
+          "}Output/Microstrip/Potential [V]": [
+            0.001
+          ]
+        }
+      }
+    ],
+    "transfo-complex-loop": [
+      {
+        "values": {
+          "Parameters/3Load resistance [Ohm]": 25
+        },
+        "outputs": {
+          "}Output/0|V_in| [V]": [
+            1
+          ],
+          "}Output/1|I_in| [A]": [
+            0.17506438494977059
+          ],
+          "}Output/2|V_out| [V]": [
+            1.9704742939713897
+          ],
+          "}Output/3|I_out| [A]": [
+            0.07881897175885555
+          ],
+          "}Output/p_H+EC [W m^-3]": [
+            0.09504927829273878
+          ],
+          "}Output/p_Joule [W m^-3]": [
+            0.01856568943796847
+          ]
+        }
+      },
+      {
+        "values": {
+          "Parameters/3Load resistance [Ohm]": 50
+        },
+        "outputs": {
+          "}Output/0|V_in| [V]": [
+            1
+          ],
+          "}Output/1|I_in| [A]": [
+            0.1044384113816383
+          ],
+          "}Output/2|V_out| [V]": [
+            1.9776446596676616
+          ],
+          "}Output/3|I_out| [A]": [
+            0.03955289319335304
+          ],
+          "}Output/p_H+EC [W m^-3]": [
+            0.09550515242540274
+          ],
+          "}Output/p_Joule [W m^-3]": [
+            0.006050105384417471
+          ]
+        }
+      }
+    ]
+  },
+  "nativeTrace": {
+    "global-quantity-real-loop": {
+      "sharedServer": true,
+      "getdpCalls": 9,
+      "loopInitializeCalls": 1,
+      "loopIncrementCalls": 8
+    },
+    "transfo-complex-loop": {
+      "sharedServer": true,
+      "getdpCalls": 3,
+      "loopInitializeCalls": 1,
+      "loopIncrementCalls": 2
+    }
+  }
+}

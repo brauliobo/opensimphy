@@ -1,0 +1,53 @@
+#include <exception>
+#include <string>
+#include <vector>
+
+#include "getdp.h"
+#include "onelab.h"
+
+extern "C" int opensimphy_getdp_run(int argc, const char *const *argv)
+{
+  if(argc < 2 || !argv) return 64;
+  std::vector<std::string> args;
+  args.reserve(argc);
+  for(int i = 0; i < argc; ++i) args.emplace_back(argv[i] ? argv[i] : "");
+  try {
+    return getdp(args, onelab::server::instance());
+  }
+  catch(const std::exception &error) {
+    fprintf(stderr, "GetDP exception: %s\n", error.what());
+    return 70;
+  }
+  catch(...) {
+    fprintf(stderr, "GetDP unknown exception\n");
+    return 70;
+  }
+}
+
+extern "C" int opensimphy_getdp_onelab_set_json(const char *json)
+{
+  if(!json) return 64;
+  return onelab::server::instance()->fromJSON(json) ? 0 : 65;
+}
+
+extern "C" const char *opensimphy_getdp_onelab_get_json()
+{
+  static std::string json;
+  return onelab::server::instance()->toJSON(json, "OpenSimPhy/GetDP") ?
+           json.c_str() : nullptr;
+}
+
+extern "C" void opensimphy_getdp_onelab_clear()
+{
+  onelab::server::instance()->clear();
+}
+
+extern "C" int opensimphy_getdp_onelab_get_changed()
+{
+  return onelab::server::instance()->getChanged();
+}
+
+extern "C" void opensimphy_getdp_onelab_set_changed(int value)
+{
+  onelab::server::instance()->setChanged(value);
+}

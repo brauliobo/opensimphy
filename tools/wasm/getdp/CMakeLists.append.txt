@@ -1,0 +1,14 @@
+
+if(OPENSIMPHY_BRIDGE)
+  add_executable(getdp_wasm ${OPENSIMPHY_BRIDGE})
+  target_link_libraries(getdp_wasm lib ${LINK_LIBRARIES})
+  set_target_properties(getdp_wasm PROPERTIES OUTPUT_NAME getdp SUFFIX ".mjs")
+  target_link_options(getdp_wasm PRIVATE
+    "-O3" "-g3" "-fexceptions"
+    "-Wl,-Map=${OPENSIMPHY_LINK_MAP}"
+    "-sMODULARIZE=1" "-sEXPORT_NAME=createGetdpModule" "-sEXPORT_ES6=1"
+    "-sALLOW_MEMORY_GROWTH=1" "-sINITIAL_MEMORY=64MB" "-sMAXIMUM_MEMORY=2GB"
+    "-sSTACK_SIZE=4MB" "-sFORCE_FILESYSTEM=1" "-sENVIRONMENT=web,worker"
+    "-sEXPORTED_FUNCTIONS=['_opensimphy_getdp_run','_opensimphy_getdp_onelab_set_json','_opensimphy_getdp_onelab_get_json','_opensimphy_getdp_onelab_clear','_opensimphy_getdp_onelab_get_changed','_opensimphy_getdp_onelab_set_changed','_malloc','_free']"
+    "-sEXPORTED_RUNTIME_METHODS=['FS','cwrap','UTF8ToString','wasmMemory','lengthBytesUTF8','stringToUTF8']")
+endif()

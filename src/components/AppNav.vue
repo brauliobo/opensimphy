@@ -22,7 +22,12 @@ if (!progress.hydrated.value) progress.hydrate()
 const links = [
   { to: '/tour', label: 'Tour', code: '00', routes: ['overview', 'tour', 'tour-chapter', 'tour-lesson'] },
   { to: '/atlas', label: 'Atlas', code: '01', routes: ['atlas', 'formula'] },
-  { to: '/labs', label: 'Workbench', code: '02', routes: ['labs', 'quantum-wave', 'edwin-gray', 'fiddle-archive', 'fiddle-record', 'core', 'walls', 'earth-workbench'] },
+  {
+    to: '/labs',
+    label: 'Workbench',
+    code: '02',
+    routes: ['labs', 'quantum-wave', 'edwin-gray', 'fiddle-archive', 'fiddle-record', 'core', 'walls', 'earth-workbench', ...(import.meta.env.VITE_ONELAB_ENABLED === 'true' ? ['onelab'] : [])],
+  },
   {
     to: '/evidence',
     label: 'Evidence',

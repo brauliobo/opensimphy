@@ -224,32 +224,26 @@ test('all wall inputs pass small-simulation completion and UI mode interaction',
   const audit = await waitForRouteAudit(page, '/labs/walls', 'wall-registry-ready', 'walls')
   expect(audit.registered).toBe(351)
 
-  const smallSimulationAudit = await page.evaluate(async () => {
-    const { simulateNumberWall } = await import('/src/engine/numberWall.ts')
-    const registry = await fetch('/data/generated/walls.json').then((response) => response.json()) as Array<{ id: string; filename: string }>
-    const failures: Array<{ id: string; error: string }> = []
-    let cursor = 0
-    async function run(): Promise<void> {
-      while (cursor < registry.length) {
-        const entry = registry[cursor++]
-        if (!entry) continue
-        try {
-          const payload = await fetch(`/data/number-walls/${encodeURIComponent(entry.filename)}`).then((response) => response.json()) as { sequence?: unknown[] }
-          const simulation = simulateNumberWall(payload, {
-            terms: Math.min(6, payload.sequence?.length ?? 0),
-            depth: 2,
-            mode: 'mod',
-            modulus: 7,
-          })
-          if (simulation.id !== entry.id || simulation.cells.length === 0) failures.push({ id: entry.id, error: 'empty or mismatched simulation' })
-        } catch (reason) {
-          failures.push({ id: entry.id, error: reason instanceof Error ? reason.message : String(reason) })
-        }
+  const registry = await page.request.get('/data/generated/walls.json').then((response) => response.json()) as Array<{ id: string; filename: string }>
+  const failures: Array<{ id: string; error: string }> = []
+  let cursor = 0
+  async function run(): Promise<void> {
+    while (cursor < registry.length) {
+      const entry = registry[cursor++]
+      if (!entry) continue
+      try {
+        const payload = await page.request.get(`/data/number-walls/${encodeURIComponent(entry.filename)}`).then((response) => response.json()) as { sequence?: unknown[] }
+        const simulation = simulateNumberWall(payload, {
+          terms: Math.min(6, payload.sequence?.length ?? 0), depth: 2, mode: 'mod', modulus: 7,
+        })
+        if (simulation.id !== entry.id || simulation.cells.length === 0) failures.push({ id: entry.id, error: 'empty or mismatched simulation' })
+      } catch (reason) {
+        failures.push({ id: entry.id, error: reason instanceof Error ? reason.message : String(reason) })
       }
     }
-    await Promise.all(Array.from({ length: 12 }, run))
-    return { tested: registry.length, failures }
-  })
+  }
+  await Promise.all(Array.from({ length: 12 }, run))
+  const smallSimulationAudit = { tested: registry.length, failures }
   expect(smallSimulationAudit.tested).toBe(351)
   expect(smallSimulationAudit.failures).toEqual([])
 
@@ -605,7 +599,7 @@ test('shows source caveat and PWA manifest/service-worker evidence', async ({ pa
 
   const manifestLink = await page.locator('link[rel="manifest"]').getAttribute('href')
   expect(manifestLink).toBeTruthy()
-  const manifest = await request.get(new URL(manifestLink!, 'http://127.0.0.1:5173').href)
+  const manifest = await request.get(new URL(manifestLink!, page.url()).href)
   expect(manifest.ok()).toBe(true)
   const registration = await page.evaluate(async () => {
     await navigator.serviceWorker?.ready

@@ -1,0 +1,57 @@
+name: WASM Release Candidate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  build-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Compile twice from isolated source trees
+        run: JOBS=4 nice npm run wasm:reproducibility
+      - name: Stage exact source-built runtime
+        run: npm run simulation:stage -- --verify-lock && npm run simulation:verify
+      - name: Independent native reference drift
+        run: JOBS=4 nice npm run wasm:reference
+      - name: Type, unit, and integration tests
+        run: nice npm run typecheck && nice npm test
+      - name: Production build without another WASM compilation
+        run: nice npm run build:deploy
+      - name: Combined-profile production E2E
+        run: nice npx playwright test --config playwright.simulation.config.ts
+      - name: Separate-profile Phase 0-4 production E2E
+        run: nice npm run test:simulation:separate
+      - name: Deterministic release package and metadata
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./tools/wasm/artifacts.lock.json').contentVersion")
+          DIRECTORY="release/wasm-$VERSION"
+          nice npm run simulation:package:verify -- --output "$DIRECTORY"
+          npm run simulation:release:verify -- "$DIRECTORY"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "directory=$DIRECTORY" >> "$GITHUB_OUTPUT"
+      - name: Attest candidate release assets
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2.4.0
+        with:
+          subject-path: ${{ steps.version.outputs.directory }}/*
+      - name: Upload short-retention candidate handoff
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: wasm-${{ steps.version.outputs.version }}-candidate-${{ github.run_id }}
+          path: ${{ steps.version.outputs.directory }}
+          if-no-files-found: error
+          retention-days: 3

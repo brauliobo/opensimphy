@@ -9,7 +9,7 @@ test('loads the Awesome Physics catalog with deterministic counts and an accessi
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Projects + archive76')
   await expect(page.getByTestId('awesome-catalog-counts')).toContainText('Organizations10')
   await expect(page.locator('.awesome-catalog-card')).toHaveCount(86)
-  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(16)
+  await expect(page.getByTestId('awesome-catalog-run')).toHaveCount(17)
   await expect(page.getByTestId('footer-awesome-physics')).toHaveAttribute('href', '/awesome-physics')
 })
 
@@ -84,4 +84,33 @@ test('runs the verified CoolProp classic-worker route with its typed default', a
   const output = JSON.parse(resultText ?? '') as { operation?: unknown; kelvin?: unknown }
   expect(output.operation).toBe('F2K')
   expect(output.kelvin).toBeCloseTo(255.3722222222, 10)
+})
+
+test('runs the verified nphysics2d Blob-companion module-worker route', async ({ page }) => {
+  await page.goto('/awesome-physics/awesome-nphysics')
+  await expect(page.getByTestId('awesome-physics-detail-ready')).toBeVisible()
+  await expect(page.getByTestId('awesome-physics-run-panel')).toBeVisible()
+
+  await page.getByTestId('awesome-physics-run').click()
+  const status = page.getByTestId('awesome-physics-status')
+  await expect.poll(async () => (await status.textContent())?.trim() ?? '', {
+    timeout: 30_000,
+    message: 'nphysics2d module worker did not complete; inspect the detail route for diagnostics',
+  }).toContain('completed')
+
+  const resultText = await page.getByTestId('awesome-physics-result').locator('code').textContent()
+  const output = JSON.parse(resultText ?? '') as {
+    schemaVersion?: unknown
+    dimension?: unknown
+    operation?: unknown
+    snapshot?: { x?: unknown; y?: unknown; steps?: unknown }
+    provenance?: { sourceRevision?: unknown }
+  }
+  expect(output).toMatchObject({
+    schemaVersion: 1,
+    dimension: 2,
+    operation: 'snapshot',
+    snapshot: { x: 0, y: 2, steps: 0 },
+    provenance: { sourceRevision: '65aa85c5470a5da85e0c13652ce58400ae2e2201' },
+  })
 })

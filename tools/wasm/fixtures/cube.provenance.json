@@ -1,0 +1,11 @@
+{
+  "name": "meshStep cube",
+  "sourceUrl": "https://github.com/CNCKitchen/meshStep/blob/a1a2841633bdb56a54cb91235800d87124af4091/cube.step",
+  "repository": "https://github.com/CNCKitchen/meshStep.git",
+  "revision": "a1a2841633bdb56a54cb91235800d87124af4091",
+  "path": "cube.step",
+  "bytes": 8705,
+  "sha256": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180",
+  "geometry": "20 mm cube centered on x/y with z from 0 to 20 mm",
+  "accessed": "2026-08-13"
+}

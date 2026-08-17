@@ -1,0 +1,18 @@
+diff --git a/src/OSD/OSD_Host.cxx b/src/OSD/OSD_Host.cxx
+index 574b74b0f9..b1e8dc87af 100644
+--- a/src/OSD/OSD_Host.cxx
++++ b/src/OSD/OSD_Host.cxx
+@@ -117,5 +117,8 @@ Standard_Integer OSD_Host::AvailableMemory(){
+ // =========================================================================
+ 
+ TCollection_AsciiString OSD_Host::InternetAddress(){
++#if defined(__EMSCRIPTEN__)
++ return TCollection_AsciiString();
++#else
+  struct hostent internet_address;
+  int a,b,c,d;
+@@ -135,3 +138,4 @@ TCollection_AsciiString OSD_Host::InternetAddress(){
+  result = buffer;
+  return(result);
++#endif
+ }

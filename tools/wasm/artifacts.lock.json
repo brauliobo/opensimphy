@@ -1,0 +1,329 @@
+{
+  "schema": 2,
+  "generationDate": "2026-08-13T00:00:00Z",
+  "contentVersion": "8b4dd5c93e4141bd5be9",
+  "inputs": {
+    "workspace/package.json": "3e6781e9a983e615f93b1458d201b2622397834f90536262e79f473519b3067e",
+    "workspace/package-lock.json": "773b2abc8e34aea9b5213e5b42b40bad6eea27dabab03ee85604eebe24ffc8d8",
+    "versions.env": "b2ffa18764eb332be4fbd1a8e24a6218f6a28da8b90fe609baa51d5d1fbff5c1",
+    "build.sh": "42cf2400ac2e4a65d41d754e2752c45dda21a9a3e6e5f81565b1428476adc6cf",
+    "container-build.sh": "80f525fa8c114386dc5fd25c43c42404fbb0365b5cb1168d6b797b11e1198336",
+    "acquire-sources.sh": "6b375451b90bcc53a919a2639064437aa6b9799c3f03038e9a34a40f655971d7",
+    "stage-assets.mjs": "9361d1760c480352e70d27c1a9616b1f6338c79b4e872f41deb60cd68fc356f6",
+    "verify-staged-assets.mjs": "d1e339301e4cb59c405c24b2efa237d89283a8a037db30c6168554b6e6447485",
+    "update-artifact-lock.mjs": "bb38c4367a6bab51a51952738ba9ba78ba7f8ecede63462260f9bc7dc5b8c56a",
+    "verify-reproducible-build.sh": "37af8fa190cfde92d21a6661aaa866cfa2c3afb453a3d2f91a078e9f62a2e5cc",
+    "compare-builds.mjs": "8c93e4c9aaa90472384adc6c4bf1dc8a511f182746c36a71f568c3c4e838258c",
+    "native-reference.sh": "12438f3d221f12348bd5e890e1e988119e7dc7855fdcd70662f679c5e0581154",
+    "container-native-reference.sh": "62f26b53333f0ca3bdf17d6c3eb9e56dff14f695c9ecf9f6bc8f1ac388b3796b",
+    "summarize-phase4.mjs": "2196f6ca114e2c12abab18bd56175e60d34927a7c19a99507ae4ba1a474d2d8d",
+    "summarize-phase5.mjs": "952ba5bbe701072e33a4937ecd5139337f844cf83f104c5cc99df81233dd8a7d",
+    "native-convergence.mjs": "6f63d0a8c3b4d569dd37475f928d6dea2f9c8d29c67f2155fe27dc850fdbe60c",
+    "measure-profiles.mjs": "76ad4f6fd9e8ce5ab614d0bc4ffac88aed7b0d2d16b5680cf40392d17a2538f9",
+    "check-forbidden-boundary.mjs": "9b42ccc8b93499a3fa430510fe0fc6cb2d3c02ed3fe886753f6cc008b4dc5df7",
+    "gmsh/view-bindings.patch": "041401db29e01c1955a02cb68528282d4ccf0bb59880866312b244a2bc776185",
+    "gmsh/optional-quad-predicate.patch": "1c024024d872603d10b2e336ab2d6bfab029a7297d063fcee61a2feaa0c6bf3d",
+    "gmsh/persistent-parser-number.patch": "1f94fdbe7de30123c326688fc7be4f5ff531f0a588860d13b4cade766638a6be",
+    "gmsh/wasm-boundaries.patch": "1b67516d2753ab76874b939e6b9ba7a0901016480d62785937bbc726cf0bd1a3",
+    "occt/wasm-boundaries.patch": "a1d14307e7c7ae7bf10938cec25bc7df6bc56e1f9e3f1b04c582f2b116023214",
+    "fixtures/microstrip-onelab.patch": "6791b1248151788d7fc65681e094a468249308fa6754cc8a916e3fed6dc0f5a3",
+    "fixtures/phase4-onelab.patch": "0949b3d2f25e37b5b0c59545ae254b678334a8e913292d5f2f67b70214bf0873",
+    "fixtures/phase5-onelab.patch": "c15dc469448f697cffa24dab7b1ccb4928281733054c02489a110224705c06ba",
+    "fixtures/projects.json": "48db6bed08cbe53ccc708d0fb4fec5c9f417f20114fbaf0759749a255b5643fd",
+    "getdp/bridge.cpp": "b1ddad94cb355184d25ea0e6fa8277dcd597b88a355dd1a663a25f134437c5c8",
+    "getdp/CMakeLists.append.txt": "699cb58bd13c7bcfbddcd9385f35ee70eee5f3ef94ecaac0cff57bcfe1e77a6a",
+    "getdp/runtime.mjs": "aaa2dfe8f841f9ce42a20437e0d05f30ae8a6875483e5809f43515bd0f061d3b",
+    "getdp/wasm-boundaries.patch": "b00d909a93b31f256eb0d7871974c5870dcfc099514fcc3026715b0a0b56064a",
+    "petsc/wasm-boundaries.patch": "f66e0d8dd18a47b5f6725511fe39702b25c37a7b973ead0d54dd26ec195a0047",
+    "getdp/combined-bridge.cpp": "42b54455636c2bf4db155bcb803f28efd44e6a42e36ae0de1983502d7c5b56be",
+    "getdp/CMakeLists.combined.txt": "4f76f572ea02a18e36a765f7825f9accfbadaddcb693c6886c439c9905bf1f6f",
+    "getdp/combined-runtime.mjs": "0f41aeefa908df321bb810511ffbbc1d126cf6f57acfd50f86aa21e412e10bd4",
+    "native-probe.cpp": "bf86f077e775ae0e789a56209a860e0ff792abfb90fefbc8948bae18bd2bd72a",
+    "phase5-native-trace.cpp": "57cd7d8894c049f0bc1d39c4b077ee403f9307f49721ff1d45c40cefb9cb2598",
+    "getdp/CMakeLists.native-trace.txt": "f865269c7b418d094500aea68a43873fbc95f7b74010e757794421a848775a91"
+  },
+  "fixtures": {
+    "microstrip/microstrip.geo": {
+      "bytes": 3259,
+      "sha256": "6b6e881d25575e8250a111a7715afba0cdc86bacdf4f14a85ed8e6caadf132fc"
+    },
+    "microstrip/microstrip.pro": {
+      "bytes": 16136,
+      "sha256": "19af1ad59868376401aa23c0fea97730d0470918b709671a19df0310a61bda58"
+    },
+    "microstrip/microstrip.json": {
+      "bytes": 1064,
+      "sha256": "cbad1c8779f01f9534cc3aa9aa689c8eceffccf3cc42da41fcfdebf67daad083"
+    },
+    "cube/cube.geo": {
+      "bytes": 1248,
+      "sha256": "e4b3169495d0b8e5fc6f242a05a174be28f10526bb66a7d0d4e49a3b89243ed2"
+    },
+    "cube/cube.step": {
+      "bytes": 8705,
+      "sha256": "73754d7ee002ea220285ba9fb26ab2e2a1bac8f1ae931a339477dd44d407c180"
+    },
+    "cube/cube.provenance.json": {
+      "bytes": 478,
+      "sha256": "d2fccf0ee742e770919e2ee36308f6d779c5ea1ac2c1181e40d10789f2f470a2"
+    },
+    "radiator/README.md": {
+      "bytes": 1056,
+      "sha256": "92951b27a0827c6ffb208245d3c28bdea43f49f56f83ffd7c921e4b4c414f379"
+    },
+    "radiator/radiator.geo": {
+      "bytes": 4557,
+      "sha256": "28835804d5dcc56e1ae5a36e0e6abf3b9e37abaef0cdffeb4056ddc860c4fa93"
+    },
+    "radiator/radiator.pro": {
+      "bytes": 8907,
+      "sha256": "af5f7107adce6a7f9ba852a134ed6bd9318b95900ef53c0862a246b80b260314"
+    },
+    "radiator/radiator_common.pro": {
+      "bytes": 213,
+      "sha256": "52d6840c5bfb5204b2d77e70155e9dc447c26e3b4bce306da0cd2a5e6a2dd548"
+    },
+    "radiator/reference.msh": {
+      "bytes": 52926,
+      "sha256": "2f582f48a0cf384df1796b642f49a896ada5a039fda5aaea959a3b7396b822fc"
+    },
+    "electromagnet/README.md": {
+      "bytes": 869,
+      "sha256": "0ad399941c0641bc2d943b6f63dda6b1ef897b5b587b3533ab78ee5b2e7257f2"
+    },
+    "electromagnet/electromagnet.geo": {
+      "bytes": 4899,
+      "sha256": "b500c422657ac2d8bc6931906223b2c937e9c25896e9ba1247d382863394d0c9"
+    },
+    "electromagnet/electromagnet.pro": {
+      "bytes": 20518,
+      "sha256": "4a32f90ebd031da6e7a585a3c36e120c98a0f517e74bae61a21011d1ee183a0b"
+    },
+    "electromagnet/electromagnet_common.pro": {
+      "bytes": 304,
+      "sha256": "f33d1198b865352a3e1bd98bed29a437ae3291d601504c22f9e9ad37f2a6e409"
+    },
+    "electromagnet/reference.msh": {
+      "bytes": 11078,
+      "sha256": "46d84ead1bcf078d853dc943b1ef02d8877d73414200345a02a5c233aa19fe9e"
+    },
+    "full-wave/README.md": {
+      "bytes": 1127,
+      "sha256": "9e46ec252e10720b26316363cc3b4491041e8a5ed19b569c9ea78614cc883c88"
+    },
+    "full-wave/full_wave.geo": {
+      "bytes": 3206,
+      "sha256": "4f59b3f487d0f3035ef18b73109ec4201fc2ff40bb0acfc51fce6fa9df1e1d77"
+    },
+    "full-wave/full_wave.pro": {
+      "bytes": 15649,
+      "sha256": "1911df4ac115e3feed974bfd964ec58b050f87c5ad72c4d57d16373931a8eaa9"
+    },
+    "full-wave/full_wave_common.pro": {
+      "bytes": 425,
+      "sha256": "97b2a032c263414f89807922352f72c74caaf2b02b5360171bd67913ac57bb9e"
+    },
+    "full-wave/reference.msh": {
+      "bytes": 7813,
+      "sha256": "e07661bfe7666c12ede4c3b8046f236eb79f660f2ea233be92395d48fc968897"
+    },
+    "global-quantity/README.md": {
+      "bytes": 854,
+      "sha256": "8d5cbc41c370af199b7282a95e27618ecf3ffd6d0ff673bd3df156bca00cbfa8"
+    },
+    "global-quantity/microstrip.geo": {
+      "bytes": 1157,
+      "sha256": "60c9df1a39c6e1c10a9ca0968220d725ca5869df9457bb1c23f861cfd73fd90f"
+    },
+    "global-quantity/microstrip.pro": {
+      "bytes": 16418,
+      "sha256": "23d7450e358ecc95169ac5e03352736cba84b997669f9ec01082ee10a5fbac3e"
+    },
+    "global-quantity/microstrip.pro.orig": {
+      "bytes": 16169,
+      "sha256": "315dead0019f2b3b74ef099f1fd3211310e233b4b976be37f56a25a9a8d210e5"
+    },
+    "transfo/Lib_Magnetoquasistatics_av_2D_Cir.pro": {
+      "bytes": 18990,
+      "sha256": "02ae5ac76208c70bbf1998d211fef788e5eb2059c2eb7f0973ebe9a56d47cbec"
+    },
+    "transfo/transfo.geo": {
+      "bytes": 2336,
+      "sha256": "d75a3d9c109fc27b63ece3c3cda096f1f6542eadd8c8f3159d443499ac2b201f"
+    },
+    "transfo/transfo.pro": {
+      "bytes": 14790,
+      "sha256": "e7587f8be167ecdbade549884057642b223494b2166c0966935f31ce39af88ea"
+    },
+    "transfo/transfo.pro.orig": {
+      "bytes": 14793,
+      "sha256": "c916a99d79c69374f290ba8898995e2b97046ca50dfee5672fbf72e89868fd29"
+    },
+    "transfo/transfo_common.pro": {
+      "bytes": 824,
+      "sha256": "14ca2d6d4b072d983c60043f509df4272641702c3b4e984adbed5841782c6600"
+    },
+    "gmsh-rendering/test_displ.geo": {
+      "bytes": 303,
+      "sha256": "dee521a9394f7799aa8f686e01178f2eb3e68e786eef463d93747e948c5b44be"
+    },
+    "gmsh-rendering/test_displ.pos": {
+      "bytes": 41206,
+      "sha256": "b09dd8432b9b02558d0e878f776a10c367a92ed16e9507a0a0c948b4d76fd893"
+    },
+    "gmsh-rendering/test_field.pos": {
+      "bytes": 26962,
+      "sha256": "83fbdad7db8c29febd5b574a96468bd519ebe95d6dfe2d349691db76eacccd2f"
+    }
+  },
+  "outputs": {
+    "combined-complex/combined-runtime.mjs": {
+      "bytes": 4211,
+      "sha256": "0f41aeefa908df321bb810511ffbbc1d126cf6f57acfd50f86aa21e412e10bd4"
+    },
+    "combined-complex/combined.imports.txt": {
+      "bytes": 24193352,
+      "sha256": "e1e3aca2a12240bb800cd735fd903e105f55e0b7960f56b6c3ccfabccadd4708"
+    },
+    "combined-complex/combined.link.map": {
+      "bytes": 26090665,
+      "sha256": "b30cc9aeafe940ab9a05f4fbf45474d04eaff261bb7e0fcff491ac5fbd855dd2"
+    },
+    "combined-complex/combined.mjs": {
+      "bytes": 396802,
+      "sha256": "a9564a4bcac0ff982b9d8e4f05f9a12982547a423152b879a17fa304688ac1ff"
+    },
+    "combined-complex/combined.pre-strip.symbols.txt": {
+      "bytes": 6382169,
+      "sha256": "1cce50362d750e4e03bb9dc58965b0ce1f7d34db01fb070348d7ed98a5c8d323"
+    },
+    "combined-complex/combined.wasm": {
+      "bytes": 77524653,
+      "sha256": "5a2726599b0a47dbe2ae681bc03b90651be12b0c7bc33557f1e396cd65f7dd06"
+    },
+    "combined-complex/gmsh-descriptor.mjs": {
+      "bytes": 301611,
+      "sha256": "23aadc073a207cb6f97f631a6123a26f5379bea63af9ada0f2e02a0927703a05"
+    },
+    "combined-complex/gmsh.d.ts": {
+      "bytes": 134944,
+      "sha256": "0ecd459d3346f45719be311767d019a7ac76e42749bf6e90a0739b52ea23feee"
+    },
+    "combined-complex/runtime.mjs": {
+      "bytes": 12854,
+      "sha256": "1b8f9edaf63f1440d6d1d0e048c382488faae96dd886ce7e60b09e68a5a12a06"
+    },
+    "combined-real/combined-runtime.mjs": {
+      "bytes": 4211,
+      "sha256": "0f41aeefa908df321bb810511ffbbc1d126cf6f57acfd50f86aa21e412e10bd4"
+    },
+    "combined-real/combined.imports.txt": {
+      "bytes": 24481589,
+      "sha256": "2c3b9b168e754a0ca9d3d57270cead41ff363317c378b1a89062246faeb420e9"
+    },
+    "combined-real/combined.link.map": {
+      "bytes": 26198927,
+      "sha256": "1eb6ce50b9709f6dc550c46a6509813cd1bdd14b7613f7af0efc1ce56dd78bb8"
+    },
+    "combined-real/combined.mjs": {
+      "bytes": 396802,
+      "sha256": "60036a46c970be6bf4323b53aa17cb31fe3341c2ce08d251bbc506718b6fa864"
+    },
+    "combined-real/combined.pre-strip.symbols.txt": {
+      "bytes": 6398315,
+      "sha256": "3502b9f166047b7aabfc9a32d53f8faf70c5a5b380997b85f823484b8461fd7e"
+    },
+    "combined-real/combined.wasm": {
+      "bytes": 77223093,
+      "sha256": "ccc28e673b12e268143ff43043dc8ca6dc0add1b427210e99c2b6006a5b2d997"
+    },
+    "combined-real/gmsh-descriptor.mjs": {
+      "bytes": 301611,
+      "sha256": "23aadc073a207cb6f97f631a6123a26f5379bea63af9ada0f2e02a0927703a05"
+    },
+    "combined-real/gmsh.d.ts": {
+      "bytes": 134944,
+      "sha256": "0ecd459d3346f45719be311767d019a7ac76e42749bf6e90a0739b52ea23feee"
+    },
+    "combined-real/runtime.mjs": {
+      "bytes": 12854,
+      "sha256": "1b8f9edaf63f1440d6d1d0e048c382488faae96dd886ce7e60b09e68a5a12a06"
+    },
+    "getdp-complex/getdp.imports.txt": {
+      "bytes": 7656007,
+      "sha256": "192d87964be47b651b6a6477d61fe6dd06c76783bc3d8a5c4996d29579505fab"
+    },
+    "getdp-complex/getdp.link.map": {
+      "bytes": 4895961,
+      "sha256": "c49d8d6446dd4d10e26c1ab7184eef002ea051dac0f219379d63b6049b58463d"
+    },
+    "getdp-complex/getdp.mjs": {
+      "bytes": 164785,
+      "sha256": "5774b45575c1fd30032a8a0ce8a39027f70b73e7d76e133becb24cdc613a4cc1"
+    },
+    "getdp-complex/getdp.pre-strip.symbols.txt": {
+      "bytes": 1064859,
+      "sha256": "e94a94bd6622c6a26993a14c207d6ee7f6b537b72f174a1bc20363717d8613c4"
+    },
+    "getdp-complex/getdp.wasm": {
+      "bytes": 35016257,
+      "sha256": "d4e21190f5d727710d0313679b39b56a341a3c20d22ec6e901e7f0a46fd55ff0"
+    },
+    "getdp/getdp.imports.txt": {
+      "bytes": 7944320,
+      "sha256": "8dad478c7173bbfcebb9d87dce11fc6161d7a80b4fc4c3bca3b3381d29dd8cc4"
+    },
+    "getdp/getdp.link.map": {
+      "bytes": 5004603,
+      "sha256": "29848adcdc6e7d162612ab120622752a54158c72ba269f3126898830c6445bbd"
+    },
+    "getdp/getdp.mjs": {
+      "bytes": 164785,
+      "sha256": "5774b45575c1fd30032a8a0ce8a39027f70b73e7d76e133becb24cdc613a4cc1"
+    },
+    "getdp/getdp.pre-strip.symbols.txt": {
+      "bytes": 1081087,
+      "sha256": "e26b0f5ad0a31405a1cb78db377693201679138e6beb5c814e4ce0f53787d1e0"
+    },
+    "getdp/getdp.wasm": {
+      "bytes": 34727653,
+      "sha256": "3048cea656c8c5074dbab2996ee0f8c1500f91394ef4de8b5191ae2d22eb15f4"
+    },
+    "gmsh/gmsh-core.imports.txt": {
+      "bytes": 16796988,
+      "sha256": "a49e8a6903a7bd452735684df18d82b89487974d3ccb91cd725f36e99cc627c6"
+    },
+    "gmsh/gmsh-core.link.map": {
+      "bytes": 22095373,
+      "sha256": "e7780a7a58e915d4bfb494f6c8bba645e6426aa7c85d294c75de2f4be4282617"
+    },
+    "gmsh/gmsh-core.mjs": {
+      "bytes": 388711,
+      "sha256": "d26ae924873ba6d786807c4dc0af8fbbd9d4c67ed2eb3f9bad094b08d160d11b"
+    },
+    "gmsh/gmsh-core.pre-strip.symbols.txt": {
+      "bytes": 5693576,
+      "sha256": "0ea62249e538e8da432d2c94a94dfe1def6877df07ae6d79b995c39fb0b61958"
+    },
+    "gmsh/gmsh-core.wasm": {
+      "bytes": 42330582,
+      "sha256": "e5084b17b9705eba4203a7ea773f655845b097569fd6debf44b8ca0bf1f5fce9"
+    },
+    "gmsh/gmsh-descriptor.mjs": {
+      "bytes": 301611,
+      "sha256": "23aadc073a207cb6f97f631a6123a26f5379bea63af9ada0f2e02a0927703a05"
+    },
+    "gmsh/gmsh.d.ts": {
+      "bytes": 134944,
+      "sha256": "0ecd459d3346f45719be311767d019a7ac76e42749bf6e90a0739b52ea23feee"
+    },
+    "gmsh/gmsh.mjs": {
+      "bytes": 514,
+      "sha256": "5b23a7f238b091ce328d2adbbf862f728fbb54d06cc0b9b5929c7b3eb8e60099"
+    },
+    "gmsh/runtime.mjs": {
+      "bytes": 12854,
+      "sha256": "1b8f9edaf63f1440d6d1d0e048c382488faae96dd886ce7e60b09e68a5a12a06"
+    }
+  }
+}

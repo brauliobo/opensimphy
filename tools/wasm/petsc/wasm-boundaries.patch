@@ -1,0 +1,31 @@
+diff --git a/config/BuildSystem/config/functions.py b/config/BuildSystem/config/functions.py
+index e21fb99062..48e6f719cb 100644
+--- a/config/BuildSystem/config/functions.py
++++ b/config/BuildSystem/config/functions.py
+@@ -25,6 +25,12 @@ class Configure(config.base.Configure):
+   def check(self, funcs, libraries = None, examineOutput=lambda ret,out,err:None):
+     '''Checks for the function "funcName", and if found defines HAVE_"funcName"'''
+     if isinstance(funcs, set): funcs = list(funcs)
+     if isinstance(funcs, str): funcs = [funcs]
++    if os.path.basename(self.compilers.getCompiler()) in ('emcc', 'em++'):
++      unsupported = {'accept', 'connect', 'execl', 'execv', 'execve', 'execvp',
++                     'fork', 'freeaddrinfo', 'getaddrinfo', 'gethostbyname',
++                     'listen', 'popen', 'posix_spawn', 'socket', 'system', 'vfork'}
++      funcs = [func for func in funcs if func not in unsupported]
++      if not funcs: return False
+     self.log.write('Checking for functions ['+' '.join(funcs)+']\n')
+     def genIncludes(funcName):
+       return 'char %s(void);\n' % funcName
+diff --git a/src/dm/impls/network/networkview.c b/src/dm/impls/network/networkview.c
+index b4445754c7..d08173460a 100644
+--- a/src/dm/impls/network/networkview.c
++++ b/src/dm/impls/network/networkview.c
+@@ -246,7 +246,9 @@ static PetscErrorCode DMNetworkViewCSV(DM dm, PetscViewer viewer)
+   PetscCall(PetscArrayzero(proccall, sizeof(proccall)));
+   PetscCall(PetscSNPrintf(proccall, sizeof(proccall), "%s %s %s %s", PETSC_PYTHON_EXE, scriptFile, options, filename));
+ 
+-#if PetscDefined(HAVE_POPEN)
++#if defined(__EMSCRIPTEN__)
++  SETERRQ(comm, PETSC_ERR_SUP, "External process viewers are unavailable in WebAssembly");
++#elif PetscDefined(HAVE_POPEN)
+   // Perform the call to run the python script (Note: while this is called on all ranks POpen will only run on rank 0)

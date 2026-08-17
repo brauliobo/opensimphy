@@ -10,6 +10,7 @@ import {
   useTourProgress,
 } from '../../src/registries/tourProgress'
 import { router as appRouter } from '../../src/router'
+import LabsView from '../../src/views/LabsView.vue'
 
 const routes = [
   { path: '/', name: 'overview', component: { template: '<div />' } },
@@ -315,5 +316,29 @@ describe('responsive navigation state', () => {
     await appRouter.isReady()
 
     expect(document.title).toBe('Evidence Guide | OpenSimPhy Atlas')
+  })
+})
+
+describe('disabled ONELAB profile', () => {
+  it('omits ONELAB laboratory navigation', async () => {
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [
+        { path: '/labs', component: { template: '<div />' } },
+        { path: '/labs/core', component: { template: '<div />' } },
+        { path: '/labs/walls', component: { template: '<div />' } },
+      ],
+    })
+    await router.push('/labs')
+    const wrapper = mount(LabsView, { global: { plugins: [router] } })
+    expect(wrapper.find('[data-testid="onelab-nav"]').exists()).toBe(false)
+    expect(wrapper.find('a[href="/labs/onelab"]').exists()).toBe(false)
+  })
+
+  it('omits the route and sends direct navigation through the catch-all', async () => {
+    expect(appRouter.hasRoute('onelab')).toBe(false)
+    await appRouter.push('/labs/onelab')
+    expect(appRouter.currentRoute.value.fullPath).toBe('/labs/onelab')
+    expect(appRouter.currentRoute.value.name).toBe('catch-all')
   })
 })

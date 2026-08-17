@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, type RouterScrollBehavior } from 'vue-router'
+import pagePaths from './page-paths.json'
 
 const legacyTopicChapters: Record<string, string> = {
   foundations: 'anchors',
@@ -28,6 +29,9 @@ export const tourScrollBehavior: RouterScrollBehavior = (to, _from, savedPositio
   const selector = safeHashSelector(to.hash)
   return selector ? { el: selector } : { top: 0 }
 }
+const onelabRoutes = import.meta.env.VITE_ONELAB_ENABLED === 'true'
+  ? [{ path: pagePaths.onelab, name: 'onelab', component: () => import('../views/OnelabLabView.vue'), meta: { title: 'Browser ONELAB' } }]
+  : []
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +64,7 @@ export const router = createRouter({
     },
     { path: '/atlas', name: 'atlas', component: () => import('../views/FormulaAtlasView.vue'), meta: { title: 'Formula Atlas' } },
     {
-      path: '/atlas/:id',
+      path: pagePaths.formula,
       name: 'formula',
       component: () => import('../views/FormulaDetailView.vue'),
       props: true,
@@ -83,6 +87,7 @@ export const router = createRouter({
     },
     { path: '/labs/core', alias: '/core', name: 'core', component: () => import('../views/CoreLabView.vue'), meta: { title: 'Core Lab' } },
     { path: '/labs/walls', alias: '/walls', name: 'walls', component: () => import('../views/NumberWallsView.vue'), meta: { title: 'Number Walls' } },
+    ...onelabRoutes,
     {
       path: '/labs/earth/:programId',
       name: 'earth-workbench',

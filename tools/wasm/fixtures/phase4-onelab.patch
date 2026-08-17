@@ -1,0 +1,33 @@
+diff --git a/radiator/radiator.geo b/radiator/radiator.geo
+--- a/radiator/radiator.geo
++++ b/radiator/radiator.geo
+@@ -34,6 +34,12 @@ DefineConstant[
+     Name "Parameters/0Model dimension"}
+   zh = {fh / 20, Min 1e-3, Max 2 * fh, Step 1e-3, Visible dim == 3,
+     Name "Parameters/Fin thickness [m]"}
++  AnalysisType = {0, Choices{0="Steady-state", 1="Transient"},
++    Name "Parameters/Analysis"}
++  tmax = {360, Min 1, Max 3600, Step 10,
++    Name "Parameters/Simulation time [s]", Visible AnalysisType}
++  dt = {5, Min 0.1, Max 100, Step 0.1,
++    Name "Parameters/Time step [s]", Visible AnalysisType}
+ ];
+ 
+ For i In {0 : N - 1}
+diff --git a/electromagnet/electromagnet.geo b/electromagnet/electromagnet.geo
+--- a/electromagnet/electromagnet.geo
++++ b/electromagnet/electromagnet.geo
+@@ -87,6 +87,13 @@ Physical Curve("Inf", 12) = inf();
+ // Mesh size constraints:
+ DefineConstant[
+   s = {1, Name "Parameters/}Global mesh size factor"}
++  NonlinearCore = {0, Choices {0, 1},
++    Help "Is the magnetic law in the core nonlinear?",
++    Name "Parameters/Nonlinear core"}
++  NewtonRaphson = {1, Choices {0="Picard", 1="Newton-Raphson"},
++    Visible NonlinearCore, Name "Parameters/Linearization method"}
++  Current = {1, Min 0.01, Max 100, Step 0.1,
++    Name "Parameters/Current [A]"}
+ ];
+ 
+ MeshSize{:} = 12.5 * mm * s;

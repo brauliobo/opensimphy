@@ -1,0 +1,26 @@
+diff --git a/microstrip.geo b/microstrip.geo
+index 8bb68a1..84f62ac 100644
+--- a/microstrip.geo
++++ b/microstrip.geo
+@@ -21,7 +21,20 @@ yBox = h * 12; // height of air box
+ 
+ // Global mesh size factor (that can be modified interactively in the Gmsh
+ // graphical interface), with a default value of "1":
+-s = DefineNumber[1., Name "Parameters/Global mesh size factor"];
++s = DefineNumber[1., Min 0.5, Max 2, Step 0.5,
++  Name "Parameters/Mesh/Global mesh size factor",
++  Help "Scales every target point mesh size in this tutorial geometry"];
++workflow = DefineNumber[0, Choices {0="Electrostatic solve", 1="Mesh audit"},
++  Name "Parameters/Run/Workflow"];
++label = DefineString["upstream tutorial",
++  Choices {"upstream tutorial", "parameter audit"},
++  Name "Parameters/Run/Label",
++  Visible workflow == 0];
++targetSize = DefineNumber[h / 10 * s,
++  Name "Parameters/Mesh/Derived substrate target [m]",
++  Help "Computed by the Gmsh parser from h / 10 * s",
++  Visible workflow == 0,
++  ReadOnly 1];
+ 
+ // Target mesh sizes on some model points:
+ p0 = h / 10 * s;

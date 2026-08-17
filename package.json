@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,8 @@
     "data:generate:fiddle-runtime": "node scripts/consolidate-fiddle-runtime.mjs --registry public/data/generated/fiddles/registry.json data/fiddles/runtime/chenopdodium-runtime-001-195.json data/fiddles/runtime/chenopdodium-runtime-196-390.json data/fiddles/runtime/chenopdodium-runtime-391-585.json data/fiddles/runtime/chenopdodium-runtime-586-780.json public/data/generated/fiddles/runtime-verification.json",
     "data:lock:earth": "node scripts/generate-data.mjs --update-earth-lock",
     "build": "vue-tsc --noEmit && vite build",
-    "build:pages": "npm run build && node scripts/create-pages-fallback.mjs",
+    "build:deploy": "npm run simulation:verify && VITE_ONELAB_ENABLED=true npm run build",
+    "build:pages": "npm run build:deploy && node scripts/create-pages-fallback.mjs",
     "check:routes": "node scripts/check-route-boundaries.mjs",
     "check:awesome-physics": "node scripts/check-awesome-physics-boundaries.mjs",
     "gray:compile": "node scripts/compile-gray-machines.mjs",
@@ -33,10 +34,30 @@
     "fem:test": "node --test --test-concurrency=4 fem/edwin-gray/ci/*.test.mjs fem/edwin-gray/scripts/*.test.mjs fem/edwin-gray/convergence/*.test.mjs",
     "fem:validate": "npm run fem:test && node fem/edwin-gray/ci/validate.mjs",
     "fem:test:runner": "node --test --test-concurrency=4 fem/edwin-gray/scripts/run.integrity.test.mjs",
-    "verify": "npm run data:generate && npm run data:generate:fiddles && npm run data:generate:fiddle-runtime && npm run gray:compile:check && npm run typecheck && npm run test && npm run fem:validate && npm run build && npm run check:routes && npm run check:awesome-physics"
+    "verify": "npm run data:generate && npm run data:generate:fiddles && npm run data:generate:fiddle-runtime && npm run gray:compile:check && npm run typecheck && npm run test && npm run fem:validate && npm run build && npm run check:routes && npm run check:awesome-physics",
+    "wasm:build": "tools/wasm/build.sh all",
+    "wasm:acquire": "tools/wasm/acquire-sources.sh",
+    "wasm:build:gmsh": "tools/wasm/build.sh gmsh",
+    "wasm:build:getdp": "tools/wasm/build.sh getdp",
+    "wasm:build:combined": "tools/wasm/build.sh combined",
+    "wasm:reproducibility": "tools/wasm/verify-reproducible-build.sh",
+    "wasm:reference": "tools/wasm/native-reference.sh",
+    "wasm:measure": "node tools/wasm/measure-profiles.mjs",
+    "wasm:lock:update": "node tools/wasm/update-artifact-lock.mjs --intentional",
+    "simulation:stage": "node tools/wasm/stage-assets.mjs",
+    "simulation:verify": "node tools/wasm/verify-staged-assets.mjs",
+    "simulation:package": "node tools/wasm/package-release.mjs",
+    "simulation:package:verify": "node tools/wasm/package-release.mjs --verify-determinism",
+    "simulation:release:verify": "node tools/wasm/verify-release.mjs",
+    "simulation:fetch": "node tools/wasm/fetch-release.mjs",
+    "test:simulation": "vitest run tests/engine/onelab.spec.ts && playwright test tests/e2e/onelab.spec.ts --config playwright.simulation.config.ts",
+    "test:simulation:separate": "VITE_ONELAB_PROFILE=separate playwright test tests/e2e/onelab.spec.ts --config playwright.separate.config.ts"
   },
   "dependencies": {
+    "meshstep": "0.1.1",
     "plotly.js-dist-min": "2.35.3",
+    "three": "0.180.0",
+    "three-mesh-bvh": "0.9.2",
     "vue": "3.5.13",
     "vue-router": "4.5.0"
   },
@@ -44,6 +65,7 @@
     "@playwright/test": "1.61.1",
     "@types/node": "22.10.7",
     "@types/plotly.js": "2.35.1",
+    "@types/three": "0.180.0",
     "@vitejs/plugin-vue": "5.2.1",
     "@vue/test-utils": "2.4.6",
     "jsdom": "25.0.1",
@@ -53,6 +75,7 @@
     "vite-node": "3.2.4",
     "vite-plugin-pwa": "0.21.1",
     "vitest": "3.2.7",
-    "vue-tsc": "2.2.0"
+    "vue-tsc": "2.2.0",
+    "wabt": "^1.0.37"
   }
 }
