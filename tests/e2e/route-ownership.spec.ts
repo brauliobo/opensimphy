@@ -320,7 +320,7 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(5)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(7)
   await expect(page.locator('.lab-choice-grid a[href="/labs/quantum-wave"]')).toContainText('Quantum wave lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/edwin-gray"]')).toContainText('Edwin Gray motor lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')

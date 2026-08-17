@@ -19,6 +19,9 @@ const routes = [
   { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' } },
   { path: '/atlas', name: 'atlas', component: { template: '<div />' } },
   { path: '/labs', name: 'labs', component: { template: '<div />' } },
+  { path: '/labs/cases', name: 'case-hub', component: { template: '<div />' } },
+  { path: '/labs/edwin-gray', name: 'edwin-gray', component: { template: '<div />' } },
+  { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: { template: '<div />' } },
   { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: { template: '<div />' } },
   { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: { template: '<div />' } },
   { path: '/labs/core', name: 'core', component: { template: '<div />' } },
@@ -263,6 +266,10 @@ describe('responsive navigation state', () => {
 
   it.each([
     '/labs',
+    '/labs/cases',
+    '/labs/edwin-gray',
+    '/awesome-physics',
+    '/awesome-physics/awesome-matter-js',
     '/labs/authors/chenopdodium',
     '/labs/authors/chenopdodium/source-record',
     '/labs/core',
@@ -293,6 +300,7 @@ describe('responsive navigation state', () => {
     expect(appRouter.resolve('/earth/source-record').name).toBe('earth-document')
     expect(appRouter.resolve('/core').name).toBe('core')
     expect(appRouter.resolve('/walls').name).toBe('walls')
+    expect(appRouter.resolve('/labs/cases').name).toBe('case-hub')
     expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').name).toBe('earth-workbench')
     expect(appRouter.resolve('/labs/earth/EARTH-PLAN-008').params.programId).toBe('EARTH-PLAN-008')
     expect(appRouter.resolve('/labs/authors/chenopdodium').name).toBe('fiddle-archive')

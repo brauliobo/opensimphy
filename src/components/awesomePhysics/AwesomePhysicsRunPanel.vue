@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, toRaw, watch } from 'vue'
+import { awesomePhysicsCasePresetInput, type AwesomePhysicsCasePreset } from '../../awesomePhysics/casePages'
 import { awesomePhysicsDefaultInput } from '../../awesomePhysics/defaultInputs'
 import { isAwesomePhysicsJsonValue, type AwesomePhysicsJsonValue } from '../../awesomePhysics/workers/protocol'
 import type { AwesomePhysicsSimulationDescriptorV1 } from '../../types/awesomePhysics'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   descriptor: AwesomePhysicsSimulationDescriptorV1
+  presets?: readonly AwesomePhysicsCasePreset[]
+}>(), {
+  presets: () => [],
+})
+
+const emit = defineEmits<{
+  completed: [result: AwesomePhysicsJsonValue]
+  cleared: []
 }>()
 
 type RunStatus = 'idle' | 'starting' | 'running' | 'completed' | 'cancelled' | 'failed'
@@ -15,11 +24,13 @@ const status = ref<RunStatus>('idle')
 const progress = ref(0)
 const error = ref('')
 const resultText = ref('')
+const presetId = ref('')
 const activeController = ref<AbortController | null>(null)
 const requestSequence = ref(0)
 let runGeneration = 0
 
 const defaultInput = computed(() => awesomePhysicsDefaultInput(props.descriptor.adapterId ?? ''))
+const hasPresets = computed(() => props.presets.length > 1)
 const hasDefaultInput = computed(() => defaultInput.value !== null)
 const canRunDescriptor = computed(() => Boolean(
   props.descriptor.availability === 'available'
@@ -34,16 +45,33 @@ const canRun = computed(() => canRunDescriptor.value && hasDefaultInput.value)
 const isRunning = computed(() => activeController.value !== null)
 const statusLabel = computed(() => status.value.replaceAll('-', ' '))
 
+function selectedPresetInput(): AwesomePhysicsJsonValue | null {
+  const selected = props.presets.find((preset) => preset.id === presetId.value)
+  if (selected) return awesomePhysicsCasePresetInput(selected)
+  const input = defaultInput.value
+  if (input === null) return null
+  const cloned: unknown = JSON.parse(JSON.stringify(input))
+  if (!isAwesomePhysicsJsonValue(cloned)) throw new TypeError('Default adapter input is not JSON-safe')
+  return cloned
+}
+
 function resetInputText(): void {
-  inputText.value = defaultInput.value === null ? '' : JSON.stringify(defaultInput.value, null, 2)
+  const input = selectedPresetInput()
+  inputText.value = input === null ? '' : JSON.stringify(input, null, 2)
 }
 
 function resetRunState(): void {
-  inputText.value = defaultInput.value === null ? '' : JSON.stringify(defaultInput.value, null, 2)
+  resetInputText()
   status.value = 'idle'
   progress.value = 0
   error.value = ''
   resultText.value = ''
+  emit('cleared')
+}
+
+function applyPreset(): void {
+  abortActiveRun()
+  resetRunState()
 }
 
 function abortActiveRun(): void {
@@ -63,6 +91,8 @@ function cancel(): void {
   status.value = 'cancelled'
   progress.value = 0
   error.value = ''
+  resultText.value = ''
+  emit('cleared')
 }
 
 function isAbortReason(reason: unknown): boolean {
@@ -139,6 +169,7 @@ async function run(): Promise<void> {
     resultText.value = JSON.stringify(result, null, 2)
     progress.value = 100
     status.value = 'completed'
+    emit('completed', result)
   } catch (reason) {
     if (generation !== runGeneration) return
     if (controller.signal.aborted || isAbortReason(reason)) {
@@ -148,6 +179,8 @@ async function run(): Promise<void> {
     } else {
       status.value = 'failed'
       error.value = reasonMessage(reason)
+      resultText.value = ''
+      emit('cleared')
     }
   } finally {
     if (generation === runGeneration) activeController.value = null
@@ -156,6 +189,7 @@ async function run(): Promise<void> {
 
 watch(() => props.descriptor.id, () => {
   abortActiveRun()
+  presetId.value = props.presets[0]?.id ?? ''
   resetRunState()
 }, { immediate: true })
 
@@ -177,6 +211,16 @@ section.awesome-run-panel(aria-labelledby="awesome-run-panel-title" data-testid=
     | {{ descriptor.availabilityReason }} Run is not exposed for this descriptor.
   p.awesome-run-default-error(v-else-if="!hasDefaultInput" role="alert" data-testid="awesome-physics-default-error")
     | No typed default input is registered for adapter #[code {{ descriptor.adapterId ?? 'missing adapter ID' }}]. Run is disabled.
+
+  label.field(v-if="hasPresets" for="awesome-physics-preset")
+    span Lesson operation
+    select#awesome-physics-preset(
+      v-model="presetId"
+      data-testid="awesome-physics-preset"
+      :disabled="isRunning || !canRun"
+      @change="applyPreset"
+    )
+      option(v-for="preset in presets" :key="preset.id" :value="preset.id") {{ preset.label }}
 
   label.field.awesome-run-input(for="awesome-physics-inputs")
     span Complete input JSON

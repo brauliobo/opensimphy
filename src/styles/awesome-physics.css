@@ -820,6 +820,63 @@
   }
 }
 
+.awesome-case-page {
+  padding: 1.4rem 0 1.8rem;
+  border-top: 1px solid var(--awesome-line);
+}
+
+.awesome-case-lesson,
+.awesome-case-idle,
+.awesome-case-mismatch {
+  max-width: 72ch;
+  color: var(--awesome-muted);
+  font-family: var(--serif);
+}
+
+.awesome-case-plot {
+  margin: 0 0 1.5rem;
+}
+
+.awesome-case-plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--awesome-line);
+  background: var(--awesome-panel);
+}
+
+.awesome-case-plot figcaption {
+  max-width: 72ch;
+  margin: 0.7rem 0 0;
+  color: var(--awesome-muted);
+  font-family: var(--serif);
+  font-size: 0.95rem;
+}
+
+.awesome-case-curve {
+  fill: none;
+  stroke: var(--awesome-accent);
+  stroke-width: 1.6;
+}
+
+.awesome-case-polygon {
+  fill: rgb(99 203 209 / 12%);
+  stroke: var(--awesome-muted);
+  stroke-width: 1.2;
+}
+
+.awesome-case-marker {
+  fill: var(--amber);
+  stroke: var(--awesome-panel);
+  stroke-width: 1;
+}
+
+.awesome-case-axis {
+  fill: var(--awesome-muted);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .awesome-physics-view *,
   .awesome-physics-view *::before,

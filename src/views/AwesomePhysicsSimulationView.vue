@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AwesomePhysicsRunPanel from '../components/awesomePhysics/AwesomePhysicsRunPanel.vue'
+import AwesomePhysicsCaseStage from '../components/awesomePhysics/AwesomePhysicsCaseStage.vue'
+import MetricStrip from '../components/cases/MetricStrip.vue'
+import { AWESOME_PHYSICS_CATALOG_ROUTE_NAME } from '../awesomePhysics/routes'
+import { awesomePhysicsCasePage, type AwesomePhysicsCasePreset } from '../awesomePhysics/casePages'
+import { CASE_HARNESS_APIS } from '../cases/harness'
+import {
+  benchmarkCaseForCatalogId,
+  benchmarkResultsFor,
+  useBenchmarkRegistry,
+} from '../cases/benchmarkRegistry'
+import ResultTable from '../components/cases/ResultTable.vue'
 import { registerAwesomePhysicsAdapters } from '../awesomePhysics/registerAdapters'
 import { useAwesomePhysicsRegistry } from '../registries/awesomePhysicsRegistry'
 import type {
@@ -9,6 +20,7 @@ import type {
   AwesomePhysicsOrganizationV1,
   AwesomePhysicsSimulationDescriptorV1,
 } from '../types/awesomePhysics'
+import type { AwesomePhysicsJsonValue } from '../awesomePhysics/workers/protocol'
 
 const props = defineProps<{
   id?: string
@@ -16,15 +28,18 @@ const props = defineProps<{
 
 const route = useRoute()
 const registry = useAwesomePhysicsRegistry()
+const benchmark = useBenchmarkRegistry()
+void benchmark.initialize()
 
 // Keep the detail surface aligned with the catalog's lazy adapter registration order.
 registerAwesomePhysicsAdapters()
 
 const loading = ref(true)
 const loadError = ref('')
-const item = ref<AwesomePhysicsCatalogItemV1 | null>(null)
-const organization = ref<AwesomePhysicsOrganizationV1 | null>(null)
-const descriptor = ref<AwesomePhysicsSimulationDescriptorV1 | null>(null)
+const item = shallowRef<AwesomePhysicsCatalogItemV1 | null>(null)
+const organization = shallowRef<AwesomePhysicsOrganizationV1 | null>(null)
+const descriptor = shallowRef<AwesomePhysicsSimulationDescriptorV1 | null>(null)
+const caseResult = shallowRef<AwesomePhysicsJsonValue | null>(null)
 let loadGeneration = 0
 
 const resolvedId = computed(() => {
@@ -38,6 +53,9 @@ const title = computed(() => item.value?.title ?? organization.value?.title ?? '
 const description = computed(() => item.value?.description ?? organization.value?.description ?? '')
 const sourceKind = computed(() => item.value?.sourceKind ?? 'organization')
 const aliases = computed(() => item.value?.aliases ?? [])
+const EMPTY_CASE_PRESETS: readonly AwesomePhysicsCasePreset[] = []
+const casePage = computed(() => awesomePhysicsCasePage(resolvedId.value))
+const casePresets = computed(() => casePage.value?.presets ?? EMPTY_CASE_PRESETS)
 const canRun = computed(() => {
   const current = descriptor.value
   return Boolean(
@@ -98,6 +116,28 @@ const provenanceStatement = computed(() => isOrganization.value
   ? 'This record establishes only that an organization was listed in the preserved Awesome Physics catalog on the recorded catalog revision.'
   : 'This record establishes only that the catalog metadata, source evidence, and bounded execution descriptor were loaded and validated by the OpenSimPhy registry.')
 
+const caseMetrics = computed(() => [
+  { label: 'Availability', value: descriptor.value?.availability ?? 'catalog-only' },
+  { label: 'Execution', value: descriptor.value?.execution ?? 'none' },
+  { label: 'Runnable', value: canRun.value ? 'true' : 'false', tone: canRun.value ? 'ok' as const : 'warn' as const },
+  { label: 'Harness', value: descriptor.value ? CASE_HARNESS_APIS.awesome : 'none' },
+])
+
+const benchmarkCase = computed(() => benchmarkCaseForCatalogId(resolvedId.value))
+const benchmarkRows = computed(() => benchmarkResultsFor(benchmarkCase.value?.caseId ?? resolvedId.value).map((row) => ({
+  id:      `${row.caseId}-${row.runtime}`,
+  runtime: row.runtime,
+  status:  row.status,
+  elapsed: `${row.metrics.elapsedMs.toFixed(3)} ms`,
+  cop:     row.metrics.cop === undefined ? 'n/a' : row.metrics.cop.toFixed(6),
+})))
+const benchmarkColumns = [
+  { key: 'runtime', label: 'Runtime' },
+  { key: 'status', label: 'Status' },
+  { key: 'elapsed', label: 'Elapsed' },
+  { key: 'cop', label: 'COP' },
+]
+
 function recordId(): string {
   return resolvedId.value
 }
@@ -123,6 +163,7 @@ watch(resolvedId, async (id) => {
   item.value = null
   organization.value = null
   descriptor.value = null
+  caseResult.value = null
 
   if (!id) {
     loadError.value = 'The Awesome Physics detail route did not provide a catalog ID.'
@@ -176,13 +217,13 @@ watch(resolvedId, async (id) => {
 <template lang="pug">
 .view.awesome-physics-view.awesome-physics-detail(:data-testid="detailReady ? 'awesome-physics-detail-ready' : undefined")
   nav.awesome-detail-return(aria-label="Awesome Physics catalog navigation")
-    a.text-link(href="/awesome-physics") <- Awesome Physics catalog
+    RouterLink.text-link(:to="{ name: AWESOME_PHYSICS_CATALOG_ROUTE_NAME }") <- Awesome Physics catalog
 
   .loading-plate(v-if="loading" data-testid="awesome-physics-detail-loading" aria-live="polite") Loading Awesome Physics record...
   .empty-state(v-else-if="loadError" role="alert" data-testid="awesome-physics-detail-error")
     strong Awesome Physics record unavailable
     p {{ loadError }}
-    a.text-link(href="/awesome-physics") Return to catalog ->
+    RouterLink.text-link(:to="{ name: AWESOME_PHYSICS_CATALOG_ROUTE_NAME }") Return to catalog ->
   template(v-else-if="detailReady")
     header.awesome-detail-header
       .awesome-detail-index
@@ -198,6 +239,7 @@ watch(resolvedId, async (id) => {
         span {{ item?.maintenance ?? organization?.maintenance }} maintenance
         span(v-if="descriptor") {{ formatToken(descriptor.execution) }} execution
         span(v-else) no execution declaration
+    MetricStrip(v-if="detailReady" :metrics="caseMetrics")
 
     section.awesome-detail-summary(aria-labelledby="awesome-detail-summary-title")
       .section-heading
@@ -274,7 +316,21 @@ watch(resolvedId, async (id) => {
         strong Plan disposition
         |  {{ descriptor.planDisposition }}
 
-    AwesomePhysicsRunPanel(v-if="canRun && descriptor" :descriptor="descriptor")
+    ResultTable(
+      v-if="benchmarkRows.length"
+      caption="Published awesome-benchmark harness results"
+      :columns="benchmarkColumns"
+      :rows="benchmarkRows"
+      test-id="awesome-benchmark-results"
+    )
+    AwesomePhysicsCaseStage(v-if="casePage" :catalog-item-id="casePage.catalogItemId" :result="caseResult")
+    AwesomePhysicsRunPanel(
+      v-if="canRun && descriptor"
+      :descriptor="descriptor"
+      :presets="casePresets"
+      @completed="caseResult = $event"
+      @cleared="caseResult = null"
+    )
     section.awesome-no-run(v-else-if="descriptor" data-testid="awesome-physics-no-run")
       p.eyebrow Execution gate
       h2 Run is not exposed

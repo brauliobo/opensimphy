@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { AWESOME_PHYSICS_DETAIL_ROUTE_NAME } from '../../awesomePhysics/routes'
 import type {
   AwesomePhysicsCatalogItemV1,
   AwesomePhysicsExecutionKind,
@@ -25,7 +26,7 @@ const emit = defineEmits<{
 const isOrganization = computed(() => props.organization !== null)
 const recordId = computed(() => props.item?.id ?? props.organization?.id ?? '')
 const recordTitle = computed(() => props.item?.title ?? props.organization?.title ?? '')
-const detailHref = computed(() => `/awesome-physics/${encodeURIComponent(recordId.value)}`)
+const detailTo = computed(() => ({ name: AWESOME_PHYSICS_DETAIL_ROUTE_NAME, params: { id: recordId.value } }))
 const canRun = computed(() => {
   const descriptor = props.descriptor
   return Boolean(
@@ -78,7 +79,7 @@ article.awesome-catalog-card(
   .awesome-card-main
     p.awesome-card-kind {{ isOrganization ? 'Organization / source index' : `${item?.sourceKind} / ${item?.category}` }}
     h2
-      a(:href="detailHref") {{ recordTitle }}
+      RouterLink(:to="detailTo") {{ recordTitle }}
     p.awesome-card-description {{ item?.description ?? organization?.description }}
     p.awesome-card-aliases(v-if="item?.aliases.length")
       strong Aliases
@@ -115,7 +116,7 @@ article.awesome-catalog-card(
   p.awesome-card-reason(v-else-if="organization") {{ organization.notes }}
 
   footer.awesome-card-actions
-    a.text-link(:href="detailHref") Open detail ->
+    RouterLink.text-link(:to="detailTo") Open detail ->
     a.text-link(v-if="item" :href="item.catalogUrl" target="_blank" rel="noreferrer") Catalog source ->
     a.text-link(v-if="organization" :href="organization.url" target="_blank" rel="noreferrer") Organization source ->
     button.awesome-run-button(

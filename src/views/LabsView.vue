@@ -37,6 +37,16 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
       strong Edwin Gray motor lab
       p Reconstruct the 1971–1979 pulsed-capacitor motors with a classical dump, arc quench, and energy ledger.
       small Open the motor reconstruction →
+    RouterLink(to="/labs/cases")
+      span 00c / CASE PAGES
+      strong Simulation cases
+      p One page per Gray motor and Awesome Physics catalog record, sharing header, metrics, schematics, and run controls.
+      small Open the case index →
+    RouterLink(to="/awesome-physics")
+      span 00d / SOURCE CATALOG
+      strong Awesome Physics
+      p Runnable adapters plus evidence-only records from the preserved catalog.
+      small Open the catalog →
     RouterLink(to="/labs/core")
       span 01 / TRANSFORM CASES
       strong Core lab
@@ -52,7 +62,12 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
       strong EARTH method workbench
       p Run one bounded method for the representative atmospheric scale-height program without entering the evidence registry.
       small Open EARTH-PLAN-008 →
-  p.lab-intro Choose another EARTH program from the full canonical #[RouterLink.text-link(to="/earth/programs") Program Registry].
+    RouterLink(v-if="onelabEnabled" to="/labs/onelab" data-testid="onelab-nav")
+      span 04 / FIELD SOLVER
+      strong Browser ONELAB
+      p Serial Gmsh mesh generation and real-double GetDP/PETSc solving with native-reference checks.
+      small Open the microstrip proof →
+  p.lab-intro Particle and quantum model cards live on the #[RouterLink.text-link(to="/earth") EARTH dossier]. Choose another program from the #[RouterLink.text-link(to="/earth/programs") Program Registry].
   section.source-section.author-collection-section(v-if="registryReady")
     .section-heading
       div
@@ -62,12 +77,7 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
     .topic-featured-grid.author-collection-grid
       RouterLink(:to="{ name: 'fiddle-archive' }")
         span Chenopdodium author collection
-      strong Fiddle source archive
-      p 780 external source records / 16 profile pages. Recorded Chromium pass: 710 rendered without uncaught page errors; retained failed requests may still exist. Scientific validations: 0.
-      small Open the author collection ->
-    RouterLink(v-if="onelabEnabled" to="/labs/onelab" data-testid="onelab-nav")
-      span 04 / FIELD SOLVER
-      strong Browser ONELAB
-      p Serial Gmsh mesh generation and real-double GetDP/PETSc solving with native-reference checks.
-      small Open the microstrip proof →
+        strong Fiddle source archive
+        p 780 external source records / 16 profile pages. Recorded Chromium pass: 710 rendered without uncaught page errors; retained failed requests may still exist. Scientific validations: 0.
+        small Open the author collection ->
 </template>

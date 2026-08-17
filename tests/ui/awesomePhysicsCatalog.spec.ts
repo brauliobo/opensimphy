@@ -28,6 +28,8 @@ function testRouter() {
     routes: [
       { path: '/awesome-physics', name: 'awesome-physics-catalog', component: AwesomePhysicsCatalogView },
       { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: AwesomePhysicsSimulationView, props: true },
+      { path: '/labs/cases', name: 'case-hub', component: { template: '<div />' } },
+      { path: '/labs/edwin-gray', name: 'edwin-gray', component: { template: '<div />' } },
     ],
   })
 }
@@ -70,7 +72,8 @@ describe('Awesome Physics catalog and detail surfaces', () => {
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Projects + archive76')
     expect(wrapper.get('[data-testid="awesome-catalog-counts"]').text()).toContain('Organizations10')
     expect(wrapper.findAll('.awesome-catalog-card')).toHaveLength(86)
-    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(17)
+    expect(wrapper.findAll('[data-testid="awesome-catalog-run"]')).toHaveLength(simulations.summary.runnable)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-matter-js"]').get('a.text-link').attributes('href')).toBe('/awesome-physics/awesome-matter-js')
     expect(runnerMock).not.toHaveBeenCalled()
     wrapper.unmount()
   })
@@ -83,7 +86,7 @@ describe('Awesome Physics catalog and detail surfaces', () => {
 
     await wrapper.get('[data-testid="awesome-physics-search"]').setValue('awesome-matter-js')
     expect(wrapper.findAll('.awesome-catalog-card')).toHaveLength(1)
-    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-matter-js"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="awesome-catalog-card-awesome-matter-js"]').exists()).toBe(true)
 
     await wrapper.get('[data-testid="awesome-physics-clear"]').trigger('click')
     await wrapper.get('[data-testid="awesome-physics-record-type"]').setValue('archive')
@@ -105,9 +108,41 @@ describe('Awesome Physics catalog and detail surfaces', () => {
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-matter-js"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-bullet3"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-nphysics"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-spirit"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-physx-3-4"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-newton-dynamics"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-ncollide"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-fluid-engine-dev"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-cantera"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(true)
+    expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-simbody"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-mujoco-py"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
     expect(wrapper.get('[data-testid="awesome-catalog-card-awesome-solid-state-simulations-archive"]').find('[data-testid="awesome-catalog-run"]').exists()).toBe(false)
     wrapper.unmount()
+  })
+
+  it('opens the Spirit case through in-app routing and exposes the LLG run panel', async () => {
+    const router = testRouter()
+    await router.push('/awesome-physics')
+    const catalog = mount(AwesomePhysicsCatalogView, { global: { plugins: [router] } })
+    await flushPromises()
+
+    const card = catalog.get('[data-testid="awesome-catalog-card-awesome-spirit"]')
+    expect(card.get('a.text-link').attributes('href')).toBe('/awesome-physics/awesome-spirit')
+    expect(card.get('h2 a').attributes('href')).toBe('/awesome-physics/awesome-spirit')
+
+    await card.get('[data-testid="awesome-catalog-run"]').trigger('click')
+    await flushPromises()
+    expect(router.currentRoute.value.name).toBe('awesome-physics-detail')
+    expect(router.currentRoute.value.params).toEqual({ id: 'awesome-spirit' })
+    catalog.unmount()
+
+    const detail = await mountDetail('awesome-spirit')
+    const expectedInput = awesomePhysicsDefaultInput('awesome-spirit-wasm')
+    expect(expectedInput).not.toBeNull()
+    expect(JSON.parse((detail.get('[data-testid="awesome-physics-inputs"]').element as HTMLTextAreaElement).value)).toEqual(expectedInput)
+    expect(detail.find('[data-testid="awesome-physics-run-panel"]').exists()).toBe(true)
+    expect(detail.get('[data-testid="awesome-physics-provenance"]').text()).toContain('does not establish')
+    detail.unmount()
   })
 
   it('fails closed for an unknown detail route parameter', async () => {

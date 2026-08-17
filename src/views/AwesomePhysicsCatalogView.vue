@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AwesomePhysicsCatalogCard from '../components/awesomePhysics/AwesomePhysicsCatalogCard.vue'
+import { AWESOME_PHYSICS_DETAIL_ROUTE_NAME } from '../awesomePhysics/routes'
 import { registerAwesomePhysicsAdapters } from '../awesomePhysics/registerAdapters'
 import { useAwesomePhysicsRegistry } from '../registries/awesomePhysicsRegistry'
 import type {
@@ -174,7 +175,7 @@ function clearFilters(): void {
 }
 
 function openDetail(id: string): void {
-  void router.push({ path: `/awesome-physics/${encodeURIComponent(id)}` })
+  void router.push({ name: AWESOME_PHYSICS_DETAIL_ROUTE_NAME, params: { id } })
 }
 </script>
 

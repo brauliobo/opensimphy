@@ -141,6 +141,8 @@ export const GRAY_VIDEO_TIMELINE: readonly GrayTimelineEntry[] = Object.freeze([
 ])
 
 export const GRAY_RELATED_LINKS = Object.freeze([
+  { to: '/labs/cases', label: 'Simulation cases', note: 'Gray plus every Awesome Physics case page' },
+  { to: '/awesome-physics', label: 'Awesome Physics catalog', note: 'Bounded adapters and evidence records' },
   { to: '/tour/electrical-standards', label: 'Electrical standards', note: 'Exact SI electrical identities, not a motor' },
   { to: '/labs/quantum-wave', label: 'Quantum wave lab', note: 'The other video-derived teaching lab' },
   { to: '/evidence', label: 'Evidence guide', note: 'Claim classes and validatesTheory: false' },
