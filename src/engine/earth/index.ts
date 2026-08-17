@@ -195,6 +195,7 @@ import { DEFAULT_PROTON_MASS_RADIUS_CHI_INPUTS, protonMassRadiusChi, type Proton
 import { fermionBosonNumbers } from "./particle/fermionBosonNumbers.js";
 import { superpositionLangevin } from "./particle/superpositionLangevin.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
+import { surgeryFloquetTls } from "./particle/surgeryFloquetTls.js";
 
 export * from "./audits.js";
 export * from "./astroAudits.js";
@@ -211,6 +212,7 @@ export * from "./fields.js";
 export * from "./foundations.js";
 export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
+export * from "./particle/surgeryFloquetTls.js";
 export * from "./particle/fermionBosonNumbers.js";
 export * from "./particle/nuclearPqEnergy.js";
 export * from "./particle/protonMassRadiusChi.js";
@@ -468,7 +470,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-FLD-001": ReturnType<typeof derrickScalingAudit>["output"];
   "EARTH-FLD-005": ReturnType<typeof superpositionLangevin>["output"];
   "EARTH-FLD-006": ReturnType<typeof decoherenceScalingSweep>["output"];
-  "EARTH-FLD-007": ReturnType<typeof floquetBenchmark>["output"];
+  "EARTH-FLD-007": ReturnType<typeof surgeryFloquetTls>["output"];
   "EARTH-FLD-008": ReturnType<typeof sineGordonBenchmark>["output"];
   "EARTH-FLD-010": ReturnType<typeof wallVsSineGordon>["output"];
   "EARTH-NUC-001": ReturnType<typeof nuclearPqEnergyAudit>["output"];
@@ -576,7 +578,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-FLD-001": derrickScalingAudit,
   "EARTH-FLD-005": superpositionLangevin,
   "EARTH-FLD-006": decoherenceScalingSweep,
-  "EARTH-FLD-007": floquetBenchmark,
+  "EARTH-FLD-007": surgeryFloquetTls,
   "EARTH-FLD-008": sineGordonBenchmark,
   "EARTH-FLD-010": wallVsSineGordon,
   "EARTH-NUC-001": nuclearPqEnergyAudit,
@@ -810,7 +812,7 @@ const EXISTING_PROVENANCE = {
   "EARTH-FLD-001": { kind: "reproduction", model: "EARTH scalar energy under three-dimensional Derrick scaling" },
   "EARTH-FLD-005": { kind: "comparison", model: "normalized damped stochastic diffusion FDT; EARTH (ν,μ) pinned but λ₀≠λ̃₀ and continuum noise undefined" },
   "EARTH-FLD-006": { kind: "comparison", model: "finite-step FLD-005 parameter-scaling comparison without physical calibration" },
-  "EARTH-FLD-007": { kind: "comparison", model: "unitary driven two-level Floquet benchmark; EARTH physical map unavailable" },
+  "EARTH-FLD-007": { kind: "comparison", model: "toy two-level Shirley Floquet analogue of the printed surgery barrier; not Hopfion surgery" },
   "EARTH-FLD-008": { kind: "comparison", model: "standard sine-Gordon kink benchmark" },
   "EARTH-FLD-010": { kind: "reproduction", model: "EARTH printed wall-potential derivative audit" },
   "EARTH-NUC-001": { kind: "reproduction", model: "EARTH nuclear pair rules with standard torus invariants" },

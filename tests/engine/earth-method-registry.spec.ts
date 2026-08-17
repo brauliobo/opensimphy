@@ -94,6 +94,8 @@ describe('EARTH method registry', () => {
           ])
         } else if (programId === 'EARTH-FLD-005') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-005-VAR'])
+        } else if (programId === 'EARTH-FLD-007') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual(['FLD-007-FLOQ'])
         } else {
           expect(result.predictions, `${programId}/${methodId}`).toEqual([])
         }
