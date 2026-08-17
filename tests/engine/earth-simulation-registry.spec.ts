@@ -20,7 +20,7 @@ const unavailableSourceMethodCount = registry.items.filter((simulation) => (
   simulation.scientificStatus === 'blocked-source'
   && !simulation.executionMethods.some((method) => method.runnable && method.relationship === 'earth-source-reproduction')
 )).length
-const declaredMethodCount = 134 + unavailableSourceMethodCount
+const declaredMethodCount = 135 + unavailableSourceMethodCount
 const G2A_REQUIRED_IDS = new Set([
   'EARTH-PLAN-001', 'EARTH-PLAN-007', 'EARTH-PLAN-008',
   'EARTH-STAR-001', 'EARTH-STAR-003', 'EARTH-STAR-005',
@@ -53,7 +53,7 @@ describe('EARTH scientific simulation registry', () => {
       runnable: 130,
       blocked: 0,
       totalMethods: declaredMethodCount,
-      runnableMethods: 134,
+      runnableMethods: 135,
     })
     expect(registry.items).toHaveLength(130)
     expect(new Set(registry.items.map(({ id }) => id)).size).toBe(130)
@@ -91,7 +91,7 @@ describe('EARTH scientific simulation registry', () => {
     const blockedSourcePrograms = registry.items.filter(({ scientificStatus }) => scientificStatus === 'blocked-source')
     expect(unavailableSourceMethodCount).toBe(blockedSourcePrograms.length)
     expect(registry.summary.totalMethods).toBe(registry.summary.runnableMethods + unavailableSourceMethodCount)
-    expect(registry.summary.runnableMethods).toBe(134)
+    expect(registry.summary.runnableMethods).toBe(135)
 
     for (const simulation of blockedSourcePrograms) {
       const runnableSource = simulation.executionMethods.find((method) => (
@@ -239,7 +239,7 @@ describe('EARTH scientific simulation registry', () => {
       runnable: SUPPORTED_EARTH_SIMULATION_IDS.length,
       blocked: 0,
       methods: declaredMethodCount,
-      runnableMethods: 134,
+      runnableMethods: 135,
       prefixes: 17,
       structuralCoverageExact: true,
       executableCoverageExact: true,

@@ -185,8 +185,8 @@ describe('EARTH scientific simulation registry', () => {
     const bundle = await loadScientificSimulationBundle()
     const sourceBlocked = bundle.registry.records.find(({ id }) => id === 'EARTH-FLD-005')
 
-    expect(bundle.registry.summary).toMatchObject({ totalMethods: 220, runnableMethods: 134 })
-    expect(bundle.registry.records.flatMap(({ executionMethods }) => executionMethods)).toHaveLength(220)
+    expect(bundle.registry.summary).toMatchObject({ totalMethods: 221, runnableMethods: 135 })
+    expect(bundle.registry.records.flatMap(({ executionMethods }) => executionMethods)).toHaveLength(221)
     expect(sourceBlocked).toMatchObject({
       runnable: true,
       scientificStatus: 'blocked-source',

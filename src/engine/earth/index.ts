@@ -195,6 +195,12 @@ import { superpositionLangevin } from "./particle/superpositionLangevin.js";
 import { decoherenceCollapseTime } from "./particle/decoherenceCollapseTime.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
 import { surgeryFloquetTls } from "./particle/surgeryFloquetTls.js";
+import {
+  CHEM6_CHIRAL_LINES_METHOD_ID,
+  DEFAULT_CHEM6_CHIRAL_LINES_INPUTS,
+  chem6ChiralLines,
+  type Chem6ChiralLinesInputs,
+} from "./particle/chem6ChiralLines.js";
 import { fermionSgKink } from "./particle/fermionSgKink.js";
 
 export * from "./audits.js";
@@ -220,6 +226,7 @@ export * from "./particle/superpositionLangevin.js";
 export * from "./particle/decoherenceCollapseTime.js";
 export * from "./particle/wallVsSineGordon.js";
 export * from "./particle/fermionSgKink.js";
+export * from "./particle/chem6ChiralLines.js";
 export * from "./pilotMethods.js";
 
 const EARTH_BIO_NEURO_COMPARATORS = {
@@ -391,7 +398,8 @@ export type EarthMethodId =
   | "earth-source-reproduction-v1"
   | "traditional-analytic-baseline-v1"
   | "traditional-numerical-baseline-v1"
-  | "source-contract-validator-v1";
+  | "source-contract-validator-v1"
+  | "chem6-chiral-lines-v1";
 
 export function isEarthSimulationId(value: string): value is EarthSimulationId {
   return (SUPPORTED_EARTH_SIMULATION_IDS as readonly string[]).includes(value);
@@ -523,7 +531,9 @@ export type EarthMethodIdsFor<Id extends EarthProgramId> = Id extends
   | "EARTH-PLAN-008"
   | "EARTH-PLAN-012"
   ? "earth-source-reproduction-v1" | "traditional-analytic-baseline-v1"
-  : EarthMethodId;
+  : Id extends "EARTH-PRT-001"
+    ? "earth-source-reproduction-v1" | "chem6-chiral-lines-v1"
+    : EarthMethodId;
 
 export type EarthMethodInputsFor<
   Id extends EarthProgramId,
@@ -536,7 +546,9 @@ export type EarthMethodInputsFor<
       ? MethodId extends "earth-source-reproduction-v1" ? EarthAtmosphericCoherenceInputs : StandardIsothermalScaleHeightInputs
       : Id extends "EARTH-PLAN-012"
         ? MethodId extends "earth-source-reproduction-v1" ? EarthPlanetaryBindingSeismicInputs : StandardUniformSphereBindingInputs
-        : EarthSimulationInputs[Id];
+        : Id extends "EARTH-PRT-001"
+          ? MethodId extends "chem6-chiral-lines-v1" ? Chem6ChiralLinesInputs : ElectronBohrRydbergAuditInputs
+          : EarthSimulationInputs[Id];
 
 export type EarthMethodOutputFor<
   Id extends EarthProgramId,
@@ -557,7 +569,11 @@ export type EarthMethodOutputFor<
         ? MethodId extends "earth-source-reproduction-v1"
           ? ReturnType<typeof earthPlanetaryBindingSeismic>["output"]
           : ReturnType<typeof standardUniformSphereBindingEnergy>["output"]
-        : EarthSimulationOutputs[Id];
+        : Id extends "EARTH-PRT-001"
+          ? MethodId extends "chem6-chiral-lines-v1"
+            ? ReturnType<typeof chem6ChiralLines>["output"]
+            : ReturnType<typeof electronBohrRydbergAudit>["output"]
+          : EarthSimulationOutputs[Id];
 
 export type EarthMethodResult<
   Id extends EarthProgramId,
@@ -1014,6 +1030,43 @@ const PILOT_PROGRAM_DEFINITIONS = {
   }),
 } as const;
 
+const PRT_001_PROGRAM_DEFINITION = Object.freeze({
+  id: "EARTH-PRT-001",
+  defaultMethodId: "earth-source-reproduction-v1" as const,
+  methods: Object.freeze([
+    Object.freeze({
+      id: "earth-source-reproduction-v1" as const,
+      programId: "EARTH-PRT-001" as const,
+      title: "earth source reproduction",
+      runtime: "browser-worker" as const,
+      defaultInputs: DEFAULT_ELECTRON_BOHR_RYDBERG_AUDIT_INPUTS,
+      execute: electronBohrRydbergAudit,
+      kind: "reproduction" as const,
+      precision: "float64" as const,
+      model: "EARTH electron, Bohr, and Rydberg formulas",
+      relationship: "earth-source-reproduction" as const,
+      modelOrigin: "earth-corpus" as const,
+      earthDerived: true,
+      validatesEarthTheory: false as const,
+    }),
+    Object.freeze({
+      id: CHEM6_CHIRAL_LINES_METHOD_ID,
+      programId: "EARTH-PRT-001" as const,
+      title: "CHEM-6 chiral-spiral line ledger",
+      runtime: "browser-worker" as const,
+      defaultInputs: DEFAULT_CHEM6_CHIRAL_LINES_INPUTS,
+      execute: chem6ChiralLines,
+      kind: "reproduction" as const,
+      precision: "float64" as const,
+      model: "CHEM-6 λ_m=2d_n/m and ν_m=m·3c·δχ²/(2π d_n) printed line ledger",
+      relationship: "earth-source-reproduction" as const,
+      modelOrigin: "earth-corpus" as const,
+      earthDerived: true,
+      validatesEarthTheory: false as const,
+    }),
+  ]),
+});
+
 type PilotProgramId = keyof typeof PILOT_PROGRAM_DEFINITIONS;
 
 function isPilotProgramId(programId: EarthProgramId): programId is PilotProgramId {
@@ -1034,6 +1087,7 @@ type UntypedEarthKernel = (inputs: unknown, options: EarthRunOptions) => EarthKe
 export const EARTH_PROGRAM_DEFINITIONS = Object.freeze(Object.fromEntries(
   SUPPORTED_EARTH_SIMULATION_IDS.map((programId) => {
     if (isPilotProgramId(programId)) return [programId, PILOT_PROGRAM_DEFINITIONS[programId]];
+    if (programId === "EARTH-PRT-001") return [programId, PRT_001_PROGRAM_DEFINITION];
     const relationship = relationshipForProgram(programId);
     const methodId = methodIdForRelationship(relationship);
     const modelOrigin: EarthModelOrigin = relationship === "earth-source-reproduction"

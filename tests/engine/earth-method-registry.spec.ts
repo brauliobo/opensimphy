@@ -50,21 +50,22 @@ const PILOT_OUTPUT_KEYS = {
 } as const
 
 describe('EARTH method registry', () => {
-  it('defines 134 methods with exactly two per pilot and one per other program', () => {
+  it('defines 135 methods with two per pilot, two on PRT-001, and one per other program', () => {
     expect(Object.keys(EARTH_PROGRAM_DEFINITIONS)).toEqual([...SUPPORTED_EARTH_SIMULATION_IDS])
     expect(Object.keys(EARTH_PROGRAM_DEFINITIONS)).toHaveLength(130)
-    expect(SUPPORTED_EARTH_SIMULATION_IDS.flatMap((programId) => listEarthMethods(programId))).toHaveLength(134)
+    expect(SUPPORTED_EARTH_SIMULATION_IDS.flatMap((programId) => listEarthMethods(programId))).toHaveLength(135)
 
     for (const programId of SUPPORTED_EARTH_SIMULATION_IDS) {
       const methods = listEarthMethods(programId)
       const pilotDefault = PILOT_DEFAULTS[programId as keyof typeof PILOT_DEFAULTS]
-      expect(methods, programId).toHaveLength(pilotDefault ? 2 : 1)
+      const extraCount = programId === 'EARTH-PRT-001' ? 2 : undefined
+      expect(methods, programId).toHaveLength(extraCount ?? (pilotDefault ? 2 : 1))
       expect(getDefaultEarthMethodId(programId)).toBe(pilotDefault ?? methods[0]?.id)
       for (const method of methods) expect(getEarthMethodDefinition(programId, method.id)).toBe(method)
     }
   })
 
-  it('publishes clone-safe, JSON-safe, finite, runnable defaults for all 134 methods', () => {
+  it('publishes clone-safe, JSON-safe, finite, runnable defaults for all 135 methods', () => {
     const clonedRegistry = structuredClone(DEFAULT_EARTH_METHOD_INPUTS)
     expect(JSON.parse(JSON.stringify(clonedRegistry))).toEqual(DEFAULT_EARTH_METHOD_INPUTS)
     expectFiniteJson(DEFAULT_EARTH_METHOD_INPUTS)
@@ -110,10 +111,14 @@ describe('EARTH method registry', () => {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
             'NUC-004-XI', 'NUC-004-RP', 'NUC-004-MP', 'NUC-004-CHI', 'NUC-004-MS',
           ])
-        } else if (programId === 'EARTH-PRT-001') {
+        } else if (programId === 'EARTH-PRT-001' && methodId === 'earth-source-reproduction-v1') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
             'PRT-001-PHI18', 'PRT-001-ALPHA', 'PRT-001-A0', 'PRT-001-ME', 'PRT-001-RYD',
             'PRT-001-E', 'PRT-001-RE', 'PRT-001-GE',
+          ])
+        } else if (programId === 'EARTH-PRT-001' && methodId === 'chem6-chiral-lines-v1') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'SP-01', 'SP-02', 'SP-03', 'SP-04', 'SP-05',
           ])
         } else if (programId === 'EARTH-PRT-005' && methodId === 'earth-source-reproduction-v1') {
           expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
@@ -133,7 +138,7 @@ describe('EARTH method registry', () => {
   it('uses explicit truthful provenance combinations', () => {
     const methods = SUPPORTED_EARTH_SIMULATION_IDS.flatMap((programId) => listEarthMethods(programId))
     const reproductions = methods.filter(({ relationship }) => relationship === 'earth-source-reproduction')
-    expect(reproductions).toHaveLength(37)
+    expect(reproductions).toHaveLength(38)
 
     for (const method of methods) {
       if (method.relationship === 'earth-source-reproduction') {

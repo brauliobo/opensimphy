@@ -24,8 +24,8 @@
     "sourceLinked": 130,
     "runnable": 130,
     "blocked": 0,
-    "totalMethods": 220,
-    "runnableMethods": 134
+    "totalMethods": 221,
+    "runnableMethods": 135
   },
   "items": [
     {
@@ -2396,6 +2396,16 @@
         {
           "id": "earth-source-reproduction-v1",
           "title": "earth source reproduction",
+          "relationship": "earth-source-reproduction",
+          "modelOrigin": "earth-corpus",
+          "runtime": "browser-worker",
+          "runnable": true,
+          "earthDerived": true,
+          "validatesEarthTheory": false
+        },
+        {
+          "id": "chem6-chiral-lines-v1",
+          "title": "CHEM-6 chiral-spiral line ledger",
           "relationship": "earth-source-reproduction",
           "modelOrigin": "earth-corpus",
           "runtime": "browser-worker",
