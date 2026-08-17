@@ -1,3 +1,4 @@
+import { fail, record } from '../simphy/contract'
 import { readonly, shallowRef } from 'vue'
 import { parseWallPayload } from '../engine/numberWall'
 import type { WallMode, WallPayload } from '../types/engine'
@@ -64,10 +65,6 @@ let initialization: Promise<void> | null = null
 let controller: AbortController | null = null
 let generation = 0
 
-function isRecord(value: unknown): value is UnknownRecord {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
 function text(record: UnknownRecord, keys: string[], fallback = ''): string {
   for (const key of keys) {
     const value = record[key]
@@ -79,7 +76,7 @@ function text(record: UnknownRecord, keys: string[], fallback = ''): string {
 function wallFrom(record: UnknownRecord): WallInput {
   const id = text(record, ['id', 'slug'])
   const filename = text(record, ['filename'], `${id}.json`)
-  if (!id || !text(record, ['title', 'name']) || !filename) throw new TypeError('Number-wall registry entry requires an ID, title, and filename')
+  if (!id || !text(record, ['title', 'name']) || !filename) fail('Number-wall registry entry', 'requires an ID, title, and filename')
   return {
     id,
     title: text(record, ['title', 'name']),
@@ -92,14 +89,11 @@ function wallFrom(record: UnknownRecord): WallInput {
 }
 
 export function parseWallIndex(value: unknown): WallInput[] {
-  if (!Array.isArray(value)) throw new TypeError('Number-wall registry is not an array')
-  const items = value.map((entry) => {
-    if (!isRecord(entry)) throw new TypeError('Number-wall registry contains a non-object entry')
-    return wallFrom(entry)
-  })
-  if (items.length !== EXPECTED_WALLS) throw new Error(`Number-wall registry contains ${items.length}/${EXPECTED_WALLS} entries`)
-  if (new Set(items.map(({ id }) => id)).size !== items.length) throw new Error('Number-wall registry IDs must be unique')
-  if (new Set(items.map(({ filename }) => filename)).size !== items.length) throw new Error('Number-wall registry filenames must be unique')
+  if (!Array.isArray(value)) fail('Number-wall registry', 'must be an array')
+  const items = value.map((entry, index) => wallFrom(record(entry, `Number-wall registry[${index}]`)))
+  if (items.length !== EXPECTED_WALLS) fail('Number-wall registry', `contains ${items.length}/${EXPECTED_WALLS} entries`)
+  if (new Set(items.map(({ id }) => id)).size !== items.length) fail('Number-wall registry', 'IDs must be unique')
+  if (new Set(items.map(({ filename }) => filename)).size !== items.length) fail('Number-wall registry', 'filenames must be unique')
   return items
 }
 

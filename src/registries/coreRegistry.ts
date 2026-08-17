@@ -1,7 +1,6 @@
 import { readonly, shallowRef } from 'vue'
-import type { Data } from 'plotly.js'
 import type { CoreEvaluation } from '../engine/core'
-import type { PlotFigure } from '../types/plot'
+import type { PlotFigure, PlotSurfaceSeries } from '../types/plot'
 import type { JsonValue, WorkbenchFindingV1, WorkbenchProvenanceSummary } from '../types/workbench'
 import type { CoreWorkerResponse } from '../types/workers'
 import { sha256 } from '../workbench/sha256'
@@ -95,48 +94,59 @@ export function coreFromEvaluation(evaluation: CoreEvaluation): CoreRecord {
     validatesTheory: false,
   }
   const sweep: PlotFigure = {
-    data: [{
-      x: evaluation.graph.map((point) => point.x),
-      y: evaluation.graph.map((point) => point.y),
-      customdata: evaluation.graph.map((point) => [point.magnitude, point.log10Abs]),
-      type: 'scatter',
-      mode: 'lines+markers',
-      name: evaluation.title,
-      line: { color: '#63cbd1', width: 2 },
+    series: [{
+      kind:   'line-markers',
+      name:   evaluation.title,
+      x:      evaluation.graph.map((point) => point.x),
+      y:      evaluation.graph.map((point) => point.y),
+      custom: evaluation.graph.map((point) => [point.magnitude, point.log10Abs]),
+      line:   { color: '#63cbd1', width: 2 },
       marker: { color: '#e6b85c', size: 4 },
-      hovertemplate: 'parameter %{x:.4f}<br>metric %{y:.8e}<br>|metric| %{customdata[0]:.8e}<extra></extra>',
+      hover:  [
+        { label: 'parameter', source: 'x', digits: 4, notation: 'fixed' },
+        { label: 'metric', source: 'y', digits: 8, notation: 'scientific' },
+        { label: '|metric|', source: { custom: 0 }, digits: 8, notation: 'scientific' },
+      ],
     }],
     layout: {
-      xaxis: { title: { text: 'case parameter / scale' } },
-      yaxis: { title: { text: 'engine metric' } },
+      xTitle: 'case parameter / scale',
+      yTitle: 'engine metric',
     },
   }
   const graphs: CoreRecord['graphs'] = [{ id: 'sweep-2d', label: '2D parameter sweep', figure: sweep }]
   if (evaluation.surface.length > 0) {
     const isPlanckSurface = evaluation.id.startsWith('planck-')
-    const surfaceTrace: Data & { intensity: number[] } = {
-      x: evaluation.surface.map((point) => point.x),
-      y: evaluation.surface.map((point) => isPlanckSurface ? point.y : point.real),
-      z: evaluation.surface.map((point) => isPlanckSurface ? point.magnitude : point.imaginary),
-      type: 'mesh3d',
-      intensity: evaluation.surface.map((point) => point.magnitude),
-      colorscale: [[0, '#213c42'], [0.5, '#63cbd1'], [1, '#e6b85c']],
-      showscale: true,
-      name: evaluation.title,
-      hovertemplate: isPlanckSurface
-        ? 'Re(z) %{x:.3f}<br>Im(z) %{y:.3f}<br>|S(z)| %{z:.6e}<extra></extra>'
-        : 'parameter %{x:.3f}<br>Re(root) %{y:.6f}<br>Im(root) %{z:.6f}<extra></extra>',
+    const surface: PlotSurfaceSeries = {
+      kind:           'surface',
+      name:           evaluation.title,
+      x:              evaluation.surface.map((point) => point.x),
+      y:              evaluation.surface.map((point) => isPlanckSurface ? point.y : point.real),
+      z:              evaluation.surface.map((point) => isPlanckSurface ? point.magnitude : point.imaginary),
+      intensity:      evaluation.surface.map((point) => point.magnitude),
+      colorScale:     [{ at: 0, color: '#213c42' }, { at: 0.5, color: '#63cbd1' }, { at: 1, color: '#e6b85c' }],
+      showColorScale: true,
+      hover:          isPlanckSurface
+        ? [
+            { label: 'Re(z)', source: 'x', digits: 3, notation: 'fixed' },
+            { label: 'Im(z)', source: 'y', digits: 3, notation: 'fixed' },
+            { label: '|S(z)|', source: 'z', digits: 6, notation: 'scientific' },
+          ]
+        : [
+            { label: 'parameter', source: 'x', digits: 3, notation: 'fixed' },
+            { label: 'Re(root)', source: 'y', digits: 6, notation: 'fixed' },
+            { label: 'Im(root)', source: 'z', digits: 6, notation: 'fixed' },
+          ],
     }
     graphs.push({
-      id: 'complex-surface-3d',
-      label: isPlanckSurface ? '3D complex magnitude' : '3D root locus',
+      id:     'complex-surface-3d',
+      label:  isPlanckSurface ? '3D complex magnitude' : '3D root locus',
       figure: {
-        data: [surfaceTrace],
+        series: [surface],
         layout: {
           scene: {
-            xaxis: { title: { text: isPlanckSurface ? 'Re(z)' : 'parameter' } },
-            yaxis: { title: { text: isPlanckSurface ? 'Im(z)' : 'Re(root)' } },
-            zaxis: { title: { text: isPlanckSurface ? '|S(z)|' : 'Im(root)' } },
+            xTitle: isPlanckSurface ? 'Re(z)' : 'parameter',
+            yTitle: isPlanckSurface ? 'Im(z)' : 'Re(root)',
+            zTitle: isPlanckSurface ? '|S(z)|' : 'Im(root)',
           },
         },
       },

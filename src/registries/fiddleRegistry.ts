@@ -1,3 +1,4 @@
+import { fail, requireExactKeys, requireNonEmptyString, requireSafeInteger, requireBoolean } from '../simphy/contract'
 import { readonly, shallowRef } from 'vue'
 import type { FiddleFlags, FiddlePanelBytes, FiddleRecord, FiddleRegistry, FiddleRegistrySource, FiddleRuntimeAggregate, FiddleRuntimeRecord } from '../types/fiddle'
 import { parseFiddleRuntimeLedger } from './fiddleRuntime'
@@ -28,72 +29,36 @@ let initialization: Promise<void> | null = null
 let controller: AbortController | null = null
 let generation = 0
 
-type UnknownRecord = Record<string, unknown>
-
-function isRecord(value: unknown): value is UnknownRecord {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function exactKeys(value: unknown, required: readonly string[], path: string): asserts value is UnknownRecord {
-  if (!isRecord(value)) fail(path, 'must be an object')
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function nonEmptyString(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-  return value
-}
-
 function safeToken(value: unknown, path: string): string {
-  const text = nonEmptyString(value, path)
+  const text = requireNonEmptyString(value, path)
   if (!FIDDLE_TOKEN_PATTERN.test(text)) fail(path, 'must contain only URL-safe token characters')
   return text
 }
 
 function safeAuthor(value: unknown, path: string): string {
-  const text = nonEmptyString(value, path)
+  const text = requireNonEmptyString(value, path)
   if (!JSFIDDLE_AUTHOR_PATTERN.test(text)) fail(path, 'must contain only URL-safe profile characters')
   return text
 }
 
-function integer(value: unknown, path: string, minimum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-  return value
-}
-
 function positiveInteger(value: unknown, path: string): number {
-  return integer(value, path, 1)
-}
-
-function boolean(value: unknown, path: string): boolean {
-  if (typeof value !== 'boolean') fail(path, 'must be a boolean')
-  return value
+  return requireSafeInteger(value, path, 1)
 }
 
 function stringArray(value: unknown, path: string): string[] {
   if (!Array.isArray(value)) fail(path, 'must be an array')
-  return value.map((entry, index) => nonEmptyString(entry, `${path}[${index}]`))
+  return value.map((entry, index) => requireNonEmptyString(entry, `${path}[${index}]`))
 }
 
 function isoTimestamp(value: unknown, path: string): string {
-  const text = nonEmptyString(value, path)
+  const text = requireNonEmptyString(value, path)
   const date = new Date(text)
   if (Number.isNaN(date.valueOf()) || date.toISOString() !== text) fail(path, 'must be an ISO timestamp')
   return text
 }
 
 function jsFiddleUrl(value: unknown, expected: string, path: string): string {
-  const text = nonEmptyString(value, path)
+  const text = requireNonEmptyString(value, path)
   let url: URL
   try {
     url = new URL(text)
@@ -108,58 +73,58 @@ function jsFiddleUrl(value: unknown, expected: string, path: string): string {
 }
 
 function parseSource(value: unknown, path: string): FiddleRegistrySource {
-  exactKeys(value, ['platform', 'author', 'profileUrl', 'profilePages', 'recordCount', 'sourceRevision', 'acquiredAt'], path)
+  requireExactKeys(value, ['platform', 'author', 'profileUrl', 'profilePages', 'recordCount', 'sourceRevision', 'acquiredAt'], [], path)
   if (value.platform !== 'jsfiddle') fail(`${path}.platform`, 'must be jsfiddle')
   const author = safeAuthor(value.author, `${path}.author`)
   const profilePages = positiveInteger(value.profilePages, `${path}.profilePages`)
   const recordCount = positiveInteger(value.recordCount, `${path}.recordCount`)
   jsFiddleUrl(value.profileUrl, fiddleProfileUrl(author, 1), `${path}.profileUrl`)
-  const sourceRevision = nonEmptyString(value.sourceRevision, `${path}.sourceRevision`)
+  const sourceRevision = requireNonEmptyString(value.sourceRevision, `${path}.sourceRevision`)
   if (!SHA256_PATTERN.test(sourceRevision)) fail(`${path}.sourceRevision`, 'must be a lowercase SHA-256 digest')
   const acquiredAt = isoTimestamp(value.acquiredAt, `${path}.acquiredAt`)
   return { platform: 'jsfiddle', author, profileUrl: value.profileUrl as string, profilePages, recordCount, sourceRevision, acquiredAt }
 }
 
 function parsePanelBytes(value: unknown, path: string): FiddlePanelBytes {
-  exactKeys(value, ['html', 'js', 'css'], path)
+  requireExactKeys(value, ['html', 'js', 'css'], [], path)
   return {
-    html: integer(value.html, `${path}.html`, 0),
-    js:   integer(value.js, `${path}.js`, 0),
-    css:  integer(value.css, `${path}.css`, 0),
+    html: requireSafeInteger(value.html, `${path}.html`, 0),
+    js:   requireSafeInteger(value.js, `${path}.js`, 0),
+    css:  requireSafeInteger(value.css, `${path}.css`, 0),
   }
 }
 
 function parseFlags(value: unknown, path: string): FiddleFlags {
-  exactKeys(value, ['can', 'svg', 'three', 'webgl', 'raf', 'tim', 'aud', 'net', 'anim', 'math', 'd3', 'plot', 'p5'], path)
+  requireExactKeys(value, ['can', 'svg', 'three', 'webgl', 'raf', 'tim', 'aud', 'net', 'anim', 'math', 'd3', 'plot', 'p5'], [], path)
   return {
-    can:   integer(value.can, `${path}.can`, 0),
-    svg:   integer(value.svg, `${path}.svg`, 0),
-    three: boolean(value.three, `${path}.three`),
-    webgl: boolean(value.webgl, `${path}.webgl`),
-    raf:   boolean(value.raf, `${path}.raf`),
-    tim:   boolean(value.tim, `${path}.tim`),
-    aud:   boolean(value.aud, `${path}.aud`),
-    net:   boolean(value.net, `${path}.net`),
-    anim:  boolean(value.anim, `${path}.anim`),
-    math:  boolean(value.math, `${path}.math`),
-    d3:    boolean(value.d3, `${path}.d3`),
-    plot:  boolean(value.plot, `${path}.plot`),
-    p5:    boolean(value.p5, `${path}.p5`),
+    can:   requireSafeInteger(value.can, `${path}.can`, 0),
+    svg:   requireSafeInteger(value.svg, `${path}.svg`, 0),
+    three: requireBoolean(value.three, `${path}.three`),
+    webgl: requireBoolean(value.webgl, `${path}.webgl`),
+    raf:   requireBoolean(value.raf, `${path}.raf`),
+    tim:   requireBoolean(value.tim, `${path}.tim`),
+    aud:   requireBoolean(value.aud, `${path}.aud`),
+    net:   requireBoolean(value.net, `${path}.net`),
+    anim:  requireBoolean(value.anim, `${path}.anim`),
+    math:  requireBoolean(value.math, `${path}.math`),
+    d3:    requireBoolean(value.d3, `${path}.d3`),
+    plot:  requireBoolean(value.plot, `${path}.plot`),
+    p5:    requireBoolean(value.p5, `${path}.p5`),
   }
 }
 
 function parseRecord(value: unknown, index: number, source: FiddleRegistrySource): FiddleRecord {
   const path = `fiddle registry.records[${index}]`
-  exactKeys(value, [
+  requireExactKeys(value, [
     'position', 'page', 'pastieId', 'slug', 'version', 'title', 'sourceUrl', 'embedUrl', 'panelBytes',
     'library', 'documentType', 'assets', 'controls', 'visualization', 'risk', 'flags',
-  ], path)
+  ], [], path)
   const position = positiveInteger(value.position, `${path}.position`)
   const page = positiveInteger(value.page, `${path}.page`)
   if (page > source.profilePages) fail(`${path}.page`, `must not exceed ${source.profilePages}`)
   const pastieId = safeToken(value.pastieId, `${path}.pastieId`)
   const slug = safeToken(value.slug, `${path}.slug`)
-  const version = integer(value.version, `${path}.version`, 0)
+  const version = requireSafeInteger(value.version, `${path}.version`, 0)
   const fiddlePath = versionPath(slug, version)
   const sourceUrl = `https://${JSFIDDLE_HOST}/${source.author}/${fiddlePath}`
   const embedUrl = `https://${JSFIDDLE_HOST}/${source.author}/${fiddlePath}show/`
@@ -169,22 +134,22 @@ function parseRecord(value: unknown, index: number, source: FiddleRegistrySource
     pastieId,
     slug,
     version,
-    title:        nonEmptyString(value.title, `${path}.title`),
+    title:        requireNonEmptyString(value.title, `${path}.title`),
     sourceUrl:    jsFiddleUrl(value.sourceUrl, sourceUrl, `${path}.sourceUrl`),
     embedUrl:     jsFiddleUrl(value.embedUrl, embedUrl, `${path}.embedUrl`),
     panelBytes:   parsePanelBytes(value.panelBytes, `${path}.panelBytes`),
-    library:      nonEmptyString(value.library, `${path}.library`),
-    documentType: nonEmptyString(value.documentType, `${path}.documentType`),
+    library:      requireNonEmptyString(value.library, `${path}.library`),
+    documentType: requireNonEmptyString(value.documentType, `${path}.documentType`),
     assets:       stringArray(value.assets, `${path}.assets`),
     controls:     stringArray(value.controls, `${path}.controls`),
-    visualization: nonEmptyString(value.visualization, `${path}.visualization`),
-    risk:          nonEmptyString(value.risk, `${path}.risk`),
+    visualization: requireNonEmptyString(value.visualization, `${path}.visualization`),
+    risk:          requireNonEmptyString(value.risk, `${path}.risk`),
     flags:         parseFlags(value.flags, `${path}.flags`),
   }
 }
 
 export function parseFiddleRegistry(value: unknown): FiddleRegistry {
-  exactKeys(value, ['schemaVersion', 'source', 'records'], 'fiddle registry')
+  requireExactKeys(value, ['schemaVersion', 'source', 'records'], [], 'fiddle registry')
   if (value.schemaVersion !== 1) fail('fiddle registry.schemaVersion', 'must be 1')
   const source = parseSource(value.source, 'fiddle registry.source')
   if (!Array.isArray(value.records)) fail('fiddle registry.records', 'must be an array')

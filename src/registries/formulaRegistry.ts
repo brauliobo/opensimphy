@@ -1,3 +1,4 @@
+import { fail, record, requireNonEmptyString, requireSafeInteger } from '../simphy/contract'
 import { readonly, shallowRef } from 'vue'
 import type { FormulaDependencyNode, FormulaRecord, FormulaRegistryArtifact, FormulaResidualScale, FormulaSourceAudit } from '../types/formula'
 import type { PlotFigure } from '../types/plot'
@@ -100,51 +101,36 @@ function residualScale(recipe: RecipeSource, evaluation: RecipeEvaluation): Form
   }
 }
 
-function registryObject(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) throw new Error(`${path} must be an object`)
-  return value as Record<string, unknown>
-}
-
-function registryString(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim() === '') throw new Error(`${path} must be a non-empty string`)
-  return value
-}
-
-function registryInteger(value: unknown, path: string): number {
-  if (!Number.isSafeInteger(value)) throw new Error(`${path} must be an integer`)
-  return value as number
-}
-
 function registrySha256(value: unknown, path: string): string {
-  const digest = registryString(value, path)
-  if (!/^[a-f0-9]{64}$/.test(digest)) throw new Error(`${path} must be a lowercase SHA-256 digest`)
+  const digest = requireNonEmptyString(value, path)
+  if (!/^[a-f0-9]{64}$/.test(digest)) fail(path, 'must be a lowercase SHA-256 digest')
   return digest
 }
 
 export function parseFormulaRegistryArtifact(value: unknown): FormulaRegistryArtifact {
-  const registry = registryObject(value, 'formula registry')
-  if (registry.schemaVersion !== 1) throw new Error('formula registry.schemaVersion must be 1')
-  const generatedAt = registryString(registry.generatedAt, 'formula registry.generatedAt')
-  const inputs = registryObject(registry.inputs, 'formula registry.inputs')
-  const recipes = registryObject(registry.recipes, 'formula registry.recipes')
-  const count = registryInteger(recipes.count, 'formula registry.recipes.count')
-  const dataUrl = registryString(recipes.dataUrl, 'formula registry.recipes.dataUrl')
-  if (count !== EXPECTED_FORMULAS) throw new Error(`formula registry.recipes.count must be ${EXPECTED_FORMULAS}`)
-  if (dataUrl !== '/data/generated/recipes.json') throw new Error('formula registry.recipes.dataUrl must identify recipes.json')
+  const registry = record(value, 'formula registry')
+  if (registry.schemaVersion !== 1) fail('formula registry.schemaVersion', 'must be 1')
+  const generatedAt = requireNonEmptyString(registry.generatedAt, 'formula registry.generatedAt')
+  const inputs = record(registry.inputs, 'formula registry.inputs')
+  const recipes = record(registry.recipes, 'formula registry.recipes')
+  const count = requireSafeInteger(recipes.count, 'formula registry.recipes.count', 1)
+  const dataUrl = requireNonEmptyString(recipes.dataUrl, 'formula registry.recipes.dataUrl')
+  if (count !== EXPECTED_FORMULAS) fail('formula registry.recipes.count', `must be ${EXPECTED_FORMULAS}`)
+  if (dataUrl !== '/data/generated/recipes.json') fail('formula registry.recipes.dataUrl', 'must identify recipes.json')
   if (!Array.isArray(recipes.items) || recipes.items.length !== EXPECTED_FORMULAS) {
-    throw new Error(`formula registry.recipes.items must contain ${EXPECTED_FORMULAS} records`)
+    fail('formula registry.recipes.items', `must contain ${EXPECTED_FORMULAS} records`)
   }
   const items = recipes.items.map((rawItem, index) => {
-    const item = registryObject(rawItem, `formula registry.recipes.items[${index}]`)
+    const item = record(rawItem, `formula registry.recipes.items[${index}]`)
     return {
-      recipeNumber: registryInteger(item.recipeNumber, `formula registry.recipes.items[${index}].recipeNumber`),
-      id: registryString(item.id, `formula registry.recipes.items[${index}].id`),
-      name: registryString(item.name, `formula registry.recipes.items[${index}].name`),
-      wallId: registryString(item.wallId, `formula registry.recipes.items[${index}].wallId`),
+      recipeNumber: requireSafeInteger(item.recipeNumber, `formula registry.recipes.items[${index}].recipeNumber`, 1),
+      id: requireNonEmptyString(item.id, `formula registry.recipes.items[${index}].id`),
+      name: requireNonEmptyString(item.name, `formula registry.recipes.items[${index}].name`),
+      wallId: requireNonEmptyString(item.wallId, `formula registry.recipes.items[${index}].wallId`),
     }
   })
   if (new Set(items.map(({ recipeNumber }) => recipeNumber)).size !== items.length || new Set(items.map(({ id }) => id)).size !== items.length) {
-    throw new Error('formula registry recipe numbers and IDs must be unique')
+    fail('formula registry', 'recipe numbers and IDs must be unique')
   }
   return {
     schemaVersion: 1,
@@ -396,44 +382,47 @@ function adaptFormula(recipe: RecipeSource, evaluation: RecipeEvaluation, index:
   const literals = constructorLiterals(recipe, [...sourceDependencies.direct, ...runtimeDependencies.direct])
   const agreement = dependencyAgreement(sourceDependencies.direct, runtimeDependencies.direct)
   const graph: PlotFigure = {
-    data: [
+    series: [
       {
-        x: sweep.map((point) => point.x),
-        y: sweep.map((point) => point.y),
-        customdata: sweep.map((point) => [point.imaginary, point.magnitude, point.log10Abs]),
-        type: 'scatter',
-        mode: 'lines',
-        name: 'computed sweep',
-        line: { color: '#63cbd1', width: 2 },
-        hovertemplate: 'R/R₀ %{x:.4f}<br>real %{y:.8e}<br>imag %{customdata[0]:.3e}<br>|z| %{customdata[1]:.8e}<extra></extra>',
+        kind:   'line',
+        name:   'computed sweep',
+        x:      sweep.map((point) => point.x),
+        y:      sweep.map((point) => point.y),
+        custom: sweep.map((point) => [point.imaginary, point.magnitude, point.log10Abs]),
+        line:   { color: '#63cbd1', width: 2 },
+        hover:  [
+          { label: 'R/R₀', source: 'x', digits: 4, notation: 'fixed' },
+          { label: 'real', source: 'y', digits: 8, notation: 'scientific' },
+          { label: 'imag', source: { custom: 0 }, digits: 3, notation: 'scientific' },
+          { label: '|z|', source: { custom: 1 }, digits: 8, notation: 'scientific' },
+        ],
       },
       {
-        x: sweep.map((point) => point.x),
-        y: sweep.map((point) => point.magnitude),
-        type: 'scatter',
-        mode: 'lines',
-        name: 'magnitude',
-        line: { color: '#efe5ce', width: 1, dash: 'dot' },
-        hovertemplate: 'R/R₀ %{x:.4f}<br>|z| %{y:.8e}<extra></extra>',
+        kind:  'line',
+        name:  'magnitude',
+        x:     sweep.map((point) => point.x),
+        y:     sweep.map((point) => point.magnitude),
+        line:  { color: '#efe5ce', width: 1, style: 'dotted' },
+        hover: [
+          { label: 'R/R₀', source: 'x', digits: 4, notation: 'fixed' },
+          { label: '|z|', source: 'y', digits: 8, notation: 'scientific' },
+        ],
       },
       ...markers.map((marker) => ({
-        x: [marker.x],
-        y: [marker.y],
-        type: 'scatter' as const,
-        mode: 'markers' as const,
-        name: marker.label,
-        marker: {
-          color: marker.label === 'expected' ? '#e6b85c' : '#63cbd1',
-          size: marker.label === 'expected' ? 11 : 9,
-          symbol: marker.label === 'expected' ? 'diamond-open' : 'cross',
-        },
+        kind:   'markers' as const,
+        name:   marker.label,
+        x:      [marker.x],
+        y:      [marker.y],
+        marker: marker.label === 'expected'
+          ? { color: '#e6b85c', size: 11, shape: 'open-diamond' as const }
+          : { color: '#63cbd1', size: 9, shape: 'cross' as const },
       })),
     ],
     layout: {
-      showlegend: true,
-      legend: { orientation: 'h', x: 0, y: 1.11, font: { size: 10 } },
-      hovermode: 'x unified',
-      margin: { t: 72, r: 24, b: 58, l: 76 },
+      showLegend: true,
+      legend:     { orientation: 'horizontal', x: 0, y: 1.11, fontSize: 10 },
+      hoverSync:  'x',
+      margin:     { top: 72, right: 24, bottom: 58, left: 76 },
     },
   }
   return {

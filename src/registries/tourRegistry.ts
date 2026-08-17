@@ -1,3 +1,4 @@
+import { fail, requireRecord, requireExactKeys, requireNonEmptyString, finiteNumber as requireFiniteNumber, isPlainRecord as isRecord } from '../simphy/contract'
 import { readonly, shallowRef } from 'vue'
 import type { TaxonomyArtifact } from '../types/engine'
 import type {
@@ -78,34 +79,9 @@ const REFERENCE_CLASSIFICATIONS = new Set(['primary-standard', 'reference-data',
 const ACCESS_STATUSES = new Set(['verified-accessible', 'partially-accessible', 'blocked', 'not-checked'])
 const CURRENT_CONTENT_REVISION = '2026-07-27'
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function requireRecord(value: unknown, path: string): asserts value is Record<string, unknown> {
-  if (!isRecord(value)) fail(path, 'must be an object')
-}
-
-function requireExactKeys(value: unknown, required: readonly string[], optional: readonly string[], path: string): asserts value is Record<string, unknown> {
-  requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function requireNonEmptyString(value: unknown, path: string): asserts value is string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-}
-
 function requireSafeId(value: unknown, path: string): asserts value is string {
-  requireNonEmptyString(value, path)
-  if (!isSafeId(value)) fail(path, 'must be a safe ID')
+  const id = requireNonEmptyString(value, path)
+  if (!isSafeId(id)) fail(path, 'must be a safe ID')
 }
 
 function requireStringArray(value: unknown, path: string, nonEmpty = false): asserts value is string[] {
@@ -123,11 +99,6 @@ function requireIdArray(value: unknown, path: string, nonEmpty = false): asserts
 function requireUnique(values: readonly string[], path: string): void {
   if (!hasUniqueValues(values)) fail(path, 'must contain unique values')
 }
-
-function requireFiniteNumber(value: unknown, path: string): asserts value is number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-}
-
 function requirePositiveInteger(value: unknown, path: string): asserts value is number {
   if (!positiveInteger(value)) fail(path, 'must be a positive integer')
 }
@@ -381,9 +352,9 @@ function validateLesson(value: unknown, path: string): asserts value is Record<s
 
 function validateControlValue(control: Record<string, unknown>, value: unknown, path: string): void {
   if (control.type === 'range' || control.type === 'number') {
-    requireFiniteNumber(value, path)
-    if (value < Number(control.min) || value > Number(control.max)) fail(path, `must be within [${String(control.min)}, ${String(control.max)}]`)
-    const steps = (value - Number(control.min)) / Number(control.step)
+    const number = requireFiniteNumber(value, path)
+    if (number < Number(control.min) || number > Number(control.max)) fail(path, `must be within [${String(control.min)}, ${String(control.max)}]`)
+    const steps = (number - Number(control.min)) / Number(control.step)
     if (Math.abs(steps - Math.round(steps)) > 1e-9 * Math.max(1, Math.abs(steps))) fail(path, `must align with step ${String(control.step)}`)
   } else if (control.type === 'select') {
     const options = control.options as Array<Record<string, unknown>>
@@ -411,19 +382,18 @@ function validateControl(value: unknown, path: string): asserts value is Record<
     value.options.forEach((option, index) => {
       const optionPath = `${path}.options[${index}]`
       requireExactKeys(option, ['value', 'label'], ['description'], optionPath)
-      requireNonEmptyString(option.value, `${optionPath}.value`)
+      optionValues.push(requireNonEmptyString(option.value, `${optionPath}.value`))
       requireNonEmptyString(option.label, `${optionPath}.label`)
       if (option.description !== undefined) requireNonEmptyString(option.description, `${optionPath}.description`)
-      optionValues.push(option.value)
     })
     requireUnique(optionValues, `${path} option values`)
   } else if (value.type === 'range' || value.type === 'number') {
     requireNonEmptyString(value.unit, `${path}.unit`)
-    requireFiniteNumber(value.min, `${path}.min`)
-    requireFiniteNumber(value.max, `${path}.max`)
-    requireFiniteNumber(value.step, `${path}.step`)
-    if (value.min >= value.max) fail(`${path}.min`, 'must be less than max')
-    if (value.step <= 0 || value.step > value.max - value.min) fail(`${path}.step`, 'must be positive and no greater than the control span')
+    const min = requireFiniteNumber(value.min, `${path}.min`)
+    const max = requireFiniteNumber(value.max, `${path}.max`)
+    const step = requireFiniteNumber(value.step, `${path}.step`)
+    if (min >= max) fail(`${path}.min`, 'must be less than max')
+    if (step <= 0 || step > max - min) fail(`${path}.step`, 'must be positive and no greater than the control span')
   }
   validateControlValue(value, value.default, `${path}.default`)
 }
@@ -450,8 +420,7 @@ function validateNumericalMethod(value: unknown, path: string): void {
   if (typeof value.deterministic !== 'boolean') fail(`${path}.deterministic`, 'must be boolean')
   if (value.implementationRef !== undefined) requireNonEmptyString(value.implementationRef, `${path}.implementationRef`)
   if (value.tolerance !== undefined) {
-    requireFiniteNumber(value.tolerance, `${path}.tolerance`)
-    if (value.tolerance <= 0) fail(`${path}.tolerance`, 'must be positive')
+    if (requireFiniteNumber(value.tolerance, `${path}.tolerance`) <= 0) fail(`${path}.tolerance`, 'must be positive')
   }
   if (value.maxIterations !== undefined) requirePositiveInteger(value.maxIterations, `${path}.maxIterations`)
 }
@@ -697,9 +666,9 @@ function parseReferences(value: unknown, ownerManifest: TourGeneratedManifest): 
     requireSafeId(entry.id, `${entryPath}.id`)
     ids.push(entry.id)
     for (const field of ['title', 'sourceFamily', 'responsibleOrganization', 'edition', 'revision', 'sourceLocator', 'scopeNote', 'licenseNote']) requireNonEmptyString(entry[field], `${entryPath}.${field}`)
-    requireNonEmptyString(entry.url, `${entryPath}.url`)
+    const url = requireNonEmptyString(entry.url, `${entryPath}.url`)
     try {
-      if (new URL(entry.url).protocol !== 'https:') fail(`${entryPath}.url`, 'must use HTTPS')
+      if (new URL(url).protocol !== 'https:') fail(`${entryPath}.url`, 'must use HTTPS')
     } catch (reason) {
       if (reason instanceof TypeError && reason.message.startsWith(entryPath)) throw reason
       fail(`${entryPath}.url`, 'must be a valid URL')
@@ -708,12 +677,12 @@ function parseReferences(value: unknown, ownerManifest: TourGeneratedManifest): 
     requirePositiveInteger(entry.publicationYear, `${entryPath}.publicationYear`)
     if (entry.publicationYear > 9999) fail(`${entryPath}.publicationYear`, 'must have four or fewer digits')
     if (entry.doi !== undefined) {
-      requireNonEmptyString(entry.doi, `${entryPath}.doi`)
-      if (!/^10\.\d{4,9}\/\S+$/.test(entry.doi)) fail(`${entryPath}.doi`, 'must be a DOI without a URL prefix')
+      const doi = requireNonEmptyString(entry.doi, `${entryPath}.doi`)
+      if (!/^10\.\d{4,9}\/\S+$/.test(doi)) fail(`${entryPath}.doi`, 'must be a DOI without a URL prefix')
     }
-    requireNonEmptyString(entry.accessedAt, `${entryPath}.accessedAt`)
-    const parsedDate = new Date(`${entry.accessedAt}T00:00:00Z`)
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(entry.accessedAt) || Number.isNaN(parsedDate.valueOf()) || parsedDate.toISOString().slice(0, 10) !== entry.accessedAt) fail(`${entryPath}.accessedAt`, 'must be an ISO calendar date')
+    const accessedAt = requireNonEmptyString(entry.accessedAt, `${entryPath}.accessedAt`)
+    const parsedDate = new Date(`${accessedAt}T00:00:00Z`)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(accessedAt) || Number.isNaN(parsedDate.valueOf()) || parsedDate.toISOString().slice(0, 10) !== accessedAt) fail(`${entryPath}.accessedAt`, 'must be an ISO calendar date')
     if (!ACCESS_STATUSES.has(entry.accessStatus as string)) fail(`${entryPath}.accessStatus`, 'is not recognized')
     if (typeof entry.supersededForCurrentSIDefinitions !== 'boolean') fail(`${entryPath}.supersededForCurrentSIDefinitions`, 'must be boolean')
   })

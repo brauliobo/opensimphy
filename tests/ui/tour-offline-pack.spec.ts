@@ -455,7 +455,7 @@ describe('Guided Tour offline pack', () => {
   it.each([
     ['mismatched revision', { ...manifest, contentRevision: '2026-07-28' }, { ok: false, status: 503 }, /Tour manifest.contentRevision/],
     ['taxonomy 404', manifest, { ok: false, status: 404 }, /Constant taxonomy failed to load \(404\)/],
-    ['taxonomy schema error', manifest, new Response(JSON.stringify({ ...taxonomy, schemaVersion: 2 }), { status: 200 }), /taxonomy schema version/],
+    ['taxonomy schema error', manifest, new Response(JSON.stringify({ ...taxonomy, schemaVersion: 2 }), { status: 200 }), /Taxonomy.schemaVersion must be 1/],
   ])('does not use the explicit taxonomy fallback for %s', async (_name, networkManifest, taxonomyResponse, expected) => {
     const storage = new MemoryCacheStorage()
     await installTourOfflinePack(manifest, { ...environment(storage), baseUrl: '/' })

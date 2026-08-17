@@ -1,3 +1,4 @@
+import { fail, requireExactKeys, requireNonEmptyString, requireSafeInteger } from '../simphy/contract'
 import type {
   FiddleRegistry,
   FiddleRuntimeAggregate,
@@ -9,29 +10,12 @@ import type {
 
 const STATUSES: readonly FiddleRuntimeStatus[] = ['verified', 'rendered-with-errors', 'empty', 'blocked', 'timeout', 'failed']
 const SHA256_PATTERN = /^[a-f0-9]{64}$/
-type UnknownRecord = Record<string, unknown>
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function exactKeys(value: unknown, required: readonly string[], path: string): asserts value is UnknownRecord {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
 function text(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-  return value
+  return requireNonEmptyString(value, path)
 }
 
 function integer(value: unknown, path: string, minimum = 0): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) fail(path, `must be an integer >= ${minimum}`)
-  return value
+  return requireSafeInteger(value, path, minimum)
 }
 
 function timestamp(value: unknown, path: string): string {
@@ -47,7 +31,7 @@ function parseStatus(value: unknown, path: string): FiddleRuntimeStatus {
 
 function parseBatch(value: unknown, index: number): FiddleRuntimeBatch {
   const path = `fiddle runtime.environment.batches[${index}]`
-  exactKeys(value, ['id', 'firstPosition', 'lastPosition', 'sha256', 'startedAt', 'completedAt', 'engine', 'version', 'playwrightVersion'], path)
+  requireExactKeys(value, ['id', 'firstPosition', 'lastPosition', 'sha256', 'startedAt', 'completedAt', 'engine', 'version', 'playwrightVersion'], [], path)
   const sha256 = text(value.sha256, `${path}.sha256`)
   if (!SHA256_PATTERN.test(sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 hash')
   return {
@@ -65,7 +49,7 @@ function parseBatch(value: unknown, index: number): FiddleRuntimeBatch {
 
 function parseAggregate(value: unknown): FiddleRuntimeAggregate {
   const path = 'fiddle runtime.aggregate'
-  exactKeys(value, [...STATUSES, 'total', 'scientificallyValidated'], path)
+  requireExactKeys(value, [...STATUSES, 'total', 'scientificallyValidated'], [], path)
   const aggregate = Object.fromEntries(STATUSES.map((status) => [status, integer(value[status], `${path}.${status}`)])) as unknown as FiddleRuntimeAggregate
   aggregate.total = integer(value.total, `${path}.total`, 1)
   if (value.scientificallyValidated !== 0) fail(`${path}.scientificallyValidated`, 'must be 0')
@@ -75,7 +59,7 @@ function parseAggregate(value: unknown): FiddleRuntimeAggregate {
 
 function parseRuntimeRecord(value: unknown, index: number): FiddleRuntimeRecord {
   const path = `fiddle runtime.records[${index}]`
-  exactKeys(value, ['position', 'slug', 'version', 'embedUrl', 'status', 'attempts', 'testedAt', 'batch', 'pageErrors', 'failureSummary'], path)
+  requireExactKeys(value, ['position', 'slug', 'version', 'embedUrl', 'status', 'attempts', 'testedAt', 'batch', 'pageErrors', 'failureSummary'], [], path)
   if (!Array.isArray(value.pageErrors)) fail(`${path}.pageErrors`, 'must be an array')
   const failureSummary = value.failureSummary === null ? null : text(value.failureSummary, `${path}.failureSummary`)
   const status = parseStatus(value.status, `${path}.status`)
@@ -96,10 +80,10 @@ function parseRuntimeRecord(value: unknown, index: number): FiddleRuntimeRecord 
 }
 
 export function parseFiddleRuntimeLedger(value: unknown, registry: FiddleRegistry): FiddleRuntimeLedger {
-  exactKeys(value, ['schemaVersion', 'registry', 'methodology', 'environment', 'aggregate', 'records'], 'fiddle runtime')
+  requireExactKeys(value, ['schemaVersion', 'registry', 'methodology', 'environment', 'aggregate', 'records'], [], 'fiddle runtime')
   if (value.schemaVersion !== 1) fail('fiddle runtime.schemaVersion', 'must be 1')
 
-  exactKeys(value.registry, ['path', 'sourceRevision', 'recordCount'], 'fiddle runtime.registry')
+  requireExactKeys(value.registry, ['path', 'sourceRevision', 'recordCount'], [], 'fiddle runtime.registry')
   if (value.registry.path !== 'data/generated/fiddles/registry.json') fail('fiddle runtime.registry.path', 'must identify the Fiddle registry')
   const sourceRevision = text(value.registry.sourceRevision, 'fiddle runtime.registry.sourceRevision')
   if (!SHA256_PATTERN.test(sourceRevision) || sourceRevision !== registry.source.sourceRevision) {
@@ -108,14 +92,14 @@ export function parseFiddleRuntimeLedger(value: unknown, registry: FiddleRegistr
   const recordCount = integer(value.registry.recordCount, 'fiddle runtime.registry.recordCount', 1)
   if (recordCount !== registry.records.length) fail('fiddle runtime.registry.recordCount', 'must match the loaded Fiddle registry')
 
-  exactKeys(value.methodology, ['scope', 'classification', 'retryPolicy', 'caveat'], 'fiddle runtime.methodology')
+  requireExactKeys(value.methodology, ['scope', 'classification', 'retryPolicy', 'caveat'], [], 'fiddle runtime.methodology')
   const methodology = {
     scope:          text(value.methodology.scope, 'fiddle runtime.methodology.scope'),
     classification: text(value.methodology.classification, 'fiddle runtime.methodology.classification'),
     retryPolicy:    text(value.methodology.retryPolicy, 'fiddle runtime.methodology.retryPolicy'),
     caveat:         text(value.methodology.caveat, 'fiddle runtime.methodology.caveat'),
   }
-  exactKeys(value.environment, ['batches'], 'fiddle runtime.environment')
+  requireExactKeys(value.environment, ['batches'], [], 'fiddle runtime.environment')
   if (!Array.isArray(value.environment.batches) || value.environment.batches.length !== 4) fail('fiddle runtime.environment.batches', 'must contain four batches')
   const batches = value.environment.batches.map(parseBatch)
   if (batches.some((batch, index) => batch.firstPosition !== index * 195 + 1 || batch.lastPosition !== (index + 1) * 195)) {

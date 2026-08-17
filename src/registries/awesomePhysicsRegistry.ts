@@ -1,3 +1,4 @@
+import { fail, requireRecord, requireExactKeys, requireNonEmptyString, requireBoolean, requireSafeInteger } from '../simphy/contract'
 import { shallowRef, type ShallowRef } from 'vue'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
@@ -115,39 +116,9 @@ let initialization: Promise<void> | null = null
 let controller: AbortController | null = null
 let generation = 0
 
-function isRecord(value: unknown): value is UnknownRecord {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function requireRecord(value: unknown, path: string): asserts value is UnknownRecord {
-  if (!isRecord(value)) fail(path, 'must be an object')
-}
-
-function requireExactKeys(
-  value: unknown,
-  required: readonly string[],
-  optional: readonly string[],
-  path: string,
-): asserts value is UnknownRecord {
-  requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function requireNonEmptyString(value: unknown, path: string): asserts value is string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-}
-
 function requireSafeId(value: unknown, path: string): asserts value is string {
-  requireNonEmptyString(value, path)
-  if (!/^[A-Za-z0-9_-]+$/.test(value)) fail(path, 'must be a safe ID')
+  const id = requireNonEmptyString(value, path)
+  if (!/^[A-Za-z0-9_-]+$/.test(id)) fail(path, 'must be a safe ID')
 }
 
 function requireStringArray(value: unknown, path: string, nonEmpty = false): asserts value is string[] {
@@ -159,13 +130,6 @@ function requireStringArray(value: unknown, path: string, nonEmpty = false): ass
 function requireUnique(values: readonly string[], path: string): void {
   if (new Set(values).size !== values.length) fail(path, 'must contain unique values')
 }
-
-function requireSafeInteger(value: unknown, path: string, minimum = 0): asserts value is number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-}
-
 function requireFiniteNonNegative(value: unknown, path: string): asserts value is number {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) fail(path, 'must be a finite non-negative number')
 }
@@ -175,9 +139,9 @@ function requireOneOf<T extends string>(value: unknown, values: readonly T[], pa
 }
 
 function requireDate(value: unknown, path: string): asserts value is string {
-  requireNonEmptyString(value, path)
-  const parsed = new Date(`${value}T00:00:00Z`)
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(parsed.valueOf()) || parsed.toISOString().slice(0, 10) !== value) {
+  const date = requireNonEmptyString(value, path)
+  const parsed = new Date(`${date}T00:00:00Z`)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(parsed.valueOf()) || parsed.toISOString().slice(0, 10) !== date) {
     fail(path, 'must be an ISO calendar date')
   }
 }
@@ -197,28 +161,23 @@ function refinesCatalogCloneRevision(sourceRevision: string | null, catalogRevis
 
 function requireRelativePath(value: unknown, path: string, nullable = false): asserts value is string | null {
   if (nullable && value === null) return
-  requireNonEmptyString(value, path)
-  if (value.startsWith('/') || /^[A-Za-z]:[\\/]/.test(value) || value.startsWith('\\')) {
+  const relative = requireNonEmptyString(value, path)
+  if (relative.startsWith('/') || /^[A-Za-z]:[\\/]/.test(relative) || relative.startsWith('\\')) {
     fail(path, 'must be repository-relative')
   }
-  if (value.includes('\\') || value.split('/').includes('..')) fail(path, 'must use a safe repository-relative POSIX path')
+  if (relative.includes('\\') || relative.split('/').includes('..')) fail(path, 'must use a safe repository-relative POSIX path')
 }
 
 function requireUrl(value: unknown, path: string): asserts value is string {
-  requireNonEmptyString(value, path)
+  const href = requireNonEmptyString(value, path)
   try {
-    const parsed = new URL(value)
+    const parsed = new URL(href)
     if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') fail(path, 'must use HTTP or HTTPS')
   } catch (reason) {
     if (reason instanceof TypeError && reason.message.startsWith(path)) throw reason
     fail(path, 'must be a valid HTTP or HTTPS URL')
   }
 }
-
-function requireBoolean(value: unknown, path: string): asserts value is boolean {
-  if (typeof value !== 'boolean') fail(path, 'must be a boolean')
-}
-
 function parseSource(value: unknown, path: string): AwesomePhysicsCatalogArtifactV1['source'] {
   requireExactKeys(value, ['catalogPath', 'manifestPath', 'migrationPlanPath', 'acquisitionDate', 'evidenceRefs'], [], path)
   requireRelativePath(value.catalogPath, `${path}.catalogPath`)
@@ -262,8 +221,8 @@ function parseArtifactProvenance(value: unknown, path: string): AwesomePhysicsAr
   requireDate(value.acquisitionDate, `${path}.acquisitionDate`)
   if (value.byteSize !== null) requireSafeInteger(value.byteSize, `${path}.byteSize`)
   if (value.sha256 !== null) {
-    requireNonEmptyString(value.sha256, `${path}.sha256`)
-    if (!/^[a-f0-9]{64}$/.test(value.sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest or null')
+    const sha256 = requireNonEmptyString(value.sha256, `${path}.sha256`)
+    if (!/^[a-f0-9]{64}$/.test(sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest or null')
   }
   requireNonEmptyString(value.transformation, `${path}.transformation`)
   if (value.datasetLicense !== null) requireNonEmptyString(value.datasetLicense, `${path}.datasetLicense`)
@@ -370,8 +329,7 @@ function parseCatalog(value: unknown): AwesomePhysicsCatalogArtifactV1 {
   if (value.schemaVersion !== 1) fail(`${path}.schemaVersion`, 'must be 1')
   const generatedAt = value.generatedAt
   requireDate(generatedAt, `${path}.generatedAt`)
-  const catalogRevision = value.catalogRevision
-  requireNonEmptyString(catalogRevision, `${path}.catalogRevision`)
+  const catalogRevision = requireNonEmptyString(value.catalogRevision, `${path}.catalogRevision`)
   if (!/^[a-f0-9]{40}$/.test(catalogRevision)) fail(`${path}.catalogRevision`, 'must be a lowercase 40-character revision')
   const source = parseSource(value.source, `${path}.source`)
   const summary = parseCatalogSummary(value.summary, `${path}.summary`)

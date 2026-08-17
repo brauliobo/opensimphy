@@ -1,3 +1,4 @@
+import { fail, requireExactKeys } from '../simphy/contract'
 import type { TourGeneratedManifest } from '../types/tour'
 
 export const GUIDED_TOUR_CACHE_PREFIX = 'opensimphy-guided-tour-'
@@ -66,25 +67,8 @@ function cacheStorage(environment: TourOfflinePackEnvironment): CacheStorage {
 }
 
 function safeId(id: string, label: string): string {
-  if (!SAFE_ID.test(id)) throw new TypeError(`${label} must be a safe ID`)
+  if (!SAFE_ID.test(id)) fail(label, 'must be a safe ID')
   return id
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function exactKeys(value: unknown, required: readonly string[], optional: readonly string[], path: string): asserts value is Record<string, unknown> {
-  if (!isRecord(value)) fail(path, 'must be an object')
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length) fail(path, `is missing properties: ${missing.join(', ')}`)
 }
 
 function nonEmptyString(value: unknown, path: string): asserts value is string {
@@ -110,7 +94,7 @@ function exactValues(value: unknown, expected: readonly string[], path: string):
 }
 
 function attribution(value: unknown, path: string): void {
-  exactKeys(value, ATTRIBUTION_KEYS, [], path)
+  requireExactKeys(value, ATTRIBUTION_KEYS, [], path)
   if (!CLAIM_CLASSES.has(value.claimClass as string)) fail(`${path}.claimClass`, 'is not recognized')
   idArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
   nonEmptyString(value.sourceRevision, `${path}.sourceRevision`)
@@ -128,7 +112,7 @@ function nullableSafeId(value: unknown, path: string): void {
 
 export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest {
   const manifestKeys = ['schemaVersion', 'contentRevision', 'title', 'thesis', 'attribution', 'readingDepths', 'depthComposition', 'attributionPolicy', 'contentStatusPolicy', 'quickStations', 'chapters', 'counts']
-  exactKeys(value, manifestKeys, [], 'Tour manifest')
+  requireExactKeys(value, manifestKeys, [], 'Tour manifest')
   if (value.schemaVersion !== 1) fail('Tour manifest.schemaVersion', 'must be 1')
   nonEmptyString(value.contentRevision, 'Tour manifest.contentRevision')
   const revisionDate = new Date(`${value.contentRevision}T00:00:00Z`)
@@ -141,19 +125,19 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   exactValues(value.readingDepths, ['guided', 'technical'], 'Tour manifest.readingDepths')
   if (value.depthComposition !== 'technical-includes-guided') fail('Tour manifest.depthComposition', 'must be technical-includes-guided')
 
-  exactKeys(value.attributionPolicy, ['inheritance', 'rule', 'attributedRoots', 'inheritingRecordKinds', 'attribution'], [], 'Tour manifest.attributionPolicy')
+  requireExactKeys(value.attributionPolicy, ['inheritance', 'rule', 'attributedRoots', 'inheritingRecordKinds', 'attribution'], [], 'Tour manifest.attributionPolicy')
   if (value.attributionPolicy.inheritance !== 'nearest-attributed-ancestor') fail('Tour manifest.attributionPolicy.inheritance', 'must be nearest-attributed-ancestor')
   nonEmptyString(value.attributionPolicy.rule, 'Tour manifest.attributionPolicy.rule')
   exactValues(value.attributionPolicy.attributedRoots, ATTRIBUTED_ROOTS, 'Tour manifest.attributionPolicy.attributedRoots')
   exactValues(value.attributionPolicy.inheritingRecordKinds, INHERITING_RECORD_KINDS, 'Tour manifest.attributionPolicy.inheritingRecordKinds')
   attribution(value.attributionPolicy.attribution, 'Tour manifest.attributionPolicy.attribution')
 
-  exactKeys(value.contentStatusPolicy, ['contentReady', 'planned', 'attribution'], [], 'Tour manifest.contentStatusPolicy')
+  requireExactKeys(value.contentStatusPolicy, ['contentReady', 'planned', 'attribution'], [], 'Tour manifest.contentStatusPolicy')
   nonEmptyString(value.contentStatusPolicy.contentReady, 'Tour manifest.contentStatusPolicy.contentReady')
   nonEmptyString(value.contentStatusPolicy.planned, 'Tour manifest.contentStatusPolicy.planned')
   attribution(value.contentStatusPolicy.attribution, 'Tour manifest.contentStatusPolicy.attribution')
 
-  exactKeys(value.counts, ['chapters', 'lessons', 'simulations', 'glossary', 'references'], [], 'Tour manifest.counts')
+  requireExactKeys(value.counts, ['chapters', 'lessons', 'simulations', 'glossary', 'references'], [], 'Tour manifest.counts')
   const expectedCounts = {
     chapters: CURRENT_SUMMARY.chapters,
     lessons: CURRENT_SUMMARY.lessons,
@@ -173,7 +157,7 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   const parsedChapters: Array<{ id: string; status: unknown; lessonIds: string[]; quickStationIds: string[] }> = []
   for (const [index, chapter] of [...chapters].sort((left, right) => Number(left.order) - Number(right.order)).entries()) {
     const path = `Tour manifest.chapters[${index}]`
-    exactKeys(chapter, ['schemaVersion', 'id', 'order', 'act', 'title', 'question', 'summary', 'status', 'quickStationIds', 'lessonIds', 'attribution', 'previousChapterId', 'nextChapterId'], [], path)
+    requireExactKeys(chapter, ['schemaVersion', 'id', 'order', 'act', 'title', 'question', 'summary', 'status', 'quickStationIds', 'lessonIds', 'attribution', 'previousChapterId', 'nextChapterId'], [], path)
     if (chapter.schemaVersion !== 1) fail(`${path}.schemaVersion`, 'must be 1')
     safeIdValue(chapter.id, `${path}.id`)
     chapterIds.push(chapter.id)
@@ -204,7 +188,7 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   let totalMinutes = 0
   for (const [index, station] of stations.entries()) {
     const path = `Tour manifest.quickStations[${index}]`
-    exactKeys(station, ['id', 'order', 'title', 'question', 'interaction', 'chapterId', 'lessonId', 'simulationId', 'estimatedMinutes', 'status'], ['glossaryIds'], path)
+    requireExactKeys(station, ['id', 'order', 'title', 'question', 'interaction', 'chapterId', 'lessonId', 'simulationId', 'estimatedMinutes', 'status'], ['glossaryIds'], path)
     safeIdValue(station.id, `${path}.id`)
     stationIds.push(station.id)
     if (station.order !== index + 1) fail(`${path}.order`, `must be ${index + 1}`)
