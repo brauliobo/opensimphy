@@ -7,6 +7,7 @@ import {
   type EarthKernelResult,
   type EarthProvenanceKind,
 } from "./common.js";
+import { derrickScalarGate } from "./particle/derrickScalarGate.js";
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 const G_SI = 6.67430e-11;
@@ -65,54 +66,8 @@ export const DEFAULT_DERRICK_SCALING_INPUTS: DerrickScalingInputs = {
 
 export function derrickScalingAudit(
   inputs: DerrickScalingInputs = DEFAULT_DERRICK_SCALING_INPUTS,
-): EarthKernelResult<{
-  convention: string;
-  formula: string;
-  gradientEnergy: number;
-  potentialEnergy: number;
-  derivativeAtOne: number;
-  stationaryLambda: null;
-  finding: "collapse-to-zero-size";
-  series: Array<{ lambda: number; gradientTerm: number; potentialTerm: number; totalEnergy: number; derivative: number }>;
-}> {
-  const gradientEnergy = nonNegativeNumber(inputs.gradientEnergy ?? 1, "gradientEnergy");
-  const potentialEnergy = nonNegativeNumber(inputs.potentialEnergy ?? 1, "potentialEnergy");
-  if (gradientEnergy === 0 && potentialEnergy === 0) throw new RangeError("At least one energy contribution must be positive");
-  const lambdaMinimum = boundedNumber(inputs.lambdaMinimum ?? 0.01, "lambdaMinimum", 1e-6, 1e6);
-  const lambdaMaximum = boundedNumber(inputs.lambdaMaximum ?? 100, "lambdaMaximum", 1e-6, 1e6);
-  if (lambdaMaximum <= lambdaMinimum) throw new RangeError("lambdaMaximum must be greater than lambdaMinimum");
-  const samples = boundedInteger(inputs.samples ?? 129, "samples", 2, 4096);
-  const series = logarithmicSamples(lambdaMinimum, lambdaMaximum, samples).map((lambda) => {
-    const gradientTerm = lambda * gradientEnergy;
-    const potentialTerm = lambda ** 3 * potentialEnergy;
-    return {
-      lambda,
-      gradientTerm,
-      potentialTerm,
-      totalEnergy: gradientTerm + potentialTerm,
-      derivative: gradientEnergy + 3 * lambda ** 2 * potentialEnergy,
-    };
-  });
-  return {
-    method: "Exact three-dimensional Derrick dilation of non-negative gradient and quartic-potential energies",
-    diagnostics: {
-      ...auditLabel("reproduction"),
-      spatialDimension: 3,
-      derivativeStrictlyPositive: series.every(({ derivative }) => derivative > 0),
-      finiteSizeMinimum: false,
-      topologicalStabilizerPresent: false,
-    },
-    output: {
-      convention: "psi_lambda(x)=psi(x/lambda), so lambda dilates every physical length by lambda",
-      formula: "E(lambda)=lambda*E_gradient+lambda^3*E_potential",
-      gradientEnergy,
-      potentialEnergy,
-      derivativeAtOne: gradientEnergy + 3 * potentialEnergy,
-      stationaryLambda: null,
-      finding: "collapse-to-zero-size",
-      series,
-    },
-  };
+) {
+  return derrickScalarGate(inputs);
 }
 
 export interface GravityFormulaAuditInputs {
