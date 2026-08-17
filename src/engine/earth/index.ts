@@ -65,7 +65,6 @@ import {
 } from "./domains.js";
 import {
   floquetBenchmark,
-  potentialDerivativeAudit,
   sineGordonBenchmark,
   stochasticDiffusion,
   type FloquetInputs,
@@ -193,6 +192,7 @@ import {
   type StandardUniformSphereBindingInputs,
 } from "./pilotMethods.js";
 import { nuclearPqEnergyAudit, type NuclearPqEnergyInputs } from "./particle/nuclearPqEnergy.js";
+import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
 
 export * from "./audits.js";
 export * from "./astroAudits.js";
@@ -210,6 +210,7 @@ export * from "./foundations.js";
 export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
 export * from "./particle/nuclearPqEnergy.js";
+export * from "./particle/wallVsSineGordon.js";
 export * from "./pilotMethods.js";
 
 const EARTH_BIO_NEURO_COMPARATORS = {
@@ -464,7 +465,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-FLD-006": ReturnType<typeof decoherenceScalingSweep>["output"];
   "EARTH-FLD-007": ReturnType<typeof floquetBenchmark>["output"];
   "EARTH-FLD-008": ReturnType<typeof sineGordonBenchmark>["output"];
-  "EARTH-FLD-010": ReturnType<typeof potentialDerivativeAudit>["output"];
+  "EARTH-FLD-010": ReturnType<typeof wallVsSineGordon>["output"];
   "EARTH-NUC-001": ReturnType<typeof nuclearPqEnergyAudit>["output"];
   "EARTH-NUC-004": ReturnType<typeof protonFormulaAudit>["output"];
   "EARTH-PRT-001": ReturnType<typeof electronBohrRydbergAudit>["output"];
@@ -572,7 +573,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-FLD-006": decoherenceScalingSweep,
   "EARTH-FLD-007": floquetBenchmark,
   "EARTH-FLD-008": sineGordonBenchmark,
-  "EARTH-FLD-010": potentialDerivativeAudit,
+  "EARTH-FLD-010": wallVsSineGordon,
   "EARTH-NUC-001": nuclearPqEnergyAudit,
   "EARTH-NUC-004": protonFormulaAudit,
   "EARTH-PRT-001": electronBohrRydbergAudit,
