@@ -1,3 +1,14 @@
+import {
+  fail,
+  record,
+  exactRecord,
+  requireFiniteNumber,
+  requirePositiveNumber,
+  requireSafeInteger,
+  requireRatio,
+  requireSafeId,
+  throwIfAborted,
+} from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterFactoryV1,
   AwesomePhysicsAdapterV1,
@@ -95,85 +106,16 @@ interface MatterInput {
   sampleEvery: number
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function requireRecord(value: unknown, path: string): UnknownRecord {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  return value as UnknownRecord
-}
-
-function requireExactKeys(
-  value: unknown,
-  required: readonly string[],
-  optional: readonly string[],
-  path: string,
-): UnknownRecord {
-  const object = requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(object).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(object, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-  return object
-}
-
-function requireFiniteNumber(value: unknown, path: string, minimum?: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value) || (minimum !== undefined && value < minimum)) {
-    const suffix = minimum === undefined ? 'must be a finite number' : `must be a finite number greater than or equal to ${minimum}`
-    fail(path, suffix)
-  }
-  return value
-}
-
-function requirePositiveNumber(value: unknown, path: string): number {
-  const number = requireFiniteNumber(value, path)
-  if (number <= 0) fail(path, 'must be greater than zero')
-  return number
-}
-
-function requireSafeInteger(value: unknown, path: string, minimum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-  return value
-}
-
-function requireRatio(value: unknown, path: string): number {
-  const number = requireFiniteNumber(value, path)
-  if (number < 0 || number > 1) fail(path, 'must be between zero and one')
-  return number
-}
-
-function requireId(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.length === 0 || value.length > 64 || !/^[A-Za-z0-9_-]+$/.test(value)) {
-    fail(path, 'must be a non-empty ASCII ID of at most 64 characters')
-  }
-  return value
-}
-
 function optionalValue(object: UnknownRecord, key: string): unknown {
   return Object.hasOwn(object, key) ? object[key] : undefined
 }
 
 function parseVector(value: unknown, path: string): MatterJsVectorV1 {
-  const object = requireExactKeys(value, ['x', 'y'], [], path)
+  const object = exactRecord(value, ['x', 'y'], [], path)
   return {
     x: requireFiniteNumber(object.x, `${path}.x`),
     y: requireFiniteNumber(object.y, `${path}.y`),
   }
-}
-
-function abortError(signal?: AbortSignal): Error {
-  if (signal?.reason instanceof Error) return signal.reason
-  const error = new Error('The operation was aborted')
-  error.name = 'AbortError'
-  return error
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (signal?.aborted) throw abortError(signal)
 }
 
 function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, signal?: AbortSignal): {
@@ -182,12 +124,12 @@ function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
   limits: MatterJsLimits
 } {
   throwIfAborted(signal)
-  const object = requireRecord(descriptor, 'Matter.js descriptor')
+  const object = record(descriptor, 'Matter.js descriptor')
   if (object.catalogItemId !== 'awesome-matter-js') fail('Matter.js descriptor.catalogItemId', 'must identify matter-js')
   if (object.title !== 'matter-js') fail('Matter.js descriptor.title', 'must be matter-js')
   if (object.execution !== 'browser') fail('Matter.js descriptor.execution', 'must be browser')
 
-  const adapterId = requireId(object.adapterId, 'Matter.js descriptor.adapterId')
+  const adapterId = requireSafeId(object.adapterId, 'Matter.js descriptor.adapterId')
   const compatibilityKeys = ['contentRevision', 'modelRevision', 'implementationRevision', 'outputRevision'] as const
   for (const key of compatibilityKeys) {
     if (typeof object[key] !== 'string' || object[key].trim().length === 0) {
@@ -195,7 +137,7 @@ function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
     }
   }
 
-  const limits = requireRecord(object.limits, 'Matter.js descriptor.limits')
+  const limits = record(object.limits, 'Matter.js descriptor.limits')
   const maxParticles = requireSafeInteger(limits.maxParticles, 'Matter.js descriptor.limits.maxParticles', 0)
   const maxIterations = requireSafeInteger(limits.maxIterations, 'Matter.js descriptor.limits.maxIterations', 0)
   const maxOutputBytes = requireSafeInteger(limits.maxOutputBytes, 'Matter.js descriptor.limits.maxOutputBytes', 1)
@@ -224,8 +166,8 @@ function parseBody(
   defaultRestitution: number,
 ): MatterBody {
   const path = `Matter.js input.bodies[${index}]`
-  const object = requireExactKeys(value, ['id', 'position', 'radius'], ['velocity', 'mass', 'restitution'], path)
-  const id = requireId(object.id, `${path}.id`)
+  const object = exactRecord(value, ['id', 'position', 'radius'], ['velocity', 'mass', 'restitution'], path)
+  const id = requireSafeId(object.id, `${path}.id`)
   const position = parseVector(object.position, `${path}.position`)
   const radius = requirePositiveNumber(object.radius, `${path}.radius`)
   if (radius * 2 > width || radius * 2 > height) fail(`${path}.radius`, 'does not fit inside the fixed boundary')
@@ -254,8 +196,8 @@ function parseBody(
 }
 
 function parseInput(value: unknown, limits: MatterJsLimits): MatterInput {
-  const object = requireExactKeys(value, ['bodies', 'bounds', 'gravity', 'steps', 'dt'], ['sampleEvery', 'restitution'], 'Matter.js input')
-  const bounds = requireExactKeys(object.bounds, ['width', 'height'], [], 'Matter.js input.bounds')
+  const object = exactRecord(value, ['bodies', 'bounds', 'gravity', 'steps', 'dt'], ['sampleEvery', 'restitution'], 'Matter.js input')
+  const bounds = exactRecord(object.bounds, ['width', 'height'], [], 'Matter.js input.bounds')
   const width = requirePositiveNumber(bounds.width, 'Matter.js input.bounds.width')
   const height = requirePositiveNumber(bounds.height, 'Matter.js input.bounds.height')
   const gravity = parseVector(object.gravity, 'Matter.js input.gravity')

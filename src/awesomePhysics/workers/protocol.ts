@@ -1,3 +1,4 @@
+import { fail, record, exactRecord, finiteNumber as requireFiniteNumber, requireSafeInteger, requireNullableString, requireNonEmptyString, requireBoolean } from '../../simphy/contract'
 import type { AwesomePhysicsSimulationDescriptorV1 } from '../../types/awesomePhysics'
 
 export const AWESOME_PHYSICS_WORKER_PROTOCOL_V1 = 'awesome-physics-worker-v1' as const
@@ -115,48 +116,8 @@ const ARTIFACT_PROVENANCE_KEYS = [
   'evidenceRefs',
 ] as const
 
-function isRecord(value: unknown): value is UnknownRecord {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
-  const prototype = Object.getPrototypeOf(value)
-  return prototype === Object.prototype || prototype === null
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
 function parsed<T>(value: unknown): T {
   return value as T
-}
-
-function requireRecord(value: unknown, path: string): UnknownRecord {
-  if (!isRecord(value)) fail(path, 'must be a plain object')
-  return value
-}
-
-function requireExactKeys(
-  value: unknown,
-  required: readonly string[],
-  optional: readonly string[],
-  path: string,
-): UnknownRecord {
-  const object = requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(object).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(object, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-  return object
-}
-
-function requireNonEmptyString(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-  return value
-}
-
-function requireNullableString(value: unknown, path: string): string | null {
-  if (value === null) return null
-  return requireNonEmptyString(value, path)
 }
 
 function requireSafeId(value: unknown, path: string): string {
@@ -165,23 +126,6 @@ function requireSafeId(value: unknown, path: string): string {
     fail(path, `must be an ASCII ID of at most ${AWESOME_PHYSICS_WORKER_MAX_ID_LENGTH} characters`)
   }
   return id
-}
-
-function requireBoolean(value: unknown, path: string): boolean {
-  if (typeof value !== 'boolean') fail(path, 'must be a boolean')
-  return value
-}
-
-function requireFiniteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function requireSafeInteger(value: unknown, path: string, minimum = 0): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-  return value
 }
 
 function requireProgress(value: unknown, path: string): AwesomePhysicsWorkerProgress {
@@ -205,7 +149,7 @@ function requireJsonValue(value: unknown, path: string): asserts value is Awesom
 }
 
 function parseDescriptor(value: unknown, path: string): AwesomePhysicsSimulationDescriptorV1 {
-  const descriptor = requireExactKeys(value, DESCRIPTOR_KEYS.filter((key) => key !== 'adapterId'), ['adapterId'], path)
+  const descriptor = exactRecord(value, DESCRIPTOR_KEYS.filter((key) => key !== 'adapterId'), ['adapterId'], path)
   requireSafeId(descriptor.id, `${path}.id`)
   requireSafeId(descriptor.catalogItemId, `${path}.catalogItemId`)
   requireNonEmptyString(descriptor.title, `${path}.title`)
@@ -229,10 +173,10 @@ function parseDescriptor(value: unknown, path: string): AwesomePhysicsSimulation
   requireNonEmptyString(descriptor.availabilityReason, `${path}.availabilityReason`)
   requireNonEmptyString(descriptor.planDisposition, `${path}.planDisposition`)
 
-  const limits = requireExactKeys(descriptor.limits, LIMIT_KEYS, [], `${path}.limits`)
+  const limits = exactRecord(descriptor.limits, LIMIT_KEYS, [], `${path}.limits`)
   LIMIT_KEYS.forEach((key) => requireSafeInteger(limits[key], `${path}.limits.${key}`))
 
-  const provenance = requireExactKeys(descriptor.artifactProvenance, ARTIFACT_PROVENANCE_KEYS, [], `${path}.artifactProvenance`)
+  const provenance = exactRecord(descriptor.artifactProvenance, ARTIFACT_PROVENANCE_KEYS, [], `${path}.artifactProvenance`)
   requireNullableString(provenance.sourceRevision, `${path}.artifactProvenance.sourceRevision`)
   requireNonEmptyString(provenance.acquisitionDate, `${path}.artifactProvenance.acquisitionDate`)
   if (provenance.byteSize !== null) requireSafeInteger(provenance.byteSize, `${path}.artifactProvenance.byteSize`)
@@ -308,9 +252,9 @@ export function isAwesomePhysicsJsonValue(value: unknown, depth = 0, seen = new 
 }
 
 export function parseAwesomePhysicsWorkerRequest(value: unknown): AwesomePhysicsWorkerRequest {
-  const message = requireRecord(value, 'request')
+  const message = record(value, 'request')
   if (message.type === 'cancel') {
-    const cancel = requireExactKeys(message, ['type', 'requestId'], [], 'request')
+    const cancel = exactRecord(message, ['type', 'requestId'], [], 'request')
     return {
       type: 'cancel',
       requestId: requireSafeId(cancel.requestId, 'request.requestId'),
@@ -318,7 +262,7 @@ export function parseAwesomePhysicsWorkerRequest(value: unknown): AwesomePhysics
   }
   if (message.type !== 'run') fail('request.type', 'must be run or cancel')
 
-  const run = requireExactKeys(message, ['type', 'requestId', 'adapterId', 'descriptor', 'input'], [], 'request')
+  const run = exactRecord(message, ['type', 'requestId', 'adapterId', 'descriptor', 'input'], [], 'request')
   const requestId = requireSafeId(run.requestId, 'request.requestId')
   const adapterId = requireSafeId(run.adapterId, 'request.adapterId')
   const descriptor = parseDescriptor(run.descriptor, 'request.descriptor')
@@ -337,9 +281,9 @@ export function parseAwesomePhysicsWorkerRequest(value: unknown): AwesomePhysics
 }
 
 export function parseAwesomePhysicsWorkerResponse(value: unknown): AwesomePhysicsWorkerResponse {
-  const message = requireRecord(value, 'response')
+  const message = record(value, 'response')
   if (message.type === 'started') {
-    const started = requireExactKeys(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress'], [], 'response')
+    const started = exactRecord(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress'], [], 'response')
     const context = parseResponseContext(started, 'response')
     const progress = requireProgress(started.progress, 'response.progress')
     if (progress !== 0) fail('response.progress', 'must be zero for started')
@@ -347,7 +291,7 @@ export function parseAwesomePhysicsWorkerResponse(value: unknown): AwesomePhysic
     return { ...context, type: 'started', progress }
   }
   if (message.type === 'completed') {
-    const completed = requireExactKeys(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress', 'result'], [], 'response')
+    const completed = exactRecord(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress', 'result'], [], 'response')
     const context = parseResponseContext(completed, 'response')
     const progress = requireProgress(completed.progress, 'response.progress')
     if (progress !== 100) fail('response.progress', 'must be 100 for completed')
@@ -356,7 +300,7 @@ export function parseAwesomePhysicsWorkerResponse(value: unknown): AwesomePhysic
     return { ...context, type: 'completed', progress, result: completed.result }
   }
   if (message.type === 'failed') {
-    const failed = requireExactKeys(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress', 'error'], [], 'response')
+    const failed = exactRecord(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress', 'error'], [], 'response')
     const context = parseResponseContext(failed, 'response')
     const progress = requireProgress(failed.progress, 'response.progress')
     const error = requireNonEmptyString(failed.error, 'response.error')
@@ -367,7 +311,7 @@ export function parseAwesomePhysicsWorkerResponse(value: unknown): AwesomePhysic
     return { ...context, type: 'failed', progress, error }
   }
   if (message.type === 'cancelled') {
-    const cancelled = requireExactKeys(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress'], [], 'response')
+    const cancelled = exactRecord(message, ['type', 'requestId', 'adapterId', 'descriptor', 'progress'], [], 'response')
     const context = parseResponseContext(cancelled, 'response')
     const progress = requireProgress(cancelled.progress, 'response.progress')
     requireResponseDescriptorMatch(context, 'response')

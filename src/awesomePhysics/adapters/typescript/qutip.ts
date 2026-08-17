@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -83,57 +84,12 @@ export interface QutipLindbladOutputV1 {
 export type QutipOutputV1 = QutipRabiOutputV1 | QutipLindbladOutputV1
 export type QutipAdapter = AwesomePhysicsAdapterV1<QutipInputV1, QutipOutputV1>
 export type QutipAdapterFactory = AwesomePhysicsAdapterFactoryV1<QutipInputV1, QutipOutputV1>
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be a safe integer')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > QUTIP_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The qutip operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function parseSharedDrive(input: Record<string, unknown>, path: string): {
   rabiFrequency: number
   detuning: number
@@ -141,8 +97,8 @@ function parseSharedDrive(input: Record<string, unknown>, path: string): {
   steps: number
   sampleEvery: number
 } {
-  const steps = boundedInteger(input.steps, `${path}.steps`, QUTIP_BOUNDS.steps.min, QUTIP_BOUNDS.steps.max)
-  const sampleEvery = boundedInteger(input.sampleEvery, `${path}.sampleEvery`, QUTIP_BOUNDS.sampleEvery.min, QUTIP_BOUNDS.sampleEvery.max)
+  const steps = requireSafeIntegerBetween(input.steps, `${path}.steps`, QUTIP_BOUNDS.steps.min, QUTIP_BOUNDS.steps.max)
+  const sampleEvery = requireSafeIntegerBetween(input.sampleEvery, `${path}.sampleEvery`, QUTIP_BOUNDS.sampleEvery.min, QUTIP_BOUNDS.sampleEvery.max)
   if (sampleEvery > steps) fail(`${path}.sampleEvery`, 'must be at most steps')
   return {
     rabiFrequency: boundedNumber(input.rabiFrequency, `${path}.rabiFrequency`, QUTIP_BOUNDS.frequency.min, QUTIP_BOUNDS.frequency.max),
@@ -191,11 +147,11 @@ function sampleFromExcited(step: number, time: number, excited: number, path: st
 }
 
 function solveRabi(input: QutipRabiInputV1, signal?: AbortSignal): QutipRabiOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The qutip operation was aborted')
   const samples: QutipSampleV1[] = [sampleFromExcited(0, 0, 0, 'samples[0]')]
   let peakExcitedPopulation = 0
   for (let step = 1; step <= input.steps; step += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The qutip operation was aborted')
     const time = step * input.timeStep
     const excited = excitedFromClosedRabi(input.rabiFrequency, input.detuning, time)
     peakExcitedPopulation = Math.max(peakExcitedPopulation, excited)
@@ -231,13 +187,13 @@ function blochDerivative(u: number, v: number, w: number, omega: number, detunin
 }
 
 function solveLindblad(input: QutipLindbladInputV1, signal?: AbortSignal): QutipLindbladOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The qutip operation was aborted')
   let u = 0
   let v = 0
   let w = -1
   const samples: QutipSampleV1[] = [sampleFromExcited(0, 0, 0, 'samples[0]')]
   for (let step = 1; step <= input.steps; step += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The qutip operation was aborted')
     const k1 = blochDerivative(u, v, w, input.rabiFrequency, input.detuning, input.decayRate)
     const k2 = blochDerivative(u + 0.5 * input.timeStep * k1[0], v + 0.5 * input.timeStep * k1[1], w + 0.5 * input.timeStep * k1[2], input.rabiFrequency, input.detuning, input.decayRate)
     const k3 = blochDerivative(u + 0.5 * input.timeStep * k2[0], v + 0.5 * input.timeStep * k2[1], w + 0.5 * input.timeStep * k2[2], input.rabiFrequency, input.detuning, input.decayRate)
@@ -273,7 +229,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The qutip operation was aborted')
   if (descriptor.catalogItemId !== QUTIP_CATALOG_ITEM_ID || descriptor.title !== 'qutip') {
     throw new TypeError('qutip adapter requires the qutip simulation descriptor')
   }
@@ -303,13 +259,13 @@ export const createQutipAdapter: QutipAdapterFactory = (descriptor, signal) => {
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The qutip operation was aborted')
+      throwIfAborted(runSignal, 'The qutip operation was aborted')
       const parsed = parseQutipInput(input)
       const output = parsed.operation === 'rabi-population'
         ? solveRabi(parsed, runSignal ?? signal)
         : solveLindblad(parsed, runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The qutip operation was aborted')
       return output
     },
   }

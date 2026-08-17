@@ -1,3 +1,14 @@
+import {
+  fail,
+  record,
+  exactRecord,
+  requireFiniteNumber,
+  requirePositiveNumber,
+  requireSafeInteger,
+  requireRatio,
+  requireSafeId,
+  throwIfAborted,
+} from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterFactoryV1,
   AwesomePhysicsAdapterV1,
@@ -93,83 +104,17 @@ interface CannonInput {
   sampleEvery: number
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function requireRecord(value: unknown, path: string): UnknownRecord {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  return value as UnknownRecord
-}
-
-function requireExactKeys(
-  value: unknown,
-  required: readonly string[],
-  optional: readonly string[],
-  path: string,
-): UnknownRecord {
-  const object = requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(object).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(object, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-  return object
-}
-
-function requireFiniteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function requirePositiveNumber(value: unknown, path: string): number {
-  const number = requireFiniteNumber(value, path)
-  if (number <= 0) fail(path, 'must be greater than zero')
-  return number
-}
-
-function requireSafeInteger(value: unknown, path: string, minimum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-  return value
-}
-
-function requireRatio(value: unknown, path: string): number {
-  const number = requireFiniteNumber(value, path)
-  if (number < 0 || number > 1) fail(path, 'must be between zero and one')
-  return number
-}
-
-function requireId(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.length === 0 || value.length > 64 || !/^[A-Za-z0-9_-]+$/.test(value)) {
-    fail(path, 'must be a non-empty ASCII ID of at most 64 characters')
-  }
-  return value
-}
-
 function optionalValue(object: UnknownRecord, key: string): unknown {
   return Object.hasOwn(object, key) ? object[key] : undefined
 }
 
 function parseVector(value: unknown, path: string): CannonJsVectorV1 {
-  const object = requireExactKeys(value, ['x', 'y', 'z'], [], path)
+  const object = exactRecord(value, ['x', 'y', 'z'], [], path)
   return {
     x: requireFiniteNumber(object.x, `${path}.x`),
     y: requireFiniteNumber(object.y, `${path}.y`),
     z: requireFiniteNumber(object.z, `${path}.z`),
   }
-}
-
-function abortError(signal?: AbortSignal): Error {
-  if (signal?.reason instanceof Error) return signal.reason
-  const error = new Error('The operation was aborted')
-  error.name = 'AbortError'
-  return error
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (signal?.aborted) throw abortError(signal)
 }
 
 function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, signal?: AbortSignal): {
@@ -178,12 +123,12 @@ function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
   limits: CannonJsLimits
 } {
   throwIfAborted(signal)
-  const object = requireRecord(descriptor, 'Cannon.js descriptor')
+  const object = record(descriptor, 'Cannon.js descriptor')
   if (object.catalogItemId !== 'awesome-cannon-js') fail('Cannon.js descriptor.catalogItemId', 'must identify cannon.js')
   if (object.title !== 'cannon.js') fail('Cannon.js descriptor.title', 'must be cannon.js')
   if (object.execution !== 'browser') fail('Cannon.js descriptor.execution', 'must be browser')
 
-  const adapterId = requireId(object.adapterId, 'Cannon.js descriptor.adapterId')
+  const adapterId = requireSafeId(object.adapterId, 'Cannon.js descriptor.adapterId')
   const compatibilityKeys = ['contentRevision', 'modelRevision', 'implementationRevision', 'outputRevision'] as const
   for (const key of compatibilityKeys) {
     if (typeof object[key] !== 'string' || object[key].trim().length === 0) {
@@ -191,7 +136,7 @@ function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
     }
   }
 
-  const limits = requireRecord(object.limits, 'Cannon.js descriptor.limits')
+  const limits = record(object.limits, 'Cannon.js descriptor.limits')
   const maxParticles = requireSafeInteger(limits.maxParticles, 'Cannon.js descriptor.limits.maxParticles', 0)
   const maxIterations = requireSafeInteger(limits.maxIterations, 'Cannon.js descriptor.limits.maxIterations', 0)
   const maxOutputBytes = requireSafeInteger(limits.maxOutputBytes, 'Cannon.js descriptor.limits.maxOutputBytes', 1)
@@ -214,8 +159,8 @@ function descriptorLimits(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
 
 function parseBody(value: unknown, index: number, floorY: number, defaultRestitution: number): CannonBody {
   const path = `Cannon.js input.bodies[${index}]`
-  const object = requireExactKeys(value, ['id', 'position', 'radius'], ['velocity', 'mass', 'restitution'], path)
-  const id = requireId(object.id, `${path}.id`)
+  const object = exactRecord(value, ['id', 'position', 'radius'], ['velocity', 'mass', 'restitution'], path)
+  const id = requireSafeId(object.id, `${path}.id`)
   const position = parseVector(object.position, `${path}.position`)
   const radius = requirePositiveNumber(object.radius, `${path}.radius`)
   if (position.y < floorY + radius) fail(`${path}.position`, 'must place the sphere above the fixed floor')
@@ -243,7 +188,7 @@ function parseBody(value: unknown, index: number, floorY: number, defaultRestitu
 }
 
 function parseInput(value: unknown, limits: CannonJsLimits): CannonInput {
-  const object = requireExactKeys(value, ['bodies', 'gravity', 'steps', 'dt'], ['floorY', 'sampleEvery', 'restitution'], 'Cannon.js input')
+  const object = exactRecord(value, ['bodies', 'gravity', 'steps', 'dt'], ['floorY', 'sampleEvery', 'restitution'], 'Cannon.js input')
   const gravity = parseVector(object.gravity, 'Cannon.js input.gravity')
   const floorY = optionalValue(object, 'floorY') === undefined
     ? 0

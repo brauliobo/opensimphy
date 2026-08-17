@@ -1,3 +1,5 @@
+import { fail, record, exactKeys, finiteNumber, boundedNumber, throwIfAborted } from '../../../simphy/contract'
+import { addScaled3, dot3, scale3, sub3 } from '../../../simphy/vec'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -61,36 +63,6 @@ export type PyRtAdapterOutputV1 = PyRtOutputV1
 export type PyRtAdapter = AwesomePhysicsAdapterV1<PyRtInputV1, PyRtOutputV1>
 export type PyRtAdapterFactory = AwesomePhysicsAdapterFactoryV1<PyRtInputV1, PyRtOutputV1>
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function vector(value: unknown, path: string, componentLimit: number): PyRtVector3V1 {
   if (!Array.isArray(value) || value.length !== 3) fail(path, 'must be an array of exactly three finite numbers')
   return [
@@ -98,34 +70,6 @@ function vector(value: unknown, path: string, componentLimit: number): PyRtVecto
     boundedNumber(value[1], `${path}[1]`, -componentLimit, componentLimit),
     boundedNumber(value[2], `${path}[2]`, -componentLimit, componentLimit),
   ]
-}
-
-function subtract(left: PyRtVector3V1, right: PyRtVector3V1): PyRtVector3V1 {
-  return [left[0] - right[0], left[1] - right[1], left[2] - right[2]]
-}
-
-function addScaled(origin: PyRtVector3V1, direction: PyRtVector3V1, parameter: number): PyRtVector3V1 {
-  return [
-    origin[0] + parameter * direction[0],
-    origin[1] + parameter * direction[1],
-    origin[2] + parameter * direction[2],
-  ]
-}
-
-function dot(left: PyRtVector3V1, right: PyRtVector3V1): number {
-  return left[0] * right[0] + left[1] * right[1] + left[2] * right[2]
-}
-
-function scale(value: PyRtVector3V1, factor: number): PyRtVector3V1 {
-  return [value[0] * factor, value[1] * factor, value[2] * factor]
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The operation was aborted')
-  error.name = 'AbortError'
-  throw error
 }
 
 function parseInput(input: unknown): {
@@ -158,10 +102,10 @@ function parseInput(input: unknown): {
 
 function solve(input: ReturnType<typeof parseInput>, signal?: AbortSignal): PyRtOutputV1 {
   throwIfAborted(signal)
-  const offset = subtract(input.ray.origin, input.sphere.center)
-  const a = dot(input.ray.direction, input.ray.direction)
-  const b = 2 * dot(offset, input.ray.direction)
-  const c = dot(offset, offset) - input.sphere.radius * input.sphere.radius
+  const offset = sub3(input.ray.origin, input.sphere.center)
+  const a = dot3(input.ray.direction, input.ray.direction)
+  const b = 2 * dot3(offset, input.ray.direction)
+  const c = dot3(offset, offset) - input.sphere.radius * input.sphere.radius
   const discriminant = b * b - 4 * a * c
   if (!Number.isFinite(discriminant)) throw new RangeError('pyRT intersection discriminant is not finite')
   if (discriminant < 0) {
@@ -202,8 +146,8 @@ function solve(input: ReturnType<typeof parseInput>, signal?: AbortSignal): PyRt
       licenseCaveat: PYRT_SOURCE_CAVEATS.license,
     }
   }
-  const point = addScaled(input.ray.origin, input.ray.direction, t)
-  const normal = scale(subtract(point, input.sphere.center), 1 / input.sphere.radius)
+  const point = addScaled3(input.ray.origin, input.ray.direction, t)
+  const normal = scale3(sub3(point, input.sphere.center), 1 / input.sphere.radius)
   const outputValues = [...point, ...normal, t]
   if (outputValues.some((value) => !Number.isFinite(value))) throw new RangeError('pyRT intersection output is not finite')
   return {

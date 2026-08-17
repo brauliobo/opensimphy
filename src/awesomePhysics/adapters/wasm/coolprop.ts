@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, exactKeys, boundedNumber, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -160,30 +161,7 @@ export type CoolPropOutputV1 = CoolPropF2KOutputV1 | CoolPropPropsSIOutputV1 | C
 export type CoolPropAdapterV1 = AwesomePhysicsAdapterV1<CoolPropInputV1, CoolPropOutputV1>
 export type CoolPropAdapterFactoryV1 = AwesomePhysicsAdapterFactoryV1<CoolPropInputV1, CoolPropOutputV1>
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string, minimum: number = -COOLPROP_BOUNDS.maximumAbsoluteValue, maximum: number = COOLPROP_BOUNDS.maximumAbsoluteValue): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
+const COOLPROP_ABS = COOLPROP_BOUNDS.maximumAbsoluteValue
 
 function boundedString(value: unknown, path: string): string {
   if (typeof value !== 'string' || value.length === 0 || value.length > COOLPROP_BOUNDS.inputStringLength) {
@@ -196,7 +174,7 @@ function parseF2K(value: Record<string, unknown>): CoolPropF2KInputV1 {
   exactKeys(value, ['operation', 'celsius'], 'CoolProp input')
   return {
     operation: 'F2K',
-    celsius: finiteNumber(value.celsius, 'CoolProp input.celsius', COOLPROP_BOUNDS.f2kCelsius.min, COOLPROP_BOUNDS.f2kCelsius.max),
+    celsius: boundedNumber(value.celsius, 'CoolProp input.celsius', COOLPROP_BOUNDS.f2kCelsius.min, COOLPROP_BOUNDS.f2kCelsius.max),
   }
 }
 
@@ -206,9 +184,9 @@ function parsePropsSI(value: Record<string, unknown>): CoolPropPropsSIInputV1 {
     operation: 'PropsSI',
     output: boundedString(value.output, 'CoolProp input.output'),
     input1: boundedString(value.input1, 'CoolProp input.input1'),
-    value1: finiteNumber(value.value1, 'CoolProp input.value1'),
+    value1: boundedNumber(value.value1, 'CoolProp input.value1', -COOLPROP_ABS, COOLPROP_ABS),
     input2: boundedString(value.input2, 'CoolProp input.input2'),
-    value2: finiteNumber(value.value2, 'CoolProp input.value2'),
+    value2: boundedNumber(value.value2, 'CoolProp input.value2', -COOLPROP_ABS, COOLPROP_ABS),
     fluid: boundedString(value.fluid, 'CoolProp input.fluid'),
   }
 }
@@ -231,8 +209,8 @@ function parseAbstractState(value: Record<string, unknown>): CoolPropAbstractSta
     backend: boundedString(value.backend, 'CoolProp input.backend'),
     fluid: boundedString(value.fluid, 'CoolProp input.fluid'),
     inputPair: boundedString(value.inputPair, 'CoolProp input.inputPair'),
-    value1: finiteNumber(value.value1, 'CoolProp input.value1'),
-    value2: finiteNumber(value.value2, 'CoolProp input.value2'),
+    value1: boundedNumber(value.value1, 'CoolProp input.value1', -COOLPROP_ABS, COOLPROP_ABS),
+    value2: boundedNumber(value.value2, 'CoolProp input.value2', -COOLPROP_ABS, COOLPROP_ABS),
     outputs,
   }
 }
@@ -244,19 +222,11 @@ export function parseCoolPropInput(value: unknown): CoolPropInputV1 {
   if (input.operation === 'AbstractState') return parseAbstractState(input)
   fail('CoolProp input.operation', 'must be F2K, PropsSI, or AbstractState')
 }
-
-function throwIfAborted(signal: AbortSignal | undefined): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The CoolProp operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The CoolProp operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-coolprop' || descriptor.title !== 'CoolProp') {
     throw new TypeError('CoolProp adapter requires the CoolProp simulation descriptor')
   }
@@ -281,8 +251,8 @@ export const createCoolPropAdapter: CoolPropAdapterFactoryV1 = (descriptor, sign
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The CoolProp operation was aborted')
+      throwIfAborted(runSignal, 'The CoolProp operation was aborted')
       parseCoolPropInput(input)
       throw new Error('CoolProp must be dispatched through the dedicated classic-worker runner')
     },

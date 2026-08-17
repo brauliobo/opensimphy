@@ -1,3 +1,12 @@
+import {
+  fail,
+  record,
+  finiteNumber,
+  boundedNumber,
+  requireSafeIntegerBetween,
+  requireNonEmptyString,
+  throwIfAnyAborted,
+} from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterFactoryV1,
   AwesomePhysicsAdapterV1,
@@ -100,51 +109,14 @@ interface AdapterDescriptorData {
   readonly implementationRevision: string
   readonly outputRevision: string
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  return value as Record<string, unknown>
-}
-
 function requireAllowedKeys(value: Record<string, unknown>, allowed: readonly string[], path: string): void {
   const allowedKeys = new Set(allowed)
   const unknown = Object.keys(value).filter((key) => !allowedKeys.has(key))
   if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
 }
 
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be finite')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const number = finiteNumber(value, path)
-  if (number < minimum || number > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return number
-}
-
-function safeInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum || value > maximum) {
-    fail(path, `must be a safe integer between ${minimum} and ${maximum}`)
-  }
-  return value
-}
-
-function nonEmptyString(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
-  return value
-}
-
-function abortError(): DOMException {
-  return new DOMException('The simulation was aborted', 'AbortError')
-}
-
 function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
-  if (signals.some((signal) => signal?.aborted)) throw abortError()
+  throwIfAnyAborted(signals, 'The simulation was aborted')
 }
 
 async function yieldToHost(): Promise<void> {
@@ -159,14 +131,14 @@ function descriptorData(descriptor: AwesomePhysicsSimulationDescriptorV1): Adapt
   }
   const adapterId = descriptor.adapterId === undefined
     ? WEBGL_RIPPLES_ADAPTER_ID
-    : nonEmptyString(descriptor.adapterId, 'descriptor.adapterId')
+    : requireNonEmptyString(descriptor.adapterId, 'descriptor.adapterId')
   if (!/^[A-Za-z0-9_-]+$/.test(adapterId)) fail('descriptor.adapterId', 'must be a safe ID')
   return {
     adapterId,
-    contentRevision: nonEmptyString(descriptor.contentRevision, 'descriptor.contentRevision'),
-    modelRevision: nonEmptyString(descriptor.modelRevision, 'descriptor.modelRevision'),
-    implementationRevision: nonEmptyString(descriptor.implementationRevision, 'descriptor.implementationRevision'),
-    outputRevision: nonEmptyString(descriptor.outputRevision, 'descriptor.outputRevision'),
+    contentRevision: requireNonEmptyString(descriptor.contentRevision, 'descriptor.contentRevision'),
+    modelRevision: requireNonEmptyString(descriptor.modelRevision, 'descriptor.modelRevision'),
+    implementationRevision: requireNonEmptyString(descriptor.implementationRevision, 'descriptor.implementationRevision'),
+    outputRevision: requireNonEmptyString(descriptor.outputRevision, 'descriptor.outputRevision'),
   }
 }
 
@@ -193,7 +165,7 @@ function parseTap(
   const radius = tap.radius === undefined
     ? Math.max(0.75, gridSize * 0.05)
     : boundedNumber(tap.radius, `${path}.radius`, 0.25, gridSize)
-  const step = tap.step === undefined ? 0 : safeInteger(tap.step, `${path}.step`, 0, steps)
+  const step = tap.step === undefined ? 0 : requireSafeIntegerBetween(tap.step, `${path}.step`, 0, steps)
   return { x, y, amplitude, radius, step }
 }
 
@@ -214,11 +186,11 @@ function parseInput(value: unknown, descriptor: AwesomePhysicsSimulationDescript
   const maxTapCount = Math.min(LOCAL_MAX_TAPS, descriptorLimit(descriptor, 'maxParticles'))
   const maxMemoryBytes = Math.min(LOCAL_MAX_MEMORY_BYTES, descriptorLimit(descriptor, 'maxMemoryBytes'))
   const maxOutputBytes = Math.min(LOCAL_MAX_OUTPUT_BYTES, descriptorLimit(descriptor, 'maxOutputBytes'))
-  const gridSize = safeInteger(input.gridSize, 'input.gridSize', 3, maxGridSize)
-  const steps = safeInteger(input.steps, 'input.steps', 0, maxIterations)
+  const gridSize = requireSafeIntegerBetween(input.gridSize, 'input.gridSize', 3, maxGridSize)
+  const steps = requireSafeIntegerBetween(input.steps, 'input.steps', 0, maxIterations)
   const sampleEvery = input.sampleEvery === undefined
     ? Math.max(1, Math.ceil(Math.max(1, steps) / 32))
-    : safeInteger(input.sampleEvery, 'input.sampleEvery', 1, maxIterations || 1)
+    : requireSafeIntegerBetween(input.sampleEvery, 'input.sampleEvery', 1, maxIterations || 1)
   const damping = input.damping === undefined ? 0.98 : boundedNumber(input.damping, 'input.damping', 0, 1)
   const waveSpeed = input.waveSpeed === undefined
     ? 0.4

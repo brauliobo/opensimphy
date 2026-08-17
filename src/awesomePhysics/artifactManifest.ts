@@ -1,9 +1,8 @@
+import { fail, requireRecord, requireExactKeys, requireBoolean, requireSafeInteger } from '../simphy/contract'
 import nativeCandidatesJson from '../../scripts/awesomePhysics/native-candidates.json'
 import referenceLedgerJson from '../../scripts/awesomePhysics/reference-ledger.json'
 import sourceArtifactsJson from '../../scripts/awesomePhysics/source-artifacts.json'
 import wasmPilotsJson from '../../scripts/awesomePhysics/wasm-pilots.json'
-
-type UnknownRecord = Record<string, unknown>
 
 export type LegacyArtifactManifestKind = 'wasm-pilots' | 'native-candidates'
 export type ArtifactManifestKind = LegacyArtifactManifestKind | 'source-artifacts' | 'reference-ledger'
@@ -183,45 +182,13 @@ const REVISION_PATTERN = /^[a-f0-9]{7,64}$/
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 
-function isRecord(value: unknown): value is UnknownRecord {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
 function parsed<T>(value: unknown): T {
   return value as T
 }
-
-function requireRecord(value: unknown, path: string): asserts value is UnknownRecord {
-  if (!isRecord(value)) fail(path, 'must be an object')
-}
-
-function requireExactKeys(
-  value: unknown,
-  required: readonly string[],
-  path: string,
-  optional: readonly string[] = [],
-): asserts value is UnknownRecord {
-  requireRecord(value, path)
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
 function requireNonEmptyString(value: unknown, path: string): asserts value is string {
   if (typeof value !== 'string' || value.trim().length === 0) fail(path, 'must be a non-empty string')
   if (value !== value.trim()) fail(path, 'must not have surrounding whitespace')
 }
-
-function requireBoolean(value: unknown, path: string): asserts value is boolean {
-  if (typeof value !== 'boolean') fail(path, 'must be a boolean')
-}
-
 function requireOneOf<T extends string>(value: unknown, values: readonly T[], path: string): asserts value is T {
   if (typeof value !== 'string' || !values.includes(value as T)) fail(path, 'has an unsupported value')
 }
@@ -283,14 +250,8 @@ function requireEvidenceArray(value: unknown, path: string): asserts value is st
   if (new Set(value).size !== value.length) fail(path, 'must contain unique references')
 }
 
-function requireSafeInteger(value: unknown, path: string, minimum = 1): asserts value is number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum) {
-    fail(path, `must be a safe integer greater than or equal to ${minimum}`)
-  }
-}
-
 function parseSourcePlan(value: unknown): ArtifactManifestV1['sourcePlan'] {
-  requireExactKeys(value, ['path', 'revision', 'evidenceRefs'], 'manifest.sourcePlan')
+  requireExactKeys(value, ['path', 'revision', 'evidenceRefs'], [], 'manifest.sourcePlan')
   requireSafeRelativePath(value.path, 'manifest.sourcePlan.path')
   requireRevision(value.revision, 'manifest.sourcePlan.revision')
   requireEvidenceArray(value.evidenceRefs, 'manifest.sourcePlan.evidenceRefs')
@@ -298,7 +259,7 @@ function parseSourcePlan(value: unknown): ArtifactManifestV1['sourcePlan'] {
 }
 
 function parseSource(value: unknown, path: string): ArtifactSourceV1 {
-  requireExactKeys(value, ['path', 'revision', 'files', 'evidenceRefs'], path)
+  requireExactKeys(value, ['path', 'revision', 'files', 'evidenceRefs'], [], path)
   requireSafeRelativePath(value.path, `${path}.path`)
   requireRevision(value.revision, `${path}.revision`)
   requirePathArray(value.files, `${path}.files`)
@@ -307,7 +268,7 @@ function parseSource(value: unknown, path: string): ArtifactSourceV1 {
 }
 
 function parseBuild(value: unknown, path: string): ArtifactBuildV1 {
-  requireExactKeys(value, ['family', 'command', 'toolchain', 'workingDirectory'], path)
+  requireExactKeys(value, ['family', 'command', 'toolchain', 'workingDirectory'], [], path)
   requireOneOf(value.family, BUILD_FAMILIES, `${path}.family`)
   requireNonEmptyString(value.command, `${path}.command`)
   requireNonEmptyString(value.toolchain, `${path}.toolchain`)
@@ -316,7 +277,7 @@ function parseBuild(value: unknown, path: string): ArtifactBuildV1 {
 }
 
 function parseOutput(value: unknown, path: string): ArtifactOutputV1 {
-  requireExactKeys(value, ['module', 'workerBoundary', 'artifactKind'], path)
+  requireExactKeys(value, ['module', 'workerBoundary', 'artifactKind'], [], path)
   requireNonEmptyString(value.module, `${path}.module`)
   requireNonEmptyString(value.workerBoundary, `${path}.workerBoundary`)
   requireOneOf(value.artifactKind, ARTIFACT_KINDS, `${path}.artifactKind`)
@@ -331,20 +292,20 @@ function parseRuntime(value: unknown, path: string): ArtifactRuntimeV1 {
     'maxArtifactBytes',
     'maxWorkerTimeMs',
     'maxOutputBytes',
-  ], path)
+  ], [], path)
   requireNonEmptyString(value.memoryPolicy, `${path}.memoryPolicy`)
   requireNonEmptyString(value.threadPolicy, `${path}.threadPolicy`)
-  requireSafeInteger(value.maxMemoryBytes, `${path}.maxMemoryBytes`)
-  requireSafeInteger(value.maxArtifactBytes, `${path}.maxArtifactBytes`)
+  const maxMemoryBytes = requireSafeInteger(value.maxMemoryBytes, `${path}.maxMemoryBytes`)
+  const maxArtifactBytes = requireSafeInteger(value.maxArtifactBytes, `${path}.maxArtifactBytes`)
   requireSafeInteger(value.maxWorkerTimeMs, `${path}.maxWorkerTimeMs`)
-  requireSafeInteger(value.maxOutputBytes, `${path}.maxOutputBytes`)
-  if (value.maxArtifactBytes > value.maxMemoryBytes) fail(`${path}.maxArtifactBytes`, 'must not exceed maxMemoryBytes')
-  if (value.maxOutputBytes > value.maxMemoryBytes) fail(`${path}.maxOutputBytes`, 'must not exceed maxMemoryBytes')
+  const maxOutputBytes = requireSafeInteger(value.maxOutputBytes, `${path}.maxOutputBytes`)
+  if (maxArtifactBytes > maxMemoryBytes) fail(`${path}.maxArtifactBytes`, 'must not exceed maxMemoryBytes')
+  if (maxOutputBytes > maxMemoryBytes) fail(`${path}.maxOutputBytes`, 'must not exceed maxMemoryBytes')
   return parsed<ArtifactRuntimeV1>(value)
 }
 
 function parseLicenseGate(value: unknown, path: string): ArtifactLicenseGateV1 {
-  requireExactKeys(value, ['status', 'license', 'noticeRequirements'], path)
+  requireExactKeys(value, ['status', 'license', 'noticeRequirements'], [], path)
   requireOneOf(value.status, LICENSE_GATE_STATUSES, `${path}.status`)
   requireNonEmptyString(value.license, `${path}.license`)
   requireStringArray(value.noticeRequirements, `${path}.noticeRequirements`, true)
@@ -352,7 +313,7 @@ function parseLicenseGate(value: unknown, path: string): ArtifactLicenseGateV1 {
 }
 
 function parseCompanion(value: unknown, path: string): ArtifactCompanionIntegrityV1 {
-  requireExactKeys(value, ['path', 'sha256', 'byteSize'], path)
+  requireExactKeys(value, ['path', 'sha256', 'byteSize'], [], path)
   requireSafeRelativePath(value.path, `${path}.path`)
   requireNonEmptyString(value.sha256, `${path}.sha256`)
   if (!SHA256_PATTERN.test(value.sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest')
@@ -361,7 +322,7 @@ function parseCompanion(value: unknown, path: string): ArtifactCompanionIntegrit
 }
 
 function parseArtifact(value: unknown, status: ArtifactStatus, path: string): ArtifactIntegrityV1 {
-  requireExactKeys(value, ['path', 'sha256', 'byteSize'], path, ['companion'])
+  requireExactKeys(value, ['path', 'sha256', 'byteSize'], ['companion'], path)
   if (value.path !== null) requireSafeRelativePath(value.path, `${path}.path`)
   if (value.sha256 !== null) {
     requireNonEmptyString(value.sha256, `${path}.sha256`)
@@ -399,7 +360,7 @@ function parseRecord(value: unknown, index: number): ArtifactRecordV1 {
     'status',
     'artifact',
     'evidenceRefs',
-  ], path)
+  ], [], path)
   requireSafeId(value.id, `${path}.id`)
   requireNonEmptyString(value.project, `${path}.project`)
   requireBoolean(value.optional, `${path}.optional`)
@@ -416,7 +377,7 @@ function parseRecord(value: unknown, index: number): ArtifactRecordV1 {
 }
 
 function parseLegacyArtifactManifest(value: unknown, expectedKind?: LegacyArtifactManifestKind): ArtifactManifestV1 {
-  requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], 'manifest')
+  requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], [], 'manifest')
   if (value.schemaVersion !== 1) fail('manifest.schemaVersion', 'must be 1')
   requireOneOf(value.manifestKind, LEGACY_MANIFEST_KINDS, 'manifest.manifestKind')
   if (expectedKind !== undefined && value.manifestKind !== expectedKind) {
@@ -432,7 +393,7 @@ function parseLegacyArtifactManifest(value: unknown, expectedKind?: LegacyArtifa
 }
 
 function parseLedgerSource(value: unknown, path: string): ArtifactLedgerSourceV1 {
-  requireExactKeys(value, ['path', 'revision', 'evidenceRefs'], path)
+  requireExactKeys(value, ['path', 'revision', 'evidenceRefs'], [], path)
   if (value.path === null) {
     if (value.revision !== null) fail(`${path}.revision`, 'must be null when source.path is null')
   } else {
@@ -472,7 +433,7 @@ function parseLedgerRecord(
     'status',
     'artifact',
     'evidenceRefs',
-  ], path)
+  ], [], path)
   requireSafeId(value.id, `${path}.id`)
   requireNonEmptyString(value.project, `${path}.project`)
   requireSafeId(value.descriptorId, `${path}.descriptorId`)
@@ -516,7 +477,7 @@ function parseLedgerManifest(
   value: unknown,
   expectedKind?: 'source-artifacts' | 'reference-ledger',
 ): SourceArtifactManifestV1 | ReferenceLedgerManifestV1 {
-  requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], 'manifest')
+  requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], [], 'manifest')
   if (value.schemaVersion !== 1) fail('manifest.schemaVersion', 'must be 1')
   const manifestKind = value.manifestKind
   requireOneOf(manifestKind, ['source-artifacts', 'reference-ledger'], 'manifest.manifestKind')

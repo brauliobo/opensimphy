@@ -4,6 +4,7 @@ import {
   loadVerifiedCompanionJavaScript,
   loadVerifiedWasmArtifact,
 } from '../../wasmArtifactLoader'
+import { fail, jsonRecord as record, exactKeys, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -107,25 +108,6 @@ interface Nphysics2dCompanion {
   initSync: (options: { module: WebAssembly.Module }) => unknown
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
 function boundedStepCount(value: unknown, path: string): number {
   if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be an integer')
   if (value < 0 || value > NPHYSICS2D_BOUNDS.maximumStepsPerCall) {
@@ -146,14 +128,6 @@ export function parseNphysics2dInput(value: unknown): Nphysics2dInputV1 {
   }
   fail('nphysics2d input.operation', 'must be snapshot or step')
 }
-
-function throwIfAborted(signal: AbortSignal | undefined): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The nphysics2d operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function linkedSignals(
   first: AbortSignal | undefined,
   second: AbortSignal | undefined,
@@ -182,7 +156,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The nphysics2d operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-nphysics' || descriptor.title !== 'nphysics') {
     throw new TypeError('nphysics2d adapter requires the nphysics simulation descriptor')
   }
@@ -310,11 +284,11 @@ async function initializeWorld(
     signal,
   }
   const companionBytes = await loadVerifiedCompanionJavaScript(artifactRecord, loaderOptions)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The nphysics2d operation was aborted')
   const module = await loadVerifiedWasmArtifact(artifactRecord, loaderOptions)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The nphysics2d operation was aborted')
   const companion = await importVerifiedCompanion(companionBytes, module)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The nphysics2d operation was aborted')
   return new companion.World2d()
 }
 
@@ -339,13 +313,13 @@ export function createNphysics2dAdapterFromRecord(
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(value, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The nphysics2d operation was aborted')
+      throwIfAborted(runSignal, 'The nphysics2d operation was aborted')
       const input = parseNphysics2dInput(value)
       const linked = linkedSignals(signal, runSignal)
       try {
         const instance = await world(linked.signal)
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The nphysics2d operation was aborted')
         if (input.operation === 'snapshot') {
           return boundedOutput({
             schemaVersion: 1,

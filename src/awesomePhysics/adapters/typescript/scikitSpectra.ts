@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, exactKeys, finiteNumber, boundedNumber, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -91,59 +92,14 @@ interface ResampledSpectrum {
   readonly intensity: number[]
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) throw new RangeError(`${path} must be between ${minimum} and ${maximum}`)
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) throw new RangeError(`${path} must be a safe integer`)
-  if (value < minimum || value > maximum) throw new RangeError(`${path} must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > SCIKIT_SPECTRA_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The scikit-spectra operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function validateSeries(axisValue: unknown, intensityValue: unknown, path: string, signal?: AbortSignal): ValidatedSeries {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-spectra operation was aborted')
   if (!Array.isArray(axisValue)) fail(`${path}.axis`, 'must be an array')
   if (!Array.isArray(intensityValue)) fail(`${path}.intensity`, 'must be an array')
   if (axisValue.length < SCIKIT_SPECTRA_BOUNDS.inputSamples.min
@@ -162,7 +118,7 @@ function validateSeries(axisValue: unknown, intensityValue: unknown, path: strin
   if (firstStep === 0) fail(`${path}.axis`, 'must be strictly monotonic')
   const descending = firstStep < 0
   for (let index = 1; index < axis.length; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-spectra operation was aborted')
     const previous = axis[index - 1]!
     const current = axis[index]!
     if ((descending && current >= previous) || (!descending && current <= previous)) {
@@ -204,7 +160,7 @@ function resampleAscending(
   const start = axis[0]!
   const stop = axis[axis.length - 1]!
   for (let index = 0; index < sampleCount; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-spectra operation was aborted')
     const value = start + ((stop - start) * index) / (sampleCount - 1)
     while (upper < axis.length - 1 && axis[upper]! < value) upper += 1
     outputAxis.push(finiteOutput(value, `resampledAxis[${index}]`))
@@ -220,7 +176,7 @@ export function resampleSpectrum(
   signal?: AbortSignal,
 ): { axis: number[]; intensity: number[] } {
   const series = validateSeries(axisValue, intensityValue, 'spectrum', signal)
-  const count = boundedInteger(sampleCount, 'sampleCount', SCIKIT_SPECTRA_BOUNDS.outputSamples.min, SCIKIT_SPECTRA_BOUNDS.outputSamples.max)
+  const count = requireSafeIntegerBetween(sampleCount, 'sampleCount', SCIKIT_SPECTRA_BOUNDS.outputSamples.min, SCIKIT_SPECTRA_BOUNDS.outputSamples.max)
   const ascending = ascendingSeries(series)
   const result = resampleAscending(ascending.axis, ascending.intensity, count, signal)
   return series.descending
@@ -240,7 +196,7 @@ function measureAscending(axis: readonly number[], intensity: readonly number[],
   let peakIndex = 0
   let minimum = intensity[0]!
   for (let index = 0; index < intensity.length; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-spectra operation was aborted')
     if (intensity[index]! < minimum) minimum = intensity[index]!
     if (intensity[index]! > intensity[peakIndex]!) peakIndex = index
   }
@@ -250,7 +206,7 @@ function measureAscending(axis: readonly number[], intensity: readonly number[],
   const halfMaximum = minimum + prominence / 2
   let leftHalfMaximumAxis: number | null = null
   for (let index = peakIndex; index > 0; index -= 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-spectra operation was aborted')
     const lowerIntensity = intensity[index - 1]!
     const upperIntensity = intensity[index]!
     if (lowerIntensity <= halfMaximum && upperIntensity >= halfMaximum) {
@@ -260,7 +216,7 @@ function measureAscending(axis: readonly number[], intensity: readonly number[],
   }
   let rightHalfMaximumAxis: number | null = null
   for (let index = peakIndex; index < intensity.length - 1; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-spectra operation was aborted')
     const lowerIntensity = intensity[index]!
     const upperIntensity = intensity[index + 1]!
     if (lowerIntensity >= halfMaximum && upperIntensity <= halfMaximum) {
@@ -305,7 +261,7 @@ function parseInput(input: unknown): ScikitSpectraInputV1 {
   if (object.intensityUnit !== 'a.u.' && object.intensityUnit !== 'counts' && object.intensityUnit !== 'absorbance') {
     fail('scikit-spectra input.intensityUnit', 'must be a.u., counts, or absorbance')
   }
-  const sampleCount = boundedInteger(
+  const sampleCount = requireSafeIntegerBetween(
     object.sampleCount,
     'scikit-spectra input.sampleCount',
     SCIKIT_SPECTRA_BOUNDS.outputSamples.min,
@@ -322,7 +278,7 @@ function parseInput(input: unknown): ScikitSpectraInputV1 {
 }
 
 function solve(input: ScikitSpectraInputV1, signal?: AbortSignal): ScikitSpectraOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-spectra operation was aborted')
   const resampled = resampleSpectrum(input.axis, input.intensity, input.sampleCount, signal)
   const peak = calculateSpectrumPeakFwhm(resampled.axis, resampled.intensity, signal)
   const output: ScikitSpectraOutputV1 = {
@@ -357,7 +313,7 @@ function solve(input: ScikitSpectraInputV1, signal?: AbortSignal): ScikitSpectra
   if (new TextEncoder().encode(serialized).byteLength > SCIKIT_SPECTRA_BOUNDS.maxOutputBytes) {
     throw new RangeError('scikit-spectra output exceeds the finite byte bound')
   }
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-spectra operation was aborted')
   return output
 }
 
@@ -365,7 +321,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-spectra operation was aborted')
   if (descriptor.catalogItemId !== SCIKIT_SPECTRA_CATALOG_ITEM_ID || descriptor.title !== 'scikit-spectra') {
     throw new TypeError('scikit-spectra adapter requires the scikit-spectra simulation descriptor')
   }
@@ -396,10 +352,10 @@ export const createScikitSpectraAdapter: ScikitSpectraAdapterFactory = (descript
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The scikit-spectra operation was aborted')
+      throwIfAborted(runSignal, 'The scikit-spectra operation was aborted')
       const output = solve(parseInput(input), runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The scikit-spectra operation was aborted')
       return output
     },
   }

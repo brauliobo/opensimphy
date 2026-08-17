@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -103,51 +104,12 @@ function dimensionOf(unit: AstropyUnitV1): 'length' | 'angle' | 'time' {
   if ((ASTROPY_ANGLE_UNITS as readonly string[]).includes(unit)) return 'angle'
   return 'time'
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > ASTROPY_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The astropy operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function parseUnit(value: unknown, path: string): AstropyUnitV1 {
   if (typeof value !== 'string' || !Object.hasOwn(TO_SI, value)) fail(path, 'must be a supported unit')
   return value as AstropyUnitV1
@@ -179,7 +141,7 @@ export function parseAstropyInput(value: unknown): AstropyInputV1 {
 }
 
 function solveUnits(input: AstropyUnitConvertInputV1, signal?: AbortSignal): AstropyUnitConvertOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The astropy operation was aborted')
   const si = input.value * TO_SI[input.from]
   return {
     schemaVersion: 1,
@@ -205,7 +167,7 @@ function wrapLongitudeDeg(degrees: number): number {
 }
 
 function solveGalactic(input: AstropyIcrsToGalacticInputV1, signal?: AbortSignal): AstropyIcrsToGalacticOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The astropy operation was aborted')
   const ra = (input.raDeg * Math.PI) / 180
   const dec = (input.decDeg * Math.PI) / 180
   const deltaRa = ra - RA_NGP_RAD
@@ -236,7 +198,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The astropy operation was aborted')
   if (descriptor.catalogItemId !== ASTROPY_CATALOG_ITEM_ID || descriptor.title !== 'astropy') {
     throw new TypeError('astropy adapter requires the astropy simulation descriptor')
   }
@@ -266,13 +228,13 @@ export const createAstropyAdapter: AstropyAdapterFactory = (descriptor, signal) 
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The astropy operation was aborted')
+      throwIfAborted(runSignal, 'The astropy operation was aborted')
       const parsed = parseAstropyInput(input)
       const output = parsed.operation === 'unit-convert'
         ? solveUnits(parsed, runSignal ?? signal)
         : solveGalactic(parsed, runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The astropy operation was aborted')
       return output
     },
   }

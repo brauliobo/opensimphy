@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -75,57 +76,12 @@ export interface ScikitBeamLagCorrelationOutputV1 {
 export type ScikitBeamOutputV1 = ScikitBeamSphereFormFactorOutputV1 | ScikitBeamLagCorrelationOutputV1
 export type ScikitBeamAdapter = AwesomePhysicsAdapterV1<ScikitBeamInputV1, ScikitBeamOutputV1>
 export type ScikitBeamAdapterFactory = AwesomePhysicsAdapterFactoryV1<ScikitBeamInputV1, ScikitBeamOutputV1>
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be a safe integer')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > SCIKIT_BEAM_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The scikit-beam operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function sphereFormFactor(qRadius: number): number {
   if (Math.abs(qRadius) < 1e-8) return 1
   const sincTerm = Math.sin(qRadius) - qRadius * Math.cos(qRadius)
@@ -144,7 +100,7 @@ export function parseScikitBeamInput(value: unknown): ScikitBeamInputV1 {
       radiusNm: boundedNumber(input.radiusNm, 'scikit-beam input.radiusNm', SCIKIT_BEAM_BOUNDS.radiusNm.min, SCIKIT_BEAM_BOUNDS.radiusNm.max),
       qMinNmInv,
       qMaxNmInv,
-      sampleCount: boundedInteger(input.sampleCount, 'scikit-beam input.sampleCount', SCIKIT_BEAM_BOUNDS.samples.min, SCIKIT_BEAM_BOUNDS.samples.max),
+      sampleCount: requireSafeIntegerBetween(input.sampleCount, 'scikit-beam input.sampleCount', SCIKIT_BEAM_BOUNDS.samples.min, SCIKIT_BEAM_BOUNDS.samples.max),
     }
   }
   if (input.operation === 'lag-correlation') {
@@ -162,13 +118,13 @@ export function parseScikitBeamInput(value: unknown): ScikitBeamInputV1 {
 }
 
 function solveSphere(input: ScikitBeamSphereFormFactorInputV1, signal?: AbortSignal): ScikitBeamSphereFormFactorOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-beam operation was aborted')
   const span = input.qMaxNmInv - input.qMinNmInv
   const samples: ScikitBeamSampleV1[] = []
   let firstMinimumQNmInv: number | null = null
   let previousIntensity: number | null = null
   for (let index = 0; index < input.sampleCount; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-beam operation was aborted')
     const qNmInv = input.qMinNmInv + span * (index / (input.sampleCount - 1))
     const formFactor = finiteOutput(sphereFormFactor(qNmInv * input.radiusNm), `samples[${index}].formFactor`)
     const intensity = finiteOutput(formFactor * formFactor, `samples[${index}].intensity`)
@@ -199,7 +155,7 @@ function solveSphere(input: ScikitBeamSphereFormFactorInputV1, signal?: AbortSig
 }
 
 function solveCorrelation(input: ScikitBeamLagCorrelationInputV1, signal?: AbortSignal): ScikitBeamLagCorrelationOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-beam operation was aborted')
   const values = input.intensity
   const zeroLag = values.reduce((sum, value) => sum + value * value, 0)
   if (zeroLag === 0) fail('scikit-beam input.intensity', 'must not be identically zero')
@@ -208,7 +164,7 @@ function solveCorrelation(input: ScikitBeamLagCorrelationInputV1, signal?: Abort
   let peakLag = 0
   let peakValue = -Infinity
   for (let lag = 0; lag < values.length; lag += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The scikit-beam operation was aborted')
     let sum = 0
     for (let index = 0; index + lag < values.length; index += 1) {
       const left = values[index]
@@ -247,7 +203,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The scikit-beam operation was aborted')
   if (descriptor.catalogItemId !== SCIKIT_BEAM_CATALOG_ITEM_ID || descriptor.title !== 'scikit-beam') {
     throw new TypeError('scikit-beam adapter requires the scikit-beam simulation descriptor')
   }
@@ -277,13 +233,13 @@ export const createScikitBeamAdapter: ScikitBeamAdapterFactory = (descriptor, si
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The scikit-beam operation was aborted')
+      throwIfAborted(runSignal, 'The scikit-beam operation was aborted')
       const parsed = parseScikitBeamInput(input)
       const output = parsed.operation === 'sphere-form-factor'
         ? solveSphere(parsed, runSignal ?? signal)
         : solveCorrelation(parsed, runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The scikit-beam operation was aborted')
       return output
     },
   }

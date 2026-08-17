@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, exactKeys, finiteNumber, boundedNumber, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -91,61 +92,12 @@ export type TightBindingOutput = TightBindingOutputV1
 export type TightBindingAdapter = AwesomePhysicsAdapterV1<TightBindingInputV1, TightBindingOutputV1>
 export type TightBindingAdapterFactory = AwesomePhysicsAdapterFactoryV1<TightBindingInputV1, TightBindingOutputV1>
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) {
-    throw new RangeError(`${path} must be between ${minimum} and ${maximum}`)
-  }
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) {
-    throw new RangeError(`${path} must be a safe integer`)
-  }
-  if (value < minimum || value > maximum) throw new RangeError(`${path} must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > TIGHT_BINDING_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The tight-binding operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 export function calculateTightBindingBandEnergyEv(
   waveVectorRadPerM: number,
   latticeSpacingM: number,
@@ -220,13 +172,13 @@ function parseInput(input: unknown): TightBindingResolvedInputV1 {
     latticeSpacingM: boundedNumber(object.latticeSpacingM, 'tight-binding input.latticeSpacingM', TIGHT_BINDING_BOUNDS.latticeSpacingM.min, TIGHT_BINDING_BOUNDS.latticeSpacingM.max),
     chemicalPotentialEv: boundedNumber(object.chemicalPotentialEv, 'tight-binding input.chemicalPotentialEv', TIGHT_BINDING_BOUNDS.chemicalPotentialEv.min, TIGHT_BINDING_BOUNDS.chemicalPotentialEv.max),
     temperatureK: boundedNumber(object.temperatureK, 'tight-binding input.temperatureK', TIGHT_BINDING_BOUNDS.temperatureK.min, TIGHT_BINDING_BOUNDS.temperatureK.max),
-    kPointCount: boundedInteger(object.kPointCount, 'tight-binding input.kPointCount', TIGHT_BINDING_BOUNDS.kPointCount.min, TIGHT_BINDING_BOUNDS.kPointCount.max),
+    kPointCount: requireSafeIntegerBetween(object.kPointCount, 'tight-binding input.kPointCount', TIGHT_BINDING_BOUNDS.kPointCount.min, TIGHT_BINDING_BOUNDS.kPointCount.max),
     spinDegeneracy,
   }
 }
 
 function solve(input: TightBindingResolvedInputV1, signal?: AbortSignal): TightBindingOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The tight-binding operation was aborted')
   const band: TightBindingBandSampleV1[] = []
   let bandMinimumEv = Infinity
   let bandMaximumEv = -Infinity
@@ -235,7 +187,7 @@ function solve(input: TightBindingResolvedInputV1, signal?: AbortSignal): TightB
   let occupancySum = 0
 
   for (let index = 0; index < input.kPointCount; index += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The tight-binding operation was aborted')
     const reducedWaveVector = -Math.PI + (2 * Math.PI * index) / (input.kPointCount - 1)
     const waveVectorRadPerM = reducedWaveVector / input.latticeSpacingM
     const energyEv = calculateTightBindingBandEnergyEv(
@@ -295,7 +247,7 @@ function solve(input: TightBindingResolvedInputV1, signal?: AbortSignal): TightB
   }
   const serialized = JSON.stringify(output)
   if (serialized === undefined) throw new Error('Tight-binding output could not be serialized as JSON')
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The tight-binding operation was aborted')
   return output
 }
 
@@ -303,7 +255,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The tight-binding operation was aborted')
   if (descriptor.catalogItemId !== TIGHT_BINDING_CATALOG_ITEM_ID || descriptor.title !== 'Shut up and calculate') {
     throw new TypeError('tight-binding adapter requires the shut-up-and-calculate simulation descriptor')
   }
@@ -334,10 +286,10 @@ export const createTightBindingAdapter: TightBindingAdapterFactory = (descriptor
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The tight-binding operation was aborted')
+      throwIfAborted(runSignal, 'The tight-binding operation was aborted')
       const output = solve(parseInput(input), runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The tight-binding operation was aborted')
       return output
     },
   }

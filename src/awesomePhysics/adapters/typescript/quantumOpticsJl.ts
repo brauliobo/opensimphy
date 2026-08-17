@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -62,69 +63,24 @@ export interface QuantumOpticsJlJaynesCummingsOutputV1 {
 export type QuantumOpticsJlOutputV1 = QuantumOpticsJlJaynesCummingsOutputV1
 export type QuantumOpticsJlAdapter = AwesomePhysicsAdapterV1<QuantumOpticsJlInputV1, QuantumOpticsJlOutputV1>
 export type QuantumOpticsJlAdapterFactory = AwesomePhysicsAdapterFactoryV1<QuantumOpticsJlInputV1, QuantumOpticsJlOutputV1>
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be a safe integer')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > QUANTUM_OPTICS_JL_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The QuantumOptics.jl operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 export function parseQuantumOpticsJlInput(value: unknown): QuantumOpticsJlInputV1 {
   const input = record(value, 'quantumoptics-jl input')
   if (input.operation !== 'jaynes-cummings') fail('quantumoptics-jl input.operation', 'must be jaynes-cummings')
   exactKeys(input, ['operation', 'coupling', 'detuning', 'photonNumber', 'timeStep', 'steps', 'sampleEvery'], 'quantumoptics-jl input')
-  const steps = boundedInteger(input.steps, 'quantumoptics-jl input.steps', QUANTUM_OPTICS_JL_BOUNDS.steps.min, QUANTUM_OPTICS_JL_BOUNDS.steps.max)
-  const sampleEvery = boundedInteger(input.sampleEvery, 'quantumoptics-jl input.sampleEvery', QUANTUM_OPTICS_JL_BOUNDS.sampleEvery.min, QUANTUM_OPTICS_JL_BOUNDS.sampleEvery.max)
+  const steps = requireSafeIntegerBetween(input.steps, 'quantumoptics-jl input.steps', QUANTUM_OPTICS_JL_BOUNDS.steps.min, QUANTUM_OPTICS_JL_BOUNDS.steps.max)
+  const sampleEvery = requireSafeIntegerBetween(input.sampleEvery, 'quantumoptics-jl input.sampleEvery', QUANTUM_OPTICS_JL_BOUNDS.sampleEvery.min, QUANTUM_OPTICS_JL_BOUNDS.sampleEvery.max)
   if (sampleEvery > steps) fail('quantumoptics-jl input.sampleEvery', 'must be at most steps')
   return {
     operation: 'jaynes-cummings',
     coupling: boundedNumber(input.coupling, 'quantumoptics-jl input.coupling', QUANTUM_OPTICS_JL_BOUNDS.coupling.min, QUANTUM_OPTICS_JL_BOUNDS.coupling.max),
     detuning: boundedNumber(input.detuning, 'quantumoptics-jl input.detuning', QUANTUM_OPTICS_JL_BOUNDS.detuning.min, QUANTUM_OPTICS_JL_BOUNDS.detuning.max),
-    photonNumber: boundedInteger(input.photonNumber, 'quantumoptics-jl input.photonNumber', QUANTUM_OPTICS_JL_BOUNDS.photonNumber.min, QUANTUM_OPTICS_JL_BOUNDS.photonNumber.max),
+    photonNumber: requireSafeIntegerBetween(input.photonNumber, 'quantumoptics-jl input.photonNumber', QUANTUM_OPTICS_JL_BOUNDS.photonNumber.min, QUANTUM_OPTICS_JL_BOUNDS.photonNumber.max),
     timeStep: boundedNumber(input.timeStep, 'quantumoptics-jl input.timeStep', QUANTUM_OPTICS_JL_BOUNDS.timeStep.min, QUANTUM_OPTICS_JL_BOUNDS.timeStep.max),
     steps,
     sampleEvery,
@@ -152,7 +108,7 @@ function sampleAt(step: number, time: number, excited: number, photonNumber: num
 }
 
 function solveJaynesCummings(input: QuantumOpticsJlJaynesCummingsInputV1, signal?: AbortSignal): QuantumOpticsJlJaynesCummingsOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The QuantumOptics.jl operation was aborted')
   const vacuumRabiFrequency = finiteOutput(
     Math.hypot(2 * input.coupling * Math.sqrt(input.photonNumber + 1), input.detuning),
     'vacuumRabiFrequency',
@@ -160,7 +116,7 @@ function solveJaynesCummings(input: QuantumOpticsJlJaynesCummingsInputV1, signal
   const samples: QuantumOpticsJlSampleV1[] = [sampleAt(0, 0, 1, input.photonNumber, 'samples[0]')]
   let peakExcitedPopulation = 1
   for (let step = 1; step <= input.steps; step += 1) {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The QuantumOptics.jl operation was aborted')
     const time = step * input.timeStep
     const excited = excitedPopulation(input.coupling, input.detuning, input.photonNumber, time)
     peakExcitedPopulation = Math.max(peakExcitedPopulation, excited)
@@ -191,7 +147,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The QuantumOptics.jl operation was aborted')
   if (descriptor.catalogItemId !== QUANTUM_OPTICS_JL_CATALOG_ITEM_ID || descriptor.title !== 'QuantumOptics.jl') {
     throw new TypeError('QuantumOptics.jl adapter requires the QuantumOptics.jl simulation descriptor')
   }
@@ -221,10 +177,10 @@ export const createQuantumOpticsJlAdapter: QuantumOpticsJlAdapterFactory = (desc
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The QuantumOptics.jl operation was aborted')
+      throwIfAborted(runSignal, 'The QuantumOptics.jl operation was aborted')
       const output = solveJaynesCummings(parseQuantumOpticsJlInput(input), runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The QuantumOptics.jl operation was aborted')
       return output
     },
   }

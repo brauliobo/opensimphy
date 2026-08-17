@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { instantiateVerifiedWasm } from '../../wasm/runtime'
+import { fail, jsonRecord as record, exactKeys, finiteNumber, boundedNumber, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -133,34 +134,8 @@ interface GalpyWasmExports {
   galpy_orbit_Lz: () => number
   galpy_circular_velocity: (R: number) => number
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function integerNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const number = finiteNumber(value, path, minimum, maximum)
+  const number = boundedNumber(value, path, minimum, maximum)
   if (!Number.isInteger(number)) fail(path, 'must be an integer')
   return number
 }
@@ -171,7 +146,7 @@ export function parseGalpyInput(value: unknown): GalpyInputV1 {
     exactKeys(input, ['operation', 'R'], 'galpy input')
     return {
       operation: 'circular-velocity',
-      R: finiteNumber(input.R, 'galpy input.R', GALPY_BOUNDS.minimumRadius, GALPY_BOUNDS.maximumCoordinate),
+      R: boundedNumber(input.R, 'galpy input.R', GALPY_BOUNDS.minimumRadius, GALPY_BOUNDS.maximumCoordinate),
     }
   }
   if (input.operation === 'integrate-orbit') {
@@ -182,27 +157,19 @@ export function parseGalpyInput(value: unknown): GalpyInputV1 {
     if (sampleCount > GALPY_BOUNDS.maximumSamples) fail('galpy input.sampleEvery', `must keep samples at or below ${GALPY_BOUNDS.maximumSamples}`)
     return {
       operation: 'integrate-orbit',
-      R: finiteNumber(input.R, 'galpy input.R', GALPY_BOUNDS.minimumRadius, GALPY_BOUNDS.maximumCoordinate),
-      z: finiteNumber(input.z, 'galpy input.z', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
-      phi: finiteNumber(input.phi, 'galpy input.phi', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
-      vR: finiteNumber(input.vR, 'galpy input.vR', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
-      vT: finiteNumber(input.vT, 'galpy input.vT', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
-      vz: finiteNumber(input.vz, 'galpy input.vz', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
-      timeStep: finiteNumber(input.timeStep, 'galpy input.timeStep', GALPY_BOUNDS.minimumTimeStep, GALPY_BOUNDS.maximumTimeStep),
+      R: boundedNumber(input.R, 'galpy input.R', GALPY_BOUNDS.minimumRadius, GALPY_BOUNDS.maximumCoordinate),
+      z: boundedNumber(input.z, 'galpy input.z', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
+      phi: boundedNumber(input.phi, 'galpy input.phi', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
+      vR: boundedNumber(input.vR, 'galpy input.vR', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
+      vT: boundedNumber(input.vT, 'galpy input.vT', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
+      vz: boundedNumber(input.vz, 'galpy input.vz', -GALPY_BOUNDS.maximumCoordinate, GALPY_BOUNDS.maximumCoordinate),
+      timeStep: boundedNumber(input.timeStep, 'galpy input.timeStep', GALPY_BOUNDS.minimumTimeStep, GALPY_BOUNDS.maximumTimeStep),
       steps,
       sampleEvery,
     }
   }
   fail('galpy input.operation', 'must be integrate-orbit or circular-velocity')
 }
-
-function throwIfAborted(signal: AbortSignal | undefined): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The galpy operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function linkedSignals(
   first: AbortSignal | undefined,
   second: AbortSignal | undefined,
@@ -231,7 +198,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The galpy operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-galpy' || descriptor.title !== 'galpy') {
     throw new TypeError('galpy adapter requires the galpy simulation descriptor')
   }
@@ -301,11 +268,9 @@ function wasmExports(instance: WebAssembly.Instance): GalpyWasmExports {
 }
 
 function finiteScalar(value: number, path: string): number {
-  if (!Number.isFinite(value)) throw new Error(`${path} must be finite`)
-  if (Math.abs(value) > GALPY_BOUNDS.maximumCoordinate * 10) {
-    throw new Error(`${path} is outside the bounded galpy output range`)
-  }
-  return value
+  const result = finiteNumber(value, path)
+  if (Math.abs(result) > GALPY_BOUNDS.maximumCoordinate * 10) fail(path, 'is outside the bounded galpy output range')
+  return result
 }
 
 function snapshot(exports: GalpyWasmExports, step: number, time: number): GalpyOrbitSampleV1 {
@@ -344,8 +309,8 @@ export function createGalpyAdapterFromRecord(
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(value, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The galpy operation was aborted')
+      throwIfAborted(runSignal, 'The galpy operation was aborted')
       const input = parseGalpyInput(value)
       const linked = linkedSignals(signal, runSignal)
       try {
@@ -355,7 +320,7 @@ export function createGalpyAdapterFromRecord(
           maxBytes: options.maxBytes ?? GALPY_BOUNDS.maximumArtifactBytes,
           signal: linked.signal,
         })
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The galpy operation was aborted')
         if (loaded.companionBytes === null) throw new Error('galpy companion JavaScript was not verified')
         const exports = wasmExports(loaded.instance)
         if (input.operation === 'circular-velocity') {
@@ -374,7 +339,7 @@ export function createGalpyAdapterFromRecord(
         }
         const samples: GalpyOrbitSampleV1[] = [snapshot(exports, 0, 0)]
         for (let step = 1; step <= input.steps; step += 1) {
-          throwIfAborted(linked.signal)
+          throwIfAborted(linked.signal, 'The galpy operation was aborted')
           if (exports.galpy_orbit_step(input.timeStep) !== 1) {
             throw new Error(`galpy WASM rejected orbit step ${step}`)
           }

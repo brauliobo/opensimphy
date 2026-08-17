@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { loadVerifiedWasmArtifact } from '../../wasmArtifactLoader'
+import { fail, jsonRecord as record, exactKeys, boundedNumber, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -96,59 +97,25 @@ interface PositionBasedDynamicsWasmExports {
 }
 
 type PositionBasedDynamicsWasmArguments = [number, number, number, number, number, number]
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 export function parsePositionBasedDynamicsInput(value: unknown): PositionBasedDynamicsDistanceInputV1 {
   const input = record(value, 'PositionBasedDynamics input')
   exactKeys(input, ['operation', 'x0', 'x1', 'restLength', 'inverseMass0', 'inverseMass1', 'stiffness'], 'PositionBasedDynamics input')
   if (input.operation !== 'solve-distance') fail('PositionBasedDynamics input.operation', 'must be solve-distance')
   return {
     operation: 'solve-distance',
-    x0: finiteNumber(input.x0, 'PositionBasedDynamics input.x0', -POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate, POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate),
-    x1: finiteNumber(input.x1, 'PositionBasedDynamics input.x1', -POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate, POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate),
-    restLength: finiteNumber(input.restLength, 'PositionBasedDynamics input.restLength', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumRestLength),
-    inverseMass0: finiteNumber(input.inverseMass0, 'PositionBasedDynamics input.inverseMass0', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumInverseMass),
-    inverseMass1: finiteNumber(input.inverseMass1, 'PositionBasedDynamics input.inverseMass1', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumInverseMass),
-    stiffness: finiteNumber(input.stiffness, 'PositionBasedDynamics input.stiffness', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumStiffness),
+    x0: boundedNumber(input.x0, 'PositionBasedDynamics input.x0', -POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate, POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate),
+    x1: boundedNumber(input.x1, 'PositionBasedDynamics input.x1', -POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate, POSITION_BASED_DYNAMICS_BOUNDS.maximumAbsoluteCoordinate),
+    restLength: boundedNumber(input.restLength, 'PositionBasedDynamics input.restLength', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumRestLength),
+    inverseMass0: boundedNumber(input.inverseMass0, 'PositionBasedDynamics input.inverseMass0', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumInverseMass),
+    inverseMass1: boundedNumber(input.inverseMass1, 'PositionBasedDynamics input.inverseMass1', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumInverseMass),
+    stiffness: boundedNumber(input.stiffness, 'PositionBasedDynamics input.stiffness', 0, POSITION_BASED_DYNAMICS_BOUNDS.maximumStiffness),
   }
 }
-
-function throwIfAborted(signal: AbortSignal | undefined): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The PositionBasedDynamics operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: PositionBasedDynamicsCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The PositionBasedDynamics operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-positionbaseddynamics' || descriptor.title !== 'PositionBasedDynamics') {
     throw new TypeError('PositionBasedDynamics adapter requires the PositionBasedDynamics simulation descriptor')
   }
@@ -242,8 +209,8 @@ export function createPositionBasedDynamicsAdapterFromRecord(
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(value, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The PositionBasedDynamics operation was aborted')
+      throwIfAborted(runSignal, 'The PositionBasedDynamics operation was aborted')
       const input = parsePositionBasedDynamicsInput(value)
       const linked = linkedSignals(signal, runSignal)
       try {
@@ -253,9 +220,9 @@ export function createPositionBasedDynamicsAdapterFromRecord(
           maxBytes: options.maxBytes ?? POSITION_BASED_DYNAMICS_BOUNDS.maximumArtifactBytes,
           signal: linked.signal,
         })
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The PositionBasedDynamics operation was aborted')
         const instance = await WebAssembly.instantiate(module, {})
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The PositionBasedDynamics operation was aborted')
         const exports = wasmExports(instance)
         const args: PositionBasedDynamicsWasmArguments = [
           input.x0,

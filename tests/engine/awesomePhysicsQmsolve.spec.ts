@@ -99,7 +99,7 @@ describe('Awesome Physics qmsolve TypeScript adapter', () => {
     await expect(evaluateQmsolve(input({ gridSize: QMSOLVE_BOUNDS.gridSize.min - 1 }))).rejects.toThrow(/gridSize/)
     await expect(evaluateQmsolve(input({ packetCenter: 7, packetWidth: 2 }))).rejects.toThrow(/outside the finite domain/)
     await expect(evaluateQmsolve(input({ timeStep: 0.05 }))).rejects.toThrow(/unstable or under-resolved/)
-    await expect(evaluateQmsolve({ ...input(), timeStep: Number.NaN })).rejects.toThrow(/timeStep must be finite/)
+    await expect(evaluateQmsolve({ ...input(), timeStep: Number.NaN })).rejects.toThrow(/timeStep must be a finite number/)
     await expect(evaluateQmsolve({ ...input(), steps: 1.5 })).rejects.toThrow(/steps must be a safe integer/)
     await expect(evaluateQmsolve({ ...input(), unexpected: true } as QmsolveInput & { unexpected: boolean })).rejects.toThrow(/unknown properties/)
     await expect(evaluateQmsolve({ ...input(), potential: 'arbitrary' } as unknown as QmsolveInput)).rejects.toThrow(/only the harmonic-oscillator/)

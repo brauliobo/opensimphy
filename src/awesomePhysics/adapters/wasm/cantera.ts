@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { instantiateVerifiedWasm } from '../../wasm/runtime'
+import { fail, jsonRecord as record, exactKeys, throwIfAborted, boundedNumber } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -120,32 +121,6 @@ export interface CanteraWasmExportsV1 {
   cantera_out: (index: number) => number
   cantera_status: () => number
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function inputByteLength(value: unknown, path: string): number {
   let json: string | undefined
   try {
@@ -167,8 +142,8 @@ function parseTemperaturePressure(input: Record<string, unknown>, extra: readonl
 } {
   exactKeys(input, ['operation', 'temperatureK', 'pressurePa', ...extra], 'Cantera input')
   return {
-    temperatureK: finiteNumber(input.temperatureK, 'Cantera input.temperatureK', CANTERA_BOUNDS.minimumTemperatureK, CANTERA_BOUNDS.maximumTemperatureK),
-    pressurePa: finiteNumber(input.pressurePa, 'Cantera input.pressurePa', CANTERA_BOUNDS.minimumPressurePa, CANTERA_BOUNDS.maximumPressurePa),
+    temperatureK: boundedNumber(input.temperatureK, 'Cantera input.temperatureK', CANTERA_BOUNDS.minimumTemperatureK, CANTERA_BOUNDS.maximumTemperatureK),
+    pressurePa: boundedNumber(input.pressurePa, 'Cantera input.pressurePa', CANTERA_BOUNDS.minimumPressurePa, CANTERA_BOUNDS.maximumPressurePa),
   }
 }
 
@@ -186,24 +161,17 @@ export function parseCanteraInput(value: unknown): CanteraInputV1 {
     return {
       operation: 'reactor',
       ...state,
-      timeS: finiteNumber(input.timeS, 'Cantera input.timeS', CANTERA_BOUNDS.minimumTimeS, CANTERA_BOUNDS.maximumTimeS),
+      timeS: boundedNumber(input.timeS, 'Cantera input.timeS', CANTERA_BOUNDS.minimumTimeS, CANTERA_BOUNDS.maximumTimeS),
     }
   }
   fail('Cantera input.operation', 'must be thermo, equilibrate-hp, or reactor')
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The Cantera operation was aborted')
-  error.name = 'AbortError'
-  throw error
 }
 
 function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The Cantera operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-cantera' || descriptor.title !== 'cantera') {
     throw new TypeError('Cantera adapter requires the cantera simulation descriptor')
   }
@@ -322,22 +290,22 @@ export async function instantiateCanteraModule(module: WebAssembly.Module): Prom
 }
 
 async function runCantera(input: CanteraInputV1, signal: AbortSignal, descriptorSignal: AbortSignal): Promise<CanteraOutputV1> {
-  throwIfAborted(descriptorSignal)
-  throwIfAborted(signal)
+  throwIfAborted(descriptorSignal, 'The Cantera operation was aborted')
+  throwIfAborted(signal, 'The Cantera operation was aborted')
   const record = verifiedArtifactRecord()
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The Cantera operation was aborted')
   const loaded = await instantiateVerifiedWasm(record, {
     maxBytes: Math.min(record.runtime.maxArtifactBytes, CANTERA_BOUNDS.maximumArtifactBytes),
     signal,
     runtimeKind: 'emscripten',
     imports: createWasmImports(),
   })
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The Cantera operation was aborted')
   if (loaded.companionBytes === null) throw new Error('Cantera companion JavaScript was not verified')
   const exports = requireWasmExports(loaded.instance.exports)
   exports._initialize?.()
   exports.__wasm_call_ctors?.()
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The Cantera operation was aborted')
 
   const opcode = input.operation === 'thermo' ? 0 : input.operation === 'equilibrate-hp' ? 1 : 2
   const time = input.operation === 'reactor' ? input.timeS : 0
@@ -393,8 +361,8 @@ export const createCanteraAdapter: CanteraAdapterFactoryV1 = (descriptor, signal
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The Cantera operation was aborted')
+      throwIfAborted(runSignal, 'The Cantera operation was aborted')
       const parsedInput = parseCanteraInput(input)
       return runCantera(parsedInput, runSignal ?? signal, signal)
     },

@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -62,51 +63,12 @@ export interface RaysectPrismOutputV1 {
 export type RaysectOutputV1 = RaysectPrismOutputV1
 export type RaysectAdapter = AwesomePhysicsAdapterV1<RaysectInputV1, RaysectOutputV1>
 export type RaysectAdapterFactory = AwesomePhysicsAdapterFactoryV1<RaysectInputV1, RaysectOutputV1>
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > RAYSECT_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The raysect operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180)
 }
@@ -152,7 +114,7 @@ export function parseRaysectInput(value: unknown): RaysectInputV1 {
 }
 
 function solvePrism(input: RaysectPrismInputV1, signal?: AbortSignal): RaysectPrismOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The raysect operation was aborted')
   const wavelengthUm = input.wavelengthNm / 1000
   const refractiveIndex = finiteOutput(input.cauchyA + input.cauchyB / (wavelengthUm * wavelengthUm), 'refractiveIndex')
   const apex = toRadians(input.apexAngleDeg)
@@ -210,7 +172,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The raysect operation was aborted')
   if (descriptor.catalogItemId !== RAYSECT_CATALOG_ITEM_ID || descriptor.title !== 'raysect') {
     throw new TypeError('raysect adapter requires the raysect simulation descriptor')
   }
@@ -240,10 +202,10 @@ export const createRaysectAdapter: RaysectAdapterFactory = (descriptor, signal) 
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The raysect operation was aborted')
+      throwIfAborted(runSignal, 'The raysect operation was aborted')
       const output = solvePrism(parseRaysectInput(input), runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The raysect operation was aborted')
       return output
     },
   }

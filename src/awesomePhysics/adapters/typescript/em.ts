@@ -1,3 +1,4 @@
+import { fail, exactKeys, finiteNumber, boundedNumber, record, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -128,37 +129,6 @@ interface ParsedLayeredInput {
 }
 
 type ParsedInput = ParsedPointSourceInput | ParsedLayeredInput
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a plain JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function signedBoundedNumber(value: unknown, path: string, maximum: number): number {
   return boundedNumber(value, path, -maximum, maximum)
 }
@@ -190,16 +160,6 @@ function outputPoint(value: Point2, path: string): EmPoint2V1 {
     finiteOutput(value[1], `${path}[1]`),
   ]
 }
-
-function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
-  const signal = signals.find((candidate) => candidate?.aborted)
-  if (!signal) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The em resistivity operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function distance(source: Point2, receiver: Point2): number {
   return Math.hypot(receiver[0] - source[0], receiver[1] - source[1])
 }
@@ -300,7 +260,7 @@ function layeredPotential(
   layers: readonly EmLayerV1[],
   ...signals: readonly (AbortSignal | undefined)[]
 ): { potentialV: number; reflectionIntegral: number } {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
   const separation = validateDistance(Math.abs(receiverX - sourceX), 'em layered separation')
   const top = layers[0]
   if (!top) throw new RangeError('em layered response requires a top layer')
@@ -312,7 +272,7 @@ function layeredPotential(
   let reflectionIntegral = 0
   const increment = MAX_TRANSFORM_ARGUMENT / QUADRATURE_STEPS
   for (let index = 0; index < QUADRATURE_STEPS; index += 1) {
-    throwIfAborted(...signals)
+    throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
     const transformArgument = (index + 0.5) * increment
     const reflection = reflectionAtWavenumber(transformArgument / separation, layers)
     reflectionIntegral += 2 * reflection * besselJ0(transformArgument)
@@ -330,7 +290,7 @@ function pointSourceOutput(
   input: ParsedPointSourceInput,
   ...signals: readonly (AbortSignal | undefined)[]
 ): EmPointSourceOutputV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
   const directX = input.receiver[0] - input.source[0]
   const directZ = input.receiver[1] - input.source[1]
   const imageZ = input.receiver[1] + input.source[1]
@@ -371,7 +331,7 @@ function layeredOutput(
   input: ParsedLayeredInput,
   ...signals: readonly (AbortSignal | undefined)[]
 ): EmLayeredOutputV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
   const base = layeredPotential(input.currentA, input.sourceX, input.receiverX, input.layers, ...signals)
   const separation = Math.abs(input.receiverX - input.sourceX)
   const differenceStep = Math.min(separation * 0.25, Math.max(separation * 1e-5, MIN_DISTANCE * 0.1))
@@ -408,11 +368,11 @@ function layeredOutput(
 }
 
 function solve(input: ParsedInput, ...signals: readonly (AbortSignal | undefined)[]): EmOutputV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
   const output = input.operation === 'point-source'
     ? pointSourceOutput(input, ...signals)
     : layeredOutput(input, ...signals)
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The em resistivity operation was aborted')
   const serialized = JSON.stringify(output)
   if (serialized === undefined) throw new Error('em output could not be serialized as JSON')
   if (serialized.length > EM_MAX_OUTPUT_BYTES) throw new RangeError(`em output exceeds ${EM_MAX_OUTPUT_BYTES} bytes`)
@@ -432,7 +392,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The em resistivity operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-em' || descriptor.title !== 'em') {
     throw new TypeError('em adapter requires the em simulation descriptor')
   }
@@ -457,9 +417,9 @@ export const createEmAdapter: EmAdapterFactory = (descriptor, signal) => {
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal, runSignal)
+      throwIfAnyAborted([signal, runSignal], 'The em resistivity operation was aborted')
       const output = solve(parseInput(input), signal, runSignal)
-      throwIfAborted(signal, runSignal)
+      throwIfAnyAborted([signal, runSignal], 'The em resistivity operation was aborted')
       return output
     },
   }

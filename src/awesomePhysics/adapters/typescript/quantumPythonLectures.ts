@@ -1,3 +1,5 @@
+import { fail, jsonRecord as record, finiteNumber, boundedNumber, exactKeys, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
+import { rk4Step } from '../../../simphy/integrate'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -98,57 +100,12 @@ export type QuantumPythonLecturesAdapterFactory = AwesomePhysicsAdapterFactoryV1
   QuantumPythonLecturesInputV1,
   QuantumPythonLecturesOutputV1
 >
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const unknown = Object.keys(value).filter((key) => !required.includes(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be a safe integer')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function finiteOutput(value: number, path: string): number {
   if (!Number.isFinite(value) || Math.abs(value) > QUANTUM_PYTHON_LECTURES_BOUNDS.maxOutputAbs) {
     throw new RangeError(`${path} is outside the finite output bound`)
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The quantum-python-lectures operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function oscillatorEnergy(omega: number, x: number, v: number): number {
   return 0.5 * v * v + 0.5 * omega * omega * x * x
 }
@@ -157,8 +114,8 @@ export function parseQuantumPythonLecturesInput(value: unknown): QuantumPythonLe
   const input = record(value, 'quantum-python-lectures input')
   if (input.operation === 'rk4-oscillator') {
     exactKeys(input, ['operation', 'omega', 'x0', 'v0', 'timeStep', 'steps', 'sampleEvery'], 'quantum-python-lectures input')
-    const steps = boundedInteger(input.steps, 'quantum-python-lectures input.steps', QUANTUM_PYTHON_LECTURES_BOUNDS.steps.min, QUANTUM_PYTHON_LECTURES_BOUNDS.steps.max)
-    const sampleEvery = boundedInteger(input.sampleEvery, 'quantum-python-lectures input.sampleEvery', QUANTUM_PYTHON_LECTURES_BOUNDS.sampleEvery.min, QUANTUM_PYTHON_LECTURES_BOUNDS.sampleEvery.max)
+    const steps = requireSafeIntegerBetween(input.steps, 'quantum-python-lectures input.steps', QUANTUM_PYTHON_LECTURES_BOUNDS.steps.min, QUANTUM_PYTHON_LECTURES_BOUNDS.steps.max)
+    const sampleEvery = requireSafeIntegerBetween(input.sampleEvery, 'quantum-python-lectures input.sampleEvery', QUANTUM_PYTHON_LECTURES_BOUNDS.sampleEvery.min, QUANTUM_PYTHON_LECTURES_BOUNDS.sampleEvery.max)
     if (sampleEvery > steps) fail('quantum-python-lectures input.sampleEvery', 'must be at most steps')
     return {
       operation: 'rk4-oscillator',
@@ -205,7 +162,7 @@ function lineshapeIntensity(kind: 'lorentzian' | 'gaussian', center: number, wid
 }
 
 function solveOscillator(input: QuantumPythonLecturesOscillatorInputV1, signal?: AbortSignal): QuantumPythonLecturesOscillatorOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
   let x = input.x0
   let v = input.v0
   const initialSample: QuantumPythonLecturesOscillatorSampleV1 = {
@@ -219,17 +176,13 @@ function solveOscillator(input: QuantumPythonLecturesOscillatorInputV1, signal?:
   let maximumRelativeEnergyError = 0
   const initialEnergy = initialSample.energy
   for (let step = 1; step <= input.steps; step += 1) {
-    throwIfAborted(signal)
-    const k1x = v
-    const k1v = -input.omega * input.omega * x
-    const k2x = v + 0.5 * input.timeStep * k1v
-    const k2v = -input.omega * input.omega * (x + 0.5 * input.timeStep * k1x)
-    const k3x = v + 0.5 * input.timeStep * k2v
-    const k3v = -input.omega * input.omega * (x + 0.5 * input.timeStep * k2x)
-    const k4x = v + input.timeStep * k3v
-    const k4v = -input.omega * input.omega * (x + input.timeStep * k3x)
-    x += (input.timeStep / 6) * (k1x + 2 * k2x + 2 * k3x + k4x)
-    v += (input.timeStep / 6) * (k1v + 2 * k2v + 2 * k3v + k4v)
+    throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
+    const next = rk4Step([x, v], input.timeStep, ([position, velocity]) => [
+      velocity ?? 0,
+      -input.omega * input.omega * (position ?? 0),
+    ])
+    x = next[0] ?? 0
+    v = next[1] ?? 0
     const energy = oscillatorEnergy(input.omega, x, v)
     if (initialEnergy > 0) maximumRelativeEnergyError = Math.max(maximumRelativeEnergyError, Math.abs(energy - initialEnergy) / initialEnergy)
     if (step % input.sampleEvery === 0 || step === input.steps) {
@@ -265,9 +218,9 @@ function solveOscillator(input: QuantumPythonLecturesOscillatorInputV1, signal?:
 }
 
 function solveLineshape(input: QuantumPythonLecturesLineshapeInputV1, signal?: AbortSignal): QuantumPythonLecturesLineshapeOutputV1 {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
   const intensities = input.frequencies.map((frequency, index) => {
-    throwIfAborted(signal)
+    throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
     return finiteOutput(lineshapeIntensity(input.kind, input.center, input.width, input.amplitude, frequency), `intensities[${index}]`)
   })
   return {
@@ -291,7 +244,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
   if (descriptor.catalogItemId !== QUANTUM_PYTHON_LECTURES_CATALOG_ITEM_ID || descriptor.title !== 'quantum-python-lectures') {
     throw new TypeError('quantum-python-lectures adapter requires the quantum-python-lectures simulation descriptor')
   }
@@ -321,13 +274,13 @@ export const createQuantumPythonLecturesAdapter: QuantumPythonLecturesAdapterFac
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The quantum-python-lectures operation was aborted')
+      throwIfAborted(runSignal, 'The quantum-python-lectures operation was aborted')
       const parsed = parseQuantumPythonLecturesInput(input)
       const output = parsed.operation === 'rk4-oscillator'
         ? solveOscillator(parsed, runSignal ?? signal)
         : solveLineshape(parsed, runSignal ?? signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(runSignal, 'The quantum-python-lectures operation was aborted')
       return output
     },
   }

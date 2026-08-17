@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { loadVerifiedWasmArtifact } from '../../wasmArtifactLoader'
+import { fail, jsonRecord as record, exactKeys, throwIfAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -65,25 +66,6 @@ interface FluidEngineDevWasmExportsV1 {
   _initialize: () => void
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
 function boundedStepCount(value: unknown, path: string): number {
   if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be an integer')
   if (value < 0 || value > FLUID_ENGINE_DEV_BOUNDS.maximumStepsPerCall) {
@@ -101,13 +83,6 @@ export function parseFluidEngineDevInput(value: unknown): FluidEngineDevInputV1 
   if (input.operation !== 'step') fail('fluid-engine-dev input.operation', 'must be step')
   exactKeys(input, ['operation', 'steps'], 'fluid-engine-dev input')
   return { operation: 'step', steps: boundedStepCount(input.steps, 'fluid-engine-dev input.steps') }
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The fluid-engine-dev operation was aborted')
-  error.name = 'AbortError'
-  throw error
 }
 
 function finiteScalar(value: unknown, path: string): number {
@@ -185,16 +160,16 @@ export async function instantiateFluidEngineDevModule(module: WebAssembly.Module
 }
 
 async function runFluidEngineDev(input: FluidEngineDevInputV1, signal: AbortSignal, descriptorSignal: AbortSignal): Promise<FluidEngineDevOutputV1> {
-  throwIfAborted(descriptorSignal)
-  throwIfAborted(signal)
+  throwIfAborted(descriptorSignal, 'The fluid-engine-dev operation was aborted')
+  throwIfAborted(signal, 'The fluid-engine-dev operation was aborted')
   const record = verifiedArtifactRecord()
   const module = await loadVerifiedWasmArtifact(record, {
     maxBytes: Math.min(record.runtime.maxArtifactBytes, FLUID_ENGINE_DEV_BOUNDS.maximumArtifactBytes),
     signal,
   })
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The fluid-engine-dev operation was aborted')
   const exports = await instantiateFluidEngineDevModule(module)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The fluid-engine-dev operation was aborted')
   const y = finiteScalar(exports.jet_sph2_step(input.steps), 'fluid-engine-dev output.y')
   const output = {
     schemaVersion: 1 as const,
@@ -224,7 +199,7 @@ function compatibilityFor(descriptor: AwesomePhysicsSimulationDescriptorV1, sign
   }
   const adapterId = descriptor.adapterId
   if (adapterId !== FLUID_ENGINE_DEV_ADAPTER_ID) throw new TypeError('fluid-engine-dev descriptor adapterId is incompatible')
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The fluid-engine-dev operation was aborted')
   return {
     adapterId,
     compatibility: {
@@ -243,8 +218,8 @@ export const createFluidEngineDevAdapter: FluidEngineDevAdapterFactoryV1 = (desc
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The fluid-engine-dev operation was aborted')
+      throwIfAborted(runSignal, 'The fluid-engine-dev operation was aborted')
       return runFluidEngineDev(parseFluidEngineDevInput(input), runSignal ?? signal, signal)
     },
   }

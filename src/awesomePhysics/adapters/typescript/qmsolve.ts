@@ -1,3 +1,4 @@
+import { record, exactKeys, finiteNumber, boundedNumber, requireNonEmptyString, requireSafeIntegerBetween, throwIfAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterFactoryV1,
   AwesomePhysicsAdapterV1,
@@ -121,85 +122,49 @@ interface EnergyValues {
   total: number
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function finiteNumber(value: unknown, label: string): asserts value is number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) throw new TypeError(`${label} must be finite`)
-}
-
-function boundedNumber(value: unknown, label: string, minimum: number, maximum: number): asserts value is number {
-  finiteNumber(value, label)
-  if (value < minimum || value > maximum) throw new RangeError(`${label} must be within [${minimum}, ${maximum}]`)
-}
-
-function boundedInteger(value: unknown, label: string, minimum: number, maximum: number): asserts value is number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) throw new RangeError(`${label} must be a safe integer`)
-  if (value < minimum || value > maximum) throw new RangeError(`${label} must be an integer within [${minimum}, ${maximum}]`)
-}
-
 function requireSignalNotAborted(signal?: AbortSignal): void {
-  if (signal?.aborted) throw cancellationError(signal)
-}
-
-function cancellationError(signal: AbortSignal): Error {
-  if (signal.reason instanceof Error) return signal.reason
-  return new DOMException('QMSolve educational adapter cancelled', 'AbortError')
+  throwIfAborted(signal, 'QMSolve educational adapter cancelled')
 }
 
 function validateInput(value: unknown): QmsolveInput {
-  if (!isRecord(value)) throw new TypeError('QMSolve input must be an object')
-  const unknownKeys = Object.keys(value).filter((key) => !(INPUT_KEYS as readonly string[]).includes(key))
-  if (unknownKeys.length > 0) throw TypeError(`QMSolve input has unknown properties: ${unknownKeys.join(', ')}`)
-  for (const key of INPUT_KEYS) {
-    if (!Object.hasOwn(value, key)) throw new TypeError(`QMSolve input is missing ${key}`)
+  const object = record(value, 'QMSolve input')
+  exactKeys(object, INPUT_KEYS, 'QMSolve input')
+  if (object.potential !== 'harmonic-oscillator') throw new RangeError('QMSolve input supports only the harmonic-oscillator potential')
+  if (object.initialState !== 'gaussian-wave-packet') throw new RangeError('QMSolve input supports only the gaussian-wave-packet initial state')
+  const input: QmsolveInput = {
+    potential:            'harmonic-oscillator',
+    initialState:         'gaussian-wave-packet',
+    gridSize:             requireSafeIntegerBetween(object.gridSize, 'gridSize', QMSOLVE_BOUNDS.gridSize.min, QMSOLVE_BOUNDS.gridSize.max),
+    domainHalfWidth:      boundedNumber(object.domainHalfWidth, 'domainHalfWidth', QMSOLVE_BOUNDS.domainHalfWidth.min, QMSOLVE_BOUNDS.domainHalfWidth.max),
+    timeStep:             boundedNumber(object.timeStep, 'timeStep', QMSOLVE_BOUNDS.timeStep.min, QMSOLVE_BOUNDS.timeStep.max),
+    steps:                requireSafeIntegerBetween(object.steps, 'steps', QMSOLVE_BOUNDS.steps.min, QMSOLVE_BOUNDS.steps.max),
+    oscillatorFrequency:  boundedNumber(object.oscillatorFrequency, 'oscillatorFrequency', QMSOLVE_BOUNDS.oscillatorFrequency.min, QMSOLVE_BOUNDS.oscillatorFrequency.max),
+    packetCenter:         finiteNumber(object.packetCenter, 'packetCenter'),
+    packetWidth:          boundedNumber(object.packetWidth, 'packetWidth', QMSOLVE_BOUNDS.packetWidth.min, QMSOLVE_BOUNDS.packetWidth.max),
+    packetMomentum:       boundedNumber(object.packetMomentum, 'packetMomentum', QMSOLVE_BOUNDS.packetMomentum.min, QMSOLVE_BOUNDS.packetMomentum.max),
+    sampleCount:          requireSafeIntegerBetween(object.sampleCount, 'sampleCount', QMSOLVE_BOUNDS.sampleCount.min, QMSOLVE_BOUNDS.sampleCount.max),
   }
 
-  if (value.potential !== 'harmonic-oscillator') throw new RangeError('QMSolve input supports only the harmonic-oscillator potential')
-  if (value.initialState !== 'gaussian-wave-packet') throw new RangeError('QMSolve input supports only the gaussian-wave-packet initial state')
-  boundedInteger(value.gridSize, 'gridSize', QMSOLVE_BOUNDS.gridSize.min, QMSOLVE_BOUNDS.gridSize.max)
-  boundedNumber(value.domainHalfWidth, 'domainHalfWidth', QMSOLVE_BOUNDS.domainHalfWidth.min, QMSOLVE_BOUNDS.domainHalfWidth.max)
-  boundedNumber(value.timeStep, 'timeStep', QMSOLVE_BOUNDS.timeStep.min, QMSOLVE_BOUNDS.timeStep.max)
-  boundedInteger(value.steps, 'steps', QMSOLVE_BOUNDS.steps.min, QMSOLVE_BOUNDS.steps.max)
-  boundedNumber(value.oscillatorFrequency, 'oscillatorFrequency', QMSOLVE_BOUNDS.oscillatorFrequency.min, QMSOLVE_BOUNDS.oscillatorFrequency.max)
-  finiteNumber(value.packetCenter, 'packetCenter')
-  boundedNumber(value.packetWidth, 'packetWidth', QMSOLVE_BOUNDS.packetWidth.min, QMSOLVE_BOUNDS.packetWidth.max)
-  boundedNumber(value.packetMomentum, 'packetMomentum', QMSOLVE_BOUNDS.packetMomentum.min, QMSOLVE_BOUNDS.packetMomentum.max)
-  boundedInteger(value.sampleCount, 'sampleCount', QMSOLVE_BOUNDS.sampleCount.min, QMSOLVE_BOUNDS.sampleCount.max)
-
-  if (Math.abs(value.packetCenter) + 3 * value.packetWidth > value.domainHalfWidth) {
+  if (Math.abs(input.packetCenter) + 3 * input.packetWidth > input.domainHalfWidth) {
     throw new RangeError('packetCenter and packetWidth place too much of the packet outside the finite domain')
   }
 
-  const spacing = 2 * value.domainHalfWidth / (value.gridSize - 1)
-  if (spacing > value.packetWidth / 2) {
+  const spacing = 2 * input.domainHalfWidth / (input.gridSize - 1)
+  if (spacing > input.packetWidth / 2) {
     throw new RangeError('gridSize is too small to resolve packetWidth')
   }
 
-  const maximumPotential = 0.5 * value.oscillatorFrequency ** 2 * value.domainHalfWidth ** 2
+  const maximumPotential = 0.5 * input.oscillatorFrequency ** 2 * input.domainHalfWidth ** 2
   const maximumKinetic = 2 * HBAR ** 2 / (MASS * spacing ** 2)
-  const maximumPhaseAdvance = value.timeStep * (maximumKinetic + maximumPotential) / HBAR
+  const maximumPhaseAdvance = input.timeStep * (maximumKinetic + maximumPotential) / HBAR
   if (!Number.isFinite(maximumPhaseAdvance) || maximumPhaseAdvance > QMSOLVE_BOUNDS.maximumPhaseAdvance) {
     throw new RangeError('timeStep is unstable or under-resolved for this grid')
   }
-  if (value.timeStep * value.steps > QMSOLVE_BOUNDS.maximumTotalTime) {
+  if (input.timeStep * input.steps > QMSOLVE_BOUNDS.maximumTotalTime) {
     throw new RangeError(`timeStep * steps must be no greater than ${QMSOLVE_BOUNDS.maximumTotalTime}`)
   }
 
-  return {
-    potential: value.potential,
-    initialState: value.initialState,
-    gridSize: value.gridSize,
-    domainHalfWidth: value.domainHalfWidth,
-    timeStep: value.timeStep,
-    steps: value.steps,
-    oscillatorFrequency: value.oscillatorFrequency,
-    packetCenter: value.packetCenter,
-    packetWidth: value.packetWidth,
-    packetMomentum: value.packetMomentum,
-    sampleCount: value.sampleCount,
-  }
+  return input
 }
 
 function gridValues(input: QmsolveInput): { coordinates: Float64Array; potential: Float64Array; spacing: number } {
@@ -433,8 +398,7 @@ export async function evaluateQmsolve(value: QmsolveInput, signal?: AbortSignal)
 }
 
 function descriptorString(value: unknown, label: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) throw new TypeError(`${label} must be a non-empty string`)
-  return value
+  return requireNonEmptyString(value, label)
 }
 
 function compatibilityFor(

@@ -1,3 +1,4 @@
+import { fail, record, exactKeys, finiteNumber, boundedNumber, throwIfAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -106,36 +107,6 @@ interface SurfaceMiss {
 
 type SurfaceIntersection = SurfaceHit | SurfaceMiss
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be an object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function vector(value: unknown, path: string, limit: number): RayoptPointV1 {
   if (!Array.isArray(value) || value.length !== 2) fail(path, 'must be an array of exactly two finite numbers')
   return [
@@ -150,14 +121,6 @@ function normalize(value: RayoptPointV1, path: string): RayoptPointV1 {
   const result: RayoptPointV1 = [value[0] / magnitude, value[1] / magnitude]
   if (!result.every(Number.isFinite)) throw new RangeError(`${path} normalization is not finite`)
   return result
-}
-
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The operation was aborted')
-  error.name = 'AbortError'
-  throw error
 }
 
 function parseInput(input: unknown): ParsedInput {

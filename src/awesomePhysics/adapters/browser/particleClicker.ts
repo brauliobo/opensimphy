@@ -1,3 +1,4 @@
+import { fail, record, exactKeys, requireNonEmptyString, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterFactoryV1,
   AwesomePhysicsAdapterV1,
@@ -229,10 +230,6 @@ type JsonRecord = Record<string, unknown>
 const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype'])
 const GRANT_FACTOR = 5
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`Particle Clicker ${path} ${message}`)
-}
-
 function isObject(value: unknown): value is object {
   return typeof value === 'object' && value !== null
 }
@@ -277,16 +274,7 @@ function assertJsonSafe(value: unknown, path: string, ancestors = new WeakSet<ob
 }
 
 function asRecord(value: unknown, path: string): JsonRecord {
-  if (!isObject(value) || Array.isArray(value)) fail(path, 'must be a plain object')
-  return value as JsonRecord
-}
-
-function exactKeys(value: JsonRecord, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
+  return record(value, path, 'plain')
 }
 
 function nonNegativeFinite(value: unknown, path: string, maximum: number): number {
@@ -362,15 +350,10 @@ function addBounded(current: number, amount: number, maximum: number, path: stri
   return next
 }
 
-function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
-  if (!signals.some((signal) => signal?.aborted)) return
-  throw new DOMException('Particle Clicker run was cancelled', 'AbortError')
-}
-
 async function yieldToAbort(signals: readonly (AbortSignal | undefined)[], iteration: number): Promise<void> {
   if (iteration % 256 !== 0) return
   await Promise.resolve()
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
 }
 
 function parseInitialState(value: unknown): MutableParticleClickerState {
@@ -562,11 +545,11 @@ async function applyAction(
   totals: MutableParticleClickerTotals,
   signals: readonly (AbortSignal | undefined)[],
 ): Promise<ParticleClickerActionResult> {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
   if (action.type === 'click') {
     const startingParticles = state.particles
     for (let click = 0; click < action.count; click += 1) {
-      throwIfAborted(...signals)
+      throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
       state.particles = addBounded(state.particles, state.detectorPower, PARTICLE_CLICKER_BOUNDS.maxParticles, 'particles')
       state.clicks += 1
       await yieldToAbort(signals, click + 1)
@@ -585,7 +568,7 @@ async function applyAction(
     state.elapsedSeconds = addBounded(state.elapsedSeconds, action.seconds, PARTICLE_CLICKER_BOUNDS.maxElapsedSeconds, 'elapsed time')
     totals.particlesFromWorkers += particlesAdded
     totals.fundingFromGrants += fundingAdded
-    throwIfAborted(...signals)
+    throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
     return actionResult(index, action.type, true, 0, particlesAdded, fundingAdded, 0, 'applied')
   }
 
@@ -594,7 +577,7 @@ async function applyAction(
     let purchased = 0
     let cost = 0
     for (let hire = 0; hire < action.count; hire += 1) {
-      throwIfAborted(...signals)
+      throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
       const nextCost = state.workerCosts[action.workerId]
       if (state.funding < nextCost) break
       state.funding -= nextCost
@@ -650,7 +633,7 @@ async function runParticleClickerWithSignals(
   input: ParticleClickerInput,
   signals: readonly (AbortSignal | undefined)[],
 ): Promise<ParticleClickerOutput> {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
   const parsed = parseInput(input)
   const totals: MutableParticleClickerTotals = {
     clicks: 0,
@@ -666,7 +649,7 @@ async function runParticleClickerWithSignals(
     actions.push(await applyAction(action, index, parsed.state, totals, signals))
     await yieldToAbort(signals, index + 1)
   }
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'Particle Clicker run was cancelled')
 
   const output = {
     schemaVersion: 1 as const,
@@ -688,8 +671,7 @@ export function runParticleClicker(input: ParticleClickerInput, signal?: AbortSi
 }
 
 function descriptorText(value: unknown, path: string): string {
-  if (typeof value !== 'string' || value.trim().length === 0) throw new TypeError(`Particle Clicker ${path} must be a non-empty string`)
-  return value
+  return requireNonEmptyString(value, path)
 }
 
 interface AdapterDescriptorData {
@@ -704,7 +686,7 @@ function descriptorData(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): AdapterDescriptorData {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'Particle Clicker run was cancelled')
   if (!descriptor || typeof descriptor !== 'object') throw new TypeError('Particle Clicker descriptor must be an object')
   if (descriptor.catalogItemId !== PARTICLE_CLICKER_CATALOG_ITEM_ID || descriptor.title !== 'particle-clicker') {
     throw new TypeError('Particle Clicker adapter requires the particle-clicker simulation descriptor')
@@ -738,7 +720,7 @@ export const createParticleClickerAdapter: ParticleClickerAdapterFactory = (
       outputRevision: data.outputRevision,
     },
     run: (input, runSignal) => {
-      throwIfAborted(factorySignal, runSignal)
+      throwIfAnyAborted([factorySignal, runSignal], 'Particle Clicker run was cancelled')
       return runParticleClickerWithSignals(input, [factorySignal, runSignal])
     },
   }

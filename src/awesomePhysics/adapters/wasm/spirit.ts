@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { loadVerifiedWasmArtifact } from '../../wasmArtifactLoader'
+import { fail, jsonRecord as record, exactKeys, boundedNumber, requireSafeIntegerBetween, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -90,45 +91,13 @@ interface SpiritWasmExports {
   spirit_llg_time: (...args: SpiritWasmArguments) => number
   spirit_llg_norm: (...args: SpiritWasmArguments) => number
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
-function boundedInteger(value: unknown, path: string, minimum: number, maximum: number): number {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value)) fail(path, 'must be an integer')
-  if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return value
-}
-
 function vec3(value: unknown, path: string, bounds: { min: number; max: number }): { x: number; y: number; z: number } {
   const vector = record(value, path)
   exactKeys(vector, ['x', 'y', 'z'], path)
   return {
-    x: finiteNumber(vector.x, `${path}.x`, bounds.min, bounds.max),
-    y: finiteNumber(vector.y, `${path}.y`, bounds.min, bounds.max),
-    z: finiteNumber(vector.z, `${path}.z`, bounds.min, bounds.max),
+    x: boundedNumber(vector.x, `${path}.x`, bounds.min, bounds.max),
+    y: boundedNumber(vector.y, `${path}.y`, bounds.min, bounds.max),
+    z: boundedNumber(vector.z, `${path}.z`, bounds.min, bounds.max),
   }
 }
 
@@ -138,23 +107,15 @@ export function parseSpiritInput(value: unknown): SpiritInputV1 {
   if (input.operation !== 'llg-heun') fail('Spirit input.operation', 'must be llg-heun')
   return {
     operation: 'llg-heun',
-    spinCount: boundedInteger(input.spinCount, 'Spirit input.spinCount', SPIRIT_BOUNDS.spinCount.min, SPIRIT_BOUNDS.spinCount.max),
-    damping: finiteNumber(input.damping, 'Spirit input.damping', SPIRIT_BOUNDS.damping.min, SPIRIT_BOUNDS.damping.max),
-    timeStep: finiteNumber(input.timeStep, 'Spirit input.timeStep', SPIRIT_BOUNDS.timeStep.min, SPIRIT_BOUNDS.timeStep.max),
-    steps: boundedInteger(input.steps, 'Spirit input.steps', SPIRIT_BOUNDS.steps.min, SPIRIT_BOUNDS.steps.max),
+    spinCount: requireSafeIntegerBetween(input.spinCount, 'Spirit input.spinCount', SPIRIT_BOUNDS.spinCount.min, SPIRIT_BOUNDS.spinCount.max),
+    damping: boundedNumber(input.damping, 'Spirit input.damping', SPIRIT_BOUNDS.damping.min, SPIRIT_BOUNDS.damping.max),
+    timeStep: boundedNumber(input.timeStep, 'Spirit input.timeStep', SPIRIT_BOUNDS.timeStep.min, SPIRIT_BOUNDS.timeStep.max),
+    steps: requireSafeIntegerBetween(input.steps, 'Spirit input.steps', SPIRIT_BOUNDS.steps.min, SPIRIT_BOUNDS.steps.max),
     field: vec3(input.field, 'Spirit input.field', SPIRIT_BOUNDS.field),
-    exchange: finiteNumber(input.exchange, 'Spirit input.exchange', SPIRIT_BOUNDS.exchange.min, SPIRIT_BOUNDS.exchange.max),
+    exchange: boundedNumber(input.exchange, 'Spirit input.exchange', SPIRIT_BOUNDS.exchange.min, SPIRIT_BOUNDS.exchange.max),
     initialSpin: vec3(input.initialSpin, 'Spirit input.initialSpin', SPIRIT_BOUNDS.spin),
   }
 }
-
-function throwIfAborted(signal: AbortSignal | undefined): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The Spirit operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function linkedSignals(
   first: AbortSignal | undefined,
   second: AbortSignal | undefined,
@@ -183,7 +144,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The Spirit operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-spirit' || descriptor.title !== 'spirit') {
     throw new TypeError('Spirit adapter requires the spirit simulation descriptor')
   }
@@ -278,8 +239,8 @@ export function createSpiritAdapterFromRecord(
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(value, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The Spirit operation was aborted')
+      throwIfAborted(runSignal, 'The Spirit operation was aborted')
       const input = parseSpiritInput(value)
       const linked = linkedSignals(signal, runSignal)
       try {
@@ -289,9 +250,9 @@ export function createSpiritAdapterFromRecord(
           maxBytes: options.maxBytes ?? SPIRIT_BOUNDS.maximumArtifactBytes,
           signal: linked.signal,
         })
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The Spirit operation was aborted')
         const instance = await WebAssembly.instantiate(module, {})
-        throwIfAborted(linked.signal)
+        throwIfAborted(linked.signal, 'The Spirit operation was aborted')
         const exports = wasmExports(instance)
         const args = wasmArguments(input)
         const status = exports.spirit_llg_status(...args)

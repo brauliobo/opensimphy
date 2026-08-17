@@ -1,3 +1,5 @@
+import { fail, exactKeys, finiteNumber, boundedNumber, record, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
+import { rk4Step } from '../../../simphy/integrate'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -112,37 +114,6 @@ interface ParsedInput {
   steps: number
   sampleCount: number
 }
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a plain JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], optional: readonly string[], path: string): void {
-  const allowed = new Set([...required, ...optional])
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function safeInteger(value: unknown, path: string, minimum: number, maximum: number): number {
   if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < minimum || value > maximum) {
     fail(path, `must be a safe integer between ${minimum} and ${maximum}`)
@@ -156,17 +127,6 @@ function finiteOutput(value: number, path: string): number {
   }
   return value
 }
-
-function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
-  for (const signal of signals) {
-    if (!signal?.aborted) continue
-    if (signal.reason instanceof Error) throw signal.reason
-    const error = new Error('The PyDy operation was aborted')
-    error.name = 'AbortError'
-    throw error
-  }
-}
-
 function yieldToHost(): Promise<void> {
   return new Promise((resolve) => globalThis.setTimeout(resolve, 0))
 }
@@ -303,26 +263,9 @@ function derivative(value: readonly number[], parameters: PydyParametersV1): [nu
   return [state.u1RadPerS, state.u2RadPerS, acceleration1, acceleration2]
 }
 
-function addScaled(left: readonly number[], right: readonly number[], scale: number): [number, number, number, number] {
-  return [
-    left[0]! + scale * right[0]!,
-    left[1]! + scale * right[1]!,
-    left[2]! + scale * right[2]!,
-    left[3]! + scale * right[3]!,
-  ]
-}
-
-function rk4Step(value: readonly number[], timeStepS: number, parameters: PydyParametersV1): [number, number, number, number] {
-  const first = derivative(value, parameters)
-  const second = derivative(addScaled(value, first, 0.5 * timeStepS), parameters)
-  const third = derivative(addScaled(value, second, 0.5 * timeStepS), parameters)
-  const fourth = derivative(addScaled(value, third, timeStepS), parameters)
-  return [
-    value[0]! + (timeStepS / 6) * (first[0]! + 2 * second[0]! + 2 * third[0]! + fourth[0]!),
-    value[1]! + (timeStepS / 6) * (first[1]! + 2 * second[1]! + 2 * third[1]! + fourth[1]!),
-    value[2]! + (timeStepS / 6) * (first[2]! + 2 * second[2]! + 2 * third[2]! + fourth[2]!),
-    value[3]! + (timeStepS / 6) * (first[3]! + 2 * second[3]! + 2 * third[3]! + fourth[3]!),
-  ]
+function integrateState(value: readonly number[], timeStepS: number, parameters: PydyParametersV1): [number, number, number, number] {
+  const next = rk4Step(value, timeStepS, (state) => derivative(state, parameters))
+  return [next[0] ?? 0, next[1] ?? 0, next[2] ?? 0, next[3] ?? 0]
 }
 
 function sampleSteps(steps: number, sampleCount: number): number[] {
@@ -350,7 +293,7 @@ function finiteJson<T>(value: T): T {
 
 export async function evaluatePydy(value: PydyInputV1, signal?: AbortSignal): Promise<PydyOutputV1> {
   const input = parseInput(value)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The PyDy operation was aborted')
   const requestedSteps = sampleSteps(input.steps, input.sampleCount)
   const requestedStepSet = new Set(requestedSteps)
   const samples = new Map<number, PydySampleV1>()
@@ -358,14 +301,14 @@ export async function evaluatePydy(value: PydyInputV1, signal?: AbortSignal): Pr
   if (requestedStepSet.has(0)) samples.set(0, sampleState(0, vectorState(stateVectorValue), input.timeStepS, input.parameters))
 
   for (let step = 1; step <= input.steps; step += 1) {
-    throwIfAborted(signal)
-    stateVectorValue = rk4Step(stateVectorValue, input.timeStepS, input.parameters)
+    throwIfAborted(signal, 'The PyDy operation was aborted')
+    stateVectorValue = integrateState(stateVectorValue, input.timeStepS, input.parameters)
     const nextState = vectorState(stateVectorValue)
     stateVectorValue = stateVector(nextState)
     if (requestedStepSet.has(step)) samples.set(step, sampleState(step, nextState, input.timeStepS, input.parameters))
     if (step % YIELD_INTERVAL === 0) {
       await yieldToHost()
-      throwIfAborted(signal)
+      throwIfAborted(signal, 'The PyDy operation was aborted')
     }
   }
 
@@ -409,7 +352,7 @@ export async function evaluatePydy(value: PydyInputV1, signal?: AbortSignal): Pr
     numericalMethod: 'Direct 2x2 Lagrangian mass-matrix solve advanced with bounded fixed-step classical RK4.',
     licenseCaveat: PYDY_SOURCE_CAVEATS.license,
   }
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The PyDy operation was aborted')
   return finiteJson(output)
 }
 
@@ -422,7 +365,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The PyDy operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-pydy' || descriptor.title !== 'pydy') {
     throw new TypeError('PyDy adapter requires the pydy simulation descriptor')
   }
@@ -451,10 +394,10 @@ export const createPydyAdapter: PydyAdapterFactory = (descriptor, signal) => {
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The PyDy operation was aborted')
+      throwIfAborted(runSignal, 'The PyDy operation was aborted')
       return evaluatePydy(input, runSignal ?? signal).then((output) => {
-        throwIfAborted(signal, runSignal)
+        throwIfAnyAborted([signal, runSignal], 'The PyDy operation was aborted')
         return output
       })
     },

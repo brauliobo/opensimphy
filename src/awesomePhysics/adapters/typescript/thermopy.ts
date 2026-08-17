@@ -1,3 +1,4 @@
+import { fail, jsonRecord as record, exactKeys, finiteNumber, boundedNumber, throwIfAborted, throwIfAnyAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -108,36 +109,6 @@ interface NormalizedInterval {
   coefficients: NormalizedCoefficients
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
-function finiteNumber(value: unknown, path: string): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
-  return value
-}
-
-function boundedNumber(value: unknown, path: string, minimum: number, maximum: number): number {
-  const result = finiteNumber(value, path)
-  if (result < minimum || result > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
-  return result
-}
-
 function coefficient(value: unknown, path: string): number {
   return boundedNumber(value, path, -MAX_ABSOLUTE_COEFFICIENT, MAX_ABSOLUTE_COEFFICIENT)
 }
@@ -148,23 +119,12 @@ function finiteOutput(value: number, path: string): number {
   }
   return value === 0 ? 0 : value
 }
-
-function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
-  for (const signal of signals) {
-    if (!signal?.aborted) continue
-    if (signal.reason instanceof Error) throw signal.reason
-    const error = new Error('The thermopy operation was aborted')
-    error.name = 'AbortError'
-    throw error
-  }
-}
-
 function normalizeIntervals(
   value: unknown,
   path: string,
   ...signals: readonly (AbortSignal | undefined)[]
 ): NormalizedInterval[] {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   if (!Array.isArray(value) || value.length < 1 || value.length > THERMOPY_MAX_INTERVALS) {
     fail(path, `must contain between 1 and ${THERMOPY_MAX_INTERVALS} intervals`)
   }
@@ -172,7 +132,7 @@ function normalizeIntervals(
   const intervals: NormalizedInterval[] = []
   let previousUpperTemperatureK: number | undefined
   for (let intervalIndex = 0; intervalIndex < value.length; intervalIndex += 1) {
-    throwIfAborted(...signals)
+    throwIfAnyAborted(signals, 'The thermopy operation was aborted')
     const interval = record(value[intervalIndex], `${path}[${intervalIndex}]`)
     exactKeys(interval, ['lowerTemperatureK', 'upperTemperatureK', 'coefficients'], `${path}[${intervalIndex}]`)
     const lowerTemperatureK = boundedNumber(
@@ -199,7 +159,7 @@ function normalizeIntervals(
     }
     const coefficients: number[] = []
     for (let coefficientIndex = 0; coefficientIndex < interval.coefficients.length; coefficientIndex += 1) {
-      throwIfAborted(...signals)
+      throwIfAnyAborted(signals, 'The thermopy operation was aborted')
       coefficients.push(coefficient(interval.coefficients[coefficientIndex], `${path}[${intervalIndex}].coefficients[${coefficientIndex}]`))
     }
 
@@ -228,7 +188,7 @@ function normalizeIntervals(
 
 function selectInterval(temperatureK: number, intervals: readonly NormalizedInterval[], ...signals: readonly (AbortSignal | undefined)[]): NormalizedInterval {
   for (const interval of intervals) {
-    throwIfAborted(...signals)
+    throwIfAnyAborted(signals, 'The thermopy operation was aborted')
     if (temperatureK >= interval.lowerTemperatureK && temperatureK <= interval.upperTemperatureK) return interval
   }
   throw new RangeError('temperatureK is outside all supplied NASA9 temperature intervals')
@@ -248,7 +208,7 @@ function assertOutputSize(output: ThermopyNasa9OutputV1): void {
 }
 
 function parseInput(input: unknown, ...signals: readonly (AbortSignal | undefined)[]): ThermopyNasa9InputV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   const object = record(input, 'thermopy input')
   if (object.operation !== 'nasa9-ideal-gas') {
     fail('thermopy input.operation', 'must be nasa9-ideal-gas')
@@ -267,7 +227,7 @@ export function calculateThermopyNasa9Properties(
   intervals: readonly ThermopyNasa9IntervalV1[],
   ...signals: readonly (AbortSignal | undefined)[]
 ): ThermopyNasa9PropertyValuesV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   const temperature = boundedNumber(temperatureK, 'temperatureK', MIN_TEMPERATURE_K, MAX_TEMPERATURE_K)
   const normalizedIntervals = normalizeIntervals(intervals, 'intervals', ...signals)
   const interval = selectInterval(temperature, normalizedIntervals, ...signals)
@@ -306,7 +266,7 @@ export function calculateThermopyNasa9Properties(
   const boundedCpOverR = finiteOutput(cpOverR, 'Cp/R')
   const boundedEnthalpyOverRT = finiteOutput(enthalpyOverRT, 'H/(R T)')
   const boundedEntropyOverR = finiteOutput(entropyOverR, 'S/R')
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   return {
     temperatureK: temperature,
     interval: {
@@ -326,7 +286,7 @@ export function calculateThermopyNasa9Properties(
 export const evaluateThermopyNasa9 = calculateThermopyNasa9Properties
 
 function solve(input: ThermopyNasa9InputV1, ...signals: readonly (AbortSignal | undefined)[]): ThermopyNasa9OutputV1 {
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   const properties = calculateThermopyNasa9Properties(input.temperatureK, input.intervals, ...signals)
   const output: ThermopyNasa9OutputV1 = {
     operation: input.operation,
@@ -354,7 +314,7 @@ function solve(input: ThermopyNasa9InputV1, ...signals: readonly (AbortSignal | 
     licenseGate: 'review',
     licenseCaveat: THERMOPY_SOURCE_CAVEATS.license,
   }
-  throwIfAborted(...signals)
+  throwIfAnyAborted(signals, 'The thermopy operation was aborted')
   assertOutputSize(output)
   return output
 }
@@ -368,7 +328,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The thermopy operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-thermopy' || descriptor.title !== 'thermopy') {
     throw new TypeError('thermopy adapter requires the thermopy simulation descriptor')
   }
@@ -393,9 +353,9 @@ export const createThermopyAdapter: ThermopyAdapterFactoryV1 = (descriptor, sign
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     run(input, runSignal) {
-      throwIfAborted(signal, runSignal)
+      throwIfAnyAborted([signal, runSignal], 'The thermopy operation was aborted')
       const output = solve(parseInput(input, signal, runSignal), signal, runSignal)
-      throwIfAborted(signal, runSignal)
+      throwIfAnyAborted([signal, runSignal], 'The thermopy operation was aborted')
       return output
     },
   }

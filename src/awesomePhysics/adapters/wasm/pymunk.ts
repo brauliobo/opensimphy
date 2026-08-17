@@ -1,6 +1,7 @@
 import { artifactRecordById } from '../../artifactManifest'
 import type { ArtifactRecordV1 } from '../../artifactManifest'
 import { loadVerifiedWasmArtifact } from '../../wasmArtifactLoader'
+import { fail, jsonRecord as record, exactKeys, throwIfAborted } from '../../../simphy/contract'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -90,25 +91,6 @@ export interface PymunkWasmExportsV1 {
   pymunk_steps: () => number
 }
 
-function fail(path: string, message: string): never {
-  throw new TypeError(`${path} ${message}`)
-}
-
-function record(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'must be a JSON object')
-  const prototype = Object.getPrototypeOf(value)
-  if (prototype !== Object.prototype && prototype !== null) fail(path, 'must be a plain JSON object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(value: Record<string, unknown>, required: readonly string[], path: string): void {
-  const allowed = new Set(required)
-  const unknown = Object.keys(value).filter((key) => !allowed.has(key))
-  const missing = required.filter((key) => !Object.hasOwn(value, key))
-  if (unknown.length > 0) fail(path, `has unknown properties: ${unknown.join(', ')}`)
-  if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
-}
-
 function inputByteLength(value: unknown, path: string): number {
   let json: string | undefined
   try {
@@ -146,13 +128,6 @@ export function parsePymunkInput(value: unknown): PymunkInputV1 {
   fail('pymunk input.operation', 'must be snapshot or step')
 }
 
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  const error = signal.reason instanceof Error ? signal.reason : new Error('The pymunk operation was aborted')
-  error.name = 'AbortError'
-  throw error
-}
-
 function finiteSnapshotValue(value: unknown, path: string): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
   if (Math.abs(value) > PYMUNK_BOUNDS.maximumSnapshotAbsoluteValue) {
@@ -173,7 +148,7 @@ function compatibilityFor(
   descriptor: AwesomePhysicsSimulationDescriptorV1,
   signal: AbortSignal,
 ): { adapterId: string; compatibility: AwesomePhysicsAdapterCompatibilityV1 } {
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The pymunk operation was aborted')
   if (descriptor.catalogItemId !== 'awesome-pymunk' || descriptor.title !== 'pymunk') {
     throw new TypeError('pymunk adapter requires the pymunk simulation descriptor')
   }
@@ -270,17 +245,17 @@ function snapshotFromStep(exports: PymunkWasmExportsV1, y: number, expectedSteps
 }
 
 async function runPymunk(input: PymunkInputV1, signal: AbortSignal, descriptorSignal: AbortSignal): Promise<PymunkOutputV1> {
-  throwIfAborted(descriptorSignal)
-  throwIfAborted(signal)
+  throwIfAborted(descriptorSignal, 'The pymunk operation was aborted')
+  throwIfAborted(signal, 'The pymunk operation was aborted')
   const record = verifiedArtifactRecord()
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The pymunk operation was aborted')
   const module = await loadVerifiedWasmArtifact(record, {
     maxBytes: Math.min(record.runtime.maxArtifactBytes, PYMUNK_BOUNDS.maximumArtifactBytes),
     signal,
   })
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The pymunk operation was aborted')
   const exports = await instantiatePymunkModule(module)
-  throwIfAborted(signal)
+  throwIfAborted(signal, 'The pymunk operation was aborted')
   const steps = input.operation === 'snapshot' ? 0 : input.steps
   const y = finiteSnapshotValue(exports.pymunk_step(steps), 'pymunk output.y')
   const snapshot = snapshotFromStep(exports, y, steps)
@@ -312,8 +287,8 @@ export const createPymunkAdapter: PymunkAdapterFactoryV1 = (descriptor, signal) 
     protocol: 'awesome-physics-adapter-v1',
     compatibility,
     async run(input, runSignal) {
-      throwIfAborted(signal)
-      throwIfAborted(runSignal)
+      throwIfAborted(signal, 'The pymunk operation was aborted')
+      throwIfAborted(runSignal, 'The pymunk operation was aborted')
       const parsedInput = parsePymunkInput(input)
       return runPymunk(parsedInput, runSignal ?? signal, signal)
     },
