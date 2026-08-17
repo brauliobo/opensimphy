@@ -180,7 +180,7 @@ describe('EARTH Iteration 7 workbench adapter', () => {
     const requestedUrls = vi.mocked(fetch).mock.calls.map(([input]) => String(input))
 
     expect(wrapper.attributes('data-surface')).toBe('workbench')
-    expect(wrapper.get('[data-testid="earth-workbench-header"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="earth-workbench-header"]').exists()).toBe(true)
     expect(wrapper.get('.workbench-instrument-title').element.tagName).toBe('H3')
     expect(wrapper.findAll('.workbench-section-title').every((heading) => heading.element.tagName === 'H4')).toBe(true)
     expect(wrapper.find('.earth-local-nav').exists()).toBe(false)

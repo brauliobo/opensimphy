@@ -8,6 +8,7 @@ import {
 } from "./common.js";
 
 type Vector3 = [number, number, number];
+const AXES = [0, 1, 2] as const;
 
 export interface SphericalCoordinationInputs {
   coordination: number;
@@ -45,9 +46,9 @@ function evaluate(points: Vector3[]): CoordinationState {
       const rightGradient = gradients[right]!;
       const leftPoint = points[left]!;
       const rightPoint = points[right]!;
-      for (let axis = 0; axis < 3; axis += 1) {
-        leftGradient[axis] += scale * rightPoint[axis]!;
-        rightGradient[axis] += scale * leftPoint[axis]!;
+      for (const axis of AXES) {
+        leftGradient[axis] += scale * rightPoint[axis];
+        rightGradient[axis] += scale * leftPoint[axis];
       }
     }
   }
@@ -56,7 +57,7 @@ function evaluate(points: Vector3[]): CoordinationState {
     const point = points[index]!;
     const gradient = gradients[index]!;
     const radial = dot(point, gradient);
-    for (let axis = 0; axis < 3; axis += 1) gradient[axis] -= radial * point[axis]!;
+    for (const axis of AXES) gradient[axis] -= radial * point[axis];
     squaredNorm += dot(gradient, gradient);
   }
   return { energy, gradients, gradientNorm: Math.sqrt(squaredNorm) };

@@ -110,6 +110,8 @@ export const ISQ_DIMENSION_AXES = Object.freeze([
 
 export const DIMENSION_AXES = ISQ_DIMENSION_AXES
 
+const DIMENSION_INDICES = [0, 1, 2, 3, 4, 5, 6] as const
+
 function readonlyDimension(...numerators: [number, number, number, number, number, number, number]): ReadonlyDimensionVector {
   return Object.freeze(numerators.map((numerator) => Object.freeze({ numerator, denominator: 1 }))) as unknown as ReadonlyDimensionVector
 }
@@ -218,7 +220,8 @@ function combineDimensions(
   right: ReadonlyDimensionVector,
   rightSign: 1 | -1,
 ): DimensionVector {
-  return left.map((leftExponent, index) => {
+  return DIMENSION_INDICES.map((index) => {
+    const leftExponent = left[index]
     const rightExponent = right[index]
     const numerator = leftExponent.numerator * rightExponent.denominator
       + rightSign * rightExponent.numerator * leftExponent.denominator
@@ -227,7 +230,8 @@ function combineDimensions(
 }
 
 function dimensionsEqual(left: ReadonlyDimensionVector | DimensionVector, right: ReadonlyDimensionVector | DimensionVector): boolean {
-  return left.every((leftExponent, index) => {
+  return DIMENSION_INDICES.every((index) => {
+    const leftExponent = left[index]
     const rightExponent = right[index]
     return leftExponent.numerator * rightExponent.denominator === rightExponent.numerator * leftExponent.denominator
   })
@@ -261,7 +265,8 @@ function formatRationalExponent(exponent: Readonly<RationalExponent>): string {
 
 export function formatDimensionVector(vector: ReadonlyDimensionVector | DimensionVector | null): string {
   if (vector === null) return 'undefined'
-  const terms = vector.flatMap((exponent, index) => {
+  const terms = DIMENSION_INDICES.flatMap((index) => {
+    const exponent = vector[index]
     const normalized = rational(exponent.numerator, exponent.denominator)
     if (normalized.numerator === 0) return []
     const symbol = ISQ_DIMENSION_AXES[index].symbol
@@ -275,7 +280,8 @@ export function formatDimensionVector(vector: ReadonlyDimensionVector | Dimensio
 export function projectDimensionAxisTable(
   output: Pick<DimensionOperationOutput, 'resultDimension' | 'targetDimension'>,
 ): DimensionAxisTableRow[] {
-  return ISQ_DIMENSION_AXES.map((axis, index) => {
+  return DIMENSION_INDICES.map((index) => {
+    const axis = ISQ_DIMENSION_AXES[index]
     const resultExponent = output.resultDimension?.[index] ?? null
     const targetExponent = output.targetDimension[index]
     return {

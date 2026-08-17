@@ -7,6 +7,7 @@ import { useFormulaRegistry, validateFormulaTaxonomyCompatibility, type FormulaR
 import { useSavedRunRegistry } from '../registries/savedRunRegistry'
 import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
 import { useTourProgress } from '../registries/tourProgress'
+import type { TaxonomyArtifact } from '../types/engine'
 import type { FormulaDependencyLedger, FormulaDependencyNode, FormulaGraphTableRow } from '../types/formula'
 import type { PlotFigure } from '../types/plot'
 import type { JsonObject, WorkbenchSnapshotInputV1, WorkbenchSnapshotV1 } from '../types/workbench'
@@ -89,7 +90,7 @@ watch(() => props.id, async (id) => {
   else if (!taxonomyRegistry.taxonomy.value) loadError.value = 'The generated formula taxonomy is unavailable.'
   else {
     try {
-      validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value, taxonomyRegistry.taxonomy.value)
+      validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value as readonly FormulaRecord[], taxonomyRegistry.taxonomy.value as TaxonomyArtifact)
     } catch (reason) {
       loadError.value = reason instanceof Error ? reason.message : String(reason)
     }

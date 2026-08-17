@@ -3,12 +3,14 @@ import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import { useFormulaRegistry, validateFormulaTaxonomyCompatibility, type FormulaRecord } from '../registries/formulaRegistry'
 import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
+import type { TaxonomyArtifact } from '../types/engine'
 
 type BasisFilter = 'all' | 'exact' | 'measured'
 type SourceCriterionFilter = 'all' | 'met' | 'not-met'
 type DimensionAuditFilter = 'all' | 'matches' | 'conflict'
 
 const formulaRegistry = useFormulaRegistry()
+type AtlasFormula = NonNullable<(typeof formulaRegistry.formulas.value)[number]>
 const taxonomyRegistry = useTaxonomyRegistry()
 const releaseFormulaRegistry = formulaRegistry.acquire()
 void taxonomyRegistry.initialize()
@@ -36,7 +38,7 @@ const compatibilityError = computed(() => {
   const taxonomy = taxonomyRegistry.taxonomy.value
   if (!taxonomy) return 'The generated formula taxonomy is unavailable.'
   try {
-    validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value, taxonomy)
+    validateFormulaTaxonomyCompatibility(formulaRegistry.formulas.value as readonly FormulaRecord[], taxonomy as TaxonomyArtifact)
     return ''
   } catch (reason) {
     return reason instanceof Error ? reason.message : String(reason)
@@ -162,18 +164,18 @@ function applyRouteQuery(): void {
   canonicalReplace()
 }
 
-function matchesSourceCriterion(item: FormulaRecord, filter: SourceCriterionFilter): boolean {
+function matchesSourceCriterion(item: AtlasFormula, filter: SourceCriterionFilter): boolean {
   if (filter === 'all') return true
   return filter === 'met' ? item.sourceAudit.met : !item.sourceAudit.met
 }
 
-function sourceCriterionLabel(item: FormulaRecord): string {
+function sourceCriterionLabel(item: AtlasFormula): string {
   const name = item.sourceAudit.basis === 'exact' ? 'source digit criterion' : 'source 5.2 sigma criterion'
   const state = item.sourceAudit.met ? 'met' : 'not met'
   return `${name} ${state}`
 }
 
-function sourceCriterionClass(item: FormulaRecord): string {
+function sourceCriterionClass(item: AtlasFormula): string {
   return item.sourceAudit.met ? 'is-met' : 'is-not-met'
 }
 

@@ -507,9 +507,9 @@ export const GRAY_PRESETS = Object.freeze(
 
 export const GRAY_PATENT_MODEL_INPUT_HASH = GRAY_MACHINE_ARTIFACT.patentModelInputHash
 
-export const GRAY_ENGINE_PROFILES = Object.freeze(
+export const GRAY_ENGINE_PROFILES: Readonly<Record<string, GrayEngineProfile>> = Object.freeze(
   GRAY_MACHINE_ARTIFACT.engineProfiles,
-) satisfies Readonly<Record<string, GrayEngineProfile>>
+)
 
 function finiteInRange(value: number, label: string, min: number, max: number): number {
   if (!Number.isFinite(value) || value < min || value > max) {
@@ -628,7 +628,7 @@ export function grayInductanceAtAngle(
   angleDeg: number,
   turns: number,
   coupling: number,
-  sectorCount = GRAY_TOPOLOGY.simultaneousSectors,
+  sectorCount: number = GRAY_TOPOLOGY.simultaneousSectors,
 ): number {
   finiteInRange(turns, 'turns', Number.MIN_VALUE, 2_000)
   finiteInRange(coupling, 'coupling', 0, 1)
@@ -715,7 +715,7 @@ export function grayCoEnergyAtAngle(
   angleDeg: number,
   turns: number,
   coupling: number,
-  sectorCount = GRAY_TOPOLOGY.simultaneousSectors,
+  sectorCount: number = GRAY_TOPOLOGY.simultaneousSectors,
 ): number {
   finiteInRange(currentA, 'currentA', -1e9, 1e9)
   return 0.5 * grayInductanceAtAngle(angleDeg, turns, coupling, sectorCount) * currentA * currentA
@@ -729,7 +729,7 @@ export function grayTorqueAtAngle(
   angleDeg: number,
   turns: number,
   coupling: number,
-  sectorCount = GRAY_TOPOLOGY.simultaneousSectors,
+  sectorCount: number = GRAY_TOPOLOGY.simultaneousSectors,
 ): number {
   finiteInRange(currentA, 'currentA', -1e9, 1e9)
   if (currentA === 0 || coupling === 0) return 0

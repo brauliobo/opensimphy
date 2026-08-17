@@ -85,7 +85,9 @@ function inputType(value: unknown): 'null' | 'array' | 'object' | 'number' | 'st
   if (value === null) return 'null'
   if (Array.isArray(value)) return 'array'
   if (typeof value === 'object') return 'object'
-  if (typeof value === 'number' || typeof value === 'string' || typeof value === 'boolean') return typeof value
+  if (typeof value === 'number') return 'number'
+  if (typeof value === 'string') return 'string'
+  if (typeof value === 'boolean') return 'boolean'
   return 'unsupported'
 }
 
@@ -102,7 +104,7 @@ function validateFiniteNumbers(value: JsonValue, path: string): void {
 
 export function validateEarthWorkbenchInputs(value: unknown, defaults: Record<string, unknown>): JsonObject {
   const cloned = cloneJsonValue(value, 'earth.inputs')
-  if (cloned === null || Array.isArray(cloned) || typeof cloned !== 'object') {
+  if (!isJsonObject(cloned)) {
     throw new EarthWorkbenchInputError('inputs', 'expected an object')
   }
   const actualKeys = Object.keys(cloned).sort()
@@ -111,12 +113,13 @@ export function validateEarthWorkbenchInputs(value: unknown, defaults: Record<st
     throw new EarthWorkbenchInputError('inputs', `expected exactly these fields: ${defaultKeys.join(', ')}`)
   }
   for (const key of defaultKeys) {
+    const actual = cloned[key]!
     const expectedType = inputType(defaults[key])
-    const actualType = inputType(cloned[key])
+    const actualType = inputType(actual)
     if (actualType !== expectedType) {
       throw new EarthWorkbenchInputError(`inputs.${key}`, `expected ${expectedType}, received ${actualType}`)
     }
-    validateFiniteNumbers(cloned[key]!, `inputs.${key}`)
+    validateFiniteNumbers(actual, `inputs.${key}`)
   }
   return cloned
 }
@@ -125,7 +128,7 @@ export function earthInputsEqual(left: unknown, right: unknown): boolean {
   try {
     const canonicalize = (value: JsonValue): JsonValue => {
       if (Array.isArray(value)) return value.map(canonicalize)
-      if (value === null || typeof value !== 'object') return value
+      if (!isJsonObject(value)) return value
       return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalize(value[key]!)]))
     }
     return JSON.stringify(canonicalize(cloneJsonValue(left))) === JSON.stringify(canonicalize(cloneJsonValue(right)))
@@ -239,7 +242,7 @@ export function earthParallelScalarDeltas(
   })
 }
 
-export function isJsonObject(value: unknown): value is Record<string, unknown> {
+export function isJsonObject(value: unknown): value is JsonObject {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 

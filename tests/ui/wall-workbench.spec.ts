@@ -203,7 +203,7 @@ describe('Number Walls Iteration 7 workbench adapter', () => {
     await settle()
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(workerState.constructions).toBe(1)
-    expect(wrapper.get('[data-testid="wall-simulation-ready"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="wall-simulation-ready"]').exists()).toBe(true)
     expect(useSavedRunRegistry().runs.value).toHaveLength(0)
 
     await wrapper.get('[data-testid="wall-depth"]').setValue(8)

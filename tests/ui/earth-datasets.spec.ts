@@ -148,7 +148,7 @@ describe('EARTH authenticated dataset registry', () => {
     expect(eeg.text()).toContain('2 declared methods · 1 runnable · 1 unavailable source formulation')
     expect(eeg.text()).toContain('EARTH source formulation (unavailable) [unavailable source formulation]')
     expect(eeg.text()).not.toContain('available method contexts')
-    expect(eeg.get('a[href="/earth/programs/EARTH-NEURO-002"]').exists()).toBe(true)
+    expect(eeg.find('a[href="/earth/programs/EARTH-NEURO-002"]').exists()).toBe(true)
 
     const sourceLinks = eeg.findAll('.dataset-external-links a')
     expect(sourceLinks.map((link) => link.attributes('href'))).toContain('https://physionet.org/content/eegmmidb/1.0.0/')

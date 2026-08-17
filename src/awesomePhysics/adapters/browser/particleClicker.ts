@@ -90,13 +90,13 @@ export interface ParticleClickerUpgradeDefinition {
 }
 
 export const PARTICLE_CLICKER_UPGRADES: readonly ParticleClickerUpgradeDefinition[] = Object.freeze([
-  Object.freeze({ id: 'upgrade-energy1', cost: 200, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze([]) }),
-  Object.freeze({ id: 'upgrade-energy2', cost: 2_000, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze(['upgrade-energy1']) }),
-  Object.freeze({ id: 'upgrade-energy3', cost: 20_000, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze(['upgrade-energy2']) }),
-  Object.freeze({ id: 'upgrade-lumi1', cost: 800, effect: 'detector-bonus', amount: 3, prerequisites: Object.freeze([]) }),
-  Object.freeze({ id: 'upgrade-lumi2', cost: 8_000, effect: 'detector-bonus', amount: 15, prerequisites: Object.freeze(['upgrade-energy1']) }),
-  Object.freeze({ id: 'upgrade-lumi3', cost: 80_000, effect: 'detector-bonus', amount: 75, prerequisites: Object.freeze(['upgrade-energy2']) }),
-  Object.freeze({ id: 'upgrade-sps', cost: 500_000, effect: 'detector-multiplier', amount: 10, prerequisites: Object.freeze(['upgrade-energy3', 'upgrade-lumi3']) }),
+  Object.freeze({ id: 'upgrade-energy1', cost: 200, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze([] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-energy2', cost: 2_000, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze(['upgrade-energy1'] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-energy3', cost: 20_000, effect: 'detector-multiplier', amount: 2, prerequisites: Object.freeze(['upgrade-energy2'] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-lumi1', cost: 800, effect: 'detector-bonus', amount: 3, prerequisites: Object.freeze([] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-lumi2', cost: 8_000, effect: 'detector-bonus', amount: 15, prerequisites: Object.freeze(['upgrade-energy1'] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-lumi3', cost: 80_000, effect: 'detector-bonus', amount: 75, prerequisites: Object.freeze(['upgrade-energy2'] as ParticleClickerUpgradeId[]) }),
+  Object.freeze({ id: 'upgrade-sps', cost: 500_000, effect: 'detector-multiplier', amount: 10, prerequisites: Object.freeze(['upgrade-energy3', 'upgrade-lumi3'] as ParticleClickerUpgradeId[]) }),
 ] as const satisfies readonly ParticleClickerUpgradeDefinition[])
 
 export interface ParticleClickerInitialState {

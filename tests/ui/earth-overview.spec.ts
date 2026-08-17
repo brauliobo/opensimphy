@@ -59,6 +59,6 @@ describe('EARTH dossier overview', () => {
     expect(wrapper.findAll('a[href="/earth/corpus"]').length).toBeGreaterThan(0)
     expect(wrapper.findAll('a[href="/earth/programs"]').length).toBeGreaterThan(0)
     expect(wrapper.findAll('a[href="/earth/datasets"]').length).toBeGreaterThan(0)
-    expect(wrapper.get('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
+    expect(wrapper.find('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
   })
 })

@@ -228,6 +228,33 @@ export interface CompactnessStateInput {
   hubblePerSecond?: number;
 }
 
+export type CompactnessRegime = "outside-horizon" | "horizon" | "inside-horizon";
+
+export interface CompactnessSeriesSample {
+  radiusOverLength: number;
+  compactness: number;
+  hubbleTerm: number;
+  kottlerF: number;
+}
+
+export interface CompactnessState {
+  id: string;
+  lengthMetres: number;
+  massKg: number;
+  hubblePerSecond: number;
+  x: number;
+  y: number;
+  compactnessFromPlanckRatios: number;
+  compactnessSI: number;
+  compactnessIdentityRelativeResidual: number;
+  boundaryMassKg: number;
+  screeningRatio: number;
+  hubbleTerm: number;
+  kottlerF: number;
+  regime: CompactnessRegime;
+  series: CompactnessSeriesSample[];
+}
+
 export interface CompactnessKottlerInputs {
   states?: CompactnessStateInput[];
   gravitationalConstant?: number;
@@ -252,23 +279,7 @@ export function compactnessKottlerInterface(
   planckLengthMetres: number;
   planckMassKg: number;
   definitions: { x: string; y: string; compactness: string; kottler: string };
-  states: Array<{
-    id: string;
-    lengthMetres: number;
-    massKg: number;
-    hubblePerSecond: number;
-    x: number;
-    y: number;
-    compactnessFromPlanckRatios: number;
-    compactnessSI: number;
-    compactnessIdentityRelativeResidual: number;
-    boundaryMassKg: number;
-    screeningRatio: number;
-    hubbleTerm: number;
-    kottlerF: number;
-    regime: "outside-horizon" | "horizon" | "inside-horizon";
-    series: Array<{ radiusOverLength: number; compactness: number; hubbleTerm: number; kottlerF: number }>;
-  }>;
+  states: CompactnessState[];
 }> {
   const gravitationalConstant = positiveNumber(inputs.gravitationalConstant ?? G_SI, "gravitationalConstant");
   const hbar = positiveNumber(inputs.hbar ?? HBAR_SI, "hbar");
@@ -280,7 +291,7 @@ export function compactnessKottlerInterface(
   }
   const planckLengthMetres = Math.sqrt(hbar * gravitationalConstant / speedOfLight ** 3);
   const planckMassKg = Math.sqrt(hbar * speedOfLight / gravitationalConstant);
-  const states = stateInputs.map((state) => {
+  const states: CompactnessState[] = stateInputs.map((state) => {
     const id = nonEmptyText(state.id, "state id");
     const lengthMetres = positiveNumber(state.lengthMetres, "lengthMetres");
     const massKg = positiveNumber(state.massKg, "massKg");
@@ -293,7 +304,7 @@ export function compactnessKottlerInterface(
     const hubbleTerm = (hubblePerSecond * lengthMetres / speedOfLight) ** 2;
     const kottlerF = 1 - compactnessSI - hubbleTerm;
     const horizonTolerance = 64 * Number.EPSILON;
-    const regime = Math.abs(kottlerF) <= horizonTolerance ? "horizon" : kottlerF > 0 ? "outside-horizon" : "inside-horizon";
+    const regime: CompactnessRegime = Math.abs(kottlerF) <= horizonTolerance ? "horizon" : kottlerF > 0 ? "outside-horizon" : "inside-horizon";
     const series = linearSamples(0.25, 4, radialSamples).map((radiusOverLength) => {
       const radius = radiusOverLength * lengthMetres;
       const compactness = 2 * gravitationalConstant * massKg / (radius * speedOfLight ** 2);
@@ -910,6 +921,20 @@ export interface ScreeningRouteRecord {
   note?: string;
 }
 
+export interface ScreeningRouteLedgerEntry {
+  id: string;
+  label: string | null;
+  chi: number | null;
+  kind: ScreeningRouteKind;
+  dependencies: ScreeningRouteDependency[];
+  note: string | null;
+  targetLeakage: boolean;
+  independentlyEligible: boolean;
+  relativeResidualToTarget: number | null;
+  matchesTarget: boolean | null;
+  exclusionReason: string | null;
+}
+
 export interface ScreeningNoGoInputs {
   targetChi?: number;
   relativeTolerance?: number;
@@ -958,15 +983,7 @@ export function screeningNoGoLedger(
 ): EarthKernelResult<{
   targetChi: number;
   relativeTolerance: number;
-  routes: Array<ScreeningRouteRecord & {
-    label: string | null;
-    note: string | null;
-    targetLeakage: boolean;
-    independentlyEligible: boolean;
-    relativeResidualToTarget: number | null;
-    matchesTarget: boolean | null;
-    exclusionReason: string | null;
-  }>;
+  routes: ScreeningRouteLedgerEntry[];
   independentRouteIds: string[];
   independentMatchingRouteIds: string[];
   noGo: boolean;
@@ -979,7 +996,7 @@ export function screeningNoGoLedger(
   }
   const allowedDependencies = new Set<ScreeningRouteDependency>(["proton-mass", "proton-radius", "target-chi", "observed-compactness", "none"]);
   const ids = new Set<string>();
-  const routes = routeInputs.map((route) => {
+  const routes: ScreeningRouteLedgerEntry[] = routeInputs.map((route) => {
     const id = nonEmptyText(route.id, "route id");
     if (ids.has(id)) throw new RangeError(`route id must be unique: ${id}`);
     ids.add(id);

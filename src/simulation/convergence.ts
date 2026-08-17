@@ -204,10 +204,12 @@ export function certifyConvergence(lines: readonly string[], criteria: Convergen
       if (groups.some(({ kind }) => kind === 'nonlinear')) issues.push('steady convergence structure contains nonlinear evidence')
     } else {
       const end = parameters[structure.endParameter], step = parameters[structure.stepParameter]
-      const count = end / step
-      if (!(Number.isFinite(count) && count > 0 && Number.isInteger(count))) issues.push(`transient parameters ${structure.endParameter}/${structure.stepParameter} do not define an integer solve count`)
-      else if (groups.length !== count || groups.some((group, index) => group.kind !== 'linear' || group.systemName !== structure.systemName || group.timeStep !== index + 1 || !sameFiniteNumber(group.time, step * (index + 1)))) {
-        issues.push(`transient convergence structure does not contain ${count} ordered ${structure.systemName} time steps`)
+      if (end === undefined || step === undefined || !(Number.isFinite(end / step) && end / step > 0 && Number.isInteger(end / step))) issues.push(`transient parameters ${structure.endParameter}/${structure.stepParameter} do not define an integer solve count`)
+      else {
+        const count = end / step
+        if (groups.length !== count || groups.some((group, index) => group.kind !== 'linear' || group.systemName !== structure.systemName || group.timeStep !== index + 1 || !sameFiniteNumber(group.time, step * (index + 1)))) {
+          issues.push(`transient convergence structure does not contain ${count} ordered ${structure.systemName} time steps`)
+        }
       }
     }
   } else {

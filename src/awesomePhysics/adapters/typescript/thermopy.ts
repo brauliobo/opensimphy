@@ -203,10 +203,23 @@ function normalizeIntervals(
       coefficients.push(coefficient(interval.coefficients[coefficientIndex], `${path}[${intervalIndex}].coefficients[${coefficientIndex}]`))
     }
 
+    const c0 = coefficients[0]
+    const c1 = coefficients[1]
+    const c2 = coefficients[2]
+    const c3 = coefficients[3]
+    const c4 = coefficients[4]
+    const c5 = coefficients[5]
+    const c6 = coefficients[6]
+    const c7 = coefficients[7]
+    const c8 = coefficients[8]
+    if (coefficients.length !== 9 || c0 === undefined || c1 === undefined || c2 === undefined || c3 === undefined
+      || c4 === undefined || c5 === undefined || c6 === undefined || c7 === undefined || c8 === undefined) {
+      fail(`${path}[${intervalIndex}].coefficients`, 'must contain 9 NASA-9 coefficients')
+    }
     intervals.push({
       lowerTemperatureK,
       upperTemperatureK,
-      coefficients: coefficients as NormalizedCoefficients,
+      coefficients: [c0, c1, c2, c3, c4, c5, c6, c7, c8],
     })
     previousUpperTemperatureK = upperTemperatureK
   }

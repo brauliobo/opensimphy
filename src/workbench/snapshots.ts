@@ -114,6 +114,10 @@ function compatibilityKey(value: unknown, path: string): string {
   return value
 }
 
+export function isJsonObject(value: unknown): value is JsonObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
 export function cloneJsonValue(value: unknown, path = 'value'): JsonValue {
   return cloneJsonValueAt(value, path, new WeakSet<object>())
 }
@@ -161,7 +165,7 @@ function cloneJsonValueAt(value: unknown, path: string, ancestors: WeakSet<objec
 
 function jsonObject(value: unknown, path: string): JsonObject {
   const clone = cloneJsonValue(value, path)
-  if (Array.isArray(clone) || clone === null || typeof clone !== 'object') fail(path, 'expected a structured JSON object')
+  if (!isJsonObject(clone)) fail(path, 'expected a structured JSON object')
   return clone
 }
 

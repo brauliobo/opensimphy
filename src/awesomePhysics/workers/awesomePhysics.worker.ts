@@ -92,8 +92,19 @@ function validateAdapter(value: unknown, request: AwesomePhysicsWorkerRunRequest
       throw new TypeError(`Adapter compatibility.${key} must match the descriptor revision`)
     }
   }
-  if (typeof adapter.run !== 'function') throw new TypeError('Adapter run must be a function')
-  return adapter as AwesomePhysicsAdapterV1
+  const run = adapter.run
+  if (typeof run !== 'function') throw new TypeError('Adapter run must be a function')
+  return {
+    adapterId: request.adapterId,
+    protocol: 'awesome-physics-adapter-v1',
+    compatibility: {
+      contentRevision: request.descriptor.contentRevision,
+      modelRevision: request.descriptor.modelRevision,
+      implementationRevision: request.descriptor.implementationRevision,
+      outputRevision: request.descriptor.outputRevision,
+    },
+    run: run as AwesomePhysicsAdapterV1['run'],
+  }
 }
 
 async function execute(request: AwesomePhysicsWorkerRunRequest, controller: AbortController): Promise<void> {

@@ -1,4 +1,5 @@
 import { readonly, shallowRef } from 'vue'
+import type { Data } from 'plotly.js'
 import type { CoreEvaluation } from '../engine/core'
 import type { PlotFigure } from '../types/plot'
 import type { JsonValue, WorkbenchFindingV1, WorkbenchProvenanceSummary } from '../types/workbench'
@@ -113,23 +114,24 @@ export function coreFromEvaluation(evaluation: CoreEvaluation): CoreRecord {
   const graphs: CoreRecord['graphs'] = [{ id: 'sweep-2d', label: '2D parameter sweep', figure: sweep }]
   if (evaluation.surface.length > 0) {
     const isPlanckSurface = evaluation.id.startsWith('planck-')
+    const surfaceTrace: Data & { intensity: number[] } = {
+      x: evaluation.surface.map((point) => point.x),
+      y: evaluation.surface.map((point) => isPlanckSurface ? point.y : point.real),
+      z: evaluation.surface.map((point) => isPlanckSurface ? point.magnitude : point.imaginary),
+      type: 'mesh3d',
+      intensity: evaluation.surface.map((point) => point.magnitude),
+      colorscale: [[0, '#213c42'], [0.5, '#63cbd1'], [1, '#e6b85c']],
+      showscale: true,
+      name: evaluation.title,
+      hovertemplate: isPlanckSurface
+        ? 'Re(z) %{x:.3f}<br>Im(z) %{y:.3f}<br>|S(z)| %{z:.6e}<extra></extra>'
+        : 'parameter %{x:.3f}<br>Re(root) %{y:.6f}<br>Im(root) %{z:.6f}<extra></extra>',
+    }
     graphs.push({
       id: 'complex-surface-3d',
       label: isPlanckSurface ? '3D complex magnitude' : '3D root locus',
       figure: {
-        data: [{
-          x: evaluation.surface.map((point) => point.x),
-          y: evaluation.surface.map((point) => isPlanckSurface ? point.y : point.real),
-          z: evaluation.surface.map((point) => isPlanckSurface ? point.magnitude : point.imaginary),
-          type: 'mesh3d',
-          intensity: evaluation.surface.map((point) => point.magnitude),
-          colorscale: [[0, '#213c42'], [0.5, '#63cbd1'], [1, '#e6b85c']],
-          showscale: true,
-          name: evaluation.title,
-          hovertemplate: isPlanckSurface
-            ? 'Re(z) %{x:.3f}<br>Im(z) %{y:.3f}<br>|S(z)| %{z:.6e}<extra></extra>'
-            : 'parameter %{x:.3f}<br>Re(root) %{y:.6f}<br>Im(root) %{z:.6f}<extra></extra>',
-        }],
+        data: [surfaceTrace],
         layout: {
           scene: {
             xaxis: { title: { text: isPlanckSurface ? 'Re(z)' : 'parameter' } },

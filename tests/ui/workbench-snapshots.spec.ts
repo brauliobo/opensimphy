@@ -1,4 +1,4 @@
-import type { WorkbenchSnapshotInputV1, WorkbenchSnapshotV1 } from '../../src/types/workbench'
+import type { JsonObject, JsonValue, WorkbenchSnapshotInputV1, WorkbenchSnapshotV1 } from '../../src/types/workbench'
 import {
   addSnapshot,
   cloneJsonValue,
@@ -16,25 +16,42 @@ import {
 const TIMESTAMP = '2026-07-27T10:00:00.000Z'
 const COMPATIBILITY_KEY = 'a'.repeat(64)
 
-function input(overrides: Partial<WorkbenchSnapshotInputV1> = {}): WorkbenchSnapshotInputV1 {
+function snapshotFields(): {
+  methodId: string
+  inputs: JsonValue
+  outputs: JsonValue
+  finding: JsonObject
+  provenance: JsonObject
+  sourceRevision: string
+  implementationRevision: string
+  modelRevision: string
+  contentRevision: string
+  compatibilityKey: string
+} {
   return {
-    instrumentId:          'dimensional-equation-builder',
-    methodId:              'direct-evaluation',
-    inputs:                { numerator: 12, denominator: 3, flags: [true, null] },
-    outputs:               { quotient: 4, unit: 'm/s' },
-    finding:               { status: 'computed', establishes: ['bounded arithmetic'] },
-    provenance:            { engine: 'dimension-engine', evidenceRefs: ['bipm-si-brochure-9'] },
-    sourceRevision:        'BIPM SI Brochure, 9th edition',
+    methodId:               'direct-evaluation',
+    inputs:                 { numerator: 12, denominator: 3, flags: [true, null] },
+    outputs:                { quotient: 4, unit: 'm/s' },
+    finding:                { status: 'computed', establishes: ['bounded arithmetic'] },
+    provenance:             { engine: 'dimension-engine', evidenceRefs: ['bipm-si-brochure-9'] },
+    sourceRevision:         'BIPM SI Brochure, 9th edition',
     implementationRevision: 'tour-dimension-engine-v1',
-    modelRevision:         'isq-dimension-model-v1',
-    contentRevision:       '2026-07-27',
-    compatibilityKey:      COMPATIBILITY_KEY,
-    label:                 'Baseline run',
-    ...overrides,
-  } as WorkbenchSnapshotInputV1
+    modelRevision:          'isq-dimension-model-v1',
+    contentRevision:        '2026-07-27',
+    compatibilityKey:       COMPATIBILITY_KEY,
+  }
 }
 
-function snapshot(overrides: Partial<WorkbenchSnapshotInputV1> = {}, timestamp = TIMESTAMP): WorkbenchSnapshotV1 {
+function input(overrides: Partial<ReturnType<typeof snapshotFields>> & { label?: string; instrumentId?: string } = {}): WorkbenchSnapshotInputV1 {
+  return {
+    instrumentId: 'dimensional-equation-builder',
+    label:        'Baseline run',
+    ...snapshotFields(),
+    ...overrides,
+  }
+}
+
+function snapshot(overrides: Parameters<typeof input>[0] = {}, timestamp = TIMESTAMP): WorkbenchSnapshotV1 {
   return createWorkbenchSnapshot(input(overrides), timestamp)
 }
 
@@ -72,10 +89,7 @@ describe('workbench snapshot contract', () => {
   })
 
   it('supports one program ID instead of an instrument ID', () => {
-    const programInput = { ...input(), programId: 'EARTH-PHYS-001' } as Record<string, unknown>
-    delete programInput.instrumentId
-    delete programInput.label
-    const value = createWorkbenchSnapshot(programInput as WorkbenchSnapshotInputV1, TIMESTAMP)
+    const value = createWorkbenchSnapshot({ ...snapshotFields(), programId: 'EARTH-PHYS-001' }, TIMESTAMP)
 
     expect(value.programId).toBe('EARTH-PHYS-001')
     expect(Object.hasOwn(value, 'instrumentId')).toBe(false)

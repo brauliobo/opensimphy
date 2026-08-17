@@ -105,10 +105,11 @@ function validateContract(simulation: TourGeneratedSimulation, initialPresetId?:
     if (!control || control.id !== spec.id || control.type !== spec.type || control.readingDepth !== spec.depth
       || !control.label.trim() || !control.description.trim()) return `Control ${spec.id} does not match the molar-matter contract.`
     if (control.type === 'select') {
-      const expectedOptions = control.id === 'substancePreset' ? ['generic-particle'] : ['ideal']
-      if (control.options.length !== 1 || control.options[0]?.value !== expectedOptions[0]
-        || !control.options[0].label.trim() || !control.options[0].description?.trim()
-        || control.default !== expectedOptions[0]) {
+      const expectedOption = control.id === 'substancePreset' ? 'generic-particle' : 'ideal'
+      const option = control.options[0]
+      if (!option || control.options.length !== 1 || option.value !== expectedOption
+        || !option.label.trim() || !option.description?.trim()
+        || control.default !== expectedOption) {
         return `Control ${spec.id} exposes an unsupported option catalog.`
       }
     } else if (!('min' in spec) || control.unit !== spec.unit || control.min !== spec.min || control.max !== spec.max

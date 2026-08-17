@@ -1050,9 +1050,13 @@ export interface HadronObservableAuditInputs {
   records?: readonly HadronObservableRecord[];
 }
 
-export const DEFAULT_HADRON_OBSERVABLE_AUDIT_INPUTS = Object.freeze({
-  records: [{ id: "radius-contract-placeholder", observable: "radius", unit: "user-unit" }],
-}) satisfies HadronObservableAuditInputs;
+const DEFAULT_HADRON_OBSERVABLE_RECORDS: readonly HadronObservableRecord[] = [
+  { id: "radius-contract-placeholder", observable: "radius", unit: "user-unit" },
+];
+
+export const DEFAULT_HADRON_OBSERVABLE_AUDIT_INPUTS: HadronObservableAuditInputs = Object.freeze({
+  records: DEFAULT_HADRON_OBSERVABLE_RECORDS,
+});
 
 export function hadronObservableContractAudit(
   inputs: HadronObservableAuditInputs = DEFAULT_HADRON_OBSERVABLE_AUDIT_INPUTS,
@@ -1061,7 +1065,7 @@ export function hadronObservableContractAudit(
   records: Array<HadronObservableRecord & { requirementsSatisfied: boolean; residual: number | null; standardizedResidual: number | null }>;
   unsatisfiedRequirements: string[];
 }> {
-  const recordInputs = boundedList(inputs.records ?? DEFAULT_HADRON_OBSERVABLE_AUDIT_INPUTS.records, "records", 1, 2048);
+  const recordInputs = boundedList(inputs.records ?? DEFAULT_HADRON_OBSERVABLE_RECORDS, "records", 1, 2048);
   const ids = new Set<string>();
   const records = recordInputs.map((record, index) => {
     if ((index & 255) === 0) checkCancelled(options);

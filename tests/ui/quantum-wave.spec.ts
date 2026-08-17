@@ -62,7 +62,7 @@ describe('Quantum Wave Lab instruments', () => {
   it('assembles and disassembles the Schrodinger teaching form', async () => {
     const wrapper = mount(SchrodingerAssembler, { props: { depth: 'technical' } })
 
-    expect(wrapper.get('[data-complete="true"]').exists()).toBe(true)
+    expect(wrapper.find('[data-complete="true"]').exists()).toBe(true)
     await wrapper.get('[data-testid="equation-potential"]').setValue(false)
     expect(wrapper.find('[data-complete="true"]').exists()).toBe(false)
     expect(wrapper.get('.quantum-boundary').text()).toContain('does not independently derive')

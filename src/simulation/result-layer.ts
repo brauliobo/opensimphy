@@ -224,7 +224,7 @@ export class ResultLayer {
   pick(raycaster: THREE.Raycaster) {
     const objects = [...this.sections, ...(this.isosurface ? [this.isosurface] : [])]
     const hit = raycaster.intersectObjects(objects)[0]
-    if (!hit || hit.faceIndex === undefined) return
+    if (!hit || hit.faceIndex == null) return
     const derived = hit.object.userData.derived as { kind: 'section' | 'isosurface'; sourceElementTags: BigUint64Array; sourceEntityTags: Uint32Array }
     return { hit, kind: derived.kind, sourceElementTag: derived.sourceElementTags[hit.faceIndex], sourceEntityTag: derived.sourceEntityTags[hit.faceIndex] }
   }

@@ -1,4 +1,4 @@
-import type { LoopControlResponse, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectResponse, SimulationAssetManifest } from './types'
+import type { LoopControlResponse, MicrostripResult, OnelabWorkerMessage, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectResponse, SimulationAssetManifest } from './types'
 import type { SimulationScene } from './scene'
 import { terminateWorker, trackWorker } from './diagnostics'
 
@@ -36,7 +36,7 @@ export class OnelabClient {
     return worker
   }
 
-  private request<T>(message: Omit<OnelabWorkerRequest, 'requestId'>, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
+  private request<T>(message: OnelabWorkerMessage, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
     const requestId = String(++this.sequence)
     if (this.disposed) return { requestId, promise: Promise.reject<T>(new Error('ONELAB client is disposed')) }
     const promise = new Promise<T>((resolve, reject) => {

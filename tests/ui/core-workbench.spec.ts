@@ -211,7 +211,7 @@ describe('Core Iteration 7 workbench adapter', () => {
   it('uses route-evaluated completion with all 37 presets and no fake Run control', async () => {
     const { wrapper } = await mountCore()
 
-    expect(wrapper.get('[data-testid="core-registry-ready"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="core-registry-ready"]').exists()).toBe(true)
     expect(wrapper.get('.workbench-shell').attributes()).toMatchObject({
       'data-execution-mode': 'route-evaluated',
       'data-execution-status': 'completed',
@@ -220,7 +220,7 @@ describe('Core Iteration 7 workbench adapter', () => {
     expect(wrapper.get('[data-testid="workbench-mode-status"]').text()).toContain('evaluated all 37 declared cases on route load')
     expect(wrapper.findAll('[data-testid^="core-case-"]')).toHaveLength(37)
     expect(wrapper.get('[data-testid="core-preset-select"]').findAll('option')).toHaveLength(37)
-    expect(wrapper.get('[data-testid="plot-ready"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="plot-ready"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="finding-validates-theory"]').text()).toBe('false')
     expect(wrapper.get('[data-testid="core-raw-output"]').text()).toContain('components')
     expect(wrapper.get('a[target="_blank"]').text()).toContain('opens new tab')

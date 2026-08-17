@@ -96,10 +96,11 @@ function safeIdValue(value: unknown, path: string): asserts value is string {
   if (!SAFE_ID.test(value)) fail(path, 'must be a safe ID')
 }
 
-function idArray(value: unknown, path: string, nonEmpty = false): asserts value is string[] {
+function idArray(value: unknown, path: string, nonEmpty = false): string[] {
   if (!Array.isArray(value) || (nonEmpty && value.length === 0)) fail(path, `must be ${nonEmpty ? 'a non-empty' : 'an'} array`)
   value.forEach((id, index) => safeIdValue(id, `${path}[${index}]`))
   if (new Set(value).size !== value.length) fail(path, 'must contain unique values')
+  return value
 }
 
 function exactValues(value: unknown, expected: readonly string[], path: string): void {
@@ -169,6 +170,7 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   }
   const chapters = value.chapters as Array<Record<string, unknown>>
   const chapterIds: string[] = []
+  const parsedChapters: Array<{ id: string; status: unknown; lessonIds: string[]; quickStationIds: string[] }> = []
   for (const [index, chapter] of [...chapters].sort((left, right) => Number(left.order) - Number(right.order)).entries()) {
     const path = `Tour manifest.chapters[${index}]`
     exactKeys(chapter, ['schemaVersion', 'id', 'order', 'act', 'title', 'question', 'summary', 'status', 'quickStationIds', 'lessonIds', 'attribution', 'previousChapterId', 'nextChapterId'], [], path)
@@ -179,10 +181,10 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
     if (!Number.isInteger(chapter.act) || Number(chapter.act) < 1 || Number(chapter.act) > 4) fail(`${path}.act`, 'must be an integer from 1 through 4')
     for (const field of ['title', 'question', 'summary']) nonEmptyString(chapter[field], `${path}.${field}`)
     if (chapter.status !== 'content-ready' && chapter.status !== 'planned') fail(`${path}.status`, 'is not recognized')
-    idArray(chapter.quickStationIds, `${path}.quickStationIds`)
-    idArray(chapter.lessonIds, `${path}.lessonIds`)
-    if (chapter.status === 'content-ready' && chapter.lessonIds.length === 0) fail(`${path}.lessonIds`, 'must not be empty for a content-ready chapter')
-    if (chapter.status === 'planned' && chapter.lessonIds.length !== 0) fail(`${path}.lessonIds`, 'must be empty for a planned chapter')
+    const quickStationIds = idArray(chapter.quickStationIds, `${path}.quickStationIds`)
+    const lessonIds = idArray(chapter.lessonIds, `${path}.lessonIds`)
+    if (chapter.status === 'content-ready' && lessonIds.length === 0) fail(`${path}.lessonIds`, 'must not be empty for a content-ready chapter')
+    if (chapter.status === 'planned' && lessonIds.length !== 0) fail(`${path}.lessonIds`, 'must be empty for a planned chapter')
     attribution(chapter.attribution, `${path}.attribution`)
     nullableSafeId(chapter.previousChapterId, `${path}.previousChapterId`)
     nullableSafeId(chapter.nextChapterId, `${path}.nextChapterId`)
@@ -190,6 +192,7 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
       || chapter.nextChapterId !== (chapters.find((entry) => entry.order === index + 1)?.id ?? null)) {
       fail(path, 'navigation is invalid')
     }
+    parsedChapters.push({ id: chapter.id, status: chapter.status, lessonIds, quickStationIds })
   }
   if (new Set(chapterIds).size !== chapterIds.length) fail('Tour manifest chapter IDs', 'must contain unique values')
 
@@ -214,7 +217,7 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
     if (!Number.isSafeInteger(station.estimatedMinutes) || Number(station.estimatedMinutes) <= 0) fail(`${path}.estimatedMinutes`, 'must be a positive integer')
     totalMinutes += Number(station.estimatedMinutes)
     if (station.status !== 'content-ready' && station.status !== 'planned') fail(`${path}.status`, 'is not recognized')
-    const owner = chapters.find((chapter) => chapter.id === station.chapterId)!
+    const owner = parsedChapters.find((chapter) => chapter.id === station.chapterId)!
     if (station.status === 'content-ready') {
       if (owner.status !== 'content-ready') fail(path, 'requires a content-ready chapter')
       if (typeof station.lessonId !== 'string' || !owner.lessonIds.includes(station.lessonId)) fail(`${path}.lessonId`, 'must resolve to its content-ready chapter')
@@ -227,13 +230,13 @@ export function parseTourOfflineManifest(value: unknown): TourGeneratedManifest 
   if (new Set(stationIds).size !== stationIds.length) fail('Tour manifest quick-station IDs', 'must contain unique values')
   if (totalMinutes < 20 || totalMinutes > 30) fail('Tour manifest quick-station minutes', `must total from 20 through 30, found ${totalMinutes}`)
 
-  for (const chapter of chapters) {
+  for (const chapter of parsedChapters) {
     const owned = stations.filter((station) => station.chapterId === chapter.id).map((station) => station.id)
     if (chapter.quickStationIds.length !== owned.length || !chapter.quickStationIds.every((id, index) => id === owned[index])) {
-      fail(`Tour manifest chapter ${String(chapter.id)}`, 'quick-station ownership is invalid')
+      fail(`Tour manifest chapter ${chapter.id}`, 'quick-station ownership is invalid')
     }
   }
-  const lessonIds = chapters.flatMap((chapter) => chapter.lessonIds as string[])
+  const lessonIds = parsedChapters.flatMap((chapter) => chapter.lessonIds)
   if (new Set(lessonIds).size !== lessonIds.length || lessonIds.length !== CURRENT_SUMMARY.lessons) fail('Tour manifest lesson coverage', `must contain ${CURRENT_SUMMARY.lessons} unique lesson`)
   const simulationIds = stations.filter((station) => station.status === 'content-ready').map((station) => station.simulationId as string)
   if (new Set(simulationIds).size !== simulationIds.length || simulationIds.length !== CURRENT_SUMMARY.stations) fail('Tour manifest station simulation coverage', `must contain ${CURRENT_SUMMARY.stations} unique simulations`)

@@ -576,7 +576,7 @@ export function kramersKronigAudit(
   };
 }
 
-export interface ComplexValue {
+interface ComplexValue {
   re: number;
   im: number;
 }

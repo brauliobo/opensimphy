@@ -15,7 +15,15 @@ import type {
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const cancelled = new Set<EarthWorkerRequestId>();
 
-function post(response: EarthWorkerResponse): void {
+type EarthWorkerCompletedPayload = {
+  type: "completed";
+  requestId: EarthWorkerRequestId;
+  programId: EarthWorkerRunRequest["programId"];
+  methodId: EarthWorkerRunRequest["methodId"];
+  result: ReturnType<typeof runEarthMethod>;
+};
+
+function post(response: Exclude<EarthWorkerResponse, { type: "completed" }> | EarthWorkerCompletedPayload): void {
   worker.postMessage(response);
 }
 

@@ -29,8 +29,8 @@ const generatedCompletion = completionJson as CompletionReport
 const generatedTaxonomy = taxonomyJson as TaxonomyArtifact
 const generatedTourManifest = tourManifestJson as TourGeneratedManifest
 const generatedTourChapter = tourChapterJson as TourGeneratedChapterRecord
-const generatedTourLesson = tourLessonJson as TourGeneratedLessonRecord
-const generatedTourSimulation = tourSimulationJson as TourGeneratedSimulation
+const generatedTourLesson = tourLessonJson as unknown as TourGeneratedLessonRecord
+const generatedTourSimulation = tourSimulationJson as unknown as TourGeneratedSimulation
 const generatedTourGlossary = tourGlossaryJson as TourGlossarySource
 const generatedTourReferences = tourReferencesJson as TourReferencesSource
 

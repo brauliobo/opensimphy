@@ -33,7 +33,9 @@ function tridiagonalSolve(rhs: Float64Array, diagonal: number, endpointFirst: nu
     upper[index] = index === count - 1 ? 0 : offDiagonal / denominator;
     solution[index] = (rhs[index]! - offDiagonal * solution[index - 1]!) / denominator;
   }
-  for (let index = count - 2; index >= 0; index -= 1) solution[index] -= upper[index]! * solution[index + 1]!;
+  for (let index = count - 2; index >= 0; index -= 1) {
+    solution[index] = solution[index]! - upper[index]! * solution[index + 1]!;
+  }
   return solution;
 }
 
@@ -51,7 +53,7 @@ function cyclicImplicitSolve(rhs: Float64Array, diagonal: number, offDiagonal: n
   const correction = tridiagonalSolve(correctionRhs, diagonal, endpointFirst, endpointLast, offDiagonal);
   const factor = (solution[0]! + beta * solution[count - 1]! / gamma)
     / (1 + correction[0]! + beta * correction[count - 1]! / gamma);
-  for (let index = 0; index < count; index += 1) solution[index] -= factor * correction[index]!;
+  for (let index = 0; index < count; index += 1) solution[index] = solution[index]! - factor * correction[index]!;
   return solution;
 }
 

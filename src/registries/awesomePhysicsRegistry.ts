@@ -1,4 +1,4 @@
-import { readonly, shallowRef } from 'vue'
+import { shallowRef, type ShallowRef } from 'vue'
 import type {
   AwesomePhysicsAdapterCompatibilityV1,
   AwesomePhysicsAdapterFactoryV1,
@@ -26,6 +26,15 @@ import type {
 
 type UnknownRecord = Record<string, unknown>
 type AdapterFactory = AwesomePhysicsAdapterFactoryV1
+type ExposedRef<T> = Readonly<ShallowRef<T>>
+
+function exposedRef<T>(value: ShallowRef<T>): ExposedRef<T> {
+  return value
+}
+
+function parsed<T>(value: unknown): T {
+  return value as T
+}
 
 export interface AwesomePhysicsRegistryArtifactsV1 {
   catalog: AwesomePhysicsCatalogArtifactV1
@@ -218,7 +227,7 @@ function parseSource(value: unknown, path: string): AwesomePhysicsCatalogArtifac
   requireDate(value.acquisitionDate, `${path}.acquisitionDate`)
   requireStringArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
   value.evidenceRefs.forEach((reference, index) => requireRelativePath(reference, `${path}.evidenceRefs[${index}]`))
-  return value as AwesomePhysicsCatalogArtifactV1['source']
+  return parsed<AwesomePhysicsCatalogArtifactV1['source']>(value)
 }
 
 function parseLink(value: unknown, path: string): AwesomePhysicsLinkV1 {
@@ -226,7 +235,7 @@ function parseLink(value: unknown, path: string): AwesomePhysicsLinkV1 {
   requireNonEmptyString(value.kind, `${path}.kind`)
   requireNonEmptyString(value.label, `${path}.label`)
   requireUrl(value.url, `${path}.url`)
-  return value as AwesomePhysicsLinkV1
+  return parsed<AwesomePhysicsLinkV1>(value)
 }
 
 function parseLicense(value: unknown, path: string): AwesomePhysicsCatalogItemV1['license'] {
@@ -235,7 +244,7 @@ function parseLicense(value: unknown, path: string): AwesomePhysicsCatalogItemV1
   requireNonEmptyString(value.text, `${path}.text`)
   requireStringArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
   value.evidenceRefs.forEach((reference, index) => requireRelativePath(reference, `${path}.evidenceRefs[${index}]`))
-  return value as AwesomePhysicsCatalogItemV1['license']
+  return parsed<AwesomePhysicsCatalogItemV1['license']>(value)
 }
 
 function parseEvidence(value: unknown, path: string): AwesomePhysicsEvidenceV1 {
@@ -244,7 +253,7 @@ function parseEvidence(value: unknown, path: string): AwesomePhysicsEvidenceV1 {
     requireStringArray(value[field], `${path}.${field}`, true)
     value[field].forEach((reference, index) => requireRelativePath(reference, `${path}.${field}[${index}]`))
   }
-  return value as AwesomePhysicsEvidenceV1
+  return parsed<AwesomePhysicsEvidenceV1>(value)
 }
 
 function parseArtifactProvenance(value: unknown, path: string): AwesomePhysicsArtifactProvenanceV1 {
@@ -260,7 +269,7 @@ function parseArtifactProvenance(value: unknown, path: string): AwesomePhysicsAr
   if (value.datasetLicense !== null) requireNonEmptyString(value.datasetLicense, `${path}.datasetLicense`)
   requireStringArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
   value.evidenceRefs.forEach((reference, index) => requireRelativePath(reference, `${path}.evidenceRefs[${index}]`))
-  return value as AwesomePhysicsArtifactProvenanceV1
+  return parsed<AwesomePhysicsArtifactProvenanceV1>(value)
 }
 
 function parseCatalogItem(value: unknown, index: number, catalogRevision: string): AwesomePhysicsCatalogItemV1 {
@@ -329,7 +338,7 @@ function parseCatalogItem(value: unknown, index: number, catalogRevision: string
     requireUrl(value.upstreamResolution.catalogUrl, `${path}.upstreamResolution.catalogUrl`)
     requireUrl(value.upstreamResolution.canonicalUpstreamUrl, `${path}.upstreamResolution.canonicalUpstreamUrl`)
   }
-  return value
+  return parsed<AwesomePhysicsCatalogItemV1>(value)
 }
 
 function parseOrganization(value: unknown, index: number): AwesomePhysicsOrganizationV1 {
@@ -346,27 +355,29 @@ function parseOrganization(value: unknown, index: number): AwesomePhysicsOrganiz
   requireStringArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
   value.evidenceRefs.forEach((reference, referenceIndex) => requireRelativePath(reference, `${path}.evidenceRefs[${referenceIndex}]`))
   requireSafeInteger(value.catalogLine, `${path}.catalogLine`, 1)
-  return value
+  return parsed<AwesomePhysicsOrganizationV1>(value)
 }
 
 function parseCatalogSummary(value: unknown, path: string): AwesomePhysicsCatalogSummaryV1 {
   requireExactKeys(value, CATALOG_SUMMARY_KEYS, [], path)
   for (const key of CATALOG_SUMMARY_KEYS) requireSafeInteger(value[key], `${path}.${key}`)
-  return value as AwesomePhysicsCatalogSummaryV1
+  return parsed<AwesomePhysicsCatalogSummaryV1>(value)
 }
 
 function parseCatalog(value: unknown): AwesomePhysicsCatalogArtifactV1 {
   const path = 'Awesome Physics catalog'
   requireExactKeys(value, ['schemaVersion', 'generatedAt', 'catalogRevision', 'source', 'summary', 'items', 'organizations'], [], path)
   if (value.schemaVersion !== 1) fail(`${path}.schemaVersion`, 'must be 1')
-  requireDate(value.generatedAt, `${path}.generatedAt`)
-  requireNonEmptyString(value.catalogRevision, `${path}.catalogRevision`)
-  if (!/^[a-f0-9]{40}$/.test(value.catalogRevision)) fail(`${path}.catalogRevision`, 'must be a lowercase 40-character revision')
+  const generatedAt = value.generatedAt
+  requireDate(generatedAt, `${path}.generatedAt`)
+  const catalogRevision = value.catalogRevision
+  requireNonEmptyString(catalogRevision, `${path}.catalogRevision`)
+  if (!/^[a-f0-9]{40}$/.test(catalogRevision)) fail(`${path}.catalogRevision`, 'must be a lowercase 40-character revision')
   const source = parseSource(value.source, `${path}.source`)
   const summary = parseCatalogSummary(value.summary, `${path}.summary`)
   if (!Array.isArray(value.items) || value.items.length === 0) fail(`${path}.items`, 'must be a non-empty array')
   if (!Array.isArray(value.organizations)) fail(`${path}.organizations`, 'must be an array')
-  const items = value.items.map((item, index) => parseCatalogItem(item, index, value.catalogRevision))
+  const items = value.items.map((item, index) => parseCatalogItem(item, index, catalogRevision))
   const organizations = value.organizations.map((organization, index) => parseOrganization(organization, index))
   const itemIds = items.map(({ id }) => id)
   const canonicalNames = items.map(({ canonicalName }) => canonicalName)
@@ -387,8 +398,8 @@ function parseCatalog(value: unknown): AwesomePhysicsCatalogArtifactV1 {
   for (const key of CATALOG_SUMMARY_KEYS) {
     if (summary[key] !== expectedSummary[key]) fail(`${path}.summary.${key}`, 'does not match the catalog entries')
   }
-  if (source.acquisitionDate !== value.generatedAt) fail(`${path}.source.acquisitionDate`, 'must match generatedAt')
-  return { schemaVersion: 1, generatedAt: value.generatedAt, catalogRevision: value.catalogRevision, source, summary, items, organizations }
+  if (source.acquisitionDate !== generatedAt) fail(`${path}.source.acquisitionDate`, 'must match generatedAt')
+  return { schemaVersion: 1, generatedAt, catalogRevision, source, summary, items, organizations }
 }
 
 function parseLimits(value: unknown, path: string): AwesomePhysicsLimitsV1 {
@@ -397,7 +408,7 @@ function parseLimits(value: unknown, path: string): AwesomePhysicsLimitsV1 {
     requireFiniteNonNegative(value[key], `${path}.${key}`)
     requireSafeInteger(value[key], `${path}.${key}`)
   }
-  return value as AwesomePhysicsLimitsV1
+  return parsed<AwesomePhysicsLimitsV1>(value)
 }
 
 function parseSimulationSummary(value: unknown, path: string): AwesomePhysicsSimulationSummaryV1 {
@@ -405,7 +416,7 @@ function parseSimulationSummary(value: unknown, path: string): AwesomePhysicsSim
   for (const key of SIMULATION_SUMMARY_KEYS.slice(0, -1)) requireSafeInteger(value[key], `${path}.${key}`)
   requireExactKeys(value.executionKinds, EXECUTION_KINDS, [], `${path}.executionKinds`)
   for (const kind of EXECUTION_KINDS) requireSafeInteger(value.executionKinds[kind], `${path}.executionKinds.${kind}`)
-  return value as AwesomePhysicsSimulationSummaryV1
+  return parsed<AwesomePhysicsSimulationSummaryV1>(value)
 }
 
 function parseDescriptor(
@@ -479,7 +490,7 @@ function parseDescriptor(
     fail(path, 'wasm-candidate remains unavailable until its build gate passes')
   }
   if (value.licenseGate === 'blocked' && value.availability !== 'blocked') fail(`${path}.availability`, 'must be blocked when the license gate is blocked')
-  return value
+  return parsed<AwesomePhysicsSimulationDescriptorV1>(value)
 }
 
 function parseSimulations(
@@ -672,7 +683,7 @@ function validateAdapterCompatibility(
     if (value.compatibility[key] !== descriptor[key]) fail(`${path}.compatibility.${key}`, 'must match the descriptor revision')
   }
   if (typeof value.run !== 'function') fail(`${path}.run`, 'must be a function')
-  return value as AwesomePhysicsAdapterV1
+  return parsed<AwesomePhysicsAdapterV1>(value)
 }
 
 async function loadAdapter(descriptorId: string, signal?: AbortSignal): Promise<AwesomePhysicsAdapterV1 | null> {
@@ -708,10 +719,10 @@ export function registerAwesomePhysicsAdapterFactory(adapterId: string, factory:
 
 export function useAwesomePhysicsRegistry() {
   return {
-    catalog: readonly(catalog),
-    simulations: readonly(simulations),
-    ready: readonly(ready),
-    error: readonly(error),
+    catalog: exposedRef(catalog),
+    simulations: exposedRef(simulations),
+    ready: exposedRef(ready),
+    error: exposedRef(error),
     initialize,
     catalogItemById,
     descriptorById,

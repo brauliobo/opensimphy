@@ -254,7 +254,7 @@ export function torusClassificationAudit(inputs: TorusClassificationInputs): Ear
     const absoluteP = Math.abs(p);
     const absoluteQ = Math.abs(q);
     const gcd = greatestCommonDivisor(absoluteP, absoluteQ);
-    const kind = absoluteP === 1 || absoluteQ === 1 ? "unknot" : gcd === 1 ? "knot" : "link";
+    const kind: "unknot" | "knot" | "link" = absoluteP === 1 || absoluteQ === 1 ? "unknot" : gcd === 1 ? "knot" : "link";
     const minimalCrossingNumber = Math.min((absoluteP - 1) * absoluteQ, (absoluteQ - 1) * absoluteP);
     return { p, q, label: label ?? null, gcd, components: gcd, kind, minimalCrossingNumber };
   });

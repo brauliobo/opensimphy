@@ -191,6 +191,10 @@ function fail(path: string, message: string): never {
   throw new TypeError(`${path} ${message}`)
 }
 
+function parsed<T>(value: unknown): T {
+  return value as T
+}
+
 function requireRecord(value: unknown, path: string): asserts value is UnknownRecord {
   if (!isRecord(value)) fail(path, 'must be an object')
 }
@@ -290,7 +294,7 @@ function parseSourcePlan(value: unknown): ArtifactManifestV1['sourcePlan'] {
   requireSafeRelativePath(value.path, 'manifest.sourcePlan.path')
   requireRevision(value.revision, 'manifest.sourcePlan.revision')
   requireEvidenceArray(value.evidenceRefs, 'manifest.sourcePlan.evidenceRefs')
-  return value as ArtifactManifestV1['sourcePlan']
+  return parsed<ArtifactManifestV1['sourcePlan']>(value)
 }
 
 function parseSource(value: unknown, path: string): ArtifactSourceV1 {
@@ -299,7 +303,7 @@ function parseSource(value: unknown, path: string): ArtifactSourceV1 {
   requireRevision(value.revision, `${path}.revision`)
   requirePathArray(value.files, `${path}.files`)
   requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
-  return value as ArtifactSourceV1
+  return parsed<ArtifactSourceV1>(value)
 }
 
 function parseBuild(value: unknown, path: string): ArtifactBuildV1 {
@@ -308,7 +312,7 @@ function parseBuild(value: unknown, path: string): ArtifactBuildV1 {
   requireNonEmptyString(value.command, `${path}.command`)
   requireNonEmptyString(value.toolchain, `${path}.toolchain`)
   requireSafeRelativePath(value.workingDirectory, `${path}.workingDirectory`)
-  return value as ArtifactBuildV1
+  return parsed<ArtifactBuildV1>(value)
 }
 
 function parseOutput(value: unknown, path: string): ArtifactOutputV1 {
@@ -316,7 +320,7 @@ function parseOutput(value: unknown, path: string): ArtifactOutputV1 {
   requireNonEmptyString(value.module, `${path}.module`)
   requireNonEmptyString(value.workerBoundary, `${path}.workerBoundary`)
   requireOneOf(value.artifactKind, ARTIFACT_KINDS, `${path}.artifactKind`)
-  return value as ArtifactOutputV1
+  return parsed<ArtifactOutputV1>(value)
 }
 
 function parseRuntime(value: unknown, path: string): ArtifactRuntimeV1 {
@@ -336,7 +340,7 @@ function parseRuntime(value: unknown, path: string): ArtifactRuntimeV1 {
   requireSafeInteger(value.maxOutputBytes, `${path}.maxOutputBytes`)
   if (value.maxArtifactBytes > value.maxMemoryBytes) fail(`${path}.maxArtifactBytes`, 'must not exceed maxMemoryBytes')
   if (value.maxOutputBytes > value.maxMemoryBytes) fail(`${path}.maxOutputBytes`, 'must not exceed maxMemoryBytes')
-  return value as ArtifactRuntimeV1
+  return parsed<ArtifactRuntimeV1>(value)
 }
 
 function parseLicenseGate(value: unknown, path: string): ArtifactLicenseGateV1 {
@@ -344,7 +348,7 @@ function parseLicenseGate(value: unknown, path: string): ArtifactLicenseGateV1 {
   requireOneOf(value.status, LICENSE_GATE_STATUSES, `${path}.status`)
   requireNonEmptyString(value.license, `${path}.license`)
   requireStringArray(value.noticeRequirements, `${path}.noticeRequirements`, true)
-  return value as ArtifactLicenseGateV1
+  return parsed<ArtifactLicenseGateV1>(value)
 }
 
 function parseCompanion(value: unknown, path: string): ArtifactCompanionIntegrityV1 {
@@ -353,7 +357,7 @@ function parseCompanion(value: unknown, path: string): ArtifactCompanionIntegrit
   requireNonEmptyString(value.sha256, `${path}.sha256`)
   if (!SHA256_PATTERN.test(value.sha256)) fail(`${path}.sha256`, 'must be a lowercase SHA-256 digest')
   requireSafeInteger(value.byteSize, `${path}.byteSize`)
-  return value as ArtifactCompanionIntegrityV1
+  return parsed<ArtifactCompanionIntegrityV1>(value)
 }
 
 function parseArtifact(value: unknown, status: ArtifactStatus, path: string): ArtifactIntegrityV1 {
@@ -377,7 +381,7 @@ function parseArtifact(value: unknown, status: ArtifactStatus, path: string): Ar
   } else if (value.path !== null || value.sha256 !== null || value.byteSize !== null) {
     fail(path, `${status} records must not claim an artifact`)
   }
-  return value as ArtifactIntegrityV1
+  return parsed<ArtifactIntegrityV1>(value)
 }
 
 function parseRecord(value: unknown, index: number): ArtifactRecordV1 {
@@ -408,7 +412,7 @@ function parseRecord(value: unknown, index: number): ArtifactRecordV1 {
   requireOneOf(value.status, STATUSES, `${path}.status`)
   parseArtifact(value.artifact, value.status, `${path}.artifact`)
   requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
-  return value as ArtifactRecordV1
+  return parsed<ArtifactRecordV1>(value)
 }
 
 function parseLegacyArtifactManifest(value: unknown, expectedKind?: LegacyArtifactManifestKind): ArtifactManifestV1 {
@@ -424,7 +428,7 @@ function parseLegacyArtifactManifest(value: unknown, expectedKind?: LegacyArtifa
   const records = value.records.map((record, index) => parseRecord(record, index))
   if (new Set(records.map(({ id }) => id)).size !== records.length) fail('manifest.records', 'must contain unique IDs')
   if (new Set(records.map(({ project }) => project)).size !== records.length) fail('manifest.records', 'must contain unique project names')
-  return value as ArtifactManifestV1
+  return parsed<ArtifactManifestV1>(value)
 }
 
 function parseLedgerSource(value: unknown, path: string): ArtifactLedgerSourceV1 {
@@ -437,7 +441,7 @@ function parseLedgerSource(value: unknown, path: string): ArtifactLedgerSourceV1
     requireRevision(value.revision, `${path}.revision`)
   }
   requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
-  return value as ArtifactLedgerSourceV1
+  return parsed<ArtifactLedgerSourceV1>(value)
 }
 
 function parseLedgerRecord(
@@ -505,7 +509,7 @@ function parseLedgerRecord(
   requireOneOf(value.status, STATUSES, `${path}.status`)
   parseArtifact(value.artifact, value.status, `${path}.artifact`)
   requireEvidenceArray(value.evidenceRefs, `${path}.evidenceRefs`)
-  return value as ArtifactLedgerRecordV1
+  return parsed<ArtifactLedgerRecordV1>(value)
 }
 
 function parseLedgerManifest(
@@ -514,19 +518,20 @@ function parseLedgerManifest(
 ): SourceArtifactManifestV1 | ReferenceLedgerManifestV1 {
   requireExactKeys(value, ['schemaVersion', 'manifestKind', 'manifestRevision', 'sourcePlan', 'records'], 'manifest')
   if (value.schemaVersion !== 1) fail('manifest.schemaVersion', 'must be 1')
-  requireOneOf(value.manifestKind, ['source-artifacts', 'reference-ledger'], 'manifest.manifestKind')
-  if (expectedKind !== undefined && value.manifestKind !== expectedKind) {
+  const manifestKind = value.manifestKind
+  requireOneOf(manifestKind, ['source-artifacts', 'reference-ledger'], 'manifest.manifestKind')
+  if (expectedKind !== undefined && manifestKind !== expectedKind) {
     fail('manifest.manifestKind', `must be ${expectedKind}`)
   }
   requireSafeId(value.manifestRevision, 'manifest.manifestRevision')
   parseSourcePlan(value.sourcePlan)
   if (!Array.isArray(value.records) || value.records.length === 0) fail('manifest.records', 'must be a non-empty array')
-  const records = value.records.map((record, index) => parseLedgerRecord(record, index, value.manifestKind))
+  const records = value.records.map((record, index) => parseLedgerRecord(record, index, manifestKind))
   if (new Set(records.map(({ id }) => id)).size !== records.length) fail('manifest.records', 'must contain unique IDs')
   if (new Set(records.map(({ project }) => project)).size !== records.length) fail('manifest.records', 'must contain unique project names')
   if (new Set(records.map(({ descriptorId }) => descriptorId)).size !== records.length) fail('manifest.records', 'must contain unique descriptor IDs')
   if (new Set(records.map(({ catalogItemId }) => catalogItemId)).size !== records.length) fail('manifest.records', 'must contain unique catalog item IDs')
-  return value as SourceArtifactManifestV1 | ReferenceLedgerManifestV1
+  return parsed<SourceArtifactManifestV1 | ReferenceLedgerManifestV1>(value)
 }
 
 export function parseArtifactManifest(value: unknown, expectedKind: 'source-artifacts'): SourceArtifactManifestV1

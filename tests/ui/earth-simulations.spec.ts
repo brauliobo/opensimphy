@@ -12,6 +12,7 @@ import {
   isSimulationBlocked,
   loadScientificSimulationBundle,
   type ScientificSimulationRecord,
+  type SimulationExecutionMethod,
 } from '../../src/earth/simulations'
 import {
   DEFAULT_EARTH_METHOD_INPUTS,
@@ -52,10 +53,46 @@ function simulation(index: number) {
   }
 }
 
+function executionMethodFrom(method: {
+  id: string
+  title: string
+  relationship: string
+  modelOrigin: string
+  runtime: string
+  runnable: boolean
+  earthDerived: boolean
+  model?: string
+}): SimulationExecutionMethod {
+  const shared = {
+    id: method.id,
+    title: method.title,
+    relationship: method.relationship,
+    modelOrigin: method.modelOrigin,
+    earthDerived: method.earthDerived,
+    validatesEarthTheory: false as const,
+  }
+  if (method.runnable) return { ...shared, runtime: method.runtime, runnable: true }
+  const model = method.model
+  if (typeof model !== 'string') throw new Error(`unavailable method ${method.id} is missing model`)
+  return { ...shared, runtime: 'unavailable', runnable: false, precision: null, model }
+}
+
+function legacyExecutionMethod(runnable: boolean): SimulationExecutionMethod {
+  return executionMethodFrom({
+    id: 'legacy-requested-method',
+    title: 'Legacy requested execution method',
+    relationship: 'source-contract-validator',
+    modelOrigin: 'engine-audit',
+    runtime: runnable ? 'browser-worker' : 'unavailable',
+    runnable,
+    earthDerived: false,
+    model: 'Legacy blocked execution',
+  })
+}
+
 function normalizedSimulation(index: number): ScientificSimulationRecord {
   const legacy = simulation(index)
   const runnable = legacy.executionMode !== 'blocked'
-  const defaultMethodId = 'legacy-requested-method'
   return {
     ...legacy,
     classificationSource: null,
@@ -64,17 +101,8 @@ function normalizedSimulation(index: number): ScientificSimulationRecord {
     inferredTypeMetadata: true,
     runnable,
     scientificStatus: runnable ? 'unresolved' : 'blocked',
-    defaultMethodId,
-    executionMethods: [{
-      id: defaultMethodId,
-      title: 'Legacy requested execution method',
-      relationship: 'source-contract-validator',
-      modelOrigin: 'engine-audit',
-      runtime: runnable ? 'browser-worker' : 'unavailable',
-      runnable,
-      earthDerived: false,
-      validatesEarthTheory: false,
-    }],
+    defaultMethodId: 'legacy-requested-method',
+    executionMethods: [legacyExecutionMethod(runnable)],
     sourceState: { text: legacy.currentState, status: legacy.currentState },
   }
 }
@@ -177,7 +205,7 @@ describe('EARTH scientific simulation registry', () => {
     )
     expect(wrapper.get('[data-testid="earth-campaign-strip"]').text()).toContain('SIM-NUC-PROTON')
     expect(wrapper.get('[data-testid="earth-campaign-strip"]').text()).toContain('SIM-FLD')
-    expect(wrapper.get('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
+    expect(wrapper.find('a[href="/earth/programs/EARTH-NUC-004"]').exists()).toBe(true)
   })
 
   it('retains schema v2 source and method metadata in the owning UI record contract', async () => {
@@ -201,8 +229,10 @@ describe('EARTH scientific simulation registry', () => {
 
   it('fails closed when generated method metadata drifts from the engine registry', async () => {
     const drifted = structuredClone(generatedRegistry)
-    drifted.items[0].defaultMethodId = 'traditional-analytic-baseline-v1'
-    drifted.items[0].executionMethods[0].id = 'traditional-analytic-baseline-v1'
+    const driftedItem = drifted.items[0]!
+    const driftedMethod = driftedItem.executionMethods[0]!
+    driftedItem.defaultMethodId = 'traditional-analytic-baseline-v1'
+    driftedMethod.id = 'traditional-analytic-baseline-v1'
     mockGeneratedRegistryFetch(drifted)
 
     await expect(loadScientificSimulationBundle()).rejects.toThrow('does not match the EARTH engine default')
@@ -210,7 +240,7 @@ describe('EARTH scientific simulation registry', () => {
 
   it('requires exact engine parity for runnable methods and strict unavailable schemas', async () => {
     const runnableDrift = structuredClone(generatedRegistry)
-    runnableDrift.items[0].executionMethods[0].title = 'Drifted runnable title'
+    runnableDrift.items[0]!.executionMethods[0]!.title = 'Drifted runnable title'
     mockGeneratedRegistryFetch(runnableDrift)
     await expect(loadScientificSimulationBundle()).rejects.toThrow('does not match the EARTH engine method definition')
 
@@ -442,7 +472,7 @@ describe('EARTH scientific simulation registry', () => {
         currentState:  item.sourceState.status,
         scientificStatus: item.scientificStatus,
         defaultMethodId: item.defaultMethodId,
-        executionMethods: item.executionMethods,
+        executionMethods: item.executionMethods.map(executionMethodFrom),
         gateStates:    item.gateStates,
         blockers:      item.blockers,
       }
@@ -466,7 +496,7 @@ describe('EARTH scientific simulation registry', () => {
       currentState: comparison.sourceState.status,
       scientificStatus: comparison.scientificStatus,
       defaultMethodId: comparison.defaultMethodId,
-      executionMethods: comparison.executionMethods,
+      executionMethods: comparison.executionMethods.map(executionMethodFrom),
       gateStates: comparison.gateStates,
       blockers: comparison.blockers,
     }

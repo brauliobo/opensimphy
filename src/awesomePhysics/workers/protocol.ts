@@ -125,6 +125,10 @@ function fail(path: string, message: string): never {
   throw new TypeError(`${path} ${message}`)
 }
 
+function parsed<T>(value: unknown): T {
+  return value as T
+}
+
 function requireRecord(value: unknown, path: string): UnknownRecord {
   if (!isRecord(value)) fail(path, 'must be a plain object')
   return value
@@ -242,7 +246,7 @@ function parseDescriptor(value: unknown, path: string): AwesomePhysicsSimulation
   requireNonEmptyString(descriptor.contentRevision, `${path}.contentRevision`)
   requireNonEmptyString(descriptor.outputRevision, `${path}.outputRevision`)
   requireJsonValue(descriptor, path)
-  return descriptor as AwesomePhysicsSimulationDescriptorV1
+  return parsed<AwesomePhysicsSimulationDescriptorV1>(descriptor)
 }
 
 function parseResponseDescriptor(value: unknown, path: string): AwesomePhysicsSimulationDescriptorV1 | null {

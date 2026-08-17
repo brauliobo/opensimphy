@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import FiddleCard from '../components/fiddles/FiddleCard.vue'
 import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
-import type { FiddleRecord, FiddleRuntimeStatus } from '../types/fiddle'
+import type { FiddleRuntimeStatus } from '../types/fiddle'
 
 const route = useRoute()
 const router = useRouter()
@@ -29,6 +29,7 @@ const archiveReady = computed(() => !registryLoading.value
   && fiddleRegistry.runtimeRecords.value.length === fiddleRegistry.records.value.length
   && fiddleRegistry.records.value.length > 0)
 const records = computed(() => fiddleRegistry.records.value)
+type ArchivedFiddle = NonNullable<(typeof records.value)[number]>
 const source = computed(() => fiddleRegistry.source.value)
 const runtimeAggregate = computed(() => fiddleRegistry.runtimeAggregate.value)
 const selectedProfileUrl = computed(() => source.value ? fiddleProfileUrl(source.value.author, page.value) : '')
@@ -147,7 +148,7 @@ function changePage(nextPage: number): void {
   void router.replace({ name: 'fiddle-archive', query: archiveQuery.value })
 }
 
-function recordRange(pageRecords: readonly FiddleRecord[]): { first: number; last: number; count: number } {
+function recordRange(pageRecords: readonly ArchivedFiddle[]): { first: number; last: number; count: number } {
   const first = pageRecords[0]?.position ?? 0
   const last = pageRecords.at(-1)?.position ?? 0
   return { first, last, count: pageRecords.length }
@@ -168,7 +169,7 @@ function sourcePageLabel(pageNumber: number): string {
   return `Source profile page ${pageNumber}, records ${summary.first}-${summary.last}`
 }
 
-function runtimeFor(record: FiddleRecord) {
+function runtimeFor(record: ArchivedFiddle) {
   const runtime = fiddleRegistry.getRuntimeBySlug(record.slug)
   if (!runtime) throw new Error(`Runtime status missing for ${record.slug}`)
   return runtime

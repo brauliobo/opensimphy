@@ -240,7 +240,7 @@ function executionMethodAt(value: unknown, path: string): SimulationExecutionMet
   ]
   exactKeys(object, runnable ? commonKeys : [...commonKeys, 'precision', 'model'], path)
   if (object.validatesEarthTheory !== false) fail(`${path}.validatesEarthTheory`, 'must remain false')
-  const method = {
+  const method: SimulationExecutionMethodBase = {
     id:                   nonEmptyString(object.id, `${path}.id`),
     title:                nonEmptyString(object.title, `${path}.title`),
     relationship:         nonEmptyString(object.relationship, `${path}.relationship`),
@@ -429,7 +429,7 @@ function generatedRecordAt(value: unknown, index: number, gateIds: string[]): Sc
   if (sourceState.status === 'blocked' && !blockers.includes(sourceState.text)) {
     fail(`${path}.blockers`, 'must preserve the blocked source state text')
   }
-  if (classification === 'dataset-audit' && !['pending', 'blocked'].includes(gateStates.G0b)) {
+  if (classification === 'dataset-audit' && gateStates.G0b !== 'pending' && gateStates.G0b !== 'blocked') {
     fail(`${path}.gateStates.G0b`, 'dataset audits must remain pending or blocked')
   }
   if (!executionMethods.some(({ id: methodId, runnable: methodRunnable }) => methodId === defaultMethodId && methodRunnable)) {
@@ -442,6 +442,7 @@ function generatedRecordAt(value: unknown, index: number, gateIds: string[]): Sc
   if (runnableMethods.length !== engineMethods.length) fail(`${path}.executionMethods`, 'runnable methods do not match the EARTH engine method count')
   engineMethods.forEach((engineMethod, methodIndex) => {
     const generatedMethod = runnableMethods[methodIndex]
+    if (!generatedMethod) fail(`${path}.executionMethods`, 'runnable methods do not match the EARTH engine method count')
     const expected = {
       id:                   engineMethod.id,
       title:                engineMethod.title,

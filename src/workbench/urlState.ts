@@ -1,5 +1,5 @@
 import type { JsonObject, JsonValue } from '../types/workbench'
-import { cloneJsonValue } from './snapshots'
+import { cloneJsonValue, isJsonObject } from './snapshots'
 
 export const MAX_WORKBENCH_URL_INPUT_BYTES = 4096
 
@@ -134,18 +134,18 @@ export function mergeOwnedQuery(
 
 function canonicalJsonValue(value: JsonValue): JsonValue {
   if (Array.isArray(value)) return value.map(canonicalJsonValue)
-  if (value === null || typeof value !== 'object') return value
+  if (!isJsonObject(value)) return value
 
   const sorted: Record<string, JsonValue> = {}
-  for (const key of Object.keys(value).sort()) sorted[key] = canonicalJsonValue(value[key]!)
+  for (const [key, item] of Object.entries(value).sort(([left], [right]) => left < right ? -1 : left > right ? 1 : 0)) {
+    sorted[key] = canonicalJsonValue(item)
+  }
   return sorted
 }
 
 function objectInputs(value: unknown): JsonObject {
   const cloned = cloneJsonValue(value, 'url.inputs')
-  if (cloned === null || typeof cloned !== 'object' || Array.isArray(cloned)) {
-    throw new WorkbenchUrlStateError('inputs must be an object')
-  }
+  if (!isJsonObject(cloned)) throw new WorkbenchUrlStateError('inputs must be an object')
   return cloned
 }
 

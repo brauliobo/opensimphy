@@ -203,15 +203,17 @@ export interface FieldSample {
   magnitude: number
 }
 
-export type OnelabWorkerRequest =
-  | { type: 'warm'; requestId: string }
-  | { type: 'run-microstrip'; requestId: string }
-  | { type: 'open-microstrip'; requestId: string }
-  | { type: 'open-project'; requestId: string; projectId: string }
-  | { type: 'project'; requestId: string; envelope: ProjectEnvelope }
-  | { type: 'loop-control'; requestId: string; operation: 'initialize' | 'increment'; envelope: ProjectEnvelope }
-  | { type: 'get-cube-scene'; requestId: string }
-  | { type: 'get-rendering-scene'; requestId: string }
+export type OnelabWorkerMessage =
+  | { type: 'warm' }
+  | { type: 'run-microstrip' }
+  | { type: 'open-microstrip' }
+  | { type: 'open-project'; projectId: string }
+  | { type: 'project'; envelope: ProjectEnvelope }
+  | { type: 'loop-control'; operation: 'initialize' | 'increment'; envelope: ProjectEnvelope }
+  | { type: 'get-cube-scene' }
+  | { type: 'get-rendering-scene' }
+
+export type OnelabWorkerRequest = OnelabWorkerMessage & { requestId: string }
 
 export type OnelabWorkerResponse =
   | { type: 'warmed'; requestId: string; manifest: SimulationAssetManifest }

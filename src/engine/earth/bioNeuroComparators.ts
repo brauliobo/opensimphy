@@ -14,6 +14,14 @@ function boundedNumber(value: number, name: string, minimum: number, maximum: nu
   return value;
 }
 
+function addIndexed(values: number[], index: number, delta: number): void {
+  values[index] = values[index]! + delta;
+}
+
+function addIndexedMatrix(matrix: number[][], row: number, column: number, delta: number): void {
+  addIndexed(matrix[row]!, column, delta);
+}
+
 function boundedList<T>(value: T[], name: string, minimum: number, maximum: number): T[] {
   if (!Array.isArray(value) || value.length < minimum || value.length > maximum) {
     throw new RangeError(`${name} must contain ${minimum} to ${maximum} entries`);
@@ -451,7 +459,7 @@ export function finiteMarkovStateGraph(
   const duration = boundedNumber(inputs.durationSeconds ?? 5, "durationSeconds", 1e-9, 1e9);
   const requestedSteps = boundedInteger(inputs.integrationSteps ?? 1000, "integrationSteps", 1, 20_000);
   const exitRates = new Array<number>(stateNames.length).fill(0);
-  for (const transition of transitions) exitRates[stateIndex.get(transition.from)!] += transition.ratePerSecond;
+  for (const transition of transitions) addIndexed(exitRates, stateIndex.get(transition.from)!, transition.ratePerSecond);
   const stableSteps = Math.ceil(duration * Math.max(...exitRates) / 0.25);
   const integrationSteps = Math.max(requestedSteps, stableSteps);
   if (integrationSteps > 20_000) throw new RangeError("durationSeconds and rates require more than 20000 stable integration steps");
@@ -460,8 +468,8 @@ export function finiteMarkovStateGraph(
     const change = new Array<number>(stateNames.length).fill(0);
     for (const transition of transitions) {
       const flow = occupancy[stateIndex.get(transition.from)!]! * transition.ratePerSecond;
-      change[stateIndex.get(transition.from)!] -= flow;
-      change[stateIndex.get(transition.to)!] += flow;
+      addIndexed(change, stateIndex.get(transition.from)!, -flow);
+      addIndexed(change, stateIndex.get(transition.to)!, flow);
     }
     return change;
   };
@@ -482,7 +490,7 @@ export function finiteMarkovStateGraph(
     for (let index = 0; index < transitions.length; index += 1) {
       const transition = transitions[index]!;
       const from = stateIndex.get(transition.from)!;
-      expectedCounts[index] += 0.5 * (before[from]! + occupancy[from]!) * transition.ratePerSecond * step;
+      addIndexed(expectedCounts, index, 0.5 * (before[from]! + occupancy[from]!) * transition.ratePerSecond * step);
     }
   }
   const occupancyTotal = occupancy.reduce((sum, value) => sum + value, 0);
@@ -762,8 +770,8 @@ function symmetricEigenDecomposition(
 ): { values: number[]; vectors: number[][]; offDiagonalResidual: number; sweeps: number } {
   const size = source.length;
   const matrix = source.map((row) => [...row]);
-  const vectors = Array.from({ length: size }, (_, row) =>
-    Array.from({ length: size }, (_, column) => row === column ? 1 : 0));
+  const vectors: number[][] = Array.from({ length: size }, (_, row) =>
+    Array.from({ length: size }, (_, column) => (row === column ? 1 : 0)));
   let sweeps = 0;
   for (; sweeps < maximumSweeps; sweeps += 1) {
     checkCancelled(options);
@@ -886,10 +894,10 @@ export function connectomeEigenmodeComparison(
   for (const edge of edges) {
     const from = nodeIndex.get(edge.from)!;
     const to = nodeIndex.get(edge.to)!;
-    laplacian[from]![from] += edge.effectiveRateSquared;
-    laplacian[to]![to] += edge.effectiveRateSquared;
-    laplacian[from]![to] -= edge.effectiveRateSquared;
-    laplacian[to]![from] -= edge.effectiveRateSquared;
+    addIndexedMatrix(laplacian, from, from, edge.effectiveRateSquared);
+    addIndexedMatrix(laplacian, to, to, edge.effectiveRateSquared);
+    addIndexedMatrix(laplacian, from, to, -edge.effectiveRateSquared);
+    addIndexedMatrix(laplacian, to, from, -edge.effectiveRateSquared);
   }
   const decomposition = symmetricEigenDecomposition(laplacian, maximumSweeps, options);
   const modes = decomposition.values.map((rawValue, index) => {

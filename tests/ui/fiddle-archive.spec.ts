@@ -186,7 +186,7 @@ describe('Fiddle archive and detail surfaces', () => {
     await flushPromises()
 
     expect(wrapper.find('[data-testid="fiddle-live-iframe"]').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="fiddle-live-activate"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="fiddle-live-activate"]').exists()).toBe(true)
 
     await wrapper.get('[data-testid="fiddle-live-activate"]').trigger('click')
     expect(wrapper.get('[data-testid="fiddle-live-iframe"]').attributes('src')).toBe(secondRecord.embedUrl)

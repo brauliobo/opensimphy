@@ -254,7 +254,10 @@ function addTap(target: Float64Array, gridSize: number, tap: NormalizedTap, scal
       const distance = Math.hypot(x - centerX, y - centerY)
       if (distance > tap.radius) continue
       const profile = 0.5 * (1 + Math.cos(Math.PI * distance / tap.radius))
-      target[y * gridSize + x] += scale * tap.amplitude * profile
+      const cell = y * gridSize + x
+      const current = target[cell]
+      if (current === undefined) throw new RangeError('Ripple grid index is outside the buffer')
+      target[cell] = current + scale * tap.amplitude * profile
     }
   }
 }

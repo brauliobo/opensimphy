@@ -232,12 +232,14 @@ function finiteJson<T>(value: T): T {
   return value
 }
 
-function throwIfAborted(signal?: AbortSignal): void {
-  if (!signal?.aborted) return
-  if (signal.reason instanceof Error) throw signal.reason
-  const error = new Error('The python-acoustics operation was aborted')
-  error.name = 'AbortError'
-  throw error
+function throwIfAborted(...signals: readonly (AbortSignal | undefined)[]): void {
+  for (const signal of signals) {
+    if (!signal?.aborted) continue
+    if (signal.reason instanceof Error) throw signal.reason
+    const error = new Error('The python-acoustics operation was aborted')
+    error.name = 'AbortError'
+    throw error
+  }
 }
 
 function optionalNumber(

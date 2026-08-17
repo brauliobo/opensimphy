@@ -1,10 +1,10 @@
 import {
   EARTH_PREDICTION_LABELS,
   EARTH_PREDICTION_SCHEMA,
+  assertEarthPredictionRow,
   predictionRowsForDisplay,
   type EarthPredictionAuditStatus,
   type EarthPredictionDisplayRow as EarthPredictionLedgerDisplayRow,
-  type EarthPredictionRow,
 } from '../engine/earth/particle/ledger.js'
 import { formatScalar, isJsonObject } from './workbench'
 
@@ -120,7 +120,7 @@ export function extractPredictions(result: unknown): EarthPredictionDisplayRow[]
     const record = asRecord(item)
     if (!record) return []
     try {
-      return [fromLedgerDisplay(predictionRowsForDisplay([record as EarthPredictionRow])[0]!)]
+      return [fromLedgerDisplay(predictionRowsForDisplay([assertEarthPredictionRow(record)])[0]!)]
     } catch {
       return [fromLooseRow(record, index)]
     }

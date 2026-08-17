@@ -195,13 +195,26 @@ async function execute(action: 'check' | 'compute' | 'reset', loopIndex?: number
     state.value = 'complete'
     return response
   } catch (reason) {
-    if (activeRequestId.value !== request.requestId || state.value === 'cancelled') return
+    if (activeRequestId.value !== request.requestId || cancelledState()) return
     error.value = reason instanceof Error ? reason.message : String(reason)
     state.value = 'error'
     return undefined
   } finally {
     if (activeRequestId.value === request.requestId && state.value === 'running') state.value = 'ready'
   }
+}
+
+function cancelledState() {
+  return state.value === 'cancelled'
+}
+
+function finiteLoopValues(database: string): Record<string, number> {
+  const finite: Record<string, number> = {}
+  for (const [name, value] of Object.entries(onelabLoopValues(database))) {
+    if (typeof value !== 'number' || !Number.isFinite(value)) throw new Error(`loop parameter ${name} has no finite scalar value`)
+    finite[name] = value
+  }
+  return finite
 }
 
 async function runLoop() {
@@ -228,7 +241,7 @@ async function runLoop() {
       sessionVersion.value++
       const response = await execute('compute', index)
       if (!response?.result || loopCancelled) break
-      loopHistory.value.push({ index, values: onelabLoopValues(session.database), database: session.database, outputs: onelabOutputs(session.database) })
+      loopHistory.value.push({ index, values: finiteLoopValues(session.database), database: session.database, outputs: onelabOutputs(session.database) })
       loopProgress.value = loopHistory.value.length
       if (loopHistory.value.length < loopTotal.value) {
         state.value = 'running'

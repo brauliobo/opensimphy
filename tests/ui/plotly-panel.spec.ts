@@ -1,9 +1,16 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import Plotly from 'plotly.js-dist-min'
+import type { PlotData } from 'plotly.js'
 import { isProxy, isReadonly, readonly } from 'vue'
 import PlotlyPanel from '../../src/components/PlotlyPanel.vue'
 import type { PlotFigure } from '../../src/types/plot'
 import { figure } from './fixtures'
+
+interface SurfaceFigure {
+  data: Partial<PlotData>[]
+  layout?: PlotFigure['layout']
+  config?: PlotFigure['config']
+}
 
 function deepFreeze<T>(value: T): T {
   if (value && typeof value === 'object') {
@@ -14,10 +21,10 @@ function deepFreeze<T>(value: T): T {
   return value
 }
 
-function surfaceFigure(color: string, ratio: number): PlotFigure {
+function surfaceFigure(color: string, ratio: number): SurfaceFigure {
   return {
     data: [{
-      x: new Float64Array([0]) as unknown as number[],
+      x: new Float64Array([0]),
       y: [0],
       z: [1],
       customdata: [[new Date('2026-01-01T00:00:00Z'), null]],
@@ -29,7 +36,7 @@ function surfaceFigure(color: string, ratio: number): PlotFigure {
   }
 }
 
-function immutableFigure(color: string, ratio: number): PlotFigure {
+function immutableFigure(color: string, ratio: number): SurfaceFigure {
   return deepFreeze(surfaceFigure(color, ratio))
 }
 
@@ -112,7 +119,7 @@ describe('PlotlyPanel', () => {
     expect(wrapper.emitted('error')).toBeUndefined()
     expect(wrapper.get('[data-testid="plot-ready"]').attributes('data-plot-state')).toBe('ready')
     expect(firstSource.data[0]?.colorscale).toEqual([[0, '#111111'], [1, '#ffffff']])
-    expect(firstSource.data[0]?.x[0]).toBe(0)
+    expect(firstSource.data[0]?.x?.[0]).toBe(0)
     expect(firstSource.layout?.scene?.aspectratio?.x).toBe(1)
     expect(firstSource.config?.modeBarButtonsToRemove).toEqual(['zoom2d'])
 
@@ -122,7 +129,7 @@ describe('PlotlyPanel', () => {
     expect(wrapper.get('[data-testid="plot-ready"]').attributes('data-plot-state')).toBe('ready')
     expect(wrapper.emitted('ready')).toHaveLength(2)
     expect(secondSource.data[0]?.colorscale).toEqual([[0, '#222222'], [1, '#ffffff']])
-    expect(secondSource.data[0]?.x[0]).toBe(0)
+    expect(secondSource.data[0]?.x?.[0]).toBe(0)
     expect(secondSource.layout?.scene?.aspectratio?.x).toBe(2)
     expect(react).toHaveBeenCalledTimes(2)
     expect(react.mock.calls[0]?.[1]).not.toBe(firstSource.data)

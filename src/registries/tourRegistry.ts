@@ -54,9 +54,9 @@ const RESULT_STATUS_IDS = ['not-evaluated', 'computed', 'compared', 'failure', '
 const CONCLUSION_SCOPE_IDS = ['activity', 'computation', 'source', 'empirical-evidence', 'scientific-conclusion'] as const
 const CONCLUSION_FIELDS = ['seenInActivity', 'computedHere', 'reproducedFromSource', 'comparedWithEvidence', 'establishes', 'doesNotEstablish'] as const
 const VALIDATION_PROTOCOL_KEYS = ['id', 'hypothesis', 'calibratedInputIds', 'heldOutObservableIds', 'datasetRefs', 'comparisonMethod', 'uncertaintyTreatment', 'acceptanceCriteria', 'failureHandling'] as const
-const CLAIM_CLASSES = new Set(CLAIM_CLASS_IDS)
-const METHOD_RELATIONSHIPS = new Set(METHOD_RELATIONSHIP_IDS)
-const MODEL_ORIGINS = new Set(MODEL_ORIGIN_IDS)
+const CLAIM_CLASSES: ReadonlySet<string> = new Set(CLAIM_CLASS_IDS)
+const METHOD_RELATIONSHIPS: ReadonlySet<string> = new Set(METHOD_RELATIONSHIP_IDS)
+const MODEL_ORIGINS: ReadonlySet<string> = new Set(MODEL_ORIGIN_IDS)
 const LESSON_BLOCK_KINDS = new Set(['prose', 'definition', 'list', 'caveat', 'derivation'])
 const CHECKPOINT_KINDS = new Set(['prediction', 'classification', 'explanation'])
 const OBSERVATION_ITEM_ROLES = new Set([
@@ -308,7 +308,9 @@ function validateQuickPath(value: unknown, lesson: Record<string, unknown>, path
   requireIdArray(value.equationStepIds, `${path}.equationStepIds`, true)
   requireIdArray(value.checkpointIds, `${path}.checkpointIds`, true)
   requireSafeId(value.simulationPresetId, `${path}.simulationPresetId`)
-  for (const field of ['guidedBlockIds', 'equationStepIds', 'checkpointIds'] as const) requireUnique(value[field], `${path}.${field}`)
+  requireUnique(value.guidedBlockIds, `${path}.guidedBlockIds`)
+  requireUnique(value.equationStepIds, `${path}.equationStepIds`)
+  requireUnique(value.checkpointIds, `${path}.checkpointIds`)
   const guidedIds = new Set((lesson.guidedBlocks as Array<Record<string, unknown>>).map(({ id }) => id))
   const equationIds = new Set((lesson.equationSteps as Array<Record<string, unknown>>).map(({ id }) => id))
   const checkpointIds = new Set((lesson.checkpoints as Array<Record<string, unknown>>).map(({ id }) => id))
@@ -331,10 +333,10 @@ function validateLesson(value: unknown, path: string): asserts value is Record<s
   requireIdArray(value.prerequisites, `${path}.prerequisites`)
   requireUnique(value.prerequisites, `${path}.prerequisites`)
   validateObservationStage(value.observationStage, `${path}.observationStage`)
-  for (const field of ['guidedBlocks', 'technicalBlocks'] as const) {
-    if (!Array.isArray(value[field]) || value[field].length === 0) fail(`${path}.${field}`, 'must be a non-empty array')
-    value[field].forEach((block, index) => validateLessonBlock(block, `${path}.${field}[${index}]`))
-  }
+  if (!Array.isArray(value.guidedBlocks) || value.guidedBlocks.length === 0) fail(`${path}.guidedBlocks`, 'must be a non-empty array')
+  value.guidedBlocks.forEach((block, index) => validateLessonBlock(block, `${path}.guidedBlocks[${index}]`))
+  if (!Array.isArray(value.technicalBlocks) || value.technicalBlocks.length === 0) fail(`${path}.technicalBlocks`, 'must be a non-empty array')
+  value.technicalBlocks.forEach((block, index) => validateLessonBlock(block, `${path}.technicalBlocks[${index}]`))
   const blockIds = [...value.guidedBlocks, ...value.technicalBlocks].map((block) => (block as Record<string, unknown>).id as string)
   requireUnique(blockIds, `${path} block IDs`)
   if (!Array.isArray(value.equationSteps) || value.equationSteps.length === 0) fail(`${path}.equationSteps`, 'must be a non-empty array')
@@ -345,7 +347,10 @@ function validateLesson(value: unknown, path: string): asserts value is Record<s
   requireStringArray(value.programIds, `${path}.programIds`)
   requireIdArray(value.glossaryIds, `${path}.glossaryIds`, true)
   requireIdArray(value.evidenceRefs, `${path}.evidenceRefs`, true)
-  for (const field of ['formulaIds', 'programIds', 'glossaryIds', 'evidenceRefs'] as const) requireUnique(value[field], `${path}.${field}`)
+  requireUnique(value.formulaIds, `${path}.formulaIds`)
+  requireUnique(value.programIds, `${path}.programIds`)
+  requireUnique(value.glossaryIds, `${path}.glossaryIds`)
+  requireUnique(value.evidenceRefs, `${path}.evidenceRefs`)
   const lessonGlossaryIds = new Set(value.glossaryIds)
   for (const field of ['guidedBlocks', 'technicalBlocks'] as const) {
     (value[field] as Array<Record<string, unknown>>).forEach((block, index) => {
@@ -414,7 +419,9 @@ function validateControl(value: unknown, path: string): asserts value is Record<
     requireUnique(optionValues, `${path} option values`)
   } else if (value.type === 'range' || value.type === 'number') {
     requireNonEmptyString(value.unit, `${path}.unit`)
-    for (const field of ['min', 'max', 'step']) requireFiniteNumber(value[field], `${path}.${field}`)
+    requireFiniteNumber(value.min, `${path}.min`)
+    requireFiniteNumber(value.max, `${path}.max`)
+    requireFiniteNumber(value.step, `${path}.step`)
     if (value.min >= value.max) fail(`${path}.min`, 'must be less than max')
     if (value.step <= 0 || value.step > value.max - value.min) fail(`${path}.step`, 'must be positive and no greater than the control span')
   }
@@ -588,7 +595,8 @@ function validateSimulation(value: unknown, path: string, ownerManifest: TourGen
     presetIds.push(preset.id)
     for (const field of ['label', 'description', 'inspectionPrompt']) requireNonEmptyString(preset[field], `${presetPath}.${field}`)
     requireExactKeys(preset.inputs, controlIds, [], `${presetPath}.inputs`)
-    controls.forEach((control) => validateControlValue(control, preset.inputs[control.id as string], `${presetPath}.inputs.${String(control.id)}`))
+    const inputs = preset.inputs
+    controls.forEach((control) => validateControlValue(control, inputs[control.id as string], `${presetPath}.inputs.${String(control.id)}`))
     validateOptionalAttribution(preset, presetPath)
   })
   requireUnique(presetIds, `${path} preset IDs`)

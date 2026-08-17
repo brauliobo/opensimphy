@@ -324,7 +324,7 @@ describe('formula iteration 6 views', () => {
     await disclosure.trigger('toggle')
     await flushPromises()
     expect(wrapper.get('[data-testid="formula-graph-ready"]')).toBeTruthy()
-    expect(wrapper.get('[data-testid="sweep-finding"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="sweep-finding"]').exists()).toBe(true)
     wrapper.unmount()
   })
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import EarthModelCard from '../components/EarthModelCard.vue'
 import EarthPredictionTable from '../components/EarthPredictionTable.vue'
@@ -46,9 +46,10 @@ import {
   type WorkbenchInputField,
 } from '../earth/workbench'
 import {
-  getEarthMethodDefinition,
+  listEarthMethods,
   isEarthSimulationId,
   type EarthMethodId,
+  type EarthSimulationId,
 } from '../engine/earth'
 import type { EarthWorkerExecution } from '../types/earthWorkers'
 import { useSavedRunRegistry } from '../registries/savedRunRegistry'
@@ -73,6 +74,8 @@ import {
   decodeWorkbenchInputEnvelope,
   encodeWorkbenchInputEnvelope,
   mergeOwnedQuery,
+  type WorkbenchQuery,
+  type WorkbenchQueryValue,
 } from '../workbench/urlState'
 
 type ExecutionStatus = 'idle' | 'starting' | 'running' | 'completed' | 'cancelled' | 'failed'
@@ -88,7 +91,7 @@ interface CompletedRun {
   readonly compatibilityKey: string
 }
 
-interface WorkbenchMethod extends SimulationExecutionMethod {
+type WorkbenchMethod = Omit<SimulationExecutionMethod, 'precision' | 'model'> & {
   kind: string
   precision: string
   model: string
@@ -155,28 +158,33 @@ const methodSections = computed(() => {
   if (typeof method === 'string' || Array.isArray(method)) return [['Method', method] as const]
   return Object.entries(method)
 })
-const methods = computed<WorkbenchMethod[]>(() => simulation.value?.executionMethods.map((method) => {
-  if (!method.runnable) {
+const methods = computed<WorkbenchMethod[]>(() => {
+  const record = simulation.value
+  if (!record) return []
+  return record.executionMethods.map((method) => {
+    if (!method.runnable) {
+      return {
+        ...method,
+        kind: 'unavailable',
+        precision: method.precision ?? 'unavailable',
+        model: method.model,
+        defaultInputs: null,
+      }
+    }
+    const methodId = method.id
+    if (!isEarthSimulationId(record.id) || !isListedEarthMethod(record.id, methodId)) {
+      return { ...method, kind: 'unavailable', precision: 'unavailable', model: 'No engine method definition is available.', defaultInputs: null }
+    }
+    const definition = earthMethodDefinition(record.id, methodId)
     return {
       ...method,
-      kind: 'unavailable',
-      precision: method.precision ?? 'unavailable',
-      model: method.model,
-      defaultInputs: null,
+      kind: definition.kind,
+      precision: definition.precision,
+      model: definition.model,
+      defaultInputs: isJsonObject(definition.defaultInputs) ? structuredClone(definition.defaultInputs) : null,
     }
-  }
-  if (!isEarthSimulationId(simulation.value!.id)) {
-    return { ...method, kind: 'unavailable', precision: 'unavailable', model: 'No engine method definition is available.', defaultInputs: null }
-  }
-  const definition = getEarthMethodDefinition(simulation.value!.id, method.id)
-  return {
-    ...method,
-    kind: definition.kind,
-    precision: definition.precision,
-    model: definition.model,
-    defaultInputs: isJsonObject(definition.defaultInputs) ? structuredClone(definition.defaultInputs) : null,
-  }
-}) ?? [])
+  })
+})
 const selectedMethod = computed(() => methods.value.find(({ id }) => id === selectedMethodId.value) ?? null)
 const selectedInputState = computed(() => inputStates.value[selectedMethodId.value] ?? null)
 const inputFields = computed(() => buildInputFields(selectedMethod.value?.defaultInputs ?? {}))
@@ -309,6 +317,35 @@ const workbenchExecutionMessage = computed(() => {
   return ''
 })
 
+function isListedEarthMethod(programId: EarthSimulationId, methodId: string): methodId is EarthMethodId {
+  return listEarthMethods(programId).some(({ id }) => id === methodId)
+}
+
+function earthMethodDefinition(programId: EarthSimulationId, methodId: EarthMethodId) {
+  const method = listEarthMethods(programId).find(({ id }) => id === methodId)
+  if (!method) throw new RangeError(`Unsupported EARTH method ID ${methodId} for program ${programId}`)
+  return method
+}
+
+function workbenchQueryFromRoute(query: LocationQuery): WorkbenchQuery {
+  const current: Record<string, WorkbenchQueryValue> = {}
+  for (const [key, value] of Object.entries(query)) {
+    if (value === null || typeof value === 'string') current[key] = value
+    else if (value.every((item): item is string => typeof item === 'string')) current[key] = Object.freeze([...value])
+  }
+  return Object.freeze(current)
+}
+
+function locationQueryFromWorkbench(query: WorkbenchQuery): LocationQueryRaw {
+  const next: LocationQueryRaw = {}
+  for (const [key, value] of Object.entries(query)) {
+    if (value === undefined) continue
+    if (typeof value === 'string' || value === null) next[key] = value
+    else next[key] = [...value]
+  }
+  return next
+}
+
 function methodLines(value: SimulationMethodValue): string[] {
   return typeof value === 'string' ? [value] : value
 }
@@ -378,7 +415,7 @@ function canonicalWorkbenchQuery(methodId: string, inputs: Record<string, unknow
     ? encodeWorkbenchInputEnvelope(inputs)
     : null
   return mergeOwnedQuery(
-    route.query,
+    workbenchQueryFromRoute(route.query),
     ['method', 'inputs'],
     { method: methodId, inputs: encodedInputs },
     { method: record?.defaultMethodId ?? '', inputs: null },
@@ -388,7 +425,7 @@ function canonicalWorkbenchQuery(methodId: string, inputs: Record<string, unknow
 function replaceWorkbenchQuery(methodId: string, inputs: Record<string, unknown> | null, force = false): void {
   try {
     const query = canonicalWorkbenchQuery(methodId, inputs)
-    if (force || !queriesEqual(route.query, query)) void router.replace({ query })
+    if (force || !queriesEqual(route.query, query)) void router.replace({ query: locationQueryFromWorkbench(query) })
   } catch (reason) {
     const message = reason instanceof Error ? reason.message : String(reason)
     actionErrors.value = { ...actionErrors.value, reset: message }
@@ -495,14 +532,15 @@ function validateInputs(): Record<string, unknown> | null {
     state.advancedError = 'Advanced input JSON must be an object.'
     return null
   }
-  const actualKeys = Object.keys(parsed).sort()
+  let inputs = parsed
+  const actualKeys = Object.keys(inputs).sort()
   const expectedKeys = Object.keys(method.defaultInputs).sort()
   if (actualKeys.length !== expectedKeys.length || actualKeys.some((key, index) => key !== expectedKeys[index])) {
     state.advancedError = `Advanced input JSON must contain exactly these fields: ${expectedKeys.join(', ')}.`
     return null
   }
   state.advancedError = ''
-  state.values = structuredClone(parsed)
+  state.values = structuredClone(inputs)
   let valid = true
   inputFields.value.forEach((field) => {
     const value = state.values[field.key]
@@ -523,14 +561,14 @@ function validateInputs(): Record<string, unknown> | null {
   })
   if (valid) {
     try {
-      parsed = validateEarthWorkbenchInputs(parsed, method.defaultInputs)
+      inputs = validateEarthWorkbenchInputs(inputs, method.defaultInputs)
     } catch (reason) {
       state.advancedError = reason instanceof Error ? reason.message : String(reason)
       valid = false
     }
   }
   syncFieldsFromValues(state)
-  return valid ? structuredClone(parsed) : null
+  return valid ? structuredClone(inputs) : null
 }
 
 function abortExecution(): void {
@@ -604,7 +642,10 @@ function resetSelectedMethod(): void {
 async function runSelectedMethod(): Promise<void> {
   const record = simulation.value
   const method = selectedMethod.value
-  if (!record || !method || !canRunSelected.value || !isEarthSimulationId(record.id)) return
+  if (!record || !method || !canRunSelected.value) return
+  const recordId = record.id
+  const methodId = method.id
+  if (!isEarthSimulationId(recordId) || !isListedEarthMethod(recordId, methodId)) return
   const inputs = validateInputs()
   if (!inputs) return
   const dispatchedInputs = cloneJsonValue(inputs, 'earth.dispatchedInputs')
@@ -618,7 +659,7 @@ async function runSelectedMethod(): Promise<void> {
   executionStatus.value = 'starting'
 
   try {
-    const execution = await runEarthMethodInWorker(record.id, method.id as EarthMethodId, structuredClone(dispatchedInputs), {
+    const execution: EarthWorkerExecution = await runEarthMethodInWorker(recordId, methodId, structuredClone(dispatchedInputs), {
       signal: controller.signal,
       onProgress(value) {
         if (executionController !== controller) return
@@ -635,7 +676,7 @@ async function runSelectedMethod(): Promise<void> {
         method,
         sourceRevision,
         sourceLocator: methodSourceLocator(method),
-        resultStatus: execution.executionStatus ?? execution.status,
+        resultStatus: execution.executionStatus,
         output: execution.output,
         evidenceRefs: methodEvidenceRefs(method),
       })

@@ -183,7 +183,7 @@ describe('Tour interaction components', () => {
     emissions = wrapper.emitted<DimensionBuilderEvaluation[]>('evaluated')!
     expect(emissions).toHaveLength(5)
     expect(emissions[4]?.[0]).toMatchObject({ operationStatus: 'undefined-unlike-addition', targetMatch: false })
-    expect(wrapper.get('[data-testid="prediction-stale"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="prediction-stale"]').exists()).toBe(true)
     expect(wrapper.get('[data-testid="prediction-comparison"]').text()).toBe('')
   })
 

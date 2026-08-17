@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import type { FieldSample, LoopControlResponse, MicrostripResult, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
+import type { FieldSample, LoopControlResponse, MicrostripResult, NativeProbe, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, ResourceAudit, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
 import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, parseOnelab, setParameterValue, validateReadOnlyValues } from '../simulation/onelab-db'
 import { certifyConvergence } from '../simulation/convergence'
 import { canonicalMshRecords } from '../simulation/msh'
@@ -526,14 +526,16 @@ function callSolverWithDatabase(solver: any, database: string, invoke: () => num
   }
 }
 
-function effectiveNumbers(descriptor: ProjectDescriptor, database: string) {
+function effectiveNumbers(descriptor: ProjectDescriptor, database: string): Record<string, number> {
   const parameters = new Map(parseOnelab(database).onelab.parameters.map((parameter) => [parameter.name, parameter]))
-  return Object.fromEntries(Object.entries(descriptor.parameterNames).map(([constant, name]) => {
+  const numbers: Record<string, number> = {}
+  for (const [constant, name] of Object.entries(descriptor.parameterNames)) {
     const parameter = parameters.get(name)
     const value = parameter?.type === 'number' && parameter.values.length === 1 ? parameter.values[0] : undefined
-    if (!Number.isFinite(value)) throw new Error(`effective native number ${constant} is absent from ${name}`)
-    return [constant, value]
-  }))
+    if (value === undefined || !Number.isFinite(value)) throw new Error(`effective native number ${constant} is absent from ${name}`)
+    numbers[constant] = value
+  }
+  return numbers
 }
 
 function seedInitialNumbers(descriptor: ProjectDescriptor, database: string) {
@@ -615,7 +617,7 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   const residuals = convergence.filter(({ kind }) => kind === 'linear').flatMap(({ residuals }) => residuals)
   const initialResidual = residuals[0]
   const residual = residuals.at(-1)
-  if (!certification.converged || !Number.isFinite(initialResidual) || !Number.isFinite(residual)) throw new Error(`PETSc convergence certification failed: ${JSON.stringify(certification)}`)
+  if (!certification.converged || initialResidual === undefined || residual === undefined || !Number.isFinite(initialResidual) || !Number.isFinite(residual)) throw new Error(`PETSc convergence certification failed: ${JSON.stringify(certification)}`)
   const degreesOfFreedom = Math.max(...logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => Number(match[1]))))
   if (!Number.isInteger(degreesOfFreedom) || degreesOfFreedom <= 0) throw new Error(`could not read GetDP system dimension: ${JSON.stringify(logs.filter((line) => line.includes('System')).slice(-10))}`)
   const posBytes: Record<string, number> = {}
@@ -635,7 +637,7 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   for (const name of outputNames) gmsh.merge(name)
   const views = gmsh.view.getTags().tags as number[]
   if (views.length !== outputNames.length) throw new Error(`Gmsh loaded ${views.length} result views for ${outputNames.length} POS files`)
-  const nativeProbes = (descriptor.probes ?? []).flatMap((coordinate) => views.flatMap((tag, index) => {
+  const nativeProbes: NativeProbe[] = (descriptor.probes ?? []).flatMap((coordinate) => views.flatMap((tag, index) => {
     const probe = gmsh.view.probe(tag, ...coordinate)
     return probe.distance === 0 && probe.values.length ? [{ file: outputNames[index]!, coordinate, values: probe.values }] : []
   }))
@@ -684,7 +686,7 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
       return (['real', 'imaginary', 'magnitude', 'phase'] as const).map((representation) => ({
         file: probe.file, coordinate: probe.coordinate, representation, time: times[0],
         sourceTimes: times,
-        values: real.map((value, component) => representation === 'real' ? value : representation === 'imaginary' ? imaginary[component]! : representation === 'magnitude' ? Math.hypot(value, imaginary[component]!) : Math.atan2(imaginary[component]!, value)),
+        values: real.map((value: number, component: number) => representation === 'real' ? value : representation === 'imaginary' ? imaginary[component]! : representation === 'magnitude' ? Math.hypot(value, imaginary[component]!) : Math.atan2(imaginary[component]!, value)),
       }))
     })
   }) : []
@@ -695,7 +697,7 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   const vectorSource = extractView(vectorField.name, gmsh.view.getListData(views[names.indexOf(vectorField.provenance.sourceFile)]!), 3)
   const memory = residentModuleMetrics()
   const cachedPartitionBytes = [...partitionAssets.values()].flatMap((snapshot) => [...snapshot.values()]).reduce((sum, bytes) => sum + bytes.byteLength, 0)
-  const resourceAudit = {
+  const resourceAudit: ResourceAudit = {
     profile: runtimeProfile,
     scalarType: descriptor.scalarType,
     startupMilliseconds: startupMilliseconds.get(descriptor.scalarType) ?? 0,
@@ -704,8 +706,8 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
     modelEntities: scene.entities.length,
     views: views.length,
     ...memfsMetrics(gmsh.FS, `/projects/${descriptor.id}`),
-    ...(runtimeProfile === 'combined' ? { nativeBridge: solver.diagnostics.bridge() } : {}),
   }
+  if (runtimeProfile === 'combined') resourceAudit.nativeBridge = solver.diagnostics.bridge()
   return {
     projectId: descriptor.id, parameters,
     nodes, elements, meshSha256, meshPhysicalNames, meshPhysicalTags, degreesOfFreedom, initialResidual, residual, mshBytes: msh.byteLength, posBytes,

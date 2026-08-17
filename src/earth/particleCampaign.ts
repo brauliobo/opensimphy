@@ -169,18 +169,18 @@ export const EARTH_BLOCKED_SOURCE_MODELS: readonly EarthModelCardRecord[] = [
   },
 ]
 
-const CARDS_BY_PROGRAM: ReadonlyMap<string, EarthModelCardRecord[]> = new Map(
-  [...EARTH_PARTICLE_CAMPAIGN_CARDS, ...EARTH_BLOCKED_SOURCE_MODELS].reduce((groups, card) => {
-    const list = groups.get(card.programId) ?? []
-    list.push(card)
-    groups.set(card.programId, list)
-    return groups
-  }, new Map<string, EarthModelCardRecord[]>()),
-)
+const cardsByProgram = [...EARTH_PARTICLE_CAMPAIGN_CARDS, ...EARTH_BLOCKED_SOURCE_MODELS].reduce((groups, card) => {
+  const list = groups.get(card.programId) ?? []
+  list.push(card)
+  groups.set(card.programId, list)
+  return groups
+}, new Map<string, EarthModelCardRecord[]>())
 
-CARDS_BY_PROGRAM.set('EARTH-FLD-006', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-QM-DECOHERENCE')])
-CARDS_BY_PROGRAM.set('EARTH-FLD-007', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-QM-DECOHERENCE')])
-CARDS_BY_PROGRAM.set('EARTH-FLD-010', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-FERMION-KINK')])
+cardsByProgram.set('EARTH-FLD-006', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-QM-DECOHERENCE')])
+cardsByProgram.set('EARTH-FLD-007', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-QM-DECOHERENCE')])
+cardsByProgram.set('EARTH-FLD-010', [...EARTH_PARTICLE_CAMPAIGN_CARDS.filter(({ slug }) => slug === 'SIM-FERMION-KINK')])
+
+const CARDS_BY_PROGRAM: ReadonlyMap<string, EarthModelCardRecord[]> = cardsByProgram
 
 export const EARTH_PARTICLE_CAMPAIGN_PROGRAM_IDS = new Set([
   'EARTH-NUC-004',

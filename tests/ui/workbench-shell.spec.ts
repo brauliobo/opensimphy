@@ -105,7 +105,7 @@ describe('WorkbenchShell', () => {
     })
     expect(routeEvaluated.find('[data-testid="workbench-run"]').exists()).toBe(false)
     expect(routeEvaluated.get('[data-testid="workbench-mode-status"]').text()).toContain('evaluates the result')
-    expect(routeEvaluated.get('[data-testid="workbench-reset"]').exists()).toBe(true)
+    expect(routeEvaluated.find('[data-testid="workbench-reset"]').exists()).toBe(true)
 
     const unavailable = mount(WorkbenchShell, {
       props: shellProps({

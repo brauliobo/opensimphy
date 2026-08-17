@@ -196,17 +196,18 @@ function parseInput(input: unknown): { wavelength: number; layers: Array<{ refra
   const object = record(input, 'EMpy input')
   exactKeys(object, ['wavelength', 'layers'], 'EMpy input')
   const wavelength = boundedNumber(object.wavelength, 'EMpy input.wavelength', MIN_WAVELENGTH, MAX_WAVELENGTH)
-  if (!Array.isArray(object.layers)) fail('EMpy input.layers', 'must be an array')
-  if (object.layers.length < 2 || object.layers.length > EMPY_MAX_LAYERS) {
+  const layerValues = object.layers
+  if (!Array.isArray(layerValues)) fail('EMpy input.layers', 'must be an array')
+  if (layerValues.length < 2 || layerValues.length > EMPY_MAX_LAYERS) {
     fail('EMpy input.layers', `must contain between 2 and ${EMPY_MAX_LAYERS} layers`)
   }
 
-  const layers = object.layers.map((value, index) => {
+  const layers = layerValues.map((value, index) => {
     const path = `EMpy input.layers[${index}]`
     const layer = record(value, path)
     exactKeys(layer, ['refractiveIndex', 'thickness'], path)
     const refractiveIndex = complex(layer.refractiveIndex, `${path}.refractiveIndex`)
-    const isBoundary = index === 0 || index === object.layers.length - 1
+    const isBoundary = index === 0 || index === layerValues.length - 1
     if (isBoundary) {
       if (layer.thickness !== null && layer.thickness !== 0) fail(`${path}.thickness`, 'must be null or zero for a boundary medium')
       return { refractiveIndex, thickness: null }

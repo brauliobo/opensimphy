@@ -112,6 +112,7 @@ export type GalaAdapter = AwesomePhysicsAdapterV1<GalaInputV1, GalaOutputV1>
 export type GalaAdapterFactory = AwesomePhysicsAdapterFactoryV1<GalaInputV1, GalaOutputV1>
 
 type Vector3 = [number, number, number]
+const AXES = [0, 1, 2] as const
 
 interface BodyState {
   mass: number
@@ -323,7 +324,7 @@ function invariantValues(bodies: readonly BodyState[]): GalaInvariantV1 {
     const speedSquared = body.velocity[0] ** 2 + body.velocity[1] ** 2 + body.velocity[2] ** 2
     kineticEnergy += 0.5 * body.mass * speedSquared
     totalMass += body.mass
-    for (let axis = 0; axis < 3; axis += 1) {
+    for (const axis of AXES) {
       momentum[axis] += body.mass * body.velocity[axis]
       centerNumerator[axis] += body.mass * body.position[axis]
     }
@@ -380,7 +381,7 @@ function advance(bodies: BodyState[], timeStep: number, currentAccelerations: re
     const body = bodies[index]
     const acceleration = currentAccelerations[index]
     if (!body || !acceleration) throw new RangeError('gala body state is missing')
-    for (let axis = 0; axis < 3; axis += 1) {
+    for (const axis of AXES) {
       body.position[axis] = finiteOutput(
         body.position[axis] + body.velocity[axis] * timeStep + acceleration[axis] * halfTimeStepSquared,
         'position',
@@ -395,7 +396,7 @@ function advance(bodies: BodyState[], timeStep: number, currentAccelerations: re
     const previous = currentAccelerations[index]
     const next = nextAccelerations[index]
     if (!body || !previous || !next) throw new RangeError('gala body state is missing')
-    for (let axis = 0; axis < 3; axis += 1) {
+    for (const axis of AXES) {
       body.velocity[axis] = finiteOutput(body.velocity[axis] + (previous[axis] + next[axis]) * halfTimeStep, 'velocity')
     }
   }

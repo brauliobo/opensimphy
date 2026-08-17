@@ -44,7 +44,7 @@ function validateArrayLength(value: unknown[], name: string, minimum: number, ma
 }
 
 // SI base-dimension order: mass, length, time, current, temperature, amount, luminous intensity.
-export type DimensionVector = [number, number, number, number, number, number, number];
+export type SiBaseDimensionVector = [number, number, number, number, number, number, number];
 
 export interface CanonicalConstantClaim {
   id: string;
@@ -53,8 +53,8 @@ export interface CanonicalConstantClaim {
   claimedValue: number;
   reproducedValue: number;
   unit: string;
-  claimedDimensions: DimensionVector;
-  reproducedDimensions: DimensionVector;
+  claimedDimensions: SiBaseDimensionVector;
+  reproducedDimensions: SiBaseDimensionVector;
   canonicalValue?: number;
   canonicalUnit?: string;
 }
@@ -64,10 +64,10 @@ export interface CanonicalConstantAuditInputs {
   relativeTolerance?: number;
 }
 
-const DIMENSIONLESS: DimensionVector = [0, 0, 0, 0, 0, 0, 0];
-const LENGTH: DimensionVector = [0, 1, 0, 0, 0, 0, 0];
-const INVERSE_ENERGY: DimensionVector = [-1, -2, 2, 0, 0, 0, 0];
-const ACTION: DimensionVector = [1, 2, -1, 0, 0, 0, 0];
+const DIMENSIONLESS: SiBaseDimensionVector = [0, 0, 0, 0, 0, 0, 0];
+const LENGTH: SiBaseDimensionVector = [0, 1, 0, 0, 0, 0, 0];
+const INVERSE_ENERGY: SiBaseDimensionVector = [-1, -2, 2, 0, 0, 0, 0];
+const ACTION: SiBaseDimensionVector = [1, 2, -1, 0, 0, 0, 0];
 
 const SOURCE_TWIST = 1 / Math.sqrt(3 * EARTH_GOLDEN_RATIO ** 2);
 const SOURCE_LAMBDA = (4 * Math.PI) ** 3;
@@ -165,12 +165,12 @@ export const DEFAULT_CANONICAL_CONSTANT_AUDIT_INPUTS: CanonicalConstantAuditInpu
   ],
 };
 
-function validateDimensions(dimensions: DimensionVector, name: string): DimensionVector {
+function validateDimensions(dimensions: SiBaseDimensionVector, name: string): SiBaseDimensionVector {
   if (!Array.isArray(dimensions) || dimensions.length !== 7) throw new RangeError(`${name} must contain seven SI exponents`);
-  return dimensions.map((value) => boundedInteger(value, `${name} exponent`, -12, 12)) as DimensionVector;
+  return dimensions.map((value) => boundedInteger(value, `${name} exponent`, -12, 12)) as SiBaseDimensionVector;
 }
 
-function sameDimensions(left: DimensionVector, right: DimensionVector): boolean {
+function sameDimensions(left: SiBaseDimensionVector, right: SiBaseDimensionVector): boolean {
   return left.every((value, index) => value === right[index]);
 }
 
@@ -353,7 +353,7 @@ export function sourceSequenceAudit(
       for (let generation = 0; generation < generations; generation += 1) word = applyMorphism(word, rules);
       return { seed, word };
     });
-    return [[0, 1], [0, 2], [1, 2]].map(([left, right]) => ({
+    return ([[0, 1], [0, 2], [1, 2]] as const).map(([left, right]) => ({
       morphism: name,
       pair: `${words[left]!.seed}/${words[right]!.seed}`,
       commonSuffixLength: commonSuffixLength(words[left]!.word, words[right]!.word),

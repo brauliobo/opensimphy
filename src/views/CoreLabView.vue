@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
@@ -21,7 +21,13 @@ import {
   createWorkbenchSnapshot,
   type SnapshotPair,
 } from '../workbench/snapshots'
-import { mergeOwnedQuery, parseEnumQuery, parseSafeIdQuery, type WorkbenchQuery } from '../workbench/urlState'
+import {
+  mergeOwnedQuery,
+  parseEnumQuery,
+  parseSafeIdQuery,
+  type WorkbenchQuery,
+  type WorkbenchQueryValue,
+} from '../workbench/urlState'
 
 const OWNED_QUERY_KEYS = ['case', 'projection', 'plot'] as const
 const PROJECTIONS = ['2d', '3d'] as const
@@ -73,10 +79,29 @@ const actionErrors = computed<WorkbenchActionErrors>(() => {
   return message ? { save: message } : {}
 })
 
+function workbenchQueryFromRoute(query: LocationQuery): WorkbenchQuery {
+  const current: Record<string, WorkbenchQueryValue> = {}
+  for (const [key, value] of Object.entries(query)) {
+    if (value === null || typeof value === 'string') current[key] = value
+    else if (value.every((item): item is string => typeof item === 'string')) current[key] = Object.freeze([...value])
+  }
+  return Object.freeze(current)
+}
+
+function locationQueryFromWorkbench(query: WorkbenchQuery): LocationQueryRaw {
+  const next: LocationQueryRaw = {}
+  for (const [key, value] of Object.entries(query)) {
+    if (value === undefined) continue
+    if (typeof value === 'string' || value === null) next[key] = value
+    else next[key] = [...value]
+  }
+  return next
+}
+
 function canonicalQuery(): WorkbenchQuery {
   const firstCase = coreRegistry.coreCases.value[0]
   return mergeOwnedQuery(
-    route.query,
+    workbenchQueryFromRoute(route.query),
     OWNED_QUERY_KEYS,
     {
       case: selectedId.value,
@@ -100,7 +125,7 @@ function queryMatchesRoute(next: WorkbenchQuery): boolean {
 
 function replaceCanonicalQuery(): void {
   const next = canonicalQuery()
-  if (!queryMatchesRoute(next)) void router.replace({ query: next })
+  if (!queryMatchesRoute(next)) void router.replace({ query: locationQueryFromWorkbench(next) })
 }
 
 function hydrateFromRoute(): void {

@@ -552,7 +552,7 @@ test('mobile controls remain usable and ten route cycles release all viewer reso
     await page.getByTestId('scene-fit').click()
     await page.getByTestId('scene-clip').click()
     await page.getByTestId('nav-toggle').click()
-    await page.getByRole('link', { name: '02 Labs' }).click()
+    await page.getByRole('link', { name: '02 Workbench' }).click()
     await expect(page.getByTestId('onelab-nav')).toBeVisible()
     await expect.poll(() => page.evaluate(() => ({
       diagnostics: window.__sceneDiagnostics,
@@ -965,7 +965,7 @@ test('route-away terminates an active STEP import and cancels an active render f
   })
   await page.getByTestId('viewer-load').click()
   await expect(page.getByTestId('viewer-state')).toHaveAttribute('data-state', 'loading')
-  await page.getByRole('link', { name: '02 Labs' }).click()
+  await page.getByRole('link', { name: '02 Workbench' }).click()
   await expect(page.getByTestId('onelab-nav')).toBeVisible()
   await expect.poll(() => page.evaluate(() => window.__sceneDiagnostics)).toEqual({ hosts: 0, workers: 0, frames: 0, observers: 0, canvases: 0, overlays: 0, contexts: 0, geometries: 0, materials: 0 })
   await expect.poll(() => page.evaluate(() => (window as any).__lifecycleSpies)).toMatchObject({ workers: 0, observers: 0, frames: 0, pointerListeners: 0 })
@@ -974,7 +974,7 @@ test('route-away terminates an active STEP import and cancels an active render f
   await page.getByTestId('viewer-load').click()
   await expect(page.getByTestId('viewer-state')).toHaveAttribute('data-state', 'ready')
   await page.evaluate(() => document.querySelector<HTMLButtonElement>('[data-testid="scene-fit"]')!.click())
-  await page.getByRole('link', { name: '02 Labs' }).click()
+  await page.getByRole('link', { name: '02 Workbench' }).click()
   await expect.poll(() => page.evaluate(() => window.__sceneDiagnostics)).toEqual({ hosts: 0, workers: 0, frames: 0, observers: 0, canvases: 0, overlays: 0, contexts: 0, geometries: 0, materials: 0 })
   await expect.poll(() => page.evaluate(() => (window as any).__lifecycleSpies)).toMatchObject({ workers: 0, observers: 0, frames: 0, pointerListeners: 0 })
 })

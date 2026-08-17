@@ -85,7 +85,9 @@ function numericControl(simulation: TourGeneratedSimulation, id: string): Numeri
   return control?.type === 'range' || control?.type === 'number' ? control : null
 }
 
-function isElectricalPresetInput(value: Record<string, number | string | boolean>): value is Record<'presetId', string> & Record<'chargeCarriers' | 'voltageV', number> {
+function isElectricalPresetInput(
+  value: Record<string, number | string | boolean>,
+): value is ElectricalStandardsInput & Record<string, number | string | boolean> {
   return sameOrderedValues(Object.keys(value).sort(), ['chargeCarriers', 'frequencyHz', 'presetId', 'voltageV'])
     && (ELECTRICAL_STANDARD_PRESET_IDS as readonly unknown[]).includes(value.presetId)
     && typeof value.chargeCarriers === 'number'
@@ -167,7 +169,7 @@ function validateContract(simulation: TourGeneratedSimulation, initialPresetId?:
       return `Preset ${preset.id} does not provide one complete generated standards input.`
     }
     try {
-      evaluateElectricalStandards(preset.inputs as unknown as ElectricalStandardsInput)
+      evaluateElectricalStandards(preset.inputs)
     } catch {
       return `Preset ${preset.id} is outside the electrical standards engine contract.`
     }
@@ -194,10 +196,10 @@ const frequencyControl = numericControl(props.simulation, 'frequencyHz')
 function presetInput(preset: TourPreset | undefined): EditableInput | null {
   return preset && isElectricalPresetInput(preset.inputs)
     ? {
-        presetId: preset.inputs.presetId as ElectricalStandardPresetId,
-        chargeCarriers: preset.inputs.chargeCarriers,
-        voltageV: preset.inputs.voltageV,
-        frequencyHz: preset.inputs.frequencyHz,
+        presetId:        preset.inputs.presetId,
+        chargeCarriers:  preset.inputs.chargeCarriers,
+        voltageV:        preset.inputs.voltageV,
+        frequencyHz:     preset.inputs.frequencyHz,
       }
     : null
 }

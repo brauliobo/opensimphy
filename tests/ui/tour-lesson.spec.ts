@@ -69,15 +69,15 @@ vi.mock('../../src/registries/tourRegistry', () => ({
   useTourRegistry: () => registry,
 }))
 
-const chapter = chapterJson as TourGeneratedChapterRecord
-const lesson = lessonJson as TourGeneratedLessonRecord
-const heatChapter = heatChapterJson as TourGeneratedChapterRecord
-const blackbodyLesson = blackbodyLessonJson as TourGeneratedLessonRecord
-const molarLesson = molarLessonJson as TourGeneratedLessonRecord
+const chapter = chapterJson as unknown as TourGeneratedChapterRecord
+const lesson = lessonJson as unknown as TourGeneratedLessonRecord
+const heatChapter = heatChapterJson as unknown as TourGeneratedChapterRecord
+const blackbodyLesson = blackbodyLessonJson as unknown as TourGeneratedLessonRecord
+const molarLesson = molarLessonJson as unknown as TourGeneratedLessonRecord
 const manifest = manifestJson as TourGeneratedManifest
-const simulation = simulationJson as TourGeneratedSimulation
-const blackbodySimulation = blackbodySimulationJson as TourGeneratedSimulation
-const molarSimulation = molarSimulationJson as TourGeneratedSimulation
+const simulation = simulationJson as unknown as TourGeneratedSimulation
+const blackbodySimulation = blackbodySimulationJson as unknown as TourGeneratedSimulation
+const molarSimulation = molarSimulationJson as unknown as TourGeneratedSimulation
 const glossary = glossaryJson as TourGlossarySource
 const references = referencesJson as TourReferencesSource
 const mountedWrappers: Array<{ unmount(): void }> = []
@@ -251,7 +251,7 @@ describe('Tour lesson vertical slice', () => {
     resolveLoader(instrumentStubs.DimensionBuilder)
     await flushPromises()
     expect(wrapper.find('[data-testid="tour-simulation-loading"]').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="dimension-builder-stub"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="dimension-builder-stub"]').exists()).toBe(true)
     expect(loader).toHaveBeenCalledOnce()
   })
 
@@ -636,7 +636,9 @@ describe('Tour lesson vertical slice', () => {
     expect(boundary.text()).toContain(lesson.doesNotEstablish[0]!.text)
     const links = boundary.findAll('[data-testid="conclusion-evidence-refs"] a')
     for (const link of links) {
-      expect(wrapper.find(link.attributes('href')).exists()).toBe(true)
+      const href = link.attributes('href')
+      expect(href).toBeDefined()
+      expect(wrapper.find(href!).exists()).toBe(true)
     }
   })
 

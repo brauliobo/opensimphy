@@ -4,6 +4,7 @@ import TourDepthControl from '../components/tour/TourDepthControl.vue'
 import { useTourOfflinePack } from '../registries/tourOfflinePack'
 import { useTourProgress } from '../registries/tourProgress'
 import { useTourRegistry } from '../registries/tourRegistry'
+import type { TourGeneratedManifest } from '../types/tour'
 
 const tour = useTourRegistry()
 const progress = useTourProgress()
@@ -39,7 +40,7 @@ const offlineStatus = computed(() => {
 })
 
 watch(() => tour.manifest.value, (value) => {
-  if (value) void offlinePack.hydrate(value)
+  if (value) void offlinePack.hydrate(generatedManifest(value))
 }, { immediate: true })
 
 onMounted(() => {
@@ -51,13 +52,17 @@ onBeforeUnmount(() => {
   window.removeEventListener('offline', updateOnline)
 })
 
+function generatedManifest(value: NonNullable<typeof tour.manifest.value>): TourGeneratedManifest {
+  return value as TourGeneratedManifest
+}
+
 function formatBytes(value: number): string {
   if (value < 1024) return `${value} B`
   return `${(value / 1024).toFixed(value < 1024 * 10 ? 1 : 0)} KB`
 }
 
 function downloadGuidedTour(): void {
-  if (tour.manifest.value) void offlinePack.download(tour.manifest.value)
+  if (tour.manifest.value) void offlinePack.download(generatedManifest(tour.manifest.value))
 }
 
 function stationProgress(stationId: string): 'not-started' | 'visited' | 'complete' {

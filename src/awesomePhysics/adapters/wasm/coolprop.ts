@@ -179,7 +179,7 @@ function exactKeys(value: Record<string, unknown>, required: readonly string[], 
   if (missing.length > 0) fail(path, `is missing properties: ${missing.join(', ')}`)
 }
 
-function finiteNumber(value: unknown, path: string, minimum = -COOLPROP_BOUNDS.maximumAbsoluteValue, maximum = COOLPROP_BOUNDS.maximumAbsoluteValue): number {
+function finiteNumber(value: unknown, path: string, minimum: number = -COOLPROP_BOUNDS.maximumAbsoluteValue, maximum: number = COOLPROP_BOUNDS.maximumAbsoluteValue): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) fail(path, 'must be a finite number')
   if (value < minimum || value > maximum) fail(path, `must be between ${minimum} and ${maximum}`)
   return value

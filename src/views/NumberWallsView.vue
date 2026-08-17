@@ -19,6 +19,7 @@ import type {
 } from '../types/workbench'
 import {
   addSnapshot,
+  cloneJsonValue,
   createSnapshotPair,
   createWorkbenchSnapshot,
   type SnapshotPair,
@@ -362,11 +363,11 @@ function snapshotInput(completed: WallResult): WorkbenchSnapshotInputV1 {
   return {
     instrumentId: 'number-walls',
     methodId:     'bareiss-determinant-wall',
-    inputs: {
+    inputs: cloneJsonValue({
       wall:    completed.input,
       payload: completed.payload,
       options: completed.options,
-    },
+    }, 'number-walls.inputs'),
     outputs: {
       matrix:     completed.values,
       exactZeroMask: completed.exactZeroMask,

@@ -3,12 +3,13 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import FiddleLiveFrame from '../components/fiddles/FiddleLiveFrame.vue'
 import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
-import type { FiddleFlags, FiddleRecord } from '../types/fiddle'
+import type { FiddleFlags } from '../types/fiddle'
 
 const props = defineProps<{ slug: string }>()
 const route = useRoute()
 const fiddleRegistry = useFiddleRegistry()
-const record = ref<FiddleRecord | null>(null)
+type ArchivedFiddle = NonNullable<(typeof fiddleRegistry.records.value)[number]>
+const record = ref<ArchivedFiddle | null>(null)
 const loading = ref(true)
 const error = ref('')
 
@@ -63,13 +64,13 @@ watch(() => props.slug, async (slug) => {
   loading.value = false
 }, { immediate: true })
 
-function adjacentRecord(direction: -1 | 1): FiddleRecord | null {
+function adjacentRecord(direction: -1 | 1): ArchivedFiddle | null {
   if (!record.value) return null
   const index = records.value.findIndex(({ position }) => position === record.value?.position)
   return records.value[index + direction] ?? null
 }
 
-function recordLocation(next: FiddleRecord) {
+function recordLocation(next: ArchivedFiddle) {
   return {
     name: 'fiddle-record',
     params: { slug: next.slug },

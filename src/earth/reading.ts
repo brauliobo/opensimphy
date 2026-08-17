@@ -84,8 +84,8 @@ export function earthReadingBlocks(document: EarthDocumentShard['document']): Ea
       const length = fence[1].length
       let end = index + 1
       while (end < lines.length) {
-        const closing = (lines[end] ?? '').match(/^ {0,3}(`+|~+)\s*$/)
-        if (closing?.[1]?.[0] === marker && closing[1].length >= length) break
+        const closer = (lines[end] ?? '').match(/^ {0,3}(`+|~+)\s*$/)?.[1]
+        if (closer && closer[0] === marker && closer.length >= length) break
         end += 1
       }
       blocks.push({

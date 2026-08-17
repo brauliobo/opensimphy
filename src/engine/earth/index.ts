@@ -1192,67 +1192,27 @@ export function getDefaultEarthMethodId<Id extends EarthProgramId>(programId: Id
   return getEarthProgramDefinition(programId).defaultMethodId;
 }
 
-export function getEarthMethodDefinition<
-  Id extends EarthProgramId,
-  MethodId extends EarthMethodIdsFor<Id>,
->(
-  programId: Id,
-  methodId: MethodId,
-): EarthMethodDefinition<
-  Id,
-  MethodId,
-  EarthMethodInputsFor<Id, MethodId>,
-  EarthMethodOutputFor<Id, MethodId>
->;
-export function getEarthMethodDefinition<Id extends EarthProgramId>(
+function requireEarthMethod<Id extends EarthProgramId>(
   programId: Id,
   methodId: string,
-): EarthMethodDefinition<
-  Id,
-  EarthMethodId,
-  EarthSimulationInputs[Id],
-  EarthMethodOutputFor<Id, EarthMethodIdsFor<Id>>
-> {
+): EarthProgramDefinitions[Id]["methods"][number] {
   const method = getEarthProgramDefinition(programId).methods.find(({ id }) => id === methodId);
   if (!method) throw new RangeError(`Unsupported EARTH method ID ${methodId} for program ${programId}`);
   return method;
 }
 
-export function getEarthMethodDefaultInputs<
-  Id extends EarthProgramId,
-  MethodId extends EarthMethodIdsFor<Id>,
->(
-  programId: Id,
-  methodId: MethodId,
-): EarthMethodInputsFor<Id, MethodId>;
-export function getEarthMethodDefaultInputs<Id extends EarthProgramId>(
-  programId: Id,
-  methodId: string,
-): EarthSimulationInputs[Id] {
-  return structuredClone(getEarthMethodDefinition(programId, methodId).defaultInputs);
-}
-
-export function runEarthMethod<
-  Id extends EarthProgramId,
-  MethodId extends EarthMethodIdsFor<Id>,
->(
-  programId: Id,
-  methodId: MethodId,
-  inputs: EarthMethodInputsFor<Id, MethodId>,
-  options?: EarthRunOptions,
-): EarthMethodResult<Id, MethodId>;
-export function runEarthMethod<Id extends EarthProgramId>(
+function executeEarthMethod<Id extends EarthProgramId>(
   programId: Id,
   methodId: string,
   inputs: EarthSimulationInputs[Id],
-  options: EarthRunOptions = {},
+  options: EarthRunOptions,
 ): EarthSimulationResult<
   Id,
   EarthMethodOutputFor<Id, EarthMethodIdsFor<Id>>,
   EarthMethodId
 > {
   checkCancelled(options);
-  const definition = getEarthMethodDefinition(programId, methodId);
+  const definition = requireEarthMethod(programId, methodId);
   const kernel = definition.execute(inputs, options);
   const provenance = {
     kind: definition.kind,
@@ -1280,11 +1240,66 @@ export function runEarthMethod<Id extends EarthProgramId>(
   };
 }
 
+export function getEarthMethodDefinition<
+  Id extends EarthProgramId,
+  MethodId extends EarthMethodIdsFor<Id>,
+>(
+  programId: Id,
+  methodId: MethodId,
+): EarthMethodDefinition<
+  Id,
+  MethodId,
+  EarthMethodInputsFor<Id, MethodId>,
+  EarthMethodOutputFor<Id, MethodId>
+>;
+export function getEarthMethodDefinition<Id extends EarthProgramId>(
+  programId: Id,
+  methodId: string,
+): EarthProgramDefinitions[Id]["methods"][number] {
+  return requireEarthMethod(programId, methodId);
+}
+
+export function getEarthMethodDefaultInputs<
+  Id extends EarthProgramId,
+  MethodId extends EarthMethodIdsFor<Id>,
+>(
+  programId: Id,
+  methodId: MethodId,
+): EarthMethodInputsFor<Id, MethodId>;
+export function getEarthMethodDefaultInputs<Id extends EarthProgramId>(
+  programId: Id,
+  methodId: string,
+): EarthSimulationInputs[Id] {
+  return structuredClone(requireEarthMethod(programId, methodId).defaultInputs);
+}
+
+export function runEarthMethod<
+  Id extends EarthProgramId,
+  MethodId extends EarthMethodIdsFor<Id>,
+>(
+  programId: Id,
+  methodId: MethodId,
+  inputs: EarthMethodInputsFor<Id, MethodId>,
+  options?: EarthRunOptions,
+): EarthMethodResult<Id, MethodId>;
+export function runEarthMethod<Id extends EarthProgramId>(
+  programId: Id,
+  methodId: string,
+  inputs: EarthSimulationInputs[Id],
+  options: EarthRunOptions = {},
+): EarthSimulationResult<
+  Id,
+  EarthMethodOutputFor<Id, EarthMethodIdsFor<Id>>,
+  EarthMethodId
+> {
+  return executeEarthMethod(programId, methodId, inputs, options);
+}
+
 export function runEarthSimulation<Id extends EarthSimulationId>(
   id: Id,
   inputs: EarthSimulationInputs[Id],
   options: EarthRunOptions = {},
 ): EarthResult<Id> {
   if (!isEarthSimulationId(id)) throw new RangeError(`Unsupported EARTH simulation ID: ${String(id)}`);
-  return runEarthMethod(id, getDefaultEarthMethodId(id), inputs, options) as EarthResult<Id>;
+  return executeEarthMethod(id, getDefaultEarthMethodId(id), inputs, options) as EarthResult<Id>;
 }

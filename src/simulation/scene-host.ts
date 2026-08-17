@@ -210,8 +210,8 @@ export class SceneHost {
   renderState() {
     const position = this.mesh?.geometry.getAttribute('position') as THREE.BufferAttribute | undefined
     return {
-      clipped: Boolean(this.mesh?.material.clippingPlanes.length),
-      clippingPlanes: this.mesh?.material.clippingPlanes.length ?? 0,
+      clipped: Boolean(this.mesh?.material.clippingPlanes?.length),
+      clippingPlanes: this.mesh?.material.clippingPlanes?.length ?? 0,
       edgeClippingPlanes: (this.edges?.material as THREE.Material | undefined)?.clippingPlanes?.length ?? 0,
       explosion: this.explosion,
       positionSample: position ? Array.from(position.array.slice(0, 12)) : [],
@@ -240,11 +240,13 @@ export class SceneHost {
       return
     }
     const hit = baseHit
-    if (!hit || hit.faceIndex === undefined) return
+    if (!hit || hit.faceIndex == null) return
     const sourceTriangle = this.display.displayTriangleToSourceTriangle[hit.faceIndex]!
     const point: [number, number, number] = hit.point.toArray() as [number, number, number]
     const attribute = this.mesh.geometry.getAttribute('position') as THREE.BufferAttribute
-    const displayTriangle = Array.from((this.mesh.geometry.index!.array as ArrayLike<number>).slice(hit.faceIndex * 3, hit.faceIndex * 3 + 3))
+    const displayIndex = this.mesh.geometry.index
+    if (!displayIndex) return
+    const displayTriangle = Array.from(displayIndex.array.slice(hit.faceIndex * 3, hit.faceIndex * 3 + 3))
     const displayed = displayTriangle.map((index) => new THREE.Vector3().fromBufferAttribute(attribute, index))
     const bary = new THREE.Vector3()
     THREE.Triangle.getBarycoord(hit.point, displayed[0]!, displayed[1]!, displayed[2]!, bary)

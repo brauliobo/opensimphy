@@ -23,10 +23,14 @@ import TourMapView from '../../src/views/TourMapView.vue'
 
 const taxonomy = taxonomyJson as TaxonomyArtifact
 const manifest = tourManifestJson as TourGeneratedManifest
-const unitsChapter = unitsChapterJson as TourGeneratedChapterRecord
-const anchorsChapter = anchorsChapterJson as TourGeneratedChapterRecord
-const heatChapter = heatChapterJson as TourGeneratedChapterRecord
+const unitsChapter = unitsChapterJson as unknown as TourGeneratedChapterRecord
+const anchorsChapter = anchorsChapterJson as unknown as TourGeneratedChapterRecord
+const heatChapter = heatChapterJson as unknown as TourGeneratedChapterRecord
 const plannedChapter = manifest.chapters.find(({ status }) => status === 'planned')!
+
+function scrollLocation(path: string): Parameters<typeof tourScrollBehavior>[0] & Parameters<typeof tourScrollBehavior>[1] {
+  return appRouter.resolve(path) as unknown as Parameters<typeof tourScrollBehavior>[0] & Parameters<typeof tourScrollBehavior>[1]
+}
 
 function createTestRouter() {
   return createRouter({
@@ -89,9 +93,9 @@ describe('Tour and support navigation', () => {
   })
 
   it('restores browser positions before safe hashes and otherwise starts at the top', async () => {
-    const from = appRouter.resolve('/tour')
-    const hashed = appRouter.resolve('/tour/units/physical-quantities#interpret')
-    const unsafe = appRouter.resolve('/tour/units/physical-quantities#bad%20selector')
+    const from = scrollLocation('/tour')
+    const hashed = scrollLocation('/tour/units/physical-quantities#interpret')
+    const unsafe = scrollLocation('/tour/units/physical-quantities#bad%20selector')
     const savedPosition = { left: 12, top: 34 }
 
     expect(await tourScrollBehavior(hashed, from, savedPosition)).toEqual(savedPosition)
