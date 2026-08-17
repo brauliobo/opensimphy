@@ -191,6 +191,7 @@ import {
   type StandardUniformSphereBindingInputs,
 } from "./pilotMethods.js";
 import { nuclearPqEnergyAudit, type NuclearPqEnergyInputs } from "./particle/nuclearPqEnergy.js";
+import { DEFAULT_PROTON_MASS_RADIUS_CHI_INPUTS, protonMassRadiusChi, type ProtonMassRadiusChiInputs } from "./particle/protonMassRadiusChi.js";
 import { fermionBosonNumbers } from "./particle/fermionBosonNumbers.js";
 import { superpositionLangevin } from "./particle/superpositionLangevin.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
@@ -212,6 +213,7 @@ export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
 export * from "./particle/fermionBosonNumbers.js";
 export * from "./particle/nuclearPqEnergy.js";
+export * from "./particle/protonMassRadiusChi.js";
 export * from "./particle/superpositionLangevin.js";
 export * from "./particle/wallVsSineGordon.js";
 export * from "./pilotMethods.js";
@@ -411,7 +413,7 @@ type ExistingEarthSimulationInputs = {
   "EARTH-FLD-008": SineGordonInputs;
   "EARTH-FLD-010": PotentialDerivativeInputs;
   "EARTH-NUC-001": NuclearPqEnergyInputs;
-  "EARTH-NUC-004": ProtonFormulaAuditInputs;
+  "EARTH-NUC-004": ProtonMassRadiusChiInputs;
   "EARTH-PRT-001": ElectronBohrRydbergAuditInputs;
   "EARTH-PRT-005": ParticleQuantumNumberAuditInputs;
   "EARTH-CHEM-002": BondPotentialAuditInputs;
@@ -470,7 +472,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-FLD-008": ReturnType<typeof sineGordonBenchmark>["output"];
   "EARTH-FLD-010": ReturnType<typeof wallVsSineGordon>["output"];
   "EARTH-NUC-001": ReturnType<typeof nuclearPqEnergyAudit>["output"];
-  "EARTH-NUC-004": ReturnType<typeof protonFormulaAudit>["output"];
+  "EARTH-NUC-004": ReturnType<typeof protonMassRadiusChi>["output"];
   "EARTH-PRT-001": ReturnType<typeof electronBohrRydbergAudit>["output"];
   "EARTH-PRT-005": ReturnType<typeof fermionBosonNumbers>["output"];
   "EARTH-CHEM-002": ReturnType<typeof bondPotentialAudit>["output"];
@@ -578,7 +580,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-FLD-008": sineGordonBenchmark,
   "EARTH-FLD-010": wallVsSineGordon,
   "EARTH-NUC-001": nuclearPqEnergyAudit,
-  "EARTH-NUC-004": protonFormulaAudit,
+  "EARTH-NUC-004": protonMassRadiusChi,
   "EARTH-PRT-001": electronBohrRydbergAudit,
   "EARTH-PRT-005": fermionBosonNumbers,
   "EARTH-CHEM-002": bondPotentialAudit,
@@ -704,7 +706,7 @@ const EARTH_SIMULATION_INPUTS_BY_ID = {
   "EARTH-FLD-008": {},
   "EARTH-FLD-010": {},
   "EARTH-NUC-001": DEFAULT_NUCLEAR_PAIR_ENUMERATION_INPUTS,
-  "EARTH-NUC-004": DEFAULT_PROTON_FORMULA_AUDIT_INPUTS,
+  "EARTH-NUC-004": DEFAULT_PROTON_MASS_RADIUS_CHI_INPUTS,
   "EARTH-PRT-001": DEFAULT_ELECTRON_BOHR_RYDBERG_AUDIT_INPUTS,
   "EARTH-PRT-005": DEFAULT_PARTICLE_QUANTUM_NUMBER_AUDIT_INPUTS,
   "EARTH-CHEM-002": DEFAULT_BOND_POTENTIAL_AUDIT_INPUTS,
@@ -812,7 +814,7 @@ const EXISTING_PROVENANCE = {
   "EARTH-FLD-008": { kind: "comparison", model: "standard sine-Gordon kink benchmark" },
   "EARTH-FLD-010": { kind: "reproduction", model: "EARTH printed wall-potential derivative audit" },
   "EARTH-NUC-001": { kind: "reproduction", model: "EARTH nuclear pair rules with standard torus invariants" },
-  "EARTH-NUC-004": { kind: "reproduction", model: "EARTH proton radius and energy formulas" },
+  "EARTH-NUC-004": { kind: "reproduction", model: "EARTH/Thad/Nassim/SM proton mass-radius-χ ledger" },
   "EARTH-PRT-001": { kind: "reproduction", model: "EARTH electron, Bohr, and Rydberg formulas" },
   "EARTH-PRT-005": { kind: "reproduction", model: "EARTH particle quantum-number and literal source claims" },
   "EARTH-CHEM-002": { kind: "reproduction", model: "EARTH bond potential with explicit normalized parameters" },
