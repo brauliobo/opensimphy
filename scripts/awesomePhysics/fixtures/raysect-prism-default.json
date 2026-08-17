@@ -1,0 +1,18 @@
+{
+  "adapterId": "awesome-raysect-typescript",
+  "catalogItemId": "awesome-raysect",
+  "sourceRevision": "5ed9a21b5f6e",
+  "implementationRevision": "raysect-prism-snell-cauchy-typescript-v1",
+  "input": {
+    "operation": "prism-trace",
+    "apexAngleDeg": 60,
+    "incidenceAngleDeg": 48,
+    "wavelengthNm": 550,
+    "cauchyA": 1.5046,
+    "cauchyB": 0.0042
+  },
+  "expected": {
+    "operation": "prism-trace",
+    "transmitted": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "adapterId": "awesome-scikit-beam-typescript",
+  "catalogItemId": "awesome-scikit-beam",
+  "sourceRevision": "dbe344435f6b",
+  "implementationRevision": "scikit-beam-sphere-form-factor-correlation-typescript-v1",
+  "input": {
+    "operation": "sphere-form-factor",
+    "radiusNm": 5,
+    "qMinNmInv": 0,
+    "qMaxNmInv": 1.5,
+    "sampleCount": 33
+  },
+  "expected": {
+    "operation": "sphere-form-factor",
+    "samples0": { "qNmInv": 0, "formFactor": 1, "intensity": 1 }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "adapterId": "awesome-quantumoptics-jl-typescript",
+  "catalogItemId": "awesome-quantumoptics-jl",
+  "sourceRevision": "5becc8f98c2a",
+  "implementationRevision": "quantumoptics-jl-jaynes-cummings-typescript-v1",
+  "input": {
+    "operation": "jaynes-cummings",
+    "coupling": 1,
+    "detuning": 0,
+    "photonNumber": 0,
+    "timeStep": 0.01,
+    "steps": 200,
+    "sampleEvery": 20
+  },
+  "expected": {
+    "operation": "jaynes-cummings",
+    "vacuumRabiFrequency": 2,
+    "samples0": { "step": 0, "excitedPopulation": 1, "cavityPhotons": 0, "inversion": 1 }
+  }
+}

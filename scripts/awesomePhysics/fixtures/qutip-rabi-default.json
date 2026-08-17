@@ -1,0 +1,98 @@
+{
+  "adapterId": "awesome-qutip-typescript",
+  "catalogItemId": "awesome-qutip",
+  "sourceRevision": "fbfb1f8bf302",
+  "implementationRevision": "qutip-two-level-rabi-lindblad-typescript-v1",
+  "input": {
+    "operation": "rabi-population",
+    "rabiFrequency": 1,
+    "detuning": 0,
+    "timeStep": 0.01,
+    "steps": 200,
+    "sampleEvery": 20
+  },
+  "expected": {
+    "operation": "rabi-population",
+    "effectiveRabiFrequency": 1,
+    "peakExcitedPopulation": 0.7080734182735712,
+    "samples": [
+      {
+        "step": 0,
+        "time": 0.0,
+        "excitedPopulation": 0.0,
+        "groundPopulation": 1.0,
+        "inversion": -1.0
+      },
+      {
+        "step": 20,
+        "time": 0.2,
+        "excitedPopulation": 0.009966711079379185,
+        "groundPopulation": 0.9900332889206208,
+        "inversion": -0.9800665778412416
+      },
+      {
+        "step": 40,
+        "time": 0.4,
+        "excitedPopulation": 0.039469502998557456,
+        "groundPopulation": 0.9605304970014426,
+        "inversion": -0.9210609940028851
+      },
+      {
+        "step": 60,
+        "time": 0.6,
+        "excitedPopulation": 0.08733219254516084,
+        "groundPopulation": 0.9126678074548391,
+        "inversion": -0.8253356149096782
+      },
+      {
+        "step": 80,
+        "time": 0.8,
+        "excitedPopulation": 0.1516466453264173,
+        "groundPopulation": 0.8483533546735826,
+        "inversion": -0.6967067093471653
+      },
+      {
+        "step": 100,
+        "time": 1.0,
+        "excitedPopulation": 0.22984884706593015,
+        "groundPopulation": 0.7701511529340699,
+        "inversion": -0.5403023058681398
+      },
+      {
+        "step": 120,
+        "time": 1.2,
+        "excitedPopulation": 0.31882112276166324,
+        "groundPopulation": 0.6811788772383367,
+        "inversion": -0.36235775447667345
+      },
+      {
+        "step": 140,
+        "time": 1.4000000000000001,
+        "excitedPopulation": 0.41501642854987963,
+        "groundPopulation": 0.5849835714501204,
+        "inversion": -0.16996714290024073
+      },
+      {
+        "step": 160,
+        "time": 1.6,
+        "excitedPopulation": 0.5145997611506444,
+        "groundPopulation": 0.48540023884935557,
+        "inversion": 0.02919952230128886
+      },
+      {
+        "step": 180,
+        "time": 1.8,
+        "excitedPopulation": 0.6136010473465435,
+        "groundPopulation": 0.3863989526534565,
+        "inversion": 0.22720209469308705
+      },
+      {
+        "step": 200,
+        "time": 2.0,
+        "excitedPopulation": 0.7080734182735712,
+        "groundPopulation": 0.2919265817264288,
+        "inversion": 0.41614683654714235
+      }
+    ]
+  }
+}

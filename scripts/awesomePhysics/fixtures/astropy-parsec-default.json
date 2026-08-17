@@ -1,0 +1,17 @@
+{
+  "adapterId": "awesome-astropy-typescript",
+  "catalogItemId": "awesome-astropy",
+  "sourceRevision": "cb3c511e2e6e",
+  "implementationRevision": "astropy-units-galactic-typescript-v1",
+  "input": {
+    "operation": "unit-convert",
+    "value": 1,
+    "from": "pc",
+    "to": "m"
+  },
+  "expected": {
+    "operation": "unit-convert",
+    "dimension": "length",
+    "value": 3.0856775814913673e16
+  }
+}
