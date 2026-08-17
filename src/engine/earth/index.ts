@@ -191,6 +191,7 @@ import {
   type StandardUniformSphereBindingInputs,
 } from "./pilotMethods.js";
 import { nuclearPqEnergyAudit, type NuclearPqEnergyInputs } from "./particle/nuclearPqEnergy.js";
+import { fermionBosonNumbers } from "./particle/fermionBosonNumbers.js";
 import { superpositionLangevin } from "./particle/superpositionLangevin.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
 
@@ -209,6 +210,7 @@ export * from "./fields.js";
 export * from "./foundations.js";
 export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
+export * from "./particle/fermionBosonNumbers.js";
 export * from "./particle/nuclearPqEnergy.js";
 export * from "./particle/superpositionLangevin.js";
 export * from "./particle/wallVsSineGordon.js";
@@ -470,7 +472,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-NUC-001": ReturnType<typeof nuclearPqEnergyAudit>["output"];
   "EARTH-NUC-004": ReturnType<typeof protonFormulaAudit>["output"];
   "EARTH-PRT-001": ReturnType<typeof electronBohrRydbergAudit>["output"];
-  "EARTH-PRT-005": ReturnType<typeof particleQuantumNumberAudit>["output"];
+  "EARTH-PRT-005": ReturnType<typeof fermionBosonNumbers>["output"];
   "EARTH-CHEM-002": ReturnType<typeof bondPotentialAudit>["output"];
   "EARTH-CHEM-004": ReturnType<typeof sphericalCoordination>["output"];
   "EARTH-CHEM-007": ReturnType<typeof shellCapacityAudit>["output"];
@@ -578,7 +580,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-NUC-001": nuclearPqEnergyAudit,
   "EARTH-NUC-004": protonFormulaAudit,
   "EARTH-PRT-001": electronBohrRydbergAudit,
-  "EARTH-PRT-005": particleQuantumNumberAudit,
+  "EARTH-PRT-005": fermionBosonNumbers,
   "EARTH-CHEM-002": bondPotentialAudit,
   "EARTH-CHEM-004": sphericalCoordination,
   "EARTH-CHEM-007": shellCapacityAudit,
