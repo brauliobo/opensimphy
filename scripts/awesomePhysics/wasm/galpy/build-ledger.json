@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "artifact": {
+    "wasm": {
+      "name": "galpy.wasm",
+      "path": "wasm/awesomePhysics/galpy/galpy.wasm",
+      "byteSize": 19591,
+      "sha256": "0e053c12eaa70b3bf771697505acaa049269c481c7d1f9ac363e8f5cf08f7720"
+    },
+    "javascript": {
+      "name": "galpy.js",
+      "path": "wasm/awesomePhysics/galpy/galpy.js",
+      "byteSize": 594,
+      "sha256": "becd50f707575c4e8ad3fb45c67e9e5ffcdfed57401a08c33b4169daad427696"
+    }
+  },
+  "source": {
+    "checkout": "awesome-physics-repos/galpy",
+    "revision": "3762e73ef84578f4a911325d283e652eb1886625",
+    "translationUnits": [
+      "scripts/awesomePhysics/wasm/galpy/galpy_abi.c",
+      "scripts/awesomePhysics/wasm/galpy/galpy.js"
+    ]
+  },
+  "toolchain": {
+    "name": "Emscripten",
+    "version": "6.0.6-git",
+    "revision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245"
+  },
+  "abi": {
+    "exports": [
+      "galpy_orbit_init",
+      "galpy_orbit_step",
+      "galpy_orbit_R",
+      "galpy_orbit_z",
+      "galpy_orbit_phi",
+      "galpy_orbit_vR",
+      "galpy_orbit_vT",
+      "galpy_orbit_vz",
+      "galpy_orbit_energy",
+      "galpy_orbit_Lz",
+      "galpy_rforce",
+      "galpy_zforce",
+      "galpy_circular_velocity"
+    ],
+    "memory": "standalone linear memory; no browser pointer ABI",
+    "status": "i32 0 or 1"
+  },
+  "build": {
+    "script": "scripts/awesomePhysics/wasm/galpy/build.mjs",
+    "parallelism": 1,
+    "flags": [
+      "-sSTANDALONE_WASM=1",
+      "-sFILESYSTEM=0",
+      "-sMALLOC=none",
+      "-sINITIAL_MEMORY=1048576",
+      "-sALLOW_MEMORY_GROWTH=0"
+    ]
+  },
+  "verification": [
+    "source checkout is clean before and after the build",
+    "source revision and toolchain version/revision are pinned",
+    "raw module has no imports and contains the scalar ABI exports",
+    "MWPotential2014 circular velocity at R=1 is 1",
+    "bounded leapfrog conserves Lz and keeps energy drift below 1e-4",
+    "artifact byte size and SHA-256 are fixed"
+  ]
+}
