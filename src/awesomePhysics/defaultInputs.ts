@@ -13,6 +13,7 @@ import type { QmsolveInput } from './adapters/typescript/qmsolve'
 import type { ScikitRfInputV1 } from './adapters/typescript/scikitRf'
 import type { TightBindingInputV1 } from './adapters/typescript/tightBinding'
 import type { CoolPropInputV1 } from './adapters/wasm/coolprop'
+import type { Nphysics2dInputV1 } from './adapters/wasm/nphysics2d'
 import type { PositionBasedDynamicsDistanceInputV1 } from './adapters/wasm/positionBasedDynamics'
 import type { Bullet3InputV1 } from './adapters/wasm/bullet3'
 
@@ -33,6 +34,7 @@ type AwesomePhysicsDefaultInputByAdapter = {
   [AWESOME_PHYSICS_ADAPTER_IDS.tightBinding]: TightBindingInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.poppy]: PoppyInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: CoolPropInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.nphysics2d]: Nphysics2dInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics]: PositionBasedDynamicsDistanceInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.bullet3]: Bullet3InputV1
 }
@@ -171,6 +173,9 @@ export const AWESOME_PHYSICS_DEFAULT_INPUTS = {
   [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: {
     operation: 'F2K',
     celsius: 0,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.nphysics2d]: {
+    operation: 'snapshot',
   },
   [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics]: {
     operation: 'solve-distance',

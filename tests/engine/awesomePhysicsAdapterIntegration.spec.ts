@@ -33,6 +33,7 @@ const expectedAdapters = new Map([
   ['shut-up-and-calculate', 'awesome-shut-up-and-calculate-typescript'],
   ['poppy', 'awesome-poppy-typescript'],
   ['CoolProp', 'awesome-coolprop-wasm'],
+  ['nphysics', 'awesome-nphysics2d-wasm'],
   ['PositionBasedDynamics', 'awesome-positionbaseddynamics-wasm'],
   ['bullet3', 'awesome-bullet3-wasm'],
 ])

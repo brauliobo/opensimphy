@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "checkout": "awesome-physics-repos/nphysics",
+    "revision": "65aa85c5470a5da85e0c13652ce58400ae2e2201",
+    "crate": "build/nphysics2d/Cargo.toml",
+    "abiSource": "scripts/awesomePhysics/wasm/nphysics/abi/src/lib.rs",
+    "abiScope": "One ground cuboid and one dynamic ball; snapshot [x, y, angle, cumulative_steps]."
+  },
+  "lock": {
+    "path": "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.lock",
+    "sha256": "e49337e39729eb355a9c337d78185bd41d6ff677071a7792b0928938e4cda8ba"
+  },
+  "toolchain": {
+    "rust": "1.87.0",
+    "cargo": "1.87.0",
+    "wasmBindgen": "0.2.127",
+    "target": "wasm32-unknown-unknown",
+    "cargoJobs": 4,
+    "maxMemoryBytes": 134217728,
+    "releaseProfile": "debug=true, lto=true, codegen-units=1"
+  },
+  "abi": {
+    "sourceSha256": "5fad2ed31879ce0125ccb39445b2b69967d8968d8e21635a586df53ff5f4c46c",
+    "exports": [
+      "World2d",
+      "World2d.snapshot",
+      "World2d.step"
+    ],
+    "limits": {
+      "maximumStepsPerCall": 600,
+      "maximumTotalSteps": 6000
+    }
+  },
+  "artifact": {
+    "wasm": {
+      "name": "nphysics2d_worker_probe.wasm",
+      "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm",
+      "byteSize": 367036,
+      "sha256": "ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1"
+    },
+    "javascript": {
+      "name": "nphysics2d_worker_probe.js",
+      "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js",
+      "byteSize": 12916,
+      "sha256": "364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26"
+    }
+  },
+  "build": {
+    "script": "scripts/awesomePhysics/wasm/nphysics/build.mjs",
+    "output": "empty out-of-tree directory",
+    "cargoFlags": [
+      "--target wasm32-unknown-unknown",
+      "--release",
+      "--locked",
+      "--jobs 4"
+    ],
+    "wasmBindgenFlags": [
+      "--target web",
+      "--no-typescript"
+    ],
+    "sourceCheckout": "read-only; clean before and after build"
+  },
+  "verification": [
+    "Full source revision, Cargo.lock, Rust, Cargo, target, and wasm-bindgen pins are checked.",
+    "ABI source hash, generated companion contract, 2D exports, byte sizes, and SHA-256 values are checked.",
+    "Initial, falling, settled, per-call step-limit, and cumulative step-limit smoke calls are checked.",
+    "No 3D ABI or artifact is generated or promoted by this pilot."
+  ]
+}

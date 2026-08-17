@@ -40,11 +40,11 @@ describe('Awesome Physics catalog foundation', () => {
     expect(catalog.items.filter(({ access }) => access.status === 'cloned')).toHaveLength(74)
     expect(simulations.summary).toEqual({
       sourceCapabilities: 76,
-      runnable: 16,
-      available: 16,
-      unavailable: 56,
+      runnable: 17,
+      available: 17,
+      unavailable: 55,
       blocked: 4,
-      adapterCount: 16,
+      adapterCount: 17,
       executionKinds: {
         browser: 6,
         wasm: 8,
@@ -153,6 +153,12 @@ describe('Awesome Physics catalog foundation', () => {
           byteSize: 333983,
           sha256: '1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425',
         })
+      } else if (descriptor.catalogItemId === 'awesome-nphysics') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: '65aa85c5470a5da85e0c13652ce58400ae2e2201',
+          byteSize: 367036,
+          sha256: 'ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1',
+        })
       } else {
         expect(descriptor.artifactProvenance.sha256).toBeNull()
       }
@@ -160,7 +166,7 @@ describe('Awesome Physics catalog foundation', () => {
       expect(descriptor.outputRevision).toBe('awesome-physics-descriptor-v1')
     }
     const availableDescriptors = simulations.items.filter(({ availability }) => availability === 'available')
-    expect(availableDescriptors).toHaveLength(16)
+    expect(availableDescriptors).toHaveLength(17)
     expect(availableDescriptors.every(({ implementationRevision }) => implementationRevision !== PHASE_ZERO_IMPLEMENTATION_REVISION)).toBe(true)
     expect(simulations.items
       .filter(({ availability }) => availability !== 'available')

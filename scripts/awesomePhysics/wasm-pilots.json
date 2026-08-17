@@ -273,60 +273,72 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/nphysics",
-        "revision": "65aa85c5470a",
+        "revision": "65aa85c5470a5da85e0c13652ce58400ae2e2201",
         "files": [
           "Cargo.toml",
           "build/nphysics2d/Cargo.toml",
-          "build/nphysics3d/Cargo.toml",
+          "src/lib.rs",
           "README.md",
-          "CHANGELOG.md"
+          "CHANGELOG.md",
+          "LICENSE"
         ],
         "evidenceRefs": [
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:10"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10",
+          "scripts/awesomePhysics/wasm/nphysics/README.md"
         ]
       },
       "build": {
         "family": "rust-cargo-wasm",
-        "command": "cargo build --manifest-path build/nphysics2d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features use-wasm-bindgen && cargo build --manifest-path build/nphysics3d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features use-wasm-bindgen",
-        "toolchain": "Pinned Rust toolchain compatible with the legacy Rust 2018 crate, wasm32-unknown-unknown target, and wasm-bindgen 0.2; cargo-web/stdweb rendering is not part of the OpenSimPhy artifact.",
+        "command": "node scripts/awesomePhysics/wasm/nphysics/build.mjs --source <clean pinned nphysics checkout> --output <empty out-of-tree directory>",
+        "toolchain": "Rust 1.87.0 and Cargo 1.87.0; wasm32-unknown-unknown; wasm-bindgen CLI 0.2.127; --locked; --jobs 4; -C link-arg=--max-memory=134217728.",
         "workingDirectory": "awesome-physics-repos/nphysics"
       },
       "output": {
-        "module": "Separate bounded nphysics2d and nphysics3d wasm-bindgen modules with no testbed renderer",
-        "workerBoundary": "A dedicated worker owns one selected 2D or 3D engine instance, typed POD buffers, cancellation, and state snapshots; no kiss3d/stdweb UI crosses the boundary.",
+        "module": "nphysics2d_worker_probe.wasm with its wasm-bindgen nphysics2d_worker_probe.js companion",
+        "workerBoundary": "The existing module worker imports the verified local companion from a temporary Blob URL, initializes it with the verified WebAssembly.Module, and owns one bounded 2D World2d snapshot/step instance.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Cap each dimension-specific module at 128 MiB and bound bodies, colliders, and simulation steps before allocation.",
-        "threadPolicy": "Single-threaded wasm32 execution; no parallel pipeline, pthreads, or shared-memory transfer.",
+        "memoryPolicy": "Cap the 2D module at 128 MiB and bound its one body, one collider, and step count before execution.",
+        "threadPolicy": "Single-threaded wasm32 execution in the existing module worker; no parallel pipeline, pthreads, or shared-memory transfer.",
         "maxMemoryBytes": 134217728,
-        "maxArtifactBytes": 33554432,
+        "maxArtifactBytes": 4194304,
         "maxWorkerTimeMs": 10000,
-        "maxOutputBytes": 4194304
+        "maxOutputBytes": 4096
       },
       "licenseGate": {
-        "status": "review",
+        "status": "pass",
         "license": "Apache-2.0",
         "noticeRequirements": [
-          "Retain nphysics and ncollide Apache-2.0 notices with any module.",
-          "Document the superseded/legacy status and review the old Rust/WASM dependency closure."
+          "Retain the nphysics Apache-2.0 license and attribution with both redistributed files.",
+          "Retain the ncollide2d Apache-2.0, nalgebra BSD-3-Clause, generational-arena MPL-2.0, slotmap Zlib, and complete direct/transitive Cargo.lock license inventory in the source and public notices.",
+          "Retain the wasm-bindgen and web-sys MIT/Apache-2.0 notices listed in the complete build notice."
         ]
       },
       "proofRequirements": [
-        "Reproduce both dimension-specific wasm-bindgen builds with a recorded Rust and dependency lock state.",
-        "Replace testbed rendering with a typed headless ABI and run representative collision/dynamics fixtures in a worker.",
-        "Prove cancellation, cache behavior, output-size budget, and legacy toolchain/license compliance before treating the pilot as usable."
+        "Reproduce the pinned nphysics2d wasm-bindgen build with Rust 1.87.0, wasm32-unknown-unknown, wasm-bindgen 0.2.127, Cargo.lock, four-job maximum, and exact output hashes/sizes.",
+        "Run the typed headless 2D ABI through the existing module worker with initial, falling, settled, finite JSON-safe snapshots and bounded step rejection.",
+        "Prove cancellation, local MIME/hash checks for both files, Blob URL companion loading, output-size limits, and retained license inventory before treating the pilot as usable."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm",
+        "sha256": "ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1",
+        "byteSize": 367036,
+        "companion": {
+          "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js",
+          "sha256": "364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26",
+          "byteSize": 12916
+        }
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:119",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:160"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+        "scripts/awesomePhysics/wasm/nphysics/README.md",
+        "scripts/awesomePhysics/wasm/nphysics/build-ledger.json",
+        "scripts/awesomePhysics/wasm/nphysics/NOTICE.md",
+        "public/wasm/awesomePhysics/nphysics/NOTICE.md"
       ]
     },
     {

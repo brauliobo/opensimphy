@@ -728,6 +728,40 @@ const AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP = Object.freeze({
     noticeRef: "public/wasm/awesomePhysics/coolprop/NOTICE.md",
     runtime: { externalPackages: [], externalData: [], requiresBuild: false },
   },
+  nphysics: {
+    manifestKind: "wasm-pilots",
+    manifestPath: WASM_PILOT_MANIFEST_PATH,
+    manifestId: "nphysics",
+    sourceRevision: "65aa85c5470a5da85e0c13652ce58400ae2e2201",
+    adapterId: "awesome-nphysics2d-wasm",
+    modulePath: "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+    factoryExport: "createNphysics2dAdapterFactory",
+    execution: "wasm",
+    modelOrigin: "upstream-adaptation",
+    numericalMethod: "Pinned nphysics2d headless ground-and-ball stepping through the verified wasm-bindgen module companion",
+    inputSchema: "nphysics2d-input-v1",
+    outputSchema: "nphysics2d-output-v1",
+    implementationRevision: "nphysics2d-wasm-bindgen-module-worker-v1",
+    transformation: "Verified pinned nphysics2d wasm-bindgen artifact dispatched through the existing module worker; no remote runtime, package, or data fallback is used.",
+    availabilityReason: "Available: the pinned nphysics2d WASM pilot passed its availability, license, local integrity, companion, and module-worker gates.",
+    sourceRefs: [
+      "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+      "scripts/awesomePhysics/wasm/nphysics/abi/src/lib.rs",
+      "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.toml",
+      "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.lock",
+      "scripts/awesomePhysics/wasm/nphysics/build.mjs",
+      "scripts/awesomePhysics/wasm/nphysics/build-ledger.json",
+      "scripts/awesomePhysics/wasm/nphysics/README.md",
+    ],
+    licenseRefs: [
+      "awesome-physics-repos/nphysics/LICENSE",
+      "scripts/awesomePhysics/wasm/nphysics/NOTICE.md",
+      "public/wasm/awesomePhysics/nphysics/NOTICE.md",
+      WASM_PILOT_MANIFEST_PATH,
+    ],
+    noticeRef: "public/wasm/awesomePhysics/nphysics/NOTICE.md",
+    runtime: { externalPackages: [], externalData: [], requiresBuild: false },
+  },
   PositionBasedDynamics: {
     manifestKind: "native-candidates",
     manifestPath: NATIVE_CANDIDATE_MANIFEST_PATH,
@@ -1177,8 +1211,8 @@ function assertImplementationEntry(name, plan, implementation) {
 
 function assertImplementationMap(parsedCatalog, planByName) {
   const verifiedNames = Object.keys(AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP).sort();
-  assert(JSON.stringify(verifiedNames) === JSON.stringify(["CoolProp", "PositionBasedDynamics", "bullet3"].sort()),
-    "Verified WASM implementation allowlist must contain exactly CoolProp, PositionBasedDynamics, and bullet3");
+  assert(JSON.stringify(verifiedNames) === JSON.stringify(["CoolProp", "nphysics", "PositionBasedDynamics", "bullet3"].sort()),
+    "Verified WASM implementation allowlist must contain exactly CoolProp, nphysics, PositionBasedDynamics, and bullet3");
   for (const [name, implementation] of Object.entries(AWESOME_PHYSICS_IMPLEMENTATION_MAP)) {
     assert(!Object.hasOwn(AWESOME_PHYSICS_VERIFIED_WASM_IMPLEMENTATION_MAP, name),
       `Implementation ${name} must not also appear in the verified WASM allowlist`);

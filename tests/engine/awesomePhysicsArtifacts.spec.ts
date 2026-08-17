@@ -51,7 +51,7 @@ function wasmResponse(bytes: Uint8Array, contentType = 'application/wasm'): Resp
 }
 
 describe('Awesome Physics artifact manifests and loader', () => {
-  it('contains the six pilots, two deferred proofs, and ten native candidates', () => {
+  it('contains the eight pilots and ten native candidates', () => {
     expect(WASM_PILOTS).toHaveLength(8)
     expect(WASM_PILOTS.map(({ project }) => project)).toEqual([
       'CoolProp',
@@ -83,7 +83,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
     const records = [...WASM_PILOTS, ...NATIVE_CANDIDATES]
     const available = records.filter(({ status }) => status === 'available')
     const unavailable = records.filter(({ status }) => status !== 'available')
-    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'position-based-dynamics', 'bullet3'])
+    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'nphysics', 'position-based-dynamics', 'bullet3'])
     for (const record of available) {
       expect(record.artifact.path).not.toBeNull()
       expect(record.artifact.sha256).toMatch(/^[a-f0-9]{64}$/)
@@ -100,6 +100,21 @@ describe('Awesome Physics artifact manifests and loader', () => {
           path: 'wasm/awesomePhysics/coolprop/coolprop.js',
           sha256: '0ffde908dc61430b78e02f5b60a1eee04d4b80f69af72739235b3ecb16eac7f6',
           byteSize: 171012,
+        },
+      },
+    })
+    expect(WASM_PILOTS.find(({ id }) => id === 'nphysics')).toMatchObject({
+      status: 'available',
+      licenseGate: { status: 'pass' },
+      source: { revision: '65aa85c5470a5da85e0c13652ce58400ae2e2201' },
+      artifact: {
+        path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm',
+        sha256: 'ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1',
+        byteSize: 367036,
+        companion: {
+          path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js',
+          sha256: '364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26',
+          byteSize: 12916,
         },
       },
     })

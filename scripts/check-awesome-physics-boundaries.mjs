@@ -24,6 +24,9 @@ const requiredDistAssets = [
   'wasm/awesomePhysics/coolprop/coolprop.js',
   'wasm/awesomePhysics/coolprop/coolprop.wasm',
   'wasm/awesomePhysics/coolprop/coolprop.worker.js',
+  'wasm/awesomePhysics/nphysics/NOTICE.md',
+  'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js',
+  'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm',
 ]
 const awesomePhysicsOwnedDistAssets = new Set(awesomePhysicsDataAssets)
 
@@ -47,6 +50,7 @@ const adapterSources = [
   'src/awesomePhysics/adapters/typescript/gala.ts',
   'src/awesomePhysics/adapters/typescript/tightBinding.ts',
   'src/awesomePhysics/adapters/typescript/poppy.ts',
+  'src/awesomePhysics/adapters/wasm/nphysics2d.ts',
   'src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts',
   'src/awesomePhysics/adapters/wasm/bullet3.ts',
 ]
