@@ -66,7 +66,6 @@ import {
 import {
   floquetBenchmark,
   sineGordonBenchmark,
-  stochasticDiffusion,
   type FloquetInputs,
   type PotentialDerivativeInputs,
   type SineGordonInputs,
@@ -192,6 +191,7 @@ import {
   type StandardUniformSphereBindingInputs,
 } from "./pilotMethods.js";
 import { nuclearPqEnergyAudit, type NuclearPqEnergyInputs } from "./particle/nuclearPqEnergy.js";
+import { superpositionLangevin } from "./particle/superpositionLangevin.js";
 import { wallVsSineGordon } from "./particle/wallVsSineGordon.js";
 
 export * from "./audits.js";
@@ -210,6 +210,7 @@ export * from "./foundations.js";
 export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
 export * from "./particle/nuclearPqEnergy.js";
+export * from "./particle/superpositionLangevin.js";
 export * from "./particle/wallVsSineGordon.js";
 export * from "./pilotMethods.js";
 
@@ -461,7 +462,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-FND-014": ReturnType<typeof sourceSequenceAudit>["output"];
   "EARTH-GEO-004": ReturnType<typeof trefoilTubeComparison>["output"];
   "EARTH-FLD-001": ReturnType<typeof derrickScalingAudit>["output"];
-  "EARTH-FLD-005": ReturnType<typeof stochasticDiffusion>["output"];
+  "EARTH-FLD-005": ReturnType<typeof superpositionLangevin>["output"];
   "EARTH-FLD-006": ReturnType<typeof decoherenceScalingSweep>["output"];
   "EARTH-FLD-007": ReturnType<typeof floquetBenchmark>["output"];
   "EARTH-FLD-008": ReturnType<typeof sineGordonBenchmark>["output"];
@@ -569,7 +570,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-FND-014": sourceSequenceAudit,
   "EARTH-GEO-004": trefoilTubeComparison,
   "EARTH-FLD-001": derrickScalingAudit,
-  "EARTH-FLD-005": stochasticDiffusion,
+  "EARTH-FLD-005": superpositionLangevin,
   "EARTH-FLD-006": decoherenceScalingSweep,
   "EARTH-FLD-007": floquetBenchmark,
   "EARTH-FLD-008": sineGordonBenchmark,
@@ -803,7 +804,7 @@ const EXISTING_PROVENANCE = {
   "EARTH-FND-014": { kind: "reproduction", model: "EARTH source-variant morphisms and sequence claims" },
   "EARTH-GEO-004": { kind: "comparison", model: "standard elastic trefoil-tube analogue, not the EARTH scalar model" },
   "EARTH-FLD-001": { kind: "reproduction", model: "EARTH scalar energy under three-dimensional Derrick scaling" },
-  "EARTH-FLD-005": { kind: "comparison", model: "normalized damped stochastic diffusion benchmark; EARTH coefficients unavailable" },
+  "EARTH-FLD-005": { kind: "comparison", model: "normalized damped stochastic diffusion FDT; EARTH (ν,μ) pinned but λ₀≠λ̃₀ and continuum noise undefined" },
   "EARTH-FLD-006": { kind: "comparison", model: "finite-step FLD-005 parameter-scaling comparison without physical calibration" },
   "EARTH-FLD-007": { kind: "comparison", model: "unitary driven two-level Floquet benchmark; EARTH physical map unavailable" },
   "EARTH-FLD-008": { kind: "comparison", model: "standard sine-Gordon kink benchmark" },
