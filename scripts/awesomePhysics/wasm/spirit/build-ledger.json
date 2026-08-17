@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "artifact": {
+    "name": "spirit-llg-heun.wasm",
+    "path": "wasm/awesomePhysics/spirit/spirit-llg-heun.wasm",
+    "byteSize": 3821,
+    "sha256": "34a942b98bfed0d3cc1d27b731662b0315f23d2df1ed904133faa1038bdcd6a4"
+  },
+  "source": {
+    "checkout": "awesome-physics-repos/spirit",
+    "revision": "e82250d3b14411c2c2fa292d143f13e3e111ad8c",
+    "translationUnits": [
+      "scripts/awesomePhysics/wasm/spirit/spirit_abi.cpp"
+    ],
+    "algorithmEvidence": [
+      "core/include/engine/Solver_Heun.hpp",
+      "core/src/engine/Method_LLG.cpp",
+      "core/include/utility/Constants.hpp"
+    ]
+  },
+  "toolchain": {
+    "name": "Emscripten",
+    "version": "6.0.6-git",
+    "revision": "ce75e06884093bcefb86a6b8fd56a5d62a4cc245",
+    "cmakeToolchainSha256": "fdca7d6b6ebe9c087aa7f0a0c7391b0b83fdb081160158f65aa1182cdc964718"
+  },
+  "abi": {
+    "exports": [
+      "spirit_llg_status",
+      "spirit_llg_mx",
+      "spirit_llg_my",
+      "spirit_llg_mz",
+      "spirit_llg_energy",
+      "spirit_llg_time",
+      "spirit_llg_norm"
+    ],
+    "memory": "standalone linear memory; no browser pointer ABI",
+    "status": "i32 0 or 1",
+    "results": "finite f64 scalars"
+  },
+  "build": {
+    "script": "scripts/awesomePhysics/wasm/spirit/build.mjs",
+    "parallelism": 1,
+    "flags": [
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-openmp",
+      "-sSTANDALONE_WASM=1",
+      "-sFILESYSTEM=0",
+      "-sMALLOC=none",
+      "-sDISABLE_EXCEPTION_CATCHING=1"
+    ]
+  },
+  "verification": [
+    "Pinned Spirit MIT license retained; ui-web/ImGui/VFRendering excluded",
+    "Standalone module hash and byte size match this ledger",
+    "Host paths /home/braulio and /tmp/opencode are absent from the module"
+  ]
+}
