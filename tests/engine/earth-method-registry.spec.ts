@@ -73,7 +73,7 @@ describe('EARTH method registry', () => {
     const untypedRun = runEarthMethod as (programId: string, methodId: string, inputs: unknown) => {
       status: string
       validatesEarthTheory: false
-      predictions: unknown[]
+      predictions: Array<{ claimId: string }>
     }
     for (const programId of SUPPORTED_EARTH_SIMULATION_IDS) {
       for (const { id: methodId } of listEarthMethods(programId)) {
@@ -84,7 +84,13 @@ describe('EARTH method registry', () => {
         const result = untypedRun(programId, methodId, first)
         expect(result.status, `${programId}/${methodId} must complete`).toBe('completed')
         expect(result.validatesEarthTheory, `${programId}/${methodId}`).toBe(false)
-        expect(result.predictions, `${programId}/${methodId}`).toEqual([])
+        if (programId === 'EARTH-NUC-001' && methodId === 'earth-source-reproduction-v1') {
+          expect(result.predictions.map(({ claimId }) => claimId), `${programId}/${methodId}`).toEqual([
+            'NUC-001-P', 'NUC-001-HE', 'NUC-001-C', 'NUC-002-AME',
+          ])
+        } else {
+          expect(result.predictions, `${programId}/${methodId}`).toEqual([])
+        }
         expectFiniteJson(result, `${programId}/${methodId}`)
         expect(() => JSON.parse(JSON.stringify(result))).not.toThrow()
       }

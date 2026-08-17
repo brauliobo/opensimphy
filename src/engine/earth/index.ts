@@ -209,6 +209,7 @@ export * from "./fields.js";
 export * from "./foundations.js";
 export * from "./physicalComparators.js";
 export * from "./particle/ledger.js";
+export * from "./particle/nuclearPqEnergy.js";
 export * from "./pilotMethods.js";
 
 const EARTH_BIO_NEURO_COMPARATORS = {
@@ -405,7 +406,7 @@ type ExistingEarthSimulationInputs = {
   "EARTH-FLD-007": FloquetInputs;
   "EARTH-FLD-008": SineGordonInputs;
   "EARTH-FLD-010": PotentialDerivativeInputs;
-  "EARTH-NUC-001": NuclearPairEnumerationInputs;
+  "EARTH-NUC-001": NuclearPqEnergyInputs;
   "EARTH-NUC-004": ProtonFormulaAuditInputs;
   "EARTH-PRT-001": ElectronBohrRydbergAuditInputs;
   "EARTH-PRT-005": ParticleQuantumNumberAuditInputs;
@@ -464,7 +465,7 @@ type ExistingEarthSimulationOutputs = {
   "EARTH-FLD-007": ReturnType<typeof floquetBenchmark>["output"];
   "EARTH-FLD-008": ReturnType<typeof sineGordonBenchmark>["output"];
   "EARTH-FLD-010": ReturnType<typeof potentialDerivativeAudit>["output"];
-  "EARTH-NUC-001": ReturnType<typeof nuclearPairEnumerationAudit>["output"];
+  "EARTH-NUC-001": ReturnType<typeof nuclearPqEnergyAudit>["output"];
   "EARTH-NUC-004": ReturnType<typeof protonFormulaAudit>["output"];
   "EARTH-PRT-001": ReturnType<typeof electronBohrRydbergAudit>["output"];
   "EARTH-PRT-005": ReturnType<typeof particleQuantumNumberAudit>["output"];
@@ -572,7 +573,7 @@ const EARTH_EXISTING_KERNELS = {
   "EARTH-FLD-007": floquetBenchmark,
   "EARTH-FLD-008": sineGordonBenchmark,
   "EARTH-FLD-010": potentialDerivativeAudit,
-  "EARTH-NUC-001": nuclearPairEnumerationAudit,
+  "EARTH-NUC-001": nuclearPqEnergyAudit,
   "EARTH-NUC-004": protonFormulaAudit,
   "EARTH-PRT-001": electronBohrRydbergAudit,
   "EARTH-PRT-005": particleQuantumNumberAudit,
