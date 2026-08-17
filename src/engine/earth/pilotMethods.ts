@@ -1,5 +1,6 @@
 import {
   boundedInteger,
+  boundedNumber,
   checkCancelled,
   finiteNumber,
   relativeError,
@@ -7,19 +8,13 @@ import {
   type EarthKernelResult,
   type EarthRunOptions,
 } from "./common.js";
+import { BOLTZMANN_CONSTANT_J_PER_K, CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, GOLDEN_RATIO, CODATA_2022_HBAR_J_S, SPEED_OF_LIGHT_M_PER_S } from "../../simphy/constants.js";
 
-const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
-const G_SI = 6.674_30e-11;
-const HBAR_SI = 1.054_571_817e-34;
-const C_SI = 299_792_458;
+const G_SI = CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2;
+const HBAR_SI = CODATA_2022_HBAR_J_S;
+const C_SI = SPEED_OF_LIGHT_M_PER_S;
 const PROTON_MASS_SI = 1.672_621_925_95e-27;
-const BOLTZMANN_SI = 1.380_649e-23;
-
-function bounded(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
+const BOLTZMANN_SI = BOLTZMANN_CONSTANT_J_PER_K;
 
 function sourceDiagnostics(extra: EarthDiagnostics = {}): EarthDiagnostics {
   return {
@@ -75,13 +70,13 @@ export interface EarthSolubilityProductSourceOutput {
 export function earthSolubilityProductSource(
   inputs: EarthSolubilityProductSourceInputs = DEFAULT_EARTH_SOLUBILITY_PRODUCT_SOURCE_INPUTS,
 ): EarthKernelResult<EarthSolubilityProductSourceOutput> {
-  const temperatureKelvin = bounded(inputs.temperatureKelvin ?? 298.15, "temperatureKelvin", 1, 1e6);
-  const deltaEnergyKcalPerMol = bounded(inputs.deltaEnergyKcalPerMol ?? 2.61, "deltaEnergyKcalPerMol", -1e6, 1e6);
-  const molarGasConstantKcalPerMolKelvin = bounded(inputs.molarGasConstantKcalPerMolKelvin ?? 0.001986, "molarGasConstantKcalPerMolKelvin", 1e-12, 1);
-  const saltCoherenceAngstrom = bounded(inputs.saltCoherenceAngstrom ?? 5.64, "saltCoherenceAngstrom", 1e-12, 1e12);
-  const solutionCoherenceAngstrom = bounded(inputs.solutionCoherenceAngstrom ?? 3.8, "solutionCoherenceAngstrom", 1e-12, 1e12);
+  const temperatureKelvin = boundedNumber(inputs.temperatureKelvin ?? 298.15, "temperatureKelvin", 1, 1e6);
+  const deltaEnergyKcalPerMol = boundedNumber(inputs.deltaEnergyKcalPerMol ?? 2.61, "deltaEnergyKcalPerMol", -1e6, 1e6);
+  const molarGasConstantKcalPerMolKelvin = boundedNumber(inputs.molarGasConstantKcalPerMolKelvin ?? 0.001986, "molarGasConstantKcalPerMolKelvin", 1e-12, 1);
+  const saltCoherenceAngstrom = boundedNumber(inputs.saltCoherenceAngstrom ?? 5.64, "saltCoherenceAngstrom", 1e-12, 1e12);
+  const solutionCoherenceAngstrom = boundedNumber(inputs.solutionCoherenceAngstrom ?? 3.8, "solutionCoherenceAngstrom", 1e-12, 1e12);
   const coherenceExponent = boundedInteger(inputs.coherenceExponent ?? 6, "coherenceExponent", 1, 64);
-  const claimedKsp = bounded(inputs.sourceClaimedKsp ?? 36, "sourceClaimedKsp", 1e-300, 1e300);
+  const claimedKsp = boundedNumber(inputs.sourceClaimedKsp ?? 36, "sourceClaimedKsp", 1e-300, 1e300);
   const boltzmannFactor = Math.exp(-deltaEnergyKcalPerMol / (molarGasConstantKcalPerMolKelvin * temperatureKelvin));
   const coherenceRatioPower = (saltCoherenceAngstrom / solutionCoherenceAngstrom) ** coherenceExponent;
   const ksp = boltzmannFactor * coherenceRatioPower;
@@ -131,13 +126,13 @@ export interface StandardIonActivityProductOutput {
 export function standardIonActivityProduct(
   inputs: StandardIonActivityProductInputs = DEFAULT_STANDARD_ION_ACTIVITY_PRODUCT_INPUTS,
 ): EarthKernelResult<StandardIonActivityProductOutput> {
-  const cationConcentration = bounded(inputs.cationConcentrationMolPerL ?? 6, "cationConcentrationMolPerL", 1e-15, 100);
-  const anionConcentration = bounded(inputs.anionConcentrationMolPerL ?? 6, "anionConcentrationMolPerL", 1e-15, 100);
-  const cationCoefficient = bounded(inputs.cationActivityCoefficient ?? 1, "cationActivityCoefficient", 1e-12, 100);
-  const anionCoefficient = bounded(inputs.anionActivityCoefficient ?? 1, "anionActivityCoefficient", 1e-12, 100);
+  const cationConcentration = boundedNumber(inputs.cationConcentrationMolPerL ?? 6, "cationConcentrationMolPerL", 1e-15, 100);
+  const anionConcentration = boundedNumber(inputs.anionConcentrationMolPerL ?? 6, "anionConcentrationMolPerL", 1e-15, 100);
+  const cationCoefficient = boundedNumber(inputs.cationActivityCoefficient ?? 1, "cationActivityCoefficient", 1e-12, 100);
+  const anionCoefficient = boundedNumber(inputs.anionActivityCoefficient ?? 1, "anionActivityCoefficient", 1e-12, 100);
   const cationStoichiometry = boundedInteger(inputs.cationStoichiometry ?? 1, "cationStoichiometry", 1, 16);
   const anionStoichiometry = boundedInteger(inputs.anionStoichiometry ?? 1, "anionStoichiometry", 1, 16);
-  const standardConcentrationMolPerL = bounded(inputs.standardConcentrationMolPerL ?? 1, "standardConcentrationMolPerL", 1e-12, 100);
+  const standardConcentrationMolPerL = boundedNumber(inputs.standardConcentrationMolPerL ?? 1, "standardConcentrationMolPerL", 1e-12, 100);
   const cationActivity = cationCoefficient * cationConcentration / standardConcentrationMolPerL;
   const anionActivity = anionCoefficient * anionConcentration / standardConcentrationMolPerL;
   const ionActivityProduct = cationActivity ** cationStoichiometry * anionActivity ** anionStoichiometry;
@@ -175,9 +170,9 @@ export interface EarthPlanckEntropySourceOutput {
 export function earthPlanckEntropySource(
   inputs: EarthPlanckEntropySourceInputs = DEFAULT_EARTH_PLANCK_ENTROPY_SOURCE_INPUTS,
 ): EarthKernelResult<EarthPlanckEntropySourceOutput> {
-  const xi0Metres = bounded(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-40, 1e6);
-  const phi = bounded(inputs.phi ?? GOLDEN_RATIO, "phi", 1.000_001, 10);
-  const areaSquareMetres = bounded(inputs.areaSquareMetres ?? 1, "areaSquareMetres", 1e-30, 1e30);
+  const xi0Metres = boundedNumber(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-40, 1e6);
+  const phi = boundedNumber(inputs.phi ?? GOLDEN_RATIO, "phi", 1.000_001, 10);
+  const areaSquareMetres = boundedNumber(inputs.areaSquareMetres ?? 1, "areaSquareMetres", 1e-30, 1e30);
   const metricSourceMetres = xi0Metres * phi ** -2;
   const quantumGravitySourceMetres = xi0Metres * phi ** 54;
   return {
@@ -221,10 +216,10 @@ export interface StandardPlanckEntropyOutput {
 export function standardPlanckEntropy(
   inputs: StandardPlanckEntropyInputs = DEFAULT_STANDARD_PLANCK_ENTROPY_INPUTS,
 ): EarthKernelResult<StandardPlanckEntropyOutput> {
-  const area = bounded(inputs.areaSquareMetres ?? 1, "areaSquareMetres", 1e-30, 1e30);
-  const gravitationalConstant = bounded(inputs.gravitationalConstant ?? G_SI, "gravitationalConstant", 1e-30, 1e-1);
-  const hbar = bounded(inputs.hbar ?? HBAR_SI, "hbar", 1e-100, 1);
-  const speedOfLight = bounded(inputs.speedOfLight ?? C_SI, "speedOfLight", 1, 1e12);
+  const area = boundedNumber(inputs.areaSquareMetres ?? 1, "areaSquareMetres", 1e-30, 1e30);
+  const gravitationalConstant = boundedNumber(inputs.gravitationalConstant ?? G_SI, "gravitationalConstant", 1e-30, 1e-1);
+  const hbar = boundedNumber(inputs.hbar ?? HBAR_SI, "hbar", 1e-100, 1);
+  const speedOfLight = boundedNumber(inputs.speedOfLight ?? C_SI, "speedOfLight", 1, 1e12);
   const planckLengthSquared = hbar * gravitationalConstant / speedOfLight ** 3;
   const planckLengthMetres = Math.sqrt(planckLengthSquared);
   return {
@@ -270,12 +265,12 @@ export function earthAtmosphericCoherenceTransform(
   inputs: EarthAtmosphericCoherenceInputs = DEFAULT_EARTH_ATMOSPHERIC_COHERENCE_INPUTS,
   options: EarthRunOptions = {},
 ): EarthKernelResult<EarthAtmosphericCoherenceOutput> {
-  const density = bounded(inputs.surfaceMassDensityKgPerCubicMetre ?? 1.225, "surfaceMassDensityKgPerCubicMetre", 1e-12, 1e12);
-  const nuclearDensity = bounded(inputs.nuclearNumberDensityPerCubicMetre ?? 1.7e44, "nuclearNumberDensityPerCubicMetre", 1e20, 1e50);
-  const xi0 = bounded(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-30, 1);
-  const protonMass = bounded(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
-  const densityMinimum = bounded(inputs.densityMinimum ?? 0.01, "densityMinimum", 1e-12, 1e12);
-  const densityMaximum = bounded(inputs.densityMaximum ?? 100, "densityMaximum", densityMinimum, 1e12);
+  const density = boundedNumber(inputs.surfaceMassDensityKgPerCubicMetre ?? 1.225, "surfaceMassDensityKgPerCubicMetre", 1e-12, 1e12);
+  const nuclearDensity = boundedNumber(inputs.nuclearNumberDensityPerCubicMetre ?? 1.7e44, "nuclearNumberDensityPerCubicMetre", 1e20, 1e50);
+  const xi0 = boundedNumber(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-30, 1);
+  const protonMass = boundedNumber(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
+  const densityMinimum = boundedNumber(inputs.densityMinimum ?? 0.01, "densityMinimum", 1e-12, 1e12);
+  const densityMaximum = boundedNumber(inputs.densityMaximum ?? 100, "densityMaximum", densityMinimum, 1e12);
   if (densityMaximum <= densityMinimum) throw new RangeError("densityMaximum must be greater than densityMinimum");
   const samples = boundedInteger(inputs.samples ?? 81, "samples", 2, 2048);
   const coherenceAtDensity = (massDensity: number) => xi0 * (nuclearDensity / (massDensity / protonMass)) ** (1 / 3);
@@ -327,11 +322,11 @@ export interface StandardIsothermalScaleHeightOutput {
 export function standardIsothermalScaleHeight(
   inputs: StandardIsothermalScaleHeightInputs = DEFAULT_STANDARD_ISOTHERMAL_SCALE_HEIGHT_INPUTS,
 ): EarthKernelResult<StandardIsothermalScaleHeightOutput> {
-  const temperature = bounded(inputs.temperatureKelvin ?? 288.15, "temperatureKelvin", 1, 1e9);
-  const molecularWeight = bounded(inputs.meanMolecularWeight ?? 28.97, "meanMolecularWeight", 1e-6, 1e6);
-  const gravity = bounded(inputs.gravityMetresPerSecondSquared ?? 9.80665, "gravityMetresPerSecondSquared", 1e-12, 1e12);
-  const protonMass = bounded(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
-  const boltzmannConstant = bounded(inputs.boltzmannConstant ?? BOLTZMANN_SI, "boltzmannConstant", 1e-30, 1e-10);
+  const temperature = boundedNumber(inputs.temperatureKelvin ?? 288.15, "temperatureKelvin", 1, 1e9);
+  const molecularWeight = boundedNumber(inputs.meanMolecularWeight ?? 28.97, "meanMolecularWeight", 1e-6, 1e6);
+  const gravity = boundedNumber(inputs.gravityMetresPerSecondSquared ?? 9.80665, "gravityMetresPerSecondSquared", 1e-12, 1e12);
+  const protonMass = boundedNumber(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
+  const boltzmannConstant = boundedNumber(inputs.boltzmannConstant ?? BOLTZMANN_SI, "boltzmannConstant", 1e-30, 1e-10);
   return {
     method: "Standard ideal-gas isothermal hydrostatic scale height",
     diagnostics: baselineDiagnostics({ isothermal: true, constantGravity: true }),
@@ -369,12 +364,12 @@ export interface EarthPlanetaryBindingSeismicOutput {
 export function earthPlanetaryBindingSeismic(
   inputs: EarthPlanetaryBindingSeismicInputs = DEFAULT_EARTH_PLANETARY_BINDING_SEISMIC_INPUTS,
 ): EarthKernelResult<EarthPlanetaryBindingSeismicOutput> {
-  const baryonCount = bounded(inputs.baryonCount ?? 5.9722e24 / PROTON_MASS_SI, "baryonCount", 1, 1e60);
-  const earthCoherence = bounded(inputs.earthCoherenceMetres ?? 6.371e6, "earthCoherenceMetres", 1e-12, 1e20);
-  const protonMass = bounded(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
-  const nuclearDensity = bounded(inputs.nuclearNumberDensityPerCubicMetre ?? 1.7e44, "nuclearNumberDensityPerCubicMetre", 1e20, 1e50);
-  const localCoherence = bounded(inputs.localCoherenceMetres ?? 1.5e-6, "localCoherenceMetres", 1e-20, 1e6);
-  const xi0 = bounded(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-20, 1);
+  const baryonCount = boundedNumber(inputs.baryonCount ?? 5.9722e24 / PROTON_MASS_SI, "baryonCount", 1, 1e60);
+  const earthCoherence = boundedNumber(inputs.earthCoherenceMetres ?? 6.371e6, "earthCoherenceMetres", 1e-12, 1e20);
+  const protonMass = boundedNumber(inputs.protonMass ?? PROTON_MASS_SI, "protonMass", 1e-32, 1e-20);
+  const nuclearDensity = boundedNumber(inputs.nuclearNumberDensityPerCubicMetre ?? 1.7e44, "nuclearNumberDensityPerCubicMetre", 1e20, 1e50);
+  const localCoherence = boundedNumber(inputs.localCoherenceMetres ?? 1.5e-6, "localCoherenceMetres", 1e-20, 1e6);
+  const xi0 = boundedNumber(inputs.xi0Metres ?? 0.15e-15, "xi0Metres", 1e-20, 1);
   const binding = baryonCount ** 2 / (6 * Math.PI * earthCoherence);
   const seismic = Math.sqrt(1 / 6) * baryonCount / earthCoherence
     * Math.sqrt(1 / (protonMass * nuclearDensity))
@@ -419,9 +414,9 @@ export interface StandardUniformSphereBindingOutput {
 export function standardUniformSphereBindingEnergy(
   inputs: StandardUniformSphereBindingInputs = DEFAULT_STANDARD_UNIFORM_SPHERE_BINDING_INPUTS,
 ): EarthKernelResult<StandardUniformSphereBindingOutput> {
-  const mass = bounded(inputs.planetMassKg ?? 5.9722e24, "planetMassKg", 1, 1e40);
-  const radius = bounded(inputs.planetRadiusMetres ?? 6.371e6, "planetRadiusMetres", 1, 1e20);
-  const gravitationalConstant = bounded(inputs.gravitationalConstant ?? G_SI, "gravitationalConstant", 1e-30, 1e-1);
+  const mass = boundedNumber(inputs.planetMassKg ?? 5.9722e24, "planetMassKg", 1, 1e40);
+  const radius = boundedNumber(inputs.planetRadiusMetres ?? 6.371e6, "planetRadiusMetres", 1, 1e20);
+  const gravitationalConstant = boundedNumber(inputs.gravitationalConstant ?? G_SI, "gravitationalConstant", 1e-30, 1e-1);
   const bindingEnergyJoules = 3 * gravitationalConstant * mass ** 2 / (5 * radius);
   if (!Number.isFinite(bindingEnergyJoules)) throw new RangeError("uniform-sphere binding energy exceeds the Float64 bound");
   return {

@@ -1,3 +1,4 @@
+import { boundedNumber, requireInteger } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
@@ -182,21 +183,8 @@ export const MOLAR_MATTER_PRESETS = Object.freeze([
   }),
 ] as const satisfies readonly Readonly<MolarMatterPreset>[])
 
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  if (!Number.isFinite(value)) throw new Error(`Molar-matter ${name} must be finite`)
-  if (value < minimum || value > maximum) {
-    throw new RangeError(`Molar-matter ${name} must be within [${minimum}, ${maximum}]`)
-  }
-  return value
-}
-
 function checkedChargeNumber(value: number): number {
-  if (!Number.isFinite(value)) throw new Error('Molar-matter chargeNumber must be finite')
-  if (!Number.isInteger(value)) throw new RangeError('Molar-matter chargeNumber must be an integer')
-  if (value < -100 || value > 100) {
-    throw new RangeError('Molar-matter chargeNumber must be within [-100, 100]')
-  }
-  return value
+  return boundedNumber(requireInteger(value, 'chargeNumber'), 'chargeNumber', -100, 100)
 }
 
 function resolveSubstance(input: MolarMatterInput): MolarSubstanceCatalogEntry {

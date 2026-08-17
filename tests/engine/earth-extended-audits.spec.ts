@@ -176,7 +176,7 @@ describe('EARTH extended audit defaults, determinism, and bounds', () => {
     })).toThrow('quantumClaims must contain 1 to 128 entries')
     expect(() => molecularSpectroscopyAudit({ nuclearSpin: 0.3 })).toThrow('nuclearSpin must be an integer or half-integer')
     expect(() => molecularSpectroscopyAudit({ rotationalTransitions: Array.from({ length: 513 }, (_, index) => ({ id: String(index), lowerJ: 0, upperJ: 1 })) })).toThrow('rotationalTransitions must contain 1 to 512 entries')
-    expect(() => photonKinematicsAudit({ comptonScatteringAngleRad: Math.PI + 0.01 })).toThrow('comptonScatteringAngleRad must be from 0')
+    expect(() => photonKinematicsAudit({ comptonScatteringAngleRad: Math.PI + 0.01 })).toThrow('comptonScatteringAngleRad must be within [0')
     expect(() => photonKinematicsAudit({ incidentWavelengthM: Number.NaN })).toThrow('incidentWavelengthM must be finite')
     expect(() => solubilityProductAudit({ coherenceExponent: 65 })).toThrow('coherenceExponent must be an integer from 1 to 64')
     expect(() => electrolyteSpeciationComparator({

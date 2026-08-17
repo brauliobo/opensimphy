@@ -207,7 +207,7 @@ describe('Tour photon-bridge engine', () => {
       expect(() => evaluatePhotonBridge({ frequencyHz })).toThrow('frequencyHz must be finite')
     }
     for (const frequencyHz of [1e3 - 1, 1.000_001e25]) {
-      expect(() => evaluatePhotonBridge({ frequencyHz })).toThrow('frequencyHz must be within [1e3, 1e25] Hz')
+      expect(() => evaluatePhotonBridge({ frequencyHz })).toThrow(/frequencyHz must be within \[/)
     }
     expect(() => evaluatePhotonBridge({} as PhotonBridgeInput)).toThrow('exactly one')
     expect(() => evaluatePhotonBridge({ frequencyHz: 1e10, presetId: 'radio' } as unknown as PhotonBridgeInput)).toThrow('exactly one')

@@ -1,3 +1,4 @@
+import { ELEMENTARY_CHARGE_C, PLANCK_CONSTANT_J_S, SPEED_OF_LIGHT_M_PER_S } from "../../../simphy/constants.js";
 import { CODATA_ALPHA } from "../foundations.js";
 import {
   buildEarthPredictionLedger,
@@ -23,9 +24,9 @@ const PLAIN =
 const MODEL =
   "CHEM-2 φ¹⁸ / α / a₀ / m_e / R_∞ ledger. Printed CODATA-looking outputs are not repaired.";
 
-const C = 299_792_458;
-const H = 6.626_070_15e-34;
-const E = 1.602_176_634e-19;
+const C = SPEED_OF_LIGHT_M_PER_S;
+const H = PLANCK_CONSTANT_J_S;
+const E = ELEMENTARY_CHARGE_C;
 const HBAR = H / (2 * Math.PI);
 const CODATA_A0 = 5.29177210544e-11;
 const CODATA_ME = 9.109_383_713_9e-31;

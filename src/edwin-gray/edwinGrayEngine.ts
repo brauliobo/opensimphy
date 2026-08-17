@@ -1,3 +1,4 @@
+import { boundedNumber } from '../simphy/numbers'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
   SI_EXACT_CONSTANTS,
@@ -512,10 +513,7 @@ export const GRAY_ENGINE_PROFILES: Readonly<Record<string, GrayEngineProfile>> =
 )
 
 function finiteInRange(value: number, label: string, min: number, max: number): number {
-  if (!Number.isFinite(value) || value < min || value > max) {
-    throw new Error(`${label} must be in [${min}, ${max}]`)
-  }
-  return value
+  return boundedNumber(value, label, min, max)
 }
 
 function resolveSpeedMode(speedMode: GraySpeedMode | undefined): GrayResolvedSpeedMode {

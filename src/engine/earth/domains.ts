@@ -1,6 +1,7 @@
 import {
   boundedInteger,
-  finiteNumber,
+  boundedNumber,
+  logarithmicSamples,
   nonNegativeNumber,
   positiveNumber,
   relativeError,
@@ -8,11 +9,11 @@ import {
   type EarthProvenanceKind,
 } from "./common.js";
 import { derrickScalarGate } from "./particle/derrickScalarGate.js";
+import { CODATA_2022_HBAR_J_S, GOLDEN_RATIO, SPEED_OF_LIGHT_M_PER_S } from "../../simphy/constants.js";
 
-const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 const G_SI = 6.67430e-11;
-const HBAR_SI = 1.054571817e-34;
-const C_SI = 299792458;
+const HBAR_SI = CODATA_2022_HBAR_J_S;
+const C_SI = SPEED_OF_LIGHT_M_PER_S;
 const PROTON_MASS_SI = 1.67262192595e-27;
 const BOLTZMANN_SI = 1.380649e-23;
 const RADIATION_CONSTANT_SI = 7.5657e-16;
@@ -20,12 +21,6 @@ const STANDARD_ATMOSPHERE = 101325;
 const ANGSTROM = 1e-10;
 
 type AuditLabel = EarthProvenanceKind;
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
 
 function nonEmptyText(value: string, name: string): string {
   if (typeof value !== "string" || !value.trim()) throw new TypeError(`${name} is required`);
@@ -36,12 +31,6 @@ function auditLabel(kind: AuditLabel): { provenanceKind: AuditLabel; benchmarkLa
   return { provenanceKind: kind, benchmarkLabel: kind };
 }
 
-function logarithmicSamples(minimum: number, maximum: number, count: number): number[] {
-  if (count === 1) return [minimum];
-  const logarithmicMinimum = Math.log(minimum);
-  const span = Math.log(maximum) - logarithmicMinimum;
-  return Array.from({ length: count }, (_, index) => Math.exp(logarithmicMinimum + span * index / (count - 1)));
-}
 
 function linearSamples(minimum: number, maximum: number, count: number): number[] {
   if (count === 1) return [minimum];

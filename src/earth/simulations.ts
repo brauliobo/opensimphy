@@ -1,3 +1,4 @@
+import { fail, record, exactKeys } from '../simphy/contract'
 import type { EarthDocumentRecord } from './corpus'
 import {
   EARTH_PROGRAM_DEFINITIONS,
@@ -161,25 +162,8 @@ interface SourceDocumentParseResult {
   sourceRevision: string | null
 }
 
-function fail(path: string, message: string): never {
-  throw new Error(`Scientific simulation registry integrity error at ${path}: ${message}`)
-}
-
-function isObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
 function objectAt(value: unknown, path: string): Record<string, unknown> {
-  if (!isObject(value)) fail(path, 'expected an object')
-  return value
-}
-
-function exactKeys(object: Record<string, unknown>, expected: readonly string[], path: string): void {
-  const keys = Object.keys(object).sort()
-  const expectedKeys = [...expected].sort()
-  if (keys.length !== expectedKeys.length || keys.some((key, index) => key !== expectedKeys[index])) {
-    fail(path, `expected exactly these fields: ${expected.join(', ')}`)
-  }
+  return record(value, path)
 }
 
 function nonEmptyString(value: unknown, path: string): string {

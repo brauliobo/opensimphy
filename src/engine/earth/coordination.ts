@@ -6,6 +6,7 @@ import {
   type EarthKernelResult,
   type EarthRunOptions,
 } from "./common.js";
+import { dot3 } from "../../simphy/vec.js";
 
 type Vector3 = [number, number, number];
 const AXES = [0, 1, 2] as const;
@@ -23,10 +24,6 @@ interface CoordinationState {
   gradientNorm: number;
 }
 
-function dot(left: Vector3, right: Vector3): number {
-  return left[0] * right[0] + left[1] * right[1] + left[2] * right[2];
-}
-
 function normalize(vector: Vector3): Vector3 {
   const length = Math.hypot(...vector);
   if (length === 0) throw new RangeError("Cannot normalize a zero coordination vector");
@@ -38,7 +35,7 @@ function evaluate(points: Vector3[]): CoordinationState {
   let energy = 0;
   for (let left = 0; left < points.length; left += 1) {
     for (let right = left + 1; right < points.length; right += 1) {
-      const denominator = 1 - Math.max(-1, Math.min(1, dot(points[left]!, points[right]!)));
+      const denominator = 1 - Math.max(-1, Math.min(1, dot3(points[left]!, points[right]!)));
       if (denominator <= 1e-14) return { energy: Number.POSITIVE_INFINITY, gradients, gradientNorm: Number.POSITIVE_INFINITY };
       energy += 2 / denominator;
       const scale = 2 / denominator ** 2;
@@ -56,9 +53,9 @@ function evaluate(points: Vector3[]): CoordinationState {
   for (let index = 0; index < points.length; index += 1) {
     const point = points[index]!;
     const gradient = gradients[index]!;
-    const radial = dot(point, gradient);
+    const radial = dot3(point, gradient);
     for (const axis of AXES) gradient[axis] -= radial * point[axis];
-    squaredNorm += dot(gradient, gradient);
+    squaredNorm += dot3(gradient, gradient);
   }
   return { energy, gradients, gradientNorm: Math.sqrt(squaredNorm) };
 }
@@ -157,7 +154,7 @@ export function sphericalCoordination(
   const pairAnglesRadians: number[] = [];
   for (let left = 0; left < best.points.length; left += 1) {
     for (let right = left + 1; right < best.points.length; right += 1) {
-      pairAnglesRadians.push(Math.acos(Math.max(-1, Math.min(1, dot(best.points[left]!, best.points[right]!)))));
+      pairAnglesRadians.push(Math.acos(Math.max(-1, Math.min(1, dot3(best.points[left]!, best.points[right]!)))));
     }
   }
   pairAnglesRadians.sort((left, right) => left - right);

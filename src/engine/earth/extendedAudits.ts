@@ -1,15 +1,21 @@
 import {
   boundedInteger,
+  boundedNumber,
+  boundedPositive,
   finiteNumber,
-  positiveNumber,
   relativeError,
   type EarthKernelResult,
 } from "./common.js";
+import {
+  ELEMENTARY_CHARGE_C,
+  GOLDEN_RATIO,
+  PLANCK_CONSTANT_J_S,
+  SPEED_OF_LIGHT_M_PER_S,
+} from "../../simphy/constants.js";
 
-const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
-const SPEED_OF_LIGHT = 299_792_458;
-const PLANCK_CONSTANT = 6.626_070_15e-34;
-const ELEMENTARY_CHARGE = 1.602_176_634e-19;
+const SPEED_OF_LIGHT = SPEED_OF_LIGHT_M_PER_S;
+const PLANCK_CONSTANT = PLANCK_CONSTANT_J_S;
+const ELEMENTARY_CHARGE = ELEMENTARY_CHARGE_C;
 const ELECTRON_MASS = 9.109_383_713_9e-31;
 const VACUUM_PERMITTIVITY = 8.854_187_812_8e-12;
 
@@ -27,18 +33,6 @@ export interface SourceClaimReference {
   document: string;
   location: string;
   text: string;
-}
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
-
-function boundedPositive(value: number, name: string, minimum: number, maximum: number): number {
-  positiveNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
 }
 
 function boundedList<T>(values: T[], name: string, minimum = 1, maximum = 512): T[] {

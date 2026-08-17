@@ -1,5 +1,6 @@
 import { boundedInteger, checkCancelled, positiveNumber, relativeError, type EarthKernelResult, type EarthRunOptions } from "../common.js";
 import { GOLDEN_RATIO } from "../foundations.js";
+import { ELEMENTARY_CHARGE_C, PLANCK_CONSTANT_J_S, SPEED_OF_LIGHT_M_PER_S } from "../../../simphy/constants.js";
 import {
   buildEarthPredictionLedger,
   buildEarthPredictionRow,
@@ -32,9 +33,9 @@ export interface Chem6ChiralLinesInputs {
   modes?: Chem6ChiralLineInput[];
 }
 
-const C = 299_792_458;
-const H = 6.626_070_15e-34;
-const E = 1.602_176_634e-19;
+const C = SPEED_OF_LIGHT_M_PER_S;
+const H = PLANCK_CONSTANT_J_S;
+const E = ELEMENTARY_CHARGE_C;
 const PRINTED_DELTA_CHI = 0.15;
 const ALGEBRAIC_DELTA_CHI = 1 / Math.sqrt(3 * GOLDEN_RATIO ** 2);
 const GATE = { metric: "relative", passIf: "<=1e-8" } as const;

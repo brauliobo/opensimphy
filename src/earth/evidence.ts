@@ -1,3 +1,5 @@
+import { fail, record, exactKeys } from '../simphy/contract'
+
 export type EarthEvidenceSourceType = 'formula' | 'code-block' | 'simulation-candidate'
 export type EarthEvidenceConfidence = 'high' | 'medium' | 'low'
 export type EarthEvidenceClassification = 'duplicate' | 'blocked-source-fragment' | 'non-scientific-example'
@@ -95,21 +97,8 @@ const SOURCE_TYPES = ['formula', 'code-block', 'simulation-candidate'] as const
 const CONFIDENCES = ['high', 'medium', 'low'] as const
 const CLASSIFICATIONS = ['duplicate', 'blocked-source-fragment', 'non-scientific-example'] as const
 
-function fail(path: string, message: string): never {
-  throw new Error(`EARTH evidence integrity error at ${path}: ${message}`)
-}
-
 function objectAt(value: unknown, path: string): Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) fail(path, 'expected an object')
-  return value as Record<string, unknown>
-}
-
-function exactKeys(object: Record<string, unknown>, expected: readonly string[], path: string): void {
-  const actual = Object.keys(object).sort()
-  const keys = [...expected].sort()
-  if (actual.length !== keys.length || actual.some((key, index) => key !== keys[index])) {
-    fail(path, `expected exactly these fields: ${expected.join(', ')}`)
-  }
+  return record(value, path)
 }
 
 function stringAt(value: unknown, path: string): string {

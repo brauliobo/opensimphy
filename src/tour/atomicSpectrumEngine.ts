@@ -1,3 +1,4 @@
+import { boundedNumber, requireInteger } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
@@ -81,15 +82,9 @@ const GREEK_LINE_NAMES = Object.freeze(['alpha', 'beta', 'gamma', 'delta'] as co
 
 function validateAtomicSpectrumInput(input: AtomicSpectrumInput): void {
   if (!input || typeof input !== 'object') throw new Error('Atomic spectrum input must be an object')
-  if (!Number.isInteger(input.atomicNumber)) throw new Error('Atomic spectrum atomicNumber must be an integer')
-  if (input.atomicNumber < ATOMIC_SPECTRUM_BOUNDS.atomicNumber.min || input.atomicNumber > ATOMIC_SPECTRUM_BOUNDS.atomicNumber.max) {
-    throw new Error('Atomic spectrum atomicNumber must be within [1, 10]')
-  }
-  if (!Number.isInteger(input.nUpper)) throw new Error('Atomic spectrum nUpper must be an integer')
-  if (input.nUpper < ATOMIC_SPECTRUM_BOUNDS.nUpper.min || input.nUpper > ATOMIC_SPECTRUM_BOUNDS.nUpper.max) {
-    throw new Error('Atomic spectrum nUpper must be within [2, 12]')
-  }
-  if (!Number.isInteger(input.nLower)) throw new Error('Atomic spectrum nLower must be an integer')
+  boundedNumber(requireInteger(input.atomicNumber, 'atomicNumber'), 'atomicNumber', ATOMIC_SPECTRUM_BOUNDS.atomicNumber.min, ATOMIC_SPECTRUM_BOUNDS.atomicNumber.max)
+  boundedNumber(requireInteger(input.nUpper, 'nUpper'), 'nUpper', ATOMIC_SPECTRUM_BOUNDS.nUpper.min, ATOMIC_SPECTRUM_BOUNDS.nUpper.max)
+  requireInteger(input.nLower, 'nLower')
   if (input.nLower < 1 || input.nLower >= input.nUpper) {
     throw new Error('Atomic spectrum nLower must be within [1, nUpper - 1]')
   }

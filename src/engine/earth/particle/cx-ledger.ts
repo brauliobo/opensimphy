@@ -1,3 +1,4 @@
+import { ELEMENTARY_CHARGE_C, PLANCK_CONSTANT_J_S, SPEED_OF_LIGHT_M_PER_S } from "../../../simphy/constants.js";
 import { GOLDEN_RATIO, CODATA_ALPHA, CODATA_HBAR } from "../foundations.js";
 import {
   buildEarthPredictionLedger,
@@ -28,14 +29,14 @@ const PDG    = "earth-dataset-review-of-particle-physics-pdg-api";
 const AME    = "earth-dataset-ame2020-and-nubase2020";
 const KNOT   = "earth-dataset-knotinfo";
 
-const C          = 299_792_458;
+const C          = SPEED_OF_LIGHT_M_PER_S;
 const XI0_M      = 0.15e-15;
 const XI0_FM     = 0.15;
 const MP_KG      = 1.672_621_923_69e-27;
 const MP_MEV     = 938.272_081_3;
 const HBAR_C     = 197.326_980_4;
-const E_CHARGE   = 1.602_176_634e-19;
-const H          = 6.626_070_15e-34;
+const E_CHARGE   = ELEMENTARY_CHARGE_C;
+const H          = PLANCK_CONSTANT_J_S;
 const ZHE_1      = 0.085_424_543_153_330_47;
 const RP_SM      = 0.840_75;
 const RP_SM_UNC  = 0.000_64;

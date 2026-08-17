@@ -1,3 +1,16 @@
+import {
+  AVOGADRO_CONSTANT_PER_MOL,
+  BOLTZMANN_CONSTANT_J_PER_K,
+  ELEMENTARY_CHARGE_C,
+  HYPERFINE_TRANSITION_FREQUENCY_CS_HZ,
+  LUMINOUS_EFFICACY_LM_PER_W,
+  PLANCK_CONSTANT_J_S,
+  REDUCED_PLANCK_CONSTANT_J_S,
+  SPEED_OF_LIGHT_M_PER_S,
+  CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2,
+} from '../simphy/constants'
+import { finiteNumber, requireNonNegativeNumber } from '../simphy/contract'
+
 export type PhysicsConstantStatus = 'exact' | 'measured' | 'derived-from-measured'
 export type PhysicsConstantSourceRef = 'bipm-si-brochure-9' | 'codata-2022'
 
@@ -12,72 +25,66 @@ export interface PhysicsConstant {
 
 export const SI_EXACTNESS_NOTE = 'An exact SI value fixes the defining numerical value or follows exactly from fixed values; it does not make a practical realization or a finite floating-point representation uncertainty-free.'
 
-function finiteNumber(value: number, label: string): number {
-  if (!Number.isFinite(value)) throw new Error(`${label} must be finite`)
-  return value
-}
-
 function constant<const T extends PhysicsConstant>(record: T): Readonly<T> {
   finiteNumber(record.value, 'Physics constant value')
   if (record.standardUncertainty !== undefined) {
-    finiteNumber(record.standardUncertainty, 'Physics constant standard uncertainty')
-    if (record.standardUncertainty < 0) throw new Error('Physics constant standard uncertainty must be non-negative')
+    requireNonNegativeNumber(record.standardUncertainty, 'Physics constant standard uncertainty')
   }
   return Object.freeze(record)
 }
 
 export const SI_EXACT_CONSTANTS = Object.freeze({
   deltaNuCs: constant({
-    value: 9_192_631_770,
+    value: HYPERFINE_TRANSITION_FREQUENCY_CS_HZ,
     unit: 'Hz',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed Cs-133 ground-state hyperfine transition frequency used to define the second.',
   }),
   speedOfLight: constant({
-    value: 299_792_458,
+    value: SPEED_OF_LIGHT_M_PER_S,
     unit: 'm s^-1',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed vacuum speed of light used to define the metre.',
   }),
   planckConstant: constant({
-    value: 6.626_070_15e-34,
+    value: PLANCK_CONSTANT_J_S,
     unit: 'J s',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed Planck constant used in the SI definition of the kilogram.',
   }),
   reducedPlanckConstant: constant({
-    value: 6.626_070_15e-34 / (2 * Math.PI),
+    value: REDUCED_PLANCK_CONSTANT_J_S,
     unit: 'J s',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Exact relation hbar = h/(2 pi); not an independent SI defining constant.',
   }),
   elementaryCharge: constant({
-    value: 1.602_176_634e-19,
+    value: ELEMENTARY_CHARGE_C,
     unit: 'C',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed elementary charge used in the SI definition of the ampere.',
   }),
   boltzmannConstant: constant({
-    value: 1.380_649e-23,
+    value: BOLTZMANN_CONSTANT_J_PER_K,
     unit: 'J K^-1',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed Boltzmann constant used in the SI definition of the kelvin.',
   }),
   avogadroConstant: constant({
-    value: 6.022_140_76e23,
+    value: AVOGADRO_CONSTANT_PER_MOL,
     unit: 'mol^-1',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
     scope: 'Fixed Avogadro constant used in the SI definition of the mole.',
   }),
   luminousEfficacy: constant({
-    value: 683,
+    value: LUMINOUS_EFFICACY_LM_PER_W,
     unit: 'lm W^-1',
     status: 'exact',
     sourceRef: 'bipm-si-brochure-9',
@@ -87,7 +94,7 @@ export const SI_EXACT_CONSTANTS = Object.freeze({
 
 export const CODATA_2022_MEASURED_CONSTANTS = Object.freeze({
   gravitationalConstant: constant({
-    value: 6.674_30e-11,
+    value: CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2,
     unit: 'm^3 kg^-1 s^-2',
     status: 'measured',
     sourceRef: 'codata-2022',

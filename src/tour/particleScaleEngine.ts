@@ -1,3 +1,4 @@
+import { boundedNumber } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
@@ -86,10 +87,7 @@ function validateParticleScaleInput(input: ParticleScaleInput): void {
   const value = input.momentumMode === 'mass-times-c' ? input.momentumMultiplier : input.momentumSi
   const label = input.momentumMode === 'mass-times-c' ? 'momentumMultiplier' : 'momentumSi'
   const bounds = PARTICLE_SCALE_BOUNDS[label]
-  if (!Number.isFinite(value)) throw new Error(`Particle scale ${label} must be finite`)
-  if (value < bounds.min || value > bounds.max) {
-    throw new Error(`Particle scale ${label} must be within [${bounds.min}, ${bounds.max}]`)
-  }
+  boundedNumber(value, label, bounds.min, bounds.max)
 }
 
 function buildFinding(

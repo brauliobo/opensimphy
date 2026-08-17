@@ -1,3 +1,4 @@
+import { boundedNumber, requireInteger } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import { EXACT_DERIVED_CONSTANTS, SI_EXACT_CONSTANTS } from './physicsConstants'
 
@@ -86,21 +87,8 @@ export const BLACKBODY_PRESETS = Object.freeze([
   preset('hot-star', 'Hot star', 'A generic hot-star ideal black-body comparison.', 10_000),
 ] as const satisfies readonly Readonly<BlackbodyPreset>[])
 
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  if (!Number.isFinite(value)) throw new Error(`Black-body ${name} must be finite`)
-  if (value < minimum || value > maximum) {
-    throw new RangeError(`Black-body ${name} must be within [${minimum}, ${maximum}]`)
-  }
-  return value
-}
-
 function checkedSampleCount(value: number): number {
-  if (!Number.isFinite(value)) throw new Error('Black-body sampleCount must be finite')
-  if (!Number.isInteger(value)) throw new RangeError('Black-body sampleCount must be an integer')
-  if (value < 2 || value > MAXIMUM_SAMPLE_COUNT) {
-    throw new RangeError(`Black-body sampleCount must be within [2, ${MAXIMUM_SAMPLE_COUNT}]`)
-  }
-  return value
+  return boundedNumber(requireInteger(value, 'sampleCount'), 'sampleCount', 2, MAXIMUM_SAMPLE_COUNT)
 }
 
 function logarithmicGrid(minimum: number, maximum: number, count: number, peak: number): number[] {

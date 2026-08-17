@@ -1,7 +1,8 @@
 import {
   boundedInteger,
+  boundedNumber,
   checkCancelled,
-  finiteNumber,
+  logarithmicSamples,
   nonNegativeNumber,
   positiveNumber,
   relativeError,
@@ -38,19 +39,6 @@ const LAMBDA_TILDE_LITERAL = (4 * Math.PI) ** 3;
 const PLAIN = "this field cannot carry Hopfions";
 const MISSING_THAD = missingPredictionSlot("Thad/Physics Monastery scalar field action");
 const MISSING_NASSIM = missingPredictionSlot("Haramein holographic-mass Lagrangian; not this scalar field action");
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
-
-function logarithmicSamples(minimum: number, maximum: number, count: number): number[] {
-  if (count === 1) return [minimum];
-  const logarithmicMinimum = Math.log(minimum);
-  const span = Math.log(maximum) - logarithmicMinimum;
-  return Array.from({ length: count }, (_, index) => Math.exp(logarithmicMinimum + span * index / (count - 1)));
-}
 
 function scaleEnergy(inputs: DerrickScalarGateInputs) {
   const gradientEnergy = nonNegativeNumber(inputs.gradientEnergy ?? 1, "gradientEnergy");

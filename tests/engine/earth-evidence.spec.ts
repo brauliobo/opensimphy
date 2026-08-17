@@ -88,7 +88,7 @@ describe('EARTH compact evidence artifacts', () => {
 
     const extra = structuredClone(evidenceManifest) as unknown as Record<string, unknown>
     extra.unexpected = true
-    expect(() => parseEarthEvidenceManifest(extra)).toThrow('expected exactly these fields')
+    expect(() => parseEarthEvidenceManifest(extra)).toThrow(/unknown properties/)
     expect(() => parseEarthEvidenceManifest(evidenceManifest, '0000000000000000000000000000000000000000')).toThrow('does not match the source registry')
     expect(() => parseEarthProgramEvidence(prt001Evidence, entry, parsedManifest, {
       documentIds: manifest.documents.map(({ id }) => id),

@@ -1,3 +1,4 @@
+import { boundedNumber, finiteNumber, requireInteger } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import {
   EXACT_DERIVED_CONSTANTS,
@@ -188,15 +189,12 @@ function node(
   status: ElectricalNodeStatus,
   note: string,
 ): ElectricalNetworkNode {
-  if (!Number.isFinite(value)) throw new Error(`Electrical node ${id} must be finite`)
+  finiteNumber(value, `Electrical node ${id}`)
   return { id, label, symbol, value, unit, status, statusLabel: STATUS_LABELS[status], note }
 }
 
 function validateBounded(value: number, label: string, minimum: number, maximum: number, unit: string): void {
-  if (!Number.isFinite(value)) throw new Error(`Electrical standards ${label} must be finite`)
-  if (value < minimum || value > maximum) {
-    throw new Error(`Electrical standards ${label} must be within [${minimum}, ${maximum}] ${unit}`)
-  }
+  boundedNumber(value, label, minimum, maximum, unit)
 }
 
 function validateInput(input: ElectricalStandardsInput): void {
@@ -209,11 +207,12 @@ function validateInput(input: ElectricalStandardsInput): void {
   if (!(ELECTRICAL_STANDARD_PRESET_IDS as readonly unknown[]).includes(input.presetId)) {
     throw new Error(`Unknown electrical standards preset: ${String(input.presetId)}`)
   }
-  if (!Number.isFinite(input.chargeCarriers)) throw new Error('Electrical standards chargeCarriers must be finite')
-  if (!Number.isInteger(input.chargeCarriers)) throw new Error('Electrical standards chargeCarriers must be an integer')
-  if (input.chargeCarriers < ELECTRICAL_CHARGE_CARRIER_BOUNDS.minimum || input.chargeCarriers > ELECTRICAL_CHARGE_CARRIER_BOUNDS.maximum) {
-    throw new Error('Electrical standards chargeCarriers must be within [1, 1000000]')
-  }
+  boundedNumber(
+    requireInteger(input.chargeCarriers, 'chargeCarriers'),
+    'chargeCarriers',
+    ELECTRICAL_CHARGE_CARRIER_BOUNDS.minimum,
+    ELECTRICAL_CHARGE_CARRIER_BOUNDS.maximum,
+  )
   validateBounded(input.frequencyHz, 'frequencyHz', ELECTRICAL_FREQUENCY_BOUNDS_HZ.minimum, ELECTRICAL_FREQUENCY_BOUNDS_HZ.maximum, 'Hz')
   validateBounded(input.voltageV, 'voltageV', ELECTRICAL_VOLTAGE_BOUNDS_V.minimum, ELECTRICAL_VOLTAGE_BOUNDS_V.maximum, 'V')
   if (input.presetId === 'josephson' && input.frequencyHz <= ELECTRICAL_FREQUENCY_BOUNDS_HZ.minimum) {

@@ -1,8 +1,14 @@
 import {
   boundedInteger,
+  boundedNumber,
   finiteNumber,
   type EarthKernelResult,
 } from "./common.js";
+import {
+  BOLTZMANN_CONSTANT_J_PER_K,
+  PLANCK_CONSTANT_J_S,
+  SPEED_OF_LIGHT_M_PER_S,
+} from "../../simphy/constants.js";
 
 export type ChemistryComparatorId =
   | "EARTH-CHEM-003"
@@ -36,9 +42,9 @@ export type LabeledChemistryComparatorResult<Id extends ChemistryComparatorId, O
 type Vector3 = [number, number, number];
 type ComplexValue = { re: number; im: number };
 
-const PLANCK_CONSTANT = 6.626_070_15e-34;
-const BOLTZMANN_CONSTANT = 1.380_649e-23;
-const SPEED_OF_LIGHT = 299_792_458;
+const PLANCK_CONSTANT = PLANCK_CONSTANT_J_S;
+const BOLTZMANN_CONSTANT = BOLTZMANN_CONSTANT_J_PER_K;
+const SPEED_OF_LIGHT = SPEED_OF_LIGHT_M_PER_S;
 const VACUUM_PERMITTIVITY = 8.854_187_812_8e-12;
 
 const BLOCKERS: Record<ChemistryComparatorId, string> = {
@@ -92,14 +98,8 @@ function kernel<Id extends ChemistryComparatorId, Output>(
   };
 }
 
-function bounded(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
-
 function positive(value: number, name: string, maximum = 1e100): number {
-  return bounded(value, name, Number.MIN_VALUE, maximum);
+  return boundedNumber(value, name, Number.MIN_VALUE, maximum);
 }
 
 function checkedArray<T>(values: readonly T[], name: string, minimum = 1, maximum = 256): readonly T[] {
@@ -118,7 +118,7 @@ function checkedLabel(value: string, name: string): string {
 
 function normalizeVector(vector: readonly number[], name: string): number[] {
   if (vector.length !== 3) throw new RangeError(`${name} must contain 3 components`);
-  const checked = vector.map((value, index) => bounded(value, `${name}[${index}]`, -1e100, 1e100));
+  const checked = vector.map((value, index) => boundedNumber(value, `${name}[${index}]`, -1e100, 1e100));
   const norm = Math.hypot(...checked);
   if (!(norm > 1e-15) || !Number.isFinite(norm)) throw new RangeError(`${name} must have finite non-zero norm`);
   return checked.map((value) => value / norm);
@@ -129,7 +129,7 @@ function checkedSymmetricMatrix(matrix: readonly (readonly number[])[], name: st
   const size = matrix.length;
   const checked = matrix.map((row, rowIndex) => {
     if (!Array.isArray(row) || row.length !== size) throw new RangeError(`${name} must be square`);
-    return row.map((value, columnIndex) => bounded(value, `${name}[${rowIndex}][${columnIndex}]`, -1e100, 1e100));
+    return row.map((value, columnIndex) => boundedNumber(value, `${name}[${rowIndex}][${columnIndex}]`, -1e100, 1e100));
   });
   for (let row = 0; row < size; row += 1) {
     for (let column = row + 1; column < size; column += 1) {
@@ -260,8 +260,8 @@ export function geometryResidualComparator(inputs?: GeometryResidualInputs) {
     checkedArray(row.observedAnglesDegrees, `rows[${rowIndex}].observedAnglesDegrees`, 1, 128);
     if (row.predictedAnglesDegrees.length !== row.observedAnglesDegrees.length) throw new RangeError(`rows[${rowIndex}] angle arrays must have equal lengths`);
     const residualsDegrees = row.observedAnglesDegrees.map((observed, angleIndex) => {
-      const checkedObserved = bounded(observed, `rows[${rowIndex}].observedAnglesDegrees[${angleIndex}]`, 0, 180);
-      const predicted = bounded(row.predictedAnglesDegrees[angleIndex]!, `rows[${rowIndex}].predictedAnglesDegrees[${angleIndex}]`, 0, 180);
+      const checkedObserved = boundedNumber(observed, `rows[${rowIndex}].observedAnglesDegrees[${angleIndex}]`, 0, 180);
+      const predicted = boundedNumber(row.predictedAnglesDegrees[angleIndex]!, `rows[${rowIndex}].predictedAnglesDegrees[${angleIndex}]`, 0, 180);
       return predicted - checkedObserved;
     });
     return {
@@ -325,8 +325,8 @@ export function pesStationaryBarrierAudit(inputs?: PesStationaryInputs) {
   const energies = [...(inputs?.energies ?? DEFAULT_PES_STATIONARY_INPUTS.energies!)];
   checkedArray(coordinates, "coordinates", 3, 4096);
   if (energies.length !== coordinates.length) throw new RangeError("coordinates and energies must have equal lengths");
-  coordinates.forEach((value, index) => bounded(value, `coordinates[${index}]`, -1e12, 1e12));
-  energies.forEach((value, index) => bounded(value, `energies[${index}]`, -1e100, 1e100));
+  coordinates.forEach((value, index) => boundedNumber(value, `coordinates[${index}]`, -1e12, 1e12));
+  energies.forEach((value, index) => boundedNumber(value, `energies[${index}]`, -1e100, 1e100));
   for (let index = 1; index < coordinates.length; index += 1) {
     if (coordinates[index]! <= coordinates[index - 1]!) throw new RangeError("coordinates must be strictly increasing");
   }
@@ -353,7 +353,7 @@ export function massWeightedHessianModes(inputs?: MassWeightedHessianInputs) {
   const rawMasses = inputs?.masses ?? DEFAULT_MASS_WEIGHTED_HESSIAN_INPUTS.masses!;
   if (rawMasses.length !== hessian.length) throw new RangeError("masses length must equal Hessian dimension");
   const masses = rawMasses.map((mass, index) => positive(mass, `masses[${index}]`, 1e12));
-  const zeroTolerance = bounded(inputs?.zeroTolerance ?? 1e-10, "zeroTolerance", 1e-15, 1e-2);
+  const zeroTolerance = boundedNumber(inputs?.zeroTolerance ?? 1e-10, "zeroTolerance", 1e-15, 1e-2);
   const massWeightedHessian = hessian.map((row, rowIndex) => row.map((value, columnIndex) => value / Math.sqrt(masses[rowIndex]! * masses[columnIndex]!)));
   const spectrum = symmetricEigenproblem(massWeightedHessian);
   const modes = spectrum.eigenvalues.map((eigenvalue, index) => ({
@@ -373,8 +373,8 @@ export function spectralDerivativeIntensities(inputs?: SpectralDerivativeInputs)
   const modes = checkedArray(inputs?.modes ?? DEFAULT_SPECTRAL_DERIVATIVE_INPUTS.modes!, "modes", 1, 512).map((mode, modeIndex) => {
     if (mode.dipoleDerivative.length !== 3) throw new RangeError(`modes[${modeIndex}].dipoleDerivative must contain 3 components`);
     if (mode.polarizabilityDerivative.length !== 6) throw new RangeError(`modes[${modeIndex}].polarizabilityDerivative must contain 6 Voigt components`);
-    const dipoleDerivative = mode.dipoleDerivative.map((value, index) => bounded(value, `modes[${modeIndex}].dipoleDerivative[${index}]`, -1e50, 1e50));
-    const polarizabilityDerivative = mode.polarizabilityDerivative.map((value, index) => bounded(value, `modes[${modeIndex}].polarizabilityDerivative[${index}]`, -1e50, 1e50));
+    const dipoleDerivative = mode.dipoleDerivative.map((value, index) => boundedNumber(value, `modes[${modeIndex}].dipoleDerivative[${index}]`, -1e50, 1e50));
+    const polarizabilityDerivative = mode.polarizabilityDerivative.map((value, index) => boundedNumber(value, `modes[${modeIndex}].polarizabilityDerivative[${index}]`, -1e50, 1e50));
     const [xx, yy, zz, xy, xz, yz] = polarizabilityDerivative as [number, number, number, number, number, number];
     const isotropic = (xx + yy + zz) / 3;
     const anisotropySquared = 0.5 * ((xx - yy) ** 2 + (yy - zz) ** 2 + (zz - xx) ** 2 + 6 * (xy ** 2 + xz ** 2 + yz ** 2));
@@ -396,10 +396,10 @@ export interface TwoLevelSpectrumInputs { groundEnergy?: number; excitedEnergy?:
 export const DEFAULT_TWO_LEVEL_SPECTRUM_INPUTS: TwoLevelSpectrumInputs = Object.freeze({ groundEnergy: 0, excitedEnergy: 1, transitionDipole: 1, linewidth: 0.05, samples: 65 });
 
 export function twoLevelElectronicSpectrum(inputs?: TwoLevelSpectrumInputs) {
-  const groundEnergy = bounded(inputs?.groundEnergy ?? 0, "groundEnergy", -1e12, 1e12);
-  const excitedEnergy = bounded(inputs?.excitedEnergy ?? 1, "excitedEnergy", -1e12, 1e12);
+  const groundEnergy = boundedNumber(inputs?.groundEnergy ?? 0, "groundEnergy", -1e12, 1e12);
+  const excitedEnergy = boundedNumber(inputs?.excitedEnergy ?? 1, "excitedEnergy", -1e12, 1e12);
   if (excitedEnergy <= groundEnergy) throw new RangeError("excitedEnergy must be greater than groundEnergy");
-  const transitionDipole = bounded(inputs?.transitionDipole ?? 1, "transitionDipole", 0, 1e12);
+  const transitionDipole = boundedNumber(inputs?.transitionDipole ?? 1, "transitionDipole", 0, 1e12);
   const linewidth = positive(inputs?.linewidth ?? 0.05, "linewidth", 1e6);
   const samples = boundedInteger(inputs?.samples ?? 65, "samples", 9, 4097);
   const excitationEnergy = excitedEnergy - groundEnergy;
@@ -418,7 +418,7 @@ export const DEFAULT_TWO_SPIN_NMR_INPUTS: TwoSpinNmrInputs = Object.freeze({ fre
 export function twoSpinNmrSpectrum(inputs?: TwoSpinNmrInputs) {
   const frequencyA = positive(inputs?.frequencyA ?? 100, "frequencyA", 1e12);
   const frequencyB = positive(inputs?.frequencyB ?? 120, "frequencyB", 1e12);
-  const scalarCoupling = bounded(inputs?.scalarCoupling ?? 10, "scalarCoupling", -1e9, 1e9);
+  const scalarCoupling = boundedNumber(inputs?.scalarCoupling ?? 10, "scalarCoupling", -1e9, 1e9);
   const halfCoupling = scalarCoupling / 2;
   const lines = [
     { spin: "A" as const, frequency: frequencyA - halfCoupling, relativeIntensity: 0.5 },
@@ -436,11 +436,11 @@ export const DEFAULT_CORE_LEVEL_INPUTS: CoreLevelInputs = Object.freeze({ transi
 
 export function coreLevelTransitionSpectrum(inputs?: CoreLevelInputs) {
   const transitions = checkedArray(inputs?.transitions ?? DEFAULT_CORE_LEVEL_INPUTS.transitions!, "transitions", 1, 512).map((transition, index) => {
-    const coreEnergy = bounded(transition.coreEnergy, `transitions[${index}].coreEnergy`, -1e12, 1e12);
-    const finalEnergy = bounded(transition.finalEnergy, `transitions[${index}].finalEnergy`, -1e12, 1e12);
+    const coreEnergy = boundedNumber(transition.coreEnergy, `transitions[${index}].coreEnergy`, -1e12, 1e12);
+    const finalEnergy = boundedNumber(transition.finalEnergy, `transitions[${index}].finalEnergy`, -1e12, 1e12);
     const energy = finalEnergy - coreEnergy;
     if (!(energy > 0)) throw new RangeError(`transitions[${index}] finalEnergy must exceed coreEnergy`);
-    const matrixElement = bounded(transition.matrixElement, `transitions[${index}].matrixElement`, 0, 1e12);
+    const matrixElement = boundedNumber(transition.matrixElement, `transitions[${index}].matrixElement`, 0, 1e12);
     return { id: checkedLabel(transition.id, `transitions[${index}].id`), coreEnergy, finalEnergy, energy, matrixElement, relativeIntensity: energy * matrixElement ** 2 };
   });
   return kernel("EARTH-SPEC-006", "Independent-particle core-to-final transition energies and supplied matrix-element strengths", inputs === undefined, { transitions });
@@ -482,7 +482,7 @@ function checkedElasticTensor(raw: readonly (readonly (readonly (readonly number
   const tensor = Array.from({ length: 3 }, (_, i) => Array.from({ length: 3 }, (_, j) => Array.from({ length: 3 }, (_, k) => Array.from({ length: 3 }, (_, l) => {
     const value = raw[i]?.[j]?.[k]?.[l];
     if (value === undefined) throw new RangeError("tensor must have dimensions 3x3x3x3");
-    return bounded(value, `tensor[${i}][${j}][${k}][${l}]`, -1e30, 1e30);
+    return boundedNumber(value, `tensor[${i}][${j}][${k}][${l}]`, -1e30, 1e30);
   }))));
   for (let i = 0; i < 3; i += 1) for (let j = 0; j < 3; j += 1) for (let k = 0; k < 3; k += 1) for (let l = 0; l < 3; l += 1) {
     const value = tensor[i]![j]![k]![l]!;
@@ -499,7 +499,7 @@ export function christoffelWaveSolver(inputs?: ChristoffelInputs) {
   const direction = normalizeVector(inputs?.direction ?? [1, 0, 0], "direction") as Vector3;
   if (inputs?.tensor && (inputs.lambda !== undefined || inputs.shearModulus !== undefined)) throw new RangeError("provide tensor or isotropic lambda/shearModulus, not both");
   const model = inputs?.tensor ? "user-tensor" as const : "isotropic-standard-comparison" as const;
-  const lambda = inputs?.tensor ? null : bounded(inputs?.lambda ?? 1, "lambda", -1e30, 1e30);
+  const lambda = inputs?.tensor ? null : boundedNumber(inputs?.lambda ?? 1, "lambda", -1e30, 1e30);
   const shearModulus = inputs?.tensor ? null : positive(inputs?.shearModulus ?? 1, "shearModulus", 1e30);
   if (lambda !== null && shearModulus !== null && lambda + 2 * shearModulus <= 0) throw new RangeError("lambda + 2*shearModulus must be positive");
   const tensor = inputs?.tensor ? checkedElasticTensor(inputs.tensor) : isotropicTensor(lambda!, shearModulus!);
@@ -519,8 +519,8 @@ export interface LorentzDielectricInputs { frequencies?: readonly number[]; epsi
 export const DEFAULT_LORENTZ_DIELECTRIC_INPUTS: LorentzDielectricInputs = Object.freeze({ frequencies: [0, 0.5, 1, 2], epsilonInfinity: 1, oscillators: [{ resonance: 1, strength: 1, damping: 0.1 }] });
 
 export function lorentzDielectricResponse(inputs?: LorentzDielectricInputs) {
-  const frequencies = checkedArray(inputs?.frequencies ?? DEFAULT_LORENTZ_DIELECTRIC_INPUTS.frequencies!, "frequencies", 1, 4097).map((value, index) => bounded(value, `frequencies[${index}]`, 0, 1e20));
-  const epsilonInfinity = bounded(inputs?.epsilonInfinity ?? 1, "epsilonInfinity", -1e12, 1e12);
+  const frequencies = checkedArray(inputs?.frequencies ?? DEFAULT_LORENTZ_DIELECTRIC_INPUTS.frequencies!, "frequencies", 1, 4097).map((value, index) => boundedNumber(value, `frequencies[${index}]`, 0, 1e20));
+  const epsilonInfinity = boundedNumber(inputs?.epsilonInfinity ?? 1, "epsilonInfinity", -1e12, 1e12);
   const oscillators = checkedArray(inputs?.oscillators ?? DEFAULT_LORENTZ_DIELECTRIC_INPUTS.oscillators!, "oscillators", 1, 128).map((oscillator, index) => ({
     resonance: positive(oscillator.resonance, `oscillators[${index}].resonance`, 1e20),
     strength: positive(oscillator.strength, `oscillators[${index}].strength`, 1e40),
@@ -548,9 +548,9 @@ export const DEFAULT_REFRACTIVE_TRANSFORM_INPUTS: RefractiveTransformInputs = Ob
 export function refractiveIndexTransform(inputs?: RefractiveTransformInputs) {
   const speedOfLight = positive(inputs?.speedOfLight ?? SPEED_OF_LIGHT, "speedOfLight", 1e12);
   const samples = checkedArray(inputs?.samples ?? DEFAULT_REFRACTIVE_TRANSFORM_INPUTS.samples!, "samples", 1, 4097).map((sample, index) => {
-    const frequency = bounded(sample.frequency, `samples[${index}].frequency`, 0, 1e20);
-    const re = bounded(sample.epsilon.re, `samples[${index}].epsilon.re`, -1e100, 1e100);
-    const im = bounded(sample.epsilon.im, `samples[${index}].epsilon.im`, -1e100, 1e100);
+    const frequency = boundedNumber(sample.frequency, `samples[${index}].frequency`, 0, 1e20);
+    const re = boundedNumber(sample.epsilon.re, `samples[${index}].epsilon.re`, -1e100, 1e100);
+    const im = boundedNumber(sample.epsilon.im, `samples[${index}].epsilon.im`, -1e100, 1e100);
     const magnitude = Math.hypot(re, im);
     const refractiveIndex = Math.sqrt(Math.max(0, (magnitude + re) / 2));
     const extinctionCoefficient = Math.sign(im || 1) * Math.sqrt(Math.max(0, (magnitude - re) / 2));
@@ -567,10 +567,10 @@ function complexScale(value: ComplexValue, scalar: number): ComplexValue { retur
 function complexMagnitudeSquared(value: ComplexValue): number { return value.re ** 2 + value.im ** 2; }
 
 export function jonesMalusComparator(inputs?: JonesMalusInputs) {
-  const inputAngleRadians = bounded(inputs?.inputAngleRadians ?? 0, "inputAngleRadians", -2 * Math.PI, 2 * Math.PI);
-  const analyzerAngleRadians = bounded(inputs?.analyzerAngleRadians ?? Math.PI / 4, "analyzerAngleRadians", -2 * Math.PI, 2 * Math.PI);
-  const opticAxisRadians = bounded(inputs?.opticAxisRadians ?? 0, "opticAxisRadians", -2 * Math.PI, 2 * Math.PI);
-  const retardanceRadians = bounded(inputs?.retardanceRadians ?? 0, "retardanceRadians", -64 * Math.PI, 64 * Math.PI);
+  const inputAngleRadians = boundedNumber(inputs?.inputAngleRadians ?? 0, "inputAngleRadians", -2 * Math.PI, 2 * Math.PI);
+  const analyzerAngleRadians = boundedNumber(inputs?.analyzerAngleRadians ?? Math.PI / 4, "analyzerAngleRadians", -2 * Math.PI, 2 * Math.PI);
+  const opticAxisRadians = boundedNumber(inputs?.opticAxisRadians ?? 0, "opticAxisRadians", -2 * Math.PI, 2 * Math.PI);
+  const retardanceRadians = boundedNumber(inputs?.retardanceRadians ?? 0, "retardanceRadians", -64 * Math.PI, 64 * Math.PI);
   const inputIntensity = positive(inputs?.inputIntensity ?? 1, "inputIntensity", 1e100);
   const input = [Math.cos(inputAngleRadians), Math.sin(inputAngleRadians)];
   const axis = [Math.cos(opticAxisRadians), Math.sin(opticAxisRadians)];
@@ -596,12 +596,12 @@ function sinc(value: number): number { return Math.abs(value) < 1e-8 ? 1 - value
 
 export function undepletedPumpNonlinearEstimate(inputs?: NonlinearEstimateInputs) {
   const wavelength = positive(inputs?.wavelength ?? 1.064e-6, "wavelength", 1e3);
-  const effectiveCoefficient = bounded(inputs?.effectiveCoefficient ?? 1e-12, "effectiveCoefficient", 0, 1);
+  const effectiveCoefficient = boundedNumber(inputs?.effectiveCoefficient ?? 1e-12, "effectiveCoefficient", 0, 1);
   const length = positive(inputs?.length ?? 1e-3, "length", 1e6);
   const pumpIntensity = positive(inputs?.pumpIntensity ?? 1e6, "pumpIntensity", 1e30);
   const fundamentalIndex = positive(inputs?.fundamentalIndex ?? 1.5, "fundamentalIndex", 1e6);
   const harmonicIndex = positive(inputs?.harmonicIndex ?? 1.6, "harmonicIndex", 1e6);
-  const phaseMismatch = bounded(inputs?.phaseMismatch ?? 0, "phaseMismatch", -1e15, 1e15);
+  const phaseMismatch = boundedNumber(inputs?.phaseMismatch ?? 0, "phaseMismatch", -1e15, 1e15);
   const angularFrequency = 2 * Math.PI * SPEED_OF_LIGHT / wavelength;
   const phaseMatchingFactor = sinc(phaseMismatch * length / 2) ** 2;
   const conversionEfficiency = 2 * angularFrequency ** 2 * effectiveCoefficient ** 2 * length ** 2 * pumpIntensity
@@ -656,8 +656,8 @@ export function eosStandardComparison(inputs?: EosComparisonInputs) {
   const volume = positive(inputs?.volume ?? 3, "volume", 1e12);
   const particles = positive(inputs?.particles ?? 1, "particles", 1e12);
   const gasConstant = positive(inputs?.gasConstant ?? 1, "gasConstant", 1e12);
-  const attraction = bounded(inputs?.attraction ?? 1, "attraction", 0, 1e24);
-  const excludedVolume = bounded(inputs?.excludedVolume ?? 0.1, "excludedVolume", 0, 1e12);
+  const attraction = boundedNumber(inputs?.attraction ?? 1, "attraction", 0, 1e24);
+  const excludedVolume = boundedNumber(inputs?.excludedVolume ?? 0.1, "excludedVolume", 0, 1e12);
   if (volume <= particles * excludedVolume) throw new RangeError("volume must exceed particles*excludedVolume");
   const idealPressure = particles * gasConstant * temperature / volume;
   const vanDerWaalsPressure = particles * gasConstant * temperature / (volume - particles * excludedVolume) - attraction * particles ** 2 / volume ** 2;
@@ -726,7 +726,7 @@ function coexistenceVolumes(temperature: number, pressure: number, spinodals: [n
 }
 
 export function vanDerWaalsCoexistenceComparator(inputs?: VanDerWaalsCoexistenceInputs) {
-  const reducedTemperature = bounded(inputs?.reducedTemperature ?? 0.85, "reducedTemperature", 0.5, 0.999);
+  const reducedTemperature = boundedNumber(inputs?.reducedTemperature ?? 0.85, "reducedTemperature", 0.5, 0.999);
   const spinodals = spinodalVolumes(reducedTemperature);
   const lowerPressure = Math.max(1e-12, reducedPressure(reducedTemperature, spinodals[0]));
   const upperPressure = reducedPressure(reducedTemperature, spinodals[1]);
@@ -757,7 +757,7 @@ export const DEFAULT_OSCILLATOR_THERMODYNAMICS_INPUTS: OscillatorThermodynamicsI
 export function oscillatorThermodynamics(inputs?: OscillatorThermodynamicsInputs) {
   const temperature = positive(inputs?.temperature ?? 300, "temperature", 1e9);
   const modes = checkedArray(inputs?.modes ?? DEFAULT_OSCILLATOR_THERMODYNAMICS_INPUTS.modes!, "modes", 1, 1024).map((mode, index) => {
-    const frequencyHz = bounded(mode.frequencyHz, `modes[${index}].frequencyHz`, 1e-12, 1e20);
+    const frequencyHz = boundedNumber(mode.frequencyHz, `modes[${index}].frequencyHz`, 1e-12, 1e20);
     const degeneracy = boundedInteger(mode.degeneracy ?? 1, `modes[${index}].degeneracy`, 1, 1_000_000);
     const x = PLANCK_CONSTANT * frequencyHz / (BOLTZMANN_CONSTANT * temperature);
     const thermalFactor = Math.exp(-x);
@@ -776,7 +776,7 @@ export const DEFAULT_PLANCK_SPECTRUM_INPUTS: PlanckSpectrumInputs = Object.freez
 
 export function planckSpectrumComparator(inputs?: PlanckSpectrumInputs) {
   const temperature = positive(inputs?.temperature ?? 300, "temperature", 1e9);
-  const frequencies = checkedArray(inputs?.frequencies ?? DEFAULT_PLANCK_SPECTRUM_INPUTS.frequencies!, "frequencies", 1, 4097).map((frequency, index) => bounded(frequency, `frequencies[${index}]`, 1e-12, 1e20));
+  const frequencies = checkedArray(inputs?.frequencies ?? DEFAULT_PLANCK_SPECTRUM_INPUTS.frequencies!, "frequencies", 1, 4097).map((frequency, index) => boundedNumber(frequency, `frequencies[${index}]`, 1e-12, 1e20));
   const spectrum = frequencies.map((frequency) => {
     const exponent = PLANCK_CONSTANT * frequency / (BOLTZMANN_CONSTANT * temperature);
     const denominator = Math.expm1(exponent);
@@ -792,10 +792,10 @@ export const DEFAULT_KINETIC_CONDUCTIVITY_INPUTS: KineticConductivityInputs = Ob
 export function kineticConductivityComparator(inputs?: KineticConductivityInputs) {
   const dimensions = boundedInteger(inputs?.dimensions ?? 3, "dimensions", 1, 3) as 1 | 2 | 3;
   const modes = checkedArray(inputs?.modes ?? DEFAULT_KINETIC_CONDUCTIVITY_INPUTS.modes!, "modes", 1, 4096).map((mode, index) => {
-    const volumetricHeatCapacity = bounded(mode.volumetricHeatCapacity, `modes[${index}].volumetricHeatCapacity`, 0, 1e30);
-    const groupVelocity = bounded(mode.groupVelocity, `modes[${index}].groupVelocity`, 0, 1e12);
-    const meanFreePath = bounded(mode.meanFreePath, `modes[${index}].meanFreePath`, 0, 1e12);
-    const weight = bounded(mode.weight ?? 1, `modes[${index}].weight`, 0, 1e12);
+    const volumetricHeatCapacity = boundedNumber(mode.volumetricHeatCapacity, `modes[${index}].volumetricHeatCapacity`, 0, 1e30);
+    const groupVelocity = boundedNumber(mode.groupVelocity, `modes[${index}].groupVelocity`, 0, 1e12);
+    const meanFreePath = boundedNumber(mode.meanFreePath, `modes[${index}].meanFreePath`, 0, 1e12);
+    const weight = boundedNumber(mode.weight ?? 1, `modes[${index}].weight`, 0, 1e12);
     return { id: checkedLabel(mode.id, `modes[${index}].id`), volumetricHeatCapacity, groupVelocity, meanFreePath, weight, contribution: weight * volumetricHeatCapacity * groupVelocity * meanFreePath / dimensions };
   });
   return kernel("EARTH-THERM-010", "Relaxation-time kinetic conductivity sum k=(1/d) sum C*v*ell with supplied mode data", inputs === undefined, { dimensions, modes, conductivity: modes.reduce((sum, mode) => sum + mode.contribution, 0), uncertaintyAvailable: false });

@@ -1,5 +1,6 @@
 import {
   boundedInteger,
+  boundedNumber,
   checkCancelled,
   finiteNumber,
   positiveNumber,
@@ -8,6 +9,7 @@ import {
   type EarthKernelResult,
   type EarthRunOptions,
 } from "./common.js";
+import { cross3, dot3, scale3, sub3 } from "../../simphy/vec.js";
 
 export type { EarthKernelResult } from "./common.js";
 
@@ -84,12 +86,6 @@ function result<Id extends PhysicalComparatorId, Output>(
   extra: EarthDiagnostics = {},
 ): PhysicalComparatorResult<Id, Output> {
   return { id, method, diagnostics: diagnostics(id, kind, extra), output };
-}
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
 }
 
 function boundedList<T>(values: readonly T[], name: string, minimum: number, maximum: number): readonly T[] {
@@ -668,15 +664,7 @@ function canonicalHopfField(x: number, y: number, z: number): Vector3 {
 }
 
 function vectorDifference(left: Vector3, right: Vector3, denominator: number): Vector3 {
-  return [(left[0] - right[0]) / denominator, (left[1] - right[1]) / denominator, (left[2] - right[2]) / denominator];
-}
-
-function dot(left: Vector3, right: Vector3): number {
-  return left[0] * right[0] + left[1] * right[1] + left[2] * right[2];
-}
-
-function cross(left: Vector3, right: Vector3): Vector3 {
-  return [left[1] * right[2] - left[2] * right[1], left[2] * right[0] - left[0] * right[2], left[0] * right[1] - left[1] * right[0]];
+  return scale3(sub3(left, right), 1 / denominator) as Vector3;
 }
 
 export function hopfEnergyComparison(
@@ -714,8 +702,8 @@ export function hopfEnergyComparison(
         const dx = vectorDifference(canonicalHopfField(x + spacing, y, z), canonicalHopfField(x - spacing, y, z), 2 * spacing);
         const dy = vectorDifference(canonicalHopfField(x, y + spacing, z), canonicalHopfField(x, y - spacing, z), 2 * spacing);
         const dz = vectorDifference(canonicalHopfField(x, y, z + spacing), canonicalHopfField(x, y, z - spacing), 2 * spacing);
-        sigmaIntegral += 0.5 * (dot(dx, dx) + dot(dy, dy) + dot(dz, dz));
-        skyrmeIntegral += 0.5 * (dot(cross(dx, dy), cross(dx, dy)) + dot(cross(dy, dz), cross(dy, dz)) + dot(cross(dz, dx), cross(dz, dx)));
+        sigmaIntegral += 0.5 * (dot3(dx, dx) + dot3(dy, dy) + dot3(dz, dz));
+        skyrmeIntegral += 0.5 * (dot3(cross3(dx, dy), cross3(dx, dy)) + dot3(cross3(dy, dz), cross3(dy, dz)) + dot3(cross3(dz, dx), cross3(dz, dx)));
         sampledInteriorPoints += 1;
       }
     }

@@ -1,5 +1,6 @@
 import {
   boundedInteger,
+  boundedNumber,
   checkCancelled,
   finiteNumber,
   type EarthKernelResult,
@@ -7,12 +8,6 @@ import {
 } from "./common.js";
 
 type DataScope = "synthetic" | "deidentified-aggregate";
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
 
 function addIndexed(values: number[], index: number, delta: number): void {
   values[index] = values[index]! + delta;

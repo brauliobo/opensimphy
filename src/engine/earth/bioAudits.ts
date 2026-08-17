@@ -1,7 +1,7 @@
 import {
   boundedInteger,
+  boundedPositive,
   finiteNumber,
-  positiveNumber,
   relativeError,
   type EarthKernelResult,
 } from "./common.js";
@@ -36,12 +36,6 @@ function reproductionDiagnostics(
     medicalAdvice: false,
     medicalValidation: false,
   };
-}
-
-function boundedPositive(value: number, name: string, minimum: number, maximum: number): number {
-  positiveNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
 }
 
 function boundedArray<T>(value: T[], name: string, minimum: number, maximum: number): T[] {

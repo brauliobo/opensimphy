@@ -227,12 +227,12 @@ describe('EARTH authenticated dataset registry', () => {
   it('fails closed on an extra field or a count that disagrees with records', async () => {
     const extraField = structuredClone(generatedRegistry) as unknown as Record<string, unknown>
     extraField.unexpected = true
-    expect(() => parseEarthDatasetRegistry(extraField)).toThrow('expected exactly these fields')
+    expect(() => parseEarthDatasetRegistry(extraField)).toThrow(/unknown properties/)
 
     const wrongSummary = structuredClone(generatedRegistry)
     wrongSummary.summary.metadataAuthenticated = 18
     const { wrapper } = await mountRegistry(wrongSummary)
-    expect(wrapper.get('[role="alert"]').text()).toContain('summary: does not match the validated records')
+    expect(wrapper.get('[role="alert"]').text()).toContain('summary does not match the validated records')
     expect(wrapper.findAll('.dataset-record')).toHaveLength(0)
   })
 })

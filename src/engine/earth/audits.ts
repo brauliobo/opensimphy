@@ -1,16 +1,23 @@
 import {
   boundedInteger,
+  boundedPositive,
   finiteNumber,
-  positiveNumber,
   relativeError,
   type EarthKernelResult,
 } from "./common.js";
 import { buildElectronBohrRydbergLedger, ELECTRON_BOHR_RYDBERG_PLAIN_LANGUAGE } from "./particle/electronBohrRydberg.js";
 
-export const EARTH_GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
-export const EARTH_SPEED_OF_LIGHT = 299_792_458;
-export const EARTH_PLANCK_CONSTANT = 6.626_070_15e-34;
-export const EARTH_ELEMENTARY_CHARGE = 1.602_176_634e-19;
+import {
+  ELEMENTARY_CHARGE_C,
+  GOLDEN_RATIO,
+  PLANCK_CONSTANT_J_S,
+  SPEED_OF_LIGHT_M_PER_S,
+} from "../../simphy/constants.js";
+
+export const EARTH_GOLDEN_RATIO = GOLDEN_RATIO;
+export const EARTH_SPEED_OF_LIGHT = SPEED_OF_LIGHT_M_PER_S;
+export const EARTH_PLANCK_CONSTANT = PLANCK_CONSTANT_J_S;
+export const EARTH_ELEMENTARY_CHARGE = ELEMENTARY_CHARGE_C;
 export const EARTH_HBAR_C_MEV_FM = 197.326_980_4;
 
 export type AuditStatus = "pass" | "failure";
@@ -29,12 +36,6 @@ function reproductionDiagnostics(extra: Record<string, boolean | number | string
     validatesTheory: false,
     ...extra,
   };
-}
-
-function boundedPositive(value: number, name: string, minimum: number, maximum: number): number {
-  positiveNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
 }
 
 function validateArrayLength(value: unknown[], name: string, minimum: number, maximum: number): void {

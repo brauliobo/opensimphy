@@ -1,3 +1,4 @@
+import { SPEED_OF_LIGHT_M_PER_S, ELEMENTARY_CHARGE_C, VACUUM_MAGNETIC_PERMEABILITY_H_PER_M, CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2 } from "../../../simphy/constants.js";
 import { checkCancelled, positiveNumber, relativeError, type EarthRunOptions } from "../common.js";
 import { CODATA_ALPHA, CODATA_HBAR, GOLDEN_RATIO, couplingAudit } from "../foundations.js";
 import {
@@ -34,7 +35,7 @@ export const EARTH_G_QG = 6.340_806_087_699_862e-11;
 export const THAD_G = 6.674_303_155e-11;
 export const THAD_GF_GEV = 1.166_378_521_83e-5;
 export const THAD_ALPHA = 7.297_352_572_955e-3;
-export const SM_G = 6.674_30e-11;
+export const SM_G = CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2;
 export const SM_GF_GEV = 1.166_378_7e-5;
 export const SM_ALPHA_S_MZ = 0.1180;
 
@@ -52,9 +53,9 @@ export const DEFAULT_COUPLING_FORCE_HIERARCHY_INPUTS: CouplingForceHierarchyInpu
   nassimProtonRadiusFm: NASSIM_PROTON_RADIUS_FM,
 };
 
-const C = 299_792_458;
-const E = 1.602_176_634e-19;
-const MU0 = 1.256_637_062_12e-6;
+const C = SPEED_OF_LIGHT_M_PER_S;
+const E = ELEMENTARY_CHARGE_C;
+const MU0 = VACUUM_MAGNETIC_PERMEABILITY_H_PER_M;
 const XI0_M_DEFAULT = 0.15e-15;
 const CODATA_ID = "earth-dataset-codata-recommended-values";
 const PDG_ID = "earth-dataset-review-of-particle-physics-pdg-api";

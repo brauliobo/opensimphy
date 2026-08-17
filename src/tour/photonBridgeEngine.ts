@@ -1,3 +1,4 @@
+import { boundedNumber } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import { SI_EXACT_CONSTANTS, SI_EXACTNESS_NOTE } from './physicsConstants'
 
@@ -105,11 +106,13 @@ function frequencyFromInput(input: PhotonBridgeInput): {
     return { frequencyHz: preset.frequencyHz, preset }
   }
 
-  const frequencyHz = input.frequencyHz as number
-  if (!Number.isFinite(frequencyHz)) throw new Error('Photon bridge frequencyHz must be finite')
-  if (frequencyHz < PHOTON_FREQUENCY_BOUNDS_HZ.minimum || frequencyHz > PHOTON_FREQUENCY_BOUNDS_HZ.maximum) {
-    throw new Error('Photon bridge frequencyHz must be within [1e3, 1e25] Hz')
-  }
+  const frequencyHz = boundedNumber(
+    input.frequencyHz as number,
+    'frequencyHz',
+    PHOTON_FREQUENCY_BOUNDS_HZ.minimum,
+    PHOTON_FREQUENCY_BOUNDS_HZ.maximum,
+    'Hz',
+  )
   return { frequencyHz, preset: null }
 }
 

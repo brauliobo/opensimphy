@@ -1,3 +1,4 @@
+import { boundedNumber, requireInteger } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import { CODATA_2022_MEASURED_CONSTANTS } from './physicsConstants'
 
@@ -131,19 +132,10 @@ function validateSpinPrecessionInput(input: SpinPrecessionInput): number {
   if (!(SPIN_PRECESSION_PARTICLE_IDS as readonly unknown[]).includes(input.particle)) {
     throw new Error(`Unknown spin precession particle: ${String(input.particle)}`)
   }
-  if (!Number.isFinite(input.magneticFieldTesla)) throw new Error('Spin precession magneticFieldTesla must be finite')
-  if (input.magneticFieldTesla < SPIN_PRECESSION_BOUNDS.magneticFieldTesla.min || input.magneticFieldTesla > SPIN_PRECESSION_BOUNDS.magneticFieldTesla.max) {
-    throw new Error('Spin precession magneticFieldTesla must be within [0.000001, 20]')
-  }
-  if (!Number.isFinite(input.timeSeconds)) throw new Error('Spin precession timeSeconds must be finite')
-  if (input.timeSeconds < SPIN_PRECESSION_BOUNDS.timeSeconds.min || input.timeSeconds > SPIN_PRECESSION_BOUNDS.timeSeconds.max) {
-    throw new Error('Spin precession timeSeconds must be within [0, 10]')
-  }
+  boundedNumber(input.magneticFieldTesla, 'magneticFieldTesla', SPIN_PRECESSION_BOUNDS.magneticFieldTesla.min, SPIN_PRECESSION_BOUNDS.magneticFieldTesla.max)
+  boundedNumber(input.timeSeconds, 'timeSeconds', SPIN_PRECESSION_BOUNDS.timeSeconds.min, SPIN_PRECESSION_BOUNDS.timeSeconds.max)
   const sampleCount = input.sampleCount ?? SPIN_PRECESSION_BOUNDS.sampleCount.default
-  if (!Number.isInteger(sampleCount)) throw new Error('Spin precession sampleCount must be an integer')
-  if (sampleCount < SPIN_PRECESSION_BOUNDS.sampleCount.min || sampleCount > SPIN_PRECESSION_BOUNDS.sampleCount.max) {
-    throw new Error('Spin precession sampleCount must be within [2, 128]')
-  }
+  boundedNumber(requireInteger(sampleCount, 'sampleCount'), 'sampleCount', SPIN_PRECESSION_BOUNDS.sampleCount.min, SPIN_PRECESSION_BOUNDS.sampleCount.max)
   return sampleCount
 }
 

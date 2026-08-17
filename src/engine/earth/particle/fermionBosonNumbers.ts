@@ -1,3 +1,4 @@
+import { SPEED_OF_LIGHT_M_PER_S } from "../../../simphy/constants.js";
 import { checkCancelled, type EarthRunOptions } from "../common.js";
 import {
   DEFAULT_PARTICLE_QUANTUM_NUMBER_AUDIT_INPUTS,
@@ -29,7 +30,7 @@ const PHI_INV2 = PHI ** -2;
 const PHI12 = PHI ** 12;
 const ELECTRON_MASS = 9.109_383_713_9e-31;
 const XI0_M = 0.15e-15;
-const SPEED_OF_LIGHT = 299_792_458;
+const SPEED_OF_LIGHT = SPEED_OF_LIGHT_M_PER_S;
 const WEINBERG_LOG = Math.log(1 + Math.SQRT2);
 const THAD_MW_OVER_MZ = WEINBERG_LOG;
 const THAD_SIN2W_ONSHELL = 1 - WEINBERG_LOG ** 2;

@@ -1,28 +1,20 @@
 import {
   boundedInteger,
-  finiteNumber,
+  boundedNumber,
+  boundedPositive,
+  logarithmicSamples,
   relativeError,
   type EarthKernelResult,
   type EarthProvenanceKind,
 } from "./common.js";
+import { GOLDEN_RATIO, SPEED_OF_LIGHT_M_PER_S } from "../../simphy/constants.js";
 
-const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
-const SPEED_OF_LIGHT_METRES_PER_SECOND = 299_792_458;
+const SPEED_OF_LIGHT_METRES_PER_SECOND = SPEED_OF_LIGHT_M_PER_S;
 const PROTON_MASS_KG = 1.672_621_925_95e-27;
 const SOLAR_MASS_KG = 1.988_47e30;
 const SECONDS_PER_YEAR = 31_557_600;
 
 type AuditLabel = EarthProvenanceKind;
-
-function boundedNumber(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
-
-function boundedPositive(value: number, name: string, minimum: number, maximum: number): number {
-  return boundedNumber(value, name, minimum, maximum);
-}
 
 function nonEmptyText(value: string, name: string): string {
   if (typeof value !== "string" || !value.trim()) throw new TypeError(`${name} is required`);
@@ -54,13 +46,6 @@ function auditDiagnostics(kind: AuditLabel, extra: Record<string, boolean | numb
     validationClaim: "none",
     ...extra,
   };
-}
-
-function logarithmicSamples(minimum: number, maximum: number, count: number): number[] {
-  if (count === 1) return [minimum];
-  const logarithmicMinimum = Math.log(minimum);
-  const span = Math.log(maximum) - logarithmicMinimum;
-  return Array.from({ length: count }, (_, index) => Math.exp(logarithmicMinimum + span * index / (count - 1)));
 }
 
 export type CosmologyDistanceConvention = "proper" | "comoving";

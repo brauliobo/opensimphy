@@ -1,3 +1,4 @@
+import { fail } from "../../../simphy/contract";
 import { relativeError } from "../common.js";
 
 export const EARTH_PREDICTION_SCHEMA = "earth-prediction/v1" as const;
@@ -185,10 +186,6 @@ const OPTIONAL_ROW_KEYS = new Set(["modelSummary", "plainLanguage", "correlation
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-
-function fail(path: string, message: string): never {
-  throw new TypeError(`earth-prediction/v1 ${path}: ${message}`);
 }
 
 function requiredString(value: unknown, path: string): string {

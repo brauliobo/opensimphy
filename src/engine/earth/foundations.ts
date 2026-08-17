@@ -6,10 +6,15 @@ import {
   relativeError,
   type EarthKernelResult,
 } from "./common.js";
+import {
+  CODATA_2022_ALPHA,
+  CODATA_2022_HBAR_J_S,
+  GOLDEN_RATIO,
+} from "../../simphy/constants.js";
 
-export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
-export const CODATA_ALPHA = 7.2973525643e-3;
-export const CODATA_HBAR = 1.054571817e-34;
+export { GOLDEN_RATIO };
+export const CODATA_ALPHA = CODATA_2022_ALPHA;
+export const CODATA_HBAR = CODATA_2022_HBAR_J_S;
 
 export interface GoldenPowerInputs {
   exponents: number[];

@@ -1,3 +1,4 @@
+import { boundedNumber } from '../simphy/numbers'
 import type {
   DimensionAxis,
   DimensionOperationOutput,
@@ -372,12 +373,7 @@ function validateInput(input: DimensionBuilderInput): void {
   if (!(DIMENSION_COORDINATE_SYSTEM_IDS as readonly unknown[]).includes(input.coordinateSystem)) {
     throw new Error(`Unknown dimension builder coordinate system: ${String(input.coordinateSystem)}`)
   }
-  if (!Number.isFinite(input.sampleSiMagnitude)) {
-    throw new Error('Dimension builder sampleSiMagnitude must be finite')
-  }
-  if (input.sampleSiMagnitude < 0.1 || input.sampleSiMagnitude > 100) {
-    throw new Error('Dimension builder sampleSiMagnitude must be within [0.1, 100]')
-  }
+  boundedNumber(input.sampleSiMagnitude, 'sampleSiMagnitude', 0.1, 100)
 }
 
 export function evaluateDimensionBuilder(input: DimensionBuilderInput): DimensionBuilderEvaluation {

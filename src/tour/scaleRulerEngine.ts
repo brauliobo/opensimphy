@@ -1,3 +1,4 @@
+import { positiveNumber } from '../simphy/numbers'
 import type { ResultFinding, TourRuntimeResultAttribution } from '../types/tour'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
@@ -153,7 +154,7 @@ function entry(
   note: string,
   evidenceRefs: readonly [ScaleSourceId, ...ScaleSourceId[]] = [sourceId],
 ): ScaleCatalogEntry {
-  if (!Number.isFinite(valueSi) || valueSi <= 0) throw new Error(`Scale catalog value for ${id} must be finite and positive`)
+  positiveNumber(valueSi, `Scale catalog value for ${id}`)
   return deepFreeze({
     id,
     family,

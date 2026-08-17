@@ -1,3 +1,4 @@
+import { CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, SPEED_OF_LIGHT_M_PER_S } from "../../../simphy/constants.js";
 import {
   DEFAULT_PROTON_FORMULA_AUDIT_INPUTS,
   EARTH_GOLDEN_RATIO,
@@ -24,9 +25,9 @@ export interface ProtonMassRadiusChiInputs extends ProtonFormulaAuditInputs {
 
 export const DEFAULT_PROTON_MASS_RADIUS_CHI_INPUTS: ProtonMassRadiusChiInputs = {
   ...DEFAULT_PROTON_FORMULA_AUDIT_INPUTS,
-  gravitationalConstant: 6.674_30e-11,
+  gravitationalConstant: CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2,
   protonMassKg:          1.672_621_925_95e-27,
-  speedOfLight:          299_792_458,
+  speedOfLight:          SPEED_OF_LIGHT_M_PER_S,
 };
 
 export const CODATA_PROTON_RADIUS_FM = 0.84075;
@@ -80,9 +81,9 @@ export function protonMassRadiusChi(
   const smRadiusFm = positiveNumber(inputs.canonicalProtonChargeRadiusFm ?? CODATA_PROTON_RADIUS_FM, "canonicalProtonChargeRadiusFm");
   const smMassMeV = positiveNumber(inputs.canonicalProtonEnergyMeV ?? CODATA_PROTON_MASS_MEV, "canonicalProtonEnergyMeV");
   const hbarCMeVFm = positiveNumber(inputs.hbarCMeVFm ?? EARTH_HBAR_C_MEV_FM, "hbarCMeVFm");
-  const G = positiveNumber(inputs.gravitationalConstant ?? 6.674_30e-11, "gravitationalConstant");
+  const G = positiveNumber(inputs.gravitationalConstant ?? CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, "gravitationalConstant");
   const protonMassKg = positiveNumber(inputs.protonMassKg ?? 1.672_621_925_95e-27, "protonMassKg");
-  const c = positiveNumber(inputs.speedOfLight ?? 299_792_458, "speedOfLight");
+  const c = positiveNumber(inputs.speedOfLight ?? SPEED_OF_LIGHT_M_PER_S, "speedOfLight");
   const lambdaPrinted = positiveNumber(inputs.lambdaClaims?.[0]?.value ?? 44.492, "lambdaPrinted");
   const fiveTubeFm = 5 * xi0Fm * EARTH_GOLDEN_RATIO ** -2;
   const tubeFm = xi0Fm * EARTH_GOLDEN_RATIO ** -2;

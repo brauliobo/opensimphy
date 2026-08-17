@@ -1,3 +1,4 @@
+import { boundedNumber, requireInteger } from '../simphy/numbers'
 import {
   CODATA_2022_MEASURED_CONSTANTS,
   SI_EXACT_CONSTANTS,
@@ -214,18 +215,12 @@ const SPECTRAL_CATALOG: Readonly<Record<Exclude<SpectralElement, 'hydrogen'>, re
 
 export const SPECTRAL_REFERENCE_LINE_COUNTS = Object.freeze({ sodium: 2, calcium: 3 } as const)
 
-function assertFinite(value: number, label: string): void {
-  if (!Number.isFinite(value)) throw new Error(`${label} must be finite`)
-}
-
 function assertRange(value: number, label: string, minimum: number, maximum: number): void {
-  assertFinite(value, label)
-  if (value < minimum || value > maximum) throw new RangeError(`${label} must be within [${minimum}, ${maximum}]`)
+  boundedNumber(value, label, minimum, maximum)
 }
 
 function assertIntegerRange(value: number, label: string, minimum: number, maximum: number): void {
-  if (!Number.isInteger(value)) throw new RangeError(`${label} must be an integer`)
-  assertRange(value, label, minimum, maximum)
+  boundedNumber(requireInteger(value, label), label, minimum, maximum)
 }
 
 function grid(minimum: number, maximum: number, count: number): number[] {

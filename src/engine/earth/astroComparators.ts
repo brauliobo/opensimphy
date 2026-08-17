@@ -1,15 +1,17 @@
 import {
   boundedInteger,
+  boundedNumber,
   checkCancelled,
   finiteNumber,
   relativeError,
   type EarthKernelResult,
   type EarthRunOptions,
 } from "./common.js";
+import { BOLTZMANN_CONSTANT_J_PER_K, CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, SPEED_OF_LIGHT_M_PER_S } from "../../simphy/constants.js";
 
-const G = 6.674_30e-11;
-const C = 299_792_458;
-const K_B = 1.380_649e-23;
+const G = CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2;
+const C = SPEED_OF_LIGHT_M_PER_S;
+const K_B = BOLTZMANN_CONSTANT_J_PER_K;
 const PROTON_MASS = 1.672_621_925_95e-27;
 const PARSEC = 3.085_677_581_491_367e16;
 const MEGAPARSEC = 1e6 * PARSEC;
@@ -60,17 +62,11 @@ const SOURCE_BLOCKERS: Record<AstroComparatorId, string> = {
 
 const SOURCE_CONTRACT_IDS = new Set<AstroComparatorId>(["EARTH-STAR-007", "EARTH-GAL-007"]);
 
-function bounded(value: number, name: string, minimum: number, maximum: number): number {
-  finiteNumber(value, name);
-  if (value < minimum || value > maximum) throw new RangeError(`${name} must be from ${minimum} to ${maximum}`);
-  return value;
-}
-
 function boundedValues(values: readonly number[], name: string, minimumLength: number, maximumLength: number, minimum: number, maximum: number): number[] {
   if (!Array.isArray(values) || values.length < minimumLength || values.length > maximumLength) {
     throw new RangeError(`${name} must contain ${minimumLength} to ${maximumLength} values`);
   }
-  return values.map((value, index) => bounded(value, `${name}[${index}]`, minimum, maximum));
+  return values.map((value, index) => boundedNumber(value, `${name}[${index}]`, minimum, maximum));
 }
 
 function text(value: string, name: string): string {
@@ -143,7 +139,7 @@ export function radialScalarProfileResidual(
   const radii = boundedValues(inputs.radii ?? DEFAULT_RADIAL_SCALAR_PROFILE_INPUTS.radii, "radii", 2, 4096, 0, 1e12);
   const profile = boundedValues(inputs.profile ?? DEFAULT_RADIAL_SCALAR_PROFILE_INPUTS.profile, "profile", 2, 4096, -1e12, 1e12);
   if (radii.length !== profile.length) throw new RangeError("radii and profile must have equal lengths");
-  const scaleRadius = bounded(inputs.scaleRadius ?? 1, "scaleRadius", 1e-12, 1e12);
+  const scaleRadius = boundedNumber(inputs.scaleRadius ?? 1, "scaleRadius", 1e-12, 1e12);
   const series = radii.map((radius, index) => {
     checkCancelled(options);
     if (index > 0 && radius <= radii[index - 1]!) throw new RangeError("radii must be strictly increasing");
@@ -180,9 +176,9 @@ export function canonicalScalarStressComponents(
   tangentialPressure: number;
   trace: number;
 }> {
-  const dt = bounded(inputs.timeDerivative ?? 0.5, "timeDerivative", -1e12, 1e12);
-  const dr = bounded(inputs.radialDerivative ?? 0.25, "radialDerivative", -1e12, 1e12);
-  const potential = bounded(inputs.potentialEnergyDensity ?? 0.125, "potentialEnergyDensity", -1e24, 1e24);
+  const dt = boundedNumber(inputs.timeDerivative ?? 0.5, "timeDerivative", -1e12, 1e12);
+  const dr = boundedNumber(inputs.radialDerivative ?? 0.25, "radialDerivative", -1e12, 1e12);
+  const potential = boundedNumber(inputs.potentialEnergyDensity ?? 0.125, "potentialEnergyDensity", -1e24, 1e24);
   const energyDensity = 0.5 * (dt * dt + dr * dr) + potential;
   const radialPressure = 0.5 * (dt * dt + dr * dr) - potential;
   const tangentialPressure = 0.5 * (dt * dt - dr * dr) - potential;
@@ -224,13 +220,13 @@ export function schwarzschildPpnObservables(
   lightDeflectionRadians: number;
   periapsisAdvanceRadiansPerOrbit: number;
 }> {
-  const mass = bounded(inputs.massKg ?? SOLAR_MASS, "massKg", 1, 1e45);
-  const radius = bounded(inputs.observerRadiusMetres ?? 6.957e8, "observerRadiusMetres", 1e-9, 1e30);
-  const impact = bounded(inputs.impactParameterMetres ?? radius, "impactParameterMetres", 1e-9, 1e30);
-  const semiMajor = bounded(inputs.orbitSemiMajorAxisMetres ?? 5.790_905e10, "orbitSemiMajorAxisMetres", 1e-9, 1e30);
-  const eccentricity = bounded(inputs.orbitEccentricity ?? 0.205_63, "orbitEccentricity", 0, 0.999_999);
-  const gamma = bounded(inputs.gamma ?? 1, "gamma", -10, 10);
-  const beta = bounded(inputs.beta ?? 1, "beta", -10, 10);
+  const mass = boundedNumber(inputs.massKg ?? SOLAR_MASS, "massKg", 1, 1e45);
+  const radius = boundedNumber(inputs.observerRadiusMetres ?? 6.957e8, "observerRadiusMetres", 1e-9, 1e30);
+  const impact = boundedNumber(inputs.impactParameterMetres ?? radius, "impactParameterMetres", 1e-9, 1e30);
+  const semiMajor = boundedNumber(inputs.orbitSemiMajorAxisMetres ?? 5.790_905e10, "orbitSemiMajorAxisMetres", 1e-9, 1e30);
+  const eccentricity = boundedNumber(inputs.orbitEccentricity ?? 0.205_63, "orbitEccentricity", 0, 0.999_999);
+  const gamma = boundedNumber(inputs.gamma ?? 1, "gamma", -10, 10);
+  const beta = boundedNumber(inputs.beta ?? 1, "beta", -10, 10);
   const schwarzschildRadiusMetres = 2 * G * mass / C ** 2;
   if (radius <= schwarzschildRadiusMetres) throw new RangeError("observerRadiusMetres must exceed the Schwarzschild radius");
   return comparison("EARTH-GRV-005", "Schwarzschild and first-PPN observable formula comparator", {
@@ -263,8 +259,8 @@ export function waveDispersionComparator(
   series: Array<{ waveNumber: number; angularFrequency: number; phaseSpeed: number; groupSpeed: number; nullResidual: number }>;
 }> {
   const waveNumbers = boundedValues(inputs.waveNumbers ?? DEFAULT_WAVE_DISPERSION_INPUTS.waveNumbers, "waveNumbers", 1, 4096, 1e-12, 1e12);
-  const speed = bounded(inputs.propagationSpeed ?? 1, "propagationSpeed", 1e-12, C);
-  const cutoff = bounded(inputs.cutoffAngularFrequency ?? 0, "cutoffAngularFrequency", 0, 1e30);
+  const speed = boundedNumber(inputs.propagationSpeed ?? 1, "propagationSpeed", 1e-12, C);
+  const cutoff = boundedNumber(inputs.cutoffAngularFrequency ?? 0, "cutoffAngularFrequency", 0, 1e30);
   const series = waveNumbers.map((waveNumber) => {
     checkCancelled(options);
     const angularFrequency = Math.hypot(speed * waveNumber, cutoff);
@@ -315,8 +311,8 @@ export function flatLambdaCdmBackground(
   hubbleTimeGyr: number;
   series: Array<{ redshift: number; hubbleKilometresPerSecondPerMegaparsec: number; comovingDistanceMegaparsecs: number; lookbackTimeGyr: number }>;
 }> {
-  const hubble = bounded(inputs.hubbleKilometresPerSecondPerMegaparsec ?? 70, "hubbleKilometresPerSecondPerMegaparsec", 1, 1e4);
-  const omegaMatter = bounded(inputs.omegaMatter ?? 0.3, "omegaMatter", 1e-6, 0.999_999);
+  const hubble = boundedNumber(inputs.hubbleKilometresPerSecondPerMegaparsec ?? 70, "hubbleKilometresPerSecondPerMegaparsec", 1, 1e4);
+  const omegaMatter = boundedNumber(inputs.omegaMatter ?? 0.3, "omegaMatter", 1e-6, 0.999_999);
   const omegaLambda = 1 - omegaMatter;
   const redshifts = boundedValues(inputs.redshifts ?? DEFAULT_FLAT_LAMBDA_CDM_INPUTS.redshifts, "redshifts", 1, 128, 0, 100);
   const steps = boundedInteger(inputs.quadratureSteps ?? 512, "quadratureSteps", 32, 8192);
@@ -361,9 +357,9 @@ export function linearGrowthComparator(
   logarithmicGrowthRate: number;
   omegaMatterFinal: number;
 }> {
-  const omegaMatter = bounded(inputs.omegaMatter ?? 0.3, "omegaMatter", 1e-6, 0.999_999);
-  const initial = bounded(inputs.initialScaleFactor ?? 1e-3, "initialScaleFactor", 1e-6, 0.5);
-  const final = bounded(inputs.finalScaleFactor ?? 1, "finalScaleFactor", initial + 1e-6, 1);
+  const omegaMatter = boundedNumber(inputs.omegaMatter ?? 0.3, "omegaMatter", 1e-6, 0.999_999);
+  const initial = boundedNumber(inputs.initialScaleFactor ?? 1e-3, "initialScaleFactor", 1e-6, 0.5);
+  const final = boundedNumber(inputs.finalScaleFactor ?? 1, "finalScaleFactor", initial + 1e-6, 1);
   const steps = boundedInteger(inputs.steps ?? 2048, "steps", 32, 65_536);
   const omegaLambda = 1 - omegaMatter;
   const dx = Math.log(final / initial) / steps;
@@ -412,7 +408,7 @@ export function toySachsWolfeSpectrum(
   approximation: "l(l+1)C_l/(2*pi)=A_s/25";
   series: Array<{ multipole: number; angularPower: number; scaledPower: number }>;
 }> {
-  const amplitude = bounded(inputs.scalarAmplitude ?? 2.1e-9, "scalarAmplitude", 1e-20, 1);
+  const amplitude = boundedNumber(inputs.scalarAmplitude ?? 2.1e-9, "scalarAmplitude", 1e-20, 1);
   const minimum = boundedInteger(inputs.minimumMultipole ?? 2, "minimumMultipole", 2, 4096);
   const maximum = boundedInteger(inputs.maximumMultipole ?? 30, "maximumMultipole", minimum, 4096);
   const series = Array.from({ length: maximum - minimum + 1 }, (_, offset) => {
@@ -452,12 +448,12 @@ export function baoToyCorrelation(
   peakSeparationMegaparsecs: number;
   series: Array<{ separationMegaparsecs: number; smoothBaseline: number; baoExcess: number; correlation: number }>;
 }> {
-  const minimum = bounded(inputs.minimumSeparationMegaparsecs ?? 40, "minimumSeparationMegaparsecs", 0.1, 1e4);
-  const maximum = bounded(inputs.maximumSeparationMegaparsecs ?? 160, "maximumSeparationMegaparsecs", minimum + 1e-6, 1e4);
+  const minimum = boundedNumber(inputs.minimumSeparationMegaparsecs ?? 40, "minimumSeparationMegaparsecs", 0.1, 1e4);
+  const maximum = boundedNumber(inputs.maximumSeparationMegaparsecs ?? 160, "maximumSeparationMegaparsecs", minimum + 1e-6, 1e4);
   const samples = boundedInteger(inputs.samples ?? 241, "samples", 3, 8193);
-  const peak = bounded(inputs.peakSeparationMegaparsecs ?? 105, "peakSeparationMegaparsecs", minimum, maximum);
-  const width = bounded(inputs.peakWidthMegaparsecs ?? 10, "peakWidthMegaparsecs", 1e-3, maximum - minimum);
-  const amplitude = bounded(inputs.peakAmplitude ?? 0.01, "peakAmplitude", 0, 1e6);
+  const peak = boundedNumber(inputs.peakSeparationMegaparsecs ?? 105, "peakSeparationMegaparsecs", minimum, maximum);
+  const width = boundedNumber(inputs.peakWidthMegaparsecs ?? 10, "peakWidthMegaparsecs", 1e-3, maximum - minimum);
+  const amplitude = boundedNumber(inputs.peakAmplitude ?? 0.01, "peakAmplitude", 0, 1e6);
   const series = linearSamples(minimum, maximum, samples).map((separationMegaparsecs) => {
     checkCancelled(options);
     const smoothBaseline = 0.002 * (separationMegaparsecs / 100) ** -2;
@@ -496,8 +492,8 @@ export function planetShellCircularityAudit(
   circular: boolean;
   eligibleAsIndependentResidual: boolean;
 }> {
-  const observed = bounded(inputs.observedRadiusMetres ?? 6.371e6, "observedRadiusMetres", 1, 1e12);
-  const scale = bounded(inputs.shellScaleMetres ?? 1e6, "shellScaleMetres", 1e-9, 1e12);
+  const observed = boundedNumber(inputs.observedRadiusMetres ?? 6.371e6, "observedRadiusMetres", 1, 1e12);
+  const scale = boundedNumber(inputs.shellScaleMetres ?? 1e6, "shellScaleMetres", 1e-9, 1e12);
   const count = boundedInteger(inputs.shellCount ?? 6, "shellCount", 1, 1_000_000);
   const countCircular = flag(inputs.shellCountDerivedFromObservedRadius ?? false, "shellCountDerivedFromObservedRadius");
   const scaleCircular = flag(inputs.shellScaleDerivedFromObservedRadius ?? false, "shellScaleDerivedFromObservedRadius");
@@ -533,9 +529,9 @@ export function profileBoundaryRatioAudit(
     const id = text(datum.id, `boundaries[${index}].id`);
     if (ids.has(id)) throw new RangeError(`boundary id must be unique: ${id}`);
     ids.add(id);
-    const below = bounded(datum.densityBelow, `boundaries[${index}].densityBelow`, 1e-30, 1e30);
-    const above = bounded(datum.densityAbove, `boundaries[${index}].densityAbove`, 1e-30, 1e30);
-    const claimedRatio = datum.claimedRatio === undefined ? null : bounded(datum.claimedRatio, `boundaries[${index}].claimedRatio`, 1e-30, 1e30);
+    const below = boundedNumber(datum.densityBelow, `boundaries[${index}].densityBelow`, 1e-30, 1e30);
+    const above = boundedNumber(datum.densityAbove, `boundaries[${index}].densityAbove`, 1e-30, 1e30);
+    const claimedRatio = datum.claimedRatio === undefined ? null : boundedNumber(datum.claimedRatio, `boundaries[${index}].claimedRatio`, 1e-30, 1e30);
     const ratioBelowToAbove = below / above;
     return { id, ratioBelowToAbove, claimedRatio, relativeResidual: claimedRatio === null ? null : relativeError(ratioBelowToAbove, claimedRatio) };
   });
@@ -555,8 +551,8 @@ export function newtonianHydrostaticSphere(
   centralPressurePascals: number;
   series: Array<{ radiusMetres: number; enclosedMassKg: number; gravityMetresPerSecondSquared: number; pressurePascals: number }>;
 }> {
-  const radius = bounded(inputs.radiusMetres ?? 1e6, "radiusMetres", 1, 1e10);
-  const density = bounded(inputs.densityKgPerCubicMetre ?? 5_500, "densityKgPerCubicMetre", 1e-12, 1e12);
+  const radius = boundedNumber(inputs.radiusMetres ?? 1e6, "radiusMetres", 1, 1e10);
+  const density = boundedNumber(inputs.densityKgPerCubicMetre ?? 5_500, "densityKgPerCubicMetre", 1e-12, 1e12);
   const samples = boundedInteger(inputs.samples ?? 65, "samples", 3, 4097);
   const centralPressurePascals = 2 * Math.PI * G * density ** 2 * radius ** 2 / 3;
   const series = linearSamples(0, radius, samples).map((r) => {
@@ -586,9 +582,9 @@ export function shearWaveBenchmark(
   shearSpeedMetresPerSecond: number;
   modes: Array<{ mode: number; wavelengthMetres: number; frequencyHertz: number }>;
 }> {
-  const length = bounded(inputs.lengthMetres ?? 1_000, "lengthMetres", 1e-6, 1e12);
-  const density = bounded(inputs.densityKgPerCubicMetre ?? 3_300, "densityKgPerCubicMetre", 1e-12, 1e12);
-  const modulus = bounded(inputs.shearModulusPascals ?? 60e9, "shearModulusPascals", 1e-12, 1e30);
+  const length = boundedNumber(inputs.lengthMetres ?? 1_000, "lengthMetres", 1e-6, 1e12);
+  const density = boundedNumber(inputs.densityKgPerCubicMetre ?? 3_300, "densityKgPerCubicMetre", 1e-12, 1e12);
+  const modulus = boundedNumber(inputs.shearModulusPascals ?? 60e9, "shearModulusPascals", 1e-12, 1e30);
   const modeCount = boundedInteger(inputs.modes ?? 8, "modes", 1, 4096);
   const speed = Math.sqrt(modulus / density);
   const modes = Array.from({ length: modeCount }, (_, index) => {
@@ -627,12 +623,12 @@ export function dynamoScalingComparator(
   magneticReynoldsNumber: number;
   elsasserNumber: number;
 }> {
-  const velocity = bounded(inputs.velocityMetresPerSecond ?? 1e-4, "velocityMetresPerSecond", 1e-20, 1e8);
-  const rotation = bounded(inputs.rotationRadiansPerSecond ?? 7.292_115e-5, "rotationRadiansPerSecond", 1e-20, 1e6);
-  const length = bounded(inputs.lengthMetres ?? 2.2e6, "lengthMetres", 1e-12, 1e12);
-  const diffusivity = bounded(inputs.magneticDiffusivitySquareMetresPerSecond ?? 1, "magneticDiffusivitySquareMetresPerSecond", 1e-20, 1e20);
-  const density = bounded(inputs.densityKgPerCubicMetre ?? 11_000, "densityKgPerCubicMetre", 1e-20, 1e20);
-  const field = bounded(inputs.magneticFieldTesla ?? 3e-3, "magneticFieldTesla", 0, 1e12);
+  const velocity = boundedNumber(inputs.velocityMetresPerSecond ?? 1e-4, "velocityMetresPerSecond", 1e-20, 1e8);
+  const rotation = boundedNumber(inputs.rotationRadiansPerSecond ?? 7.292_115e-5, "rotationRadiansPerSecond", 1e-20, 1e6);
+  const length = boundedNumber(inputs.lengthMetres ?? 2.2e6, "lengthMetres", 1e-12, 1e12);
+  const diffusivity = boundedNumber(inputs.magneticDiffusivitySquareMetresPerSecond ?? 1, "magneticDiffusivitySquareMetresPerSecond", 1e-20, 1e20);
+  const density = boundedNumber(inputs.densityKgPerCubicMetre ?? 11_000, "densityKgPerCubicMetre", 1e-20, 1e20);
+  const field = boundedNumber(inputs.magneticFieldTesla ?? 3e-3, "magneticFieldTesla", 0, 1e12);
   const mu0 = 4e-7 * Math.PI;
   return comparison("EARTH-PLAN-006", "Dimensionless rotating-conducting-fluid scaling contract", {
     rossbyNumber: velocity / (rotation * length),
@@ -652,7 +648,7 @@ export function orbitalRatioMultiplicityAudit(
   series: Array<{ ratio: number; nearestExponent: number; nearestPower: number; logResidual: number; multiplicityCorrectedScore: number }>;
 }> {
   const ratios = boundedValues(inputs.ratios ?? DEFAULT_ORBITAL_RATIO_INPUTS.ratios, "ratios", 1, 4096, 1e-12, 1e12);
-  const base = bounded(inputs.ratioBase ?? 2 ** (1 / 3), "ratioBase", 1.000_001, 100);
+  const base = boundedNumber(inputs.ratioBase ?? 2 ** (1 / 3), "ratioBase", 1.000_001, 100);
   const minimum = boundedInteger(inputs.minimumExponent ?? -12, "minimumExponent", -128, 128);
   const maximum = boundedInteger(inputs.maximumExponent ?? 12, "maximumExponent", minimum, 128);
   const testedPowers = maximum - minimum + 1;
@@ -691,11 +687,11 @@ export function jeansEscapeComparator(
   mostProbableThermalSpeedMetresPerSecond: number;
   escapeFluxPerSquareMetrePerSecond: number;
 }> {
-  const mass = bounded(inputs.planetMassKg ?? 5.9722e24, "planetMassKg", 1, 1e35);
-  const radius = bounded(inputs.exobaseRadiusMetres ?? 6.5e6, "exobaseRadiusMetres", 1, 1e12);
-  const temperature = bounded(inputs.exobaseTemperatureKelvin ?? 1_000, "exobaseTemperatureKelvin", 1, 1e9);
-  const particleMass = bounded(inputs.particleMassKg ?? PROTON_MASS, "particleMassKg", 1e-32, 1e-20);
-  const numberDensity = bounded(inputs.numberDensityPerCubicMetre ?? 1e12, "numberDensityPerCubicMetre", 0, 1e40);
+  const mass = boundedNumber(inputs.planetMassKg ?? 5.9722e24, "planetMassKg", 1, 1e35);
+  const radius = boundedNumber(inputs.exobaseRadiusMetres ?? 6.5e6, "exobaseRadiusMetres", 1, 1e12);
+  const temperature = boundedNumber(inputs.exobaseTemperatureKelvin ?? 1_000, "exobaseTemperatureKelvin", 1, 1e9);
+  const particleMass = boundedNumber(inputs.particleMassKg ?? PROTON_MASS, "particleMassKg", 1e-32, 1e-20);
+  const numberDensity = boundedNumber(inputs.numberDensityPerCubicMetre ?? 1e12, "numberDensityPerCubicMetre", 0, 1e40);
   const jeansParameter = G * mass * particleMass / (K_B * temperature * radius);
   const thermalSpeed = Math.sqrt(2 * K_B * temperature / particleMass);
   return comparison("EARTH-PLAN-011", "Collisionless Maxwellian Jeans escape at a user-specified exobase", {
@@ -722,16 +718,16 @@ export function stellarMassRadiusResidualAudit(
 }> {
   const data = inputs.data ?? DEFAULT_STELLAR_MASS_RADIUS_INPUTS.data;
   if (!Array.isArray(data) || data.length < 1 || data.length > 4096) throw new RangeError("data must contain 1 to 4096 entries");
-  const normalization = bounded(inputs.normalization ?? 1, "normalization", 1e-12, 1e12);
-  const exponent = bounded(inputs.exponent ?? 0.8, "exponent", -10, 10);
+  const normalization = boundedNumber(inputs.normalization ?? 1, "normalization", 1e-12, 1e12);
+  const exponent = boundedNumber(inputs.exponent ?? 0.8, "exponent", -10, 10);
   const ids = new Set<string>();
   const series = data.map((datum, index) => {
     checkCancelled(options);
     const id = text(datum.id, `data[${index}].id`);
     if (ids.has(id)) throw new RangeError(`datum id must be unique: ${id}`);
     ids.add(id);
-    const mass = bounded(datum.massSolar, `data[${index}].massSolar`, 1e-6, 1e6);
-    const radius = bounded(datum.radiusSolar, `data[${index}].radiusSolar`, 1e-6, 1e6);
+    const mass = boundedNumber(datum.massSolar, `data[${index}].massSolar`, 1e-6, 1e6);
+    const radius = boundedNumber(datum.radiusSolar, `data[${index}].radiusSolar`, 1e-6, 1e6);
     const predictedRadiusSolar = normalization * mass ** exponent;
     return { id, predictedRadiusSolar, residualDex: Math.log10(radius / predictedRadiusSolar) };
   });
@@ -752,9 +748,9 @@ export function laneEmdenPolytrope(
   dimensionlessMass: number;
   pointsComputed: number;
 }> {
-  const index = bounded(inputs.polytropicIndex ?? 1, "polytropicIndex", 0, 4.9);
-  const step = bounded(inputs.stepSize ?? 0.002, "stepSize", 1e-5, 0.05);
-  const maximumXi = bounded(inputs.maximumXi ?? 10, "maximumXi", 1, 100);
+  const index = boundedNumber(inputs.polytropicIndex ?? 1, "polytropicIndex", 0, 4.9);
+  const step = boundedNumber(inputs.stepSize ?? 0.002, "stepSize", 1e-5, 0.05);
+  const maximumXi = boundedNumber(inputs.maximumXi ?? 10, "maximumXi", 1, 100);
   const maximumSteps = Math.ceil(maximumXi / step);
   if (maximumSteps > 1_000_000) throw new RangeError("maximumXi/stepSize must not exceed 1000000");
   let xi = step;
@@ -816,8 +812,8 @@ export function hrMassLuminosityRegression(
   const rows = data.map((datum, index) => {
     checkCancelled(options);
     return {
-      x: Math.log10(bounded(datum.massSolar, `data[${index}].massSolar`, 1e-6, 1e6)),
-      y: Math.log10(bounded(datum.luminositySolar, `data[${index}].luminositySolar`, 1e-12, 1e18)),
+      x: Math.log10(boundedNumber(datum.massSolar, `data[${index}].massSolar`, 1e-6, 1e6)),
+      y: Math.log10(boundedNumber(datum.luminositySolar, `data[${index}].luminositySolar`, 1e-12, 1e18)),
       heldOut: flag(datum.heldOut ?? false, `data[${index}].heldOut`),
     };
   });
@@ -863,8 +859,8 @@ export function boundedPeriodogram(
   const times = boundedValues(inputs.times ?? DEFAULT_PERIOD_TIMES, "times", 4, 4096, -1e12, 1e12);
   const values = boundedValues(inputs.values ?? DEFAULT_PERIOD_VALUES, "values", 4, 4096, -1e30, 1e30);
   if (times.length !== values.length) throw new RangeError("times and values must have equal lengths");
-  const minimum = bounded(inputs.minimumFrequency ?? 0.05, "minimumFrequency", 1e-12, 1e12);
-  const maximum = bounded(inputs.maximumFrequency ?? 1, "maximumFrequency", minimum + 1e-12, 1e12);
+  const minimum = boundedNumber(inputs.minimumFrequency ?? 0.05, "minimumFrequency", 1e-12, 1e12);
+  const maximum = boundedNumber(inputs.maximumFrequency ?? 1, "maximumFrequency", minimum + 1e-12, 1e12);
   const frequencies = boundedInteger(inputs.frequencies ?? 256, "frequencies", 3, 8192);
   const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
   const variance = values.reduce((sum, value) => sum + (value - mean) ** 2, 0);
@@ -909,8 +905,8 @@ export function radialOscillatorModes(
   boundaryCondition: "u(0)=u(R)=0";
   modes: Array<{ radialOrder: number; angularFrequencyRadiansPerSecond: number; periodSeconds: number }>;
 }> {
-  const radius = bounded(inputs.radiusMetres ?? 6.957e8, "radiusMetres", 1, 1e15);
-  const soundSpeed = bounded(inputs.soundSpeedMetresPerSecond ?? 2e5, "soundSpeedMetresPerSecond", 1e-9, C);
+  const radius = boundedNumber(inputs.radiusMetres ?? 6.957e8, "radiusMetres", 1, 1e15);
+  const soundSpeed = boundedNumber(inputs.soundSpeedMetresPerSecond ?? 2e5, "soundSpeedMetresPerSecond", 1e-9, C);
   const count = boundedInteger(inputs.modes ?? 8, "modes", 1, 4096);
   const modes = Array.from({ length: count }, (_, index) => {
     checkCancelled(options);
@@ -936,8 +932,8 @@ export function compactObjectFormulaContract(
   newtonianBindingEnergyJoules: number;
   outsideHorizon: boolean;
 }> {
-  const mass = bounded(inputs.massKg ?? 1.4 * SOLAR_MASS, "massKg", 1, 1e40);
-  const radius = bounded(inputs.radiusMetres ?? 12_000, "radiusMetres", 1e-6, 1e20);
+  const mass = boundedNumber(inputs.massKg ?? 1.4 * SOLAR_MASS, "massKg", 1, 1e40);
+  const radius = boundedNumber(inputs.radiusMetres ?? 12_000, "radiusMetres", 1e-6, 1e20);
   const schwarzschildRadiusMetres = 2 * G * mass / C ** 2;
   const outsideHorizon = radius > schwarzschildRadiusMetres;
   return comparison("EARTH-STAR-007", "Compact-object algebra contract; no collapse, TOV, neutrino, shock, or kick evolution", {
@@ -974,8 +970,8 @@ export function galaxyMorphologyPitchResidualAudit(
     const id = text(datum.id, `data[${index}].id`);
     if (ids.has(id)) throw new RangeError(`datum id must be unique: ${id}`);
     ids.add(id);
-    const observed = bounded(datum.observedPitchDegrees, `data[${index}].observedPitchDegrees`, -90, 90);
-    const predicted = bounded(datum.predictedPitchDegrees, `data[${index}].predictedPitchDegrees`, -90, 90);
+    const observed = boundedNumber(datum.observedPitchDegrees, `data[${index}].observedPitchDegrees`, -90, 90);
+    const predicted = boundedNumber(datum.predictedPitchDegrees, `data[${index}].predictedPitchDegrees`, -90, 90);
     return {
       id,
       pitchResidualDegrees: predicted - observed,
@@ -1005,10 +1001,10 @@ export function linearDiskDensityMode(
   oscillationAngularFrequency: number | null;
   growthRatePerSecond: number | null;
 }> {
-  const density = bounded(inputs.surfaceDensityKgPerSquareMetre ?? 1, "surfaceDensityKgPerSquareMetre", 1e-20, 1e20);
-  const epicyclic = bounded(inputs.epicyclicFrequencyRadiansPerSecond ?? 1e-15, "epicyclicFrequencyRadiansPerSecond", 0, 1e6);
-  const dispersion = bounded(inputs.radialDispersionMetresPerSecond ?? 10_000, "radialDispersionMetresPerSecond", 0, C);
-  const waveNumber = bounded(inputs.waveNumberPerMetre ?? 1e-20, "waveNumberPerMetre", 1e-40, 1e3);
+  const density = boundedNumber(inputs.surfaceDensityKgPerSquareMetre ?? 1, "surfaceDensityKgPerSquareMetre", 1e-20, 1e20);
+  const epicyclic = boundedNumber(inputs.epicyclicFrequencyRadiansPerSecond ?? 1e-15, "epicyclicFrequencyRadiansPerSecond", 0, 1e6);
+  const dispersion = boundedNumber(inputs.radialDispersionMetresPerSecond ?? 10_000, "radialDispersionMetresPerSecond", 0, C);
+  const waveNumber = boundedNumber(inputs.waveNumberPerMetre ?? 1e-20, "waveNumberPerMetre", 1e-40, 1e3);
   const omegaSquared = epicyclic ** 2 - 2 * Math.PI * G * density * waveNumber + dispersion ** 2 * waveNumber ** 2;
   return comparison("EARTH-GAL-002", "Local razor-thin fluid-disk axisymmetric dispersion relation", {
     dispersionAngularFrequencySquared: omegaSquared,
@@ -1040,14 +1036,14 @@ export function rotationCurveResidualAudit(
   let previousRadius = -Infinity;
   const series = data.map((datum, index) => {
     checkCancelled(options);
-    const radiusKiloparsecs = bounded(datum.radiusKiloparsecs, `data[${index}].radiusKiloparsecs`, 1e-9, 1e6);
+    const radiusKiloparsecs = boundedNumber(datum.radiusKiloparsecs, `data[${index}].radiusKiloparsecs`, 1e-9, 1e6);
     if (radiusKiloparsecs <= previousRadius) throw new RangeError("data radii must be strictly increasing");
     previousRadius = radiusKiloparsecs;
-    const observed = bounded(datum.observedKilometresPerSecond, `data[${index}].observedKilometresPerSecond`, 0, 1e7);
-    const model = bounded(datum.modelKilometresPerSecond, `data[${index}].modelKilometresPerSecond`, 0, 1e7);
+    const observed = boundedNumber(datum.observedKilometresPerSecond, `data[${index}].observedKilometresPerSecond`, 0, 1e7);
+    const model = boundedNumber(datum.modelKilometresPerSecond, `data[${index}].modelKilometresPerSecond`, 0, 1e7);
     const uncertainty = datum.uncertaintyKilometresPerSecond === undefined
       ? null
-      : bounded(datum.uncertaintyKilometresPerSecond, `data[${index}].uncertaintyKilometresPerSecond`, 1e-12, 1e7);
+      : boundedNumber(datum.uncertaintyKilometresPerSecond, `data[${index}].uncertaintyKilometresPerSecond`, 1e-12, 1e7);
     const residualKilometresPerSecond = observed - model;
     return { radiusKiloparsecs, residualKilometresPerSecond, standardizedResidual: uncertainty === null ? null : residualKilometresPerSecond / uncertainty };
   });
@@ -1071,10 +1067,10 @@ export function habitableZoneMonotonicityAudit(
   crossingRadiusKiloparsecs: number | null;
   canDefineBoundedAnnulus: false;
 }> {
-  const minimum = bounded(inputs.minimumRadiusKiloparsecs ?? 0, "minimumRadiusKiloparsecs", 0, 1e6);
-  const maximum = bounded(inputs.maximumRadiusKiloparsecs ?? 30, "maximumRadiusKiloparsecs", minimum + 1e-9, 1e6);
-  const scale = bounded(inputs.scaleLengthKiloparsecs ?? 5, "scaleLengthKiloparsecs", 1e-9, 1e6);
-  const threshold = bounded(inputs.threshold ?? 0.2, "threshold", 1e-12, 0.999_999_999_999);
+  const minimum = boundedNumber(inputs.minimumRadiusKiloparsecs ?? 0, "minimumRadiusKiloparsecs", 0, 1e6);
+  const maximum = boundedNumber(inputs.maximumRadiusKiloparsecs ?? 30, "maximumRadiusKiloparsecs", minimum + 1e-9, 1e6);
+  const scale = boundedNumber(inputs.scaleLengthKiloparsecs ?? 5, "scaleLengthKiloparsecs", 1e-9, 1e6);
+  const threshold = boundedNumber(inputs.threshold ?? 0.2, "threshold", 1e-12, 0.999_999_999_999);
   const samples = boundedInteger(inputs.samples ?? 301, "samples", 3, 8193);
   let thresholdCrossings = 0;
   let crossingRadiusKiloparsecs: number | null = null;
@@ -1115,12 +1111,12 @@ export function lensingClusterFormulaContract(
   einsteinAngleRadians: number;
   virialVelocityDispersionMetresPerSecond: number;
 }> {
-  const mass = bounded(inputs.lensMassKg ?? 1e14 * SOLAR_MASS, "lensMassKg", 1, 1e50);
-  const impact = bounded(inputs.impactParameterMetres ?? 500 * 1_000 * PARSEC, "impactParameterMetres", 1, 1e30);
-  const lensDistance = bounded(inputs.lensDistanceMetres ?? 800 * MEGAPARSEC, "lensDistanceMetres", 1, 1e30);
-  const sourceDistance = bounded(inputs.sourceDistanceMetres ?? 1_600 * MEGAPARSEC, "sourceDistanceMetres", 1, 1e30);
-  const lensSourceDistance = bounded(inputs.lensSourceDistanceMetres ?? 1_000 * MEGAPARSEC, "lensSourceDistanceMetres", 1, 1e30);
-  const radius = bounded(inputs.clusterRadiusMetres ?? MEGAPARSEC, "clusterRadiusMetres", 1, 1e30);
+  const mass = boundedNumber(inputs.lensMassKg ?? 1e14 * SOLAR_MASS, "lensMassKg", 1, 1e50);
+  const impact = boundedNumber(inputs.impactParameterMetres ?? 500 * 1_000 * PARSEC, "impactParameterMetres", 1, 1e30);
+  const lensDistance = boundedNumber(inputs.lensDistanceMetres ?? 800 * MEGAPARSEC, "lensDistanceMetres", 1, 1e30);
+  const sourceDistance = boundedNumber(inputs.sourceDistanceMetres ?? 1_600 * MEGAPARSEC, "sourceDistanceMetres", 1, 1e30);
+  const lensSourceDistance = boundedNumber(inputs.lensSourceDistanceMetres ?? 1_000 * MEGAPARSEC, "lensSourceDistanceMetres", 1, 1e30);
+  const radius = boundedNumber(inputs.clusterRadiusMetres ?? MEGAPARSEC, "clusterRadiusMetres", 1, 1e30);
   if (lensDistance >= sourceDistance) throw new RangeError("lensDistanceMetres must be less than sourceDistanceMetres");
   if (lensSourceDistance > sourceDistance) throw new RangeError("lensSourceDistanceMetres must not exceed sourceDistanceMetres");
   return comparison("EARTH-GAL-007", "Point-lens and virial cluster formula contract with user-supplied distances and mass", {
