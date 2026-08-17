@@ -87,7 +87,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/galpy",
-        "revision": "3762e73ef845",
+        "revision": "3762e73ef84578f4a911325d283e652eb1886625",
         "files": [
           ".github/workflows/build_pyodide_wheels.yml",
           "setup.py",
@@ -101,19 +101,19 @@
         ]
       },
       "build": {
-        "family": "pyodide",
-        "command": "python -m pip install pyodide-build && export EMSCRIPTEN_VERSION=\"$(pyodide config get emscripten_version)\" && emconfigure ./configure --disable-shared --prefix=\"$PWD/.libs\" CFLAGS=-fPIC && emmake make --parallel 3 && CFLAGS=\"$(pkg-config --cflags-only-I --dont-define-prefix gsl)\" LDFLAGS=\"$(pkg-config --libs-only-L --dont-define-prefix gsl)\" pyodide build",
-        "toolchain": "CPython 3.12 or 3.13 with pyodide-build selecting its reported Emscripten version; build and statically link GSL 2.8 before pyodide build.",
+        "family": "emscripten",
+        "command": "node scripts/awesomePhysics/wasm/galpy/build.mjs --source <pinned galpy checkout> --output <empty out-of-tree directory>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; standalone MWPotential2014/orbit ABI; INITIAL_MEMORY=1048576; no pthreads.",
         "workingDirectory": "awesome-physics-repos/galpy"
       },
       "output": {
-        "module": "A pinned galpy Pyodide wheel loaded by the local Pyodide runtime",
-        "workerBoundary": "A dedicated worker owns Pyodide startup, numeric-array-only MWPotential/orbit calls, cancellation, and serialized traces.",
-        "artifactKind": "pyodide-wheel"
+        "module": "galpy.js companion plus galpy.wasm MWPotential2014 leapfrog ABI",
+        "workerBoundary": "The existing module worker loads the verified local companion and standalone WASM, owns one bounded MWPotential2014 orbit, cancellation, and numeric-array samples.",
+        "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Bound Pyodide and galpy allocations to 256 MiB; accept only bounded numeric arrays and reject larger orbit grids.",
-        "threadPolicy": "Single worker and single Python execution lane; no pthreads or shared-memory arrays.",
+        "memoryPolicy": "Standalone MWPotential2014 module with 1 MiB linear memory and no growth; accept only bounded numeric arrays and reject larger orbit grids.",
+        "threadPolicy": "Single worker and single leapfrog lane; no pthreads, shared-memory arrays, or Python runtime.",
         "maxMemoryBytes": 268435456,
         "maxArtifactBytes": 67108864,
         "maxWorkerTimeMs": 15000,
@@ -123,24 +123,32 @@
         "status": "pass",
         "license": "BSD-3-Clause",
         "noticeRequirements": [
-          "Retain the galpy LICENSE and AUTHORS metadata with the wheel or any extracted module.",
-          "Review GSL and Pyodide dependency notices before redistribution."
+          "Retain the galpy LICENSE and AUTHORS metadata with the module.",
+          "Retain the Emscripten/musl notices listed in the galpy artifact NOTICE.md."
         ]
       },
       "proofRequirements": [
-        "Reproduce the repository's pyodide-build workflow and record the Python, Pyodide, Emscripten, and GSL revisions.",
-        "Run a bounded MWPotential/orbit numeric-array smoke test inside a worker.",
-        "Prove cancellation, startup time, cache behavior, output-size budget, and license compliance."
+        "Reproduce the pinned standalone Emscripten MWPotential2014/orbit build and fail on any output hash or byte-size drift.",
+        "Run a bounded MWPotential2014 leapfrog numeric-array smoke test through the local module worker.",
+        "Prove cancellation, local MIME/hash checks for both files, output-size budget, and BSD-3-Clause notice compliance."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/galpy/galpy.wasm",
+        "sha256": "0e053c12eaa70b3bf771697505acaa049269c481c7d1f9ac363e8f5cf08f7720",
+        "byteSize": 19591,
+        "companion": {
+          "path": "wasm/awesomePhysics/galpy/galpy.js",
+          "sha256": "becd50f707575c4e8ad3fb45c67e9e5ffcdfed57401a08c33b4169daad427696",
+          "byteSize": 594
+        }
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:116",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:230"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+        "scripts/awesomePhysics/wasm/galpy/README.md",
+        "scripts/awesomePhysics/wasm/galpy/NOTICE.md",
+        "public/wasm/awesomePhysics/galpy/NOTICE.md"
       ]
     },
     {
@@ -149,60 +157,74 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/cantera",
-        "revision": "11a2381011cb",
+        "revision": "11a2381011cb6d42e61cc4c195e0f920864bf8d3",
         "files": [
-          "doc/sphinx/develop/distribution-packages/pyodide-wheel.md",
-          "interfaces/python_sdist/build_pyodide_wheel.py",
-          "interfaces/python_sdist/CMakeLists.txt",
-          "pixi.toml",
-          "LICENSE.txt"
+          "License.txt",
+          "include/cantera/core.h",
+          "include/cantera/zerodim.h",
+          "src/thermo",
+          "src/equil",
+          "src/zeroD",
+          "data/h2o2.yaml",
+          "data/element-standard-entropies.yaml"
         ],
         "evidenceRefs": [
           "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
-          "awesome-physics-repos/CLONE_MANIFEST.tsv:27"
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27",
+          "scripts/awesomePhysics/wasm/cantera/README.md"
         ]
       },
       "build": {
-        "family": "pyodide",
-        "command": "pixi run -e pyodide scons pyodide-wheel",
-        "toolchain": "The repository's pixi pyodide environment: Python 3.13, pyodide-build >=0.33.0,<0.34, CMake >=3.27,<4, Ninja, Boost, SCons, Cython, NumPy, ruamel.yaml, Node.js, and Make.",
+        "family": "emscripten",
+        "command": "node scripts/awesomePhysics/wasm/cantera/build.mjs --source <clean pinned cantera checkout> --output <empty out-of-tree directory> --em-cache <pinned Emscripten cache>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; standalone thermo/HP-equilibrium/zero-D ABI; MAXIMUM_MEMORY=268435456; no pthreads; selected h2o2.yaml plus embedded element-standard-entropies.yaml.",
         "workingDirectory": "awesome-physics-repos/cantera"
       },
       "output": {
-        "module": "A pinned Cantera Pyodide wheel with the reduced CANTERA_PYODIDE static extension",
-        "workerBoundary": "A dedicated worker owns Pyodide startup, selected thermo/equilibrium and zero-D reactor calls, cancellation, and bounded YAML/data loading.",
-        "artifactKind": "pyodide-wheel"
+        "module": "cantera.js companion plus cantera.wasm thermo / HP-equilibrium / zero-D reactor ABI",
+        "workerBoundary": "The existing module worker loads the verified local companion and standalone WASM and owns one bounded ohmech H2/O2 fixture; Pyodide, 1-D flames, and the full data directory stay outside the boundary.",
+        "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Bound the Pyodide runtime and selected mechanism/YAML data to 256 MiB; reject unbounded mechanism and flame requests.",
-        "threadPolicy": "Single worker and single Python execution lane; pthreads and shared memory are disabled.",
+        "memoryPolicy": "Cap the standalone module at 256 MiB and bound temperature, pressure, and reactor time before execution.",
+        "threadPolicy": "Single-threaded wasm32 execution in the existing module worker; pthreads and shared memory are disabled.",
         "maxMemoryBytes": 268435456,
         "maxArtifactBytes": 67108864,
         "maxWorkerTimeMs": 15000,
         "maxOutputBytes": 4194304
       },
       "licenseGate": {
-        "status": "review",
+        "status": "pass",
         "license": "BSD-3-Clause with government notices",
         "noticeRequirements": [
-          "Retain the Cantera BSD-3-Clause text and all required government notices.",
-          "Review selected YAML mechanism/data redistribution rights and Pyodide dependency notices."
+          "Retain the Cantera BSD-3-Clause text, Caltech copyright, and Sandia Contract AC04-94AL85000 government notices.",
+          "Retain the GRI-Mech 3.0 citation for selected h2o2.yaml and the NIST-JANAF/USGS citations for embedded element-standard-entropies.yaml.",
+          "Retain the Eigen MPL-2.0, yaml-cpp/fmt MIT, SUNDIALS BSD-3-Clause, Boost BSL-1.0, and Emscripten notices listed in NOTICE.md."
         ]
       },
       "proofRequirements": [
-        "Reproduce the documented two-stage sdist then Pyodide-wheel build in the pinned pixi environment.",
-        "Run thermo/equilibrium and one zero-D reactor smoke test through the worker with only selected YAML data.",
-        "Prove cancellation, startup and output-size budgets, cache behavior, and BSD/government notice compliance."
+        "Reproduce the pinned standalone Emscripten Cantera ABI build and fail on any output hash or byte-size drift.",
+        "Run bounded thermo, HP equilibrium, and one zero-D reactor smoke tests through the local module worker with only selected YAML data.",
+        "Prove cancellation, local MIME/hash checks for both files, output-size budget, and BSD/government/third-party notice compliance. The Pyodide wheel remains a documented comparison path, not the runtime."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/cantera/cantera.wasm",
+        "sha256": "f09ed0cdef7892938820208ca94a4940d58d2466ecf1e4b428b046ed4c2ac2e9",
+        "byteSize": 3220251,
+        "companion": {
+          "path": "wasm/awesomePhysics/cantera/cantera.js",
+          "sha256": "d4aa7a5ded8cfb70abc178de1f30e3c12a2c75998a8afbef97d48c6d68de0a61",
+          "byteSize": 380
+        }
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:117",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:177"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+        "scripts/awesomePhysics/wasm/cantera/README.md",
+        "scripts/awesomePhysics/wasm/cantera/build-ledger.json",
+        "scripts/awesomePhysics/wasm/cantera/NOTICE.md",
+        "public/wasm/awesomePhysics/cantera/NOTICE.md"
       ]
     },
     {
@@ -324,8 +346,8 @@
       "status": "available",
       "artifact": {
         "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm",
-        "sha256": "ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1",
-        "byteSize": 367036,
+        "sha256": "e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba",
+        "byteSize": 366856,
         "companion": {
           "path": "wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js",
           "sha256": "364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26",
@@ -347,7 +369,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/pymunk",
-        "revision": "6287ce6d9223",
+        "revision": "6287ce6d9223d1d79d28b2c26f37499f45b445b8",
         "files": [
           ".github/workflows/wheels.yml",
           "pyproject.toml",
@@ -361,21 +383,21 @@
         ]
       },
       "build": {
-        "family": "pyodide",
-        "command": "CIBW_PLATFORM=pyodide python -m cibuildwheel --output-dir wheelhouse",
-        "toolchain": "The repository's cibuildwheel pyodide platform with submodules checked out and PYMUNK_BUILD_SLIM=1; build the wheel, not the desktop examples.",
+        "family": "emscripten-headless",
+        "command": "node scripts/awesomePhysics/wasm/pymunk/build.mjs --source <clean pinned pymunk checkout> --output <empty .wasm-build/pymunk directory> --install",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; Munk2D gitlink 47b0e6b200c1aedb7b9ee09a998a2ef0bbad8f82 cloned out-of-tree; INITIAL_MEMORY=16777216; MAXIMUM_MEMORY=134217728; no pthreads.",
         "workingDirectory": "awesome-physics-repos/pymunk"
       },
       "output": {
-        "module": "A pinned pymunk Pyodide wheel containing the slim Chipmunk extension",
-        "workerBoundary": "A dedicated worker owns Pyodide startup and bounded headless 2D Space stepping; drawing utilities, pygame, and desktop callbacks stay outside the boundary.",
-        "artifactKind": "pyodide-wheel"
+        "module": "pymunk.wasm headless Chipmunk ground-and-ball ABI",
+        "workerBoundary": "The existing module worker loads the verified local raw WASM module and owns bounded snapshot/step calls; drawing utilities, pygame, threaded spaces, and Pyodide stay outside the boundary.",
+        "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Bound Pyodide and the Chipmunk space to 128 MiB with explicit body, shape, and step limits.",
-        "threadPolicy": "Single worker and single Python execution lane; threaded-space examples and pthreads are excluded.",
+        "memoryPolicy": "Cap the Chipmunk space at 128 MiB with explicit body, shape, and step limits.",
+        "threadPolicy": "Single-threaded wasm32 execution in the existing module worker; threaded-space examples and pthreads are excluded.",
         "maxMemoryBytes": 134217728,
-        "maxArtifactBytes": 33554432,
+        "maxArtifactBytes": 1048576,
         "maxWorkerTimeMs": 10000,
         "maxOutputBytes": 4194304
       },
@@ -383,24 +405,28 @@
         "status": "pass",
         "license": "MIT",
         "noticeRequirements": [
-          "Retain the Pymunk MIT license and Chipmunk attribution with the wheel.",
-          "Review the cffi and Pyodide dependency notices before redistribution."
+          "Retain the Pymunk MIT license and Chipmunk/Munk2D attribution with the module.",
+          "Retain the Emscripten/musl notices listed in the public NOTICE.md."
         ]
       },
       "proofRequirements": [
-        "Reproduce the repository's CIBW_PLATFORM=pyodide wheel workflow with the pinned source revision.",
-        "Compare the Pyodide worker against a small direct TypeScript adapter using headless physics only.",
-        "Prove cancellation, cache behavior, output-size budget, and MIT/Chipmunk notice compliance."
+        "Reproduce the pinned Munk2D/Chipmunk Emscripten-headless build with the pinned pymunk revision and fail on any output hash or byte-size drift.",
+        "Run bounded headless snapshot/step calls through the existing module worker and prove cancellation plus finite JSON-safe output.",
+        "Prove local MIME/hash checks, output-size budget, and MIT/Chipmunk notice compliance. The Pyodide wheel remains a documented comparison path, not the runtime."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/pymunk/pymunk.wasm",
+        "sha256": "0166b68c54e17b3892ca675749afdc065806e8df5636fc55e89d8d4badb67158",
+        "byteSize": 76555
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:120",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:164"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+        "scripts/awesomePhysics/wasm/pymunk/README.md",
+        "scripts/awesomePhysics/wasm/pymunk/build-ledger.json",
+        "scripts/awesomePhysics/wasm/pymunk/NOTICE.md",
+        "public/wasm/awesomePhysics/pymunk/NOTICE.md"
       ]
     },
     {

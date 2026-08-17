@@ -149,7 +149,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/PhysX-3.4",
-        "revision": "5e42a5f11235",
+        "revision": "5e42a5f112351a223c19c17bb331e6c55037b8eb",
         "files": [
           "README.md",
           "PhysX_3.4/Source/Common",
@@ -164,12 +164,12 @@
       },
       "build": {
         "family": "emscripten-headless",
-        "command": "emcmake cmake -S ports/physx-headless -B build-wasm -DPHYSX_BUILD_GPU=OFF -DPHYSX_BUILD_APEX=OFF -DPHYSX_BUILD_SAMPLES=OFF -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm --parallel 4",
-        "toolchain": "Emscripten SDK with a new repository-local CMake port façade over the PhysX CPU SDK; APEX, GPU, samples, platform layers, and filesystem assumptions are excluded.",
-        "workingDirectory": "awesome-physics-repos/PhysX-3.4"
+        "command": "node scripts/awesomePhysics/wasm/physx/build.mjs --source <pinned PhysX-3.4 checkout> --output <empty out-of-tree directory> --em-cache <pinned Emscripten cache> --toolchain <Emscripten CMake toolchain file>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; repository-local CMake façade over the PhysX 3.4 CPU SDK with a 12 GiB compile RSS cap, PX_SIMD_DISABLED, no APEX/GPU/PVD/samples; runtime MAXIMUM_MEMORY=256 MiB.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "A future PhysX-3.4 CPU sample C ABI façade plus physx-3-4.wasm",
+        "module": "PhysX-3.4 CPU sample C ABI façade (physx_version/physx_step) plus physx-3-4.wasm",
         "workerBoundary": "A dedicated worker owns a narrow headless scene and POD buffers, explicit memory ownership, cancellation, and copied simulation output; no SDK object graph crosses to Vue.",
         "artifactKind": "wasm-module"
       },
@@ -182,11 +182,11 @@
         "maxOutputBytes": 4194304
       },
       "licenseGate": {
-        "status": "review",
-        "license": "BSD-style NVIDIA license with bundled third-party notices",
+        "status": "pass",
+        "license": "NVIDIA BSD-style for the selected CPU subset",
         "noticeRequirements": [
-          "Retain the NVIDIA copyright, BSD-style conditions, disclaimer, and acknowledgements.",
-          "Review the selected SDK subset and every bundled third-party notice before redistribution."
+          "Retain the NVIDIA copyright, BSD-style conditions, disclaimer, and AGEIA/NovodeX header copyrights.",
+          "Sample/APEX third-party names in the root README are out of scope for this subset."
         ]
       },
       "proofRequirements": [
@@ -194,15 +194,20 @@
         "Prove a headless CPU sample with POD input/output and no APEX/GPU/platform dependencies.",
         "Record the Emscripten revision, module hash and byte size, worker limits, and full BSD-style notice review."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/physx/physx-3-4.wasm",
+        "sha256": "1741e6d6e3030fe3ffd3d1160bc2f1d3ce5d52a503ad216788bf9a07322acdfc",
+        "byteSize": 1833037
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:161"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+        "scripts/awesomePhysics/wasm/physx/README.md",
+        "scripts/awesomePhysics/wasm/physx/NOTICE.md",
+        "scripts/awesomePhysics/wasm/physx/NOTICE-LEDGER.md",
+        "scripts/awesomePhysics/wasm/physx/build-ledger.json",
+        "public/wasm/awesomePhysics/physx/NOTICE.md"
       ]
     },
     {
@@ -211,7 +216,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/simbody",
-        "revision": "944fd33fa423",
+        "revision": "944fd33fa42301929f760858ba5506affc025d8c",
         "files": [
           "CMakeLists.txt",
           "Simbody/CMakeLists.txt",
@@ -226,13 +231,13 @@
       },
       "build": {
         "family": "emscripten-headless",
-        "command": "emcmake cmake -S . -B build-wasm -DSIMBODY_BUILD_SHARED_LIBS=OFF -DBUILD_VISUALIZER=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DINSTALL_DOCS=OFF -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm --parallel 4",
-        "toolchain": "Emscripten SDK with static SimTKcommon, SimTKmath, and SimTKsimbody libraries; OpenGL Visualizer, examples, tests, and filesystem features are excluded.",
-        "workingDirectory": "awesome-physics-repos/simbody"
+        "command": "node scripts/awesomePhysics/wasm/simbody/build.mjs --source <pinned simbody checkout> --output <empty .wasm-build directory>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; Unix CMake requires system BLAS/LAPACK and the vendored LAPACK path is Windows-only. Emscripten has no BLAS/LAPACK; Visualizer/OpenGL excluded. Configure fails closed before any module is produced.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "A future narrow Simbody C/embind façade plus simbody.wasm",
-        "workerBoundary": "A dedicated worker owns the selected articulated-body model, POD state buffers, explicit lifetime, cancellation, and copied trajectories; Visualizer/OpenGL remains excluded.",
+        "module": "No simbody.wasm: Emscripten configure cannot link BLAS/LAPACK",
+        "workerBoundary": "Do not mount awesome-simbody-wasm. A dedicated worker would own one articulated-body model only after a BLAS/LAPACK-capable WASM port exists inside the 256 MiB memory and 64 MiB artifact caps; Visualizer/OpenGL remains excluded.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
@@ -252,11 +257,11 @@
         ]
       },
       "proofRequirements": [
-        "Evaluate a narrow articulated-body CPU core with a C/embind worker boundary.",
-        "Run deterministic joint and trajectory fixtures without the native Visualizer.",
-        "Record toolchain, module hash and byte size, worker limits, and dependency notice review before release."
+        "Do not ship a reconstructed TypeScript pendulum or a WASM module without BLAS/LAPACK.",
+        "Unix CMake try_compile against system lapack;blas fails under Emscripten; vendored LAPACK is Windows-only.",
+        "A WASM LAPACK port is out of the 256 MiB memory / 64 MiB artifact budget for this candidate."
       ],
-      "status": "planned",
+      "status": "blocked",
       "artifact": {
         "path": null,
         "sha256": null,
@@ -264,7 +269,8 @@
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:165"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+        "scripts/awesomePhysics/wasm/simbody/README.md"
       ]
     },
     {
@@ -273,7 +279,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/newton-dynamics",
-        "revision": "a9c460c3509c",
+        "revision": "a9c460c3509c935e65c5b1196b955d56627c3ffa",
         "files": [
           "newton-4.00/CMakeLists.txt",
           "newton-4.00/sdk/CMakeLists.txt",
@@ -288,12 +294,12 @@
       },
       "build": {
         "family": "emscripten-headless",
-        "command": "emcmake cmake -S newton-4.00 -B build-wasm -DNEWTON_BUILD_SANDBOX_DEMOS=OFF -DNEWTON_BUILD_SINGLE_THREADED=ON -DNEWTON_BUILD_SHARED_LIBS=OFF -DNEWTON_ENABLE_OPENCL_SDK=OFF -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm --parallel 4",
-        "toolchain": "Emscripten SDK and a new headless SDK target; the discontinued native sandbox, OpenGL, OpenCL, shared libraries, and platform input are excluded.",
-        "workingDirectory": "awesome-physics-repos/newton-dynamics"
+        "command": "node scripts/awesomePhysics/wasm/newton-dynamics/build.mjs --source <pinned newton-dynamics checkout> --output <empty out-of-tree directory> --em-cache <pinned Emscripten cache> --toolchain <Emscripten CMake toolchain file>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; repository-local CMake façade over newton-4.00 CPU SDK with D_SCALAR_VECTOR_CLASS, D_USE_THREAD_EMULATION, a 12 GiB compile RSS cap, and runtime MAXIMUM_MEMORY=256 MiB; sandbox/OpenGL/OpenCL/CUDA excluded.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "A future Newton CPU collision/dynamics C ABI façade plus newton-dynamics.wasm",
+        "module": "Newton CPU collision/dynamics C ABI façade (newton_version/newton_step) plus newton-dynamics.wasm",
         "workerBoundary": "A dedicated worker owns one bounded headless scene, POD buffers, explicit lifetime, cancellation, and copied results; the native sandbox is not a browser UI.",
         "artifactKind": "wasm-module"
       },
@@ -306,11 +312,11 @@
         "maxOutputBytes": 4194304
       },
       "licenseGate": {
-        "status": "review",
-        "license": "zlib-style license with bundled notices",
+        "status": "pass",
+        "license": "zlib with tinyxml zlib and linked VHACD BSD-3-Clause",
         "noticeRequirements": [
-          "Retain the source license and all bundled notices with any redistribution.",
-          "Resolve the discontinued repository's exact notice and dependency closure before release."
+          "Retain the Newton zlib license, Julio Jerez / Alain Suero attribution, and tinyxml zlib notice.",
+          "Retain the Khaled Mamou VHACD BSD-3-Clause notice because ndMesh.cpp links that library."
         ]
       },
       "proofRequirements": [
@@ -318,15 +324,20 @@
         "Remove sandbox, OpenGL, OpenCL, filesystem, and platform-input assumptions from the build.",
         "Record toolchain, module hash and byte size, worker limits, and zlib/bundled-notice review."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/newton-dynamics/newton-dynamics.wasm",
+        "sha256": "a78e1d46238dbb218f48ce3818082a6db9b8ef492f02085c8df182fa611c58a9",
+        "byteSize": 362424
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:159"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+        "scripts/awesomePhysics/wasm/newton-dynamics/README.md",
+        "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE.md",
+        "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE-LEDGER.md",
+        "scripts/awesomePhysics/wasm/newton-dynamics/build-ledger.json",
+        "public/wasm/awesomePhysics/newton-dynamics/NOTICE.md"
       ]
     },
     {
@@ -335,7 +346,7 @@
       "optional": false,
       "source": {
         "path": "awesome-physics-repos/fluid-engine-dev",
-        "revision": "94c300ff5ad8",
+        "revision": "94c300ff5ad8a2f588e5e27e8e9746a424b29863",
         "files": [
           "CMakeLists.txt",
           "cmake/TaskingSystemOptions.cmake",
@@ -350,45 +361,48 @@
       },
       "build": {
         "family": "emscripten-headless",
-        "command": "emcmake cmake -S . -B build-wasm -DJET_TASKING_SYSTEM=Serial -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm --target jet --parallel 4",
-        "toolchain": "Emscripten SDK with the serial headless Jet kernel; native examples, resource unpacking, pybind11, Mitsuba output, and TBB/OpenMP/C++11 tasking are excluded.",
-        "workingDirectory": "awesome-physics-repos/fluid-engine-dev"
+        "command": "node scripts/awesomePhysics/wasm/fluid-engine-dev/build.mjs --source <pinned fluid-engine-dev checkout> --output <empty .wasm-build directory>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; serial 2D SPH C ABI; -fwasm-exceptions; INITIAL_MEMORY=16 MiB; MAXIMUM_MEMORY=128 MiB; no pthreads, TBB, OpenMP, gtest, or examples.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "A future reduced 2D SPH/FLIP C ABI façade plus fluid-engine-dev.wasm",
-        "workerBoundary": "A dedicated worker owns the serial fluid kernel, typed particle/grid buffers, cancellation, and copied particle output; WebGL renders independently.",
+        "module": "fluid-engine-dev.wasm with a bounded 2D SPH scalar ABI",
+        "workerBoundary": "The lazy adapter verifies and instantiates the local raw module, runs one bounded four-particle SPH step, and returns a copied scalar; Vue owns rendering only.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Cap linear memory at 256 MiB and bound 2D grid cells, particles, steps, and output buffers before allocation.",
-        "threadPolicy": "JET_TASKING_SYSTEM=Serial; no TBB, OpenMP, C++11 threads, pthreads, or shared memory.",
-        "maxMemoryBytes": 268435456,
-        "maxArtifactBytes": 67108864,
+        "memoryPolicy": "The standalone module has a 128 MiB maximum linear memory; the adapter accepts at most 600 SPH frames.",
+        "threadPolicy": "Serial CPU subset only; no TBB, OpenMP, C++11 threads, pthreads, or shared memory.",
+        "maxMemoryBytes": 134217728,
+        "maxArtifactBytes": 4194304,
         "maxWorkerTimeMs": 15000,
-        "maxOutputBytes": 8388608
+        "maxOutputBytes": 4096
       },
       "licenseGate": {
-        "status": "review",
-        "license": "MIT with third-party dependencies",
+        "status": "pass",
+        "license": "MIT",
         "noticeRequirements": [
-          "Retain the project MIT license and 3RD_PARTY.md notices.",
-          "Review external resource and dependency rights before shipping a generated module."
+          "Retain the Jet MIT license with the module.",
+          "Retain the in-tree FlatBuffers Apache-2.0 notice. Do not redistribute gtest, pybind11, examples, or unpacked resources."
         ]
       },
       "proofRequirements": [
-        "Build only a reduced 2D SPH/FLIP serial kernel and exclude the full 3D SDK and native examples.",
-        "Run bounded particle/grid fixtures through a dedicated worker and compare typed output buffers.",
-        "Record toolchain, module hash and byte size, memory/thread policy, and third-party/resource notice review."
+        "Build only a reduced 2D SPH serial kernel and exclude the full 3D SDK and native examples.",
+        "Run a four-particle SPH fixture through a dedicated worker and compare the particle-0 y scalar.",
+        "Record toolchain, module hash and byte size, memory/thread policy, and MIT/FlatBuffers notice review."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/fluid-engine-dev/fluid-engine-dev.wasm",
+        "sha256": "d8bdd5c4841ab009e0b008cacbee88660c09bf8906714c388decd548934e389e",
+        "byteSize": 230684
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:166"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+        "scripts/awesomePhysics/wasm/fluid-engine-dev/README.md",
+        "scripts/awesomePhysics/wasm/fluid-engine-dev/build-ledger.json",
+        "public/wasm/awesomePhysics/fluid-engine-dev/NOTICE.md"
       ]
     },
     {
@@ -585,7 +599,7 @@
       "optional": true,
       "source": {
         "path": "awesome-physics-repos/ncollide",
-        "revision": "f3c3ecb3c98d",
+        "revision": "f3c3ecb3c98d1c2698574372b6b0e9d0032bc0c5",
         "files": [
           "Cargo.toml",
           "build/ncollide2d/Cargo.toml",
@@ -600,45 +614,113 @@
       },
       "build": {
         "family": "rust-cargo-wasm",
-        "command": "cargo build --manifest-path build/ncollide2d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features dim2 && cargo build --manifest-path build/ncollide3d/Cargo.toml --target wasm32-unknown-unknown --release --no-default-features --features dim3",
-        "toolchain": "Stable Rust wasm32-unknown-unknown with the pure collision libraries only; old cargo-web/testbed rendering and successor Rapier migration remain outside the optional proof.",
-        "workingDirectory": "awesome-physics-repos/ncollide"
+        "command": "node scripts/awesomePhysics/wasm/ncollide/build.mjs --source <pinned ncollide checkout> --output <empty .wasm-build directory>",
+        "toolchain": "Rust 1.87.0 and Cargo 1.87.0; wasm32-unknown-unknown; --locked; --jobs 4; --cap-lints=warn; -C panic=abort; -C link-arg=--max-memory=67108864; ulimit -v 8 GiB.",
+        "workingDirectory": "opensimphy"
       },
       "output": {
-        "module": "Optional ncollide2d/ncollide3d collision-only wasm modules behind a future narrow façade",
-        "workerBoundary": "A dedicated worker owns collision queries, typed shape/ray buffers, cancellation, and copied contacts; no obsolete testbed renderer crosses the boundary.",
+        "module": "ncollide2d.wasm with a bounded collision-only C ABI",
+        "workerBoundary": "The lazy adapter verifies and instantiates the local raw module, runs one bounded distance, contact, ray, translational TOI, or CCD plane-settling call, and returns copied scalars; no testbed renderer or ncollide3d module crosses the adapter boundary.",
         "artifactKind": "wasm-module"
       },
       "runtime": {
-        "memoryPolicy": "Cap each dimension-specific module at 128 MiB and bound shapes, queries, contacts, and output arrays before allocation.",
+        "memoryPolicy": "The standalone module has a 64 MiB maximum linear memory; the adapter accepts only bounded finite scalar inputs and at most 600 CCD steps.",
         "threadPolicy": "Single-threaded Rust collision core; no pthreads or shared memory.",
-        "maxMemoryBytes": 134217728,
-        "maxArtifactBytes": 33554432,
+        "maxMemoryBytes": 67108864,
+        "maxArtifactBytes": 1048576,
         "maxWorkerTimeMs": 10000,
-        "maxOutputBytes": 4194304
+        "maxOutputBytes": 4096
       },
       "licenseGate": {
         "status": "pass",
         "license": "Apache-2.0",
         "noticeRequirements": [
-          "Retain ncollide and dependency Apache-2.0 notices with any optional module.",
-          "Record why this optional proof is preferred only when the successor ecosystem cannot serve the lesson."
+          "Retain ncollide and dependency Apache-2.0 notices with the module.",
+          "Retain the nalgebra BSD-3-Clause, slotmap Zlib, and complete Cargo.lock license inventory in the source and public notices."
         ]
       },
       "proofRequirements": [
         "Prove a collision-only worker ABI if a lesson requires ncollide rather than its maintained successor.",
-        "Run deterministic 2D and 3D contact/ray fixtures with no cargo-web or native testbed UI.",
+        "Run deterministic 2D distance, contact, ray, translational TOI, and CCD plane-settling fixtures with no cargo-web or native testbed UI.",
         "Record Rust/dependency revisions, module hash and byte size, worker limits, and Apache-2.0 notice review."
       ],
-      "status": "planned",
+      "status": "available",
       "artifact": {
-        "path": null,
-        "sha256": null,
-        "byteSize": null
+        "path": "wasm/awesomePhysics/ncollide/ncollide2d.wasm",
+        "sha256": "57ca3a88ae50d98a93221ae161143b991f0f3e0c3c52c687348216ea2c35da6a",
+        "byteSize": 113119
       },
       "evidenceRefs": [
         "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
-        "AWESOME_PHYSICS_MIGRATION_PLAN.md:158"
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+        "scripts/awesomePhysics/wasm/ncollide/README.md",
+        "scripts/awesomePhysics/wasm/ncollide/build-ledger.json",
+        "public/wasm/awesomePhysics/ncollide/NOTICE.md"
+      ]
+    },
+    {
+      "id": "spirit-headless",
+      "project": "spirit",
+      "optional": false,
+      "source": {
+        "path": "awesome-physics-repos/spirit",
+        "revision": "e82250d3b14411c2c2fa292d143f13e3e111ad8c",
+        "files": [
+          "LICENSE.txt",
+          "core/include/engine/Solver_Heun.hpp",
+          "core/src/engine/Method_LLG.cpp",
+          "core/include/utility/Constants.hpp",
+          "CMake/Emscripten.cmake"
+        ],
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45"
+        ]
+      },
+      "build": {
+        "family": "emscripten-headless",
+        "command": "node scripts/awesomePhysics/wasm/spirit/build.mjs --source ../awesome-physics-repos/spirit --output <empty out-of-tree directory> --emscripten-root <pinned Emscripten root> --em-cache <pinned Emscripten cache>",
+        "toolchain": "Emscripten 6.0.6-git revision ce75e06884093bcefb86a6b8fd56a5d62a4cc245; serial Heun LLG C ABI; ui-web, ImGui, VFRendering, pthreads, and filesystem are excluded.",
+        "workingDirectory": "opensimphy"
+      },
+      "output": {
+        "module": "spirit-llg-heun.wasm with a bounded Heun LLG scalar ABI",
+        "workerBoundary": "The lazy adapter verifies and instantiates the local raw module, validates bounded LLG inputs, performs one Heun integration, and returns copied magnetization scalars; Vue owns rendering only.",
+        "artifactKind": "wasm-module"
+      },
+      "runtime": {
+        "memoryPolicy": "The standalone module has no allocation ABI; the adapter accepts at most 32 spins and 4000 Heun steps.",
+        "threadPolicy": "Serial CPU subset only; no native threads, OpenMP, pthreads, or shared memory.",
+        "maxMemoryBytes": 16777216,
+        "maxArtifactBytes": 4194304,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4096
+      },
+      "licenseGate": {
+        "status": "pass",
+        "license": "MIT",
+        "noticeRequirements": [
+          "Retain the Spirit MIT license with the module.",
+          "Do not redistribute ui-web, ImGui, VFRendering, or unreviewed bundled web assets."
+        ]
+      },
+      "proofRequirements": [
+        "Compile the bounded Heun LLG C ABI without Spirit ui-web or ImGui.",
+        "Run a damped single-spin precession and a ferromagnetic chain fixture through the verified adapter.",
+        "Record the Emscripten revision, module hash and byte size, memory/thread policy, and MIT notice before release."
+      ],
+      "status": "available",
+      "artifact": {
+        "path": "wasm/awesomePhysics/spirit/spirit-llg-heun.wasm",
+        "sha256": "34a942b98bfed0d3cc1d27b731662b0315f23d2df1ed904133faa1038bdcd6a4",
+        "byteSize": 3821
+      },
+      "evidenceRefs": [
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+        "scripts/awesomePhysics/wasm/spirit/README.md",
+        "scripts/awesomePhysics/wasm/spirit/build-ledger.json",
+        "public/wasm/awesomePhysics/spirit/NOTICE.md"
       ]
     }
   ]

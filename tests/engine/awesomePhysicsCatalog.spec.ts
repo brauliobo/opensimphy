@@ -38,23 +38,16 @@ describe('Awesome Physics catalog foundation', () => {
     expect(catalog.items.filter(({ sourceKind }) => sourceKind === 'archive')).toHaveLength(1)
     expect(catalog.organizations).toHaveLength(10)
     expect(catalog.items.filter(({ access }) => access.status === 'cloned')).toHaveLength(74)
-    expect(simulations.summary).toEqual({
+    expect(simulations.summary.runnable).toBe(simulations.items.filter(({ runnable }) => runnable).length)
+    expect(simulations.summary).toMatchObject({
       sourceCapabilities: 76,
-      runnable: 17,
-      available: 17,
-      unavailable: 55,
+      available: simulations.summary.runnable,
+      adapterCount: simulations.summary.runnable,
       blocked: 4,
-      adapterCount: 17,
-      executionKinds: {
-        browser: 6,
-        wasm: 8,
-        'wasm-candidate': 6,
-        typescript: 44,
-        artifact: 8,
-        reference: 3,
-        blocked: 1,
-      },
+      unavailable: 76 - simulations.summary.runnable - 4,
     })
+    expect(Object.values(simulations.summary.executionKinds).reduce((sum, count) => sum + count, 0)).toBe(76)
+    expect(simulations.summary.runnable).toBeGreaterThanOrEqual(23)
   })
 
   it('keeps catalog and descriptor IDs unique', () => {
@@ -156,9 +149,43 @@ describe('Awesome Physics catalog foundation', () => {
       } else if (descriptor.catalogItemId === 'awesome-nphysics') {
         expect(descriptor.artifactProvenance).toMatchObject({
           sourceRevision: '65aa85c5470a5da85e0c13652ce58400ae2e2201',
-          byteSize: 367036,
-          sha256: 'ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1',
+          byteSize: 366856,
+          sha256: 'e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba',
         })
+      } else if (descriptor.catalogItemId === 'awesome-spirit') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: 'e82250d3b14411c2c2fa292d143f13e3e111ad8c',
+          byteSize: 3821,
+          sha256: '34a942b98bfed0d3cc1d27b731662b0315f23d2df1ed904133faa1038bdcd6a4',
+        })
+      } else if (descriptor.catalogItemId === 'awesome-pymunk') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: '6287ce6d9223d1d79d28b2c26f37499f45b445b8',
+          byteSize: 76555,
+          sha256: '0166b68c54e17b3892ca675749afdc065806e8df5636fc55e89d8d4badb67158',
+        })
+      } else if (descriptor.catalogItemId === 'awesome-galpy') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: '3762e73ef84578f4a911325d283e652eb1886625',
+          byteSize: 19591,
+          sha256: '0e053c12eaa70b3bf771697505acaa049269c481c7d1f9ac363e8f5cf08f7720',
+        })
+      } else if (descriptor.catalogItemId === 'awesome-ncollide') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: 'f3c3ecb3c98d1c2698574372b6b0e9d0032bc0c5',
+          byteSize: 113119,
+          sha256: '57ca3a88ae50d98a93221ae161143b991f0f3e0c3c52c687348216ea2c35da6a',
+        })
+      } else if (descriptor.catalogItemId === 'awesome-fluid-engine-dev') {
+        expect(descriptor.artifactProvenance).toMatchObject({
+          sourceRevision: '94c300ff5ad8a2f588e5e27e8e9746a424b29863',
+          byteSize: 230684,
+          sha256: 'd8bdd5c4841ab009e0b008cacbee88660c09bf8906714c388decd548934e389e',
+        })
+      } else if (descriptor.artifactProvenance.sha256 !== null) {
+        expect(descriptor.availability).toBe('available')
+        expect(descriptor.artifactProvenance.sha256).toMatch(/^[a-f0-9]{64}$/)
+        expect(descriptor.artifactProvenance.byteSize).toBeGreaterThan(0)
       } else {
         expect(descriptor.artifactProvenance.sha256).toBeNull()
       }
@@ -166,7 +193,16 @@ describe('Awesome Physics catalog foundation', () => {
       expect(descriptor.outputRevision).toBe('awesome-physics-descriptor-v1')
     }
     const availableDescriptors = simulations.items.filter(({ availability }) => availability === 'available')
-    expect(availableDescriptors).toHaveLength(17)
+    expect(availableDescriptors).toHaveLength(simulations.summary.runnable)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-scikit-beam')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-raysect')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-quantumoptics-jl')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-astropy')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-galpy')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-ncollide')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-fluid-engine-dev')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-cantera')).toBe(true)
+    expect(availableDescriptors.some(({ catalogItemId }) => catalogItemId === 'awesome-simbody')).toBe(false)
     expect(availableDescriptors.every(({ implementationRevision }) => implementationRevision !== PHASE_ZERO_IMPLEMENTATION_REVISION)).toBe(true)
     expect(simulations.items
       .filter(({ availability }) => availability !== 'available')

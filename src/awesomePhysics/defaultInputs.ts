@@ -9,13 +9,27 @@ import type { FluidsInputV1 } from './adapters/typescript/fluids'
 import type { GalaInputV1 } from './adapters/typescript/gala'
 import type { PoppyInputV1 } from './adapters/typescript/poppy'
 import type { PyRtInputV1 } from './adapters/typescript/pyRt'
+import type { QuantumPythonLecturesInputV1 } from './adapters/typescript/quantumPythonLectures'
+import type { QutipInputV1 } from './adapters/typescript/qutip'
+import type { ScikitBeamInputV1 } from './adapters/typescript/scikitBeam'
+import type { RaysectInputV1 } from './adapters/typescript/raysect'
+import type { QuantumOpticsJlInputV1 } from './adapters/typescript/quantumOpticsJl'
+import type { AstropyInputV1 } from './adapters/typescript/astropy'
 import type { QmsolveInput } from './adapters/typescript/qmsolve'
 import type { ScikitRfInputV1 } from './adapters/typescript/scikitRf'
 import type { TightBindingInputV1 } from './adapters/typescript/tightBinding'
 import type { CoolPropInputV1 } from './adapters/wasm/coolprop'
+import type { GalpyInputV1 } from './adapters/wasm/galpy'
 import type { Nphysics2dInputV1 } from './adapters/wasm/nphysics2d'
 import type { PositionBasedDynamicsDistanceInputV1 } from './adapters/wasm/positionBasedDynamics'
 import type { Bullet3InputV1 } from './adapters/wasm/bullet3'
+import type { PymunkInputV1 } from './adapters/wasm/pymunk'
+import type { SpiritInputV1 } from './adapters/wasm/spirit'
+import type { NcollideInputV1 } from './adapters/wasm/ncollide'
+import type { FluidEngineDevInputV1 } from './adapters/wasm/fluidEngineDev'
+import type { PhysxInputV1 } from './adapters/wasm/physx'
+import type { NewtonInputV1 } from './adapters/wasm/newtonDynamics'
+import type { CanteraInputV1 } from './adapters/wasm/cantera'
 
 export type AwesomePhysicsAdapterId = typeof AWESOME_PHYSICS_ADAPTER_IDS[keyof typeof AWESOME_PHYSICS_ADAPTER_IDS]
 
@@ -33,10 +47,24 @@ type AwesomePhysicsDefaultInputByAdapter = {
   [AWESOME_PHYSICS_ADAPTER_IDS.gala]: GalaInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.tightBinding]: TightBindingInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.poppy]: PoppyInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.quantumPythonLectures]: QuantumPythonLecturesInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.qutip]: QutipInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.scikitBeam]: ScikitBeamInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.raysect]: RaysectInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.quantumOpticsJl]: QuantumOpticsJlInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.astropy]: AstropyInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: CoolPropInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.galpy]: GalpyInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.nphysics2d]: Nphysics2dInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.positionBasedDynamics]: PositionBasedDynamicsDistanceInputV1
   [AWESOME_PHYSICS_ADAPTER_IDS.bullet3]: Bullet3InputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.spirit]: SpiritInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.pymunk]: PymunkInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.ncollide]: NcollideInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.fluidEngineDev]: FluidEngineDevInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.physx]: PhysxInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.newtonDynamics]: NewtonInputV1
+  [AWESOME_PHYSICS_ADAPTER_IDS.cantera]: CanteraInputV1
 }
 
 export type AwesomePhysicsDefaultInput = AwesomePhysicsDefaultInputByAdapter[AwesomePhysicsAdapterId]
@@ -170,9 +198,68 @@ export const AWESOME_PHYSICS_DEFAULT_INPUTS = {
     aperture: { shape: 'circular', radius: 1e-3 },
     positions: [-1e-3, -5e-4, 0, 5e-4, 1e-3],
   },
+  [AWESOME_PHYSICS_ADAPTER_IDS.quantumPythonLectures]: {
+    operation: 'rk4-oscillator',
+    omega: 1,
+    x0: 1,
+    v0: 0,
+    timeStep: 0.01,
+    steps: 200,
+    sampleEvery: 20,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.qutip]: {
+    operation: 'rabi-population',
+    rabiFrequency: 1,
+    detuning: 0,
+    timeStep: 0.01,
+    steps: 200,
+    sampleEvery: 20,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.scikitBeam]: {
+    operation: 'sphere-form-factor',
+    radiusNm: 5,
+    qMinNmInv: 0,
+    qMaxNmInv: 1.5,
+    sampleCount: 33,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.raysect]: {
+    operation: 'prism-trace',
+    apexAngleDeg: 60,
+    incidenceAngleDeg: 48,
+    wavelengthNm: 550,
+    cauchyA: 1.5046,
+    cauchyB: 0.0042,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.quantumOpticsJl]: {
+    operation: 'jaynes-cummings',
+    coupling: 1,
+    detuning: 0,
+    photonNumber: 0,
+    timeStep: 0.01,
+    steps: 200,
+    sampleEvery: 20,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.astropy]: {
+    operation: 'unit-convert',
+    value: 1,
+    from: 'pc',
+    to: 'm',
+  },
   [AWESOME_PHYSICS_ADAPTER_IDS.coolprop]: {
     operation: 'F2K',
     celsius: 0,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.galpy]: {
+    operation: 'integrate-orbit',
+    R: 1,
+    z: 0.1,
+    phi: 0,
+    vR: 0,
+    vT: 1,
+    vz: 0,
+    timeStep: 0.01,
+    steps: 200,
+    sampleEvery: 20,
   },
   [AWESOME_PHYSICS_ADAPTER_IDS.nphysics2d]: {
     operation: 'snapshot',
@@ -188,6 +275,39 @@ export const AWESOME_PHYSICS_DEFAULT_INPUTS = {
   },
   [AWESOME_PHYSICS_ADAPTER_IDS.bullet3]: {
     operation: 'step',
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.spirit]: {
+    operation: 'llg-heun',
+    spinCount: 1,
+    damping: 0.3,
+    timeStep: 0.002,
+    steps: 400,
+    field: { x: 0, y: 0, z: 1 },
+    exchange: 0,
+    initialSpin: { x: 1, y: 0, z: 0 },
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.pymunk]: {
+    operation: 'step',
+    steps: 60,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.ncollide]: {
+    operation: 'step',
+    steps: 60,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.fluidEngineDev]: {
+    operation: 'step',
+    steps: 60,
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.physx]: {
+    operation: 'step',
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.newtonDynamics]: {
+    operation: 'step',
+  },
+  [AWESOME_PHYSICS_ADAPTER_IDS.cantera]: {
+    operation: 'equilibrate-hp',
+    temperatureK: 1001,
+    pressurePa: 101325,
   },
 } as const satisfies AwesomePhysicsDefaultInputByAdapter
 

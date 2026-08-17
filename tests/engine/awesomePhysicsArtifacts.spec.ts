@@ -63,7 +63,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
       'fluids',
       'thermo',
     ])
-    expect(NATIVE_CANDIDATES).toHaveLength(10)
+    expect(NATIVE_CANDIDATES).toHaveLength(11)
     expect(NATIVE_CANDIDATES.map(({ project }) => project)).toEqual([
       'PositionBasedDynamics',
       'bullet3',
@@ -75,6 +75,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
       'euclider',
       'TFG',
       'ncollide',
+      'spirit',
     ])
     expect(NATIVE_CANDIDATES.find(({ project }) => project === 'ncollide')?.optional).toBe(true)
   })
@@ -83,7 +84,20 @@ describe('Awesome Physics artifact manifests and loader', () => {
     const records = [...WASM_PILOTS, ...NATIVE_CANDIDATES]
     const available = records.filter(({ status }) => status === 'available')
     const unavailable = records.filter(({ status }) => status !== 'available')
-    expect(available.map(({ id }) => id)).toEqual(['coolprop', 'nphysics', 'position-based-dynamics', 'bullet3'])
+    expect(available.map(({ id }) => id)).toEqual([
+      'coolprop',
+      'galpy',
+      'cantera',
+      'nphysics',
+      'pymunk',
+      'position-based-dynamics',
+      'bullet3',
+      'physx-3-4',
+      'newton-dynamics',
+      'fluid-engine-dev',
+      'ncollide',
+      'spirit-headless',
+    ])
     for (const record of available) {
       expect(record.artifact.path).not.toBeNull()
       expect(record.artifact.sha256).toMatch(/^[a-f0-9]{64}$/)
@@ -109,8 +123,8 @@ describe('Awesome Physics artifact manifests and loader', () => {
       source: { revision: '65aa85c5470a5da85e0c13652ce58400ae2e2201' },
       artifact: {
         path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.wasm',
-        sha256: 'ac0450e94ecf9a6f56e3b097734af646e8ba298dab77a3ad285a88f5726047e1',
-        byteSize: 367036,
+        sha256: 'e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba',
+        byteSize: 366856,
         companion: {
           path: 'wasm/awesomePhysics/nphysics/nphysics2d_worker_probe.js',
           sha256: '364889e36d2218a7da8fcd55e1c4c97b227ceb68b4dfcf840b1d934c6b96bc26',
@@ -138,7 +152,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
         byteSize: 333983,
       },
     })
-    for (const project of ['PositionBasedDynamics', 'bullet3']) {
+    for (const project of ['PositionBasedDynamics', 'bullet3', 'spirit', 'galpy', 'cantera', 'ncollide', 'pymunk', 'PhysX', 'newton-dynamics', 'fluid-engine-dev']) {
       const descriptor = simulations.items.find(({ title }) => title === project)
       expect(descriptor).toMatchObject({
         execution: 'wasm',
@@ -154,7 +168,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
     expect(WASM_PILOTS.find(({ project }) => project === 'fluids')?.status).toBe('blocked')
     expect(WASM_PILOTS.find(({ project }) => project === 'thermo')?.status).toBe('blocked')
     expect(WASM_PILOT_MANIFEST.records).toHaveLength(8)
-    expect(NATIVE_CANDIDATE_MANIFEST.records).toHaveLength(10)
+    expect(NATIVE_CANDIDATE_MANIFEST.records).toHaveLength(11)
   })
 
   it('maps every artifact, reference, and blocked descriptor to one ledger record', () => {
@@ -168,7 +182,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
     expect(SOURCE_ARTIFACTS.map(({ catalogItemId }) => catalogItemId)).toEqual(artifactDescriptors.map(({ catalogItemId }) => catalogItemId))
     expect(SOURCE_ARTIFACTS.map(({ project }) => project)).toEqual(artifactDescriptors.map(({ title }) => title))
 
-    expect(REFERENCE_LEDGER.filter(({ execution }) => execution === 'reference')).toHaveLength(3)
+    expect(REFERENCE_LEDGER.filter(({ execution }) => execution === 'reference')).toHaveLength(2)
     expect(REFERENCE_LEDGER.filter(({ execution }) => execution === 'blocked')).toHaveLength(1)
     expect(REFERENCE_LEDGER.map(({ id }) => id)).toEqual([...referenceDescriptors, ...blockedDescriptors].map(({ id }) => id))
     expect(REFERENCE_LEDGER.map(({ catalogItemId }) => catalogItemId)).toEqual(
@@ -204,7 +218,7 @@ describe('Awesome Physics artifact manifests and loader', () => {
       }
     }
     expect(SOURCE_ARTIFACT_MANIFEST.records).toHaveLength(8)
-    expect(REFERENCE_LEDGER_MANIFEST.records).toHaveLength(4)
+    expect(REFERENCE_LEDGER_MANIFEST.records).toHaveLength(3)
     expect(REFERENCE_LEDGER.find(({ project }) => project === 'pypdt')?.status).toBe('blocked')
   })
 

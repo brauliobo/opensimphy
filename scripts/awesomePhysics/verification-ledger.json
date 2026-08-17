@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-08-16",
+  "generator": "scripts/awesomePhysics/generate-catalog.mjs",
+  "notes": [
+    "Awesome Physics catalog only. Gray, EARTH, and tour catalogs were not regenerated.",
+    "This session promoted scikit-beam, raysect, QuantumOptics.jl, and astropy TypeScript kernels.",
+    "Verified WASM allowlist is owned by the WASM agents; this session did not change those artifacts."
+  ],
+  "catalog": {
+    "path": "public/data/generated/awesomePhysics/catalog.json",
+    "sha256": "75b1e7babe46f385d99acde78d956167593ff7fa663b0aa3a58493f8d7b9c596"
+  },
+  "simulations": {
+    "path": "public/data/generated/awesomePhysics/simulations.json",
+    "sha256": "14489f1594295bf0921779324019d92c1de36db8c574584da162ce1dc61d7a1b",
+    "summary": {
+      "sourceCapabilities": 76,
+      "runnable": 27,
+      "available": 27,
+      "unavailable": 45,
+      "blocked": 4,
+      "adapterCount": 27
+    }
+  },
+  "promotedSincePreviousLedger": [
+    {
+      "canonicalName": "scikit-beam",
+      "adapterId": "awesome-scikit-beam-typescript",
+      "licenseGate": "pass",
+      "fixture": "scripts/awesomePhysics/fixtures/scikit-beam-sphere-default.json"
+    },
+    {
+      "canonicalName": "raysect",
+      "adapterId": "awesome-raysect-typescript",
+      "licenseGate": "pass",
+      "fixture": "scripts/awesomePhysics/fixtures/raysect-prism-default.json"
+    },
+    {
+      "canonicalName": "QuantumOptics.jl",
+      "adapterId": "awesome-quantumoptics-jl-typescript",
+      "licenseGate": "pass",
+      "fixture": "scripts/awesomePhysics/fixtures/quantumoptics-jl-jc-default.json"
+    },
+    {
+      "canonicalName": "astropy",
+      "adapterId": "awesome-astropy-typescript",
+      "licenseGate": "pass",
+      "fixture": "scripts/awesomePhysics/fixtures/astropy-parsec-default.json"
+    }
+  ],
+  "reusedVerifiedWasm": [
+    {
+      "canonicalName": "CoolProp",
+      "wasmSha256": "57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829"
+    },
+    {
+      "canonicalName": "PositionBasedDynamics",
+      "wasmSha256": "3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df"
+    },
+    {
+      "canonicalName": "bullet3",
+      "wasmSha256": "1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425"
+    },
+    {
+      "canonicalName": "nphysics",
+      "wasmSha256": "e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba"
+    }
+  ]
+}
