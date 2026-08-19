@@ -424,7 +424,6 @@ const tourSimulationDirectory = join(tourGeneratedDirectory, "simulations");
 await rm(earthDocumentDirectory, { recursive: true, force: true });
 await rm(earthEvidenceDirectory, { recursive: true, force: true });
 await rm(tourGeneratedDirectory, { recursive: true, force: true });
-await rm(awesomePhysicsGeneratedDirectory, { recursive: true, force: true });
 await mkdir(earthDocumentDirectory, { recursive: true });
 await mkdir(earthEvidenceProgramDirectory, { recursive: true });
 await mkdir(earthEvidenceDocumentDirectory, { recursive: true });
