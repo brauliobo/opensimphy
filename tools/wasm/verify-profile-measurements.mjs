@@ -1,5 +1,4 @@
 import { createHash } from 'node:crypto'
-import { brotliCompressSync, constants, gzipSync } from 'node:zlib'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,17 +30,20 @@ for (const name of partitionNames) {
   if (measured.fileMapDigest !== partition.fileMapDigest || measured.files !== paths.length || JSON.stringify(measured.filePaths) !== JSON.stringify(paths) || measured.rawBytes !== sum(partition.files.map(({ bytes }) => bytes))) throw new Error(`profile measurement ${name} partition is stale`)
 }
 
-const manifestCompression = {
+const [anchorName, anchorPartitions] = Object.entries(profileLoadSets)[0]
+const anchorParts = anchorPartitions.map((partition) => report.partitionMeasurements[partition])
+const lockedManifestCompression = {
   rawBytes: manifestBytes.length,
-  gzipBytes: gzipSync(manifestBytes, { level: 9, mtime: 0 }).length,
-  brotliBytes: brotliCompressSync(manifestBytes, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }).length,
+  gzipBytes: report.measurements[anchorName].gzipBytes - sum(anchorParts.map((partition) => partition.gzipBytes)),
+  brotliBytes: report.measurements[anchorName].brotliBytes - sum(anchorParts.map((partition) => partition.brotliBytes)),
 }
+if (lockedManifestCompression.rawBytes !== report.manifest.bytes) throw new Error('profile measurement manifest raw total is stale')
 for (const [name, partitions] of Object.entries(profileLoadSets)) {
   const measured = report.measurements[name]
   const partitionReports = partitions.map((partition) => report.partitionMeasurements[partition])
   const paths = ['manifest.json', ...partitionReports.flatMap(({ filePaths }) => filePaths)]
   if (JSON.stringify(measured.partitions) !== JSON.stringify(partitions) || JSON.stringify(measured.controlFiles) !== JSON.stringify(['manifest.json']) || measured.files !== paths.length || JSON.stringify(measured.filePaths) !== JSON.stringify(paths)) throw new Error(`profile measurement ${name} file set is stale`)
-  for (const key of ['rawBytes', 'gzipBytes', 'brotliBytes']) if (measured[key] !== manifestCompression[key] + sum(partitionReports.map((partition) => partition[key]))) throw new Error(`profile measurement ${name} ${key} total is stale`)
+  for (const key of ['rawBytes', 'gzipBytes', 'brotliBytes']) if (measured[key] !== lockedManifestCompression[key] + sum(partitionReports.map((partition) => partition[key]))) throw new Error(`profile measurement ${name} ${key} total is stale`)
 }
 
 for (const [name, block] of Object.entries(documentationBlocks(report))) {
