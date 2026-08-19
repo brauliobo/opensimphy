@@ -5,6 +5,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { proveEventMapSymmetry, validateEventMapSymmetryProof } from "../scripts/event-map-symmetry.mjs";
+import { productionProfileDocument, productionRequiredTuples } from "./production-profile.mjs";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, "..");
@@ -595,7 +596,13 @@ function evaluateMetrics(samples, spec) {
   return checks;
 }
 
-export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk(), profileBytes, evidence, evidenceDir }) {
+export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk(), profileBytes, evidence, evidenceDir, coverage = "reduced" }) {
+  assert(["reduced", "production"].includes(coverage), "coverage must be reduced or production");
+  const specificationSha256 = sha256Bytes(specBytes || Buffer.from(stableJson(spec)));
+  if (coverage === "production") {
+    profile = productionProfileDocument(spec, specificationSha256);
+    profileBytes = Buffer.from(stableJson(profile));
+  }
   const report = {
     contract: "edwin-gray-convergence-report",
     contractVersion: 2,
@@ -630,13 +637,13 @@ export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk
   };
   try {
     validateSpec(spec);
-    validateReducedProfile(profile, spec);
+    if (coverage === "reduced") validateReducedProfile(profile, spec);
     assert(evidence?.contract === "edwin-gray-convergence-evidence" && evidence.contractVersion === 2, "unsupported convergence evidence contract");
     assert(evidence.status === "complete", "convergence evidence is not complete");
     assert(evidence.caseId === spec.caseId, "convergence evidence case ID is invalid");
     assert(Array.isArray(evidence.samples), "convergence evidence samples are missing");
     assert(new Set(evidence.samples.map((sample) => sample?.id)).size === evidence.samples.length, "convergence evidence sample IDs are duplicated");
-    const expected = expectedSampleDefinitions(spec, profile);
+    const expected = coverage === "production" ? productionRequiredTuples(spec) : expectedSampleDefinitions(spec, profile);
     const expectedByKey = new Map(expected.map((item) => [sampleKey(item.domainId, item.meshLevelId, item.driveCurrentA, item.rotorAngleDeg), item]));
     assert(evidence.samples.length === expected.length, `evidence sample count ${evidence.samples.length} does not match required production count ${expected.length}`);
     const declared = new Map();
@@ -648,18 +655,12 @@ export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk
     }
     assert(expected.every((item) => declared.has(sampleKey(item.domainId, item.meshLevelId, item.driveCurrentA, item.rotorAngleDeg))), "evidence does not provide exact production coverage");
     const direct = [];
-    const directByKey = new Map();
-    const derived = [];
     for (const item of expected) {
       const sample = declared.get(definitionKey(item));
-      assert(sample.kind !== "symmetry-derived-convergence-sample", `sample ${sample.id} must be independently solved by the reduced profile`);
-      const verifiedSample = verifySample(sample, item, spec, evidenceDir);
-      direct.push(verifiedSample);
-      directByKey.set(definitionKey(item), verifiedSample);
+      assert(sample.kind !== "symmetry-derived-convergence-sample", `sample ${sample.id} must be independently solved`);
+      direct.push(verifySample(sample, item, spec, evidenceDir));
     }
-    assert(derived.length === 0, "reduced convergence evidence cannot contain derived samples");
-    const verifiedDerived = [];
-    const verifiedByKey = new Map([...direct, ...verifiedDerived].map((item) => [definitionKey(item), item]));
+    const verifiedByKey = new Map(direct.map((item) => [definitionKey(item), item]));
     const verified = expected.map((item) => verifiedByKey.get(definitionKey(item)));
     assert(new Set(direct.map((item) => item.jobInputHash)).size === direct.length, "attested job input hashes are not unique");
     assert(new Set(verified.map((item) => item.environmentIdentityHash)).size === 1, "convergence samples use different solver environments");
@@ -670,7 +671,7 @@ export function evaluateConvergence({ spec, specBytes, profile = profileFromDisk
     const domainHashes = spec.production.domains.map((domain) => verified.find((item) => item.domainId === domain.id).modelInputHash);
     assert(new Set(domainHashes).size === domainHashes.length, "outer-domain variants are not distinguished by model input hashes");
     report.evidence.independentlySolvedSampleCount = direct.length;
-    report.evidence.symmetryDerivedSampleCount = verifiedDerived.length;
+    report.evidence.symmetryDerivedSampleCount = 0;
     report.checks.push({ id: "evidence-integrity-and-coverage", status: "passed", observed: verified.length, tolerance: expected.length, comparison: "exact" });
     report.checks.push(...evaluateMetrics(verified, spec));
     report.failures = report.checks.filter((check) => check.status === "failed").map((check) => check.id);
@@ -698,19 +699,26 @@ function parseArgs(argv) {
 function main(argv) {
   const options = parseArgs(argv);
   assert(options.evidence, "--evidence is required");
+  const coverage = options.coverage || "reduced";
+  assert(["reduced", "production"].includes(coverage), "--coverage must be reduced or production");
   const specPath = resolve(options.spec || DEFAULT_SPEC);
   const profilePath = resolve(options.profile || DEFAULT_PROFILE);
   const evidencePath = resolve(options.evidence);
   const outputPath = resolve(options.out || "convergence-report.json");
   const specBytes = readFileSync(specPath);
-  const profileBytes = readFileSync(profilePath);
+  const spec = readJson(specPath, "convergence specification");
+  const profile = coverage === "production"
+    ? productionProfileDocument(spec, sha256Bytes(specBytes))
+    : readJson(profilePath, "reduced convergence profile");
+  const profileBytes = coverage === "production" ? Buffer.from(stableJson(profile)) : readFileSync(profilePath);
   const report = evaluateConvergence({
-    spec: readJson(specPath, "convergence specification"),
+    spec,
     specBytes,
-    profile: readJson(profilePath, "reduced convergence profile"),
+    profile,
     profileBytes,
     evidence: readJson(evidencePath, "convergence evidence"),
-    evidenceDir: dirname(evidencePath)
+    evidenceDir: dirname(evidencePath),
+    coverage
   });
   writeFileSync(outputPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
   console.log(JSON.stringify({ status: report.status, output: outputPath, failures: report.failures.length }));

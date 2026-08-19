@@ -46,6 +46,8 @@ const SWEEP_MANIFEST_VERSION = "motor-fem-sweep-v3";
 const RESULT_CONTRACT = "edwin-gray-browser-result";
 const RESULT_CONTRACT_VERSION = 1;
 const SOLVER_OUTPUTS = ["observables.dat", "coenergy.dat", "inductance.dat"];
+const POST_OPERATION_TABLES = "MagnetostaticTables"
+const POST_OPERATION_FIELDS = "MagnetostaticResults"
 const SOLVER_CONVERGENCE = "solver-convergence.json";
 const RESULT_OBSERVABLES = ["magneticEnergyJ", "coEnergyJ", "inductanceH"];
 const MESH_QUALITY_FAILURES = [
@@ -57,7 +59,7 @@ const MESH_QUALITY_FAILURES = [
 
 function parseArgs(argv) {
   const options = { backend: "auto" };
-  const flags = new Set(["validate", "dry-run", "sweep", "resume", "aggregate", "publication", "help"]);
+  const flags = new Set(["validate", "dry-run", "sweep", "resume", "aggregate", "publication", "write-field-maps", "help"]);
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (!token.startsWith("--")) {
@@ -100,8 +102,9 @@ function usage() {
     "  --solver-config PATH               Versioned PETSc profile configuration",
     "  --memory-gib GIB                   Docker hard memory/swap limit (default: 24)",
     "  --cpus COUNT                       Docker CPU quota (default: thread count)",
-    "  --threads COUNT                    GetDP solver thread count (default: 2 for Docker)",
+    "  --threads COUNT                    GetDP/MUMPS thread count (default: 4; publication stays 2)",
     "  --mesh-threads COUNT               Gmsh thread count (default: --threads)",
+    "  --write-field-maps                 Also write the 1.3 GiB field maps used to inspect energy flow",
     "  --case PATH                        Case JSON path",
     "  --geo PATH                         Gmsh geometry path",
     "  --pro PATH                         GetDP problem path",
@@ -604,7 +607,28 @@ function parameterWrapper(source, overrides) {
 }
 
 function problemWrapper(source, overrides) {
-  return `${overrides.map(([name, value]) => `${name} = ${value};`).join("\n")}\nInclude ${JSON.stringify(source)};`;
+  return [
+    ...overrides.map(([name, value]) => `${name} = ${value};`),
+    `Include ${JSON.stringify(source)};`,
+    "PostOperation {",
+    "  { Name MagnetostaticTables; NameOfPostProcessing MagnetostaticResults;",
+    "    Operation {",
+    '      Print[MagneticEnergyJ[Domain], OnGlobal, Format Table, File "observables.dat"];',
+    '      Print[CoEnergyJ[Domain], OnGlobal, Format Table, File "coenergy.dat"];',
+    '      Print[InductanceH[Domain], OnGlobal, Format Table, File "inductance.dat"];',
+    "    }",
+    "  }",
+    "}",
+    ""
+  ].join("\n");
+}
+
+function getdpPostOperation(options) {
+  return options["write-field-maps"] ? POST_OPERATION_FIELDS : POST_OPERATION_TABLES
+}
+
+function solveCommandPlan(solverThreads, solver, postOperation) {
+  return ["getdp", "{problem}", "-nt", String(solverThreads), "-name", "{solution}", "-msh", "{mesh}", "-solve", "Magnetostatics3D", "-pos", postOperation, ...solver.petscOptions]
 }
 
 function backendPlan(options, host, { allowUnavailable = false } = {}) {
@@ -744,14 +768,14 @@ function runnerRevision() {
 }
 
 function identifyBackend(plan, options, inputs) {
-  const solverThreads = positiveInteger(options.threads || process.env.SOLVER_THREADS || (plan.kind === "docker" ? "2" : "1"), "--threads");
-  const meshThreads = positiveInteger(options["mesh-threads"] || solverThreads, "--mesh-threads");
+  const solverThreads = positiveInteger(options.threads || process.env.SOLVER_THREADS || (options.publication ? "2" : "4"), "--threads");
+  const meshThreads = positiveInteger(options["mesh-threads"] || (options.publication ? "1" : solverThreads), "--mesh-threads");
   const cpus = positiveNumber(options.cpus || solverThreads, "--cpus");
   const memoryGiB = plan.kind === "docker" ? positiveNumber(options["memory-gib"] || "24", "--memory-gib") : null;
   const solver = solverProfile(inputs, options);
   const commandPlan = {
     mesh: ["gmsh", "{geometry}", "-3", "-nt", String(meshThreads), "-format", "msh4", "-o", "{mesh}"],
-    solve: ["getdp", "{problem}", "-nt", String(solverThreads), "-name", "{solution}", "-msh", "{mesh}", "-solve", "Magnetostatics3D", "-pos", "MagnetostaticResults", ...solver.petscOptions]
+    solve: solveCommandPlan(solverThreads, solver, getdpPostOperation(options))
   };
   if (options.publication) {
     assert(plan.kind === "docker", "Publication requires the memory-bounded Docker backend");
@@ -1075,7 +1099,7 @@ function commandPlan(job) {
     "-solve",
     "Magnetostatics3D",
     "-pos",
-    "MagnetostaticResults",
+    getdpPostOperation(job.options),
     ...plan.solver.petscOptions
   ];
   const auditArgs = [
@@ -1137,17 +1161,27 @@ function planJob(inputs, parameters, options, plan, runRoot, symmetryApplied = f
   return { hash, modelInputHash, jobId, jobDir, meshPath, auditPath, parametersPath, geoWrapperPath, proWrapperPath, checkpoint, parameters, plan, inputs, options, runRoot, symmetryApplied };
 }
 
-function parseSolverConvergence(logPath, solver) {
-  const log = readFileSync(logPath, "utf8");
+function selectedPetscSolver(log, solver) {
   const selected = [...log.matchAll(/Info\s+: N: (\d+) - (\S+) (\S+)(?: (\S+))?/g)].at(-1);
   assert(selected, "GetDP log does not record the selected PETSc KSP/PC");
   assert(selected[2] === solver.kspType && selected[3] === solver.pcType, `GetDP selected ${selected[2]}/${selected[3]} instead of ${solver.kspType}/${solver.pcType}`);
   if (solver.factorSolverType) {
     assert(selected[4] === solver.factorSolverType, `GetDP selected ${selected[4] || "no factor solver"} instead of ${solver.factorSolverType}`);
   }
+  return selected;
+}
+
+function petscSolveReason(log) {
   const reason = [...log.matchAll(/Linear solve (did not converge|converged) due to (\S+) iterations (\d+)/g)].at(-1);
   assert(reason, "GetDP log does not contain a PETSc convergence reason");
   assert(reason[1] === "converged" && reason[2].startsWith("CONVERGED_"), `PETSc solve did not converge: ${reason[2]}`);
+  return reason;
+}
+
+function parseSolverConvergence(logPath, solver) {
+  const log = readFileSync(logPath, "utf8");
+  const selected = selectedPetscSolver(log, solver);
+  const reason = petscSolveReason(log);
   const residual = [...log.matchAll(/(\d+) KSP unpreconditioned resid norm ([\deE+.-]+) true resid norm ([\deE+.-]+) \|\|r\(i\)\|\|\/\|\|b\|\| ([\deE+.-]+)/g)].at(-1);
   assert(residual, "GetDP log does not contain the final true residual");
   const memory = [...log.matchAll(/Mem = ([\d.]+)Mb/g)].map((match) => Number(match[1]));
@@ -1171,6 +1205,42 @@ function parseSolverConvergence(logPath, solver) {
     } : null,
     peakGetdpMemoryMiB: memory.length ? Math.max(...memory) : null,
     runtimeSeconds: wall.length ? Math.max(...wall) : null
+  };
+}
+
+function parseDirectSolverEvidence(logPath, solver, jobDir) {
+  const log = readFileSync(logPath, "utf8");
+  const selected = selectedPetscSolver(log, solver);
+  const reason = petscSolveReason(log);
+  assert(solver.mode === "direct" && solver.kspType === "preonly" && solver.pcType === "lu" && solver.factorSolverType === "mumps",
+    "direct solver evidence requires preonly/lu/mumps");
+  assert(!/(?:^|\n)(?:.*PETSC ERROR|Error\s*:|.*(?:out of memory|cannot allocate memory|oom-kill|oom_reaper)|\s*Killed\s*$)/im.test(log),
+    "GetDP log contains a PETSc/GetDP error or out-of-memory failure");
+  assert(/Info\s+: SaveSolution\[Sys_Mag\]/.test(log), "GetDP log does not contain completed SaveSolution");
+  assert(/Info\s+: Stopped \([^\n]+\)\s*$/.test(log), "GetDP log is truncated or does not contain the final stopped record");
+  const outputHashes = Object.fromEntries(SOLVER_OUTPUTS.map((name) => {
+    const path = join(jobDir, name);
+    assert(existsSync(path) && statSync(path).size > 0, `GetDP output is missing or empty: ${name}`);
+    return [name, sha256File(path)];
+  }));
+  return {
+    schemaVersion: "edwin-gray-solver-evidence-v1",
+    status: "complete",
+    profile: solver.name,
+    configSha256: solver.configSha256,
+    mode: solver.mode,
+    getdpExitStatus: 0,
+    kspType: selected[2],
+    pcType: selected[3],
+    factorSolverType: solver.factorSolverType || null,
+    reason: reason[2],
+    iterations: Number(reason[3]),
+    finalResidualNorm: null,
+    finalRelativeResidual: null,
+    saveSolution: true,
+    postoperations: [...SOLVER_OUTPUTS],
+    getdpLogSha256: sha256File(logPath),
+    outputHashes
   };
 }
 
@@ -1275,7 +1345,9 @@ function runJob(job) {
       runRoot
     });
     assert(outputsComplete(job), "GetDP completed without producing all declared table outputs");
-    const convergence = parseSolverConvergence(solveRun.log, plan.solver);
+    const convergence = plan.solver.mode === "direct"
+      ? parseDirectSolverEvidence(solveRun.log, plan.solver, jobDir)
+      : parseSolverConvergence(solveRun.log, plan.solver);
     writeAtomic(join(jobDir, SOLVER_CONVERGENCE), convergence);
     checkpoint.phases.solve = "complete";
     checkpoint.artifacts.logs.getdp = sha256File(solveRun.log);

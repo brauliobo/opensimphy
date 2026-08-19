@@ -110,6 +110,7 @@ describe('Edwin Gray COP claim reproduction', () => {
       'diagramCop282',
       'transcriptCop300',
       'transcriptAmbiguousOutput',
+      'whisperCop280',
     ])
     expect(cop300.status).toBe('incomplete-source-values')
     expect(cop300.claim).toMatchObject({
@@ -130,6 +131,22 @@ describe('Edwin Gray COP claim reproduction', () => {
     expect(ambiguous.conservationClosure.totalDeclaredInputPowerW).toBeNull()
     expect(ambiguous.conservationClosure.observedOutput).toBeNull()
     expect(ambiguous.conservationClosure.displayedCopTarget).toBeNull()
+  })
+
+  it('reproduces Whisper 26.8 W / 7.5 kW arithmetic without endorsing the attributed claim', () => {
+    const result = evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.whisperCop280)
+    const observed = result.conservationClosure.observedOutput
+
+    expect(result.claim.arithmeticCop).toBeCloseTo(279.8507462686567, 12)
+    expect(result.claim).toMatchObject({
+      attributedInputPowerW: 26.8,
+      attributedOutputPowerW: 7_500,
+    })
+    expect(result.status).toBe('arithmetic-match-boundary-open')
+    expect(result.validatesTheory).toBe(false)
+    expect(observed?.requiredUnaccountedPowerW).toBeCloseTo(7_473.2, 12)
+    expect(observed?.closedSystemCop).toBeNull()
+    expect(observed?.boundaryClosed).toBe(false)
   })
 
   it('does not inject claim deficits into the motor simulation', () => {

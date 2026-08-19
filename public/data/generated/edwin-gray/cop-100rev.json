@@ -2,7 +2,7 @@
   "contract": "edwin-gray-cop-100rev",
   "version": 1,
   "magneticLookup": null,
-  "productionLutPublished": false,
+  "productionLutPublished": true,
   "lutBlocker": "fem/edwin-gray/convergence/production-lut-blocker.json",
   "energyModel": "bounded-classical-lumped-surrogate",
   "doesNotModify": "public/data/generated/awesomePhysics/simulations.json",

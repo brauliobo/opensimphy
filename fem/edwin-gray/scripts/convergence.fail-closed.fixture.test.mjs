@@ -7,6 +7,7 @@ import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { convergenceSymmetryProof, evaluateConvergence, expectedSampleDefinitions } from "../convergence/evaluate-convergence.mjs";
+import { productionConvergenceAttestation, productionRequiredTuples } from "../convergence/production-profile.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SPEC_PATH = join(ROOT, "convergence/convergence-spec-v2.json");
@@ -400,6 +401,24 @@ test("missing production evidence is rejected", (t) => {
   const report = evaluate(context);
   assert.equal(report.status, "rejected");
   assert.match(report.failures[0], /sample count/);
+});
+
+test("production coverage rejects reduced 23-tuple evidence and attests the 33-sample profile", (t) => {
+  const context = fixture(t);
+  const report = evaluateConvergence({
+    spec: SPEC,
+    specBytes: SPEC_BYTES,
+    evidence: context.evidence,
+    evidenceDir: context.root,
+    coverage: "production"
+  });
+  const expected = productionConvergenceAttestation(SPEC, SPEC_PATH);
+  assert.equal(report.status, "rejected");
+  assert.equal(report.profile.contract, expected.contract);
+  assert.equal(report.profile.profileId, expected.profileId);
+  assert.equal(report.profile.sha256, expected.sha256);
+  assert.equal(productionRequiredTuples(SPEC).length, 33);
+  assert.match(report.failures[0], /sample count 23 does not match required production count 33/);
 });
 
 test("reduced convergence samples must all be independently solved", (t) => {

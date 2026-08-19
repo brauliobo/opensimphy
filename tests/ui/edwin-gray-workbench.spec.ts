@@ -26,6 +26,7 @@ import {
   type GrayWorkerResponse,
 } from '../../src/edwin-gray/edwinGrayWorkerProtocol'
 import { GRAY_MACHINE_ARTIFACT } from '../../src/edwin-gray/generated/grayMachines.generated'
+import { compatibleGrayMagneticLookup } from '../helpers/edwinGrayFemLookup'
 
 class MockGrayWorker implements GrayWorkerLike {
   readonly listeners = new Map<string, Set<EventListener>>()
@@ -75,11 +76,17 @@ describe('Edwin Gray canonical workbench state', () => {
       magneticModel: 'limited-fem-calibration' as const,
     }
     expect(parseGrayWorkbenchQuery(serializeGrayWorkbenchInput(calibration))).toEqual(calibration)
+    const femLookup = {
+      ...defaultGrayWorkbenchInput('patent-3890548-illustrative'),
+      magneticModel: 'fem-lookup' as const,
+    }
+    expect(parseGrayWorkbenchQuery(serializeGrayWorkbenchInput(femLookup))).toEqual(femLookup)
   })
 
   it('requires a ready lookup before constructing FEM input and freezes completed output', () => {
     const state = { ...defaultGrayWorkbenchInput('patent-3890548-illustrative'), magneticModel: 'fem-lookup' as const }
     expect(() => grayFullMotorInput(state)).toThrow(/compatible ready FEM lookup/)
+    expect(() => createGraySubmittedInput(state)).toThrow(/compatible ready FEM lookup/)
 
     const output = freezeGrayFullMotorResult(evaluateGrayFullMotor({
       ...GRAY_PRESETS.purple,
@@ -89,6 +96,15 @@ describe('Edwin Gray canonical workbench state', () => {
     }))
     expect(Object.isFrozen(output.events)).toBe(true)
     expect(Object.isFrozen(output.ledger)).toBe(true)
+
+    const lookup = compatibleGrayMagneticLookup()
+    const femInput = grayFullMotorInput(state, lookup)
+    const femResult = evaluateGrayFullMotor(femInput)
+    expect(lookup.source).toBe('fem-lookup')
+    expect(femInput.magneticLookup?.source).toBe('fem-lookup')
+    expect(femResult.magneticScope).toBe('hybrid-fem-magnetic-lumped-circuit')
+    expect(femResult.ledger.claimDeficitInjectedJ).toBe(0)
+    expect(femResult.ledger.wholeSystemCop).toBeLessThanOrEqual(1)
   })
 
   it('rejects invalid and unsupported future URL revisions', () => {

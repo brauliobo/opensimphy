@@ -15,10 +15,10 @@ import {
 } from '../../src/cases/grayArtifacts'
 
 describe('Edwin Gray persisted lab artifacts', () => {
-  it('exposes the 100-rev classical COP catalog without a production LUT', () => {
-    expect(GRAY_COP_100REV.productionLutPublished).toBe(false)
+  it('exposes the 100-rev classical COP catalog beside a published production LUT', () => {
+    expect(GRAY_COP_100REV.productionLutPublished).toBe(true)
     expect(GRAY_COP_100REV.magneticLookup).toBeNull()
-    expect(grayCopCatalogHasProductionLut()).toBe(false)
+    expect(grayCopCatalogHasProductionLut()).toBe(true)
     expect(GRAY_COP_100REV.peakWholeSystemCop).toBeCloseTo(0.026006101059471973, 12)
     expect(GRAY_COP_100REV.meanWholeSystemCop).toBeCloseTo(0.01616000022113847, 12)
     expect(GRAY_COP_100REV.copRange).toEqual([0.008455854947167687, 0.026006101059471973])
@@ -27,11 +27,11 @@ describe('Edwin Gray persisted lab artifacts', () => {
     expect(grayCopCatalogRows()).toHaveLength(7)
     expect(grayCopCatalogMetrics().some((row) => row.value === 'source-claim only')).toBe(true)
     expect(grayCopCatalogClaims().some((row) => row.status === 'source-claim-only')).toBe(true)
-    expect(GRAY_VIDEO_ARTIFACTS.productionLut.published).toBe(false)
+    expect(GRAY_VIDEO_ARTIFACTS.productionLut.published).toBe(true)
   })
 
   it('maps whisper schematic cues and only attaches retained cue frames', () => {
-    expect(GRAY_SCHEMATIC.productionLut.published).toBe(false)
+    expect(GRAY_SCHEMATIC.productionLut.published).toBe(true)
     expect(GRAY_SCHEMATIC.circuit.holdCapacitors).toBe(2)
     expect(GRAY_SCHEMATIC.circuit.dumpBankCapacitors).toBe(4)
     expect(GRAY_SCHEMATIC.claims.cop282).toBe('absent-from-this-pack')

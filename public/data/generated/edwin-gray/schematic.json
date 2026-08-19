@@ -57,9 +57,9 @@
     "recoveryFraction": { "value": 0.67, "kind": "secondhand-Hackenberger" }
   },
   "productionLut": {
-    "published": false,
+    "published": true,
     "blocker": "/home/braulio/Projects/physics/opensimphy/fem/edwin-gray/convergence/production-lut-blocker.json",
-    "note": "COP ledgers use the existing lumped Gray engine. No fake LUT."
+    "note": "Production LUT is published for fem-lookup. The 100-rev catalog remains the lumped Gray engine."
   },
   "enginePresets": {
     "note": "Illustrative lumped surrogates already compiled in opensimphy/src/edwin-gray/generated/grayMachines.generated.ts",

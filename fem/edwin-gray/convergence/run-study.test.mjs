@@ -15,6 +15,7 @@ import {
   selectedDefinitions,
   studyPlan
 } from "./run-study.mjs";
+import { productionRequiredTuples } from "./production-profile.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const RUN_STUDY = resolve(DIR, "run-study.mjs");
@@ -104,7 +105,7 @@ test("existing-only evaluation does not require a solver hard timeout", () => {
 });
 
 test("the actual publication gate rejects reduced and profile-hash-tampered reports before solver or LUT work", () => {
-  const production = productionConvergenceAttestation(SPEC);
+  const production = productionConvergenceAttestation(SPEC, SPEC_PATH);
   const reports = [
     {
       label: "reduced report with a tampered eligibility boolean",
@@ -156,5 +157,60 @@ test("the actual publication gate rejects reduced and profile-hash-tampered repo
     } finally {
       rmSync(workDir, { recursive: true, force: true });
     }
+  }
+});
+
+test("production coverage plans exactly 33 independent tuples and accepts convergence memory above 24 GiB", () => {
+  const production = productionRequiredTuples(SPEC);
+  const attestation = productionConvergenceAttestation(SPEC, SPEC_PATH);
+  assert.equal(production.length, 33);
+  assert.equal(attestation.contract, "edwin-gray-production-convergence-profile");
+  assert.equal(attestation.profileId, "historical-33-sample-production-v2");
+  assert.equal(new Set(production.map((tuple) => `${tuple.domainId}|${tuple.meshLevelId}|${tuple.driveCurrentA}|${tuple.rotorAngleDeg}`)).size, 33);
+
+  const workDir = mkdtempSync(resolve(tmpdir(), "edwin-gray-production-plan-"));
+  try {
+    const result = runStudy([
+      "--stage", "convergence",
+      "--coverage", "production",
+      "--plan",
+      "--docker-image", "solver@sha256:" + "a".repeat(64),
+      "--work-dir", workDir,
+      "--solver-profile", "direct-mumps-convergence-v1",
+      "--memory-gib", "64",
+      "--cpus", "2",
+      "--threads", "2",
+      "--mesh-threads", "1",
+      "--hard-timeout-seconds", "60"
+    ]);
+    assert.equal(result.status, 0, result.stderr);
+    const plan = JSON.parse(result.stdout);
+    assert.equal(plan.samples.length, 33);
+    assert(plan.samples.every((item) => item.command.includes("direct-mumps-convergence-v1")));
+    assert(plan.samples.every((item) => item.command.includes("64")));
+  } finally {
+    rmSync(workDir, { recursive: true, force: true });
+  }
+});
+
+test("publication still refuses convergence-only memory above 24 GiB", () => {
+  const workDir = mkdtempSync(resolve(tmpdir(), "edwin-gray-publication-memory-"));
+  try {
+    writeFileSync(resolve(workDir, "convergence-report.json"), "{}\n");
+    const result = runStudy([
+      "--stage", "publication",
+      "--docker-image", "must-not-run",
+      "--work-dir", workDir,
+      "--solver-profile", "direct-mumps-publication-v1",
+      "--memory-gib", "64",
+      "--cpus", "2",
+      "--threads", "2",
+      "--mesh-threads", "1",
+      "--hard-timeout-seconds", "60"
+    ]);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /must be in \(0, 24\]/);
+  } finally {
+    rmSync(workDir, { recursive: true, force: true });
   }
 });

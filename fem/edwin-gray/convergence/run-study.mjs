@@ -6,6 +6,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { convergenceSymmetryProof, expectedSampleDefinitions } from "./evaluate-convergence.mjs";
+import { productionConvergenceAttestation, productionRequiredTuples } from "./production-profile.mjs";
 import { proveEventMapSymmetry } from "../scripts/event-map-symmetry.mjs";
 import { expandPublicationLut, publicationDefinitions } from "./publication.mjs";
 import { validateBundledLut } from "../ci/validate-lut.mjs";
@@ -244,8 +245,10 @@ function collectExistingEvidence(workDir, spec, definitions) {
   return samples.sort((left, right) => sampleKey(left).localeCompare(sampleKey(right)));
 }
 
-function evaluateEvidence(workDir, evidencePath, reportPath) {
-  const evaluation = spawnSync(process.execPath, [EVALUATOR, "--evidence", evidencePath, "--out", reportPath], {
+function evaluateEvidence(workDir, evidencePath, reportPath, coverage) {
+  const args = [EVALUATOR, "--evidence", evidencePath, "--out", reportPath];
+  if (coverage === "production") args.push("--coverage", "production");
+  const evaluation = spawnSync(process.execPath, args, {
     cwd: ROOT,
     encoding: "utf8"
   });
@@ -283,48 +286,10 @@ function eventIndexForAngle(spec, angle) {
   return spec.production.convergenceEventIndex + (periodic ? spec.production.periodicityEventIndexOffset : 0);
 }
 
-export function productionConvergenceAttestation(spec) {
-  const production = spec.production;
-  const base = production.baseDomainId;
-  const fine = production.meshLevels.at(-1).id;
-  const representative = production.representativeAngles.map((item) => item.angleDeg);
-  const angles = new Set([
-    ...representative,
-    ...production.torqueAnglesDeg,
-    ...production.periodicityPairsDeg.flat()
-  ].map((angle) => Number(angle).toFixed(10)));
-  const required = new Map();
-  const add = (domainId, meshLevelId, driveCurrentA, rotorAngleDeg) => {
-    const tuple = { domainId, meshLevelId, driveCurrentA, rotorAngleDeg, eventIndex: eventIndexForAngle(spec, rotorAngleDeg) };
-    required.set(sampleKey(tuple), tuple);
-  };
-  for (const mesh of production.meshLevels) {
-    for (const angle of angles) add(base, mesh.id, production.productionCurrentA, Number(angle));
-  }
-  for (const domain of production.domains) {
-    for (const angle of representative) add(domain.id, fine, production.productionCurrentA, angle);
-  }
-  for (const current of [production.productionCurrentA, production.linearityAuditCurrentA]) {
-    for (const angle of representative) add(base, fine, current, angle);
-  }
-  const profile = {
-    contract: "edwin-gray-production-convergence-profile",
-    contractVersion: 1,
-    profileId: "historical-33-sample-production-v2",
-    specificationSha256: sha256(SPEC_PATH),
-    requiredTuples: [...required.values()].sort((left, right) => sampleKey(left).localeCompare(sampleKey(right)))
-  };
-  assert(profile.requiredTuples.length === 33, "canonical production convergence profile must contain exactly 33 tuples");
-  return {
-    contract: profile.contract,
-    contractVersion: profile.contractVersion,
-    profileId: profile.profileId,
-    sha256: sha256Value(profile)
-  };
-}
+export { productionConvergenceAttestation };
 
 export function authorizePublicationReport(report, spec) {
-  const expectedProfile = productionConvergenceAttestation(spec);
+  const expectedProfile = productionConvergenceAttestation(spec, SPEC_PATH);
   assert(report.status === "approved", "publication requires an approved convergence report");
   assert(report.contract === "edwin-gray-convergence-report" && report.contractVersion === 2, "publication convergence report contract is invalid");
   assert(report.specification?.contract === spec.contract && report.specification?.contractVersion === spec.contractVersion
@@ -375,7 +340,9 @@ function executeSamples({ definitions, spec, cases, workDir, image, threads, mes
       ? undefined
       : hardTimeoutSeconds - Math.ceil((Date.now() - started) / 1000);
     assert(remainingSeconds === undefined || remainingSeconds > 0, "shared hard timeout expired before all samples completed");
-    const output = JSON.parse(run(process.execPath, args, `sample ${sampleId(sample)}`, remainingSeconds));
+    const label = sampleId(sample);
+    process.stderr.write(`run-study: ${publication ? "publication" : "convergence"} ${completed.length + 1}/${definitions.length} ${label}\n`);
+    const output = JSON.parse(run(process.execPath, args, `sample ${label}`, remainingSeconds));
     const checkpoint = join(output.jobDir, "checkpoint.json");
     const checkpointData = readJson(checkpoint, `sample ${sampleId(sample)} checkpoint`);
     environmentIdentityHash ||= checkpointData.environmentIdentityHash;
@@ -411,11 +378,11 @@ export function studyPlan({ definitions, spec, cases, workDir, options }) {
           cases,
           runs,
           image: options["docker-image"],
-          threads: Number(options.threads || 1),
+          threads: Number(options.threads || 4),
           meshThreads: Number(options["mesh-threads"] || 1),
-          cpus: Number(options.cpus || 2),
+          cpus: Number(options.cpus || 4),
           memoryGiB: Number(options["memory-gib"] || 24),
-          solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1",
+          solverProfile: options["solver-profile"] || "direct-mumps-fast-v1",
           publication: false
         })]
       };
@@ -498,6 +465,8 @@ function pilotReport(samples, workDir, spec) {
 }
 
 function runConvergence(options, spec, definitions, workDir) {
+  const declared = definitions;
+  const coverage = options.coverage || "reduced";
   if (options["existing-only"] === "true") {
     const evidencePath = resolve(workDir, "convergence-evidence.json");
     const reportPath = resolve(workDir, "convergence-report.json");
@@ -509,7 +478,7 @@ function runConvergence(options, spec, definitions, workDir) {
       caseId: spec.caseId,
       samples
     });
-    const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath);
+    const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath, coverage);
     return {
       status: report.status,
       stage: "convergence",
@@ -594,11 +563,11 @@ function runConvergence(options, spec, definitions, workDir) {
     cases,
     workDir,
     image: options["docker-image"],
-    threads: Number(options.threads || 1),
+    threads: Number(options.threads || 4),
     meshThreads: Number(options["mesh-threads"] || 1),
-    cpus: Number(options.cpus || 2),
+    cpus: Number(options.cpus || 4),
     memoryGiB: Number(options["memory-gib"] || 24),
-    solverProfile: options["solver-profile"] || "iterative-cg-gamg-v1",
+    solverProfile: options["solver-profile"] || "direct-mumps-fast-v1",
     hardTimeoutSeconds: Number(options["hard-timeout-seconds"]),
     expectedEnvironmentIdentityHash: [...priorEnvironmentHashes][0] || null
   });
@@ -608,9 +577,9 @@ function runConvergence(options, spec, definitions, workDir) {
     writeJson(reportPath, report);
     return { status: report.status, stage: "pilot", jobs: samples.length, report: reportPath, reportSha256: sha256(reportPath), failures: report.failures };
   }
-  const allSamples = collectExistingEvidence(workDir, spec, expectedSampleDefinitions(spec));
-  if (allSamples.length !== expectedSampleDefinitions(spec).length) {
-    return { status: "pending", stage: "convergence", jobs: samples.length, completedReducedTuples: allSamples.length, requiredReducedTuples: expectedSampleDefinitions(spec).length };
+  const allSamples = collectExistingEvidence(workDir, spec, declared);
+  if (allSamples.length !== declared.length) {
+    return { status: "pending", stage: "convergence", jobs: samples.length, completedTuples: allSamples.length, requiredTuples: declared.length };
   }
   const evidencePath = resolve(workDir, "convergence-evidence.json");
   const reportPath = resolve(workDir, "convergence-report.json");
@@ -621,7 +590,7 @@ function runConvergence(options, spec, definitions, workDir) {
     caseId: spec.caseId,
     samples: allSamples
   });
-  const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath);
+  const { report, evaluation } = evaluateEvidence(workDir, evidencePath, reportPath, coverage);
   return {
     status: report.status,
     stage: "convergence",
@@ -654,7 +623,10 @@ function main(argv) {
   const hardTimeoutSeconds = Number(options["hard-timeout-seconds"]);
   assert(Number.isInteger(threads) && threads >= 1 && threads <= 2, "--threads must be an integer in [1, 2]");
   assert(Number.isFinite(cpus) && cpus > 0 && cpus <= 2, "--cpus must be in (0, 2]");
-  assert(Number.isFinite(memoryGiB) && memoryGiB > 0 && memoryGiB <= 24, "--memory-gib must be in (0, 24]");
+  const coverage = options.coverage || "reduced";
+  assert(["reduced", "production"].includes(coverage), "--coverage must be reduced or production");
+  assert(Number.isFinite(memoryGiB) && memoryGiB > 0 && (options.stage === "publication" ? memoryGiB <= 24 : memoryGiB <= 80),
+    options.stage === "publication" ? "--memory-gib must be in (0, 24]" : "--memory-gib must be in (0, 80]");
   assert(Number.isInteger(meshThreads) && meshThreads >= 1 && meshThreads <= 2, "--mesh-threads must be an integer in [1, 2]");
   if (!existingOnly) assert(Number.isFinite(hardTimeoutSeconds) && hardTimeoutSeconds > 0, "--hard-timeout-seconds must be finite and positive");
   if (options.stage === "publication") {
@@ -664,7 +636,9 @@ function main(argv) {
   mkdirSync(workDir, { recursive: true });
   const spec = readJson(SPEC_PATH, "convergence specification");
   const profile = readJson(REDUCED_PROFILE_PATH, "reduced convergence profile");
-  let definitions = expectedSampleDefinitions(spec, profile);
+  let definitions = coverage === "production"
+    ? productionRequiredTuples(spec)
+    : expectedSampleDefinitions(spec, profile);
   if (options["selected-tuples"]) definitions = selectedDefinitions(readJson(resolve(options["selected-tuples"]), "selected tuples"), definitions);
   const started = Date.now();
   const result = runConvergence(options, spec, definitions, workDir);

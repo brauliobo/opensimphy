@@ -1,0 +1,232 @@
+{
+  "contract": "edwin-gray-convergence-report",
+  "contractVersion": 2,
+  "specification": {
+    "contract": "edwin-gray-convergence-spec",
+    "contractVersion": 2,
+    "sha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7"
+  },
+  "profile": {
+    "contract": "edwin-gray-production-convergence-profile",
+    "contractVersion": 1,
+    "profileId": "historical-33-sample-production-v2",
+    "sha256": "63b7a77e8e6535aff470ffcf5e4368f570241ffaf07a7f3f271dbf69d3413ce4",
+    "scope": null,
+    "productionEligible": null,
+    "claims": null
+  },
+  "evidence": {
+    "contract": "edwin-gray-convergence-evidence",
+    "contractVersion": 2,
+    "sampleCount": 33,
+    "independentlySolvedSampleCount": 33,
+    "symmetryDerivedSampleCount": 0
+  },
+  "status": "approved",
+  "checks": [
+    {
+      "id": "evidence-integrity-and-coverage",
+      "status": "passed",
+      "observed": 33,
+      "tolerance": 33,
+      "comparison": "exact"
+    },
+    {
+      "id": "energy-coenergy-agreement",
+      "status": "passed",
+      "observed": 0,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-node-growth:0.0000000000",
+      "status": "passed",
+      "observed": 1.453504173055558,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-growth:0.0000000000",
+      "status": "passed",
+      "observed": 1.4601078786780481,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-node-ratio-drift:0.0000000000",
+      "status": "passed",
+      "observed": 0.006414510086339701,
+      "tolerance": 0.35,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-coarse-fine:0.0000000000",
+      "status": "passed",
+      "observed": 0.009488770473504859,
+      "tolerance": 0.02,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-medium-fine:0.0000000000",
+      "status": "passed",
+      "observed": 0.004343191093186296,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-node-growth:6.6666666667",
+      "status": "passed",
+      "observed": 1.4484557108221696,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-growth:6.6666666667",
+      "status": "passed",
+      "observed": 1.45433832109504,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-node-ratio-drift:6.6666666667",
+      "status": "passed",
+      "observed": 0.006356579862132005,
+      "tolerance": 0.35,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-coarse-fine:6.6666666667",
+      "status": "passed",
+      "observed": 0.011643711205772513,
+      "tolerance": 0.02,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-medium-fine:6.6666666667",
+      "status": "passed",
+      "observed": 0.0050774873187236945,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-node-growth:13.3333333333",
+      "status": "passed",
+      "observed": 1.454028553465469,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-growth:13.3333333333",
+      "status": "passed",
+      "observed": 1.46003282297818,
+      "tolerance": 1.05,
+      "comparison": "minimum"
+    },
+    {
+      "id": "mesh-element-node-ratio-drift:13.3333333333",
+      "status": "passed",
+      "observed": 0.006129248497600841,
+      "tolerance": 0.35,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-coarse-fine:13.3333333333",
+      "status": "passed",
+      "observed": 0.011421757776118157,
+      "tolerance": 0.02,
+      "comparison": "maximum"
+    },
+    {
+      "id": "mesh-observable-medium-fine:13.3333333333",
+      "status": "passed",
+      "observed": 0.005024438104943829,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-base-far:0.0000000000",
+      "status": "passed",
+      "observed": 0.0002491481007091767,
+      "tolerance": 0.015,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-expanded-far:0.0000000000",
+      "status": "passed",
+      "observed": 0.00011938335368599208,
+      "tolerance": 0.005,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-base-far:6.6666666667",
+      "status": "passed",
+      "observed": 0.00009802875649001698,
+      "tolerance": 0.015,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-expanded-far:6.6666666667",
+      "status": "passed",
+      "observed": 0.00005616453236944121,
+      "tolerance": 0.005,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-base-far:13.3333333333",
+      "status": "passed",
+      "observed": 0.000046214027549517357,
+      "tolerance": 0.015,
+      "comparison": "maximum"
+    },
+    {
+      "id": "domain-expanded-far:13.3333333333",
+      "status": "passed",
+      "observed": 0.00001421598897166591,
+      "tolerance": 0.005,
+      "comparison": "maximum"
+    },
+    {
+      "id": "current-inductance:6.6666666667",
+      "status": "passed",
+      "observed": 1.015626068707441e-15,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "current-energy-i2:6.6666666667",
+      "status": "passed",
+      "observed": 1.4049493950452934e-14,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "angle-periodicity:0.0000000000:120.0000000000",
+      "status": "passed",
+      "observed": 0.00002684688042111328,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "angle-periodicity:6.6666666667:126.6666666667",
+      "status": "passed",
+      "observed": 0.00020807160977544264,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "angle-periodicity:13.3333333333:133.3333333333",
+      "status": "passed",
+      "observed": 0.0002425049584335429,
+      "tolerance": 0.01,
+      "comparison": "maximum"
+    },
+    {
+      "id": "torque-derivative-stability",
+      "status": "passed",
+      "observed": 0.0050034653159208905,
+      "tolerance": 0.08,
+      "comparison": "maximum"
+    }
+  ],
+  "failures": []
+}

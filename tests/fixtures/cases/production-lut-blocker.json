@@ -1,69 +1,58 @@
 {
   "contract": "edwin-gray-production-lut-blocker",
   "contractVersion": 1,
-  "checkedAt": "2026-08-16",
-  "lutPath": null,
-  "productionLutPublished": false,
-  "status": "blocked",
-  "failClosed": true,
-  "reason": "GetDP cannot honestly complete the attested 33-sample production convergence inside the 24 GiB publication cap, and the publication gate rejects incomplete or reduced-profile reports before any LUT write.",
-  "blockers": [
-    {
-      "id": "missing-approved-33-sample-report",
-      "detail": "Publication requires an approved edwin-gray-convergence-report@2 whose profile is historical-33-sample-production-v2. Retained evidence is rejected at 18/33 samples. No runnable job tree remains under fem/edwin-gray/runs/."
-    },
-    {
-      "id": "reduced-profile-cannot-authorize-publication",
-      "detail": "The live evaluator only accepts illustrative-linear-numerical-convergence-v1 (23 independently solved tuples, productionEligible false, lutPublication false). Completing that reduced study cannot satisfy authorizePublicationReport."
-    },
-    {
-      "id": "direct-mumps-mesh-floor-and-ram-cap",
-      "detail": "direct-mumps-publication-v1 is the only publication-eligible solver. It requires mesh size 0.025 m, measured 1,335,000 DOF and 19.3 GiB peak, and a hard Docker cap of exactly 24 GiB. Direct MUMPS refuses meshes finer than 0.025 m. Medium 0.022 m, fine 0.019 m, expanded, and far tuples therefore cannot be solved with the publication solver under the cap."
-    },
-    {
-      "id": "iterative-solver-not-publication-eligible",
-      "detail": "iterative-cg-gamg-v1 is publicationAllowed false and experimentStatus rejected-too-slow-for-publication. Using it would not unlock motor-fem-lut-v1.json."
-    }
-  ],
+  "checkedAt": "2026-08-19",
+  "lutPath": "data/generated/edwin-gray/motor-fem-lut-v1.json",
+  "productionLutPublished": true,
+  "status": "published",
+  "failClosed": false,
+  "claimDeficitInjectedJ": 0,
+  "reason": "Approved historical-33-sample-production-v2 report authorized publication. Six independently solved coarse direct-MUMPS GetDP jobs wrote motor-fem-lut-v1.json; 27 entries are the 40-degree symmetry expansion. claimDeficitInjectedJ stays 0.",
+  "blockers": [],
   "identities": {
     "specificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
-    "reducedProfileId": "illustrative-linear-numerical-convergence-v1",
-    "reducedProfileSha256": "568802906e8fc87e283c3e9ff29cfa5913d5c4ce03505c805fd21d857ca844bd",
     "productionProfileId": "historical-33-sample-production-v2",
     "productionProfileSha256": "63b7a77e8e6535aff470ffcf5e4368f570241ffaf07a7f3f271dbf69d3413ce4",
     "publicationProfileId": "fast-coarse-direct-mumps-v1",
     "publicationProfileSha256": "a7fe41b6cbfdf60f26207e37cfed93dbc0228e08452408e006a981a0d918b338",
-    "rejectedReportSha256": "5429d381ea1015e21027f6d2a5d3ea41ce0d5df2add1a68827d2f9b793866c89",
-    "solverImage": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d"
+    "approvedReportSha256": "fb76cbc22eccc24e9c6f7a06ec0f0a796fd0dc7561fc4e93e683c684ac332dfd",
+    "convergenceEvidenceSha256": "b64c9a49a69dd8a02a0dd2ea6b548dda04eb5fd6e398bd6c6cff63a33e419f72",
+    "publicationEvidenceSha256": "745f71533a137ef3e1aa02483c93db3e630a879f6386ccdf1c26708f691b5e3c",
+    "lutSha256": "1e1b6f37428b95363086bd5e510d9677e2d41da82838f1d350cd539d7d8ed2e0",
+    "solverImage": "opensimphy-edwin-gray-fem@sha256:27f6e63f74e9d33b0071820a6b0765d4cac1578e0dcf7c748cebe7f6770f2b2d",
+    "convergenceEnvironmentIdentityHash": "a8bdca42bfb4279c90e23ca164236b05dc057de4634937b3e30dbdcccb1fc952",
+    "publicationEnvironmentIdentityHash": "5649fe93a062cb5a2bb6a6aaacd5a8bf441d27ca55a274b7999ee31801f68af2"
   },
   "resources": {
     "publicationMemoryGiB": 24,
     "publicationCpus": 2,
     "publicationSolverThreads": 2,
     "publicationMeshThreads": 1,
-    "hostMemAvailableGiBObserved": 94,
+    "convergenceMemoryGiB": 80,
+    "hostMemAvailableGiBObserved": 98,
     "hostGetdp": false,
     "dockerImagePresent": true
   },
   "retainedEvidence": {
-    "presentSamples": 18,
+    "presentSamples": 33,
     "requiredSamples": 33,
-    "independentlySolvedSampleCount": 17,
-    "symmetryDerivedSampleCount": 1,
-    "reportStatus": "rejected",
-    "reportPath": "../evidence/v2/convergence-report-rejected.json"
+    "independentlySolvedSampleCount": 33,
+    "symmetryDerivedSampleCount": 0,
+    "reportStatus": "approved",
+    "reportPath": "fem/edwin-gray/runs/study-production-v2/convergence-report.json",
+    "independentlySolvedJobs": 6,
+    "symmetryDerivedEntries": 27
   },
   "verification": {
-    "publicationAgainstRejectedReport": {
-      "exitCode": 1,
-      "stderr": "run-study: publication requires an approved convergence report",
-      "lutWritten": false,
-      "casesWritten": false
-    },
-    "femValidate": {
-      "tests": 91,
-      "passed": 91,
-      "bundledLut": "absent"
+    "publication": {
+      "exitCode": 0,
+      "status": "published",
+      "lutWritten": true,
+      "lutPath": "public/data/generated/edwin-gray/motor-fem-lut-v1.json",
+      "lutSha256": "1e1b6f37428b95363086bd5e510d9677e2d41da82838f1d350cd539d7d8ed2e0",
+      "independentlySolvedJobs": 6,
+      "symmetryDerivedEntries": 27,
+      "claimDeficitInjectedJ": 0
     }
   }
 }

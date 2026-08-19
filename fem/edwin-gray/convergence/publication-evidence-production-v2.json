@@ -1,0 +1,81 @@
+{
+  "contract": "edwin-gray-production-publication-evidence",
+  "contractVersion": 1,
+  "status": "published",
+  "independentlySolvedJobCount": 6,
+  "symmetryDerivedEntryCount": 27,
+  "solvedEventIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "symmetryProofSha256": "6e73200e5ea901821d39ec51810c7e006fcd63195074f6891cc60c3352d2c538",
+  "specificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
+  "convergenceReportSha256": "fb76cbc22eccc24e9c6f7a06ec0f0a796fd0dc7561fc4e93e683c684ac332dfd",
+  "lutSha256": "1e1b6f37428b95363086bd5e510d9677e2d41da82838f1d350cd539d7d8ed2e0",
+  "samples": [
+    {
+      "id": "base-coarse-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/9737b2ea8c004ef0490e54e5/result.json",
+      "checkpoint": "runs/9737b2ea8c004ef0490e54e5/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a13p3333333333-e1",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 1,
+      "result": "runs/1c11a6d5acfb236d515d996f/result.json",
+      "checkpoint": "runs/1c11a6d5acfb236d515d996f/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a26p6666666667-e2",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 26.6666666667,
+      "eventIndex": 2,
+      "result": "runs/ff0ec36e28d474d942c7c5de/result.json",
+      "checkpoint": "runs/ff0ec36e28d474d942c7c5de/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a40-e3",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 40,
+      "eventIndex": 3,
+      "result": "runs/0017f54de2783def6486df7d/result.json",
+      "checkpoint": "runs/0017f54de2783def6486df7d/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a53p3333333333-e4",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 53.3333333333,
+      "eventIndex": 4,
+      "result": "runs/0c85b9e762201bdb5a0088f9/result.json",
+      "checkpoint": "runs/0c85b9e762201bdb5a0088f9/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a66p6666666667-e5",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 66.6666666667,
+      "eventIndex": 5,
+      "result": "runs/3528a80e88f51fbc6eaf5b1a/result.json",
+      "checkpoint": "runs/3528a80e88f51fbc6eaf5b1a/checkpoint.json"
+    }
+  ]
+}

@@ -60,6 +60,10 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-claim-reproduction')).toContainText('explicitly separate')
     await expect(page.getByTestId('gray-retained-cop-evidence')).toContainText('COP 282')
     await expect(page.getByTestId('gray-retained-cop-evidence')).toContainText('Absent')
+    await expect(page.getByTestId('gray-whisper-cop-claim')).toContainText('279.85')
+    await expect(page.getByTestId('gray-whisper-cop-claim')).toContainText('validatesTheory: false')
+    await expect(page.getByTestId('gray-cop-discovery')).toBeVisible()
+    await expect(page.getByTestId('gray-presenter-meter-cop')).toHaveText('279.85')
 
     await page.getByTestId('gray-revolutions').fill('2')
     await expect(page.getByTestId('gray-stale')).toBeVisible()
@@ -145,23 +149,24 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(eventSummary).toHaveAttribute('aria-live', 'polite')
   })
 
-  test('keeps the absent production LUT separate from the unavailable calibration', async ({ page }) => {
+  test('keeps the published production LUT separate from the unavailable calibration', async ({ page }) => {
     await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'unavailable')
     await expect(page.getByTestId('gray-magnetic-model').locator('option[value="fem-lookup"]')).toHaveAttribute('disabled', '')
 
     await page.getByTestId('gray-machine-contract').selectOption('patent-3890548-illustrative')
-    await expect(page.getByTestId('gray-fem-runtime-status')).not.toHaveAttribute('data-state', 'ready')
+    await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'ready')
+    await expect(page.getByTestId('gray-magnetic-model').locator('option[value="fem-lookup"]')).not.toHaveAttribute('disabled')
     await expect(page.getByTestId('gray-calibration-runtime-status')).toHaveAttribute('data-state', 'invalid')
     await expect(page.getByTestId('gray-calibration-runtime-status')).toContainText('provenance mismatch')
     await expect(page.getByTestId('gray-magnetic-model')).toHaveValue('illustrative-surrogate')
     await expect(page.getByTestId('gray-fem-status')).toContainText('never relabeled FEM')
-    await expect(page.getByTestId('gray-production-lut-blocker')).toContainText('blocked / not published')
-    await expect(page.getByTestId('gray-production-lut-blocker')).toContainText('18/33')
-    await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('GetDP cannot honestly complete')
+    await expect(page.getByTestId('gray-production-lut-blocker')).toContainText('published')
+    await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('Compatible lookup')
 
     await page.getByTestId('gray-machine-contract').selectOption('edwin-gray-gold')
     await expect(page.getByTestId('gray-fem-runtime-status')).toHaveAttribute('data-state', 'unavailable')
     await expect(page.getByTestId('gray-fem-runtime-status')).toContainText('No prototype-specific geometry')
+    await expect(page.getByTestId('gray-magnetic-model').locator('option[value="fem-lookup"]')).toHaveAttribute('disabled', '')
     await expect(page.getByTestId('gray-magnetic-model').locator('option[value="limited-fem-calibration"]')).toHaveCount(0)
   })
 
@@ -340,7 +345,7 @@ test.describe('Edwin Gray Workbench', () => {
     await expectContainedReflow(page, true)
   })
 
-  test('mounts persisted 100-rev COP, schematic cues, and whisper artifacts without a production LUT', async ({ page }) => {
+  test('mounts persisted 100-rev COP, schematic cues, and whisper artifacts with a published production LUT', async ({ page }) => {
     await expect(page.getByTestId('gray-cop-catalog-metrics')).toContainText('0.026006')
     await expect(page.getByTestId('gray-cop-catalog-metrics')).toContainText('0.016160')
     await expect(page.getByTestId('gray-cop-catalog-metrics')).toContainText('source-claim only')
@@ -348,13 +353,13 @@ test.describe('Edwin Gray Workbench', () => {
     await expect(page.getByTestId('gray-cop-catalog')).toContainText('0.026006')
     await expect(page.getByTestId('case-cop')).toContainText('source-claim-only')
     await expect(page.getByTestId('gray-schematic-status')).toContainText('source-bounded-presenter-reconstruction')
-    await expect(page.getByTestId('gray-schematic-status')).toContainText('Production LUT published: false')
-    await expect(page.getByTestId('gray-schematic-metrics')).toContainText('not published')
+    await expect(page.getByTestId('gray-schematic-status')).toContainText('Production LUT published: true')
+    await expect(page.getByTestId('gray-schematic-metrics')).toContainText('published')
     await expect(page.getByTestId('case-schematic-ignitron-array').locator('img')).toBeVisible()
     await expect(page.getByTestId('case-schematic-cop-300').locator('img')).toHaveCount(0)
     await expect(page.getByTestId('gray-whisper-cues')).toContainText('COP of 300.')
     await expect(page.getByTestId('gray-whisper-transcripts')).toContainText('Whisper VTT')
-    await expect(page.getByTestId('gray-production-lut-blocker')).toContainText('blocked / not published')
+    await expect(page.getByTestId('gray-production-lut-blocker')).toContainText('published')
     await expect(page.getByTestId('gray-claims-clip-path')).toHaveText('research/opensimphy-edwin-gray/source/media/nC740fpBs4M-3300-4380.mkv')
     await expect(page.getByTestId('gray-claims-clip-sha256')).toHaveText('480235ab6fa2830a94c207a3a1e6752f0266b002ce3a017b6805d926584d327b')
     await expect(page.getByTestId('gray-claims-clip-metrics')).toContainText('research path only')

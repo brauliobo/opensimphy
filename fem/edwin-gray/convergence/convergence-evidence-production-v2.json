@@ -1,0 +1,338 @@
+{
+  "contract": "edwin-gray-convergence-evidence",
+  "contractVersion": 2,
+  "status": "complete",
+  "caseId": "patent-3890548-illustrative",
+  "samples": [
+    {
+      "id": "base-coarse-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/9737b2ea8c004ef0490e54e5/result.json",
+      "checkpoint": "runs/9737b2ea8c004ef0490e54e5/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a10-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 10,
+      "eventIndex": 0,
+      "result": "runs/0c316321a2b43d02cf63fede/result.json",
+      "checkpoint": "runs/0c316321a2b43d02cf63fede/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a120-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 120,
+      "eventIndex": 9,
+      "result": "runs/7f8885d7bd4972683df189a8/result.json",
+      "checkpoint": "runs/7f8885d7bd4972683df189a8/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "result": "runs/d27ec6a4bafb65b6e6dcef2c/result.json",
+      "checkpoint": "runs/d27ec6a4bafb65b6e6dcef2c/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/ae9a1679ea80a89eacabc35e/result.json",
+      "checkpoint": "runs/ae9a1679ea80a89eacabc35e/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a133p3333333333-e9",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 133.3333333333,
+      "eventIndex": 9,
+      "result": "runs/19cff2fa08a7d19854095c03/result.json",
+      "checkpoint": "runs/19cff2fa08a7d19854095c03/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a3p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 3.3333333333,
+      "eventIndex": 0,
+      "result": "runs/805f1b575ce0fbba324b721c/result.json",
+      "checkpoint": "runs/805f1b575ce0fbba324b721c/checkpoint.json"
+    },
+    {
+      "id": "base-coarse-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "coarse",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/9149f44680694d8dd38f8bc2/result.json",
+      "checkpoint": "runs/9149f44680694d8dd38f8bc2/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/be130bff24483cfaf804da92/result.json",
+      "checkpoint": "runs/be130bff24483cfaf804da92/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/1fa1401abca41e9d3f4861fc/result.json",
+      "checkpoint": "runs/1fa1401abca41e9d3f4861fc/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i1-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 1,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/6d4bfce30e9585e01694403c/result.json",
+      "checkpoint": "runs/6d4bfce30e9585e01694403c/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/d280c967023c2df97cd1b96e/result.json",
+      "checkpoint": "runs/d280c967023c2df97cd1b96e/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a10-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 10,
+      "eventIndex": 0,
+      "result": "runs/242baa702bbe5bb3ee52e7fa/result.json",
+      "checkpoint": "runs/242baa702bbe5bb3ee52e7fa/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a120-e9",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 120,
+      "eventIndex": 9,
+      "result": "runs/e1e5fc02ee09f598254959fd/result.json",
+      "checkpoint": "runs/e1e5fc02ee09f598254959fd/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "result": "runs/e0fb9ae731d78bcb6572df89/result.json",
+      "checkpoint": "runs/e0fb9ae731d78bcb6572df89/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/0c5f9e12a26eeb1e980536ad/result.json",
+      "checkpoint": "runs/0c5f9e12a26eeb1e980536ad/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a133p3333333333-e9",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 133.3333333333,
+      "eventIndex": 9,
+      "result": "runs/a69c2cd1ca11a3ad062db1d1/result.json",
+      "checkpoint": "runs/a69c2cd1ca11a3ad062db1d1/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a3p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 3.3333333333,
+      "eventIndex": 0,
+      "result": "runs/9aabd6d6afc0f10e4b72d384/result.json",
+      "checkpoint": "runs/9aabd6d6afc0f10e4b72d384/checkpoint.json"
+    },
+    {
+      "id": "base-fine-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/3e79bf60c56294a648ad7a02/result.json",
+      "checkpoint": "runs/3e79bf60c56294a648ad7a02/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a0-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/fd34cc7fa0239b61cc74a880/result.json",
+      "checkpoint": "runs/fd34cc7fa0239b61cc74a880/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a10-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 10,
+      "eventIndex": 0,
+      "result": "runs/b20c9633a7b1200ffd4e756b/result.json",
+      "checkpoint": "runs/b20c9633a7b1200ffd4e756b/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a120-e9",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 120,
+      "eventIndex": 9,
+      "result": "runs/a56e7ed764305cecb2be3195/result.json",
+      "checkpoint": "runs/a56e7ed764305cecb2be3195/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a126p6666666667-e9",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 126.6666666667,
+      "eventIndex": 9,
+      "result": "runs/dd1bd163017a166ebcae2655/result.json",
+      "checkpoint": "runs/dd1bd163017a166ebcae2655/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a13p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/b3cdc506435d4960a98b6887/result.json",
+      "checkpoint": "runs/b3cdc506435d4960a98b6887/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a133p3333333333-e9",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 133.3333333333,
+      "eventIndex": 9,
+      "result": "runs/b1f3dec263c21b2b08530c1e/result.json",
+      "checkpoint": "runs/b1f3dec263c21b2b08530c1e/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a3p3333333333-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 3.3333333333,
+      "eventIndex": 0,
+      "result": "runs/b7cfea209396092956863f87/result.json",
+      "checkpoint": "runs/b7cfea209396092956863f87/checkpoint.json"
+    },
+    {
+      "id": "base-medium-i10-a6p6666666667-e0",
+      "domainId": "base",
+      "meshLevelId": "medium",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/059ca8190e1f6205f9bcb5e6/result.json",
+      "checkpoint": "runs/059ca8190e1f6205f9bcb5e6/checkpoint.json"
+    },
+    {
+      "id": "expanded-fine-i10-a0-e0",
+      "domainId": "expanded",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/66719ee67eef6e6716712bd0/result.json",
+      "checkpoint": "runs/66719ee67eef6e6716712bd0/checkpoint.json"
+    },
+    {
+      "id": "expanded-fine-i10-a13p3333333333-e0",
+      "domainId": "expanded",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/6004552279096444cd05c282/result.json",
+      "checkpoint": "runs/6004552279096444cd05c282/checkpoint.json"
+    },
+    {
+      "id": "expanded-fine-i10-a6p6666666667-e0",
+      "domainId": "expanded",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/f7fc1b513f12beebb565d550/result.json",
+      "checkpoint": "runs/f7fc1b513f12beebb565d550/checkpoint.json"
+    },
+    {
+      "id": "far-fine-i10-a0-e0",
+      "domainId": "far",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 0,
+      "eventIndex": 0,
+      "result": "runs/4f5c158e3b79e7ce0dd79328/result.json",
+      "checkpoint": "runs/4f5c158e3b79e7ce0dd79328/checkpoint.json"
+    },
+    {
+      "id": "far-fine-i10-a13p3333333333-e0",
+      "domainId": "far",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 13.3333333333,
+      "eventIndex": 0,
+      "result": "runs/117d62d771a92080416b6871/result.json",
+      "checkpoint": "runs/117d62d771a92080416b6871/checkpoint.json"
+    },
+    {
+      "id": "far-fine-i10-a6p6666666667-e0",
+      "domainId": "far",
+      "meshLevelId": "fine",
+      "driveCurrentA": 10,
+      "rotorAngleDeg": 6.6666666667,
+      "eventIndex": 0,
+      "result": "runs/31e2f62cb0bfe9319833fc16/result.json",
+      "checkpoint": "runs/31e2f62cb0bfe9319833fc16/checkpoint.json"
+    }
+  ]
+}

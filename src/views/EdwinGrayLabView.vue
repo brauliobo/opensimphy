@@ -46,6 +46,7 @@ import { loadGrayMagneticLookup } from '../edwin-gray/edwinGrayFem'
 import {
   GRAY_PRODUCTION_LUT_BLOCKER,
   grayProductionLutBlocked,
+  grayProductionLutBanner,
   grayProductionLutBlockReason,
 } from '../edwin-gray/edwinGrayProductionLut'
 import {
@@ -61,6 +62,7 @@ import {
 } from '../edwin-gray/edwinGrayMachines'
 import {
   evaluateGrayCopClaim,
+  evaluateGrayPresenterConverterChain,
   GRAY_COP_CLAIM_SCENARIOS,
   type GrayFullMotorResult,
   type GrayMagneticLookup,
@@ -143,6 +145,8 @@ const claimEvidence = freezeGrayValue({
   diagramCop282: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282),
   retainedTranscriptCop282: null,
   retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
+  whisperCop280: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.whisperCop280),
+  converterChain: evaluateGrayPresenterConverterChain(),
 })
 const benchmark = useBenchmarkRegistry()
 void benchmark.initialize()
@@ -163,6 +167,9 @@ const machineRows = GRAY_MACHINE_IDS.map((id) => ({
 const copClaims = grayCopCatalogClaims()
 const copCatalogMetrics = grayCopCatalogMetrics()
 const copCatalogRows = grayCopCatalogRows()
+const copDisplayNote = grayProductionLutBlocked()
+  ? 'Live worker COP is this run\'s classical ledger. The 100-rev catalog peak is 0.026 (ema4), mean 0.016, range 0.0085–0.026. Claimed 300 is source-claim only. No production FEM LUT.'
+  : `Live worker COP is this run's classical ledger. The 100-rev catalog peak is 0.026 (ema4), mean 0.016, range 0.0085–0.026. Claimed 300 is source-claim only. Production FEM LUT published at ${GRAY_PRODUCTION_LUT_BLOCKER.lutPath}; magneticModel fem-lookup refines L(θ)/torque only.`
 const copCatalogColumns = Object.freeze([
   { key: 'model', label: 'Machine' },
   { key: 'cop', label: 'Whole-system COP' },
@@ -742,11 +749,11 @@ onBeforeUnmount(() => {
       :observed="result.ledger.wholeSystemCop"
       :scope="result.ledger.copScope"
       :claims="copClaims"
-      note="Live worker COP is this run's classical ledger. The 100-rev catalog peak is 0.026 (ema4), mean 0.016, range 0.0085–0.026. Claimed 300 is source-claim only. No production FEM LUT."
+      :note="copDisplayNote"
     )
     MetricStrip(:metrics="copCatalogMetrics" test-id="gray-cop-catalog-metrics")
     ResultTable(
-      caption="Persisted 100-revolution classical COP catalog. magneticLookup is null; production LUT is not published."
+      caption="Persisted 100-revolution classical COP catalog. magneticLookup is null; the catalog stays lumped. Production LUT is published for fem-lookup."
       :columns="copCatalogColumns"
       :rows="copCatalogRows"
       test-id="gray-cop-catalog"
@@ -997,8 +1004,8 @@ onBeforeUnmount(() => {
           h2#gray-fem-title Runtime FEM status: {{ femStatus }}
           p {{ femMessage }} FEM is activated only for an exact machine compatibility match. The surrogate remains explicitly labeled and is never relabeled FEM.
           p(data-testid="gray-production-lut-blocker")
-            strong Production LUT: blocked / not published.
-            |  {{ GRAY_PRODUCTION_LUT_BLOCKER.retainedEvidence.presentSamples }}/{{ GRAY_PRODUCTION_LUT_BLOCKER.retainedEvidence.requiredSamples }} retained samples. {{ grayProductionLutBlockReason() }}
+            strong {{ grayProductionLutBanner() }}
+            |  {{ grayProductionLutBlockReason() }}
           p(v-if="calibrationAvailable" data-testid="gray-calibration-summary") Limited calibration: {{ calibrationDisplayStatus }}. It is separate from production FEM, limited-not-validated, non-production, and never enabled by default. Torque and all dynamic mechanical outputs have no validated bound.
         .gray-fem-card__links
           a(:href="GRAY_FEM_PROVENANCE.workspace" target="_blank" rel="noreferrer") Open fem/edwin-gray provenance

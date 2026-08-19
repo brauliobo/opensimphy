@@ -73,7 +73,8 @@ if (existsSync(process.env.GETDP_NONCONVERGE)) {
 }
 console.log("  12 KSP unpreconditioned resid norm 5.0e-04 true resid norm 5.0e-04 ||r(i)||/||b|| 5.0e-04");
 console.log("Linear solve converged due to CONVERGED_RTOL iterations 12");
-console.log("Info    : (Wall = 2.5s, CPU = 2.0s, Mem = 64.0Mb)");
+console.log("Info    : SaveSolution[Sys_Mag]");
+console.log("Info    : Stopped (fixture, Wall = 2.5s, CPU = 2.0s, Mem = 64.0Mb)");
 `);
   writeExecutable(audit, `
 import { createHash } from "node:crypto";
@@ -305,6 +306,41 @@ test("direct MUMPS publication is explicit and restricted to the accepted coarse
   result = run(context, ...common, "--mesh-size", "0.025", "--publication");
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /memory-bounded Docker backend/);
+  result = run(context, ...common.slice(0, -2), "--solver-profile", "direct-mumps-convergence-v1", "--mesh-size", "0.019");
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("direct MUMPS attests completion without iterative residual lines", (t) => {
+  const context = fixture(t);
+  writeExecutable(context.getdp, `
+import { existsSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+if (existsSync(process.env.GETDP_NO_OUTPUT)) process.exit(0);
+console.log("Info    : N: 100 - preonly lu mumps");
+console.log("Linear solve converged due to CONVERGED_ITS iterations 1");
+console.log("Info    : SaveSolution[Sys_Mag]");
+writeFileSync(join(process.cwd(), "observables.dat"), "MagneticEnergyJ 1.25\\n");
+writeFileSync(join(process.cwd(), "coenergy.dat"), "CoEnergyJ 1.25\\n");
+writeFileSync(join(process.cwd(), "inductance.dat"), "InductanceH 2.5\\n");
+console.log("Info    : Stopped (fixture, Wall = 2.5s, CPU = 2.0s, Mem = 64.0Mb)");
+`);
+  const result = run(
+    context,
+    "--resume",
+    "--backend", "host",
+    "--gmsh-bin", context.gmsh,
+    "--getdp-bin", context.getdp,
+    "--mesh-audit", context.audit,
+    "--solver-profile", "direct-mumps-convergence-v1",
+    "--mesh-size", "0.025",
+    "--run-dir", context.runs
+  );
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout);
+  const convergence = JSON.parse(readFileSync(join(output.jobDir, "solver-convergence.json"), "utf8"));
+  assert.equal(convergence.schemaVersion, "edwin-gray-solver-evidence-v1");
+  assert.equal(convergence.finalResidualNorm, null);
+  assert.equal(convergence.reason, "CONVERGED_ITS");
 });
 
 test("aggregation rejects an incomplete declared manifest slice", (t) => {

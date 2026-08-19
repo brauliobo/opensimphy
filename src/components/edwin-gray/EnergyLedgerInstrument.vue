@@ -2,6 +2,7 @@
 import {
   type GrayCopClaimEvaluation,
   type GrayFullMotorResult,
+  type GrayPresenterConverterChainEvaluation,
 } from '../../edwin-gray/edwinGrayEngine'
 import type { ReadingDepth } from '../../types/tour'
 
@@ -12,9 +13,15 @@ const props = defineProps<{
     diagramCop282: Readonly<GrayCopClaimEvaluation>
     retainedTranscriptCop282: null
     retainedTranscriptCop300: Readonly<GrayCopClaimEvaluation>
+    whisperCop280: Readonly<GrayCopClaimEvaluation>
+    converterChain: Readonly<GrayPresenterConverterChainEvaluation>
   }>
 }>()
 const observedDeficitW = props.claimEvidence.diagramCop282.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
+const whisperDeficitW = props.claimEvidence.whisperCop280.conservationClosure.observedOutput?.requiredUnaccountedPowerW ?? 0
+const presenterMeter = props.result.ledger.measurementBoundaries.presenterMeter
+const recoveryMakeup = props.result.ledger.measurementBoundaries.recoveryMakeup
+const converterChain = props.claimEvidence.converterChain
 const formatJ = (value: number): string => `${value.toExponential(4)} J`
 </script>
 
@@ -64,6 +71,33 @@ article.quantum-instrument(data-testid="gray-energy-instrument")
       summary Technical ledger disclosure
       p Normalized residual {{ result.ledger.normalizedResidual.toExponential(4) }}. Electromagnetic work {{ formatJ(result.ledger.electromagneticWorkJ) }}; kinetic change {{ formatJ(result.ledger.kineticEnergyChangeJ) }}.
 
+  section.gray-claim-panel(aria-labelledby="gray-cop-discovery-title" data-testid="gray-cop-discovery")
+    .gray-claim-panel__heading
+      p.quantum-kicker Measurement boundary / attributed vs run
+      h4#gray-cop-discovery-title Why ~280 appears
+      p Crosby's front-end meter counted 26.8 W into a converter, not electrical-out vs electrical-in. The 7.5 kW is torque/force on a classical generator. Battery recovery and the 30 A / 12 V top-off sit outside that meter, so apparent COP is 7.5 kW / 26.8 W.
+    dl.gray-claim-metrics
+      div
+        dt Presenter meter COP
+        dd(data-testid="gray-presenter-meter-cop") {{ presenterMeter.apparentCop.toFixed(2) }}
+      div
+        dt Recovery-makeup COP
+        dd(data-testid="gray-recovery-makeup-cop") {{ recoveryMakeup.recoveryMakeupCop.toFixed(6) }}
+      div
+        dt Whole-system COP
+        dd {{ result.ledger.wholeSystemCop.toFixed(6) }}
+    dl.gray-claim-metrics
+      div
+        dt Hackenberger apparent COP
+        dd {{ converterChain.hackenbergerApparentCop.toFixed(2) }}
+      div
+        dt Top-off generator
+        dd {{ converterChain.topOffGeneratorW }} W
+      div
+        dt Unaccounted energy
+        dd {{ formatJ(converterChain.unaccountedEnergyJ) }}
+    p.gray-claim-panel__boundary {{ converterChain.missingEnergyTerm }}
+
   section.gray-claim-panel(aria-labelledby="gray-claim-title" data-testid="gray-claim-reproduction")
     .gray-claim-panel__heading
       p.quantum-kicker Fallback diagnostic / explicitly separate
@@ -90,4 +124,21 @@ article.quantum-instrument(data-testid="gray-energy-instrument")
       div
         dt Paired output
         dd {{ claimEvidence.retainedTranscriptCop300.claim.attributedOutputPowerW === null ? 'Absent' : claimEvidence.retainedTranscriptCop300.claim.attributedOutputPowerW }}
+
+  section.gray-claim-panel(aria-labelledby="gray-whisper-cop-title" data-testid="gray-whisper-cop-claim")
+    .gray-claim-panel__heading
+      p.quantum-kicker Fallback diagnostic / explicitly separate
+      h4#gray-whisper-cop-title Attributed Whisper arithmetic, not motor output
+      p Whisper resolves auto-caption "7 12 kilowatts" to 7.5 kW out / 26.8 W in. Arithmetic COP ≈ 280 from 7.5 kW / 26.8 W. Nobody said 280 or 282. This is not motor output.
+    dl.gray-claim-metrics
+      div
+        dt Whisper values
+        dd 26.8 W in / 7.5 kW out
+      div
+        dt Arithmetic COP
+        dd(data-testid="gray-whisper-cop-arithmetic") {{ claimEvidence.whisperCop280.claim.arithmeticCop?.toFixed(2) }}
+      div
+        dt Required unaccounted power
+        dd(data-testid="gray-whisper-cop-deficit") {{ whisperDeficitW.toFixed(1) }} W
+    p.gray-claim-panel__boundary validatesTheory: {{ claimEvidence.whisperCop280.validatesTheory }}. This diagnostic is preserved only as attributed Whisper claim arithmetic.
 </template>

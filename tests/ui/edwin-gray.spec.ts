@@ -7,6 +7,7 @@ import PulseCycleInstrument from '../../src/components/edwin-gray/PulseCycleInst
 import {
   evaluateGrayCopClaim,
   evaluateGrayFullMotor,
+  evaluateGrayPresenterConverterChain,
   GRAY_COP_CLAIM_SCENARIOS,
   GRAY_PRESETS,
 } from '../../src/edwin-gray/edwinGrayEngine'
@@ -25,6 +26,8 @@ const claimEvidence = freezeGrayValue({
   diagramCop282: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.diagramCop282),
   retainedTranscriptCop282: null,
   retainedTranscriptCop300: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.transcriptCop300),
+  whisperCop280: evaluateGrayCopClaim(GRAY_COP_CLAIM_SCENARIOS.whisperCop280),
+  converterChain: evaluateGrayPresenterConverterChain(),
 })
 const patentResult = freezeGrayFullMotorResult(evaluateGrayFullMotor({
   ...GRAY_PRESETS['patent-illustrative'],
@@ -71,6 +74,17 @@ describe('unified Edwin Gray result instruments', () => {
     expect(energy.get('[data-testid="gray-system-cop"]').text()).toBe(result.ledger.wholeSystemCop.toFixed(6))
     expect(energy.get('[data-testid="gray-claim-reproduction"]').text()).toContain('explicitly separate')
     expect(energy.get('[data-testid="gray-retained-cop-evidence"]').text()).toContain('COP 282Absent')
+    expect(energy.get('[data-testid="gray-whisper-cop-claim"]').text()).toContain('26.8 W in / 7.5 kW out')
+    expect(energy.get('[data-testid="gray-whisper-cop-arithmetic"]').text()).toBe('279.85')
+    expect(energy.get('[data-testid="gray-whisper-cop-deficit"]').text()).toContain('7473.2')
+    expect(energy.get('[data-testid="gray-whisper-cop-claim"]').text()).toContain('explicitly separate')
+    expect(energy.get('[data-testid="gray-cop-discovery"]').text()).toContain('front-end meter')
+    expect(energy.get('[data-testid="gray-presenter-meter-cop"]').text()).toBe('279.85')
+    expect(Number(energy.get('[data-testid="gray-recovery-makeup-cop"]').text())).toBeLessThan(1)
+    expect(Number(energy.get('[data-testid="gray-recovery-makeup-cop"]').text())).toBeCloseTo(
+      result.ledger.measurementBoundaries.recoveryMakeup.recoveryMakeupCop,
+      6,
+    )
     expect(Object.isFrozen(claimEvidence.diagramCop282.conservationClosure)).toBe(true)
   })
 

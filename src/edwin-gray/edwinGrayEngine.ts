@@ -348,6 +348,21 @@ export interface GrayCopClaimEvaluation {
   }
 }
 
+export interface GrayPresenterConverterChainEvaluation {
+  presenterApparentCop: number
+  claimedRuntimeSeconds: number
+  claimedMechanicalEnergyJ: number
+  claimedFrontEndEnergyJ: number
+  unaccountedEnergyJ: number
+  hackenbergerImpliedMakeupW: number
+  hackenbergerApparentCop: number
+  topOffGeneratorW: number
+  frontEndPlusTopOffCop: number
+  requiredCycleReturnEfficiencyForPresenterCop: number
+  validatesTheory: false
+  missingEnergyTerm: string
+}
+
 export interface GrayMotorResult {
   motor: GrayMotorCatalogEntry
   input: GrayResolvedMotorInput
@@ -457,6 +472,26 @@ export const GRAY_COP_CLAIM_SCENARIOS = Object.freeze({
     sourceNote: 'The words are retained without importing values from the separate diagram or COP 300 statement.',
     rawSourceText: '7 12 kilowatts',
   } satisfies GrayCopClaimScenario),
+  whisperCop280: Object.freeze({
+    id: 'whisper-26p8w-7p5kw',
+    label: 'Local Whisper 26.8 W / 7.5 kW arithmetic',
+    source: 'retained-transcript',
+    attributedInputPowerW: 26.8,
+    attributedOutputPowerW: 7_500,
+    attributedOutputPowerRangeW: null,
+    displayedCop: 7_500 / 26.8,
+    sourceNote: 'Whisper resolves auto-caption "7 12 kilowatts" to 7.5 kW with 26.8 W input. Arithmetic COP ≈ 279.85. Not a spoken 280/282.',
+  } satisfies GrayCopClaimScenario),
+})
+
+export const GRAY_PRESENTER_CONVERTER_CHAIN = Object.freeze({
+  id: 'crosby-converter-generator',
+  frontEndInputW: GRAY_COP_CLAIM_SCENARIOS.whisperCop280.attributedInputPowerW!,
+  mechanicalOutputW: GRAY_COP_CLAIM_SCENARIOS.whisperCop280.attributedOutputPowerW!,
+  claimedRuntimeHours: 36,
+  batteryRecoveryFraction: 0.67,
+  topOffGeneratorA: 30,
+  topOffGeneratorV: 12,
 })
 
 export const GRAY_TOPOLOGY: GrayTopologyContract = Object.freeze({
@@ -1072,6 +1107,37 @@ export function evaluateGrayCopClaim(
       observedOutput,
       displayedCopTarget,
     },
+  }
+}
+
+/** Audits attributed converter-chain metering; it does not call or alter the motor simulation. */
+export function evaluateGrayPresenterConverterChain(): GrayPresenterConverterChainEvaluation {
+  const {
+    frontEndInputW,
+    mechanicalOutputW,
+    claimedRuntimeHours,
+    batteryRecoveryFraction,
+    topOffGeneratorA,
+    topOffGeneratorV,
+  } = GRAY_PRESENTER_CONVERTER_CHAIN
+  const claimedRuntimeSeconds = claimedRuntimeHours * 3600
+  const claimedMechanicalEnergyJ = mechanicalOutputW * claimedRuntimeSeconds
+  const claimedFrontEndEnergyJ = frontEndInputW * claimedRuntimeSeconds
+  const hackenbergerImpliedMakeupW = (1 - batteryRecoveryFraction) * mechanicalOutputW
+  const topOffGeneratorW = topOffGeneratorA * topOffGeneratorV
+  return {
+    presenterApparentCop: mechanicalOutputW / frontEndInputW,
+    claimedRuntimeSeconds,
+    claimedMechanicalEnergyJ,
+    claimedFrontEndEnergyJ,
+    unaccountedEnergyJ: claimedMechanicalEnergyJ - claimedFrontEndEnergyJ,
+    hackenbergerImpliedMakeupW,
+    hackenbergerApparentCop: mechanicalOutputW / hackenbergerImpliedMakeupW,
+    topOffGeneratorW,
+    frontEndPlusTopOffCop: mechanicalOutputW / (frontEndInputW + topOffGeneratorW),
+    requiredCycleReturnEfficiencyForPresenterCop: 1 - frontEndInputW / mechanicalOutputW,
+    validatesTheory: false,
+    missingEnergyTerm: 'Front-end-only Crosby metering (26.8 W) omits battery depletion, recovery return, and 30 A / 12 V top-off; 7.5 kW is shaft/torque, not electrical-out vs electrical-in.',
   }
 }
 
@@ -1833,6 +1899,36 @@ export interface GrayFullMotorEventResult {
   ledger: GrayFullMotorEventLedger
 }
 
+export interface GrayFullMotorPresenterMeterBoundary {
+  id: string
+  sourceScenarioId: string
+  scope: 'attributed-open-presenter-meter'
+  makeupInputPowerW: number
+  countedOutputPowerW: number
+  apparentCop: number
+  derivesFromMotorRun: false
+}
+
+export interface GrayFullMotorRecoveryMakeupBoundary {
+  makeupInputJ: number
+  countedOutputJ: number
+  makeupInputPowerW: number
+  countedOutputPowerW: number
+  recoveryMakeupCop: number
+  holdingDeliveredJ: number
+  recoveryReturnedJ: number
+  cycleReturnEfficiency: number
+  throughputMakeupCop: number
+  requiredCycleReturnEfficiencyForPresenterClaim: number
+  gapToPresenterApparentCop: number
+  derivesFromMotorRun: true
+}
+
+export interface GrayFullMotorMeasurementBoundaries {
+  presenterMeter: GrayFullMotorPresenterMeterBoundary
+  recoveryMakeup: GrayFullMotorRecoveryMakeupBoundary
+}
+
 export interface GrayFullMotorRunLedger {
   boundaryComplete: true
   initialStoredElectricalJ: number
@@ -1862,10 +1958,11 @@ export interface GrayFullMotorRunLedger {
   wholeSystemEfficiency: number
   copScope: 'complete-declared-source-and-stored-energy-boundary'
   claimDeficitInjectedJ: 0
+  measurementBoundaries: GrayFullMotorMeasurementBoundaries
 }
 
 export interface GrayFullMotorFinding {
-  code: 'bounded-model' | 'quench-rule' | 'magnetic-scope' | 'energy-boundary' | 'stall'
+  code: 'bounded-model' | 'quench-rule' | 'magnetic-scope' | 'energy-boundary' | 'measurement-boundary' | 'stall'
   statement: string
 }
 
@@ -1937,6 +2034,48 @@ interface GrayFullMotorTotals {
   arcLossJ: number
   rechargeLossJ: number
   recoveryReturnLossJ: number
+  holdingDeliveredJ: number
+  recoveryReturnedJ: number
+}
+
+function grayRatioOrZero(numerator: number, denominator: number): number {
+  return denominator === 0 ? 0 : numerator / denominator
+}
+
+function grayFullMotorMeasurementBoundaries(input: {
+  externalRechargeJ: number
+  loadWorkJ: number
+  simulatedDurationSeconds: number
+  holdingDeliveredJ: number
+  recoveryReturnedJ: number
+}): GrayFullMotorMeasurementBoundaries {
+  const chain = evaluateGrayPresenterConverterChain()
+  const recoveryMakeupCop = grayRatioOrZero(input.loadWorkJ, input.externalRechargeJ)
+  return {
+    presenterMeter: {
+      id: GRAY_COP_CLAIM_SCENARIOS.whisperCop280.id,
+      sourceScenarioId: GRAY_COP_CLAIM_SCENARIOS.whisperCop280.id,
+      scope: 'attributed-open-presenter-meter',
+      makeupInputPowerW: GRAY_PRESENTER_CONVERTER_CHAIN.frontEndInputW,
+      countedOutputPowerW: GRAY_PRESENTER_CONVERTER_CHAIN.mechanicalOutputW,
+      apparentCop: chain.presenterApparentCop,
+      derivesFromMotorRun: false,
+    },
+    recoveryMakeup: {
+      makeupInputJ: input.externalRechargeJ,
+      countedOutputJ: input.loadWorkJ,
+      makeupInputPowerW: grayRatioOrZero(input.externalRechargeJ, input.simulatedDurationSeconds),
+      countedOutputPowerW: grayRatioOrZero(input.loadWorkJ, input.simulatedDurationSeconds),
+      recoveryMakeupCop,
+      holdingDeliveredJ: input.holdingDeliveredJ,
+      recoveryReturnedJ: input.recoveryReturnedJ,
+      cycleReturnEfficiency: grayRatioOrZero(input.recoveryReturnedJ, input.holdingDeliveredJ),
+      throughputMakeupCop: grayRatioOrZero(input.holdingDeliveredJ, input.externalRechargeJ),
+      requiredCycleReturnEfficiencyForPresenterClaim: chain.requiredCycleReturnEfficiencyForPresenterCop,
+      gapToPresenterApparentCop: chain.presenterApparentCop - recoveryMakeupCop,
+      derivesFromMotorRun: true,
+    },
+  }
 }
 
 const GRAY_FULL_MOTOR_MAX_REVOLUTIONS = 100
@@ -2342,6 +2481,8 @@ export function evaluateGrayFullMotor(
     arcLossJ: 0,
     rechargeLossJ: 0,
     recoveryReturnLossJ: 0,
+    holdingDeliveredJ: 0,
+    recoveryReturnedJ: 0,
   }
   const schedule = buildGrayEventSchedule(revolutions)
   const events: GrayFullMotorEventResult[] = []
@@ -2365,6 +2506,7 @@ export function evaluateGrayFullMotor(
     totals.sourceJ += recharge.sourceJ
     totals.rechargeLossJ += recharge.sourceLossJ
     totals.recoveryReturnLossJ += recharge.recoveryReturnLossJ
+    totals.recoveryReturnedJ += recharge.recoveryReturnedJ
     totals.arcLossJ += recharge.priorCoilArcLossJ
     const before = grayFullMotorStoredState(state, resolved)
     const rpmAtEvent = before.rpm
@@ -2411,6 +2553,7 @@ export function evaluateGrayFullMotor(
     state.dumpJ = holdingTransfer.dumpJ
     state.dumpVoltageV = holdingTransfer.dumpVoltageV
     const holdingDeliveredJ = holdingTransfer.holdingDeliveredJ
+    totals.holdingDeliveredJ += holdingDeliveredJ
     const dumpBankPeakJ = state.dumpJ
     const electricalQuarterCycleSeconds = Math.PI / 2 * Math.sqrt(inductanceH * dumpCapacitanceF)
     const transientDurationSeconds = Math.min(quenchTime, electricalQuarterCycleSeconds)
@@ -2556,6 +2699,7 @@ export function evaluateGrayFullMotor(
     totals.sourceJ += finalRecharge.sourceJ
     totals.rechargeLossJ += finalRecharge.sourceLossJ
     totals.recoveryReturnLossJ += finalRecharge.recoveryReturnLossJ
+    totals.recoveryReturnedJ += finalRecharge.recoveryReturnedJ
     totals.arcLossJ += finalRecharge.priorCoilArcLossJ
     if (!finalAdvance.reached) {
       stalled = true
@@ -2577,6 +2721,13 @@ export function evaluateGrayFullMotor(
     ? numericalResidualJ
     : numericalResidualJ / totalDeclaredInputJ
   const wholeSystemCop = totalDeclaredInputJ === 0 ? 0 : totals.loadWorkJ / totalDeclaredInputJ
+  const measurementBoundaries = grayFullMotorMeasurementBoundaries({
+    externalRechargeJ: totals.sourceJ,
+    loadWorkJ: totals.loadWorkJ,
+    simulatedDurationSeconds: timeSeconds,
+    holdingDeliveredJ: totals.holdingDeliveredJ,
+    recoveryReturnedJ: totals.recoveryReturnedJ,
+  })
   const ledger: GrayFullMotorRunLedger = {
     boundaryComplete: true,
     initialStoredElectricalJ,
@@ -2606,6 +2757,7 @@ export function evaluateGrayFullMotor(
     wholeSystemEfficiency: wholeSystemCop,
     copScope: 'complete-declared-source-and-stored-energy-boundary',
     claimDeficitInjectedJ: 0,
+    measurementBoundaries,
   }
   const findings: GrayFullMotorFinding[] = [
     {
@@ -2629,6 +2781,10 @@ export function evaluateGrayFullMotor(
     {
       code: 'energy-boundary',
       statement: 'Whole-system COP uses only declared external recharge and initial stored electrical/kinetic energy; no claim deficit is injected.',
+    },
+    {
+      code: 'measurement-boundary',
+      statement: `Presenter ~280 COP is front-end-only Crosby metering (${GRAY_PRESENTER_CONVERTER_CHAIN.frontEndInputW} W vs ${GRAY_PRESENTER_CONVERTER_CHAIN.mechanicalOutputW / 1000} kW shaft). Simulated recovery-makeup COP is ${measurementBoundaries.recoveryMakeup.recoveryMakeupCop}; cycle return ${measurementBoundaries.recoveryMakeup.cycleReturnEfficiency} is far below 99.64%.`,
     },
   ]
   if (stalled) {

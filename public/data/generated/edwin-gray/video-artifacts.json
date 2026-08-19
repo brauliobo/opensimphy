@@ -17,7 +17,7 @@
     "fullJsonResearchOnly": "research/opensimphy-edwin-gray/analysis/whisper/nC740fpBs4M.whisper.json"
   },
   "productionLut": {
-    "published": false,
+    "published": true,
     "blocker": "data/generated/edwin-gray/production-lut-blocker.json",
     "engineUses": "bounded-classical-lumped-surrogate"
   },

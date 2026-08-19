@@ -1,6 +1,11 @@
 .gray-stator { fill: #7a5cff33; stroke: #c9b8ff; }
 .gray-rotor { fill: #ffb34733; stroke: #ffb347; }
 .gray-recovery { fill: none; stroke: #6ee7b7; stroke-dasharray: 4 3; }
+.gray-patent-stator { fill: #7a5cff33; stroke: #c9b8ff; }
+.gray-patent-rotor { fill: #ffb34733; stroke: #ffb347; }
+.gray-station-active { stroke-width: 3; }
+.gray-patent-stator.gray-station-active { fill: #7a5cff66; }
+.gray-patent-rotor.gray-station-active { fill: #ffb34766; }
 
 [data-testid="gray-whisper-transcripts"] .text-link { margin-right: 1rem; }
 
@@ -294,6 +299,13 @@
   height: auto;
 }
 
+.gray-geometry-stages {
+  display: grid;
+  margin-top: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .gray-topology-panel {
   padding-top: 1.5rem;
   margin-top: 1.5rem;
@@ -487,6 +499,7 @@
 
 @media (max-width: 760px) {
   .gray-workbench { width: 100%; }
+  .gray-geometry-stages { grid-template-columns: 1fr; }
   .gray-workbench__header,
   .gray-snapshots > header { align-items: start; flex-direction: column; }
   .gray-workbench__signal { width: 100%; }
@@ -553,17 +566,24 @@
     border-color: HighlightText;
   }
 
-  .gray-stator {
+  .gray-stator,
+  .gray-patent-stator {
     fill: Canvas;
     stroke: CanvasText;
     stroke-width: 2;
     forced-color-adjust: none;
   }
 
-  .gray-rotor {
+  .gray-rotor,
+  .gray-patent-rotor {
     fill: Highlight;
     stroke: Highlight;
     stroke-width: 2;
+    forced-color-adjust: none;
+  }
+
+  .gray-station-active {
+    stroke-width: 4;
     forced-color-adjust: none;
   }
 

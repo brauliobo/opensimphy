@@ -1,6 +1,7 @@
 import {
   buildGrayEventSchedule,
   evaluateGrayFullMotor,
+  GRAY_PATENT_MODEL_INPUT_HASH,
   GRAY_PRESETS,
   runGrayFullMotor,
   type GrayFullMotorInput,
@@ -247,7 +248,7 @@ describe('Edwin Gray continuous full motor teaching model', () => {
       provenance: {
         solver: 'test-solver',
         backend: 'test-backend',
-        inputHash: 'a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7',
+        inputHash: GRAY_PATENT_MODEL_INPUT_HASH,
       },
       compatibility: {
         machineContractId: 'patent-3890548-illustrative',
@@ -256,7 +257,7 @@ describe('Edwin Gray continuous full motor teaching model', () => {
         topologyIdentity: 'us3890548a-nine-stator-three-rotor-pair-topology',
         turns: 100,
         excitation: 'impressed-current-magnetostatic',
-        modelInputHash: 'a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7',
+        modelInputHash: GRAY_PATENT_MODEL_INPUT_HASH,
       },
     }
     const hybrid = evaluateGrayFullMotor({
@@ -312,5 +313,28 @@ describe('Edwin Gray continuous full motor teaching model', () => {
       onEventCompleted: (count) => completed.push(count),
     })
     expect(completed).toEqual(Array.from({ length: result.completedEventCount }, (_, index) => index + 1))
+  })
+
+  it('names presenter ~280 COP as a front-end meter boundary without injecting deficit', () => {
+    const result = evaluateGrayFullMotor(prescribedInput)
+    const { presenterMeter, recoveryMakeup } = result.ledger.measurementBoundaries
+
+    expect(presenterMeter.id).toBe('whisper-26p8w-7p5kw')
+    expect(presenterMeter.sourceScenarioId).toBe('whisper-26p8w-7p5kw')
+    expect(presenterMeter.scope).toBe('attributed-open-presenter-meter')
+    expect(presenterMeter.apparentCop).toBeCloseTo(279.8507462686567, 12)
+    expect(presenterMeter.derivesFromMotorRun).toBe(false)
+    expect(recoveryMakeup.makeupInputJ).toBe(result.ledger.externalRechargeJ)
+    expect(recoveryMakeup.countedOutputJ).toBe(result.ledger.loadWorkJ)
+    expect(recoveryMakeup.derivesFromMotorRun).toBe(true)
+    expect(recoveryMakeup.recoveryMakeupCop).toBeLessThan(0.05)
+    expect(recoveryMakeup.requiredCycleReturnEfficiencyForPresenterClaim).toBeCloseTo(0.9964266666666667, 12)
+    expect(recoveryMakeup.cycleReturnEfficiency).toBeLessThan(
+      recoveryMakeup.requiredCycleReturnEfficiencyForPresenterClaim,
+    )
+    expect(result.ledger.claimDeficitInjectedJ).toBe(0)
+    expect(result.ledger.wholeSystemCop).toBeLessThanOrEqual(1)
+    expect(result.ledger.copScope).toBe('complete-declared-source-and-stored-energy-boundary')
+    expect(result.findings.some((finding) => finding.code === 'measurement-boundary')).toBe(true)
   })
 })
