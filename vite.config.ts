@@ -75,7 +75,7 @@ export default defineConfig({
           'data/generated/fiddles/registry.json',
           'data/generated/fiddles/runtime-verification.json',
           'data/generated/awesomePhysics/**/*.json',
-          'data/generated/edwin-gray/**/*.json',
+          'data/generated/edwin-gray/**',
           'data/generated/tour/**/*.json',
           'data/generated/earth/documents/**/*.json',
           'data/generated/earth/evidence/programs/**/*.json',
