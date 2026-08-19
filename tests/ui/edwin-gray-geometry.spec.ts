@@ -19,8 +19,8 @@ describe('Edwin Gray patent geometry', () => {
     })
     const event = result.events[2]!
 
-    expect(geometry.get('[data-testid="gray-rotor"]').exists()).toBe(true)
-    expect(geometry.get('[data-testid="gray-patent-stage"]').exists()).toBe(true)
+    geometry.get('[data-testid="gray-rotor"]')
+    geometry.get('[data-testid="gray-patent-stage"]')
     expect(geometry.findAll('[data-testid="gray-patent-stator"]')).toHaveLength(9)
 
     const rotor = geometry.get('[data-testid="gray-patent-rotor"]')
