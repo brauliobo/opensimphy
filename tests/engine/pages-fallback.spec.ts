@@ -10,6 +10,8 @@ describe('GitHub Pages route fallbacks', () => {
       '/',
       '/atlas',
       '/labs',
+      '/labs/compute',
+      '/labs/hyperbolic-partition',
       '/labs/core',
       '/core',
       '/labs/walls',

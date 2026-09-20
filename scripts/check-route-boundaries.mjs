@@ -26,8 +26,11 @@ const routes = {
   tourMap: 'src/views/TourMapView.vue',
   tourChapter: 'src/views/TourChapterView.vue',
   tourLesson: 'src/views/TourLessonView.vue',
+  computeLab: 'src/views/ComputeView.vue',
   quantumWaveLab: 'src/views/QuantumWaveLabView.vue',
+  quantumRegistersLab: 'src/views/QuantumRegistersLabView.vue',
   cliffordSpaceLab: 'src/views/CliffordSpaceLabView.vue',
+  hyperbolicPartitionLab: 'src/views/HyperbolicPartitionLabView.vue',
   edwinGrayLab: 'src/views/EdwinGrayLabView.vue',
   fiddleArchive: 'src/views/FiddleArchiveView.vue',
   fiddleRecord: 'src/views/FiddleRecordView.vue',
@@ -48,7 +51,7 @@ const routes = {
 }
 
 const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
-const nonNumericalRoutes = [...tourRoutes, 'quantumWaveLab', 'cliffordSpaceLab', 'evidence', 'saved', 'notFound']
+const nonNumericalRoutes = [...tourRoutes, 'quantumWaveLab', 'quantumRegistersLab', 'cliffordSpaceLab', 'hyperbolicPartitionLab', 'evidence', 'saved', 'notFound']
 const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthWorkbench', 'earthDatasets']
 const fiddleRoutes = ['fiddleArchive', 'fiddleRecord']
 
@@ -435,6 +438,8 @@ if (manifest) {
 
   assertOwns('NumberWallsView route closure', closures.numberWalls, 'wall')
   assertNoOwnership('NumberWallsView route closure', closures.numberWalls, ['formula', 'core', 'gray'])
+
+  assertNoOwnership('ComputeView route closure', closures.computeLab, ['formula', 'core', 'wall', 'gray'])
 
   for (const route of earthRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'gray'])
   for (const route of fiddleRoutes) assertNoOwnership(`${route} route closure`, closures[route], ['formula', 'core', 'wall', 'earth', 'gray', 'plotly'])

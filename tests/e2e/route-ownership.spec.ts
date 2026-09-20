@@ -175,6 +175,15 @@ test('/labs/quantum-wave stays browser-local and loads no registry owner', async
   await expect(page.getByRole('heading', { name: 'Why does physics need i?' })).toBeVisible()
 })
 
+test('/labs/quantum-registers stays browser-local and loads no registry owner', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/quantum-registers')
+  await expect(page.getByTestId('quantum-registers-lab-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, [])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.getByRole('heading', { name: 'Why 137 coins?' })).toBeVisible()
+})
+
 test('/labs/clifford-space stays browser-local and loads no registry owner', async ({ page }) => {
   const activity = await gotoColdRoute(page, '/labs/clifford-space')
   await expect(page.getByTestId('clifford-space-lab-ready')).toBeVisible()
@@ -182,6 +191,15 @@ test('/labs/clifford-space stays browser-local and loads no registry owner', asy
   expectOwnerArtifacts(activity, [])
   expect(workerOwners(activity)).toEqual([])
   await expect(page.getByRole('heading', { name: 'What fills space around the unit cube?' })).toBeVisible()
+})
+
+test('/labs/hyperbolic-partition stays browser-local and loads no registry owner', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/hyperbolic-partition')
+  await expect(page.getByTestId('hyperbolic-partition-lab-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, [])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.getByRole('heading', { name: 'How do four roots of T_a become an ideal tetrahedron?' })).toBeVisible()
 })
 
 test('/labs/edwin-gray owns exactly one Gray worker and no unrelated owner', async ({ page }) => {
@@ -329,9 +347,13 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(8)
+  const hrefs = await page.locator('.lab-choice-grid a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))
+  expect(hrefs[0]).toBe('/labs/compute')
+  await expect(page.locator('.lab-choice-grid a[href="/labs/compute"]')).toContainText('Compute lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/quantum-wave"]')).toContainText('Quantum wave lab')
+  await expect(page.locator('.lab-choice-grid a[href="/labs/quantum-registers"]')).toContainText('Quantum register lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/clifford-space"]')).toContainText('Clifford space lab')
+  await expect(page.locator('.lab-choice-grid a[href="/labs/hyperbolic-partition"]')).toContainText('Hyperbolic partition lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/edwin-gray"]')).toContainText('Edwin Gray motor lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('.lab-choice-grid a[href*="chenopdodium"]')).toHaveCount(0)

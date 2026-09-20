@@ -4,6 +4,8 @@
   "atlas": "/atlas",
   "formula": "/atlas/:id",
   "labs": "/labs",
+  "compute": "/labs/compute",
+  "hyperbolicPartition": "/labs/hyperbolic-partition",
   "core": "/labs/core",
   "coreAlias": "/core",
   "walls": "/labs/walls",

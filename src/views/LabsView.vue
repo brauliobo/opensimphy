@@ -27,16 +27,31 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
     strong Laboratory counts unavailable
     p {{ registryError }}
   .lab-choice-grid(v-else-if="registryReady")
+    RouterLink(to="/labs/compute")
+      span 00 / COMPUTE KERNEL
+      strong Compute lab
+      p Wolfram-style prompt: SI/Planck quantities, dimensional interpretations, calculus, matrices, and 2D/3D graphs. Runs entirely in the browser.
+      small Open the local kernel →
     RouterLink(to="/labs/quantum-wave")
       span 00 / GUIDED DERIVATION
       strong Quantum wave lab
       p Rebuild the imaginary-number story with spectra, standing waves, operators, Fourier sums, probability, and materials.
       small Open the teacher's reconstruction →
+    RouterLink(to="/labs/quantum-registers")
+      span 00a / REGISTER HYPOTHESIS
+      strong Quantum register lab
+      p 137 coin flips, majority phase as the next step, and named bit-register methods. Unpublished; not a validation.
+      small Open the 137-bit experiment →
     RouterLink(to="/labs/clifford-space")
       span 00e / GEOMETRIC ALGEBRA
       strong Clifford space lab
       p Unit cube, rhombic-dodecahedron honeycomb, and the eight Cl(3) blades as a field on R³.
       small Open the space tiling →
+    RouterLink(to="/labs/hyperbolic-partition")
+      span 00f / QUARTIC COVER
+      strong Hyperbolic partition lab
+      p Four roots of T_a, 24 Möbius charts, cross-ratio λ, monodromy around ±a₁/±b₁, and the Riemann surface.
+      small Open the tetrahedron explorer →
     RouterLink(to="/labs/edwin-gray")
       span 00b / HISTORICAL MACHINE
       strong Edwin Gray motor lab

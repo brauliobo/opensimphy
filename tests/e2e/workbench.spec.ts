@@ -38,7 +38,7 @@ async function savedRuns(page: Page): Promise<Array<Record<string, unknown>>> {
   })
 }
 
-test('/labs presents eight owned labs and a separate author collection without eager domain data or workers', async ({ page }) => {
+test('/labs presents owned labs and a separate author collection without eager domain data or workers', async ({ page }) => {
   const requests: string[] = []
   const workers: string[] = []
   page.on('request', (request) => requests.push(new URL(request.url()).pathname))
@@ -46,17 +46,22 @@ test('/labs presents eight owned labs and a separate author collection without e
 
   await gotoReady(page, '/labs', 'completion-registry-ready')
 
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(8)
-  expect(await page.locator('.lab-choice-grid a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))).toEqual([
+  const hrefs = await page.locator('.lab-choice-grid a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))
+  const expected = [
+    '/labs/compute',
     '/labs/quantum-wave',
+    '/labs/quantum-registers',
     '/labs/clifford-space',
+    '/labs/hyperbolic-partition',
     '/labs/edwin-gray',
     '/labs/cases',
     '/awesome-physics',
     '/labs/core',
     '/labs/walls',
     '/labs/earth/EARTH-PLAN-008',
-  ])
+  ]
+  if (hrefs.includes('/labs/onelab')) expected.push('/labs/onelab')
+  expect(hrefs).toEqual(expected)
   await expect(page.locator('.author-collection-grid > a')).toHaveAttribute('href', '/labs/authors/chenopdodium')
   await expect(page.locator('.author-collection-grid > a')).toContainText(/710 rendered without uncaught page errors/i)
   await expect(page.locator('.author-collection-grid > a')).toContainText(/retained failed requests may still exist/i)
