@@ -249,7 +249,7 @@ Do not mutate the only position buffer as the current exploded-view implementati
 | Meshing | 1D/2D/3D, physical groups, high order | Existing Gmsh WASM covers the core. |
 | Problem language | Existing GetDP `.pro` files | Parser and kernel compile to WASM. |
 | Solves | Real/complex, steady, transient, nonlinear | PETSc path validated for a real linear solve. |
-| Eigenproblems | SLEPc or a bounded alternative | Separate milestone. |
+| Eigenproblems | Bounded P1 Laplace on the Gmsh mesh; SLEPc off in the locked WASM | Desktop `EigenSolve` `.pro` is exported for native SLEPc GetDP. |
 | Post-processing | `.res`/`.pos`, model/list data, timesteps | GetDP generation validated; Gmsh view bindings still needed. |
 | Rendering | Surface/volume mesh, fields, deformation, sections, probes | Build on meshStep viewer concepts. |
 | Sweeps | ONELAB loops with progress and result history | Implement after repeatable in-process solves. |
@@ -312,7 +312,7 @@ The principal advantage of the alternatives is permissive or higher-level custom
 
 - Combine Gmsh/GetDP around one ONELAB server.
 - Add parameter loops, result histories, repeated solve memory audits, and optional OPFS project persistence.
-- Add SLEPc/eigen fixtures only when required.
+- Add SLEPc to the locked WASM only with a new content version and native reference; the browser workbench already runs bounded P1 eigenmodes.
 - Gate: representative ONELAB models execute check/compute loops without process or socket emulation.
 
 ## Immediate Next Work
