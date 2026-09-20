@@ -10,6 +10,7 @@ import {
 } from '../../src/registries/savedRunRegistry'
 import { resetWallRegistryForTests, setWallRegistryForTests } from '../../src/registries/wallRegistry'
 import { wall } from './fixtures'
+import { emptyVaporView } from './vaporStubs'
 
 const workerState = vi.hoisted(() => ({
   constructions: 0,
@@ -104,7 +105,10 @@ function sourceResponse(id: string): Response {
 function createWallRouter(): Router {
   return createRouter({
     history: createMemoryHistory(),
-    routes: [{ path: '/labs/walls', component: NumberWallsView }],
+    routes: [
+      { path: '/labs/walls', component: NumberWallsView },
+      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+    ],
   })
 }
 
@@ -113,11 +117,14 @@ async function settle(): Promise<void> {
   await flushPromises()
 }
 
+const mountedWalls: VueWrapper[] = []
+
 async function mountWall(router: Router, path = '/labs/walls'): Promise<VueWrapper> {
   await router.push(path)
   await router.isReady()
   const wrapper = mount(NumberWallsView, { global: { plugins: [router] } })
   await settle()
+  mountedWalls.push(wrapper)
   return wrapper
 }
 
@@ -141,6 +148,7 @@ describe('Number Walls Iteration 7 workbench adapter', () => {
   })
 
   afterEach(() => {
+    mountedWalls.splice(0).forEach((wrapper) => wrapper.unmount())
     resetWallRegistryForTests()
     resetSavedRunRegistryForTests()
     vi.unstubAllGlobals()

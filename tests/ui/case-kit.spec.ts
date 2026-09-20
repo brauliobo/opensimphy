@@ -23,6 +23,7 @@ import { resetAwesomePhysicsAdapterRegistrationsForTests } from '../../src/aweso
 import { resetAwesomePhysicsRegistryForTests, setAwesomePhysicsRegistryForTests } from '../../src/registries/awesomePhysicsRegistry'
 import CaseHubView from '../../src/views/CaseHubView.vue'
 import type { AwesomePhysicsCatalogArtifactV1, AwesomePhysicsSimulationArtifactV1 } from '../../src/types/awesomePhysics'
+import { emptyVaporView } from './vaporStubs'
 
 const catalog = catalogJson as AwesomePhysicsCatalogArtifactV1
 const simulations = simulationsJson as AwesomePhysicsSimulationArtifactV1
@@ -32,9 +33,9 @@ function testRouter() {
     history: createMemoryHistory(),
     routes: [
       { path: '/labs/cases', name: 'case-hub', component: CaseHubView },
-      { path: '/labs/edwin-gray', name: 'edwin-gray', component: { template: '<div />' } },
-      { path: '/awesome-physics', name: 'awesome-physics-catalog', component: { template: '<div />' } },
-      { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: { template: '<div />' }, props: true },
+      { path: '/labs/edwin-gray', name: 'edwin-gray', component: emptyVaporView },
+      { path: '/awesome-physics', name: 'awesome-physics-catalog', component: emptyVaporView },
+      { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: emptyVaporView, props: true },
     ],
   })
 }

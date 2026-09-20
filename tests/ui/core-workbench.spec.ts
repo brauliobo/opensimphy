@@ -11,6 +11,7 @@ import {
 } from '../../src/registries/savedRunRegistry'
 import CoreLabView from '../../src/views/CoreLabView.vue'
 import { coreCase, figure } from './fixtures'
+import { emptyVaporView } from './vaporStubs'
 
 interface WorkerRecord {
   postMessage: ReturnType<typeof vi.fn>
@@ -103,15 +104,21 @@ const coreCases = Array.from({ length: 37 }, (_, index) => record(index))
 function testRouter(): Router {
   return createRouter({
     history: createMemoryHistory(),
-    routes: [{ path: '/labs/core', component: CoreLabView }],
+    routes: [
+      { path: '/labs/core', component: CoreLabView },
+      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+    ],
   })
 }
+
+const mountedWrappers: VueWrapper[] = []
 
 async function mountCore(path = '/labs/core'): Promise<{ router: Router; wrapper: VueWrapper }> {
   const router = testRouter()
   await router.push(path)
   const wrapper = mount(CoreLabView, { global: { plugins: [router] } })
   await flushPromises()
+  mountedWrappers.push(wrapper)
   return { router, wrapper }
 }
 
@@ -136,6 +143,7 @@ describe('Core Iteration 7 workbench adapter', () => {
   })
 
   afterEach(() => {
+    mountedWrappers.splice(0).forEach((wrapper) => wrapper.unmount())
     resetCoreRegistryForTests()
     resetSavedRunRegistryForTests()
   })

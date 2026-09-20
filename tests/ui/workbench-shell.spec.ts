@@ -67,9 +67,13 @@ function snapshot(
   return createWorkbenchSnapshot(input, timestamp)
 }
 
+function mountShell(options: Record<string, unknown> = {}) {
+  return mount(WorkbenchShell, options as never)
+}
+
 describe('WorkbenchShell', () => {
   it('emits manual actions and exposes capability-driven snapshot actions', async () => {
-    const wrapper = mount(WorkbenchShell, { props: shellProps() })
+    const wrapper = mountShell( { props: shellProps() })
 
     await wrapper.get('[data-testid="workbench-run"]').trigger('click')
     await wrapper.get('[data-testid="workbench-reset"]').trigger('click')
@@ -87,7 +91,7 @@ describe('WorkbenchShell', () => {
   })
 
   it('shows cancel only while a manual execution is running and reports bounded progress', async () => {
-    const wrapper = mount(WorkbenchShell, {
+    const wrapper = mountShell( {
       props: shellProps({ status: 'running', progress: 37, hasResult: false }),
     })
 
@@ -100,14 +104,14 @@ describe('WorkbenchShell', () => {
   })
 
   it('uses honest non-button states for route evaluation and unavailable execution', () => {
-    const routeEvaluated = mount(WorkbenchShell, {
+    const routeEvaluated = mountShell( {
       props: shellProps({ executionMode: 'route-evaluated', status: 'idle', hasResult: false }),
     })
     expect(routeEvaluated.find('[data-testid="workbench-run"]').exists()).toBe(false)
     expect(routeEvaluated.get('[data-testid="workbench-mode-status"]').text()).toContain('evaluates the result')
     expect(routeEvaluated.find('[data-testid="workbench-reset"]').exists()).toBe(true)
 
-    const unavailable = mount(WorkbenchShell, {
+    const unavailable = mountShell( {
       props: shellProps({
         executionMode:    'unavailable',
         status:           'unavailable',
@@ -121,7 +125,7 @@ describe('WorkbenchShell', () => {
   })
 
   it('keeps reset explicit and explains disabled save and comparison actions', () => {
-    const noResult = mount(WorkbenchShell, {
+    const noResult = mountShell( {
       props: shellProps({
         status:        'idle',
         capabilities:  { save: false, compare: false },
@@ -136,16 +140,16 @@ describe('WorkbenchShell', () => {
     expect(noResult.text()).toContain('Saving is not available')
     expect(noResult.text()).toContain('Comparison is not available')
 
-    const fullPair = mount(WorkbenchShell, { props: shellProps({ snapshotCount: 2 }) })
+    const fullPair = mountShell( { props: shellProps({ snapshotCount: 2 }) })
     expect(fullPair.get('[data-testid="workbench-freeze"]').attributes()).toHaveProperty('disabled')
     expect(fullPair.text()).toContain('already contains two snapshots')
 
-    const error = mount(WorkbenchShell, { props: shellProps({ actionErrors: { save: 'Storage failed.' } }) })
+    const error = mountShell( { props: shellProps({ actionErrors: { save: 'Storage failed.' } }) })
     expect(error.get('.workbench-action-errors').attributes('role')).toBe('alert')
   })
 
   it('announces rejected URL state outside the scientific result', () => {
-    const wrapper = mount(WorkbenchShell, {
+    const wrapper = mountShell( {
       props: shellProps({ stateWarning: 'Requested URL state was rejected. Canonical defaults were restored.' }),
     })
 
@@ -154,13 +158,13 @@ describe('WorkbenchShell', () => {
   })
 
   it('keeps nested instrument and section heading levels ordered', () => {
-    const wrapper = mount(WorkbenchShell, { props: shellProps({ headingLevel: 'h3' }) })
+    const wrapper = mountShell( { props: shellProps({ headingLevel: 'h3' }) })
     expect(wrapper.get('.workbench-instrument-title').element.tagName).toBe('H3')
     expect(wrapper.findAll('.workbench-section-title').every((heading) => heading.element.tagName === 'H4')).toBe(true)
   })
 
   it('keeps the mobile semantic region DOM order without JavaScript movement', () => {
-    const wrapper = mount(WorkbenchShell, {
+    const wrapper = mountShell( {
       props: shellProps(),
       slots: {
         stage:                '<div>stage</div>',

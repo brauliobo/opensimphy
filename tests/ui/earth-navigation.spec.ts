@@ -1,14 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import EarthLocalNav from '../../src/components/EarthLocalNav.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const routes = [
-  { path: '/earth', name: 'earth', component: { template: '<div />' } },
-  { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
-  { path: '/earth/programs', alias: '/earth/simulations', name: 'earth-simulations', component: { template: '<div />' } },
-  { path: '/earth/programs/:id', alias: '/earth/simulations/:id', name: 'earth-simulation', component: { template: '<div />' } },
-  { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
-  { path: '/earth/corpus/:slug', alias: '/earth/:slug', name: 'earth-document', component: { template: '<div />' } },
+  { path: '/earth', name: 'earth', component: emptyVaporView },
+  { path: '/earth/corpus', name: 'earth-corpus', component: emptyVaporView },
+  { path: '/earth/programs', alias: '/earth/simulations', name: 'earth-simulations', component: emptyVaporView },
+  { path: '/earth/programs/:id', alias: '/earth/simulations/:id', name: 'earth-simulation', component: emptyVaporView },
+  { path: '/earth/datasets', name: 'earth-datasets', component: emptyVaporView },
+  { path: '/earth/corpus/:slug', alias: '/earth/:slug', name: 'earth-document', component: emptyVaporView },
 ]
 
 describe('EARTH local navigation', () => {

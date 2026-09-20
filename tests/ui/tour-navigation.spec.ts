@@ -20,6 +20,7 @@ import NotFoundView from '../../src/views/NotFoundView.vue'
 import SavedView from '../../src/views/SavedView.vue'
 import TourChapterView from '../../src/views/TourChapterView.vue'
 import TourMapView from '../../src/views/TourMapView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const taxonomy = taxonomyJson as TaxonomyArtifact
 const manifest = tourManifestJson as TourGeneratedManifest
@@ -36,15 +37,15 @@ function createTestRouter() {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/', component: { template: '<div />' } },
+      { path: '/', component: emptyVaporView },
       { path: '/tour', component: TourMapView },
       { path: '/tour/:chapter', component: TourChapterView, props: true },
-      { path: '/tour/:chapter/:lesson', component: { template: '<div />' }, props: true },
-      { path: '/atlas', component: { template: '<div />' } },
-      { path: '/labs', component: { template: '<div />' } },
+      { path: '/tour/:chapter/:lesson', component: emptyVaporView, props: true },
+      { path: '/atlas', component: emptyVaporView },
+      { path: '/labs', component: emptyVaporView },
       { path: '/evidence', component: EvidenceView },
-      { path: '/sources', component: { template: '<div />' } },
-      { path: '/earth', component: { template: '<div />' } },
+      { path: '/sources', component: emptyVaporView },
+      { path: '/earth', component: emptyVaporView },
       { path: '/saved', component: SavedView },
       { path: '/:pathMatch(.*)*', component: NotFoundView },
     ],

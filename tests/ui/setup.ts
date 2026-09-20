@@ -1,4 +1,8 @@
+import { config } from '@vue/test-utils'
+import { vaporInteropPlugin } from 'vue'
 import { vi } from 'vitest'
+
+config.global.plugins.push(vaporInteropPlugin)
 
 class ResizeObserverMock {
   observe() {}

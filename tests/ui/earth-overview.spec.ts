@@ -5,6 +5,7 @@ import completionJson from '../../public/data/generated/earth/completion.json'
 import manifestJson from '../../public/data/generated/earth/manifest.json'
 import programsJson from '../../public/data/generated/earth/scientific-simulations.json'
 import EarthOverviewView from '../../src/views/EarthOverviewView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 function response(body: unknown): Response {
   return { ok: true, status: 200, json: async () => body } as Response
@@ -24,10 +25,10 @@ describe('EARTH dossier overview', () => {
       history: createMemoryHistory(),
       routes: [
         { path: '/earth', name: 'earth', component: EarthOverviewView },
-        { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
-        { path: '/earth/programs', name: 'earth-simulations', component: { template: '<div />' } },
-        { path: '/earth/programs/:id', name: 'earth-simulation', component: { template: '<div />' } },
-        { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
+        { path: '/earth/corpus', name: 'earth-corpus', component: emptyVaporView },
+        { path: '/earth/programs', name: 'earth-simulations', component: emptyVaporView },
+        { path: '/earth/programs/:id', name: 'earth-simulation', component: emptyVaporView },
+        { path: '/earth/datasets', name: 'earth-datasets', component: emptyVaporView },
       ],
     })
     await router.push('/earth')

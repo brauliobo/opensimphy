@@ -22,6 +22,7 @@ import {
 import { extractPredictions, predictionOutcomeLabel } from '../../src/earth/predictions'
 import EarthSimulationDetailView from '../../src/views/EarthSimulationDetailView.vue'
 import EarthSimulationsView from '../../src/views/EarthSimulationsView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 vi.mock('../../src/earth/runSimulation', () => ({ runEarthMethodInWorker: vi.fn() }))
 
@@ -159,12 +160,12 @@ function testRouter() {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/earth', name: 'earth', component: { template: '<div />' } },
-      { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
+      { path: '/earth', name: 'earth', component: emptyVaporView },
+      { path: '/earth/corpus', name: 'earth-corpus', component: emptyVaporView },
       { path: '/earth/programs', name: 'earth-simulations', component: EarthSimulationsView },
       { path: '/earth/programs/:id', name: 'earth-simulation', component: EarthSimulationDetailView, props: true },
-      { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
-      { path: '/earth/corpus/:slug', name: 'earth-document', component: { template: '<div />' } },
+      { path: '/earth/datasets', name: 'earth-datasets', component: emptyVaporView },
+      { path: '/earth/corpus/:slug', name: 'earth-document', component: emptyVaporView },
     ],
   })
 }

@@ -20,6 +20,7 @@ import {
 import { DEFAULT_EARTH_METHOD_INPUTS } from '../../src/engine/earth'
 import { decodeWorkbenchInputEnvelope, encodeWorkbenchInputEnvelope } from '../../src/workbench/urlState'
 import EarthSimulationDetailView from '../../src/views/EarthSimulationDetailView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 vi.mock('../../src/earth/runSimulation', () => ({ runEarthMethodInWorker: vi.fn() }))
 
@@ -46,14 +47,15 @@ function testRouter(): Router {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/earth', component: { template: '<div />' } },
-      { path: '/labs', component: { template: '<div />' } },
-      { path: '/earth/corpus', component: { template: '<div />' } },
+      { path: '/earth', component: emptyVaporView },
+      { path: '/labs', component: emptyVaporView },
+      { path: '/earth/corpus', component: emptyVaporView },
       { path: '/earth/programs/:id', component: EarthSimulationDetailView, props: true },
       { path: '/labs/earth/:id', component: EarthSimulationDetailView, props: (route) => ({ id: route.params.id, surface: 'workbench' }) },
-      { path: '/earth/programs', component: { template: '<div />' } },
-      { path: '/earth/corpus/:slug', component: { template: '<div />' } },
-      { path: '/earth/datasets', component: { template: '<div />' } },
+      { path: '/earth/programs', component: emptyVaporView },
+      { path: '/earth/corpus/:slug', component: emptyVaporView },
+      { path: '/earth/datasets', component: emptyVaporView },
+      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
     ],
   })
 }

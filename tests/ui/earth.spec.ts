@@ -6,6 +6,8 @@ import readmeEvidenceJson from '../../public/data/generated/earth/evidence/docum
 import type { EarthDocumentShard, EarthManifest } from '../../src/earth/corpus'
 import EarthCorpusView from '../../src/views/EarthCorpusView.vue'
 import EarthDocumentView from '../../src/views/EarthDocumentView.vue'
+import RouterViewHost from './stubs/RouterViewHost.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const manifest = manifestJson as EarthManifest
 
@@ -17,11 +19,11 @@ function testRouter() {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/earth', name: 'earth', component: { template: '<div />' } },
+      { path: '/earth', name: 'earth', component: emptyVaporView },
       { path: '/earth/corpus', name: 'earth-corpus', component: EarthCorpusView },
-      { path: '/earth/programs', name: 'earth-simulations', component: { template: '<div />' } },
-      { path: '/earth/programs/:id', name: 'earth-simulation', component: { template: '<div />' } },
-      { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
+      { path: '/earth/programs', name: 'earth-simulations', component: emptyVaporView },
+      { path: '/earth/programs/:id', name: 'earth-simulation', component: emptyVaporView },
+      { path: '/earth/datasets', name: 'earth-datasets', component: emptyVaporView },
       { path: '/earth/corpus/:slug', name: 'earth-document', component: EarthDocumentView, props: true },
     ],
   })
@@ -33,7 +35,7 @@ describe('EARTH source reader', () => {
     vi.stubGlobal('fetch', fetchMock)
     const router = testRouter()
     await router.push('/earth/corpus?q=Universal&collection=theorem&series=BIO&evidence=simulations')
-    const wrapper = mount({ template: '<RouterView />' }, { global: { plugins: [router] } })
+    const wrapper = mount(RouterViewHost, { global: { plugins: [router] } })
     await flushPromises()
 
     expect(fetchMock).toHaveBeenCalledTimes(2)

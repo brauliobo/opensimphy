@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const runtimeRegistryFiles = [
@@ -38,10 +38,67 @@ function computeRuntimeRegistryRevision(): string {
 
 const runtimeRegistryRevision = computeRuntimeRegistryRevision()
 
+function vueDist(pkg: string, file: string): string {
+  return fileURLToPath(new URL(`./node_modules/${pkg}/dist/${file}`, import.meta.url))
+}
+
+// Vue's package `node` condition is CJS without runtime-vapor `template` and
+// without runtime-dom `ensureRenderer`. Vitest (jsdom in Node) must use the
+// bundler graph, and those files must be inlined so nested `@vue/*` imports
+// are not re-resolved by Node to a second CJS copy.
+const vueRuntimeAliases = {
+  vue: vueDist('vue', 'vue.runtime.esm-bundler.js'),
+  '@vue/runtime-dom': vueDist('@vue/runtime-dom', 'runtime-dom.esm-bundler.js'),
+  '@vue/runtime-core': vueDist('@vue/runtime-core', 'runtime-core.esm-bundler.js'),
+  '@vue/runtime-vapor': vueDist('@vue/runtime-vapor', 'runtime-vapor.esm-bundler.js'),
+  '@vue/reactivity': vueDist('@vue/reactivity', 'reactivity.esm-bundler.js'),
+  '@vue/shared': vueDist('@vue/shared', 'shared.esm-bundler.js'),
+  '@vue/test-utils': fileURLToPath(
+    new URL('./node_modules/@vue/test-utils/dist/vue-test-utils.esm-bundler.mjs', import.meta.url),
+  ),
+  'vue-router': fileURLToPath(new URL('./node_modules/vue-router/dist/vue-router.mjs', import.meta.url)),
+}
+
+const vueRuntimeInline = [
+  /\/node_modules\/vue\/dist\//,
+  /\/node_modules\/@vue\/runtime-/,
+  /\/node_modules\/@vue\/reactivity\//,
+  /\/node_modules\/@vue\/shared\//,
+  /\/node_modules\/@vue\/test-utils\//,
+  /\/node_modules\/vue-router\//,
+]
+
+const vtuVueWrapperFactory =
+  'registerFactory(WrapperType.VueWrapper, (app, vm, setProps) => new VueWrapper(app, vm, setProps));'
+const vtuVaporVmHelper = fileURLToPath(new URL('./tests/ui/withVtuVaporVm.ts', import.meta.url))
+
+function vueTestUtilsVaporCompat(): Plugin {
+  return {
+    name: 'vue-test-utils-vapor-compat',
+    enforce: 'pre',
+    transform(code, id) {
+      if (!id.includes('vue-test-utils.esm-bundler')) return
+      if (!code.includes(vtuVueWrapperFactory)) {
+        throw new Error('Vue Test Utils VueWrapper factory text changed; update vueTestUtilsVaporCompat')
+      }
+      return {
+        code:
+          `import { withVtuVaporVm } from ${JSON.stringify(vtuVaporVmHelper)};\n` +
+          code.replace(
+            vtuVueWrapperFactory,
+            'registerFactory(WrapperType.VueWrapper, (app, vm, setProps) => new VueWrapper(app, withVtuVaporVm(vm, app), setProps));',
+          ),
+        map: null,
+      }
+    },
+  }
+}
+
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/',
   plugins: [
-    vue(),
+    vue({ features: { vapor: true } }),
+    vueTestUtilsVaporCompat(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: { enabled: true, suppressWarnings: true },
@@ -64,7 +121,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,json,txt}'],
+        globPatterns: ['**/*.{js,css,html,svg,json,txt,woff,woff2,ttf}'],
         globIgnores: [
           'data/generated/recipes.json',
           'data/generated/symbols.json',
@@ -215,7 +272,16 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      ...vueRuntimeAliases,
+    },
+  },
+  ssr: {
+    noExternal: [/^vue$/, /^@vue\//, /^vue-router$/],
+    resolve: {
+      conditions: ['module', 'browser', 'development|production'],
+    },
   },
   server: { port: 5173, strictPort: true },
   preview: { port: 4173, strictPort: true },
@@ -227,6 +293,8 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('plotly.js-dist-min')) return 'plotly'
+          if (id.includes('node_modules/mathjs')) return 'mathjs'
+          if (id.includes('node_modules/katex')) return 'katex'
         },
       },
     },
@@ -239,5 +307,11 @@ export default defineConfig({
     restoreMocks: true,
     include: ['tests/ui/**/*.spec.ts', 'tests/engine/**/*.spec.ts'],
     coverage: { reporter: ['text', 'html'] },
+    alias: vueRuntimeAliases,
+    server: {
+      deps: {
+        inline: vueRuntimeInline,
+      },
+    },
   },
 })

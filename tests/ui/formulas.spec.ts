@@ -12,6 +12,7 @@ import {
 import { resetTaxonomyRegistryForTests, setTaxonomyRegistryForTests } from '../../src/registries/taxonomyRegistry'
 import { resetTourProgressForTests } from '../../src/registries/tourProgress'
 import { formula, taxonomy } from './fixtures'
+import { emptyVaporView } from './vaporStubs'
 
 const formulas = Array.from({ length: 288 }, (_, index) => formula(index + 1))
 const compatibleTaxonomy = {
@@ -33,10 +34,11 @@ const compatibleTaxonomy = {
 const router = createRouter({
   history: createMemoryHistory(),
   routes: [
-    { path: '/topics/:id', component: { template: '<div />' } },
-    { path: '/tour/:chapter/:lesson', component: { template: '<div />' }, meta: { title: 'Tour Lesson' } },
+    { path: '/topics/:id', component: emptyVaporView },
+    { path: '/tour/:chapter/:lesson', component: emptyVaporView, meta: { title: 'Tour Lesson' } },
     { path: '/atlas', component: FormulaAtlasView, meta: { title: 'Formula Atlas' } },
     { path: '/atlas/:id', component: FormulaDetailView, props: true, meta: { title: 'Formula Record' } },
+    { path: '/labs/compute', name: 'compute', component: emptyVaporView, meta: { title: 'Compute Lab' } },
   ],
 })
 

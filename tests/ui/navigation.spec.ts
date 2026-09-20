@@ -1,9 +1,8 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { defineComponent, nextTick, ref } from 'vue'
+import { nextTick } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import App from '../../src/App.vue'
 import AppNav from '../../src/components/AppNav.vue'
-import TourDepthControl from '../../src/components/tour/TourDepthControl.vue'
 import {
   resetTourProgressForTests,
   setTourProgressDependenciesForTests,
@@ -11,33 +10,38 @@ import {
 } from '../../src/registries/tourProgress'
 import { router as appRouter } from '../../src/router'
 import LabsView from '../../src/views/LabsView.vue'
+import NavigationShell from './stubs/NavigationShell.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const routes = [
-  { path: '/', name: 'overview', component: { template: '<div />' } },
-  { path: '/tour', name: 'tour', component: { template: '<div />' } },
-  { path: '/tour/:chapter', name: 'tour-chapter', component: { template: '<div />' } },
-  { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' } },
-  { path: '/atlas', name: 'atlas', component: { template: '<div />' } },
-  { path: '/labs', name: 'labs', component: { template: '<div />' } },
-  { path: '/labs/cases', name: 'case-hub', component: { template: '<div />' } },
-  { path: '/labs/clifford-space', name: 'clifford-space', component: { template: '<div />' } },
-  { path: '/labs/edwin-gray', name: 'edwin-gray', component: { template: '<div />' } },
-  { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: { template: '<div />' } },
-  { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: { template: '<div />' } },
-  { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: { template: '<div />' } },
-  { path: '/labs/core', name: 'core', component: { template: '<div />' } },
-  { path: '/labs/walls', name: 'walls', component: { template: '<div />' } },
-  { path: '/labs/earth/:programId', name: 'earth-workbench', component: { template: '<div />' } },
-  { path: '/evidence', name: 'evidence', component: { template: '<div />' } },
-  { path: '/saved', name: 'saved', component: { template: '<div />' } },
-  { path: '/earth', name: 'earth', component: { template: '<div />' } },
-  { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
-  { path: '/earth/programs', alias: '/earth/simulations', name: 'earth-simulations', component: { template: '<div />' } },
-  { path: '/earth/programs/:id', alias: '/earth/simulations/:id', name: 'earth-simulation', component: { template: '<div />' } },
-  { path: '/earth/datasets', name: 'earth-datasets', component: { template: '<div />' } },
-  { path: '/earth/corpus/:slug', alias: '/earth/:slug', name: 'earth-document', component: { template: '<div />' } },
-  { path: '/sources', name: 'sources', component: { template: '<div />' } },
-  { path: '/awesome-physics', name: 'awesome-physics-catalog', component: { template: '<div />' } },
+  { path: '/', name: 'overview', component: emptyVaporView },
+  { path: '/tour', name: 'tour', component: emptyVaporView },
+  { path: '/tour/:chapter', name: 'tour-chapter', component: emptyVaporView },
+  { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: emptyVaporView },
+  { path: '/atlas', name: 'atlas', component: emptyVaporView },
+  { path: '/labs', name: 'labs', component: emptyVaporView },
+  { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+  { path: '/labs/cases', name: 'case-hub', component: emptyVaporView },
+  { path: '/labs/quantum-registers', name: 'quantum-registers', component: emptyVaporView },
+  { path: '/labs/clifford-space', name: 'clifford-space', component: emptyVaporView },
+  { path: '/labs/hyperbolic-partition', name: 'hyperbolic-partition', component: emptyVaporView },
+  { path: '/labs/edwin-gray', name: 'edwin-gray', component: emptyVaporView },
+  { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: emptyVaporView },
+  { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: emptyVaporView },
+  { path: '/labs/authors/chenopdodium/:slug', name: 'fiddle-record', component: emptyVaporView },
+  { path: '/labs/core', name: 'core', component: emptyVaporView },
+  { path: '/labs/walls', name: 'walls', component: emptyVaporView },
+  { path: '/labs/earth/:programId', name: 'earth-workbench', component: emptyVaporView },
+  { path: '/evidence', name: 'evidence', component: emptyVaporView },
+  { path: '/saved', name: 'saved', component: emptyVaporView },
+  { path: '/earth', name: 'earth', component: emptyVaporView },
+  { path: '/earth/corpus', name: 'earth-corpus', component: emptyVaporView },
+  { path: '/earth/programs', alias: '/earth/simulations', name: 'earth-simulations', component: emptyVaporView },
+  { path: '/earth/programs/:id', alias: '/earth/simulations/:id', name: 'earth-simulation', component: emptyVaporView },
+  { path: '/earth/datasets', name: 'earth-datasets', component: emptyVaporView },
+  { path: '/earth/corpus/:slug', alias: '/earth/:slug', name: 'earth-document', component: emptyVaporView },
+  { path: '/sources', name: 'sources', component: emptyVaporView },
+  { path: '/awesome-physics', name: 'awesome-physics-catalog', component: emptyVaporView },
 ]
 
 function createTestRouter() {
@@ -62,7 +66,7 @@ describe('responsive navigation state', () => {
     const wrapper = mount(AppNav, { global: { plugins: [router] } })
 
     expect(wrapper.findAll('.nav-link').map((link) => link.text().replace(/^\d+/, ''))).toEqual(['Tour', 'Atlas', 'Workbench', 'Evidence'])
-    expect(wrapper.findComponent(TourDepthControl).exists()).toBe(true)
+    expect(wrapper.find('[data-testid="depth-control"]').exists()).toBe(true)
     await wrapper.get('[data-testid="reading-depth-technical"]').trigger('change')
     expect(useTourProgress().depth.value).toBe('technical')
     expect(wrapper.find('[data-testid="nav-resume"]').exists()).toBe(false)
@@ -206,24 +210,9 @@ describe('responsive navigation state', () => {
   it('clears shell isolation and focus listeners when the navigation unmounts open', async () => {
     const router = createTestRouter()
     await router.push('/')
-    const showNavigation = ref(true)
-    const NavigationShell = defineComponent({
-      components: { AppNav },
-      setup() {
-        return { menuOpen: ref(false), showNavigation }
-      },
-      template: `
-        <div>
-          <AppNav v-if="showNavigation" @menu-state-change="menuOpen = $event" />
-          <main data-testid="shell-main" :inert="menuOpen ? '' : undefined" :aria-hidden="menuOpen ? 'true' : undefined">
-            <button data-testid="shell-control">Background control</button>
-          </main>
-          <footer data-testid="shell-footer" :inert="menuOpen ? '' : undefined" :aria-hidden="menuOpen ? 'true' : undefined" />
-        </div>
-      `,
-    })
     const wrapper = mount(NavigationShell, {
       attachTo: document.body,
+      props: { showNavigation: true },
       global: { plugins: [router] },
     })
     const main = wrapper.get('[data-testid="shell-main"]')
@@ -231,7 +220,7 @@ describe('responsive navigation state', () => {
 
     await wrapper.get('[data-testid="nav-toggle"]').trigger('click')
     expect(main.attributes('inert')).toBe('')
-    showNavigation.value = false
+    await wrapper.setProps({ showNavigation: false })
     await nextTick()
     expect(main.attributes('inert')).toBeUndefined()
     expect(main.attributes('aria-hidden')).toBeUndefined()
@@ -267,8 +256,11 @@ describe('responsive navigation state', () => {
 
   it.each([
     '/labs',
+    '/labs/compute',
     '/labs/cases',
+    '/labs/quantum-registers',
     '/labs/clifford-space',
+    '/labs/hyperbolic-partition',
     '/labs/edwin-gray',
     '/awesome-physics',
     '/awesome-physics/awesome-matter-js',
@@ -334,10 +326,10 @@ describe('disabled ONELAB profile', () => {
     const router = createRouter({
       history: createMemoryHistory(),
       routes: [
-        { path: '/labs', component: { template: '<div />' } },
-        { path: '/labs/core', component: { template: '<div />' } },
-        { path: '/labs/walls', component: { template: '<div />' } },
-        { path: '/labs/clifford-space', component: { template: '<div />' } },
+        { path: '/labs', component: emptyVaporView },
+        { path: '/labs/core', component: emptyVaporView },
+        { path: '/labs/walls', component: emptyVaporView },
+        { path: '/labs/clifford-space', component: emptyVaporView },
       ],
     })
     await router.push('/labs')

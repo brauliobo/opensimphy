@@ -24,6 +24,7 @@ import type { TaxonomyArtifact } from '../../src/types/engine'
 import type { TourGeneratedManifest } from '../../src/types/tour'
 import type { WorkbenchSnapshotInputV1 } from '../../src/types/workbench'
 import SavedView from '../../src/views/SavedView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const FIRST_TIME = '2026-07-27T10:00:00.000Z'
 const SECOND_TIME = '2026-07-27T11:00:00.000Z'
@@ -94,9 +95,9 @@ function createTestRouter() {
     history: createMemoryHistory(),
     routes: [
       { path: '/saved', component: SavedView },
-      { path: '/tour', component: { template: '<div />' } },
-      { path: '/tour/:chapter/:lesson', component: { template: '<div />' } },
-      { path: '/atlas/:id', component: { template: '<div />' } },
+      { path: '/tour', component: emptyVaporView },
+      { path: '/tour/:chapter/:lesson', component: emptyVaporView },
+      { path: '/atlas/:id', component: emptyVaporView },
     ],
   })
 }

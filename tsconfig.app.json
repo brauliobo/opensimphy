@@ -13,5 +13,9 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client", "vite-plugin-pwa/client", "vitest/globals"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "tests/ui/**/*.ts"]
+  "vueCompilerOptions": {
+    "target": 3.6,
+    "vapor": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "tests/ui/**/*.ts", "tests/ui/**/*.vue"]
 }

@@ -6,6 +6,7 @@ import generatedManifest from '../../public/data/generated/earth/manifest.json'
 import generatedSimulations from '../../public/data/generated/earth/scientific-simulations.json'
 import { parseEarthDatasetRegistry } from '../../src/earth/datasets'
 import EarthDatasetsView from '../../src/views/EarthDatasetsView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 function response(body: unknown): Response {
   return { ok: true, status: 200, json: async () => body } as Response
@@ -15,10 +16,10 @@ function testRouter() {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/earth', name: 'earth', component: { template: '<div />' } },
-      { path: '/earth/corpus', name: 'earth-corpus', component: { template: '<div />' } },
-      { path: '/earth/programs', name: 'earth-simulations', component: { template: '<div />' } },
-      { path: '/earth/programs/:id', name: 'earth-simulation', component: { template: '<div />' } },
+      { path: '/earth', name: 'earth', component: emptyVaporView },
+      { path: '/earth/corpus', name: 'earth-corpus', component: emptyVaporView },
+      { path: '/earth/programs', name: 'earth-simulations', component: emptyVaporView },
+      { path: '/earth/programs/:id', name: 'earth-simulation', component: emptyVaporView },
       { path: '/earth/datasets', name: 'earth-datasets', component: EarthDatasetsView },
     ],
   })

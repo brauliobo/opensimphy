@@ -12,6 +12,7 @@ import { resetTourRegistryForTests, setTourRegistryForTests } from '../../src/re
 import type { TaxonomyArtifact } from '../../src/types/engine'
 import type { TourGeneratedManifest } from '../../src/types/tour'
 import OverviewView from '../../src/views/OverviewView.vue'
+import { emptyVaporView } from './vaporStubs'
 
 const taxonomy = taxonomyJson as TaxonomyArtifact
 const manifest = tourManifestJson as TourGeneratedManifest
@@ -21,12 +22,12 @@ function createTestRouter() {
     history: createMemoryHistory(),
     routes: [
       { path: '/', component: OverviewView },
-      { path: '/tour', component: { template: '<div />' } },
-      { path: '/tour/:chapter', component: { template: '<div />' } },
-      { path: '/tour/:chapter/:lesson', component: { template: '<div />' } },
-      { path: '/atlas', component: { template: '<div />' } },
-      { path: '/evidence', component: { template: '<div />' } },
-      { path: '/saved', component: { template: '<div />' } },
+      { path: '/tour', component: emptyVaporView },
+      { path: '/tour/:chapter', component: emptyVaporView },
+      { path: '/tour/:chapter/:lesson', component: emptyVaporView },
+      { path: '/atlas', component: emptyVaporView },
+      { path: '/evidence', component: emptyVaporView },
+      { path: '/saved', component: emptyVaporView },
     ],
   })
 }

@@ -7,8 +7,9 @@ import {
   awesomePhysicsRoutes,
   installAwesomePhysicsRoutes,
 } from '../../src/awesomePhysics/routes'
+import { emptyVaporView } from '../ui/vaporStubs'
 
-const stubComponent = { template: '<div />' }
+const stubComponent = emptyVaporView
 
 function testRouter(routes: RouteRecordRaw[] = []): ReturnType<typeof createRouter> {
   return createRouter({

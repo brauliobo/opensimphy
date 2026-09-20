@@ -2,13 +2,14 @@ import { mount } from '@vue/test-utils'
 import CoverageStrip from '../../src/components/CoverageStrip.vue'
 import type { CoverageRow } from '../../src/registries/completionRegistry'
 import { coverage } from './fixtures'
+import { vaporAnchorStub } from './vaporStubs'
 
 describe('CoverageStrip', () => {
   it('fails closed when any exact count mismatches', () => {
     const rows: CoverageRow[] = coverage(false)
     const wrapper = mount(CoverageStrip, {
       props: { rows, complete: false },
-      global: { stubs: { RouterLink: { template: '<a><slot /></a>' } } },
+      global: { stubs: { RouterLink: vaporAnchorStub } },
     })
 
     expect(wrapper.get('[data-testid="coverage-status"]').attributes('data-status')).toBe('incomplete')
@@ -20,7 +21,7 @@ describe('CoverageStrip', () => {
     const rows: CoverageRow[] = coverage()
     const wrapper = mount(CoverageStrip, {
       props: { rows, complete: true },
-      global: { stubs: { RouterLink: { template: '<a><slot /></a>' } } },
+      global: { stubs: { RouterLink: vaporAnchorStub } },
     })
     expect(wrapper.get('[data-testid="coverage-status"]').attributes('data-status')).toBe('complete')
   })

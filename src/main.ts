@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createVaporApp, vaporInteropPlugin, type VaporComponent } from 'vue'
 import { registerSW } from 'virtual:pwa-register'
 import App from './App.vue'
 import { installAwesomePhysicsRoutes } from './awesomePhysics/routes'
@@ -9,4 +9,8 @@ import './styles/fiddles.css'
 registerSW({ immediate: true })
 
 installAwesomePhysicsRoutes(router)
-createApp(App).use(router).mount('#app')
+
+const app = createVaporApp(App as VaporComponent)
+app.use(vaporInteropPlugin)
+app.use(router)
+app.mount('#app')

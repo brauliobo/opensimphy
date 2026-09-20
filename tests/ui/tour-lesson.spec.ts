@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createMemoryHistory, createRouter, type Router } from 'vue-router'
 import heatChapterJson from '../../public/data/generated/tour/chapters/heat-matter.json'
 import chapterJson from '../../public/data/generated/tour/chapters/units.json'
 import glossaryJson from '../../public/data/generated/tour/glossary.json'
@@ -22,37 +22,45 @@ import type {
   ObservationItemRole,
   TourReferencesSource,
 } from '../../src/types/tour'
-import TourLessonView from '../../src/views/TourLessonView.vue'
+import { instrumentStubs } from './tourInstrumentStubs'
+import { depthControlStub, emptyVaporView } from './vaporStubs'
 
-const instrumentStubs = vi.hoisted(() => {
-  const stub = (testId: string) => ({
-    props: ['simulation', 'depth', 'initialPresetId'],
-    emits: ['evaluated'],
-    data: () => ({ controlValue: 'initial' }),
-    template: `<div data-instrument-stub><input v-model="controlValue" data-testid="instrument-control"><button type="button" :data-testid="'${testId}'" :data-simulation="simulation.id" :data-depth="depth" :data-preset="initialPresetId" @click="$emit('evaluated', simulation.id)"></button></div>`,
-  })
-  return {
-    DimensionBuilder: stub('dimension-builder-stub'),
-    ScaleRuler: stub('scale-ruler-stub'),
-    PhotonBridge: stub('photon-bridge-stub'),
-    ElectricalStandardsNetwork: stub('electrical-standards-network-stub'),
-    AtomicSpectrumExplorer: stub('atomic-spectrum-explorer-stub'),
-    ParticleScaleComparator: stub('particle-scale-comparator-stub'),
-    SpinPrecessionVisualizer: stub('spin-precession-visualizer-stub'),
-    BlackbodySpectrum: stub('blackbody-spectrum-stub'),
-    MolarMatterScaler: stub('molar-matter-scaler-stub'),
-  }
+vi.mock('../../src/components/tour/DimensionBuilder.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.DimensionBuilder }
 })
-
-vi.mock('../../src/components/tour/DimensionBuilder.vue', () => ({ __esModule: true, default: instrumentStubs.DimensionBuilder }))
-vi.mock('../../src/components/tour/ScaleRuler.vue', () => ({ __esModule: true, default: instrumentStubs.ScaleRuler }))
-vi.mock('../../src/components/tour/PhotonBridge.vue', () => ({ __esModule: true, default: instrumentStubs.PhotonBridge }))
-vi.mock('../../src/components/tour/ElectricalStandardsNetwork.vue', () => ({ __esModule: true, default: instrumentStubs.ElectricalStandardsNetwork }))
-vi.mock('../../src/components/tour/AtomicSpectrumExplorer.vue', () => ({ __esModule: true, default: instrumentStubs.AtomicSpectrumExplorer }))
-vi.mock('../../src/components/tour/ParticleScaleComparator.vue', () => ({ __esModule: true, default: instrumentStubs.ParticleScaleComparator }))
-vi.mock('../../src/components/tour/SpinPrecessionVisualizer.vue', () => ({ __esModule: true, default: instrumentStubs.SpinPrecessionVisualizer }))
-vi.mock('../../src/components/tour/BlackbodySpectrum.vue', () => ({ __esModule: true, default: instrumentStubs.BlackbodySpectrum }))
-vi.mock('../../src/components/tour/MolarMatterScaler.vue', () => ({ __esModule: true, default: instrumentStubs.MolarMatterScaler }))
+vi.mock('../../src/components/tour/ScaleRuler.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.ScaleRuler }
+})
+vi.mock('../../src/components/tour/PhotonBridge.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.PhotonBridge }
+})
+vi.mock('../../src/components/tour/ElectricalStandardsNetwork.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.ElectricalStandardsNetwork }
+})
+vi.mock('../../src/components/tour/AtomicSpectrumExplorer.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.AtomicSpectrumExplorer }
+})
+vi.mock('../../src/components/tour/ParticleScaleComparator.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.ParticleScaleComparator }
+})
+vi.mock('../../src/components/tour/SpinPrecessionVisualizer.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.SpinPrecessionVisualizer }
+})
+vi.mock('../../src/components/tour/BlackbodySpectrum.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.BlackbodySpectrum }
+})
+vi.mock('../../src/components/tour/MolarMatterScaler.vue', async () => {
+  const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
+  return { __esModule: true, default: stubs.MolarMatterScaler }
+})
 
 const registry = vi.hoisted(() => ({
   manifest: { value: null as TourGeneratedManifest | null },
@@ -81,6 +89,12 @@ const molarSimulation = molarSimulationJson as unknown as TourGeneratedSimulatio
 const glossary = glossaryJson as TourGlossarySource
 const references = referencesJson as TourReferencesSource
 const mountedWrappers: Array<{ unmount(): void }> = []
+let activeRouter: Router | undefined
+
+function lessonRouter(): Router {
+  if (!activeRouter) throw new Error('Tour lesson router is not mounted')
+  return activeRouter
+}
 let intersectionCallback: IntersectionObserverCallback | null = null
 let intersectionOptions: IntersectionObserverInit | undefined
 const observedSections: Element[] = []
@@ -117,11 +131,12 @@ function routerFor(path: string) {
   const router = createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/tour', component: { template: '<div />' } },
-      { path: '/tour/:chapter', component: { template: '<div />' } },
-      { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: { template: '<div />' }, meta: { title: 'Tour Lesson' } },
-      { path: '/atlas/:id', name: 'formula', component: { template: '<div />' } },
-      { path: '/evidence', component: { template: '<div />' } },
+      { path: '/tour', component: emptyVaporView },
+      { path: '/tour/:chapter', component: emptyVaporView },
+      { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: emptyVaporView, meta: { title: 'Tour Lesson' } },
+      { path: '/atlas/:id', name: 'formula', component: emptyVaporView },
+      { path: '/evidence', component: emptyVaporView },
+      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
     ],
   })
   return router.push(path).then(() => router)
@@ -133,14 +148,14 @@ async function mountLesson(
   attachTo?: Element,
 ) {
   const router = await routerFor(path)
+  activeRouter = router
+  const { default: TourLessonView } = await import('../../src/views/TourLessonView.vue')
   const wrapper = mount(TourLessonView, {
     props,
     global: {
       plugins: [router],
       stubs: {
-        TourDepthControl: {
-          template: '<div data-testid="depth-control-stub">Reading depth</div>',
-        },
+        TourDepthControl: depthControlStub,
       },
     },
     ...(attachTo ? { attachTo } : {}),
@@ -200,7 +215,9 @@ describe('Tour lesson vertical slice', () => {
       },
     })
     mountedWrappers.push(wrapper)
-    await flushPromises()
+    await vi.waitFor(() => {
+      expect(wrapper.find(`[data-testid="${testId}"]`).exists()).toBe(true)
+    })
 
     const instrument = wrapper.get(`[data-testid="${testId}"]`)
     expect(instrument.attributes('data-simulation')).toBe(simulationId)
@@ -249,8 +266,9 @@ describe('Tour lesson vertical slice', () => {
     expect(wrapper.find('[data-instrument-stub]').exists()).toBe(false)
 
     resolveLoader(instrumentStubs.DimensionBuilder)
-    await flushPromises()
-    expect(wrapper.find('[data-testid="tour-simulation-loading"]').exists()).toBe(false)
+    await vi.waitFor(() => {
+      expect(wrapper.find('[data-testid="tour-simulation-loading"]').exists()).toBe(false)
+    })
     expect(wrapper.find('[data-testid="dimension-builder-stub"]').exists()).toBe(true)
     expect(loader).toHaveBeenCalledOnce()
   })
@@ -267,7 +285,9 @@ describe('Tour lesson vertical slice', () => {
       },
     })
     mountedWrappers.push(wrapper)
-    await flushPromises()
+    await vi.waitFor(() => {
+      expect(wrapper.find('[data-testid="tour-simulation-load-error"]').exists()).toBe(true)
+    })
 
     const alert = wrapper.get('[data-testid="tour-simulation-load-error"]')
     expect(alert.attributes('role')).toBe('alert')
@@ -281,7 +301,9 @@ describe('Tour lesson vertical slice', () => {
       props: { simulation, depth: 'guided' },
     })
     mountedWrappers.push(wrapper)
-    await flushPromises()
+    await vi.waitFor(() => {
+      expect(wrapper.find('[data-testid="instrument-control"]').exists()).toBe(true)
+    })
 
     await wrapper.get('[data-testid="instrument-control"]').setValue('edited')
     const staleInstrument = wrapper.get('[data-testid="dimension-builder-stub"]')
@@ -399,7 +421,7 @@ describe('Tour lesson vertical slice', () => {
       expect(link.attributes('href')).toBe(href)
       expect(link.attributes('aria-label')).toBe(`Formula ${formulaId}, opens Formula record`)
       expect(link.attributes('target')).toBeUndefined()
-      expect(wrapper.vm.$router.resolve(href).query).toEqual({
+      expect(lessonRouter().resolve(href).query).toEqual({
         returnTo: '/tour/units/physical-quantities#interpret',
       })
     })
@@ -414,7 +436,7 @@ describe('Tour lesson vertical slice', () => {
       const formulaId = lesson.formulaIds[index]!
       const href = `/atlas/${formulaId}?returnTo=/tour/units/physical-quantities?path=quick%23interpret`
       expect(link.attributes('href')).toBe(href)
-      expect(wrapper.vm.$router.resolve(href).query).toEqual({
+      expect(lessonRouter().resolve(href).query).toEqual({
         returnTo: '/tour/units/physical-quantities?path=quick#interpret',
       })
     })
@@ -434,7 +456,7 @@ describe('Tour lesson vertical slice', () => {
     expect(progress.state.value.chapters.units?.status).toBe('visited')
     expect(wrapper.get('[data-testid="completion-announcement"]').text()).toBe('Station marked complete.')
 
-    await wrapper.vm.$router.push('/tour/units/physical-quantities')
+    await lessonRouter().push('/tour/units/physical-quantities')
     await flushPromises()
     expect(wrapper.get('[data-testid="completion-announcement"]').text()).toBe('')
     await wrapper.get('[data-testid="mark-lesson-complete"]').trigger('click')
@@ -475,7 +497,7 @@ describe('Tour lesson vertical slice', () => {
   it('reacts to query-only mode changes and browser back with mode-specific title, content, resume, and preset', async () => {
     const wrapper = await mountLesson()
     await flushPromises()
-    const router = wrapper.vm.$router
+    const router = lessonRouter()
 
     expect(document.title).toBe(`${lesson.title} | OpenSimPhy Atlas`)
     expect(wrapper.get('[data-testid="dimension-builder-stub"]').attributes('data-preset')).toBeUndefined()

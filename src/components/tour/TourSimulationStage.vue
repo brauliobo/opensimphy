@@ -1,32 +1,11 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, defineComponent, h, inject, type Component } from 'vue'
+import { computed, defineVaporAsyncComponent, inject, type Component, type VaporComponent } from 'vue'
 import type { ReadingDepth, TourGeneratedSimulation } from '../../types/tour'
+import TourSimulationLoadError from './TourSimulationLoadError.vue'
+import TourSimulationLoading from './TourSimulationLoading.vue'
 
 type SimulationModule = { default: Component }
 type SimulationLoader = () => Promise<Component | SimulationModule>
-
-const simulationLoading = defineComponent({
-  name: 'TourSimulationLoading',
-  setup: () => () => h('p', {
-    role: 'status',
-    'aria-live': 'polite',
-    'data-testid': 'tour-simulation-loading',
-  }, 'Loading interactive simulation...'),
-})
-
-const simulationLoadError = defineComponent({
-  name: 'TourSimulationLoadError',
-  props: {
-    error: Error,
-  },
-  setup: () => () => h('div', {
-    role: 'alert',
-    'data-testid': 'tour-simulation-load-error',
-  }, [
-    h('p', 'The interactive simulation could not be loaded.'),
-    h('p', 'Reload this lesson to retry. If the problem continues, check the network connection and try again.'),
-  ]),
-})
 
 const defaultSimulationLoaders = Object.freeze({
   'dimensional-equation-builder': () => import('./DimensionBuilder.vue'),
@@ -51,11 +30,11 @@ const emit = defineEmits<{
 }>()
 
 const simulationLoaders = inject<Readonly<Record<string, SimulationLoader>>>('tourSimulationLoaders', defaultSimulationLoaders)
-const simulationComponents: Readonly<Record<string, Component>> = Object.freeze(Object.fromEntries(
-  Object.entries(simulationLoaders).map(([id, loader]) => [id, defineAsyncComponent({
-    loader,
-    loadingComponent: simulationLoading,
-    errorComponent: simulationLoadError,
+const simulationComponents: Readonly<Record<string, VaporComponent>> = Object.freeze(Object.fromEntries(
+  Object.entries(simulationLoaders).map(([id, loader]) => [id, defineVaporAsyncComponent({
+    loader: loader as () => Promise<VaporComponent>,
+    loadingComponent: TourSimulationLoading as VaporComponent,
+    errorComponent: TourSimulationLoadError as VaporComponent,
     delay: 0,
     timeout: 15_000,
   })]),
