@@ -26,6 +26,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: nice -n 10 npm ci
+      - name: Acquire Giac WASM
+        run: nice -n 10 npm run giac:acquire
       - name: Generate deterministic data
         run: |
           nice -n 10 npm run data:generate -- --external-corpus-mode=artifact

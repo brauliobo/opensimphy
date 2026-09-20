@@ -20,6 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - name: Acquire Giac WASM
+        run: nice npm run giac:acquire
       - name: Compile twice from isolated source trees
         run: JOBS=4 nice npm run wasm:reproducibility
       - name: Stage exact source-built runtime
