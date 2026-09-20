@@ -1,5 +1,7 @@
 node_modules/
 dist/
+vendor/giacjs/giacwasm.js
+vendor/giacjs/giac.js
 dev-dist/
 coverage/
 test-results/
