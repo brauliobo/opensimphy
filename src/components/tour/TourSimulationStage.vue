@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineVaporAsyncComponent, inject, type Component, type VaporComponent } from 'vue'
+import { computed, inject, shallowRef, watch, type Component } from 'vue'
 import type { ReadingDepth, TourGeneratedSimulation } from '../../types/tour'
 import TourSimulationLoadError from './TourSimulationLoadError.vue'
 import TourSimulationLoading from './TourSimulationLoading.vue'
@@ -30,17 +30,40 @@ const emit = defineEmits<{
 }>()
 
 const simulationLoaders = inject<Readonly<Record<string, SimulationLoader>>>('tourSimulationLoaders', defaultSimulationLoaders)
-const simulationComponents: Readonly<Record<string, VaporComponent>> = Object.freeze(Object.fromEntries(
-  Object.entries(simulationLoaders).map(([id, loader]) => [id, defineVaporAsyncComponent({
-    loader: loader as () => Promise<VaporComponent>,
-    loadingComponent: TourSimulationLoading as VaporComponent,
-    errorComponent: TourSimulationLoadError as VaporComponent,
-    delay: 0,
-    timeout: 15_000,
-  })]),
-))
+const resolvedComponent = shallowRef<Component | null>(null)
+const loadError = shallowRef<Error | null>(null)
+const loading = shallowRef(true)
 
-const simulationComponent = computed(() => simulationComponents[props.simulation.id] ?? null)
+function moduleComponent(value: Component | SimulationModule): Component {
+  if (value && typeof value === 'object' && 'default' in value && value.default) return value.default
+  return value as Component
+}
+
+watch(() => props.simulation.id, async (id) => {
+  const loader = simulationLoaders[id]
+  if (!loader) {
+    resolvedComponent.value = null
+    loadError.value = null
+    loading.value = false
+    return
+  }
+  loading.value = true
+  loadError.value = null
+  resolvedComponent.value = null
+  try {
+    const loaded = await loader()
+    if (id !== props.simulation.id) return
+    resolvedComponent.value = moduleComponent(loaded)
+  } catch (reason) {
+    if (id !== props.simulation.id) return
+    const error = reason instanceof Error ? reason : new Error(String(reason))
+    loadError.value = error
+    throw error
+  } finally {
+    if (id === props.simulation.id) loading.value = false
+  }
+}, { immediate: true })
+
 const simulationInstanceKey = computed(() => [
   props.simulation.id,
   props.simulation.comparison.compatibilityKey,
@@ -50,14 +73,16 @@ const simulationInstanceKey = computed(() => [
 
 <template lang="pug">
 component(
-  :is="simulationComponent"
-  v-if="simulationComponent"
+  :is="resolvedComponent"
+  v-if="resolvedComponent"
   :key="simulationInstanceKey"
   :simulation="simulation"
   :depth="depth"
   :initial-preset-id="initialPresetId"
   @evaluated="emit('evaluated', $event)"
 )
+TourSimulationLoading(v-else-if="loading")
+TourSimulationLoadError(v-else-if="loadError")
 div(v-else role="alert" data-testid="tour-simulation-unknown")
   p The requested interactive simulation is unavailable.
   p Simulation ID: #[code {{ simulation.id }}]

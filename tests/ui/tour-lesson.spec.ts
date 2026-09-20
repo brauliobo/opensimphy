@@ -22,6 +22,7 @@ import type {
   ObservationItemRole,
   TourReferencesSource,
 } from '../../src/types/tour'
+import TourLessonView from '../../src/views/TourLessonView.vue'
 import { instrumentStubs } from './tourInstrumentStubs'
 import { depthControlStub, emptyVaporView } from './vaporStubs'
 
@@ -149,7 +150,6 @@ async function mountLesson(
 ) {
   const router = await routerFor(path)
   activeRouter = router
-  const { default: TourLessonView } = await import('../../src/views/TourLessonView.vue')
   const wrapper = mount(TourLessonView, {
     props,
     global: {
@@ -215,9 +215,8 @@ describe('Tour lesson vertical slice', () => {
       },
     })
     mountedWrappers.push(wrapper)
-    await vi.waitFor(() => {
-      expect(wrapper.find(`[data-testid="${testId}"]`).exists()).toBe(true)
-    })
+    await flushPromises()
+    expect(wrapper.find(`[data-testid="${testId}"]`).exists()).toBe(true)
 
     const instrument = wrapper.get(`[data-testid="${testId}"]`)
     expect(instrument.attributes('data-simulation')).toBe(simulationId)
@@ -266,9 +265,8 @@ describe('Tour lesson vertical slice', () => {
     expect(wrapper.find('[data-instrument-stub]').exists()).toBe(false)
 
     resolveLoader(instrumentStubs.DimensionBuilder)
-    await vi.waitFor(() => {
-      expect(wrapper.find('[data-testid="tour-simulation-loading"]').exists()).toBe(false)
-    })
+    await flushPromises()
+    expect(wrapper.find('[data-testid="tour-simulation-loading"]').exists()).toBe(false)
     expect(wrapper.find('[data-testid="dimension-builder-stub"]').exists()).toBe(true)
     expect(loader).toHaveBeenCalledOnce()
   })
@@ -285,9 +283,8 @@ describe('Tour lesson vertical slice', () => {
       },
     })
     mountedWrappers.push(wrapper)
-    await vi.waitFor(() => {
-      expect(wrapper.find('[data-testid="tour-simulation-load-error"]').exists()).toBe(true)
-    })
+    await flushPromises()
+    expect(wrapper.find('[data-testid="tour-simulation-load-error"]').exists()).toBe(true)
 
     const alert = wrapper.get('[data-testid="tour-simulation-load-error"]')
     expect(alert.attributes('role')).toBe('alert')
@@ -301,9 +298,8 @@ describe('Tour lesson vertical slice', () => {
       props: { simulation, depth: 'guided' },
     })
     mountedWrappers.push(wrapper)
-    await vi.waitFor(() => {
-      expect(wrapper.find('[data-testid="instrument-control"]').exists()).toBe(true)
-    })
+    await flushPromises()
+    expect(wrapper.find('[data-testid="instrument-control"]').exists()).toBe(true)
 
     await wrapper.get('[data-testid="instrument-control"]').setValue('edited')
     const staleInstrument = wrapper.get('[data-testid="dimension-builder-stub"]')
