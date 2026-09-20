@@ -1,4 +1,4 @@
-import type { LoopControlResponse, MicrostripResult, OnelabWorkerMessage, OnelabWorkerResponse, ProjectBootstrap, ProjectEnvelope, ProjectResponse, SimulationAssetManifest } from './types'
+import type { EigenResult, LoopControlResponse, MicrostripResult, OnelabWorkerMessage, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, SimulationAssetManifest } from './types'
 import type { SimulationScene } from './scene'
 import { terminateWorker, trackWorker } from './diagnostics'
 
@@ -25,6 +25,7 @@ export class OnelabClient {
        else if (event.data.type === 'project-opened') pending.resolve(event.data.project)
        else if (event.data.type === 'project-response') pending.resolve(event.data.response)
        else if (event.data.type === 'loop-control-response') pending.resolve(event.data.response)
+       else if (event.data.type === 'eigen-result') pending.resolve(event.data.result)
        else if (event.data.type === 'scene') pending.resolve(event.data.scene)
        else pending.resolve(event.data.manifest)
     })
@@ -56,8 +57,20 @@ export class OnelabClient {
 
   openProject(projectId: string) { return this.request<ProjectBootstrap>({ type: 'open-project', projectId }).promise }
 
+  openSession(files: ProjectFile[], descriptor: ProjectDescriptor) {
+    return this.request<ProjectBootstrap>({ type: 'open-session', files, descriptor }).promise
+  }
+
   startProject(envelope: ProjectEnvelope, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
     return this.request<ProjectResponse>({ type: 'project', envelope }, enteredNative)
+  }
+
+  meshProject(envelope: ProjectEnvelope, dimension: 1 | 2 | 3, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
+    return this.request<SimulationScene>({ type: 'mesh', envelope, dimension }, enteredNative)
+  }
+
+  eigenProject(envelope: ProjectEnvelope, modeCount = 8, enteredNative?: (event: Extract<OnelabWorkerResponse, { type: 'entered-native' }>) => void) {
+    return this.request<EigenResult>({ type: 'eigen', envelope, modeCount }, enteredNative)
   }
 
   startLoopControl(operation: 'initialize' | 'increment', envelope: ProjectEnvelope) {
@@ -65,6 +78,7 @@ export class OnelabClient {
   }
 
   getCubeScene() { return this.request<SimulationScene>({ type: 'get-cube-scene' }).promise }
+  getStepScene() { return this.request<SimulationScene>({ type: 'get-step-scene' }).promise }
   getRenderingScene() { return this.request<SimulationScene>({ type: 'get-rendering-scene' }).promise }
 
   onEnteredNative(listener: (event: CustomEvent<Extract<OnelabWorkerResponse, { type: 'entered-native' }>>) => void) {

@@ -26,33 +26,39 @@ async function loadFixture() {
   return new TextDecoder().decode(bytes)
 }
 
-worker.addEventListener('message', async (event: MessageEvent<{ type: 'convert-cube'; requestId: string }>) => {
+function convert(source: string): SimulationScene {
+  const result = importStep(source, {
+    surfaceDeviation: 0.05,
+    normalDeviation: 15,
+    maxEdge: 5,
+    measureGeometry: true,
+    vertexNormals: true,
+  })
+  if (!result.diagnostics.ok) throw new Error(`meshStep rejected STEP: ${JSON.stringify(result.diagnostics)}`)
+  return {
+    source: 'meshstep-preview',
+    referencePositions: Float64Array.from(result.mesh.positions),
+    surfaceTriangles: result.mesh.indices.slice(),
+    triangleEntityTags: result.faceOfTri.slice(),
+    entities: [...result.faces.values()].map((face) => ({
+      dimension: 2,
+      tag: face.faceId,
+      bounds: [0, 0, 0, 0, 0, 0],
+      physicalTags: new Uint32Array(),
+    })),
+    elementBlocks: [],
+    groups: [],
+    fields: [],
+    surfaceSignatures: surfaceSignatures(result.mesh.positions, result.mesh.indices, result.faceOfTri),
+  }
+}
+
+worker.addEventListener('message', async (event: MessageEvent<{ type: 'convert-cube' | 'convert-step'; requestId: string; source?: string }>) => {
   const { requestId } = event.data
   try {
-    const result = importStep(await loadFixture(), {
-      surfaceDeviation: 0.05,
-      normalDeviation: 15,
-      maxEdge: 5,
-      measureGeometry: true,
-      vertexNormals: true,
-    })
-    if (!result.diagnostics.ok) throw new Error(`meshStep rejected cube: ${JSON.stringify(result.diagnostics)}`)
-    const scene: SimulationScene = {
-      source: 'meshstep-preview',
-      referencePositions: Float64Array.from(result.mesh.positions),
-      surfaceTriangles: result.mesh.indices.slice(),
-      triangleEntityTags: result.faceOfTri.slice(),
-      entities: [...result.faces.values()].map((face) => ({
-        dimension: 2,
-        tag: face.faceId,
-        bounds: [0, 0, 0, 0, 0, 0],
-        physicalTags: new Uint32Array(),
-      })),
-      elementBlocks: [],
-      groups: [],
-      fields: [],
-      surfaceSignatures: surfaceSignatures(result.mesh.positions, result.mesh.indices, result.faceOfTri),
-    }
+    const source = event.data.type === 'convert-step' ? event.data.source : await loadFixture()
+    if (!source) throw new Error('STEP source is empty')
+    const scene = convert(source)
     worker.postMessage({ type: 'result', requestId, scene }, sceneTransferables(scene))
   } catch (error) {
     worker.postMessage({ type: 'error', requestId, error: error instanceof Error ? error.message : String(error) })

@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import type { FieldSample, LoopControlResponse, MicrostripResult, NativeProbe, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, ResourceAudit, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
+import type { EigenResult, FieldSample, LoopControlResponse, MicrostripResult, NativeProbe, OnelabWorkerRequest, OnelabWorkerResponse, ProjectBootstrap, ProjectDescriptor, ProjectEnvelope, ProjectFile, ProjectResponse, ResourceAudit, SimulationAssetManifest, SimulationAssetPartition, SimulationAssetPartitionName, ViewBlock } from '../simulation/types'
 import { callGetdpWithDatabase, canonicalizeOnelab, mergeValidatedValues, parseOnelab, setParameterValue, validateReadOnlyValues } from '../simulation/onelab-db'
 import { certifyConvergence } from '../simulation/convergence'
 import { canonicalMshRecords } from '../simulation/msh'
@@ -11,6 +11,9 @@ import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
 import { maximumLoopPoints } from '../simulation/loops'
 import { verifySimulationManifest } from '../simulation/asset-manifest'
+import { cadDatabase, cavityEigenSource, cubeElectrostaticsSource, ensureMeshParameter, isRuntimeProject } from '../simulation/cad-projects'
+import { electrostaticGroupsFromEntities } from '../simulation/cad-groups'
+import { solveLaplaceEigen } from '../simulation/eigen'
 
 const worker = self as unknown as DedicatedWorkerGlobalScope
 const root = new URL(`${import.meta.env.BASE_URL}simulation/`, worker.location.origin)
@@ -720,24 +723,55 @@ async function solvePreparedProject(requestId: string, envelope: ProjectEnvelope
   }
 }
 
+async function runtimeFiles(descriptor: ProjectDescriptor): Promise<ProjectFile[]> {
+  return Promise.all(descriptor.files.map(async (path) => {
+    if (path === 'cube-electrostatics.pro') return { path, bytes: new TextEncoder().encode(cubeElectrostaticsSource) }
+    if (path === 'cavity-eigen.pro') return { path, bytes: new TextEncoder().encode(cavityEigenSource) }
+    return { path, bytes: await fetchBytes(`fixtures/${descriptor.directory}/${path}`) }
+  }))
+}
+
 async function openProject(projectId: string): Promise<ProjectBootstrap> {
   await initialize()
   const descriptor = projectDescriptor(projectId)
   if (descriptor.kind !== 'solve' || !descriptor.problem || !descriptor.resolution || !descriptor.postOperations?.length) throw new Error(`project ${projectId} is not a solver project`)
   const solver = await solverFor(descriptor.scalarType)
-  const files = await Promise.all(descriptor.files.map(async (path) => ({
+  const files = isRuntimeProject(projectId) ? await runtimeFiles(descriptor) : await Promise.all(descriptor.files.map(async (path) => ({
     path,
     bytes: await fetchBytes(`fixtures/${descriptor.directory}/${path}`),
   })))
   const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
   writeProjectFiles(envelope, solver)
+  if (descriptor.solver === 'eigen-p1') {
+    parseGmshDatabase(descriptor)
+    return { files, defaults: cadDatabase(4), descriptor }
+  }
   const gmshDeclarations = parseGmshDatabase(descriptor)
   const declarations = callSolverWithDatabase(solver, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
-  const gmshDefaults = parseGmshDatabase(descriptor, seedInitialNumbers(descriptor, declarations.database))
-  const checked = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, gmshDefaults)), '-check']))
+  const seeded = descriptor.cad ? ensureMeshParameter(declarations.database, 2) : seedInitialNumbers(descriptor, declarations.database)
+  const gmshDefaults = parseGmshDatabase(descriptor, seeded)
+  const checkNumbers = descriptor.cad ? {} : effectiveNumbers(descriptor, gmshDefaults)
+  const checked = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(checkNumbers), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP default check exited with status ${checked.status}`)
-  return { files, defaults: checked.database, descriptor }
+  return { files, defaults: descriptor.cad ? ensureMeshParameter(checked.database, 2) : checked.database, descriptor }
+}
+
+async function openSession(files: ProjectFile[], descriptor: ProjectDescriptor): Promise<ProjectBootstrap> {
+  await initialize()
+  if (descriptor.kind !== 'solve' || !descriptor.problem) throw new Error(`session ${descriptor.id} is not a solver project`)
+  const solver = await solverFor(descriptor.scalarType)
+  const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
+  writeProjectFiles(envelope, solver)
+  if (descriptor.solver === 'eigen-p1') {
+    parseGmshDatabase(descriptor)
+    return { files, defaults: cadDatabase(4), descriptor }
+  }
+  const gmshDeclarations = parseGmshDatabase(descriptor)
+  const declarations = callSolverWithDatabase(solver, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
+  if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
+  const defaults = ensureMeshParameter(declarations.database, 2)
+  return { files, defaults, descriptor }
 }
 
 async function openMicrostrip() { return openProject('microstrip') }
@@ -748,17 +782,29 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
   const solver = await solverFor(descriptor.scalarType)
   logs.length = 0
   writeProjectFiles(envelope, solver)
+  if (descriptor.solver === 'eigen-p1') {
+    parseGmshDatabase(descriptor, envelope.action === 'reset' ? envelope.defaults : envelope.database)
+    const database = envelope.action === 'reset' ? envelope.defaults : ensureMeshParameter(envelope.database, meshFactor(descriptor, envelope.database))
+    if (envelope.action !== 'compute') return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
+    applyMeshSize(meshFactor(descriptor, database))
+    ensureCadPhysicalGroups(envelope)
+    emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
+    gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
+    gmsh.model.mesh.generate(descriptor.dimension)
+    return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
+  }
   const gmshDefaults = parseGmshDatabase(descriptor, envelope.defaults)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
   const declarations = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
   if (envelope.action !== 'reset') validateReadOnlyValues(declarations.database, envelope.database, envelope.defaults)
   const requested = envelope.action === 'reset' ? declarations.database : mergeValidatedValues(declarations.database, envelope.database)
-  let database = parseGmshDatabase(descriptor, requested)
+  let database = parseGmshDatabase(descriptor, descriptor.cad ? ensureMeshParameter(requested, 2) : requested)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const checked = callSolverWithDatabase(solver, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(effectiveNumbers(descriptor, database)), '-check']))
+  const checkNumbers = descriptor.cad || Object.keys(descriptor.parameterNames).length === 0 ? {} : effectiveNumbers(descriptor, database)
+  const checked = callSolverWithDatabase(solver, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(checkNumbers), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP check exited with status ${checked.status}`)
-  database = parseGmshDatabase(descriptor, checked.database)
+  database = parseGmshDatabase(descriptor, descriptor.cad ? ensureMeshParameter(checked.database, meshFactor(descriptor, checked.database)) : checked.database)
   if (envelope.loopIndex !== undefined) {
     if (runtimeProfile !== 'combined' || !Number.isInteger(envelope.loopIndex) || envelope.loopIndex < 0 || envelope.loopIndex >= maximumLoopPoints) throw new Error('invalid native ONELAB loop point index')
     const total = solver.loop.initialize(maximumLoopPoints)
@@ -766,20 +812,63 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
     for (let index = 0; index < envelope.loopIndex; index++) if (!solver.loop.increment()) throw new Error(`native ONELAB loop ended before point ${envelope.loopIndex}`)
     database = canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
   }
-  applyPhysicalGroups(envelope)
-  const parameters = effectiveNumbers(descriptor, database)
+  const sidecar = ensureCadPhysicalGroups(envelope)
+  if (descriptor.cad) applyMeshSize(meshFactor(descriptor, database))
+  const parameters = Object.keys(descriptor.parameterNames).length ? effectiveNumbers(descriptor, database) : {}
   if (envelope.action === 'compute') {
     const imported = runtimeProfile === 'combined'
       ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
       : canonicalNativeDatabase(solver.onelab.get())
-    if (imported !== database) throw new Error('GetDP database changed after check export')
-    const result = await solvePreparedProject(requestId, envelope, solver, parameters)
+    if (!descriptor.cad && imported !== database) throw new Error('GetDP database changed after check export')
+    const result = await solvePreparedProject(requestId, { ...envelope, sidecar }, solver, parameters)
     database = runtimeProfile === 'combined'
       ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
       : importGmshDatabase(canonicalNativeDatabase(solver.onelab.get()))
+    if (descriptor.cad) database = ensureMeshParameter(database, meshFactor(descriptor, envelope.database || database))
     return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database, result }
   }
   return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
+}
+
+async function meshProject(requestId: string, envelope: ProjectEnvelope, dimension: 1 | 2 | 3): Promise<SimulationScene> {
+  await initialize()
+  const solver = await solverFor(envelope.descriptor.scalarType)
+  writeProjectFiles(envelope, solver)
+  parseGmshDatabase(envelope.descriptor, envelope.database || envelope.defaults)
+  emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
+  ensureCadPhysicalGroups(envelope)
+  if (envelope.descriptor.cad || envelope.descriptor.solver === 'eigen-p1') applyMeshSize(meshFactor(envelope.descriptor, envelope.database || envelope.defaults))
+  gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
+  gmsh.model.mesh.generate(dimension)
+  return authoritativeScene()
+}
+
+async function eigenProject(requestId: string, envelope: ProjectEnvelope, modeCount = 8): Promise<EigenResult> {
+  await initialize()
+  const solver = await solverFor(envelope.descriptor.scalarType)
+  writeProjectFiles(envelope, solver)
+  parseGmshDatabase(envelope.descriptor, envelope.database || envelope.defaults)
+  emit({ type: 'entered-native', requestId, workerId, operation: 'eigen-p1' })
+  ensureCadPhysicalGroups(envelope)
+  applyMeshSize(meshFactor(envelope.descriptor, envelope.database || envelope.defaults))
+  gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
+  gmsh.model.mesh.generate(envelope.descriptor.dimension)
+  const scene = authoritativeScene()
+  const solved = solveLaplaceEigen(scene, modeCount)
+  scene.fields = [solved.field]
+  return { nodes: solved.nodes, freeNodes: solved.freeNodes, modes: solved.modes, scene }
+}
+
+async function getStepScene(requestId: string): Promise<SimulationScene> {
+  await initialize()
+  gmsh.clear()
+  writeFile(gmsh.FS, '/cube.step', await fetchBytes('fixtures/cube/cube.step'))
+  emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-open' })
+  gmsh.open('/cube.step')
+  gmsh.model.mesh.generate(3)
+  const scene = authoritativeScene()
+  if (scene.entities.filter(({ dimension }) => dimension === 2).length !== 6) throw new Error('OCC STEP cube does not expose six surfaces')
+  return scene
 }
 
 async function controlLoop(requestId: string, operation: 'initialize' | 'increment', envelope: ProjectEnvelope): Promise<LoopControlResponse> {
@@ -817,6 +906,59 @@ async function runMicrostrip(requestId: string) {
   })
   if (!response.result) throw new Error('legacy microstrip computation returned no result')
   return response.result
+}
+
+function modelEntities(): ModelEntity[] {
+  const entities: ModelEntity[] = []
+  for (const [dimension, entityTag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const bounds = gmsh.model.getBoundingBox(dimension, entityTag)
+    entities.push({
+      dimension: dimension as 0 | 1 | 2 | 3,
+      tag: entityTag,
+      bounds: [bounds.xmin, bounds.ymin, bounds.zmin, bounds.xmax, bounds.ymax, bounds.zmax],
+      physicalTags: Uint32Array.from(gmsh.model.getPhysicalGroupsForEntity(dimension, entityTag).physicalTags),
+    })
+  }
+  return entities
+}
+
+function modelSpan() {
+  let span = 0
+  for (const [dimension, tag] of pairs(gmsh.model.getEntities().dimTags as number[])) {
+    const bounds = gmsh.model.getBoundingBox(dimension, tag)
+    span = Math.max(span, bounds.xmax - bounds.xmin, bounds.ymax - bounds.ymin, bounds.zmax - bounds.zmin)
+  }
+  return span > 0 ? span : 1
+}
+
+function applyMeshSize(factor: number) {
+  if (!(factor > 0) || !Number.isFinite(factor)) throw new Error('mesh size factor must be a finite positive number')
+  const characteristic = modelSpan()
+  gmsh.option.setNumber('Mesh.MeshSizeMin', characteristic / (4 * factor))
+  gmsh.option.setNumber('Mesh.MeshSizeMax', characteristic / factor)
+  gmsh.option.setNumber('Mesh.MeshSizeFactor', 1)
+}
+
+function meshFactor(descriptor: ProjectDescriptor, database: string) {
+  const name = descriptor.parameterNames.s ?? 'Parameters/Global mesh size factor'
+  const parameter = parseOnelab(database).onelab.parameters.find((entry) => entry.name === name)
+  const value = parameter?.type === 'number' ? parameter.values[0] : descriptor.setNumbers.s
+  if (value === undefined || !Number.isFinite(value) || value <= 0) return 2
+  return value
+}
+
+function ensureCadPhysicalGroups(envelope: ProjectEnvelope) {
+  if (!envelope.descriptor.cad) {
+    applyPhysicalGroups(envelope)
+    return envelope.sidecar
+  }
+  if (envelope.sidecar.groups.length) {
+    applyPhysicalGroups(envelope)
+    return envelope.sidecar
+  }
+  const sidecar = electrostaticGroupsFromEntities(envelope.descriptor.id, modelEntities())
+  applyPhysicalGroups({ ...envelope, sidecar })
+  return sidecar
 }
 
 function pairs(values: number[]) {
@@ -904,16 +1046,28 @@ async function handleRequest(event: MessageEvent<OnelabWorkerRequest>) {
     if (event.data.type === 'warm') emit({ type: 'warmed', requestId, manifest: await initialize() })
     else if (event.data.type === 'open-microstrip') emit({ type: 'project-opened', requestId, project: await openMicrostrip() })
     else if (event.data.type === 'open-project') emit({ type: 'project-opened', requestId, project: await openProject(event.data.projectId) })
+    else if (event.data.type === 'open-session') emit({ type: 'project-opened', requestId, project: await openSession(event.data.files, event.data.descriptor) })
     else if (event.data.type === 'project') {
       const response = await runProject(requestId, event.data.envelope)
       const transfers = response.result ? [response.result.scalar.values.buffer, response.result.vector.values.buffer, ...sceneTransferables(response.result.scene)] : []
       emit({ type: 'project-response', requestId, response }, transfers)
+    }
+    else if (event.data.type === 'mesh') {
+      const scene = await meshProject(requestId, event.data.envelope, event.data.dimension)
+      emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
+    }
+    else if (event.data.type === 'eigen') {
+      const result = await eigenProject(requestId, event.data.envelope, event.data.modeCount)
+      emit({ type: 'eigen-result', requestId, result }, sceneTransferables(result.scene))
     }
     else if (event.data.type === 'loop-control') {
       emit({ type: 'loop-control-response', requestId, response: await controlLoop(requestId, event.data.operation, event.data.envelope) })
     }
     else if (event.data.type === 'get-cube-scene') {
       const scene = await getCubeScene()
+      emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
+    } else if (event.data.type === 'get-step-scene') {
+      const scene = await getStepScene(requestId)
       emit({ type: 'scene', requestId, scene }, sceneTransferables(scene))
     } else if (event.data.type === 'get-rendering-scene') {
       const scene = await getRenderingScene()

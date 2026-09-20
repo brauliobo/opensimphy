@@ -28,4 +28,12 @@ describe('MeshstepClient lifecycle', () => {
     await expect(client.convertCube()).rejects.toThrow('is disposed')
     expect(WorkerStub.instances[0]!.terminate).toHaveBeenCalledOnce()
   })
+
+  it('posts convert-step with the provided source text', async () => {
+    const client = new MeshstepClient()
+    const pending = client.convertStep('ISO-10303-21;')
+    expect(WorkerStub.instances[0]!.postMessage).toHaveBeenCalledWith({ type: 'convert-step', requestId: '1', source: 'ISO-10303-21;' })
+    client.dispose()
+    await expect(pending).rejects.toThrow('disposed during conversion')
+  })
 })

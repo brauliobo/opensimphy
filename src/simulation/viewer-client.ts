@@ -20,11 +20,19 @@ export class MeshstepClient {
   }
 
   convertCube() {
+    return this.convert('convert-cube')
+  }
+
+  convertStep(source: string) {
+    return this.convert('convert-step', source)
+  }
+
+  private convert(type: 'convert-cube' | 'convert-step', source?: string) {
     if (this.disposed) return Promise.reject<SimulationScene>(new Error('meshStep client is disposed'))
     const requestId = String(++this.sequence)
     return new Promise<SimulationScene>((resolve, reject) => {
       this.pending.set(requestId, { resolve, reject })
-      this.worker.postMessage({ type: 'convert-cube', requestId })
+      this.worker.postMessage({ type, requestId, source })
     })
   }
 
