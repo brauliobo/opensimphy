@@ -1008,7 +1008,7 @@ test('opens locked OCC STEP as a GetDP electrostatic CAD project', async ({ page
   expect(groups.names.map(({ name }) => name)).toEqual(expect.arrayContaining(['Ground', 'Electrode', 'Dielectric']))
 })
 
-test('computes bounded P1 Dirichlet eigenmodes on the cube mesh', async ({ page }) => {
+test('computes SLEPc Dirichlet eigenmodes on the cube mesh', async ({ page }) => {
   test.setTimeout(360_000)
   await page.goto('/labs/onelab')
   await ensureReady(page)

@@ -79,7 +79,7 @@ const mappedSummary = computed(() => mappedScene.value?.fields.map((field) => ({
 const selectableEntities = computed(() => mappedScene.value?.entities.filter(({ dimension }) => dimension >= 2) ?? [])
 const spatialProbes = computed(() => {
   const solved = displayedResult.value?.scene
-  if (!solved) return []
+  if (!solved || displayedResult.value.projectId !== 'microstrip') return []
   const scalar = solved.fields.find((field) => field.name === 'v')
   const vector = solved.fields.find((field) => field.name === 'e')
   if (!scalar || !vector) return []
@@ -184,7 +184,7 @@ function deletePhysicalGroup() { if (selectedGroupId.value) { groupEditor.delete
 function resetPhysicalGroups() { groupEditor.reset(); selectedGroupId.value = ''; persistGroups() }
 
 async function solve() {
-  if (session.descriptor?.solver === 'eigen-p1') await runEigen()
+  if (session.descriptor?.solver === 'slepc') await runEigen()
   else await execute('compute')
 }
 
@@ -552,8 +552,8 @@ section.onelab-lab.view
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
   ComputeEmbed(source-id="onelab" source-label="Browser ONELAB" beside="the mesh/solve workbench")
   .simulation-caveat(role="note")
-    strong OCC STEP is a GetDP electrostatic CAD path; SLEPc is off in the locked WASM.
-    span Arbitrary STEP opens through Gmsh OCC, receives ground/electrode/volume groups, and solves with GetDP. Eigenmodes use a bounded P1 Laplace solver on the Gmsh mesh because the locked GetDP binary is built with ENABLE_SLEPC=OFF. meshStep remains a fast preview; simulation-bound tags stay on the Gmsh surface.
+    strong OCC STEP is a GetDP electrostatic CAD path; eigenmodes use GetDP+SLEPc.
+    span Arbitrary STEP opens through Gmsh OCC, receives ground/electrode/volume groups, and solves with GetDP. Cube Dirichlet eigenmodes run GetDP EigenSolve through the locked SLEPc-enabled WASM. meshStep remains a fast preview; simulation-bound tags stay on the Gmsh surface.
   nav.onelab-modules(aria-label="ONELAB modules")
     button(type="button" data-testid="onelab-module-geometry" :aria-current="moduleId === 'geometry' ? 'page' : undefined" @click="moduleId = 'geometry'") Geometry
     button(type="button" data-testid="onelab-module-mesh" :aria-current="moduleId === 'mesh' ? 'page' : undefined" @click="moduleId = 'mesh'") Mesh
@@ -598,7 +598,7 @@ section.onelab-lab.view
     button(type="button" data-testid="onelab-warm" @click="warm" :disabled="busy") Warm simulation assets
     button(type="button" data-testid="onelab-check" @click="execute('check')" :disabled="busy") Check metadata
     button(type="button" data-testid="onelab-reset" @click="execute('reset')" :disabled="busy") Reset defaults
-    button(type="button" data-testid="onelab-solve" @click="solve" :disabled="busy") {{ selectedDescriptor?.solver === 'eigen-p1' ? 'Compute eigenmodes' : 'Compute' }}
+    button(type="button" data-testid="onelab-solve" @click="solve" :disabled="busy") {{ selectedDescriptor?.solver === 'slepc' ? 'Compute eigenmodes' : 'Compute' }}
     button(type="button" data-testid="onelab-loop" @click="runLoop" :disabled="busy || loopRunning") {{ loopHistory.length && loopHistory.length < loopTotal ? 'Resume loop' : 'Run bounded loop' }}
     button(type="button" data-testid="onelab-cancel" @click="cancel" :disabled="state !== 'running'") Cancel worker
     button(type="button" data-testid="project-export" @click="exportArchive(false)" :disabled="!sessionReady") Export project
@@ -623,6 +623,11 @@ section.onelab-lab.view
         p.eyebrow POST-PROCESSING
         h2 {{ eigenResult ? 'Eigenmodes' : 'Mapped results' }}
       span {{ mappedScene.fields.length }} mapped fields
+    output.sr-only(data-testid="mapped-field-summary") {{ JSON.stringify(mappedSummary) }}
+    output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(mappedScene)) }}
+    output.sr-only(data-testid="mapped-spatial-probes") {{ JSON.stringify(spatialProbes) }}
+    output.sr-only(data-testid="mapped-export-summary") {{ JSON.stringify(exportSummary) }}
+    output.sr-only(data-testid="mapped-selection-detail") {{ JSON.stringify(lastSelection) }}
     SimulationSceneHost(:scene="mappedScene" @select="selectSurface")
     .physical-group-editor(data-testid="physical-group-editor")
       output.sr-only(data-testid="physical-group-selection") {{ authoritativeSelection ?? '' }}
@@ -639,11 +644,6 @@ section.onelab-lab.view
       button(type="button" data-testid="physical-group-delete" @click="deletePhysicalGroup" :disabled="!selectedGroupId") Delete
       button(type="button" data-testid="physical-group-reset" @click="resetPhysicalGroups") Reset
       output.sr-only(data-testid="physical-group-sidecar") {{ JSON.stringify(groupEditor.sidecar()) }}
-    output.sr-only(data-testid="mapped-field-summary") {{ JSON.stringify(mappedSummary) }}
-    output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(mappedScene)) }}
-    output.sr-only(data-testid="mapped-spatial-probes") {{ JSON.stringify(spatialProbes) }}
-    output.sr-only(data-testid="mapped-export-summary") {{ JSON.stringify(exportSummary) }}
-    output.sr-only(data-testid="mapped-selection-detail") {{ JSON.stringify(lastSelection) }}
   dl.onelab-result(v-if="eigenResult" data-testid="eigen-result")
     dt Nodes
     dd(data-testid="eigen-nodes") {{ eigenResult.nodes }} / {{ eigenResult.freeNodes }} free

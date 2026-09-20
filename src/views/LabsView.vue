@@ -84,7 +84,7 @@ const walls = computed(() => completionRegistry.coverage.value.find((row) => row
     RouterLink(to="/labs/onelab" data-testid="onelab-nav")
       span 04 / FIELD SOLVER
       strong Browser ONELAB
-      p Serial Gmsh mesh generation and real-double GetDP/PETSc solving with native-reference checks.
+      p Serial Gmsh mesh generation and GetDP/PETSc/SLEPc solving with native-reference checks.
       small Open the microstrip proof →
   p.lab-intro Particle and quantum model cards live on the #[RouterLink.text-link(to="/earth") EARTH dossier]. Choose another program from the #[RouterLink.text-link(to="/earth/programs") Program Registry].
   section.source-section.author-collection-section(v-if="registryReady")
