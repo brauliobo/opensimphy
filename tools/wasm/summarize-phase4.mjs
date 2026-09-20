@@ -86,6 +86,7 @@ const reference = {
       occt: { revision: versions.OCCT_REVISION, tree: versions.OCCT_TREE },
       getdp: { revision: versions.GETDP_REVISION, tree: versions.GETDP_TREE },
       petsc: { revision: versions.PETSC_REVISION, tree: versions.PETSC_TREE },
+      slepc: { revision: versions.SLEPC_REVISION, tree: versions.SLEPC_TREE },
     },
   },
   projects,

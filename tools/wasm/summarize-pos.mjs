@@ -95,6 +95,7 @@ const reference = {
       gmsh: { url: versions.GMSH_URL, commit: versions.GMSH_REVISION, tree: versions.GMSH_TREE },
       getdp: { url: versions.GETDP_URL, commit: versions.GETDP_REVISION, tree: versions.GETDP_TREE },
       petsc: { url: versions.PETSC_URL, commit: versions.PETSC_REVISION, tree: versions.PETSC_TREE },
+      slepc: { url: versions.SLEPC_URL, commit: versions.SLEPC_REVISION, tree: versions.SLEPC_TREE },
     },
     inputs: lock.inputs,
     fixtures: lock.fixtures,

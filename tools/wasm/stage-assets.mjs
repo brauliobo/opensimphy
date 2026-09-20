@@ -55,6 +55,7 @@ const manifest = {
     occt: { url: versions.OCCT_URL, commit: versions.OCCT_REVISION, tree: versions.OCCT_TREE },
     getdp: { url: versions.GETDP_URL, commit: versions.GETDP_REVISION, tree: versions.GETDP_TREE },
     petsc: { url: versions.PETSC_URL, commit: versions.PETSC_REVISION, tree: versions.PETSC_TREE },
+    slepc: { url: versions.SLEPC_URL, commit: versions.SLEPC_REVISION, tree: versions.SLEPC_TREE },
   },
   inputs: lock.inputs,
   profiles: { default: 'combined', available: ['combined', 'separate'] },

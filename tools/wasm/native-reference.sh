@@ -14,7 +14,7 @@ mkdir -p "$CACHE/build" "$CACHE/out" "$CACHE/downloads" "$CACHE/fixtures"
 "$ROOT/tools/wasm/acquire-sources.sh"
 rm -rf "$CACHE/src"
 mkdir -p "$CACHE/src"
-cp -a "$ROOT/tools/wasm/.cache/src/gmsh" "$ROOT/tools/wasm/.cache/src/occt" "$ROOT/tools/wasm/.cache/src/getdp" "$ROOT/tools/wasm/.cache/src/petsc" "$CACHE/src/"
+cp -a "$ROOT/tools/wasm/.cache/src/gmsh" "$ROOT/tools/wasm/.cache/src/occt" "$ROOT/tools/wasm/.cache/src/getdp" "$ROOT/tools/wasm/.cache/src/petsc" "$ROOT/tools/wasm/.cache/src/slepc" "$CACHE/src/"
 cp "$ROOT/tools/wasm/.cache/downloads/f2cblaslapack-3.8.0.q2.tar.gz" "$CACHE/downloads/"
 cp "$ROOT/tools/wasm/.cache/fixtures/microstrip/"microstrip.{geo,pro} "$CACHE/fixtures/"
 for fixture in radiator electromagnet full-wave global-quantity transfo; do cp -a "$ROOT/tools/wasm/.cache/fixtures/$fixture" "$CACHE/fixtures/"; done

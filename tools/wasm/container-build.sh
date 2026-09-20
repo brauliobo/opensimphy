@@ -114,6 +114,22 @@ ensure_petsc_profile() {
   popd >/dev/null
 }
 
+ensure_slepc_profile() {
+  local arch=$1
+  [[ -f "$SRC/slepc/include/slepc.h" ]] || { echo "SLEPc source is missing slepc.h" >&2; exit 3; }
+  if [[ -f "$SRC/slepc/$arch/lib/libslepc.a" && -f "$SRC/slepc/$arch/include/slepcconf.h" ]]; then
+    return
+  fi
+  pushd "$SRC/slepc" >/dev/null
+  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" ./configure
+  nice make PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" -j"$JOBS"
+  popd >/dev/null
+  [[ -f "$SRC/slepc/$arch/lib/libslepc.a" && -f "$SRC/slepc/$arch/include/slepcconf.h" ]] || {
+    echo "SLEPc did not install libslepc.a for $arch" >&2
+    exit 3
+  }
+}
+
 build_combined_profile() {
   local scalar=$1 arch=$2 output=$3 work="$BUILD/combined-$1"
   local gmsh_lib="$BUILD/gmsh-prefix/lib/libgmsh.a"
@@ -127,6 +143,7 @@ build_combined_profile() {
     exit 3
   }
   ensure_petsc_profile "$scalar" "$arch"
+  ensure_slepc_profile "$arch"
   rm -rf "$work"
   mkdir -p "$work"
   cp "$TOOLS/getdp/combined-bridge.cpp" "$work/combined-bridge.cpp"
@@ -135,12 +152,16 @@ build_combined_profile() {
   cat "$work/CMakeLists.combined.txt" >> "$work/src/CMakeLists.txt"
   node -e 'const fs=require("fs"); const [source,target]=process.argv.slice(1); const names=JSON.parse(fs.readFileSync(source)); for(const name of ["_opensimphy_combined_run","_opensimphy_combined_onelab_set_json","_opensimphy_combined_onelab_get_json","_opensimphy_combined_onelab_clear","_opensimphy_combined_onelab_get_changed","_opensimphy_combined_onelab_set_changed","_opensimphy_combined_loop_initialize","_opensimphy_combined_loop_increment","_opensimphy_combined_server_identity","_opensimphy_combined_last_getdp_server_identity","_opensimphy_combined_getdp_calls","_opensimphy_combined_loop_initialize_calls","_opensimphy_combined_loop_increment_calls","_opensimphy_combined_json_import_calls","_opensimphy_combined_json_export_calls","_opensimphy_combined_abort","_opensimphy_combined_close","_opensimphy_combined_last_error","_opensimphy_combined_heap_bytes","_malloc","_free"]) if(!names.includes(name)) names.push(name); fs.writeFileSync(target, JSON.stringify(names.sort()))' \
     "$BUILD/gmsh-js/generated/exported_functions.json" "$work/combined-exports.json"
-  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" emcmake cmake \
+  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" emcmake cmake \
     -S "$work/src" -B "$work/cmake" \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-fexceptions \
     -DSIZEOF_VOID_P=4 -DSOCKLEN_T_SIZE=4 -DINTPTR_T_SIZE=4 \
     -DDEFAULT=OFF -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF \
-    -DENABLE_SLEPC=OFF -DENABLE_GMSH=ON -DENABLE_BUILD_LIB=ON \
+    -DENABLE_SLEPC=ON -DENABLE_GMSH=ON -DENABLE_BUILD_LIB=ON \
+    -DSLEPC_DIR="$SRC/slepc" \
+    -DSLEPC_LIB="$SRC/slepc/$arch/lib/libslepc.a" \
+    -DSLEPC_INC="$SRC/slepc/include" \
+    -DSLEPC_INC2="$SRC/slepc/$arch/include" \
     -DGMSH_LIB="$gmsh_lib" -DGMSH_INC="$gmsh_include" \
     -DOPENSIMPHY_COMBINED_BRIDGE="$work/combined-bridge.cpp" \
     -DOPENSIMPHY_GMSH_INCLUDE="$gmsh_include" \
@@ -152,7 +173,7 @@ build_combined_profile() {
   local config="$work/cmake/src/common/GetDPConfig.h"
   grep -q '^#define HAVE_GMSH' "$config"
   grep -q '^#define HAVE_PETSC' "$config"
-  ! grep -q '^#define HAVE_SLEPC' "$config"
+  grep -q '^#define HAVE_SLEPC' "$config"
   ! grep -q '^#define HAVE_SPARSKIT' "$config"
   nice cmake --build "$work/cmake" --target opensimphy_combined --parallel "$JOBS"
   /emsdk/upstream/bin/llvm-nm -C "$work/cmake/combined.wasm" > "$work/combined.pre-strip.symbols.txt"
@@ -185,17 +206,23 @@ build_getdp_profile() {
   rm -rf "$work"
   mkdir -p "$work"
   ensure_petsc_profile "$scalar" "$arch"
+  ensure_slepc_profile "$arch"
 
   cp "$TOOLS/getdp/bridge.cpp" "$work/bridge.cpp"
   cp "$TOOLS/getdp/CMakeLists.append.txt" "$work/CMakeLists.append.txt"
   cp -a "$SRC/getdp" "$work/src"
   cat "$work/CMakeLists.append.txt" >> "$work/src/CMakeLists.txt"
-  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" emcmake cmake \
+  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" emcmake cmake \
     -S "$work/src" -B "$work/cmake" \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-fexceptions \
     -DSIZEOF_VOID_P=4 -DSOCKLEN_T_SIZE=4 -DINTPTR_T_SIZE=4 \
     -DDEFAULT=OFF -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF \
-    -DENABLE_BUILD_LIB=ON -DOPENSIMPHY_BRIDGE="$work/bridge.cpp" \
+    -DENABLE_SLEPC=ON -DENABLE_BUILD_LIB=ON \
+    -DSLEPC_DIR="$SRC/slepc" \
+    -DSLEPC_LIB="$SRC/slepc/$arch/lib/libslepc.a" \
+    -DSLEPC_INC="$SRC/slepc/include" \
+    -DSLEPC_INC2="$SRC/slepc/$arch/include" \
+    -DOPENSIMPHY_BRIDGE="$work/bridge.cpp" \
     -DOPENSIMPHY_LINK_MAP="$work/getdp.link.map" \
     -DPETSC_DIR="$SRC/petsc" -DPETSC_ARCH="$arch" \
     -DPETSC_LIBS="$SRC/petsc/$arch/lib/libpetsc.a"
@@ -203,6 +230,7 @@ build_getdp_profile() {
   grep -q '^#define HAVE_PETSC' "$config"
   grep -q '^#define HAVE_BLAS' "$config"
   grep -q '^#define HAVE_LAPACK' "$config"
+  grep -q '^#define HAVE_SLEPC' "$config"
   ! grep -q '^#define HAVE_SPARSKIT' "$config"
   nice cmake --build "$work/cmake" --target getdp_wasm --parallel "$JOBS"
   /emsdk/upstream/bin/llvm-nm -C "$work/cmake/getdp.wasm" > "$work/getdp.pre-strip.symbols.txt"

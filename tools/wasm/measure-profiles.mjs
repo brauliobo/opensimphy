@@ -100,8 +100,8 @@ export function documentationBlocks(report) {
   const partition = report.partitionMeasurements
   const phase4Rows = [
     ['OCC Gmsh', partition.gmsh],
-    ['Real GetDP/PETSc', partition['separate-real']],
-    ['Complex GetDP/PETSc', partition['separate-complex']],
+    ['Real GetDP/PETSc/SLEPc', partition['separate-real']],
+    ['Complex GetDP/PETSc/SLEPc', partition['separate-complex']],
   ]
   const total = {
     rawBytes: sum(phase4Rows.map(([, value]) => value), 'rawBytes'),

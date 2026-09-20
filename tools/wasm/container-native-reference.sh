@@ -46,23 +46,37 @@ build_getdp() {
     --with-precision=double --with-64-bit-indices=0 --with-mpi=0 COPTFLAGS=-O2 CXXOPTFLAGS=-O2
   nice make PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" -j"$JOBS" all
   popd >/dev/null
+  pushd "$SRC/slepc" >/dev/null
+  PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" ./configure
+  nice make PETSC_DIR="$SRC/petsc" PETSC_ARCH="$arch" SLEPC_DIR="$SRC/slepc" -j"$JOBS"
+  popd >/dev/null
   cmake -S "$SRC/getdp" -B "$work" -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF \
-    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=OFF -DENABLE_BUILD_LIB=OFF \
+    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SLEPC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=OFF -DENABLE_BUILD_LIB=OFF \
+    -DSLEPC_DIR="$SRC/slepc" \
+    -DSLEPC_LIB="$SRC/slepc/$arch/lib/libslepc.a" \
+    -DSLEPC_INC="$SRC/slepc/include" \
+    -DSLEPC_INC2="$SRC/slepc/$arch/include" \
     -DPETSC_DIR="$SRC/petsc" -DPETSC_ARCH="$arch" -DPETSC_LIBS="$SRC/petsc/$arch/lib/libpetsc.a"
   grep -q '^#define HAVE_PETSC' "$work/src/common/GetDPConfig.h"
+  grep -q '^#define HAVE_SLEPC' "$work/src/common/GetDPConfig.h"
   nice cmake --build "$work" --target getdp --parallel "$JOBS"
 }
 build_phase5_trace() {
   local scalar=$1 arch="arch-opensimphy-native-$1" work="$BUILD/phase5-trace-$1"
   cmake -S "$SRC/getdp" -B "$work" -DCMAKE_BUILD_TYPE=Release -DDEFAULT=OFF \
-    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=ON \
+    -DENABLE_KERNEL=ON -DENABLE_PETSC=ON -DENABLE_SLEPC=ON -DENABLE_SPARSKIT=OFF -DENABLE_GMSH=ON \
     -DENABLE_BUILD_LIB=ON -DOPENSIMPHY_NATIVE_TRACE=/workspace/tools/phase5-native-trace.cpp \
+    -DSLEPC_DIR="$SRC/slepc" \
+    -DSLEPC_LIB="$SRC/slepc/$arch/lib/libslepc.a" \
+    -DSLEPC_INC="$SRC/slepc/include" \
+    -DSLEPC_INC2="$SRC/slepc/$arch/include" \
     -DGMSH_LIB="$BUILD/gmsh-prefix/lib/libgmsh.a" -DGMSH_INC="$BUILD/gmsh-prefix/include" \
     -DOPENSIMPHY_GMSH_SOURCE="$SRC/gmsh" -DOPENSIMPHY_GMSH_LIBRARY="$BUILD/gmsh-prefix/lib/libgmsh.a" \
     -DOPENSIMPHY_GMSH_STATIC_DEPENDENCIES="$occt_libraries" \
     -DPETSC_DIR="$SRC/petsc" -DPETSC_ARCH="$arch" -DPETSC_LIBS="$SRC/petsc/$arch/lib/libpetsc.a"
   grep -q '^#define HAVE_GMSH' "$work/src/common/GetDPConfig.h"
   grep -q '^#define HAVE_PETSC' "$work/src/common/GetDPConfig.h"
+  grep -q '^#define HAVE_SLEPC' "$work/src/common/GetDPConfig.h"
   nice cmake --build "$work" --target phase5_native_trace --parallel "$JOBS"
 }
 cat /workspace/tools/getdp/CMakeLists.native-trace.txt >> "$SRC/getdp/CMakeLists.txt"
