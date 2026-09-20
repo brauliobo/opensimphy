@@ -15,7 +15,7 @@ export default defineConfig({
   workers: 1,
   projects: [{ name: 'chromium-separate-production', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'npm run simulation:verify && VITE_ONELAB_ENABLED=true VITE_ONELAB_PROFILE=separate nice npm run build && nice npm run preview -- --host 127.0.0.1 --port 4184',
+    command: 'npm run simulation:verify && VITE_ONELAB_PROFILE=separate nice npm run build && nice npm run preview -- --host 127.0.0.1 --port 4184',
     url: 'http://127.0.0.1:4184',
     reuseExistingServer: false,
     timeout: 180_000,

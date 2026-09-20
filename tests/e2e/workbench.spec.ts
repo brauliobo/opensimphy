@@ -59,8 +59,8 @@ test('/labs presents owned labs and a separate author collection without eager d
     '/labs/core',
     '/labs/walls',
     '/labs/earth/EARTH-PLAN-008',
+    '/labs/onelab',
   ]
-  if (hrefs.includes('/labs/onelab')) expected.push('/labs/onelab')
   expect(hrefs).toEqual(expected)
   await expect(page.locator('.author-collection-grid > a')).toHaveAttribute('href', '/labs/authors/chenopdodium')
   await expect(page.locator('.author-collection-grid > a')).toContainText(/710 rendered without uncaught page errors/i)

@@ -2,7 +2,6 @@
 /// <reference types="vite-plugin-pwa/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_ONELAB_ENABLED?: 'true' | 'false'
   readonly VITE_ONELAB_PROFILE?: 'combined' | 'separate'
 }
 

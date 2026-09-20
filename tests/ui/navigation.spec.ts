@@ -9,9 +9,8 @@ import {
   useTourProgress,
 } from '../../src/registries/tourProgress'
 import { router as appRouter } from '../../src/router'
-import LabsView from '../../src/views/LabsView.vue'
 import NavigationShell from './stubs/NavigationShell.vue'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute, emptyVaporView } from './vaporStubs'
 
 const routes = [
   { path: '/', name: 'overview', component: emptyVaporView },
@@ -20,7 +19,7 @@ const routes = [
   { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: emptyVaporView },
   { path: '/atlas', name: 'atlas', component: emptyVaporView },
   { path: '/labs', name: 'labs', component: emptyVaporView },
-  { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+  computeLabRoute,
   { path: '/labs/cases', name: 'case-hub', component: emptyVaporView },
   { path: '/labs/quantum-registers', name: 'quantum-registers', component: emptyVaporView },
   { path: '/labs/clifford-space', name: 'clifford-space', component: emptyVaporView },
@@ -321,27 +320,9 @@ describe('responsive navigation state', () => {
   })
 })
 
-describe('disabled ONELAB profile', () => {
-  it('omits ONELAB laboratory navigation', async () => {
-    const router = createRouter({
-      history: createMemoryHistory(),
-      routes: [
-        { path: '/labs', component: emptyVaporView },
-        { path: '/labs/core', component: emptyVaporView },
-        { path: '/labs/walls', component: emptyVaporView },
-        { path: '/labs/clifford-space', component: emptyVaporView },
-      ],
-    })
-    await router.push('/labs')
-    const wrapper = mount(LabsView, { global: { plugins: [router] } })
-    expect(wrapper.find('[data-testid="onelab-nav"]').exists()).toBe(false)
-    expect(wrapper.find('a[href="/labs/onelab"]').exists()).toBe(false)
-  })
-
-  it('omits the route and sends direct navigation through the catch-all', async () => {
-    expect(appRouter.hasRoute('onelab')).toBe(false)
-    await appRouter.push('/labs/onelab')
-    expect(appRouter.currentRoute.value.fullPath).toBe('/labs/onelab')
-    expect(appRouter.currentRoute.value.name).toBe('catch-all')
+describe('always-on ONELAB laboratory', () => {
+  it('registers the lazy ONELAB route', () => {
+    expect(appRouter.hasRoute('onelab')).toBe(true)
+    expect(appRouter.resolve('/labs/onelab').name).toBe('onelab')
   })
 })

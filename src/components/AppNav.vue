@@ -26,7 +26,7 @@ const links = [
     to: '/labs',
     label: 'Workbench',
     code: '02',
-    routes: ['labs', 'compute', 'case-hub', 'quantum-wave', 'quantum-registers', 'clifford-space', 'hyperbolic-partition', 'edwin-gray', 'awesome-physics-catalog', 'awesome-physics-detail', 'fiddle-archive', 'fiddle-record', 'core', 'walls', 'earth-workbench', ...(import.meta.env.VITE_ONELAB_ENABLED === 'true' ? ['onelab'] : [])],
+    routes: ['labs', 'compute', 'case-hub', 'quantum-wave', 'quantum-registers', 'clifford-space', 'hyperbolic-partition', 'edwin-gray', 'awesome-physics-catalog', 'awesome-physics-detail', 'fiddle-archive', 'fiddle-record', 'core', 'walls', 'earth-workbench', 'onelab'],
   },
   {
     to: '/evidence',

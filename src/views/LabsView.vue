@@ -12,7 +12,6 @@ const registryError = computed(() => completionRegistry.error.value?.message
   ?? (completionRegistry.ready.value && !registryReady.value ? 'The generated completion report is unavailable.' : ''))
 const core = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'core'))
 const walls = computed(() => completionRegistry.coverage.value.find((row) => row.key === 'walls'))
-const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
 </script>
 
 <template lang="pug">
@@ -82,7 +81,7 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
       strong EARTH method workbench
       p Run one bounded method for the representative atmospheric scale-height program without entering the evidence registry.
       small Open EARTH-PLAN-008 →
-    RouterLink(v-if="onelabEnabled" to="/labs/onelab" data-testid="onelab-nav")
+    RouterLink(to="/labs/onelab" data-testid="onelab-nav")
       span 04 / FIELD SOLVER
       strong Browser ONELAB
       p Serial Gmsh mesh generation and real-double GetDP/PETSc solving with native-reference checks.

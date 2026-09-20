@@ -14,7 +14,7 @@
     "data:generate:fiddle-runtime": "node scripts/consolidate-fiddle-runtime.mjs --registry public/data/generated/fiddles/registry.json data/fiddles/runtime/chenopdodium-runtime-001-195.json data/fiddles/runtime/chenopdodium-runtime-196-390.json data/fiddles/runtime/chenopdodium-runtime-391-585.json data/fiddles/runtime/chenopdodium-runtime-586-780.json public/data/generated/fiddles/runtime-verification.json",
     "data:lock:earth": "node scripts/generate-data.mjs --update-earth-lock",
     "build": "vue-tsc --noEmit && vite build",
-    "build:deploy": "npm run simulation:verify && VITE_ONELAB_ENABLED=true npm run build",
+    "build:deploy": "npm run simulation:verify && npm run build",
     "build:pages": "npm run build:deploy && node scripts/create-pages-fallback.mjs",
     "check:routes": "node scripts/check-route-boundaries.mjs",
     "check:awesome-physics": "node scripts/check-awesome-physics-boundaries.mjs",

@@ -13,7 +13,7 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium-netlify', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'VITE_ONELAB_ENABLED=false nice npm run build && nice npm run preview -- --host 127.0.0.1 --port 4184',
+    command: 'nice npm run build && nice npm run preview -- --host 127.0.0.1 --port 4184',
     url: 'http://127.0.0.1:4184',
     reuseExistingServer: false,
     timeout: 180_000,
