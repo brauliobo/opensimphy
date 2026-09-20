@@ -1,5 +1,4 @@
 import type { PlotFigure, PlotSurfaceSeries } from '../types/plot'
-import { sampleAxis } from './calculus'
 
 export function plotFunction2d(
   f: (x: number) => number,
@@ -10,7 +9,7 @@ export function plotFunction2d(
 ): PlotFigure {
   const x: number[] = []
   const y: number[] = []
-  for (const value of sampleAxis(from, to, count)) {
+  for (const value of linspace(from, to, count)) {
     const sample = f(value)
     if (!Number.isFinite(sample)) continue
     x.push(value)
@@ -42,8 +41,8 @@ export function plotFunction3d(
   name: string,
   count = 36,
 ): PlotFigure {
-  const xs = sampleAxis(xFrom, xTo, count)
-  const ys = sampleAxis(yFrom, yTo, count)
+  const xs = linspace(xFrom, xTo, count)
+  const ys = linspace(yFrom, yTo, count)
   const x: number[] = []
   const y: number[] = []
   const z: number[] = []
@@ -81,4 +80,10 @@ export function plotFunction3d(
       scene:  { xTitle: 'x', yTitle: 'y', zTitle: name, aspect: { x: 1, y: 1, z: 0.7 } },
     },
   }
+}
+
+function linspace(from: number, to: number, count: number): number[] {
+  if (count < 2) throw new RangeError('plot sampling requires at least two points')
+  const span = to - from
+  return Array.from({ length: count }, (_, index) => from + span * index / (count - 1))
 }

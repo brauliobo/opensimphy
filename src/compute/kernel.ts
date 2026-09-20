@@ -1,28 +1,22 @@
 import type { EvaluationSymbol } from '../types/engine'
 import { complex } from '../engine/complex'
-import { DIMENSIONLESS, isDimensionless } from '../engine/dimensions'
+import { DIMENSIONLESS } from '../engine/dimensions'
 import { ExpressionError, evaluateExpression } from '../engine/expression'
-import { adaptiveSimpson } from './calculus'
-import {
-  compiledSampler,
-  ensureMathjs,
-  evaluateMatrixQuery,
-  numericEvaluate,
-  solveResidual,
-  symbolicDerivative,
-  symbolicSimplify,
-  toLatex,
-} from './cas'
 import { computeBaseSymbols } from './constants'
-import { formatBasicDimensions, formatComplex, formatScalar, formatSiUnit } from './format'
+import { formatBasicDimensions, formatComplex, formatSiUnit } from './format'
+import { ensureGiac, formatGiacExact, formatSolveList, giacEval, giacLatex, parseGiacNumber } from './giac'
 import { parseComputeIntent } from './parse'
 import { plotFunction2d, plotFunction3d } from './plots'
 import { interpretDimension, QUANTITY_KIND_CAVEAT } from './quantities'
 import { rewriteComputeQuery } from './rewrite'
 import { EMPTY_COMPUTE_CONTEXT, type ComputeContext, type ComputeIntent, type ComputeResult } from './types'
 
+type MathJs = typeof import('mathjs')
+type Sampler = (extras: Record<string, number>) => number
+
+let mathjs: MathJs | undefined
+
 export async function evaluateQuery(query: string, context: ComputeContext = EMPTY_COMPUTE_CONTEXT): Promise<ComputeResult> {
-  await ensureMathjs()
   const rewritten = rewriteComputeQuery(query)
   if (!rewritten) return { query, rewritten, intent: { kind: 'evaluate', expression: '' }, interpretations: [], steps: [], warnings: [], error: 'Empty query.' }
   const intent = parseComputeIntent(rewritten)
@@ -58,25 +52,29 @@ async function dispatch(
   if (intent.kind === 'integrate') return integrate(query, rewritten, intent, symbols, context, steps)
   if (intent.kind === 'solve') return solve(query, rewritten, intent, context, steps)
   if (intent.kind === 'simplify') {
-    const symbolic = symbolicSimplify(intent.expression)
+    await ensureGiac()
+    const symbolic = giacEval(`simplify(${intent.expression})`)
+    steps.push('Simplified with Giac/Xcas.')
     return baseResult(query, rewritten, intent, context, steps, { symbolic, latex: toLatex(symbolic), formatted: symbolic })
   }
   if (intent.kind === 'matrix') {
-    const matrix = evaluateMatrixQuery(intent.expression)
-    return baseResult(query, rewritten, intent, context, steps, { formatted: matrix.formatted, symbolic: matrix.formatted })
+    await ensureGiac()
+    const formatted = giacEval(intent.expression)
+    steps.push('Evaluated the matrix command with Giac/Xcas.')
+    return baseResult(query, rewritten, intent, context, steps, { formatted, symbolic: formatted })
   }
   if (intent.kind === 'plot2d') return plot2d(query, rewritten, intent, symbols, context, steps)
   return plot3d(query, rewritten, intent, symbols, context, steps)
 }
 
-function evaluateValue(
+async function evaluateValue(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   symbols: Record<string, EvaluationSymbol>,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
   try {
     const evaluated = evaluateExpression(intent.expression, symbols)
     const interpretations = interpretDimension(evaluated.dimension)
@@ -93,150 +91,202 @@ function evaluateValue(
   } catch (reason) {
     if (!(reason instanceof ExpressionError)) throw reason
     if (!isCasRecoverable(reason)) throw reason
-    steps.push('Evaluated as a dimensionless CAS expression with mathjs.')
-    const value = numericEvaluate(intent.expression, numericScope(symbols))
+    await ensureGiac()
+    steps.push('Evaluated with the Giac/Xcas computer algebra system.')
+    const raw = giacEval(intent.expression)
+    const numeric = parseGiacNumber(raw)
+    if (numeric !== undefined) {
+      return baseResult(query, rewritten, intent, context, steps, {
+        value:     complex(numeric),
+        dimension: DIMENSIONLESS,
+        siUnit:    '1',
+        formatted: formatGiacExact(raw),
+      })
+    }
     return baseResult(query, rewritten, intent, context, steps, {
-      value:       complex(value),
-      dimension:   DIMENSIONLESS,
-      siUnit:      '1',
-      formatted:   formatScalar(value),
-      interpretations: [],
+      formatted: raw,
+      symbolic:  raw,
+      latex:     toLatex(raw),
     })
   }
 }
 
-function differentiate(
+async function differentiate(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   symbols: Record<string, EvaluationSymbol>,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
+  await ensureGiac()
   const variable = intent.variable ?? 'x'
-  const symbolic = symbolicDerivative(intent.expression, variable, intent.order ?? 1)
-  steps.push(`Symbolic derivative with respect to ${variable}.`)
+  const spec = (intent.order ?? 1) > 1 ? `${intent.expression},${variable},${intent.order}` : `${intent.expression},${variable}`
+  const symbolic = giacEval(`normal(diff(${spec}))`)
+  steps.push(`Symbolic derivative with Giac/Xcas with respect to ${variable}.`)
+  const sample = await makeSampler(symbolic, symbols, [variable])
   return baseResult(query, rewritten, intent, context, steps, {
     symbolic,
     latex:     toLatex(symbolic),
     formatted: symbolic,
-    figure:    plotFunction2d((x) => sampleExpression(symbolic, symbols, { [variable]: x }), -8, 8, `d/d${variable}`),
+    figure:    plotFunction2d((x) => sample({ [variable]: x }), -8, 8, `d/d${variable}`),
   })
 }
 
-function integrate(
+async function integrate(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   symbols: Record<string, EvaluationSymbol>,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
+  await ensureGiac()
   const variable = intent.variable ?? 'x'
   if (intent.from === undefined || intent.to === undefined) {
+    const symbolic = giacEval(`integrate(${intent.expression},${variable})`)
+    steps.push(`Indefinite integral with Giac/Xcas with respect to ${variable}.`)
     return baseResult(query, rewritten, intent, context, steps, {
-      error: 'Indefinite symbolic integration is not in the fast kernel. Supply limits, for example: integrate x^2 from 0 to 1.',
+      formatted: symbolic,
+      symbolic,
+      latex:     toLatex(symbolic),
     })
   }
-  const from = numericBound(intent.from, symbols)
-  const to = numericBound(intent.to, symbols)
-  const value = adaptiveSimpson((x) => sampleExpression(intent.expression, symbols, { [variable]: x }), from, to)
-  steps.push(`Adaptive Simpson integral of ${intent.expression} d${variable} from ${from} to ${to}.`)
+  let raw: string
+  let numerical = false
+  try {
+    raw = giacEval(`simplify(int(${intent.expression},${variable},${intent.from},${intent.to}))`)
+  } catch {
+    raw = giacEval(`evalf(int(${intent.expression},${variable},${intent.from},${intent.to}))`)
+    numerical = true
+  }
+  const exact = formatGiacExact(raw)
+  const numeric = parseGiacNumber(raw) ?? parseGiacNumber(giacEval(`evalf(${exact})`))
+  if (numeric === undefined || !Number.isFinite(numeric)) throw new TypeError(`Giac integral was not numeric: ${raw}`)
+  steps.push(numerical
+    ? `Numerical integral with Giac/Xcas evalf of ${intent.expression} d${variable} from ${intent.from} to ${intent.to}.`
+    : `Definite integral with Giac/Xcas of ${intent.expression} d${variable} from ${intent.from} to ${intent.to}.`)
+  const fromNum = Number(intent.from)
+  const toNum = Number(intent.to)
+  const sample = Number.isFinite(fromNum) && Number.isFinite(toNum)
+    ? await makeSampler(intent.expression, symbols, [variable])
+    : undefined
   return baseResult(query, rewritten, intent, context, steps, {
-    value:     complex(value),
+    value:     complex(numeric),
     dimension: DIMENSIONLESS,
     siUnit:    '1',
-    formatted: formatScalar(value),
-    figure:    plotFunction2d((x) => sampleExpression(intent.expression, symbols, { [variable]: x }), from, to, intent.expression),
+    formatted: exact,
+    symbolic:  exact,
+    latex:     toLatex(exact),
+    figure:    sample
+      ? plotFunction2d((x) => sample({ [variable]: x }), fromNum, toNum, intent.expression)
+      : undefined,
   })
 }
 
-function solve(
+async function solve(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
   const variable = intent.variable ?? 'x'
-  const { roots, residual } = solveResidual(intent.equation ?? intent.expression, variable)
-  if (!roots.length) throw new RangeError(`No real root found for ${intent.expression}`)
-  steps.push(`Newton search on residual ${residual}.`)
+  const equation = intent.equation ?? intent.expression
+  await ensureGiac()
+  let formatted = formatSolveList(giacEval(`solve(${equation},${variable})`), variable)
+  if (!formatted) {
+    formatted = formatSolveList(giacEval(`fsolve(${equation},${variable})`), variable)
+    if (!formatted) throw new RangeError(`No root from Giac for ${intent.expression}`)
+    steps.push(`Numerical root with Giac/Xcas fsolve for ${variable}.`)
+  } else {
+    steps.push(`Solved with Giac/Xcas for ${variable}.`)
+  }
+  const roots = [...formatted.matchAll(/=\s*([-+0-9.eE]+)/g)]
+    .map((match) => Number(match[1]))
+    .filter((value) => Number.isFinite(value))
   return baseResult(query, rewritten, intent, context, steps, {
-    formatted: roots.map((root) => `${variable} = ${formatScalar(root)}`).join(', '),
-    symbolic:  roots.map((root) => `${variable}=${formatScalar(root)}`).join(', '),
-    value:     complex(roots[0]!),
+    formatted,
+    symbolic:  formatted,
+    value:     roots[0] === undefined ? undefined : complex(roots[0]),
     dimension: DIMENSIONLESS,
   })
 }
 
-function plot2d(
+async function plot2d(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   symbols: Record<string, EvaluationSymbol>,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
   const variable = intent.variable ?? 'x'
   const from = intent.xFrom ?? -8
   const to = intent.xTo ?? 8
+  const sample = await makeSampler(intent.expression, symbols, [variable])
   steps.push(`Sampled ${intent.expression} versus ${variable} from ${from} to ${to}.`)
   return baseResult(query, rewritten, intent, context, steps, {
     formatted: intent.expression,
-    figure:    plotFunction2d((x) => sampleExpression(intent.expression, symbols, { [variable]: x }), from, to, intent.expression),
+    figure:    plotFunction2d((x) => sample({ [variable]: x }), from, to, intent.expression),
   })
 }
 
-function plot3d(
+async function plot3d(
   query: string,
   rewritten: string,
   intent: ComputeIntent,
   symbols: Record<string, EvaluationSymbol>,
   context: ComputeContext,
   steps: string[],
-): ComputeResult {
+): Promise<ComputeResult> {
   const xFrom = intent.xFrom ?? -8
   const xTo = intent.xTo ?? 8
   const yFrom = intent.yFrom ?? -8
   const yTo = intent.yTo ?? 8
+  const sample = await makeSampler(intent.expression, symbols, ['x', 'y'])
   steps.push(`Sampled ${intent.expression} on a 36×36 grid.`)
   return baseResult(query, rewritten, intent, context, steps, {
     formatted: intent.expression,
-    figure:    plotFunction3d(
-      (x, y) => sampleExpression(intent.expression, symbols, { x, y }),
-      xFrom,
-      xTo,
-      yFrom,
-      yTo,
-      intent.expression,
-    ),
+    figure:    plotFunction3d((x, y) => sample({ x, y }), xFrom, xTo, yFrom, yTo, intent.expression),
   })
 }
 
-function sampleExpression(expression: string, symbols: Record<string, EvaluationSymbol>, extras: Record<string, number>): number {
+async function makeSampler(
+  expression: string,
+  symbols: Record<string, EvaluationSymbol>,
+  variables: readonly string[],
+): Promise<Sampler> {
+  const probe = Object.fromEntries(variables.map((name) => [name, 0.125]))
+  try {
+    evaluateBound(expression, symbols, probe)
+    return (extras) => evaluateBound(expression, symbols, extras)
+  } catch (reason) {
+    if (!(reason instanceof ExpressionError)) throw reason
+    mathjs ??= await import('mathjs')
+    const compiled = mathjs.parse(expression).compile()
+    const scope = numericScope(symbols)
+    return (extras) => {
+      const value = compiled.evaluate({ ...scope, ...extras })
+      if (typeof value === 'number' && Number.isFinite(value)) return value
+      throw new TypeError(`Cannot sample ${expression} at ${variables.join(',')}`)
+    }
+  }
+}
+
+function evaluateBound(expression: string, symbols: Record<string, EvaluationSymbol>, extras: Record<string, number>): number {
   const bound = { ...symbols }
   for (const [name, value] of Object.entries(extras)) {
     bound[name] = { value: complex(value), dimension: DIMENSIONLESS, source: 'parameter' }
   }
-  try {
-    const evaluated = evaluateExpression(expression, bound)
-    if (!isDimensionless(evaluated.dimension) && Object.keys(extras).length > 0) {
-      return evaluated.value.re
-    }
-    return evaluated.value.re
-  } catch (reason) {
-    if (!(reason instanceof ExpressionError)) throw reason
-    return compiledSampler(expression, Object.keys(extras))({ ...numericScope(symbols), ...extras })
-  }
+  return evaluateExpression(expression, bound).value.re
 }
 
-function numericBound(expression: string, symbols: Record<string, EvaluationSymbol>): number {
+function toLatex(expression: string): string {
   try {
-    return evaluateExpression(expression, symbols).value.re
-  } catch (reason) {
-    if (!(reason instanceof ExpressionError)) throw reason
-    return numericEvaluate(expression, numericScope(symbols))
+    return giacLatex(expression)
+  } catch {
+    return expression
   }
 }
 

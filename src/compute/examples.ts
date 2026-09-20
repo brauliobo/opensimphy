@@ -9,4 +9,5 @@ export const COMPUTE_EXAMPLE_QUERIES = [
   'd/dx sin(x)^2',
   'solve x^2 - 2*x - 3 = 0',
   'det([[1,2],[3,4]])',
+  'integrate sin(x)',
 ] as const
