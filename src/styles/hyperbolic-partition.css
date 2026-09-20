@@ -1,0 +1,137 @@
+.partition-lab-view .quantum-lab-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.partition-lab-view .quantum-lab-rail {
+  position: static;
+  padding-top: 0;
+}
+
+.partition-lab-view .quantum-shortcut__steps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.partition-instrument {
+  min-width: 0;
+  margin-top: 1rem;
+  border: 1px solid var(--rule-bright);
+  background: #0c0e0f;
+}
+
+.partition-toolbar,
+.partition-slider {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.partition-slider {
+  border-bottom: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.partition-tabs,
+.partition-subs,
+.partition-specials,
+.partition-branches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.partition-tabs button,
+.partition-subs button,
+.partition-specials button,
+.partition-branches button {
+  min-height: 44px;
+  padding: 0.35rem 0.7rem;
+  color: var(--paper);
+  background: #14181a;
+  border: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.partition-tabs button[aria-selected='true'],
+.partition-subs button[aria-selected='true'],
+.partition-branches button[aria-pressed='true'] {
+  color: #111;
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+.partition-stage {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
+}
+
+.partition-canvas {
+  width: 100%;
+  min-width: 0;
+  height: min(70vh, 640px);
+  background: #0c0e0f;
+}
+
+.partition-readout {
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
+  padding: 0.85rem;
+  overflow: auto;
+  max-height: min(70vh, 640px);
+  border-left: 1px solid var(--rule);
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+
+.partition-readout .eyebrow {
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.partition-field {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.partition-field input,
+.partition-range {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.35rem 0.5rem;
+  color: var(--paper);
+  background: #14181a;
+  border: 1px solid var(--rule);
+}
+
+.partition-roots {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.partition-roots div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.partition-roots strong {
+  color: var(--cyan);
+}
+
+@media (max-width: 860px) {
+  .partition-lab-view .quantum-shortcut__steps,
+  .partition-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .partition-readout {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+    max-height: none;
+  }
+}
