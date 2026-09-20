@@ -12,23 +12,22 @@ import {
 import { complex } from '../engine/complex'
 import {
   DIMENSIONLESS,
+  SI_ACTION,
+  SI_CHARGE,
+  SI_ENERGY,
+  SI_LENGTH,
+  SI_MASS,
+  SI_TEMPERATURE,
+  SI_TIME,
   UNIT_SYMBOLS,
   addDimensions,
-  dimension,
   scaleDimension,
   subtractDimensions,
 } from '../engine/dimensions'
 import { defaultExpressionSymbols, evaluateExpression } from '../engine/expression'
+import { computeSiUnitSymbols } from './units'
 
-const TIME = dimension(1)
-const LENGTH = dimension(0, 1)
-const CHARGE = dimension(0, 0, 1)
-const TEMPERATURE = dimension(0, 0, 0, 1)
-const MASS = dimension(0, 0, 0, 0, 1)
-const ACTION = addDimensions(MASS, addDimensions(scaleDimension(LENGTH, 2), scaleDimension(TIME, -1)))
-const ENERGY = addDimensions(MASS, addDimensions(scaleDimension(LENGTH, 2), scaleDimension(TIME, -2)))
-
-function symbol(value: number, dim: ReturnType<typeof dimension>): EvaluationSymbol {
+function symbol(value: number, dim: EvaluationSymbol['dimension']): EvaluationSymbol {
   return { value: complex(value), dimension: dim, source: 'primitive' }
 }
 
@@ -41,18 +40,19 @@ export function computeBaseSymbols(): Record<string, EvaluationSymbol> {
   const symbols: Record<string, EvaluationSymbol> = {
     ...defaultExpressionSymbols(),
     ...UNIT_SYMBOLS,
-    c:     symbol(SPEED_OF_LIGHT_M_PER_S, subtractDimensions(LENGTH, TIME)),
-    h:     symbol(PLANCK_CONSTANT_J_S, ACTION),
-    hbar:  symbol(REDUCED_PLANCK_CONSTANT_J_S, ACTION),
-    ℏ:     symbol(REDUCED_PLANCK_CONSTANT_J_S, ACTION),
-    G:     symbol(CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, subtractDimensions(addDimensions(scaleDimension(LENGTH, 3), scaleDimension(TIME, -2)), MASS)),
-    k_B:   symbol(BOLTZMANN_CONSTANT_J_PER_K, subtractDimensions(ENERGY, TEMPERATURE)),
-    kB:    symbol(BOLTZMANN_CONSTANT_J_PER_K, subtractDimensions(ENERGY, TEMPERATURE)),
-    q_e:   symbol(ELEMENTARY_CHARGE_C, CHARGE),
+    ...computeSiUnitSymbols(),
+    c:     symbol(SPEED_OF_LIGHT_M_PER_S, subtractDimensions(SI_LENGTH, SI_TIME)),
+    h:     symbol(PLANCK_CONSTANT_J_S, SI_ACTION),
+    hbar:  symbol(REDUCED_PLANCK_CONSTANT_J_S, SI_ACTION),
+    ℏ:     symbol(REDUCED_PLANCK_CONSTANT_J_S, SI_ACTION),
+    G:     symbol(CODATA_2022_GRAVITATIONAL_CONSTANT_M3_PER_KG_S2, subtractDimensions(addDimensions(scaleDimension(SI_LENGTH, 3), scaleDimension(SI_TIME, -2)), SI_MASS)),
+    k_B:   symbol(BOLTZMANN_CONSTANT_J_PER_K, subtractDimensions(SI_ENERGY, SI_TEMPERATURE)),
+    kB:    symbol(BOLTZMANN_CONSTANT_J_PER_K, subtractDimensions(SI_ENERGY, SI_TEMPERATURE)),
+    q_e:   symbol(ELEMENTARY_CHARGE_C, SI_CHARGE),
     alpha: symbol(CODATA_2022_ALPHA, DIMENSIONLESS),
     α:     symbol(CODATA_2022_ALPHA, DIMENSIONLESS),
-    mu0:   symbol(VACUUM_MAGNETIC_PERMEABILITY_H_PER_M, addDimensions(addDimensions(MASS, LENGTH), scaleDimension(CHARGE, -2))),
-    μ0:    symbol(VACUUM_MAGNETIC_PERMEABILITY_H_PER_M, addDimensions(addDimensions(MASS, LENGTH), scaleDimension(CHARGE, -2))),
+    mu0:   symbol(VACUUM_MAGNETIC_PERMEABILITY_H_PER_M, addDimensions(addDimensions(SI_MASS, SI_LENGTH), scaleDimension(SI_CHARGE, -2))),
+    μ0:    symbol(VACUUM_MAGNETIC_PERMEABILITY_H_PER_M, addDimensions(addDimensions(SI_MASS, SI_LENGTH), scaleDimension(SI_CHARGE, -2))),
   }
   symbols.ε0 = derived('1/(mu0 * c^2)', symbols)
   symbols.eps0 = symbols.ε0

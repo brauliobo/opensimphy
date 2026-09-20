@@ -1,6 +1,7 @@
 import { evaluateQuery } from '../../src/compute/kernel'
 import { parseComputeIntent } from '../../src/compute/parse'
 import { rewriteComputeQuery } from '../../src/compute/rewrite'
+import { COMPUTE_EXAMPLE_QUERIES } from '../../src/compute/examples'
 import { interpretDimension } from '../../src/compute/quantities'
 import { computeBaseSymbols } from '../../src/compute/constants'
 import { evaluateExpression } from '../../src/engine/expression'
@@ -12,6 +13,11 @@ describe('compute rewrite and intent', () => {
     expect(rewriteComputeQuery('{Planck mass}/{Planck length}')).toBe('(m_P)/(l_P)')
   })
 
+  it('rewrites Wolfram scientific notation and plural SI units', () => {
+    expect(rewriteComputeQuery('1.573886629 × 10^-18 meters')).toBe('1.573886629e-18 meter')
+    expect(rewriteComputeQuery('1.2102526979 × 10^44 newtons')).toBe('1.2102526979e44 N')
+  })
+
   it('classifies calculus, plot, and solve intents', () => {
     expect(parseComputeIntent('d/dx sin(x)').kind).toBe('differentiate')
     expect(parseComputeIntent('derivative of x^2')).toMatchObject({ kind: 'differentiate', expression: 'x^2', variable: 'x' })
@@ -20,6 +26,17 @@ describe('compute rewrite and intent', () => {
     expect(parseComputeIntent('plot3d sin(x)*cos(y)').kind).toBe('plot3d')
     expect(parseComputeIntent('solve x^2 - 4 = 0').kind).toBe('solve')
     expect(parseComputeIntent('det([[1,2],[3,4]])').kind).toBe('matrix')
+  })
+
+  it('keeps the shared compute-lab examples classified', () => {
+    expect(parseComputeIntent(rewriteComputeQuery(COMPUTE_EXAMPLE_QUERIES[0])).kind).toBe('evaluate')
+    expect(parseComputeIntent(rewriteComputeQuery(COMPUTE_EXAMPLE_QUERIES[1])).kind).toBe('evaluate')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[2]).kind).toBe('plot2d')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[3]).kind).toBe('plot3d')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[4]).kind).toBe('integrate')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[5]).kind).toBe('differentiate')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[6]).kind).toBe('solve')
+    expect(parseComputeIntent(COMPUTE_EXAMPLE_QUERIES[7]).kind).toBe('matrix')
   })
 })
 
@@ -39,6 +56,12 @@ describe('compute kernel', () => {
     ]))
     expect(result.value?.re).toBeGreaterThan(1e34)
     expect(result.siUnit).toBe('kg s^-2')
+  })
+
+  it('keeps SI conversion for electronvolt-family units on the compute path only', () => {
+    const symbols = computeBaseSymbols()
+    expect(symbols.GeV?.value.re).toBeCloseTo(1.602176634e-10, 20)
+    expect(formatBasicDimensions(symbols.GeV!.dimension)).toBe('[mass][length]^{2}[time]^{-2}')
   })
 
   it('keeps the monastery engine dimensions for a derived Planck quantity', () => {
@@ -80,5 +103,16 @@ describe('compute kernel', () => {
     const cas = await evaluateQuery('tan(pi/4)')
     expect(cas.error).toBeUndefined()
     expect(cas.value?.re).toBeCloseTo(1, 8)
+  })
+
+  it('evaluates a mixed-unit GeV / meter^3 / newton radical as inverse length', async () => {
+    const query = 'sqrt(((125.37560000 GeV)/(1.573886629 × 10^-18 meters)^3)/(1.2102526979 × 10^44 newtons))'
+    const result = await evaluateQuery(query)
+    expect(result.error).toBeUndefined()
+    expect(result.steps.join('\n')).toMatch(/monastery-compatible dimensional engine/)
+    expect(result.basicDimensions).toBe('[length]^{-1}')
+    expect(result.siUnit).toBe('m^-1')
+    expect(result.value?.re).toBeCloseTo(6.524744509494495, 8)
+    expect(result.interpretations.map((entry) => entry.name)).toContain('wavenumber')
   })
 })

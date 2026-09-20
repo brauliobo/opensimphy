@@ -56,11 +56,11 @@ export interface ComputeResult {
   error?: string
 }
 
+export const NAMED_QUANTITY_CAVEAT = 'Named quantity lists share a dimension; they do not establish quantity-kind identity.'
+
 export const EMPTY_COMPUTE_CONTEXT: ComputeContext = Object.freeze({
   sourceId:    'si-planck',
   sourceLabel: 'SI defining constants and derived Planck units',
   symbols:     Object.freeze({}),
-  notes:       Object.freeze([
-    'Named quantity lists share a dimension; they do not establish quantity-kind identity.',
-  ]),
+  notes:       Object.freeze([NAMED_QUANTITY_CAVEAT]),
 })

@@ -29,7 +29,7 @@ public/data/number-walls
                          preserved per-input static JSON
 data/physics_monastery  non-public recovered PDF/text source artifacts used by generation
 content/tour            attributed Tour source content and generated-artifact contracts
-src/compute              SI/Planck query kernel, dimensional interpretations, numerical calculus, and mathjs CAS
+src/compute              monastery dimensional engine plus a lazy mathjs CAS; KaTeX for LaTeX; Plotly only on ComputeDock hosts
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
 src/tour                pure Tour engines, progress model, and transactional offline pack
@@ -181,6 +181,14 @@ npx vite preview --host 127.0.0.1
 Deploy the contents of `dist/`. `netlify.toml` supplies the build command, publish directory, and SPA history fallback. Other static hosts must route unknown navigation paths to `index.html` while serving asset and data URLs normally. No Node, Python, database, API process, or server-side rendering is used in production.
 
 For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from the deployment workflow, generates directory `index.html` copies for every concrete router path and alias, and retains `dist/404.html` as the SPA fallback for unknown paths. The route manifest shared by Vue Router and the Pages generator is `src/router/page-paths.json`; parameterized routes continue through the unknown-path fallback because they cannot be enumerated statically.
+
+## Compute kernel
+
+`/labs/compute` is a Wolfram-style prompt over the existing monastery dimensional engine. Named SI/Planck quantities stay in `evaluateExpression` so charge-based five-axis dimensions and dimensionless mole are unchanged. Mixed-unit input (`GeV`, `meters`, `newtons`, `× 10^n`) is rewritten onto SI-scaled compute units; recipe `UNIT_SYMBOLS` stay dimension tags of 1. mathjs 14.5.2 (Apache-2.0) is lazy-loaded only for unknown symbols, unsupported tokens, derivatives, integrals, matrices, and solves. KaTeX 0.16.22 renders LaTeX. 2D/3D figures reuse the app's Plotly host inside `ComputeDock` (Compute lab, formula detail, Core, Walls, EARTH). Tour, Gray, quantum, Clifford, hyperbolic, ONELAB, and case pages mount `ComputePrompt` without Plotly.
+
+Rejected for this surface: Pyodide/SymPy (too large for a static PWA), and Giac/Maxima WASM (GPL). No extra WASM CAS is compiled; monastery numerics and mathjs cover the browser-only CAS.
+
+Quantity names that share a dimension are interpretations, not quantity-kind identity.
 
 ## Browser Support
 
