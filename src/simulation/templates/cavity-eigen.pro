@@ -1,23 +1,19 @@
-// GetDP SLEPc eigen formulation for a Dirichlet cavity.
-// Locked OpenSimPhy WASM still has ENABLE_SLEPC=OFF; the browser workbench
-// solves the same Laplace eigenproblem with the bounded P1 assembler on the
-// Gmsh mesh. Export this file to run EigenSolve in a native SLEPc GetDP.
-
+// GetDP SLEPc eigen formulation for a Dirichlet cavity on cube.geo.
 DefineConstant[
   s = {4, Name "Parameters/Global mesh size factor", Label "Global mesh size factor",
     Min 0.5, Max 8, Step 0.5, Help "Gmsh target mesh size for the cavity"}
 ];
 
 Group {
-  Cavity = Region[1];
-  Skin = Region[2];
+  Cavity = Region[401];
+  CavityBoundary = Region[{301, 302, 303, 304, 305, 306}];
   Vol = Region[Cavity];
-  Dom = Region[{Cavity, Skin}];
+  Dom = Region[{Cavity, CavityBoundary}];
 }
 
 Constraint {
   { Name Dirichlet; Type Assign;
-    Case { { Region Skin; Value 0.; } }
+    Case { { Region CavityBoundary; Value 0.; } }
   }
 }
 
@@ -57,7 +53,7 @@ Resolution {
   { Name Eigen;
     System { { Name A; NameOfFormulation LaplaceEigen; } }
     Operation {
-      Generate[A];
+      GenerateSeparate[A];
       EigenSolve[A, 8, 0, 0];
       SaveSolutions[A];
     }

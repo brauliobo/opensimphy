@@ -11,9 +11,9 @@ import { OnelabWorkerScheduler } from '../simulation/worker-scheduler'
 import artifactLock from '../../tools/wasm/artifacts.lock.json'
 import { maximumLoopPoints } from '../simulation/loops'
 import { verifySimulationManifest } from '../simulation/asset-manifest'
-import { cadDatabase, cavityEigenSource, cubeElectrostaticsSource, ensureMeshParameter, isRuntimeProject } from '../simulation/cad-projects'
+import { cavityEigenSource, cubeElectrostaticsSource, ensureMeshParameter, isRuntimeProject } from '../simulation/cad-projects'
 import { electrostaticGroupsFromEntities } from '../simulation/cad-groups'
-import { solveLaplaceEigen } from '../simulation/eigen'
+import { certifySlepcEigenSolve } from '../simulation/slepc-log'
 
 const worker = self as unknown as DedicatedWorkerGlobalScope
 const root = new URL(`${import.meta.env.BASE_URL}simulation/`, worker.location.origin)
@@ -742,19 +742,16 @@ async function openProject(projectId: string): Promise<ProjectBootstrap> {
   })))
   const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
   writeProjectFiles(envelope, solver)
-  if (descriptor.solver === 'eigen-p1') {
-    parseGmshDatabase(descriptor)
-    return { files, defaults: cadDatabase(4), descriptor }
-  }
   const gmshDeclarations = parseGmshDatabase(descriptor)
   const declarations = callSolverWithDatabase(solver, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
-  const seeded = descriptor.cad ? ensureMeshParameter(declarations.database, 2) : seedInitialNumbers(descriptor, declarations.database)
+  const runtimeMesh = usesRuntimeMeshSize(descriptor)
+  const seeded = runtimeMesh ? ensureMeshParameter(declarations.database, 2) : seedInitialNumbers(descriptor, declarations.database)
   const gmshDefaults = parseGmshDatabase(descriptor, seeded)
-  const checkNumbers = descriptor.cad ? {} : effectiveNumbers(descriptor, gmshDefaults)
+  const checkNumbers = runtimeMesh ? {} : effectiveNumbers(descriptor, gmshDefaults)
   const checked = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(checkNumbers), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP default check exited with status ${checked.status}`)
-  return { files, defaults: descriptor.cad ? ensureMeshParameter(checked.database, 2) : checked.database, descriptor }
+  return { files, defaults: runtimeMesh ? ensureMeshParameter(checked.database, 2) : checked.database, descriptor }
 }
 
 async function openSession(files: ProjectFile[], descriptor: ProjectDescriptor): Promise<ProjectBootstrap> {
@@ -763,10 +760,6 @@ async function openSession(files: ProjectFile[], descriptor: ProjectDescriptor):
   const solver = await solverFor(descriptor.scalarType)
   const envelope: ProjectEnvelope = { schema: 3, action: 'reset', projectId: 'bootstrap', revision: 0, files, database: '', defaults: '', descriptor, sidecar: { schema: 1, projectId: descriptor.id, groups: [] } }
   writeProjectFiles(envelope, solver)
-  if (descriptor.solver === 'eigen-p1') {
-    parseGmshDatabase(descriptor)
-    return { files, defaults: cadDatabase(4), descriptor }
-  }
   const gmshDeclarations = parseGmshDatabase(descriptor)
   const declarations = callSolverWithDatabase(solver, gmshDeclarations, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
@@ -782,29 +775,19 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
   const solver = await solverFor(descriptor.scalarType)
   logs.length = 0
   writeProjectFiles(envelope, solver)
-  if (descriptor.solver === 'eigen-p1') {
-    parseGmshDatabase(descriptor, envelope.action === 'reset' ? envelope.defaults : envelope.database)
-    const database = envelope.action === 'reset' ? envelope.defaults : ensureMeshParameter(envelope.database, meshFactor(descriptor, envelope.database))
-    if (envelope.action !== 'compute') return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
-    applyMeshSize(meshFactor(descriptor, database))
-    ensureCadPhysicalGroups(envelope)
-    emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
-    gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
-    gmsh.model.mesh.generate(descriptor.dimension)
-    return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
-  }
+  const runtimeMesh = usesRuntimeMeshSize(descriptor)
   const gmshDefaults = parseGmshDatabase(descriptor, envelope.defaults)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
   const declarations = callSolverWithDatabase(solver, gmshDefaults, () => solver.run(['getdp', descriptor.problem!, '-check']))
   if (declarations.status !== 0) throw new Error(`GetDP declaration check exited with status ${declarations.status}`)
   if (envelope.action !== 'reset') validateReadOnlyValues(declarations.database, envelope.database, envelope.defaults)
   const requested = envelope.action === 'reset' ? declarations.database : mergeValidatedValues(declarations.database, envelope.database)
-  let database = parseGmshDatabase(descriptor, descriptor.cad ? ensureMeshParameter(requested, 2) : requested)
+  let database = parseGmshDatabase(descriptor, runtimeMesh ? ensureMeshParameter(requested, 2) : requested)
   emit({ type: 'entered-native', requestId, workerId, operation: 'getdp-check' })
-  const checkNumbers = descriptor.cad || Object.keys(descriptor.parameterNames).length === 0 ? {} : effectiveNumbers(descriptor, database)
+  const checkNumbers = runtimeMesh || Object.keys(descriptor.parameterNames).length === 0 ? {} : effectiveNumbers(descriptor, database)
   const checked = callSolverWithDatabase(solver, database, () => solver.run(['getdp', descriptor.problem!, ...numberArguments(checkNumbers), '-check']))
   if (checked.status !== 0) throw new Error(`GetDP check exited with status ${checked.status}`)
-  database = parseGmshDatabase(descriptor, descriptor.cad ? ensureMeshParameter(checked.database, meshFactor(descriptor, checked.database)) : checked.database)
+  database = parseGmshDatabase(descriptor, runtimeMesh ? ensureMeshParameter(checked.database, meshFactor(descriptor, checked.database)) : checked.database)
   if (envelope.loopIndex !== undefined) {
     if (runtimeProfile !== 'combined' || !Number.isInteger(envelope.loopIndex) || envelope.loopIndex < 0 || envelope.loopIndex >= maximumLoopPoints) throw new Error('invalid native ONELAB loop point index')
     const total = solver.loop.initialize(maximumLoopPoints)
@@ -813,18 +796,19 @@ async function runProject(requestId: string, envelope: ProjectEnvelope): Promise
     database = canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
   }
   const sidecar = ensureCadPhysicalGroups(envelope)
-  if (descriptor.cad) applyMeshSize(meshFactor(descriptor, database))
+  if (runtimeMesh) applyMeshSize(meshFactor(descriptor, database))
   const parameters = Object.keys(descriptor.parameterNames).length ? effectiveNumbers(descriptor, database) : {}
   if (envelope.action === 'compute') {
+    if (descriptor.solver === 'slepc') throw new Error('SLEPc eigenmodes use the eigen request')
     const imported = runtimeProfile === 'combined'
       ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
       : canonicalNativeDatabase(solver.onelab.get())
-    if (!descriptor.cad && imported !== database) throw new Error('GetDP database changed after check export')
+    if (!runtimeMesh && imported !== database) throw new Error('GetDP database changed after check export')
     const result = await solvePreparedProject(requestId, { ...envelope, sidecar }, solver, parameters)
     database = runtimeProfile === 'combined'
       ? canonicalNativeDatabase(gmsh.onelab.get('', 'json').data)
       : importGmshDatabase(canonicalNativeDatabase(solver.onelab.get()))
-    if (descriptor.cad) database = ensureMeshParameter(database, meshFactor(descriptor, envelope.database || database))
+    if (runtimeMesh) database = ensureMeshParameter(database, meshFactor(descriptor, envelope.database || database))
     return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database, result }
   }
   return { action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database }
@@ -837,7 +821,7 @@ async function meshProject(requestId: string, envelope: ProjectEnvelope, dimensi
   parseGmshDatabase(envelope.descriptor, envelope.database || envelope.defaults)
   emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
   ensureCadPhysicalGroups(envelope)
-  if (envelope.descriptor.cad || envelope.descriptor.solver === 'eigen-p1') applyMeshSize(meshFactor(envelope.descriptor, envelope.database || envelope.defaults))
+  if (usesRuntimeMeshSize(envelope.descriptor)) applyMeshSize(meshFactor(envelope.descriptor, envelope.database || envelope.defaults))
   gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
   gmsh.model.mesh.generate(dimension)
   return authoritativeScene()
@@ -845,18 +829,53 @@ async function meshProject(requestId: string, envelope: ProjectEnvelope, dimensi
 
 async function eigenProject(requestId: string, envelope: ProjectEnvelope, modeCount = 8): Promise<EigenResult> {
   await initialize()
-  const solver = await solverFor(envelope.descriptor.scalarType)
+  const descriptor = envelope.descriptor
+  if (descriptor.solver !== 'slepc' || !descriptor.problem || !descriptor.resolution || !descriptor.postOperations?.length) {
+    throw new Error(`project ${descriptor.id} is not a SLEPc eigen project`)
+  }
+  const solver = await solverFor(descriptor.scalarType)
+  logs.length = 0
   writeProjectFiles(envelope, solver)
-  parseGmshDatabase(envelope.descriptor, envelope.database || envelope.defaults)
-  emit({ type: 'entered-native', requestId, workerId, operation: 'eigen-p1' })
+  parseGmshDatabase(descriptor, envelope.database || envelope.defaults)
   ensureCadPhysicalGroups(envelope)
-  applyMeshSize(meshFactor(envelope.descriptor, envelope.database || envelope.defaults))
+  applyMeshSize(meshFactor(descriptor, envelope.database || envelope.defaults))
   gmsh.option.setNumber('Mesh.MshFileVersion', 2.2)
-  gmsh.model.mesh.generate(envelope.descriptor.dimension)
+  emit({ type: 'entered-native', requestId, workerId, operation: 'gmsh-mesh' })
+  gmsh.model.mesh.generate(descriptor.dimension)
+  const meshPath = `${descriptor.id}.msh`
+  gmsh.write(meshPath)
+  const msh = gmsh.FS.readFile(meshPath) as Uint8Array
+  writeFile(solver.FS, meshPath, msh)
+  for (const output of solver.FS.readdir('.').filter((name: string) => /\.(?:pos|res)$/.test(name))) solver.FS.unlink(output)
+  emit({ type: 'entered-native', requestId, workerId, operation: 'slepc-eigen' })
+  if (runtimeProfile === 'combined') gmsh.logger.start()
+  let status: number
+  try {
+    status = solver.run([
+      'getdp', descriptor.problem, '-msh', meshPath,
+      '-solve', descriptor.resolution, ...descriptor.postOperations.flatMap((operation) => ['-pos', operation]),
+    ])
+  } finally {
+    if (runtimeProfile === 'combined') {
+      logs.push(...gmsh.logger.get().log)
+      gmsh.logger.stop()
+    }
+  }
+  if (status !== 0) throw new Error(`GetDP SLEPc eigen solve exited with status ${status}: ${logs.filter((line) => /SLEPc|Error|EIG /.test(line)).slice(-12).join('\n')}`)
+  const modes = certifySlepcEigenSolve(logs, modeCount)
+  const posSources = new Map<string, string>()
+  const outputNames = (solver.FS.readdir('.') as string[]).filter((name) => name.endsWith('.pos')).sort()
+  if (!outputNames.length) throw new Error(`SLEPc eigen project ${descriptor.id} produced no POS outputs`)
+  for (const name of outputNames) {
+    const bytes = solver.FS.readFile(name) as Uint8Array
+    posSources.set(name, new TextDecoder().decode(bytes))
+    writeFile(gmsh.FS, name, bytes)
+  }
   const scene = authoritativeScene()
-  const solved = solveLaplaceEigen(scene, modeCount)
-  scene.fields = [solved.field]
-  return { nodes: solved.nodes, freeNodes: solved.freeNodes, modes: solved.modes, scene }
+  attachPosFields(scene, outputNames, posSources, descriptor.scalarType)
+  const nodes = scene.referencePositions.length / 3
+  const dofs = Math.max(0, ...logs.flatMap((line) => [...line.matchAll(/System \d+\/\d+: (\d+) Dofs/g)].map((match) => Number(match[1]))))
+  return { nodes, freeNodes: dofs || nodes, modes, scene }
 }
 
 async function getStepScene(requestId: string): Promise<SimulationScene> {
@@ -929,6 +948,49 @@ function modelSpan() {
     span = Math.max(span, bounds.xmax - bounds.xmin, bounds.ymax - bounds.ymin, bounds.zmax - bounds.zmin)
   }
   return span > 0 ? span : 1
+}
+
+function usesRuntimeMeshSize(descriptor: ProjectDescriptor) {
+  return Boolean(descriptor.cad || descriptor.solver === 'slepc')
+}
+
+function attachPosFields(scene: SimulationScene, outputNames: string[], posSources: Map<string, string>, scalarType: ProjectDescriptor['scalarType']) {
+  for (const tag of gmsh.view.getTags().tags as number[]) gmsh.view.remove(tag)
+  for (const name of outputNames) gmsh.merge(name)
+  const views = gmsh.view.getTags().tags as number[]
+  if (views.length !== outputNames.length) throw new Error(`Gmsh loaded ${views.length} result views for ${outputNames.length} POS files`)
+  const mesh = { positions: scene.referencePositions, nodeTags: scene.nodeTags!, elementBlocks: scene.elementBlocks }
+  scene.fields = views.flatMap((tag, index) => {
+    const name = outputNames[index]!.slice(0, -4)
+    const sourceFile = outputNames[index]!
+    const modelSteps: ModelViewStep[] = []
+    const stepCount = gmsh.view.option.getNumber(tag, 'NbTimeStep').value
+    for (let step = 0; step < stepCount; step++) {
+      let modelStep: ModelViewStep | undefined
+      try {
+        const homogeneous = gmsh.view.getHomogeneousModelData(tag, step)
+        if (homogeneous.dataType) {
+          try { modelStep = expandHomogeneousModelStep(mesh, homogeneous) } catch { /* heterogeneous or padded model data */ }
+        }
+      } catch { /* list representation or heterogeneous model data */ }
+      if (!modelStep) {
+        try {
+          const heterogeneous = gmsh.view.getModelData(tag, step)
+          if (heterogeneous.dataType) modelStep = heterogeneous
+        } catch { /* list representation */ }
+      }
+      if (!modelStep) break
+      modelSteps.push(modelStep)
+    }
+    if (modelSteps.length) {
+      if (modelSteps.length !== stepCount) throw new Error(`model view ${name} exposed ${modelSteps.length} of ${stepCount} steps`)
+      const field = normalizeModelView(mesh, { name, sourceFile, modelName: gmsh.model.getCurrent().name, steps: modelSteps })
+      return scalarType === 'complex-double' ? complexFieldRepresentations(field) : [field]
+    }
+    const fields = normalizeListView(mesh, { name, sourceFile, ...gmsh.view.getListData(tag), times: parsePosTimes(posSources.get(sourceFile)!) })
+    return scalarType === 'complex-double' ? fields.flatMap(complexFieldRepresentations) : fields
+  })
+  return views
 }
 
 function applyMeshSize(factor: number) {

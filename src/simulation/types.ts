@@ -164,7 +164,7 @@ export interface ProjectDescriptor {
   probes?: Array<[number, number, number]>
   fieldView?: string
   displacementView?: string
-  solver?: 'getdp' | 'eigen-p1'
+  solver?: 'getdp' | 'slepc'
   cad?: boolean
 }
 
@@ -233,7 +233,7 @@ export type OnelabWorkerRequest = OnelabWorkerMessage & { requestId: string }
 
 export type OnelabWorkerResponse =
   | { type: 'warmed'; requestId: string; manifest: SimulationAssetManifest }
-  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'getdp-check' | 'gmsh-mesh' | 'getdp-solve' | 'gmsh-open' | 'eigen-p1' }
+  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'getdp-check' | 'gmsh-mesh' | 'getdp-solve' | 'gmsh-open' | 'slepc-eigen' }
   | { type: 'result'; requestId: string; result: MicrostripResult }
   | { type: 'project-opened'; requestId: string; project: ProjectBootstrap }
   | { type: 'project-response'; requestId: string; response: ProjectResponse }

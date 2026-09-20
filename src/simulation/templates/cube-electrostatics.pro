@@ -79,7 +79,7 @@ PostProcessing {
   { Name Ele; NameOfFormulation Electrostatics;
     Quantity {
       { Name v; Value { Local { [{v}]; In Vol_Ele; Jacobian Vol; } } }
-      { Name e; Value { Local { [{-d v}]; In Vol_Ele; Jacobian Vol; } } }
+      { Name e; Value { Local { [-{d v}]; In Vol_Ele; Jacobian Vol; } } }
     }
   }
 }
