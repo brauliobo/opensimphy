@@ -5,6 +5,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
+import artifactLock from '../../tools/wasm/artifacts.lock.json' with { type: 'json' }
 import { archiveName, inspectArchive, makeDeterministicArchive, releaseTag, validateRelease, verifyReleaseDirectory, verifyReproducibilityEvidence } from '../../tools/wasm/release-lib.mjs'
 
 const execFileAsync = promisify(execFile)
@@ -87,7 +88,7 @@ describe('deterministic WASM release packaging', () => {
 })
 
 describe('exact GitHub release fetch validation', () => {
-  const version = '8b4dd5c93e4141bd5be9'
+  const version = artifactLock.contentVersion
   const sourceCommit = '1'.repeat(40)
   const names = ['SHA256SUMS', 'corresponding-source.json', 'release-metadata.json', 'reproducibility-report.json', 'simulation.spdx.json', archiveName(version)]
   const release = { tag_name: releaseTag(version), target_commitish: sourceCommit, draft: false, prerelease: false, assets: names.map((name, id) => ({ id, name })) }
