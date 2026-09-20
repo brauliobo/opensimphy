@@ -1,7 +1,8 @@
 /// <reference types="vitest/config" />
 
 import { createHash } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { copyFileSync, createReadStream, existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig, type Plugin } from 'vite'
@@ -94,11 +95,52 @@ function vueTestUtilsVaporCompat(): Plugin {
   }
 }
 
+function giacWasmAsset(): Plugin {
+  const source = fileURLToPath(new URL('./vendor/giacjs/giacwasm.js', import.meta.url))
+  return {
+    name: 'giac-wasm-asset',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const path = req.url?.split('?')[0] ?? ''
+        if (!path.endsWith('/giac/giacwasm.js')) {
+          next()
+          return
+        }
+        if (!existsSync(source)) {
+          res.statusCode = 404
+          res.end('Giac WASM is not acquired. Run node scripts/acquire-giac.mjs')
+          return
+        }
+        res.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+        createReadStream(source).pipe(res)
+      })
+    },
+    closeBundle() {
+      copyGiacAsset()
+    },
+    writeBundle() {
+      copyGiacAsset()
+    },
+  }
+}
+
+function copyGiacAsset(): void {
+  const source = fileURLToPath(new URL('./vendor/giacjs/giacwasm.js', import.meta.url))
+  const license = fileURLToPath(new URL('./vendor/giacjs/LICENSE', import.meta.url))
+  if (!existsSync(source)) throw new Error('Giac WASM is missing; run node scripts/acquire-giac.mjs')
+  const destDir = fileURLToPath(new URL('./dist/giac', import.meta.url))
+  mkdirSync(destDir, { recursive: true })
+  copyFileSync(source, join(destDir, 'giacwasm.js'))
+  if (existsSync(license)) copyFileSync(license, join(destDir, 'LICENSE'))
+}
+
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/',
   plugins: [
     vue({ features: { vapor: true } }),
     vueTestUtilsVaporCompat(),
+    giacWasmAsset(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: { enabled: true, suppressWarnings: true },
@@ -148,6 +190,7 @@ export default defineConfig({
           'assets/edwinGray.worker-*.js',
           'assets/plotly-*.js',
           'simulation/**',
+          'giac/**',
         ],
         navigateFallback: 'index.html',
         runtimeCaching: [
@@ -265,6 +308,14 @@ export default defineConfig({
             options: {
               cacheName: `opensimphy-plotly-${runtimeRegistryRevision}`,
               expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+          {
+            urlPattern: /\/giac\/giacwasm\.js$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'opensimphy-giac-wasm',
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
         ],

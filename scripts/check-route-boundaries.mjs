@@ -363,7 +363,7 @@ function extractCalls(source, name) {
 function assertRuntimeRegistryPolicies(sw, revision) {
   if (revision === null) return []
   const registrations = extractCalls(sw, 'registerRoute')
-  const routeOwnedCacheNames = new Set(['opensimphy-gray-fem-lut', 'opensimphy-gray-worker'])
+  const routeOwnedCacheNames = new Set(['opensimphy-gray-fem-lut', 'opensimphy-gray-worker', 'opensimphy-giac-wasm'])
   const policies = [
     { prefix: 'opensimphy-taxonomy', marker: 'taxonomy\\.json$', maxEntries: 1 },
     { prefix: 'opensimphy-formula-sources', marker: '(?:recipes|symbols)\\.json$', maxEntries: 2 },
@@ -551,6 +551,9 @@ for (const url of excludedPrecacheUrls) {
 for (const url of precacheUrls) {
   if (/(?:^|\/)assets\/(?:formula|core|numberWall|edwinGray)\.worker-[A-Za-z0-9_-]+\.js$/.test(url)) {
     fail(`sw.js precache still contains route-owned worker ${url}`)
+  }
+  if (/(?:^|\/)giac\//.test(url)) {
+    fail(`sw.js precache still contains Giac WASM ${url}`)
   }
 }
 
