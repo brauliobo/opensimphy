@@ -2,8 +2,7 @@
 import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AwesomePhysicsRunPanel from '../components/awesomePhysics/AwesomePhysicsRunPanel.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import AwesomePhysicsCaseStage from '../components/awesomePhysics/AwesomePhysicsCaseStage.vue'
 import MetricStrip from '../components/cases/MetricStrip.vue'
 import { AWESOME_PHYSICS_CATALOG_ROUTE_NAME } from '../awesomePhysics/routes'
@@ -42,11 +41,6 @@ const item = shallowRef<AwesomePhysicsCatalogItemV1 | null>(null)
 const organization = shallowRef<AwesomePhysicsOrganizationV1 | null>(null)
 const descriptor = shallowRef<AwesomePhysicsSimulationDescriptorV1 | null>(null)
 const caseResult = shallowRef<AwesomePhysicsJsonValue | null>(null)
-const computeContext = labeledComputeContext(
-  'awesome-physics',
-  'Awesome Physics case',
-  'Prompt evaluations are local SI/Planck calculations beside the catalog adapter.',
-)
 let loadGeneration = 0
 
 const resolvedId = computed(() => {
@@ -338,12 +332,12 @@ watch(resolvedId, async (id) => {
       @completed="caseResult = $event"
       @cleared="caseResult = null"
     )
-    ComputePrompt(:context="computeContext")
     section.awesome-no-run(v-else-if="descriptor" data-testid="awesome-physics-no-run")
       p.eyebrow Execution gate
       h2 Run is not exposed
       p {{ descriptor.availabilityReason }}
       p The catalog intentionally exposes no Run control for unavailable, blocked, artifact, reference, or wasm-candidate records. This detail page remains an evidence view.
+    ComputeEmbed(source-id="awesome-physics" source-label="Awesome Physics case" beside="the catalog adapter")
 
     section.awesome-detail-evidence(aria-labelledby="awesome-detail-evidence-title")
       p.eyebrow 04 / Repository-relative evidence

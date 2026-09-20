@@ -11,7 +11,7 @@ import {
 } from '../../src/registries/savedRunRegistry'
 import CoreLabView from '../../src/views/CoreLabView.vue'
 import { coreCase, figure } from './fixtures'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute } from './vaporStubs'
 
 interface WorkerRecord {
   postMessage: ReturnType<typeof vi.fn>
@@ -106,7 +106,7 @@ function testRouter(): Router {
     history: createMemoryHistory(),
     routes: [
       { path: '/labs/core', component: CoreLabView },
-      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+      computeLabRoute,
     ],
   })
 }

@@ -13,7 +13,7 @@ import type {
   AwesomePhysicsCatalogArtifactV1,
   AwesomePhysicsSimulationArtifactV1,
 } from '../../src/types/awesomePhysics'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute, emptyVaporView } from './vaporStubs'
 
 vi.mock('../../src/awesomePhysics/workers/runInWorker', () => ({
   runAwesomePhysicsInWorker: vi.fn(),
@@ -31,6 +31,7 @@ function testRouter() {
       { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: AwesomePhysicsSimulationView, props: true },
       { path: '/labs/cases', name: 'case-hub', component: emptyVaporView },
       { path: '/labs/edwin-gray', name: 'edwin-gray', component: emptyVaporView },
+      computeLabRoute,
     ],
   })
 }

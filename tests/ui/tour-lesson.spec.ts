@@ -24,7 +24,7 @@ import type {
 } from '../../src/types/tour'
 import TourLessonView from '../../src/views/TourLessonView.vue'
 import { instrumentStubs } from './tourInstrumentStubs'
-import { depthControlStub, emptyVaporView } from './vaporStubs'
+import { computeLabRoute, depthControlStub, emptyVaporView } from './vaporStubs'
 
 vi.mock('../../src/components/tour/DimensionBuilder.vue', async () => {
   const { instrumentStubs: stubs } = await import('./tourInstrumentStubs')
@@ -137,7 +137,7 @@ function routerFor(path: string) {
       { path: '/tour/:chapter/:lesson', name: 'tour-lesson', component: emptyVaporView, meta: { title: 'Tour Lesson' } },
       { path: '/atlas/:id', name: 'formula', component: emptyVaporView },
       { path: '/evidence', component: emptyVaporView },
-      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+      computeLabRoute,
     ],
   })
   return router.push(path).then(() => router)

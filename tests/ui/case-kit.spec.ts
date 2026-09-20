@@ -23,7 +23,7 @@ import { resetAwesomePhysicsAdapterRegistrationsForTests } from '../../src/aweso
 import { resetAwesomePhysicsRegistryForTests, setAwesomePhysicsRegistryForTests } from '../../src/registries/awesomePhysicsRegistry'
 import CaseHubView from '../../src/views/CaseHubView.vue'
 import type { AwesomePhysicsCatalogArtifactV1, AwesomePhysicsSimulationArtifactV1 } from '../../src/types/awesomePhysics'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute, emptyVaporView } from './vaporStubs'
 
 const catalog = catalogJson as AwesomePhysicsCatalogArtifactV1
 const simulations = simulationsJson as AwesomePhysicsSimulationArtifactV1
@@ -36,6 +36,7 @@ function testRouter() {
       { path: '/labs/edwin-gray', name: 'edwin-gray', component: emptyVaporView },
       { path: '/awesome-physics', name: 'awesome-physics-catalog', component: emptyVaporView },
       { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: emptyVaporView, props: true },
+      computeLabRoute,
     ],
   })
 }

@@ -2,8 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import QuantumTooltip from '../components/quantum/QuantumTooltip.vue'
 import CliffordSpaceInstrument from '../components/clifford-space/CliffordSpaceInstrument.vue'
 import {
@@ -19,12 +18,6 @@ const progress = useTourProgress()
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
-const computeContext = labeledComputeContext(
-  'clifford-space',
-  'Clifford space lab',
-  'Prompt evaluations are local SI/Planck calculations beside the tiling instruments.',
-)
-
 const shortcutSteps = Object.freeze([
   Object.freeze({ label: 'Read', title: 'Field', body: 'Eight trigonometric blades on R³. Their Euclidean norm is 1 at every point.' }),
   Object.freeze({ label: 'Build', title: 'Cell', body: 'Integer cube corners carry the Cl(3) basis. Height-1/2 pyramids make a rhombic dodecahedron.' }),
@@ -107,7 +100,7 @@ onMounted(() => {
             p Move the probe. The bars are the Cl(3) field at that point.
         CliffordSpaceInstrument(:depth="depth")
 
-      ComputePrompt(:context="computeContext")
+      ComputeEmbed(source-id="clifford-space" source-label="Clifford space lab" beside="the tiling instruments")
 
       section.quantum-related(aria-labelledby="clifford-related-title")
         .quantum-related__heading

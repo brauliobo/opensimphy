@@ -20,7 +20,7 @@ import {
 import { DEFAULT_EARTH_METHOD_INPUTS } from '../../src/engine/earth'
 import { decodeWorkbenchInputEnvelope, encodeWorkbenchInputEnvelope } from '../../src/workbench/urlState'
 import EarthSimulationDetailView from '../../src/views/EarthSimulationDetailView.vue'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute, emptyVaporView } from './vaporStubs'
 
 vi.mock('../../src/earth/runSimulation', () => ({ runEarthMethodInWorker: vi.fn() }))
 
@@ -55,7 +55,7 @@ function testRouter(): Router {
       { path: '/earth/programs', component: emptyVaporView },
       { path: '/earth/corpus/:slug', component: emptyVaporView },
       { path: '/earth/datasets', component: emptyVaporView },
-      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+      computeLabRoute,
     ],
   })
 }

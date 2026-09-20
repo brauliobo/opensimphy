@@ -10,7 +10,7 @@ import {
 } from '../../src/registries/savedRunRegistry'
 import { resetWallRegistryForTests, setWallRegistryForTests } from '../../src/registries/wallRegistry'
 import { wall } from './fixtures'
-import { emptyVaporView } from './vaporStubs'
+import { computeLabRoute } from './vaporStubs'
 
 const workerState = vi.hoisted(() => ({
   constructions: 0,
@@ -107,7 +107,7 @@ function createWallRouter(): Router {
     history: createMemoryHistory(),
     routes: [
       { path: '/labs/walls', component: NumberWallsView },
-      { path: '/labs/compute', name: 'compute', component: emptyVaporView },
+      computeLabRoute,
     ],
   })
 }

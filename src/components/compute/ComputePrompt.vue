@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, ref, unref, watch } from 'vue'
 import { COMPUTE_CONTEXT_KEY } from '../../compute/context'
+import { COMPUTE_EXAMPLE_QUERIES, COMPUTE_LAB_PATH } from '../../compute/examples'
 import { evaluateQuery } from '../../compute/kernel'
 import { EMPTY_COMPUTE_CONTEXT, type ComputeContext, type ComputeResult } from '../../compute/types'
 import '../../styles/compute.css'
@@ -18,16 +19,6 @@ const context = computed(() => props.context ?? (unref(injected) as ComputeConte
 const query = ref(props.initialQuery ?? '')
 const result = ref<ComputeResult | null>(null)
 const running = ref(false)
-
-const exampleQueries = [
-  '(Planck mass)/(Planck time)^2',
-  'plot sin(x) * exp(-x/8)',
-  'plot3d sin(x)*cos(y)',
-  'integrate x^2 from 0 to 1',
-  'd/dx sin(x)^2',
-  'solve x^2 - 2*x - 3 = 0',
-  'det([[1,2],[3,4]])',
-]
 
 watch(() => props.initialQuery, async (value) => {
   if (!value) return
@@ -50,7 +41,7 @@ watch(() => result.value?.latex, async (latex) => {
 
 const graphHref = computed(() => {
   const text = result.value?.query || query.value
-  return text ? { path: '/labs/compute', query: { q: text } } : { path: '/labs/compute' }
+  return text ? { path: COMPUTE_LAB_PATH, query: { q: text } } : { path: COMPUTE_LAB_PATH }
 })
 
 async function submit(): Promise<void> {
@@ -90,7 +81,7 @@ section.compute-prompt(data-testid="compute-prompt" :aria-label="context.sourceL
       RouterLink.text-link(:to="graphHref" data-testid="compute-open-lab") Open in Compute lab
     .compute-examples(v-if="examples")
       button(
-        v-for="example in exampleQueries"
+        v-for="example in COMPUTE_EXAMPLE_QUERIES"
         :key="example"
         type="button"
         data-testid="compute-example"

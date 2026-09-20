@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import CaseCard from '../components/cases/CaseCard.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import MetricStrip from '../components/cases/MetricStrip.vue'
 import { collectCaseRecords, GRAY_CASE } from '../cases/caseRegistry'
 import { useBenchmarkRegistry } from '../cases/benchmarkRegistry'
@@ -42,11 +41,6 @@ const metrics = computed(() => {
 })
 
 const ready = computed(() => registry.ready.value && !registry.error.value)
-const computeContext = labeledComputeContext(
-  'cases',
-  'Simulation cases',
-  'Prompt evaluations are local SI/Planck calculations beside the case index.',
-)
 </script>
 
 <template lang="pug">
@@ -59,7 +53,7 @@ const computeContext = labeledComputeContext(
     status="Vue + Pug"
   )
   MetricStrip(:metrics="metrics")
-  ComputePrompt(:context="computeContext")
+  ComputeEmbed(source-id="cases" source-label="Simulation cases" beside="the case index")
   .loading-plate(v-if="!registry.ready.value") Loading case registry…
   .empty-state(v-else-if="registry.error.value" role="alert")
     strong Case registry unavailable

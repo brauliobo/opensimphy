@@ -8,6 +8,13 @@ export const emptyVaporView = defineVaporComponent({
   },
 })
 
+export const computeLabRoute = {
+  path: '/labs/compute',
+  name: 'compute' as const,
+  component: emptyVaporView,
+  meta: { title: 'Compute Lab' },
+}
+
 export const vaporAnchorStub = defineVaporComponent({
   name: 'VaporAnchorStub',
   setup() {

@@ -2,8 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import QuantumTooltip from '../components/quantum/QuantumTooltip.vue'
 import HyperbolicPartitionInstrument from '../components/hyperbolic-partition/HyperbolicPartitionInstrument.vue'
 import {
@@ -19,12 +18,6 @@ const progress = useTourProgress()
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
-const computeContext = labeledComputeContext(
-  'hyperbolic-partition',
-  'Hyperbolic partition lab',
-  'Prompt evaluations are local SI/Planck calculations beside the quartic explorer.',
-)
-
 const shortcutSteps = Object.freeze([
   Object.freeze({ label: 'Solve', title: 'Roots', body: 'Four sheets of T_a(x)=0. Vieta keeps the ledger closed for every a.' }),
   Object.freeze({ label: 'Normalize', title: 'Möbius', body: 'Send three roots to ∞, 0, 1. The fourth point is the cross-ratio λ.' }),
@@ -107,7 +100,7 @@ onMounted(() => {
             p Move a. The four roots, the 24 Möbius charts, and the branch loops are the same polynomial.
         HyperbolicPartitionInstrument(:depth="depth")
 
-      ComputePrompt(:context="computeContext")
+      ComputeEmbed(source-id="hyperbolic-partition" source-label="Hyperbolic partition lab" beside="the quartic explorer")
 
       section.quantum-related(aria-labelledby="partition-related-title")
         .quantum-related__heading

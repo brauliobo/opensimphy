@@ -3,8 +3,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import GeometryInstrument from '../components/edwin-gray/GeometryInstrument.vue'
 import CircuitInstrument from '../components/edwin-gray/CircuitInstrument.vue'
 import PulseCycleInstrument from '../components/edwin-gray/PulseCycleInstrument.vue'
@@ -96,11 +95,6 @@ import type { WorkbenchSnapshotV1 } from '../types/workbench'
 import type { ReadingDepth } from '../types/tour'
 
 const progress = useTourProgress()
-const computeContext = labeledComputeContext(
-  'edwin-gray',
-  'Edwin Gray motor lab',
-  'Prompt evaluations are local SI/Planck calculations beside the motor ledger. They do not inject radiant energy or claim-deficit into the worker.',
-)
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
@@ -1018,7 +1012,11 @@ onBeforeUnmount(() => {
           a(:href="GRAY_FEM_PROVENANCE.workspace" target="_blank" rel="noreferrer") Open fem/edwin-gray provenance
           a(:href="GRAY_FEM_PROVENANCE.sourceLedger" target="_blank" rel="noreferrer") Open source ledger
 
-      ComputePrompt(:context="computeContext")
+      ComputeEmbed(
+        source-id="edwin-gray"
+        source-label="Edwin Gray motor lab"
+        note="Prompt evaluations are local SI/Planck calculations beside the motor ledger. They do not inject radiant energy or claim-deficit into the worker."
+      )
 
       section.quantum-related(aria-labelledby="gray-related-title")
         .quantum-related__heading

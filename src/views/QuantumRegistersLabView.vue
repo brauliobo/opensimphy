@@ -2,8 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import QuantumTooltip from '../components/quantum/QuantumTooltip.vue'
 import MajorityPhaseInstrument from '../components/quantum-registers/MajorityPhaseInstrument.vue'
 import BitRegisterInstrument from '../components/quantum-registers/BitRegisterInstrument.vue'
@@ -24,11 +23,6 @@ const progress = useTourProgress()
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
-const computeContext = labeledComputeContext(
-  'quantum-registers',
-  'Quantum register lab',
-  'Prompt evaluations are local SI/Planck calculations beside the register instruments.',
-)
 const instrumentComponents = {
   'majority-phase': MajorityPhaseInstrument,
   'bit-register':   BitRegisterInstrument,
@@ -119,7 +113,7 @@ onMounted(() => {
               code {{ section.equation }}
         component(:is="instrumentFor(section.moduleId)" :depth="depth")
 
-      ComputePrompt(:context="computeContext")
+      ComputeEmbed(source-id="quantum-registers" source-label="Quantum register lab" beside="the register instruments")
 
       section.quantum-related(aria-labelledby="register-related-title")
         .quantum-related__heading
