@@ -1,3 +1,6 @@
+import type { SimulationScene } from './scene'
+import type { PhysicalGroupSidecar } from './physical-groups'
+
 export interface SimulationAssetManifest {
   schema: 5
   version: string
@@ -161,6 +164,8 @@ export interface ProjectDescriptor {
   probes?: Array<[number, number, number]>
   fieldView?: string
   displacementView?: string
+  solver?: 'getdp' | 'eigen-p1'
+  cad?: boolean
 }
 
 export interface ProjectFile {
@@ -203,26 +208,36 @@ export interface FieldSample {
   magnitude: number
 }
 
+export interface EigenResult {
+  nodes: number
+  freeNodes: number
+  modes: Array<{ index: number; value: number; residual: number }>
+  scene: SimulationScene
+}
+
 export type OnelabWorkerMessage =
   | { type: 'warm' }
   | { type: 'run-microstrip' }
   | { type: 'open-microstrip' }
   | { type: 'open-project'; projectId: string }
+  | { type: 'open-session'; files: ProjectFile[]; descriptor: ProjectDescriptor }
   | { type: 'project'; envelope: ProjectEnvelope }
+  | { type: 'mesh'; envelope: ProjectEnvelope; dimension: 1 | 2 | 3 }
+  | { type: 'eigen'; envelope: ProjectEnvelope; modeCount?: number }
   | { type: 'loop-control'; operation: 'initialize' | 'increment'; envelope: ProjectEnvelope }
   | { type: 'get-cube-scene' }
+  | { type: 'get-step-scene' }
   | { type: 'get-rendering-scene' }
 
 export type OnelabWorkerRequest = OnelabWorkerMessage & { requestId: string }
 
 export type OnelabWorkerResponse =
   | { type: 'warmed'; requestId: string; manifest: SimulationAssetManifest }
-  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'getdp-check' | 'gmsh-mesh' | 'getdp-solve' }
+  | { type: 'entered-native'; requestId: string; workerId: string; operation: 'getdp-check' | 'gmsh-mesh' | 'getdp-solve' | 'gmsh-open' | 'eigen-p1' }
   | { type: 'result'; requestId: string; result: MicrostripResult }
   | { type: 'project-opened'; requestId: string; project: ProjectBootstrap }
   | { type: 'project-response'; requestId: string; response: ProjectResponse }
   | { type: 'loop-control-response'; requestId: string; response: LoopControlResponse }
   | { type: 'scene'; requestId: string; scene: SimulationScene }
+  | { type: 'eigen-result'; requestId: string; result: EigenResult }
   | { type: 'error'; requestId: string; error: string }
-import type { SimulationScene } from './scene'
-import type { PhysicalGroupSidecar } from './physical-groups'
