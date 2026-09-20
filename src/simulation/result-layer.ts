@@ -48,6 +48,8 @@ export class ResultLayer {
   private isosurface?: THREE.Mesh
   private sections: THREE.Mesh[] = []
   private clipPlanes: THREE.Plane[] = []
+  private contourLevels = 9
+  private isoFraction = 0.5
 
   constructor(
     private world: THREE.Scene,
@@ -85,11 +87,13 @@ export class ResultLayer {
     }
   }
 
-  set(field: ResultField | undefined, step: number, rangeMode: FieldRangeMode, customRange?: [number, number]) {
+  set(field: ResultField | undefined, step: number, rangeMode: FieldRangeMode, customRange?: [number, number], contourLevels = 9, isoFraction = 0.5) {
     this.field = field
     this.step = step
     this.rangeMode = rangeMode
     this.customRange = customRange
+    this.contourLevels = contourLevels
+    this.isoFraction = isoFraction
     this.removeGlyphs()
     this.removeContours()
     this.removeIsosurface()
@@ -246,8 +250,8 @@ export class ResultLayer {
   }
 
   private applyContours(field: ResultField, range: [number, number]) {
-    if (field.association !== 'node' || range[0] === range[1]) return
-    const levels = Array.from({ length: 9 }, (_, index) => range[0] + (index + 1) * (range[1] - range[0]) / 10)
+    if (this.contourLevels <= 0 || field.association !== 'node' || range[0] === range[1]) return
+    const levels = Array.from({ length: this.contourLevels }, (_, index) => range[0] + (index + 1) * (range[1] - range[0]) / (this.contourLevels + 1))
     const contours = surfaceContours(this.scene, field, this.step, levels)
     if (!contours.positions.length) return
     const geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(Float32Array.from(contours.positions), 3))
@@ -266,7 +270,7 @@ export class ResultLayer {
 
   private applyIsosurface(field: ResultField, range: [number, number]) {
     if (!['node', 'element-node'].includes(field.association) || range[0] === range[1] || !this.scene.elementBlocks.some(({ dimension }) => dimension === 3)) return
-    const surface = tetraIsosurface(this.scene, field, this.step, (range[0] + range[1]) / 2)
+    const surface = tetraIsosurface(this.scene, field, this.step, range[0] + this.isoFraction * (range[1] - range[0]))
     if (!surface.triangles.length) return
     const geometry = new THREE.BufferGeometry()
       .setAttribute('position', new THREE.BufferAttribute(Float32Array.from(surface.positions), 3))

@@ -81,13 +81,22 @@ function expectPhase4Convergence(actual: Phase4ConvergenceGroup[], expected: Pha
   })
 }
 
+async function ensureReady(page: import('@playwright/test').Page) {
+  await expect(page.getByTestId('onelab-state')).toBeVisible()
+  await expect.poll(async () => {
+    const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+    if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+    return state
+  }, { timeout: 180_000 }).toMatch(/^(ready|complete)$/)
+}
+
 test('warms online then meshes, solves and extracts views fully offline across repeat and recreation', async ({ page, context }) => {
   await page.goto('/labs')
   await expect(page.getByTestId('app-ready')).toBeVisible()
   await expect(page.getByTestId('onelab-nav')).toBeVisible()
   await page.getByTestId('onelab-nav').click()
   await expect(page).toHaveURL(/\/labs\/onelab$/)
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect.poll(async () => {
     const state = await page.getByTestId('onelab-state').getAttribute('data-state')
     if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
@@ -122,7 +131,7 @@ test('warms online then meshes, solves and extracts views fully offline across r
   })
   await page.reload()
   await expect(page.getByTestId('app-ready')).toBeVisible()
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<string, { cacheName: string; files: Array<{ bytes: number }> }> }
   expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions[complexPartition].cacheName)
@@ -247,7 +256,7 @@ test('warms online then meshes, solves and extracts views fully offline across r
 
 test('checks parser metadata, computes two native meshes, preserves edits through cancellation and resets defaults', async ({ page }) => {
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
 
   const meshSize = page.getByTestId('parameter-global-mesh-size-factor').locator('input')
@@ -359,7 +368,7 @@ test('executes bounded real and complex ONELAB loops and commits sent outputs po
   test.skip(runtimeProfile === 'separate', 'Phase 5 native loops require the combined runtime')
   test.setTimeout(360_000)
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   let totalComputes = 0
   for (const projectId of ['global-quantity-real-loop', 'transfo-complex-loop']) {
@@ -406,7 +415,7 @@ test('executes bounded real and complex ONELAB loops and commits sent outputs po
         await expect(page.getByTestId('project-opfs-save')).toBeDisabled()
       }
       await page.reload()
-      await page.getByTestId('onelab-warm').click()
+      await ensureReady(page)
       await page.getByTestId('project-import').setInputFiles(archivePath!)
       await expect(page.getByTestId('onelab-database')).toHaveText(database)
       expect(JSON.parse(await page.getByTestId('onelab-loop-history').innerText())).toHaveLength(expectedHistory.length)
@@ -440,7 +449,7 @@ test('audits alternating profile memory and reconstructs a cancelled loop at a p
   test.skip(runtimeProfile === 'separate', 'Phase 5 native loops require the combined runtime')
   test.setTimeout(360_000)
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   const metrics: Array<{ memoryBytes: number; modelEntities: number; views: number; memfsFiles: number; memfsBytes: number }> = []
   for (const projectId of ['microstrip', 'transfo-complex-loop', 'global-quantity-real-loop', 'microstrip']) {
@@ -571,7 +580,7 @@ test('executes every Phase 4 fixture with native convergence, dynamic outputs an
   const complexTransfers: string[] = []
   page.on('request', (request) => { if (request.url().includes(`/${complexAssetDirectory}/`)) complexTransfers.push(request.url()) })
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   const manifest = await page.evaluate(() => fetch('/simulation/manifest.json').then((response) => response.json())) as { partitions: Record<string, { cacheName: string; files: Array<{ bytes: number }> }> }
   expect(await page.evaluate(() => caches.keys())).not.toContain(manifest.partitions[complexPartition].cacheName)
@@ -658,7 +667,7 @@ test('executes every Phase 4 fixture with native convergence, dynamic outputs an
 test('uses descriptor numbers only as defaults and solves edited native values', async ({ page }) => {
   test.setTimeout(360_000)
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   const solve = async () => {
     await page.getByTestId('onelab-solve').click()
@@ -748,7 +757,7 @@ test('renders pinned Gmsh field and true-displacement truth with deformed pickin
 
 test('persists authored physical groups and reapplies stable membership after remesh', async ({ page }) => {
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   await page.getByTestId('onelab-solve').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
@@ -780,7 +789,7 @@ test('persists authored physical groups and reapplies stable membership after re
   await page.getByTestId('physical-group-name').fill('renamed boundary')
   await page.getByTestId('physical-group-rename').click()
   await page.reload()
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await page.getByTestId('onelab-solve').click()
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'complete')
   await expect(page.getByTestId('physical-group-select').locator('option', { hasText: 'renamed boundary' })).toHaveCount(1)
@@ -820,7 +829,7 @@ test('persists authored physical groups and reapplies stable membership after re
 test('bounds retained WASM, snapshot, cache and JS growth across real, complex and cancellation cycles', async ({ page, context }) => {
   test.setTimeout(360_000)
   await page.goto('/labs/onelab')
-  await page.getByTestId('onelab-warm').click()
+  await ensureReady(page)
   await expect(page.getByTestId('onelab-state')).toHaveAttribute('data-state', 'ready')
   const solve = async (project: string) => {
     await page.getByTestId('onelab-project').selectOption(project)
@@ -977,4 +986,43 @@ test('route-away terminates an active STEP import and cancels an active render f
   await page.getByRole('link', { name: '02 Workbench' }).click()
   await expect.poll(() => page.evaluate(() => window.__sceneDiagnostics)).toEqual({ hosts: 0, workers: 0, frames: 0, observers: 0, canvases: 0, overlays: 0, contexts: 0, geometries: 0, materials: 0 })
   await expect.poll(() => page.evaluate(() => (window as any).__lifecycleSpies)).toMatchObject({ workers: 0, observers: 0, frames: 0, pointerListeners: 0 })
+})
+
+test('opens locked OCC STEP as a GetDP electrostatic CAD project', async ({ page }) => {
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await ensureReady(page)
+  await page.getByTestId('onelab-project').selectOption('cube-step-electrostatics')
+  await ensureReady(page)
+  await page.getByTestId('onelab-solve').click()
+  await expect.poll(async () => {
+    const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+    if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+    return state
+  }, { timeout: 180_000 }).toBe('complete')
+  await expect(page.getByTestId('onelab-result')).toBeVisible()
+  expect(Number((await page.getByTestId('onelab-mesh').innerText()).split(' ')[0])).toBeGreaterThan(8)
+  const fields = JSON.parse(await page.getByTestId('mapped-field-summary').innerText()) as Array<{ name: string }>
+  expect(fields.map(({ name }) => name)).toEqual(expect.arrayContaining(['v', 'e']))
+  const groups = JSON.parse(await page.getByTestId('onelab-msh-groups').innerText()) as { names: Array<{ name: string }> }
+  expect(groups.names.map(({ name }) => name)).toEqual(expect.arrayContaining(['Ground', 'Electrode', 'Dielectric']))
+})
+
+test('computes bounded P1 Dirichlet eigenmodes on the cube mesh', async ({ page }) => {
+  test.setTimeout(360_000)
+  await page.goto('/labs/onelab')
+  await ensureReady(page)
+  await page.getByTestId('onelab-project').selectOption('cube-cavity-eigen')
+  await ensureReady(page)
+  await page.getByTestId('onelab-solve').click()
+  await expect.poll(async () => {
+    const state = await page.getByTestId('onelab-state').getAttribute('data-state')
+    if (state === 'error') throw new Error(await page.getByRole('alert').innerText())
+    return state
+  }, { timeout: 180_000 }).toBe('complete')
+  const modes = JSON.parse(await page.getByTestId('eigen-modes').innerText()) as Array<{ value: number; residual: number }>
+  expect(modes.length).toBeGreaterThan(0)
+  expect(modes[0]!.value).toBeGreaterThan(0)
+  expect(modes[0]!.residual).toBeLessThan(1e-3)
+  for (let index = 1; index < modes.length; index++) expect(modes[index]!.value).toBeGreaterThanOrEqual(modes[index - 1]!.value)
 })

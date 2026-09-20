@@ -68,15 +68,15 @@ describe('SimulationSceneHost', () => {
   it('selects timesteps and range modes for mapped fields', async () => {
     const wrapper = mount(SimulationSceneHost, { props: { scene: resultScene } })
     await wrapper.vm.$nextTick()
-    expect(setResult).toHaveBeenCalledWith('v', 0, 'global', undefined)
+    expect(setResult).toHaveBeenCalledWith('v', 0, 'global', undefined, 9, 0.5)
     const stepSelect = wrapper.get('[data-testid="result-step"]')
     ;(stepSelect.findAll('option')[1]!.element as HTMLOptionElement).selected = true
     await stepSelect.trigger('change')
-    expect(setResult).toHaveBeenLastCalledWith('v', 1, 'global', undefined)
+    expect(setResult).toHaveBeenLastCalledWith('v', 1, 'global', undefined, 9, 0.5)
     await wrapper.get('[data-testid="result-range-mode"]').setValue('custom')
     await wrapper.get('[data-testid="result-range-min"]').setValue('0.5')
     await wrapper.get('[data-testid="result-range-max"]').setValue('2.5')
-    expect(setResult).toHaveBeenLastCalledWith('v', 1, 'custom', [0.5, 2.5])
+    expect(setResult).toHaveBeenLastCalledWith('v', 1, 'custom', [0.5, 2.5], 9, 0.5)
     expect(wrapper.get('[data-testid="result-legend"]').text()).toContain('0.5')
     wrapper.unmount()
   })

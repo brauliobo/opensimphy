@@ -1,34 +1,32 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { OnelabClient } from '../simulation/client'
 import { summarizeView } from '../simulation/reference'
-import type { MicrostripResult } from '../simulation/types'
-import { parameterChanged, parseOnelab, type OnelabParameter } from '../simulation/onelab-db'
+import type { EigenResult, MicrostripResult, ProjectDescriptor, ProjectFile } from '../simulation/types'
+import { parseOnelab, type OnelabParameter } from '../simulation/onelab-db'
 import { ProjectSession } from '../simulation/project-session'
 import SimulationSceneHost from '../components/SimulationSceneHost.vue'
-import ComputePrompt from '../components/compute/ComputePrompt.vue'
-import { labeledComputeContext } from '../compute/context'
+import OnelabParameterTree from '../components/onelab/OnelabParameterTree.vue'
+import ComputeEmbed from '../components/compute/ComputeEmbed.vue'
 import { matchSurfaceSignatures, summarizeScene, type SimulationScene, type SurfaceMatch } from '../simulation/scene'
 import type { SceneSelection } from '../simulation/scene-host'
 import { fieldCsv, fieldPos, probeScenePoint } from '../simulation/results'
 import { MeshstepClient } from '../simulation/viewer-client'
-import { projectCatalog } from '../simulation/project-catalog'
+import { allSolverProjects } from '../simulation/project-catalog'
+import { cubeElectrostaticsSource, electrostaticCadProject, textFile } from '../simulation/cad-projects'
 import { PhysicalGroupEditor } from '../simulation/physical-groups'
 import { onelabLoopValues, onelabOutputs, type LoopHistoryPoint } from '../simulation/loops'
 import { exportProjectArchive, importProjectArchive, loadPersistedProjectArchive, persistProjectArchive, projectPersistenceStatus } from '../simulation/project-archive'
 
 const client = new OnelabClient()
-const computeContext = labeledComputeContext(
-  'onelab',
-  'Browser ONELAB',
-  'Prompt evaluations are local SI/Planck calculations beside the mesh/solve workbench.',
-)
 const session = new ProjectSession()
 const sessionVersion = ref(0)
 const meshstep = new MeshstepClient()
 const state = ref<'idle' | 'warming' | 'ready' | 'running' | 'complete' | 'stale' | 'cancelled' | 'error'>('idle')
+const moduleId = ref<'geometry' | 'mesh' | 'solver' | 'post' | 'file'>('geometry')
 const error = ref('')
 const result = ref<MicrostripResult>()
+const eigenResult = ref<EigenResult>()
 const runs = ref(0)
 const committedResultRevision = ref(-1)
 const workerId = ref('')
@@ -45,7 +43,9 @@ const authoritativeSelectionDimension = ref<2 | 3>(2)
 const lastSelection = ref<SceneSelection>()
 const viewerError = ref('')
 let disposed = false
-const solverProjects = projectCatalog.filter(({ kind }) => kind === 'solve')
+const uploadedProjects = ref<ProjectDescriptor[]>([])
+const uploadedFiles = new Map<string, ProjectFile[]>()
+const solverProjects = computed(() => [...allSolverProjects(), ...uploadedProjects.value])
 const selectedProjectId = ref('microstrip')
 const groupName = ref('selection')
 const selectedGroupId = ref('')
@@ -57,20 +57,26 @@ const loopRunning = ref(false)
 let loopCancelled = false
 const opfsStatus = ref<'available' | 'unsupported' | 'saved' | 'loaded' | 'error'>(projectPersistenceStatus())
 let groupEditor = new PhysicalGroupEditor(selectedProjectId.value)
+const busy = computed(() => state.value === 'warming' || state.value === 'running')
+const sessionReady = computed(() => {
+  sessionVersion.value
+  return session.ready
+})
 const parameters = computed(() => {
   sessionVersion.value
-  return session.ready ? parseOnelab(session.database).onelab.parameters.filter(({ name }) => name.startsWith('Parameters/')) : []
+  return session.ready ? parseOnelab(session.database).onelab.parameters : []
 })
 const displayedResult = computed(() => {
   sessionVersion.value
   return committedResultRevision.value === session.revision ? session.lastResult : undefined
 })
-const mappedSummary = computed(() => displayedResult.value?.scene.fields.map((field) => ({
+const mappedScene = computed(() => eigenResult.value?.scene ?? displayedResult.value?.scene)
+const mappedSummary = computed(() => mappedScene.value?.fields.map((field) => ({
   id: field.id, name: field.name, association: field.association, components: field.components,
   samples: field.values.length / field.steps.length / field.components, steps: [...field.steps], times: [...field.times], ranges: [...field.ranges], globalRange: field.globalRange,
   provenance: field.provenance, complexPart: field.complexPart,
 })))
-const selectableEntities = computed(() => displayedResult.value?.scene.entities.filter(({ dimension }) => dimension >= 2) ?? [])
+const selectableEntities = computed(() => mappedScene.value?.entities.filter(({ dimension }) => dimension >= 2) ?? [])
 const spatialProbes = computed(() => {
   const solved = displayedResult.value?.scene
   if (!solved) return []
@@ -85,13 +91,14 @@ const spatialProbes = computed(() => {
   })
 })
 const exportSummary = computed(() => {
-  const solved = displayedResult.value?.scene
+  const solved = mappedScene.value
   if (!solved) return []
   return solved.fields.map((field) => {
     const csv = fieldCsv(solved, field), pos = fieldPos(solved, field)
     return { id: field.id, csvRows: csv.trim().split('\n').length, csvHeader: csv.split('\n')[0], posRecords: (pos.match(/\b[SVT][PTQLSHIY]\(/g) ?? []).length, hasTime: /TIME\{/.test(pos) }
   })
 })
+const selectedDescriptor = computed(() => solverProjects.value.find(({ id }) => id === selectedProjectId.value))
 const removeNativeListener = client.onEnteredNative((event) => {
   if (event.detail.requestId !== activeRequestId.value) return
   workerId.value = event.detail.workerId
@@ -99,38 +106,46 @@ const removeNativeListener = client.onEnteredNative((event) => {
 })
 
 async function warm() {
+  if (state.value === 'warming' || state.value === 'running') return
   state.value = 'warming'
   error.value = ''
   try {
     if (!authoredGroups.value.length) restoreGroups(selectedProjectId.value)
     await navigator.serviceWorker?.ready
     await client.warm()
-    if (!session.ready) {
-      const project = await client.openProject(selectedProjectId.value)
-      session.open(project.files, project.defaults, project.descriptor)
-      sessionVersion.value++
-    }
+    if (!session.ready) await loadSelectedProject()
+    if (disposed) return
     state.value = 'ready'
   } catch (reason) {
+    if (disposed) return
     error.value = reason instanceof Error ? reason.message : String(reason)
     state.value = 'error'
   }
+}
+
+async function loadSelectedProject() {
+  const upload = uploadedFiles.get(selectedProjectId.value)
+  const uploaded = uploadedProjects.value.find(({ id }) => id === selectedProjectId.value)
+  const project = upload && uploaded
+    ? await client.openSession(upload, uploaded)
+    : await client.openProject(selectedProjectId.value)
+  session.open(project.files, project.defaults, project.descriptor)
+  committedResultRevision.value = -1
+  result.value = undefined
+  eigenResult.value = undefined
+  loopHistory.value = []
+  loopProgress.value = 0
+  loopTotal.value = 0
+  authoritativeSelection.value = undefined
+  restoreGroups(selectedProjectId.value)
+  sessionVersion.value++
 }
 
 async function selectProject(event: Event) {
   selectedProjectId.value = (event.target as HTMLSelectElement).value
   state.value = 'warming'
   try {
-    const project = await client.openProject(selectedProjectId.value)
-    session.open(project.files, project.defaults, project.descriptor)
-    committedResultRevision.value = -1
-    result.value = undefined
-    loopHistory.value = []
-    loopProgress.value = 0
-    loopTotal.value = 0
-    authoritativeSelection.value = undefined
-    restoreGroups(selectedProjectId.value)
-    sessionVersion.value++
+    await loadSelectedProject()
     state.value = 'ready'
   } catch (reason) {
     error.value = reason instanceof Error ? reason.message : String(reason)
@@ -169,7 +184,8 @@ function deletePhysicalGroup() { if (selectedGroupId.value) { groupEditor.delete
 function resetPhysicalGroups() { groupEditor.reset(); selectedGroupId.value = ''; persistGroups() }
 
 async function solve() {
-  await execute('compute')
+  if (session.descriptor?.solver === 'eigen-p1') await runEigen()
+  else await execute('compute')
 }
 
 async function execute(action: 'check' | 'compute' | 'reset', loopIndex?: number) {
@@ -178,6 +194,7 @@ async function execute(action: 'check' | 'compute' | 'reset', loopIndex?: number
   state.value = 'running'
   error.value = ''
   nativeOperation.value = ''
+  eigenResult.value = undefined
   const request = client.startProject({ ...session.envelope(action, groupEditor.sidecar()), ...(loopIndex === undefined ? {} : { loopIndex }) })
   activeRequestId.value = request.requestId
   try {
@@ -206,6 +223,59 @@ async function execute(action: 'check' | 'compute' | 'reset', loopIndex?: number
     error.value = reason instanceof Error ? reason.message : String(reason)
     state.value = 'error'
     return undefined
+  } finally {
+    if (activeRequestId.value === request.requestId && state.value === 'running') state.value = 'ready'
+  }
+}
+
+async function runEigen() {
+  if (!session.ready) await warm()
+  if (!session.ready) return
+  state.value = 'running'
+  error.value = ''
+  nativeOperation.value = ''
+  committedResultRevision.value = -1
+  result.value = undefined
+  const request = client.eigenProject(session.envelope('compute', groupEditor.sidecar()))
+  activeRequestId.value = request.requestId
+  try {
+    const next = await request.promise
+    if (activeRequestId.value !== request.requestId) return
+    eigenResult.value = next
+    authoritative.value = next.scene
+    scene.value = next.scene
+    viewerState.value = 'ready'
+    runs.value++
+    sessionVersion.value++
+    state.value = 'complete'
+  } catch (reason) {
+    if (activeRequestId.value !== request.requestId || cancelledState()) return
+    error.value = reason instanceof Error ? reason.message : String(reason)
+    state.value = 'error'
+  } finally {
+    if (activeRequestId.value === request.requestId && state.value === 'running') state.value = 'ready'
+  }
+}
+
+async function generateMesh(dimension: 1 | 2 | 3) {
+  if (!session.ready) await warm()
+  if (!session.ready) return
+  state.value = 'running'
+  error.value = ''
+  const request = client.meshProject(session.envelope('check', groupEditor.sidecar()), dimension)
+  activeRequestId.value = request.requestId
+  try {
+    const next = await request.promise
+    if (activeRequestId.value !== request.requestId) return
+    authoritative.value = next
+    scene.value = next
+    viewerState.value = 'ready'
+    sessionVersion.value++
+    state.value = 'complete'
+  } catch (reason) {
+    if (activeRequestId.value !== request.requestId || cancelledState()) return
+    error.value = reason instanceof Error ? reason.message : String(reason)
+    state.value = 'error'
   } finally {
     if (activeRequestId.value === request.requestId && state.value === 'running') state.value = 'ready'
   }
@@ -282,10 +352,6 @@ function editFromEvent(parameter: OnelabParameter, event: Event) {
   editParameter(parameter, (event.target as HTMLInputElement | HTMLSelectElement).value)
 }
 
-function choiceLabel(parameter: Extract<OnelabParameter, { type: 'number' }>, value: number) {
-  return Object.entries(parameter.valueLabels ?? {}).find(([, candidate]) => candidate === value)?.[0] ?? String(value)
-}
-
 function cancel() {
   loopCancelled = true
   if (client.cancel(activeRequestId.value)) state.value = 'cancelled'
@@ -312,6 +378,7 @@ function applyImportedProject(archive: Awaited<ReturnType<typeof importProjectAr
   loopTotal.value = archive.history.length
   committedResultRevision.value = -1
   result.value = undefined
+  eigenResult.value = undefined
   sessionVersion.value++
   state.value = 'ready'
 }
@@ -325,6 +392,50 @@ async function importArchive(event: Event) {
     applyImportedProject(archive)
   } catch (reason) {
     error.value = reason instanceof Error ? reason.message : String(reason)
+  } finally {
+    ;(event.target as HTMLInputElement).value = ''
+  }
+}
+
+async function importCad(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  error.value = ''
+  viewerError.value = ''
+  try {
+    const bytes = new Uint8Array(await file.arrayBuffer())
+    const geometry = file.name.replace(/^.*[/\\]/, '')
+    if (!/\.(?:step|stp)$/i.test(geometry)) throw new Error('CAD import accepts STEP files')
+    const descriptor = electrostaticCadProject(`cad-${crypto.randomUUID()}`, geometry, file.name)
+    const files = [{ path: geometry, bytes }, textFile('cube-electrostatics.pro', cubeElectrostaticsSource)]
+    uploadedFiles.set(descriptor.id, files)
+    uploadedProjects.value = [...uploadedProjects.value.filter(({ id }) => id !== descriptor.id), descriptor]
+    selectedProjectId.value = descriptor.id
+    viewerState.value = 'loading'
+    const [previewScene, project] = await Promise.all([
+      meshstep.convertStep(new TextDecoder().decode(bytes)),
+      client.openSession(files, descriptor),
+    ])
+    if (disposed) return
+    preview.value = previewScene
+    scene.value = previewScene
+    matches.value = undefined
+    authoritative.value = undefined
+    session.open(project.files, project.defaults, project.descriptor)
+    restoreGroups(descriptor.id)
+    committedResultRevision.value = -1
+    result.value = undefined
+    eigenResult.value = undefined
+    sessionVersion.value++
+    viewerState.value = 'ready'
+    state.value = 'ready'
+    moduleId.value = 'geometry'
+  } catch (reason) {
+    if (disposed) return
+    viewerError.value = reason instanceof Error ? reason.message : String(reason)
+    viewerState.value = 'error'
+    error.value = viewerError.value
+    state.value = 'error'
   } finally {
     ;(event.target as HTMLInputElement).value = ''
   }
@@ -374,6 +485,24 @@ async function loadViewer() {
   }
 }
 
+async function loadOccStep() {
+  viewerState.value = 'loading'
+  viewerError.value = ''
+  try {
+    const next = await client.getStepScene()
+    if (disposed) return
+    preview.value = undefined
+    matches.value = undefined
+    authoritative.value = next
+    scene.value = next
+    viewerState.value = 'ready'
+  } catch (reason) {
+    if (disposed) return
+    viewerError.value = reason instanceof Error ? reason.message : String(reason)
+    viewerState.value = 'error'
+  }
+}
+
 async function loadRenderingTruth() {
   viewerState.value = 'loading'
   viewerError.value = ''
@@ -411,6 +540,7 @@ function showPreview() {
   if (preview.value) scene.value = preview.value
 }
 
+onMounted(() => { void warm() })
 onBeforeUnmount(() => { disposed = true; removeNativeListener(); meshstep.dispose(); client.dispose() })
 </script>
 
@@ -420,20 +550,33 @@ section.onelab-lab.view
     p.eyebrow LAB / ONELAB PHASE 5
     h1 Browser ONELAB workbench
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
-  ComputePrompt(:context="computeContext")
+  ComputeEmbed(source-id="onelab" source-label="Browser ONELAB" beside="the mesh/solve workbench")
   .simulation-caveat(role="note")
-    strong Arbitrary STEP projects are not yet wired to solver execution.
-    span STEP remains a meshStep preview. Simulation-bound selections use the separately meshed authoritative Gmsh surface.
+    strong OCC STEP is a GetDP electrostatic CAD path; SLEPc is off in the locked WASM.
+    span Arbitrary STEP opens through Gmsh OCC, receives ground/electrode/volume groups, and solves with GetDP. Eigenmodes use a bounded P1 Laplace solver on the Gmsh mesh because the locked GetDP binary is built with ENABLE_SLEPC=OFF. meshStep remains a fast preview; simulation-bound tags stay on the Gmsh surface.
+  nav.onelab-modules(aria-label="ONELAB modules")
+    button(type="button" data-testid="onelab-module-geometry" :aria-current="moduleId === 'geometry' ? 'page' : undefined" @click="moduleId = 'geometry'") Geometry
+    button(type="button" data-testid="onelab-module-mesh" :aria-current="moduleId === 'mesh' ? 'page' : undefined" @click="moduleId = 'mesh'") Mesh
+    button(type="button" data-testid="onelab-module-solver" :aria-current="moduleId === 'solver' ? 'page' : undefined" @click="moduleId = 'solver'") Solver
+    button(type="button" data-testid="onelab-module-post" :aria-current="moduleId === 'post' ? 'page' : undefined" @click="moduleId = 'post'") Post
+    button(type="button" data-testid="onelab-module-file" :aria-current="moduleId === 'file' ? 'page' : undefined" @click="moduleId = 'file'") File
   section.viewer-workbench
     .viewer-heading
       div
-        p.eyebrow PHASE 1 / ENGINEERING VIEWER
+        p.eyebrow GEOMETRY / MESH
         h2 STEP preview / Gmsh authority
       .onelab-actions
         button.text-button(type="button" data-testid="viewer-load" @click="loadViewer" :disabled="viewerState === 'loading'") Load locked cube pair
+        button.text-button(type="button" data-testid="step-occ-load" @click="loadOccStep" :disabled="viewerState === 'loading' || busy") Load OCC STEP cube
         button.text-button(type="button" data-testid="rendering-truth-load" @click="loadRenderingTruth" :disabled="viewerState === 'loading'") Load Gmsh field/displacement truth
+        label.text-button Import STEP
+          input.sr-only(type="file" accept=".step,.stp,model/step" data-testid="cad-import" @change="importCad")
     p(data-testid="viewer-state" :data-state="viewerState") Viewer: {{ viewerState }}
     p.inline-error(v-if="viewerError" role="alert") {{ viewerError }}
+    .onelab-mesh-actions
+      button(type="button" data-testid="mesh-1d" @click="generateMesh(1)" :disabled="busy || !sessionReady") Mesh 1D
+      button(type="button" data-testid="mesh-2d" @click="generateMesh(2)" :disabled="busy || !sessionReady") Mesh 2D
+      button(type="button" data-testid="mesh-3d" @click="generateMesh(3)" :disabled="busy || !sessionReady") Mesh 3D
     template(v-if="scene")
       .viewer-status
         span(data-testid="viewer-source") {{ scene.source }}
@@ -449,82 +592,38 @@ section.onelab-lab.view
         button.text-button(type="button" data-testid="viewer-handoff" @click="handoffSelection" :disabled="selectedPreviewKey === undefined || !matches") Use selected Gmsh surface
   label.onelab-project
     span Project fixture
-    select(data-testid="onelab-project" :value="selectedProjectId" @change="selectProject" :disabled="state === 'running' || state === 'warming'")
+    select(data-testid="onelab-project" :value="selectedProjectId" @change="selectProject" :disabled="busy")
       option(v-for="project in solverProjects" :key="project.id" :value="project.id") {{ project.title }}
   .onelab-actions
-    button(type="button" data-testid="onelab-warm" @click="warm" :disabled="state === 'warming' || state === 'running'") Warm simulation assets
-    button(type="button" data-testid="onelab-check" @click="execute('check')" :disabled="state === 'warming' || state === 'running'") Check metadata
-    button(type="button" data-testid="onelab-reset" @click="execute('reset')" :disabled="state === 'warming' || state === 'running'") Reset defaults
-    button(type="button" data-testid="onelab-solve" @click="solve" :disabled="state === 'warming' || state === 'running'") Compute
-    button(type="button" data-testid="onelab-loop" @click="runLoop" :disabled="state === 'warming' || state === 'running' || loopRunning") {{ loopHistory.length && loopHistory.length < loopTotal ? 'Resume loop' : 'Run bounded loop' }}
+    button(type="button" data-testid="onelab-warm" @click="warm" :disabled="busy") Warm simulation assets
+    button(type="button" data-testid="onelab-check" @click="execute('check')" :disabled="busy") Check metadata
+    button(type="button" data-testid="onelab-reset" @click="execute('reset')" :disabled="busy") Reset defaults
+    button(type="button" data-testid="onelab-solve" @click="solve" :disabled="busy") {{ selectedDescriptor?.solver === 'eigen-p1' ? 'Compute eigenmodes' : 'Compute' }}
+    button(type="button" data-testid="onelab-loop" @click="runLoop" :disabled="busy || loopRunning") {{ loopHistory.length && loopHistory.length < loopTotal ? 'Resume loop' : 'Run bounded loop' }}
     button(type="button" data-testid="onelab-cancel" @click="cancel" :disabled="state !== 'running'") Cancel worker
-    button(type="button" data-testid="project-export" @click="exportArchive(false)" :disabled="!session.ready") Export project
-    button(type="button" data-testid="project-export-history" @click="exportArchive(true)" :disabled="!session.ready") Export with history
+    button(type="button" data-testid="project-export" @click="exportArchive(false)" :disabled="!sessionReady") Export project
+    button(type="button" data-testid="project-export-history" @click="exportArchive(true)" :disabled="!sessionReady") Export with history
     label.text-button Project import
       input.sr-only(type="file" accept="application/json,.json" data-testid="project-import" @change="importArchive")
-    button(type="button" data-testid="project-opfs-save" @click="saveOpfs" :disabled="!session.ready || opfsStatus === 'unsupported'") Save project in browser
+    button(type="button" data-testid="project-opfs-save" @click="saveOpfs" :disabled="!sessionReady || opfsStatus === 'unsupported'") Save project in browser
     button(type="button" data-testid="project-opfs-load" @click="loadOpfs" :disabled="opfsStatus === 'unsupported'") Load browser project
     output(data-testid="project-opfs-status" :data-status="opfsStatus") OPFS: {{ opfsStatus }}
   section.onelab-loop-status(data-testid="onelab-loop-status" :data-running="loopRunning")
     progress(:max="loopTotal || 1" :value="loopProgress")
     span {{ loopProgress }} / {{ loopTotal }} committed points
     output.sr-only(data-testid="onelab-loop-history") {{ JSON.stringify(loopHistory) }}
-  section.onelab-parameters(v-if="parameters.length" data-testid="onelab-parameters")
-    label.onelab-parameter(
-      v-for="parameter in parameters"
-      v-show="parameter.visible"
-      :key="parameter.name"
-      :class="{ 'is-changed': parameterChanged(parameter) > 0, 'is-readonly': parameter.readOnly }"
-      :data-testid="`parameter-${parameter.name.split('/').at(-1)?.toLowerCase().replaceAll(' ', '-')}`"
-      :data-name="parameter.name"
-      :data-changed="parameterChanged(parameter)"
-    )
-      span {{ parameter.label ?? parameter.name }}
-      select(
-        v-if="parameter.type === 'number' && parameter.choices?.length"
-        :value="parameter.values[0]"
-        :disabled="parameter.readOnly || state === 'running'"
-        @change="editFromEvent(parameter, $event)"
-      )
-        option(v-for="choice in parameter.choices" :key="choice" :value="choice") {{ choiceLabel(parameter, choice) }}
-      select(
-        v-else-if="parameter.type === 'string' && parameter.choices?.length"
-        :value="parameter.values[0]"
-        :disabled="parameter.readOnly || state === 'running'"
-        @change="editFromEvent(parameter, $event)"
-      )
-        option(v-for="choice in parameter.choices" :key="choice" :value="choice") {{ choice }}
-      input(
-        v-else-if="parameter.type === 'number'"
-        type="number"
-        :value="parameter.values[0]"
-        :min="parameter.min"
-        :max="parameter.max"
-        :step="parameter.step || 'any'"
-        :readonly="parameter.readOnly"
-        :disabled="state === 'running'"
-        @change="editFromEvent(parameter, $event)"
-      )
-      input(
-        v-else
-        type="text"
-        :value="parameter.values[0]"
-        :readonly="parameter.readOnly"
-        :disabled="state === 'running'"
-        @change="editFromEvent(parameter, $event)"
-      )
-      small(v-if="parameter.help") {{ parameter.help }}
+  OnelabParameterTree(v-if="parameters.length" :parameters="parameters" :running="state === 'running'" @edit="editFromEvent")
   p(data-testid="onelab-state" :data-state="state") State: {{ state }}
   output.sr-only(data-testid="onelab-database") {{ session.database }}
   p(data-testid="onelab-worker" :data-worker-id="workerId" :data-request-id="activeRequestId" :data-native-operation="nativeOperation") Worker: {{ workerId }} / request {{ activeRequestId }} / {{ nativeOperation }}
   p.system-error(v-if="error" role="alert") {{ error }}
-  section.viewer-workbench(v-if="displayedResult?.scene" data-testid="result-viewer")
+  section.viewer-workbench(v-if="mappedScene" data-testid="result-viewer")
     .viewer-heading
       div
-        p.eyebrow PHASE 3 / MAPPED RESULTS
-        h2 Potential / electric field
-      span {{ displayedResult.scene.fields.length }} mapped fields
-    SimulationSceneHost(:scene="displayedResult.scene" @select="selectSurface")
+        p.eyebrow POST-PROCESSING
+        h2 {{ eigenResult ? 'Eigenmodes' : 'Mapped results' }}
+      span {{ mappedScene.fields.length }} mapped fields
+    SimulationSceneHost(:scene="mappedScene" @select="selectSurface")
     .physical-group-editor(data-testid="physical-group-editor")
       output.sr-only(data-testid="physical-group-selection") {{ authoritativeSelection ?? '' }}
       select(data-testid="physical-group-entity" aria-label="Authoritative entity" @change="selectAuthoritativeEntity")
@@ -541,10 +640,15 @@ section.onelab-lab.view
       button(type="button" data-testid="physical-group-reset" @click="resetPhysicalGroups") Reset
       output.sr-only(data-testid="physical-group-sidecar") {{ JSON.stringify(groupEditor.sidecar()) }}
     output.sr-only(data-testid="mapped-field-summary") {{ JSON.stringify(mappedSummary) }}
-    output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(displayedResult.scene)) }}
+    output.sr-only(data-testid="mapped-scene-summary") {{ JSON.stringify(summarizeScene(mappedScene)) }}
     output.sr-only(data-testid="mapped-spatial-probes") {{ JSON.stringify(spatialProbes) }}
     output.sr-only(data-testid="mapped-export-summary") {{ JSON.stringify(exportSummary) }}
     output.sr-only(data-testid="mapped-selection-detail") {{ JSON.stringify(lastSelection) }}
+  dl.onelab-result(v-if="eigenResult" data-testid="eigen-result")
+    dt Nodes
+    dd(data-testid="eigen-nodes") {{ eigenResult.nodes }} / {{ eigenResult.freeNodes }} free
+    dt Modes
+    dd(data-testid="eigen-modes") {{ JSON.stringify(eigenResult.modes) }}
   dl.onelab-result(v-if="displayedResult" data-testid="onelab-result")
     dt Runs
     dd(data-testid="onelab-runs") {{ runs }}

@@ -20,6 +20,8 @@ const customMin = ref(0)
 const customMax = ref(1)
 const probe = ref<FieldProbe>()
 const deformationScale = ref(0)
+const contourLevels = ref(9)
+const isoFraction = ref(0.5)
 let host: SceneHost | undefined
 
 function applyScene(scene: SimulationScene) {
@@ -33,6 +35,8 @@ function applyScene(scene: SimulationScene) {
   fieldId.value = scene.fields[0]?.id ?? ''
   step.value = 0
   rangeMode.value = 'global'
+  contourLevels.value = 9
+  isoFraction.value = 0.5
   const range = scene.fields[0]?.globalRange
   if (range) [customMin.value, customMax.value] = range
   applyResult()
@@ -56,7 +60,7 @@ function sceneDebug() { return host?.renderState() }
 const activeField = () => props.scene?.fields.find(({ id }) => id === fieldId.value)
 function applyResult() {
   const custom: [number, number] | undefined = rangeMode.value === 'custom' ? [customMin.value, customMax.value] : undefined
-  host?.setResult(fieldId.value || undefined, step.value, rangeMode.value, custom)
+  host?.setResult(fieldId.value || undefined, step.value, rangeMode.value, custom, contourLevels.value, isoFraction.value)
   renderRevision.value++
 }
 function selectResult() {
@@ -107,7 +111,7 @@ onMounted(() => {
 })
 watch(() => props.scene, (scene) => { if (scene) applyScene(scene) })
 watch(explosion, (amount) => { host?.setExplosion(amount); renderRevision.value++ })
-watch([step, rangeMode, customMin, customMax], () => { applyResult(); applyDeformation() })
+watch([step, rangeMode, customMin, customMax, contourLevels, isoFraction], () => { applyResult(); applyDeformation() })
 watch(deformationScale, applyDeformation)
 onBeforeUnmount(() => {
   diagnostics().overlays--
@@ -150,6 +154,12 @@ onBeforeUnmount(() => {
     label(v-if="displacementFields().some(({ id }) => id === fieldId)")
       span Deformation
       input(v-model.number="deformationScale" data-testid="result-deformation" type="range" min="0" max="5" step="0.25")
+    label
+      span Contours
+      input(v-model.number="contourLevels" data-testid="result-contours" type="range" min="0" max="16" step="1")
+    label
+      span Iso
+      input(v-model.number="isoFraction" data-testid="result-iso" type="range" min="0" max="1" step="0.05")
   .scene-mobile-controls(aria-label="Scene controls")
     button(type="button" data-testid="scene-fit" @click="host?.fit()") Fit
     button(type="button" data-testid="scene-clip" :aria-pressed="clipped" @click="setClipping") Sections {{ clipCount }}

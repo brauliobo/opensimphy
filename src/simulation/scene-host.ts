@@ -202,8 +202,8 @@ export class SceneHost {
     this.invalidate()
   }
 
-  setResult(fieldId: string | undefined, step = 0, rangeMode: FieldRangeMode = 'global', customRange?: [number, number]) {
-    this.results?.set(this.source?.fields.find(({ id }) => id === fieldId), step, rangeMode, customRange)
+  setResult(fieldId: string | undefined, step = 0, rangeMode: FieldRangeMode = 'global', customRange?: [number, number], contourLevels = 9, isoFraction = 0.5) {
+    this.results?.set(this.source?.fields.find(({ id }) => id === fieldId), step, rangeMode, customRange, contourLevels, isoFraction)
     this.invalidate()
   }
 

@@ -16,7 +16,10 @@ vi.mock('../../src/simulation/client', () => ({
     warm = vi.fn(async () => ({}))
     openMicrostrip = openMicrostrip
     openProject = openMicrostrip
+    openSession = openMicrostrip
     startProject = startProject
+    meshProject = vi.fn(() => ({ requestId: 'mesh', promise: Promise.resolve({ source: 'gmsh-authoritative', fields: [] }) }))
+    eigenProject = vi.fn(() => ({ requestId: 'eigen', promise: Promise.resolve({ nodes: 1, freeNodes: 1, modes: [], scene: { source: 'gmsh-authoritative', fields: [] } }) }))
     onEnteredNative() { return () => {} }
     dispose() {}
   },
@@ -31,10 +34,11 @@ describe('ONELAB parameter controls', () => {
     projectResponse = (envelope) => Promise.resolve({ action: envelope.action, projectId: envelope.projectId, revision: envelope.revision, database: envelope.action === 'reset' ? defaults : envelope.database })
   })
 
-  it('renders native metadata, changed state, check envelopes and reset defaults', async () => {
+  it('auto-warms, renders native metadata, changed state, check envelopes and reset defaults', async () => {
     const wrapper = mount(OnelabLabView, { global: { stubs: { SimulationSceneHost: true } } })
-    await wrapper.get('[data-testid="onelab-warm"]').trigger('click')
     await flushPromises()
+    expect(wrapper.get('[data-testid="onelab-state"]').attributes('data-state')).toBe('ready')
+    expect(wrapper.find('[data-testid="onelab-module-geometry"]').exists()).toBe(true)
     const size = wrapper.get('[data-testid="parameter-size"]')
     expect(size.findAll('option').map((option) => option.text())).toEqual(['Fine', 'Coarse'])
     expect(wrapper.get('[data-testid="parameter-derived"]').isVisible()).toBe(false)
@@ -54,7 +58,6 @@ describe('ONELAB parameter controls', () => {
     let envelope: any
     projectResponse = (request) => new Promise((next) => { envelope = request; resolve = next })
     const wrapper = mount(OnelabLabView, { global: { stubs: { SimulationSceneHost: true } } })
-    await wrapper.get('[data-testid="onelab-warm"]').trigger('click')
     await flushPromises()
     const input = wrapper.get('[data-testid="parameter-size"] select')
     await wrapper.get('[data-testid="onelab-check"]').trigger('click')
