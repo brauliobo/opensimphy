@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { createRouteWriteGate, formControlValue } from '../workbench/formControl'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import {
   EARTH_PARTICLE_CAMPAIGN_CARDS,
@@ -18,6 +19,7 @@ const QUERY_KEYS = ['q', 'domain', 'class', 'science', 'method', 'runtime', 'gat
 
 const route = useRoute()
 const router = useRouter()
+const routeWrite = createRouteWriteGate()
 const bundle = ref<ScientificSimulationBundle | null>(null)
 const error = ref('')
 const query = ref('')
@@ -106,14 +108,16 @@ function routePage(): number {
 }
 
 function hydrateFromRoute(): void {
-  query.value = routeString('q', '')
-  domain.value = routeString('domain', 'all')
-  classification.value = routeString('class', 'all')
-  scientificReadiness.value = routeString('science', 'all')
-  methodRelationship.value = routeString('method', 'all')
-  runtimeAvailability.value = routeString('runtime', 'all')
-  gateAttention.value = routeString('gate', 'all')
-  page.value = routePage()
+  routeWrite.run(() => {
+    query.value = routeString('q', '')
+    domain.value = routeString('domain', 'all')
+    classification.value = routeString('class', 'all')
+    scientificReadiness.value = routeString('science', 'all')
+    methodRelationship.value = routeString('method', 'all')
+    runtimeAvailability.value = routeString('runtime', 'all')
+    gateAttention.value = routeString('gate', 'all')
+    page.value = routePage()
+  })
 }
 
 function registryQuery(): LocationQueryRaw {
@@ -136,9 +140,21 @@ function queryMatchesRoute(next: LocationQueryRaw): boolean {
     && nextKeys.every((key) => route.query[key] === next[key])
 }
 
-function resetPage(): void {
-  page.value = 1
+function assignAndResetPage(assign: (value: string) => void) {
+  return (event: Event): void => {
+    const value = formControlValue(event)
+    if (value !== null) assign(value)
+    page.value = 1
+  }
 }
+
+const onSearchInput = assignAndResetPage((value) => { query.value = value })
+const onDomainChange = assignAndResetPage((value) => { domain.value = value })
+const onClassChange = assignAndResetPage((value) => { classification.value = value })
+const onScienceChange = assignAndResetPage((value) => { scientificReadiness.value = value })
+const onMethodChange = assignAndResetPage((value) => { methodRelationship.value = value })
+const onRuntimeChange = assignAndResetPage((value) => { runtimeAvailability.value = value })
+const onGateChange = assignAndResetPage((value) => { gateAttention.value = value })
 
 function setPage(nextPage: number): void {
   page.value = Math.min(Math.max(nextPage, 1), pages.value)
@@ -199,6 +215,7 @@ function unavailableMethodCountFor(record: ScientificSimulationRecord): number {
 
 watch(() => route.query, hydrateFromRoute, { immediate: true })
 watch([query, domain, classification, scientificReadiness, methodRelationship, runtimeAvailability, gateAttention, page], () => {
+  if (routeWrite.isApplying()) return
   const next = registryQuery()
   if (!queryMatchesRoute(next)) void router.replace({ query: next })
 })
@@ -257,16 +274,16 @@ onBeforeUnmount(() => controller.abort())
         data-testid="simulation-search"
         type="search"
         placeholder="ID, title, evidence, method, or output"
-        @input="resetPage"
+        @input="onSearchInput"
       )
     label.field
       span Domain
-      select(v-model="domain" data-testid="simulation-domain" @change="resetPage")
+      select(v-model="domain" data-testid="simulation-domain" @change="onDomainChange")
         option(value="all") All domains
         option(v-for="item in domains" :key="item" :value="item") {{ item }} domain
     label.field
       span Canonical class
-      select(v-model="classification" data-testid="simulation-class" @change="resetPage")
+      select(v-model="classification" data-testid="simulation-class" @change="onClassChange")
         option(value="all") All canonical classes
         option(v-for="item in classifications" :key="item" :value="item") {{ formatToken(item) }}
 
@@ -277,23 +294,23 @@ onBeforeUnmount(() => controller.abort())
     .advanced-filter-grid
       label.field
         span Scientific readiness
-        select(v-model="scientificReadiness" data-testid="simulation-science" @change="resetPage")
+        select(v-model="scientificReadiness" data-testid="simulation-science" @change="onScienceChange")
           option(value="all") All scientific statuses
           option(v-for="item in scientificStatuses" :key="item" :value="item") {{ scientificStatus(item) }}
       label.field
         span Method relationship
-        select(v-model="methodRelationship" data-testid="simulation-method" @change="resetPage")
+        select(v-model="methodRelationship" data-testid="simulation-method" @change="onMethodChange")
           option(value="all") All method relationships
           option(v-for="item in methodRelationships" :key="item" :value="item") {{ formatToken(item) }}
       label.field
         span Runtime availability
-        select(v-model="runtimeAvailability" data-testid="simulation-runtime" @change="resetPage")
+        select(v-model="runtimeAvailability" data-testid="simulation-runtime" @change="onRuntimeChange")
           option(value="all") All runtime availability
           option(value="available") Has a runnable method
           option(value="unavailable") Has an unavailable method
       label.field
         span Gate needing attention
-        select(v-model="gateAttention" data-testid="simulation-gate" @change="resetPage")
+        select(v-model="gateAttention" data-testid="simulation-gate" @change="onGateChange")
           option(value="all") All gate records
           option(value="attention") Any gate needs attention
           option(v-for="item in gateIds" :key="item" :value="item") {{ item }} needs attention

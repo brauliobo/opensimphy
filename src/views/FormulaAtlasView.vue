@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { createRouteWriteGate, formControlValue } from '../workbench/formControl'
 import { useFormulaRegistry, validateFormulaTaxonomyCompatibility, type FormulaRecord } from '../registries/formulaRegistry'
 import { useTaxonomyRegistry } from '../registries/taxonomyRegistry'
 import type { TaxonomyArtifact } from '../types/engine'
@@ -17,6 +18,7 @@ void taxonomyRegistry.initialize()
 
 const route = useRoute()
 const router = useRouter()
+const routeWrite = createRouteWriteGate()
 const query = ref('')
 const topic = ref('all')
 const category = ref('all')
@@ -145,23 +147,25 @@ function searchQuery(value: string | null): string {
 }
 
 function applyRouteQuery(): void {
-  query.value = searchQuery(scalarQuery('q'))
-  topic.value = finiteOption(scalarQuery('topic'), topics.value.map(({ id }) => id))
-  category.value = topic.value === 'all'
-    ? 'all'
-    : finiteOption(scalarQuery('category'), categories.value.map(({ id }) => id))
-  basis.value = finiteOption(scalarQuery('basis'), ['exact', 'measured']) as BasisFilter
-  column.value = finiteOption(scalarQuery('column'), columns.value)
-  island.value = finiteOption(scalarQuery('island'), islands.value)
-  sourceCriterion.value = finiteOption(scalarQuery('sourceCriterion'), sourceCriterionOptions) as SourceCriterionFilter
-  dimensionAudit.value = finiteOption(scalarQuery('dimensionAudit'), ['matches', 'conflict']) as DimensionAuditFilter
-  constructor.value = finiteOption(scalarQuery('constructor'), constructors.value.map(({ id }) => id))
-  representation.value = finiteOption(scalarQuery('representation'), representations.value.map(({ id }) => id))
-  const requestedPage = scalarQuery('page')
-  page.value = requestedPage && /^[1-9]\d*$/.test(requestedPage) && Number(requestedPage) <= pages.value
-    ? Number(requestedPage)
-    : 1
-  canonicalReplace()
+  routeWrite.run(() => {
+    query.value = searchQuery(scalarQuery('q'))
+    topic.value = finiteOption(scalarQuery('topic'), topics.value.map(({ id }) => id))
+    category.value = topic.value === 'all'
+      ? 'all'
+      : finiteOption(scalarQuery('category'), categories.value.map(({ id }) => id))
+    basis.value = finiteOption(scalarQuery('basis'), ['exact', 'measured']) as BasisFilter
+    column.value = finiteOption(scalarQuery('column'), columns.value)
+    island.value = finiteOption(scalarQuery('island'), islands.value)
+    sourceCriterion.value = finiteOption(scalarQuery('sourceCriterion'), sourceCriterionOptions) as SourceCriterionFilter
+    dimensionAudit.value = finiteOption(scalarQuery('dimensionAudit'), ['matches', 'conflict']) as DimensionAuditFilter
+    constructor.value = finiteOption(scalarQuery('constructor'), constructors.value.map(({ id }) => id))
+    representation.value = finiteOption(scalarQuery('representation'), representations.value.map(({ id }) => id))
+    const requestedPage = scalarQuery('page')
+    page.value = requestedPage && /^[1-9]\d*$/.test(requestedPage) && Number(requestedPage) <= pages.value
+      ? Number(requestedPage)
+      : 1
+    canonicalReplace()
+  })
 }
 
 function matchesSourceCriterion(item: AtlasFormula, filter: SourceCriterionFilter): boolean {
@@ -195,7 +199,27 @@ function commitFilters(): void {
   canonicalReplace()
 }
 
-function changeTopic(): void {
+function commitAssigned(assign: (value: string) => void) {
+  return (event: Event): void => {
+    const value = formControlValue(event)
+    if (value !== null) assign(value)
+    commitFilters()
+  }
+}
+
+const onSearchInput = commitAssigned((value) => { query.value = value })
+const onCategoryChange = commitAssigned((value) => { category.value = value })
+const onBasisChange = commitAssigned((value) => { basis.value = value })
+const onColumnChange = commitAssigned((value) => { column.value = value })
+const onIslandChange = commitAssigned((value) => { island.value = value })
+const onSourceCriterionChange = commitAssigned((value) => { sourceCriterion.value = value })
+const onDimensionAuditChange = commitAssigned((value) => { dimensionAudit.value = value })
+const onConstructorChange = commitAssigned((value) => { constructor.value = value })
+const onRepresentationChange = commitAssigned((value) => { representation.value = value })
+
+function changeTopic(event?: Event): void {
+  const value = event ? formControlValue(event) : null
+  if (value !== null) topic.value = value
   category.value = 'all'
   commitFilters()
 }
@@ -250,7 +274,7 @@ function categoryTitle(topicId: string, categoryId: string): string {
   section.filter-console.filter-console-primary(v-if="registryReady" aria-label="Primary formula filters")
     label.field.field-search
       span Search registry
-      input(v-model="query" data-testid="formula-search" type="search" placeholder="symbol, equation, dependency…" @input="commitFilters")
+      input(v-model="query" data-testid="formula-search" type="search" placeholder="symbol, equation, dependency…" @input="onSearchInput")
     label.field
       span Topic
       select(v-model="topic" data-testid="formula-topic" @change="changeTopic")
@@ -258,12 +282,12 @@ function categoryTitle(topicId: string, categoryId: string): string {
         option(v-for="item in topics" :key="item.id" :value="item.id") {{ item.shortTitle }} ({{ item.count }})
     label.field
       span Category
-      select(v-model="category" data-testid="formula-category" :disabled="topic === 'all'" @change="commitFilters")
+      select(v-model="category" data-testid="formula-category" :disabled="topic === 'all'" @change="onCategoryChange")
         option(value="all") all categories
         option(v-for="item in categories" :key="item.id" :value="item.id") {{ item.title }} ({{ item.count }})
     label.field
       span Reference basis
-      select(v-model="basis" data-testid="formula-basis" @change="commitFilters")
+      select(v-model="basis" data-testid="formula-basis" @change="onBasisChange")
         option(value="all") exact + measured
         option(value="exact") source-labelled exact
         option(value="measured") source-labelled measured
@@ -276,34 +300,34 @@ function categoryTitle(topicId: string, categoryId: string): string {
     .advanced-filter-grid
       label.field
         span Source column
-        select(v-model="column" data-testid="formula-column" @change="commitFilters")
+        select(v-model="column" data-testid="formula-column" @change="onColumnChange")
           option(value="all") all columns
           option(v-for="item in columns" :key="item" :value="item") {{ item }}
       label.field
         span Source island
-        select(v-model="island" data-testid="formula-island" @change="commitFilters")
+        select(v-model="island" data-testid="formula-island" @change="onIslandChange")
           option(value="all") all islands
           option(v-for="item in islands" :key="item" :value="item") {{ item }}
       label.field
         span Source criterion / not scientific validation
-        select(v-model="sourceCriterion" data-testid="formula-source-criterion" @change="commitFilters")
+        select(v-model="sourceCriterion" data-testid="formula-source-criterion" @change="onSourceCriterionChange")
           option(value="all") all source criteria
           option(value="met") criterion met
           option(value="not-met") criterion not met
       label.field
         span Dimension audit
-        select(v-model="dimensionAudit" data-testid="formula-dimension-audit" @change="commitFilters")
+        select(v-model="dimensionAudit" data-testid="formula-dimension-audit" @change="onDimensionAuditChange")
           option(value="all") matches + conflicts
           option(value="matches") declared/computed match
           option(value="conflict") declared/computed conflict
       label.field
         span Constructor
-        select(v-model="constructor" data-testid="formula-constructor" @change="commitFilters")
+        select(v-model="constructor" data-testid="formula-constructor" @change="onConstructorChange")
           option(value="all") all constructors
           option(v-for="item in constructors" :key="item.id" :value="item.id") {{ item.id }} ({{ item.count }})
       label.field
         span Representation
-        select(v-model="representation" data-testid="formula-representation" @change="commitFilters")
+        select(v-model="representation" data-testid="formula-representation" @change="onRepresentationChange")
           option(value="all") all representations
           option(v-for="item in representations" :key="item.id" :value="item.id") {{ item.id.replaceAll('-', ' ') }} ({{ item.count }})
 

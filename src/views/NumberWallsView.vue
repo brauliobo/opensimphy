@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { formControlValue } from '../workbench/formControl'
 import WallCanvas from '../components/WallCanvas.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
@@ -233,7 +234,9 @@ function selectSource(id: string): void {
   navigateState()
 }
 
-function applyPreset(): void {
+function applyPreset(event?: Event): void {
+  const selectedPreset = event ? formControlValue(event) : presetId.value
+  if (selectedPreset) presetId.value = selectedPreset
   const preset = PRESETS.find(({ id }) => id === presetId.value)
   if (!preset) return
   depth.value = preset.options.depth

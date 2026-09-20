@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { createRouteWriteGate } from '../workbench/formControl'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import { loadEarthManifest, type EarthManifest } from '../earth/corpus'
 import { loadEarthEvidenceManifest, type EarthEvidenceManifest } from '../earth/evidence'
 
 const route = useRoute()
 const router = useRouter()
+const routeWrite = createRouteWriteGate()
 const manifest = ref<EarthManifest | null>(null)
 const evidence = ref<EarthEvidenceManifest | null>(null)
 const error = ref('')
@@ -46,10 +48,12 @@ function routeString(key: string, fallback: string): string {
 }
 
 function hydrateFromRoute(): void {
-  query.value = routeString('q', '')
-  collection.value = routeString('collection', 'all')
-  series.value = routeString('series', 'all')
-  evidenceFilter.value = routeString('evidence', 'all')
+  routeWrite.run(() => {
+    query.value = routeString('q', '')
+    collection.value = routeString('collection', 'all')
+    series.value = routeString('series', 'all')
+    evidenceFilter.value = routeString('evidence', 'all')
+  })
 }
 
 function corpusQuery(): LocationQueryRaw {
@@ -80,6 +84,7 @@ function formatBytes(value: number): string {
 
 watch(() => route.query, hydrateFromRoute, { immediate: true })
 watch([query, collection, series, evidenceFilter], () => {
+  if (routeWrite.isApplying()) return
   const next = corpusQuery()
   if (!queryMatchesRoute(next)) void router.replace({ query: next })
 })

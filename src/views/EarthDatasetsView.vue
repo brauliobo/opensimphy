@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { createRouteWriteGate } from '../workbench/formControl'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import {
   loadEarthDatasetRegistry,
@@ -16,6 +17,7 @@ type SortOrder = typeof SORT_ORDERS[number]
 
 const route = useRoute()
 const router = useRouter()
+const routeWrite = createRouteWriteGate()
 const registry = ref<EarthDatasetRegistry | null>(null)
 const simulationBundle = ref<ScientificSimulationBundle | null>(null)
 const error = ref('')
@@ -110,16 +112,18 @@ function routeString(key: string, fallback: string): string {
 }
 
 function hydrateFromRoute(): void {
-  const requestedSort = routeString('sort', 'queue')
-  query.value = routeString('q', '')
-  datasetId.value = routeString('dataset', 'all')
-  program.value = routeString('program', 'all')
-  category.value = routeString('category', 'all')
-  priority.value = routeString('priority', 'all')
-  authentication.value = routeString('authentication', 'all')
-  redistribution.value = routeString('redistribution', 'all')
-  g0b.value = routeString('g0b', 'all')
-  sortOrder.value = SORT_ORDERS.includes(requestedSort as SortOrder) ? requestedSort as SortOrder : 'queue'
+  routeWrite.run(() => {
+    const requestedSort = routeString('sort', 'queue')
+    query.value = routeString('q', '')
+    datasetId.value = routeString('dataset', 'all')
+    program.value = routeString('program', 'all')
+    category.value = routeString('category', 'all')
+    priority.value = routeString('priority', 'all')
+    authentication.value = routeString('authentication', 'all')
+    redistribution.value = routeString('redistribution', 'all')
+    g0b.value = routeString('g0b', 'all')
+    sortOrder.value = SORT_ORDERS.includes(requestedSort as SortOrder) ? requestedSort as SortOrder : 'queue'
+  })
 }
 
 function ledgerQuery(): LocationQueryRaw {
@@ -217,6 +221,7 @@ watch([
   g0b,
   sortOrder,
 ], () => {
+  if (routeWrite.isApplying()) return
   const next = ledgerQuery()
   if (!queryMatchesRoute(next)) void router.replace({ query: next })
 })

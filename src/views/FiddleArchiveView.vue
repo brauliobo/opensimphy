@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
+import { createRouteWriteGate, formControlValue } from '../workbench/formControl'
 import FiddleCard from '../components/fiddles/FiddleCard.vue'
 import { fiddleProfileUrl, useFiddleRegistry } from '../registries/fiddleRegistry'
 import type { FiddleRuntimeStatus } from '../types/fiddle'
 
 const route = useRoute()
 const router = useRouter()
+const routeWrite = createRouteWriteGate()
 const fiddleRegistry = useFiddleRegistry()
 const query = ref('')
 const visualization = ref('all')
@@ -62,7 +64,7 @@ const archiveQuery = computed<LocationQueryRaw>(() => ({
 }))
 
 watch([() => route.fullPath, () => fiddleRegistry.ready.value, visualizations], () => {
-  if (!archiveReady.value) return
+  if (!archiveReady.value || routeWrite.isApplying()) return
   hydrateFromRoute()
 }, { immediate: true })
 
@@ -102,44 +104,58 @@ function sameRouteQuery(next: LocationQueryRaw): boolean {
 }
 
 function hydrateFromRoute(): void {
-  const search = safeSearch(scalarQuery('q'))
-  const rawVisualization = scalarQuery('viz')
-  const rawRuntime = scalarQuery('runtime')
-  const visualizationWarning = rawVisualization !== null && rawVisualization !== 'all' && !visualizations.value.includes(rawVisualization)
-    ? `The visualization filter ${rawVisualization} is not in the archive; showing all visualizations.`
-    : ''
-  const nextVisualization = visualizationWarning ? 'all' : rawVisualization ?? 'all'
-  const allowedRuntimeStatuses = ['verified', 'rendered-with-errors', 'empty', 'blocked', 'timeout', 'failed']
-  const runtimeWarning = rawRuntime !== null && !allowedRuntimeStatuses.includes(rawRuntime)
-    ? `The runtime filter ${rawRuntime} is not valid; showing all runtime statuses.`
-    : ''
-  const pageState = safePage(scalarQuery('page'), source.value?.profilePages ?? 1)
-  query.value = search.value
-  visualization.value = nextVisualization
-  runtimeStatus.value = runtimeWarning ? 'all' : (rawRuntime as FiddleRuntimeStatus | null) ?? 'all'
-  page.value = pageState.value
-  const notice = [search.warning, visualizationWarning, runtimeWarning, pageState.warning].filter(Boolean).join(' ')
-  if (notice || !preservingNotice) routeNotice.value = notice
-  const nextQuery: LocationQueryRaw = {
-    ...(query.value === '' ? {} : { q: query.value }),
-    ...(visualization.value === 'all' ? {} : { viz: visualization.value }),
-    ...(runtimeStatus.value === 'all' ? {} : { runtime: runtimeStatus.value }),
-    ...(page.value === 1 ? {} : { page: String(page.value) }),
-  }
-  if (!sameRouteQuery(nextQuery)) {
-    preservingNotice = true
-    void router.replace({ name: 'fiddle-archive', query: nextQuery }).finally(() => {
+  routeWrite.run(() => {
+    const search = safeSearch(scalarQuery('q'))
+    const rawVisualization = scalarQuery('viz')
+    const rawRuntime = scalarQuery('runtime')
+    const visualizationWarning = rawVisualization !== null && rawVisualization !== 'all' && !visualizations.value.includes(rawVisualization)
+      ? `The visualization filter ${rawVisualization} is not in the archive; showing all visualizations.`
+      : ''
+    const nextVisualization = visualizationWarning ? 'all' : rawVisualization ?? 'all'
+    const allowedRuntimeStatuses = ['verified', 'rendered-with-errors', 'empty', 'blocked', 'timeout', 'failed']
+    const runtimeWarning = rawRuntime !== null && !allowedRuntimeStatuses.includes(rawRuntime)
+      ? `The runtime filter ${rawRuntime} is not valid; showing all runtime statuses.`
+      : ''
+    const pageState = safePage(scalarQuery('page'), source.value?.profilePages ?? 1)
+    query.value = search.value
+    visualization.value = nextVisualization
+    runtimeStatus.value = runtimeWarning ? 'all' : (rawRuntime as FiddleRuntimeStatus | null) ?? 'all'
+    page.value = pageState.value
+    const notice = [search.warning, visualizationWarning, runtimeWarning, pageState.warning].filter(Boolean).join(' ')
+    if (notice || !preservingNotice) routeNotice.value = notice
+    const nextQuery: LocationQueryRaw = {
+      ...(query.value === '' ? {} : { q: query.value }),
+      ...(visualization.value === 'all' ? {} : { viz: visualization.value }),
+      ...(runtimeStatus.value === 'all' ? {} : { runtime: runtimeStatus.value }),
+      ...(page.value === 1 ? {} : { page: String(page.value) }),
+    }
+    if (!sameRouteQuery(nextQuery)) {
+      preservingNotice = true
+      void router.replace({ name: 'fiddle-archive', query: nextQuery }).finally(() => {
+        preservingNotice = false
+      })
+    } else {
       preservingNotice = false
-    })
-  } else {
-    preservingNotice = false
-  }
+    }
+  })
 }
 
 function commitFilters(): void {
   page.value = 1
   void router.replace({ name: 'fiddle-archive', query: archiveQuery.value })
 }
+
+function commitAssigned(assign: (value: string) => void) {
+  return (event: Event): void => {
+    const value = formControlValue(event)
+    if (value !== null) assign(value)
+    commitFilters()
+  }
+}
+
+const onSearchInput = commitAssigned((value) => { query.value = value })
+const onVisualizationChange = commitAssigned((value) => { visualization.value = value })
+const onRuntimeChange = commitAssigned((value) => { runtimeStatus.value = value as FiddleRuntimeStatus | 'all' })
 
 function changePage(nextPage: number): void {
   const maximum = source.value?.profilePages ?? 1
@@ -215,16 +231,16 @@ function runtimeFor(record: ArchivedFiddle) {
             autocomplete="off"
             data-testid="fiddle-search"
             placeholder="e.g. canvas, spin, CLDR"
-            @input="commitFilters"
+            @input="onSearchInput"
           )
         label.field
           span Visualization
-          select(v-model="visualization" data-testid="fiddle-visualization" @change="commitFilters")
+          select(v-model="visualization" data-testid="fiddle-visualization" @change="onVisualizationChange")
             option(value="all") All visualizations
             option(v-for="option in visualizations" :key="option" :value="option") {{ option }}
         label.field
           span Runtime status
-          select(v-model="runtimeStatus" data-testid="fiddle-runtime-filter" @change="commitFilters")
+          select(v-model="runtimeStatus" data-testid="fiddle-runtime-filter" @change="onRuntimeChange")
             option(value="all") All runtime statuses
             option(value="verified") Rendered without uncaught page errors ({{ runtimeAggregate?.verified }})
             option(value="rendered-with-errors") Rendered with errors ({{ runtimeAggregate?.['rendered-with-errors'] }})
