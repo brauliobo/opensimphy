@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-SPEC-001",
+  "counts": {
+    "total": 26,
+    "bySourceType": {
+      "formula": 26,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 20,
+      "medium": 6,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-nist-atomic-spectra-database-asd"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-10",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:display-math",
+        "line-span:32-34"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-11",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:display-math",
+        "line-span:36-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-12",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-13",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-14",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-15",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-16",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-17",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-18",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-20",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:45-45"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-22",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-23",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-24",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-26",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-38",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-39",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:display-math",
+        "line-span:82-84"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-4",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:21-21"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-41",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:display-math",
+        "line-span:87-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-56",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:2-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-56"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-57",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:20-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-57"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-58",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-58"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-59",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:57-57"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-59"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-60",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:72-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-60"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-61",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-61"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-7",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-8",
+      "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-6",
+        "document-title:Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+        "formula-kind:inline-math",
+        "line-span:28-28"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+        "formulaId": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b-formula-8"
+      }
+    }
+  ]
+}

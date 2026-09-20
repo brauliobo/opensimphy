@@ -1,0 +1,1803 @@
+{
+  "_AwesomePhysicsSimulationView-C91sBqTf.js": {
+    "file": "assets/AwesomePhysicsSimulationView-C91sBqTf.js",
+    "name": "AwesomePhysicsSimulationView",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_registerAdapters-DA9En9OV.js",
+      "_contract-DzmKjb1v.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_artifactManifest-DAO4oe7j.js"
+    ],
+    "dynamicImports": [
+      "src/awesomePhysics/workers/runInWorker.ts"
+    ],
+    "css": [
+      "assets/awesome-physics-CCq9qB2q.css"
+    ]
+  },
+  "_CaseNav.vue_vue_type_script_setup_true_lang-BaACqL4Z.js": {
+    "file": "assets/CaseNav.vue_vue_type_script_setup_true_lang-BaACqL4Z.js",
+    "name": "CaseNav.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html",
+      "_caseRegistry-AaGVqS0i.js"
+    ]
+  },
+  "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js": {
+    "file": "assets/ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+    "name": "ComputeDock.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js"
+    ],
+    "dynamicImports": [
+      "_plotly-BqzO5Dyi.js"
+    ]
+  },
+  "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js": {
+    "file": "assets/ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+    "name": "ComputeEmbed.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js"
+    ]
+  },
+  "_ComputePrompt--UaM7Wjs.css": {
+    "file": "assets/ComputePrompt--UaM7Wjs.css",
+    "src": "_ComputePrompt--UaM7Wjs.css"
+  },
+  "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js": {
+    "file": "assets/ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+    "name": "ComputePrompt.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html",
+      "_constants-DJ_Bewxw.js"
+    ],
+    "dynamicImports": [
+      "_mathjs-DzNr8_2o.js",
+      "_mathjs-DzNr8_2o.js",
+      "_mathjs-DzNr8_2o.js",
+      "_mathjs-DzNr8_2o.js",
+      "_mathjs-DzNr8_2o.js",
+      "_katex-ANDAQCU8.js",
+      "_katex-ANDAQCU8.js"
+    ],
+    "css": [
+      "assets/ComputePrompt--UaM7Wjs.css"
+    ]
+  },
+  "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js": {
+    "file": "assets/EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+    "name": "EarthLocalNav.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_EarthModelCard.vue_vue_type_script_setup_true_lang-CoLaAtEx.js": {
+    "file": "assets/EarthModelCard.vue_vue_type_script_setup_true_lang-CoLaAtEx.js",
+    "name": "EarthModelCard.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_FailClosedGraph.vue_vue_type_script_setup_true_lang-BqCiBj-b.js": {
+    "file": "assets/FailClosedGraph.vue_vue_type_script_setup_true_lang-BqCiBj-b.js",
+    "name": "FailClosedGraph.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js": {
+    "file": "assets/FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+    "name": "FigurePanel.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js": {
+    "file": "assets/MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+    "name": "MetricStrip.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_OrbitControls-Bzm_Q8_w.js": {
+    "file": "assets/OrbitControls-Bzm_Q8_w.js",
+    "name": "OrbitControls"
+  },
+  "_QuantumTooltip-CMezZeLl.js": {
+    "file": "assets/QuantumTooltip-CMezZeLl.js",
+    "name": "QuantumTooltip",
+    "imports": [
+      "index.html",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/QuantumTooltip-ChgdL4YH.css"
+    ]
+  },
+  "_QuantumTooltip-ChgdL4YH.css": {
+    "file": "assets/QuantumTooltip-ChgdL4YH.css",
+    "src": "_QuantumTooltip-ChgdL4YH.css"
+  },
+  "_ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js": {
+    "file": "assets/ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js",
+    "name": "ResultTable.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js": {
+    "file": "assets/WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js",
+    "name": "WorkbenchCompare.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "index.html",
+      "_snapshots-DJ6dRcQO.js"
+    ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_artifactManifest-DAO4oe7j.js": {
+    "file": "assets/artifactManifest-DAO4oe7j.js",
+    "name": "artifactManifest",
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_awesome-physics-CCq9qB2q.css": {
+    "file": "assets/awesome-physics-CCq9qB2q.css",
+    "src": "_awesome-physics-CCq9qB2q.css"
+  },
+  "_benchmarkRegistry-CN6-z38w.js": {
+    "file": "assets/benchmarkRegistry-CN6-z38w.js",
+    "name": "benchmarkRegistry",
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/benchmarkRegistry-xn2gLzzX.css"
+    ]
+  },
+  "_benchmarkRegistry-xn2gLzzX.css": {
+    "file": "assets/benchmarkRegistry-xn2gLzzX.css",
+    "src": "_benchmarkRegistry-xn2gLzzX.css"
+  },
+  "_caseRegistry-AaGVqS0i.js": {
+    "file": "assets/caseRegistry-AaGVqS0i.js",
+    "name": "caseRegistry"
+  },
+  "_completionRegistry-BZQD2Lcd.js": {
+    "file": "assets/completionRegistry-BZQD2Lcd.js",
+    "name": "completionRegistry",
+    "imports": [
+      "index.html",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_constants-DJ_Bewxw.js": {
+    "file": "assets/constants-DJ_Bewxw.js",
+    "name": "constants"
+  },
+  "_contract-DzmKjb1v.js": {
+    "file": "assets/contract-DzmKjb1v.js",
+    "name": "contract"
+  },
+  "_corpus-CHIPWDuM.js": {
+    "file": "assets/corpus-CHIPWDuM.js",
+    "name": "corpus"
+  },
+  "_datasets-qEz5RD0y.js": {
+    "file": "assets/datasets-qEz5RD0y.js",
+    "name": "datasets",
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_evidence-BUbE6ioW.js": {
+    "file": "assets/evidence-BUbE6ioW.js",
+    "name": "evidence",
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_fiddleRegistry-DQukBrcO.js": {
+    "file": "assets/fiddleRegistry-DQukBrcO.js",
+    "name": "fiddleRegistry",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "index.html"
+    ]
+  },
+  "_formControl-CG1U2uOu.js": {
+    "file": "assets/formControl-CG1U2uOu.js",
+    "name": "formControl"
+  },
+  "_formulaRegistry-B9EOMwtO.js": {
+    "file": "assets/formulaRegistry-B9EOMwtO.js",
+    "name": "formulaRegistry",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "index.html",
+      "_sha256-Afs0rgmq.js"
+    ]
+  },
+  "_katex-ANDAQCU8.js": {
+    "file": "assets/katex-ANDAQCU8.js",
+    "name": "katex",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/katex-iT9kCKzZ.css"
+    ],
+    "assets": [
+      "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf"
+    ]
+  },
+  "_katex-iT9kCKzZ.css": {
+    "file": "assets/katex-iT9kCKzZ.css",
+    "src": "_katex-iT9kCKzZ.css"
+  },
+  "_mathjs-DzNr8_2o.js": {
+    "file": "assets/mathjs-DzNr8_2o.js",
+    "name": "mathjs",
+    "isDynamicEntry": true
+  },
+  "_numbers-U-pHN7Vr.js": {
+    "file": "assets/numbers-U-pHN7Vr.js",
+    "name": "numbers"
+  },
+  "_particleCampaign-DqgdU5kw.js": {
+    "file": "assets/particleCampaign-DqgdU5kw.js",
+    "name": "particleCampaign"
+  },
+  "_physicsConstants-D2Fb_-GK.js": {
+    "file": "assets/physicsConstants-D2Fb_-GK.js",
+    "name": "physicsConstants",
+    "imports": [
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_plotly-BqzO5Dyi.js": {
+    "file": "assets/plotly-BqzO5Dyi.js",
+    "name": "plotly",
+    "isDynamicEntry": true,
+    "imports": [
+      "_mathjs-DzNr8_2o.js"
+    ]
+  },
+  "_quantum-wave-U2ioBcID.css": {
+    "file": "assets/quantum-wave-U2ioBcID.css",
+    "src": "_quantum-wave-U2ioBcID.css"
+  },
+  "_registerAdapters-DA9En9OV.js": {
+    "file": "assets/registerAdapters-DA9En9OV.js",
+    "name": "registerAdapters",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "index.html"
+    ],
+    "dynamicImports": [
+      "src/awesomePhysics/adapters/browser/matterJs.ts",
+      "src/awesomePhysics/adapters/browser/cannonJs.ts",
+      "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+      "src/awesomePhysics/adapters/browser/webglRipples.ts",
+      "src/awesomePhysics/adapters/browser/particleClicker.ts",
+      "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+      "src/awesomePhysics/adapters/typescript/empy.ts",
+      "src/awesomePhysics/adapters/typescript/pyRt.ts",
+      "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+      "src/awesomePhysics/adapters/typescript/fluids.ts",
+      "src/awesomePhysics/adapters/typescript/gala.ts",
+      "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+      "src/awesomePhysics/adapters/typescript/poppy.ts",
+      "src/awesomePhysics/adapters/typescript/quantumPythonLectures.ts",
+      "src/awesomePhysics/adapters/typescript/qutip.ts",
+      "src/awesomePhysics/adapters/typescript/scikitBeam.ts",
+      "src/awesomePhysics/adapters/typescript/raysect.ts",
+      "src/awesomePhysics/adapters/typescript/quantumOpticsJl.ts",
+      "src/awesomePhysics/adapters/typescript/astropy.ts",
+      "src/awesomePhysics/adapters/wasm/coolprop.ts",
+      "src/awesomePhysics/adapters/wasm/galpy.ts",
+      "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+      "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+      "src/awesomePhysics/adapters/wasm/bullet3.ts",
+      "src/awesomePhysics/adapters/wasm/spirit.ts",
+      "src/awesomePhysics/adapters/wasm/pymunk.ts",
+      "src/awesomePhysics/adapters/wasm/ncollide.ts",
+      "src/awesomePhysics/adapters/wasm/fluidEngineDev.ts",
+      "src/awesomePhysics/adapters/wasm/physx.ts",
+      "src/awesomePhysics/adapters/wasm/newtonDynamics.ts",
+      "src/awesomePhysics/adapters/wasm/cantera.ts"
+    ]
+  },
+  "_runtime-3zF2Bzm-.js": {
+    "file": "assets/runtime-3zF2Bzm-.js",
+    "name": "runtime",
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js"
+    ]
+  },
+  "_savedRunRegistry-4lLptdwl.js": {
+    "file": "assets/savedRunRegistry-4lLptdwl.js",
+    "name": "savedRunRegistry",
+    "imports": [
+      "index.html",
+      "_snapshots-DJ6dRcQO.js"
+    ]
+  },
+  "_sha256-Afs0rgmq.js": {
+    "file": "assets/sha256-Afs0rgmq.js",
+    "name": "sha256"
+  },
+  "_simulations-BesX13Sq.js": {
+    "file": "assets/simulations-BesX13Sq.js",
+    "name": "simulations",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "_numbers-U-pHN7Vr.js",
+      "_constants-DJ_Bewxw.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "_snapshots-DJ6dRcQO.js": {
+    "file": "assets/snapshots-DJ6dRcQO.js",
+    "name": "snapshots",
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "_taxonomyRegistry-DaFSRtvq.js": {
+    "file": "assets/taxonomyRegistry-DaFSRtvq.js",
+    "name": "taxonomyRegistry",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "index.html"
+    ]
+  },
+  "_tour-DtszU6Jw.css": {
+    "file": "assets/tour-DtszU6Jw.css",
+    "src": "_tour-DtszU6Jw.css"
+  },
+  "_tourOfflinePack-C2l1VLzn.js": {
+    "file": "assets/tourOfflinePack-C2l1VLzn.js",
+    "name": "tourOfflinePack",
+    "imports": [
+      "index.html",
+      "_tourRegistry-CsCPYQ_I.js",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ]
+  },
+  "_tourRegistry-CsCPYQ_I.js": {
+    "file": "assets/tourRegistry-CsCPYQ_I.js",
+    "name": "tourRegistry",
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "index.html",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ]
+  },
+  "_urlState-C5NyyeTD.js": {
+    "file": "assets/urlState-C5NyyeTD.js",
+    "name": "urlState",
+    "imports": [
+      "index.html",
+      "_snapshots-DJ6dRcQO.js"
+    ]
+  },
+  "_vec-BFiAMMY6.js": {
+    "file": "assets/vec-BFiAMMY6.js",
+    "name": "vec"
+  },
+  "_wasmArtifactLoader-B1c67TqH.js": {
+    "file": "assets/wasmArtifactLoader-B1c67TqH.js",
+    "name": "wasmArtifactLoader",
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js"
+    ]
+  },
+  "index.html": {
+    "file": "assets/index-fNG-5QOD.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+      "src/views/AwesomePhysicsShellView.vue",
+      "src/views/AwesomePhysicsCatalogView.vue",
+      "_AwesomePhysicsSimulationView-C91sBqTf.js",
+      "src/views/OverviewView.vue",
+      "src/views/TourMapView.vue",
+      "src/views/TourChapterView.vue",
+      "src/views/TourLessonView.vue",
+      "src/views/FormulaAtlasView.vue",
+      "src/views/FormulaDetailView.vue",
+      "src/views/LabsView.vue",
+      "src/views/ComputeView.vue",
+      "src/views/CaseHubView.vue",
+      "src/views/QuantumWaveLabView.vue",
+      "src/views/QuantumRegistersLabView.vue",
+      "src/views/CliffordSpaceLabView.vue",
+      "src/views/HyperbolicPartitionLabView.vue",
+      "src/views/EdwinGrayLabView.vue",
+      "src/views/FiddleArchiveView.vue",
+      "src/views/FiddleRecordView.vue",
+      "src/views/CoreLabView.vue",
+      "src/views/NumberWallsView.vue",
+      "src/views/OnelabLabView.vue",
+      "src/views/EarthSimulationDetailView.vue",
+      "src/views/EarthOverviewView.vue",
+      "src/views/EarthCorpusView.vue",
+      "src/views/EarthSimulationsView.vue",
+      "src/views/EarthSimulationDetailView.vue",
+      "src/views/EarthDatasetsView.vue",
+      "src/views/EarthDocumentView.vue",
+      "src/views/SourcesView.vue",
+      "src/views/EvidenceView.vue",
+      "src/views/SavedView.vue",
+      "src/views/NotFoundView.vue",
+      "src/views/NotFoundView.vue"
+    ],
+    "css": [
+      "assets/index-PnFMDUnL.css"
+    ]
+  },
+  "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.ttf": {
+    "file": "assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff": {
+    "file": "assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff2": {
+    "file": "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.ttf": {
+    "file": "assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff": {
+    "file": "assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2": {
+    "file": "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.ttf": {
+    "file": "assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff": {
+    "file": "assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2": {
+    "file": "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.ttf": {
+    "file": "assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff": {
+    "file": "assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2": {
+    "file": "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.ttf": {
+    "file": "assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff": {
+    "file": "assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2": {
+    "file": "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf": {
+    "file": "assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff": {
+    "file": "assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff2": {
+    "file": "assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.ttf": {
+    "file": "assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff": {
+    "file": "assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2": {
+    "file": "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Italic.ttf": {
+    "file": "assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Italic.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff": {
+    "file": "assets/KaTeX_Main-Italic-BMLOBm91.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff2": {
+    "file": "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf": {
+    "file": "assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff": {
+    "file": "assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff2": {
+    "file": "assets/KaTeX_Main-Regular-B22Nviop.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.ttf": {
+    "file": "assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff": {
+    "file": "assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2": {
+    "file": "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-Italic.ttf": {
+    "file": "assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-Italic.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff": {
+    "file": "assets/KaTeX_Math-Italic-DA0__PXp.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff2": {
+    "file": "assets/KaTeX_Math-Italic-t53AETM-.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.ttf": {
+    "file": "assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff": {
+    "file": "assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2": {
+    "file": "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.ttf": {
+    "file": "assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff": {
+    "file": "assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2": {
+    "file": "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.ttf": {
+    "file": "assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff": {
+    "file": "assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2": {
+    "file": "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Script-Regular.ttf": {
+    "file": "assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Script-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff": {
+    "file": "assets/KaTeX_Script-Regular-D5yQViql.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff2": {
+    "file": "assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.ttf": {
+    "file": "assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff": {
+    "file": "assets/KaTeX_Size1-Regular-C195tn64.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff2": {
+    "file": "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.ttf": {
+    "file": "assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff": {
+    "file": "assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff2": {
+    "file": "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size3-Regular.ttf": {
+    "file": "assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size3-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff": {
+    "file": "assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.ttf": {
+    "file": "assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff": {
+    "file": "assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff2": {
+    "file": "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff2"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.ttf": {
+    "file": "assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.ttf"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff": {
+    "file": "assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff"
+  },
+  "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2": {
+    "file": "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+    "src": "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2"
+  },
+  "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
+    "file": "assets/workbox-window.prod.es5-BBnX5xw4.js",
+    "name": "workbox-window.prod.es5",
+    "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+    "isDynamicEntry": true
+  },
+  "src/awesomePhysics/adapters/browser/cannonJs.ts": {
+    "file": "assets/cannonJs-DLGI5GYi.js",
+    "name": "cannonJs",
+    "src": "src/awesomePhysics/adapters/browser/cannonJs.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/browser/matterJs.ts": {
+    "file": "assets/matterJs-Dhl30VWU.js",
+    "name": "matterJs",
+    "src": "src/awesomePhysics/adapters/browser/matterJs.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/browser/myphysicslab.ts": {
+    "file": "assets/myphysicslab-BVaAFjXD.js",
+    "name": "myphysicslab",
+    "src": "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/browser/particleClicker.ts": {
+    "file": "assets/particleClicker-DOmEdKdw.js",
+    "name": "particleClicker",
+    "src": "src/awesomePhysics/adapters/browser/particleClicker.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/browser/webglRipples.ts": {
+    "file": "assets/webglRipples-BJPMQ36W.js",
+    "name": "webglRipples",
+    "src": "src/awesomePhysics/adapters/browser/webglRipples.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/astropy.ts": {
+    "file": "assets/astropy-DALwmnXq.js",
+    "name": "astropy",
+    "src": "src/awesomePhysics/adapters/typescript/astropy.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/empy.ts": {
+    "file": "assets/empy-DKtN-1Uh.js",
+    "name": "empy",
+    "src": "src/awesomePhysics/adapters/typescript/empy.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/fluids.ts": {
+    "file": "assets/fluids-BhBYgLnE.js",
+    "name": "fluids",
+    "src": "src/awesomePhysics/adapters/typescript/fluids.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/gala.ts": {
+    "file": "assets/gala-hRw6Koz6.js",
+    "name": "gala",
+    "src": "src/awesomePhysics/adapters/typescript/gala.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/poppy.ts": {
+    "file": "assets/poppy-Dy6cGsXI.js",
+    "name": "poppy",
+    "src": "src/awesomePhysics/adapters/typescript/poppy.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/pyRt.ts": {
+    "file": "assets/pyRt-Dy0czJHw.js",
+    "name": "pyRt",
+    "src": "src/awesomePhysics/adapters/typescript/pyRt.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/qmsolve.ts": {
+    "file": "assets/qmsolve-DLr0VaEn.js",
+    "name": "qmsolve",
+    "src": "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/quantumOpticsJl.ts": {
+    "file": "assets/quantumOpticsJl-Bclvx_mr.js",
+    "name": "quantumOpticsJl",
+    "src": "src/awesomePhysics/adapters/typescript/quantumOpticsJl.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/quantumPythonLectures.ts": {
+    "file": "assets/quantumPythonLectures-BXiMzSZj.js",
+    "name": "quantumPythonLectures",
+    "src": "src/awesomePhysics/adapters/typescript/quantumPythonLectures.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/qutip.ts": {
+    "file": "assets/qutip--2ycnpqo.js",
+    "name": "qutip",
+    "src": "src/awesomePhysics/adapters/typescript/qutip.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/raysect.ts": {
+    "file": "assets/raysect-CsW_uJA0.js",
+    "name": "raysect",
+    "src": "src/awesomePhysics/adapters/typescript/raysect.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/scikitBeam.ts": {
+    "file": "assets/scikitBeam-Dk5CLXfe.js",
+    "name": "scikitBeam",
+    "src": "src/awesomePhysics/adapters/typescript/scikitBeam.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/scikitRf.ts": {
+    "file": "assets/scikitRf-CxrCKVbK.js",
+    "name": "scikitRf",
+    "src": "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/typescript/tightBinding.ts": {
+    "file": "assets/tightBinding-BdBfUAM-.js",
+    "name": "tightBinding",
+    "src": "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/bullet3.ts": {
+    "file": "assets/bullet3-BkGUWE5n.js",
+    "name": "bullet3",
+    "src": "src/awesomePhysics/adapters/wasm/bullet3.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/cantera.ts": {
+    "file": "assets/cantera-DLtF3N4D.js",
+    "name": "cantera",
+    "src": "src/awesomePhysics/adapters/wasm/cantera.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_runtime-3zF2Bzm-.js",
+      "_contract-DzmKjb1v.js",
+      "_wasmArtifactLoader-B1c67TqH.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/coolprop.ts": {
+    "file": "assets/coolprop-BVRQfxMd.js",
+    "name": "coolprop",
+    "src": "src/awesomePhysics/adapters/wasm/coolprop.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/fluidEngineDev.ts": {
+    "file": "assets/fluidEngineDev-B0cagtp1.js",
+    "name": "fluidEngineDev",
+    "src": "src/awesomePhysics/adapters/wasm/fluidEngineDev.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/galpy.ts": {
+    "file": "assets/galpy-2AoyCs-v.js",
+    "name": "galpy",
+    "src": "src/awesomePhysics/adapters/wasm/galpy.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_runtime-3zF2Bzm-.js",
+      "_contract-DzmKjb1v.js",
+      "_wasmArtifactLoader-B1c67TqH.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/ncollide.ts": {
+    "file": "assets/ncollide-DFMAgyOt.js",
+    "name": "ncollide",
+    "src": "src/awesomePhysics/adapters/wasm/ncollide.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/newtonDynamics.ts": {
+    "file": "assets/newtonDynamics-qgSdB53z.js",
+    "name": "newtonDynamics",
+    "src": "src/awesomePhysics/adapters/wasm/newtonDynamics.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/nphysics2d.ts": {
+    "file": "assets/nphysics2d-BgU40aY4.js",
+    "name": "nphysics2d",
+    "src": "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/physx.ts": {
+    "file": "assets/physx-Dee6cN-g.js",
+    "name": "physx",
+    "src": "src/awesomePhysics/adapters/wasm/physx.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts": {
+    "file": "assets/positionBasedDynamics-DFziLony.js",
+    "name": "positionBasedDynamics",
+    "src": "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/pymunk.ts": {
+    "file": "assets/pymunk-BPNQpBcQ.js",
+    "name": "pymunk",
+    "src": "src/awesomePhysics/adapters/wasm/pymunk.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/adapters/wasm/spirit.ts": {
+    "file": "assets/spirit-MJ8KOo_K.js",
+    "name": "spirit",
+    "src": "src/awesomePhysics/adapters/wasm/spirit.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/awesomePhysics/wasm/coolpropWorker.ts": {
+    "file": "assets/coolpropWorker-BoyKsuaM.js",
+    "name": "coolpropWorker",
+    "src": "src/awesomePhysics/wasm/coolpropWorker.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_artifactManifest-DAO4oe7j.js",
+      "_wasmArtifactLoader-B1c67TqH.js",
+      "src/awesomePhysics/workers/runInWorker.ts",
+      "_contract-DzmKjb1v.js",
+      "_AwesomePhysicsSimulationView-C91sBqTf.js",
+      "_registerAdapters-DA9En9OV.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js"
+    ],
+    "dynamicImports": [
+      "src/awesomePhysics/adapters/wasm/coolprop.ts"
+    ],
+    "css": [
+      "assets/awesome-physics-CCq9qB2q.css"
+    ]
+  },
+  "src/awesomePhysics/workers/runInWorker.ts": {
+    "file": "assets/runInWorker-CjROcbdu.js",
+    "name": "runInWorker",
+    "src": "src/awesomePhysics/workers/runInWorker.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_AwesomePhysicsSimulationView-C91sBqTf.js",
+      "_registerAdapters-DA9En9OV.js",
+      "_contract-DzmKjb1v.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_artifactManifest-DAO4oe7j.js"
+    ],
+    "dynamicImports": [
+      "src/awesomePhysics/wasm/coolpropWorker.ts"
+    ],
+    "css": [
+      "assets/awesome-physics-CCq9qB2q.css"
+    ]
+  },
+  "src/components/tour/AtomicSpectrumExplorer.vue": {
+    "file": "assets/AtomicSpectrumExplorer-CdBCczFy.js",
+    "name": "AtomicSpectrumExplorer",
+    "src": "src/components/tour/AtomicSpectrumExplorer.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/AtomicSpectrumExplorer-BGENvNP1.css"
+    ]
+  },
+  "src/components/tour/BlackbodySpectrum.vue": {
+    "file": "assets/BlackbodySpectrum-CqAoNWdd.js",
+    "name": "BlackbodySpectrum",
+    "src": "src/components/tour/BlackbodySpectrum.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/BlackbodySpectrum-CTCgjnNe.css"
+    ]
+  },
+  "src/components/tour/DimensionBuilder.vue": {
+    "file": "assets/DimensionBuilder-DWcJKPTE.js",
+    "name": "DimensionBuilder",
+    "src": "src/components/tour/DimensionBuilder.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js"
+    ]
+  },
+  "src/components/tour/ElectricalStandardsNetwork.vue": {
+    "file": "assets/ElectricalStandardsNetwork-D8MiVS5N.js",
+    "name": "ElectricalStandardsNetwork",
+    "src": "src/components/tour/ElectricalStandardsNetwork.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/ElectricalStandardsNetwork-DAedbpW1.css"
+    ]
+  },
+  "src/components/tour/MolarMatterScaler.vue": {
+    "file": "assets/MolarMatterScaler-6hJkmJ6c.js",
+    "name": "MolarMatterScaler",
+    "src": "src/components/tour/MolarMatterScaler.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/MolarMatterScaler-DwVTL97y.css"
+    ]
+  },
+  "src/components/tour/ParticleScaleComparator.vue": {
+    "file": "assets/ParticleScaleComparator-DpOWBSmC.js",
+    "name": "ParticleScaleComparator",
+    "src": "src/components/tour/ParticleScaleComparator.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/ParticleScaleComparator-CsH-LeNK.css"
+    ]
+  },
+  "src/components/tour/PhotonBridge.vue": {
+    "file": "assets/PhotonBridge-Ddt7dMjs.js",
+    "name": "PhotonBridge",
+    "src": "src/components/tour/PhotonBridge.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/PhotonBridge-ZHyjmhlc.css"
+    ]
+  },
+  "src/components/tour/ScaleRuler.vue": {
+    "file": "assets/ScaleRuler-C5di8Vru.js",
+    "name": "ScaleRuler",
+    "src": "src/components/tour/ScaleRuler.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/ScaleRuler-BH41Yd-R.css"
+    ]
+  },
+  "src/components/tour/SpinPrecessionVisualizer.vue": {
+    "file": "assets/SpinPrecessionVisualizer-DQH0HzcP.js",
+    "name": "SpinPrecessionVisualizer",
+    "src": "src/components/tour/SpinPrecessionVisualizer.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/SpinPrecessionVisualizer-D_f-mARz.css"
+    ]
+  },
+  "src/views/AwesomePhysicsCatalogView.vue": {
+    "file": "assets/AwesomePhysicsCatalogView-DY5R4b3j.js",
+    "name": "AwesomePhysicsCatalogView",
+    "src": "src/views/AwesomePhysicsCatalogView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_registerAdapters-DA9En9OV.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/awesome-physics-CCq9qB2q.css"
+    ]
+  },
+  "src/views/AwesomePhysicsShellView.vue": {
+    "file": "assets/AwesomePhysicsShellView-C-DCos0L.js",
+    "name": "AwesomePhysicsShellView",
+    "src": "src/views/AwesomePhysicsShellView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_CaseNav.vue_vue_type_script_setup_true_lang-BaACqL4Z.js",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_caseRegistry-AaGVqS0i.js",
+      "_registerAdapters-DA9En9OV.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/awesome-physics-CCq9qB2q.css"
+    ]
+  },
+  "src/views/CaseHubView.vue": {
+    "file": "assets/CaseHubView-Bhu9CxHW.js",
+    "name": "CaseHubView",
+    "src": "src/views/CaseHubView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+      "_caseRegistry-AaGVqS0i.js",
+      "_registerAdapters-DA9En9OV.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/CliffordSpaceLabView.vue": {
+    "file": "assets/CliffordSpaceLabView-XtSBykPP.js",
+    "name": "CliffordSpaceLabView",
+    "src": "src/views/CliffordSpaceLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_QuantumTooltip-CMezZeLl.js",
+      "_OrbitControls-Bzm_Q8_w.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/CliffordSpaceLabView-C6IFbZTp.css",
+      "assets/quantum-wave-U2ioBcID.css"
+    ]
+  },
+  "src/views/ComputeView.vue": {
+    "file": "assets/ComputeView-C2v7cRUJ.js",
+    "name": "ComputeView",
+    "src": "src/views/ComputeView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_constants-DJ_Bewxw.js"
+    ]
+  },
+  "src/views/CoreLabView.vue": {
+    "file": "assets/CoreLabView-iEzvGTOA.js",
+    "name": "CoreLabView",
+    "src": "src/views/CoreLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_FailClosedGraph.vue_vue_type_script_setup_true_lang-BqCiBj-b.js",
+      "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+      "_WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js",
+      "_urlState-C5NyyeTD.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_sha256-Afs0rgmq.js",
+      "_snapshots-DJ6dRcQO.js",
+      "_savedRunRegistry-4lLptdwl.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/CoreLabView-B0eGyzvP.css"
+    ]
+  },
+  "src/views/EarthCorpusView.vue": {
+    "file": "assets/EarthCorpusView-DMetoxns.js",
+    "name": "EarthCorpusView",
+    "src": "src/views/EarthCorpusView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_corpus-CHIPWDuM.js",
+      "_evidence-BUbE6ioW.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/EarthDatasetsView.vue": {
+    "file": "assets/EarthDatasetsView-q-eT61sH.js",
+    "name": "EarthDatasetsView",
+    "src": "src/views/EarthDatasetsView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_datasets-qEz5RD0y.js",
+      "_simulations-BesX13Sq.js",
+      "_contract-DzmKjb1v.js",
+      "_numbers-U-pHN7Vr.js",
+      "_constants-DJ_Bewxw.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "src/views/EarthDocumentView.vue": {
+    "file": "assets/EarthDocumentView-CIamWUmQ.js",
+    "name": "EarthDocumentView",
+    "src": "src/views/EarthDocumentView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_corpus-CHIPWDuM.js",
+      "_evidence-BUbE6ioW.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/EarthOverviewView.vue": {
+    "file": "assets/EarthOverviewView-B7BBM3Rl.js",
+    "name": "EarthOverviewView",
+    "src": "src/views/EarthOverviewView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_EarthModelCard.vue_vue_type_script_setup_true_lang-CoLaAtEx.js",
+      "_corpus-CHIPWDuM.js",
+      "_datasets-qEz5RD0y.js",
+      "_particleCampaign-DqgdU5kw.js",
+      "_simulations-BesX13Sq.js",
+      "_contract-DzmKjb1v.js",
+      "_numbers-U-pHN7Vr.js",
+      "_constants-DJ_Bewxw.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "src/views/EarthSimulationDetailView.vue": {
+    "file": "assets/EarthSimulationDetailView-thKfAeKf.js",
+    "name": "EarthSimulationDetailView",
+    "src": "src/views/EarthSimulationDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_EarthModelCard.vue_vue_type_script_setup_true_lang-CoLaAtEx.js",
+      "_simulations-BesX13Sq.js",
+      "_snapshots-DJ6dRcQO.js",
+      "_sha256-Afs0rgmq.js",
+      "_WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js",
+      "_urlState-C5NyyeTD.js",
+      "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_datasets-qEz5RD0y.js",
+      "_particleCampaign-DqgdU5kw.js",
+      "_evidence-BUbE6ioW.js",
+      "_savedRunRegistry-4lLptdwl.js",
+      "_contract-DzmKjb1v.js",
+      "_numbers-U-pHN7Vr.js",
+      "_constants-DJ_Bewxw.js",
+      "_vec-BFiAMMY6.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js"
+    ]
+  },
+  "src/views/EarthSimulationsView.vue": {
+    "file": "assets/EarthSimulationsView-DsngX8Wr.js",
+    "name": "EarthSimulationsView",
+    "src": "src/views/EarthSimulationsView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_EarthLocalNav.vue_vue_type_script_setup_true_lang-BUb-Y9rz.js",
+      "_particleCampaign-DqgdU5kw.js",
+      "_simulations-BesX13Sq.js",
+      "_contract-DzmKjb1v.js",
+      "_numbers-U-pHN7Vr.js",
+      "_constants-DJ_Bewxw.js",
+      "_vec-BFiAMMY6.js"
+    ]
+  },
+  "src/views/EdwinGrayLabView.vue": {
+    "file": "assets/EdwinGrayLabView-BdO7cBlC.js",
+    "name": "EdwinGrayLabView",
+    "src": "src/views/EdwinGrayLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "_CaseNav.vue_vue_type_script_setup_true_lang-BaACqL4Z.js",
+      "_benchmarkRegistry-CN6-z38w.js",
+      "_MetricStrip.vue_vue_type_script_setup_true_lang-xy3P43Vj.js",
+      "_ResultTable.vue_vue_type_script_setup_true_lang-CC4ob6JO.js",
+      "_caseRegistry-AaGVqS0i.js",
+      "_snapshots-DJ6dRcQO.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/EdwinGrayLabView-CbCF80S9.css",
+      "assets/quantum-wave-U2ioBcID.css"
+    ]
+  },
+  "src/views/EvidenceView.vue": {
+    "file": "assets/EvidenceView-DRCNhe-M.js",
+    "name": "EvidenceView",
+    "src": "src/views/EvidenceView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/FiddleArchiveView.vue": {
+    "file": "assets/FiddleArchiveView-CkGvbXat.js",
+    "name": "FiddleArchiveView",
+    "src": "src/views/FiddleArchiveView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_fiddleRegistry-DQukBrcO.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/FiddleRecordView.vue": {
+    "file": "assets/FiddleRecordView-Cnsv82cE.js",
+    "name": "FiddleRecordView",
+    "src": "src/views/FiddleRecordView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_fiddleRegistry-DQukBrcO.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/FormulaAtlasView.vue": {
+    "file": "assets/FormulaAtlasView-DLzHXIWk.js",
+    "name": "FormulaAtlasView",
+    "src": "src/views/FormulaAtlasView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_formulaRegistry-B9EOMwtO.js",
+      "_taxonomyRegistry-DaFSRtvq.js",
+      "_contract-DzmKjb1v.js",
+      "_sha256-Afs0rgmq.js"
+    ]
+  },
+  "src/views/FormulaDetailView.vue": {
+    "file": "assets/FormulaDetailView-sAyKmcor.js",
+    "name": "FormulaDetailView",
+    "src": "src/views/FormulaDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+      "_FailClosedGraph.vue_vue_type_script_setup_true_lang-BqCiBj-b.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js",
+      "_formulaRegistry-B9EOMwtO.js",
+      "_savedRunRegistry-4lLptdwl.js",
+      "_taxonomyRegistry-DaFSRtvq.js",
+      "_snapshots-DJ6dRcQO.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js",
+      "_sha256-Afs0rgmq.js"
+    ]
+  },
+  "src/views/HyperbolicPartitionLabView.vue": {
+    "file": "assets/HyperbolicPartitionLabView-Bj8oJREv.js",
+    "name": "HyperbolicPartitionLabView",
+    "src": "src/views/HyperbolicPartitionLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_QuantumTooltip-CMezZeLl.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_constants-DJ_Bewxw.js"
+    ],
+    "css": [
+      "assets/HyperbolicPartitionLabView-7aBuOMVR.css",
+      "assets/quantum-wave-U2ioBcID.css"
+    ]
+  },
+  "src/views/LabsView.vue": {
+    "file": "assets/LabsView-Cw5F7soA.js",
+    "name": "LabsView",
+    "src": "src/views/LabsView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_completionRegistry-BZQD2Lcd.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/NotFoundView.vue": {
+    "file": "assets/NotFoundView-B3NebsLA.js",
+    "name": "NotFoundView",
+    "src": "src/views/NotFoundView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/NumberWallsView.vue": {
+    "file": "assets/NumberWallsView-CsA4PzPc.js",
+    "name": "NumberWallsView",
+    "src": "src/views/NumberWallsView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_formControl-CG1U2uOu.js",
+      "_ComputeDock.vue_vue_type_script_setup_true_lang-B6nHbk2h.js",
+      "_WorkbenchCompare.vue_vue_type_script_setup_true_lang-Dznq-qff.js",
+      "_urlState-C5NyyeTD.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_savedRunRegistry-4lLptdwl.js",
+      "_contract-DzmKjb1v.js",
+      "_sha256-Afs0rgmq.js",
+      "_snapshots-DJ6dRcQO.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_FigurePanel.vue_vue_type_script_setup_true_lang-BeGTxOfN.js",
+      "_constants-DJ_Bewxw.js"
+    ],
+    "dynamicImports": [
+      "src/workers/numberWall.worker.ts?worker"
+    ],
+    "css": [
+      "assets/NumberWallsView-Pd4Qf_7l.css"
+    ]
+  },
+  "src/views/OnelabLabView.vue": {
+    "file": "assets/OnelabLabView-zB7fkkpx.js",
+    "name": "OnelabLabView",
+    "src": "src/views/OnelabLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_OrbitControls-Bzm_Q8_w.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js"
+    ]
+  },
+  "src/views/OverviewView.vue": {
+    "file": "assets/OverviewView-CiFrkvAh.js",
+    "name": "OverviewView",
+    "src": "src/views/OverviewView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_tourOfflinePack-C2l1VLzn.js",
+      "_tourRegistry-CsCPYQ_I.js",
+      "_taxonomyRegistry-DaFSRtvq.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/QuantumRegistersLabView.vue": {
+    "file": "assets/QuantumRegistersLabView-Bh0cG7zq.js",
+    "name": "QuantumRegistersLabView",
+    "src": "src/views/QuantumRegistersLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_QuantumTooltip-CMezZeLl.js",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/QuantumRegistersLabView-7NPL2rL4.css",
+      "assets/quantum-wave-U2ioBcID.css"
+    ]
+  },
+  "src/views/QuantumWaveLabView.vue": {
+    "file": "assets/QuantumWaveLabView-CojIRLC8.js",
+    "name": "QuantumWaveLabView",
+    "src": "src/views/QuantumWaveLabView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_QuantumTooltip-CMezZeLl.js",
+      "_numbers-U-pHN7Vr.js",
+      "_physicsConstants-D2Fb_-GK.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js"
+    ],
+    "css": [
+      "assets/QuantumWaveLabView-tAvvk8jy.css",
+      "assets/quantum-wave-U2ioBcID.css"
+    ]
+  },
+  "src/views/SavedView.vue": {
+    "file": "assets/SavedView-Cv88w3b2.js",
+    "name": "SavedView",
+    "src": "src/views/SavedView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_savedRunRegistry-4lLptdwl.js",
+      "_tourOfflinePack-C2l1VLzn.js",
+      "_tourRegistry-CsCPYQ_I.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_snapshots-DJ6dRcQO.js",
+      "_contract-DzmKjb1v.js",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ],
+    "css": [
+      "assets/SavedView-DikKN0FA.css",
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/SourcesView.vue": {
+    "file": "assets/SourcesView-Cga_KMvg.js",
+    "name": "SourcesView",
+    "src": "src/views/SourcesView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_completionRegistry-BZQD2Lcd.js",
+      "_contract-DzmKjb1v.js"
+    ]
+  },
+  "src/views/TourChapterView.vue": {
+    "file": "assets/TourChapterView-Dz26Z07l.js",
+    "name": "TourChapterView",
+    "src": "src/views/TourChapterView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_tourRegistry-CsCPYQ_I.js",
+      "_contract-DzmKjb1v.js",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ],
+    "css": [
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/TourLessonView.vue": {
+    "file": "assets/TourLessonView-I9lP0hCI.js",
+    "name": "TourLessonView",
+    "src": "src/views/TourLessonView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_ComputeEmbed.vue_vue_type_script_setup_true_lang-orKvmXRj.js",
+      "_tourRegistry-CsCPYQ_I.js",
+      "_ComputePrompt.vue_vue_type_script_setup_true_lang-BhHJAWHd.js",
+      "_constants-DJ_Bewxw.js",
+      "_contract-DzmKjb1v.js",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ],
+    "dynamicImports": [
+      "src/components/tour/DimensionBuilder.vue",
+      "src/components/tour/ScaleRuler.vue",
+      "src/components/tour/PhotonBridge.vue",
+      "src/components/tour/ElectricalStandardsNetwork.vue",
+      "src/components/tour/AtomicSpectrumExplorer.vue",
+      "src/components/tour/ParticleScaleComparator.vue",
+      "src/components/tour/SpinPrecessionVisualizer.vue",
+      "src/components/tour/BlackbodySpectrum.vue",
+      "src/components/tour/MolarMatterScaler.vue"
+    ],
+    "css": [
+      "assets/TourLessonView-C6o6vCbh.css",
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/views/TourMapView.vue": {
+    "file": "assets/TourMapView-C28nRMFj.js",
+    "name": "TourMapView",
+    "src": "src/views/TourMapView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_tourRegistry-CsCPYQ_I.js",
+      "_contract-DzmKjb1v.js",
+      "_taxonomyRegistry-DaFSRtvq.js"
+    ],
+    "css": [
+      "assets/tour-DtszU6Jw.css"
+    ]
+  },
+  "src/workers/numberWall.worker.ts?worker": {
+    "file": "assets/numberWall.worker-BFnf2fh1.js",
+    "name": "numberWall.worker",
+    "src": "src/workers/numberWall.worker.ts?worker",
+    "isDynamicEntry": true
+  }
+}

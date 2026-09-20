@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-PRT-001",
+  "counts": {
+    "total": 30,
+    "bySourceType": {
+      "formula": 30,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 24,
+      "medium": 6,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12",
+    "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+    "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+    "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-codata-recommended-values"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-1",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:5-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-10",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-11",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:45-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-12",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:49-51"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-13",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:53-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-14",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:57-59"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-15",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:64-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-16",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-17",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-18",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:68-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-19",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:75-77"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-2",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:9-9"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-20",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-21",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:79-81"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-25",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-26",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-27",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-28",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-29",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-30",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:inline-math",
+        "line-span:95-95"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-6",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:18-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-65",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:2-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-65"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-66",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:21-21"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-66"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-67",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-67"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-68",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-68"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-69",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-69"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-7",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:29-31"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-70",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-70"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-8",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:36-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-9",
+      "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-2",
+        "document-title:Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+        "formula-kind:display-math",
+        "line-span:41-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+        "formulaId": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5-formula-9"
+      }
+    }
+  ]
+}

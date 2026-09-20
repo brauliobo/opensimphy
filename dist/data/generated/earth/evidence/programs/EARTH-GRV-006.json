@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-GRV-006",
+  "counts": {
+    "total": 0,
+    "bySourceType": {
+      "formula": 0,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+    "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+    "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+    "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": []
+}

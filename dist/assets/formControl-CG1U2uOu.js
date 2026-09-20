@@ -1,0 +1,1 @@
+function n(t){const e=t.target;return e instanceof HTMLInputElement||e instanceof HTMLSelectElement||e instanceof HTMLTextAreaElement?e.value:null}function r(){let t=!1;return{run(e){t=!0;try{e()}finally{t=!1}},isApplying(){return t}}}export{r as c,n as f};

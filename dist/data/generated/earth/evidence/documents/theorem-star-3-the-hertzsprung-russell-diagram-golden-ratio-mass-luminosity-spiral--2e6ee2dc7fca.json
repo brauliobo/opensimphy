@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+    "slug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+    "title": "Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral"
+  },
+  "summary": {
+    "coverageAssignments": 59,
+    "canonicalProgramAssignments": 49,
+    "classifiedAssignments": 10,
+    "relatedCanonicalPrograms": 9,
+    "classificationCounts": {
+      "duplicate": 10,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-STAR-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-004",
+      "counts": {
+        "total": 49,
+        "bySourceType": {
+          "formula": 39,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 28,
+          "medium": 21,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-008",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-STAR-009",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-1",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-21",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:278-278"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-21"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-14"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-25",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-25"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-26",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-26"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-19"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-27",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-27"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-4",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-4"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-47",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:287-287"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-47"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-31"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-9",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:69-69"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "formulaId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-formula-9"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-formula-7"
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-1",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-3",
+        "document-title:Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+        "identical-code-content-sha256",
+        "section:Verification Notes",
+        "line-span:196-200"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-1",
+        "simulationCandidateIds": [
+          "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-1"
+        ]
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1"
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-1",
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "confidence": "high",
+      "assignmentBasis": [
+        "linked-code-block:earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-1",
+        "source-document:earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "section:Verification Notes",
+        "line-in-code-span:196:196-200"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+        "simulationCandidateId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-1",
+        "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1"
+    }
+  ]
+}

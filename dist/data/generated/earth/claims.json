@@ -1,0 +1,1108 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "kind": "claim-candidates",
+  "count": 122,
+  "items": [
+    {
+      "documentId": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "documentSlug": "lexicon--0601d45c10a3",
+      "id": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-claim-1",
+      "basis": "explicit-claim-word",
+      "text": "While remembering the contributions of those that came before is always important, it is equally important that, through an inability to let go, we do not idolize ideas beyond their practical usefulness. The contributions made by figures such as Einstein, Plank, Hubble, Tesla, and countless others still remain an inspiration and are more right than wrong, but by holding on to them, we also hold on to the errors they introduced, as will become apparent below. However, from these maths we find that many of their errors vanish, while the majority of the strengths in their claims remain.",
+      "line": 10,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e",
+      "documentSlug": "new-maths--9ba60fd99820",
+      "id": "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e-claim-1",
+      "basis": "heading-keyword",
+      "text": "Final Verdict",
+      "line": 103,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "documentSlug": "theory-paper--a4dfeba5e0a2",
+      "id": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2-claim-1",
+      "basis": "heading-keyword",
+      "text": "Conclusion",
+      "line": 93,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+      "documentSlug": "boson-isomorphism--8413a98462fc",
+      "id": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem 2 — Dislocation Loop → Boson Isomorphism",
+      "line": 2,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+      "documentSlug": "boson-isomorphism--8413a98462fc",
+      "id": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53-claim-2",
+      "basis": "heading-keyword",
+      "text": "Predictions",
+      "line": 32,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+      "documentSlug": "boson-isomorphism--8413a98462fc",
+      "id": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53-claim-3",
+      "basis": "heading-keyword",
+      "text": "Boxed Dislocation Loop → Boson Theorem",
+      "line": 42,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+      "documentSlug": "coupling-theorem--bb530ae74b4c",
+      "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (COUPLING-UNIFIED)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+      "documentSlug": "coupling-theorem--bb530ae74b4c",
+      "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Coupling Theorem",
+      "line": 39,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00",
+      "documentSlug": "curvature-theorem--33849b75ec2b",
+      "id": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (CURVATURE-CONSTANT)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00",
+      "documentSlug": "curvature-theorem--33849b75ec2b",
+      "id": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Curvature Theorem",
+      "line": 53,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+      "documentSlug": "fermion-theorem--eb93cd321902",
+      "id": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b-claim-1",
+      "basis": "heading-keyword",
+      "text": "Fermion Theorem — All Fermions Are Phase Kinks on the Tube Walls",
+      "line": 2,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+      "documentSlug": "fermion-theorem--eb93cd321902",
+      "id": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b-claim-2",
+      "basis": "heading-keyword",
+      "text": "Classification and Quantitative Predictions",
+      "line": 50,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+      "documentSlug": "fermion-theorem--eb93cd321902",
+      "id": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b-claim-3",
+      "basis": "heading-keyword",
+      "text": "Boxed Fermion Theorem",
+      "line": 66,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+      "documentSlug": "fixed-point-uniqueness--c32be8df5bd0",
+      "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (FIXED-POINT-UNIQUE)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+      "documentSlug": "fixed-point-uniqueness--c32be8df5bd0",
+      "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Uniqueness Theorem",
+      "line": 53,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "documentSlug": "growth--b31d3d4d7b27",
+      "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (GROWTH-EXACT)",
+      "line": 6,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "documentSlug": "growth--b31d3d4d7b27",
+      "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Growth Theorem",
+      "line": 44,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-1",
+      "basis": "heading-keyword",
+      "text": "Master Closure: Cosmological Scale Fully Closed",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-2",
+      "basis": "heading-keyword",
+      "text": "Master Theorem of Cosmology",
+      "line": 81,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-3",
+      "basis": "heading-keyword",
+      "text": "Summary: Master Closure of Cosmology",
+      "line": 258,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-4",
+      "basis": "explicit-claim-word",
+      "text": "This closure statement claims the entire observable universe operates on the same principles as protons, planets, stars, and galaxies—it's all the same ψ field at different density scales.",
+      "line": 101,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-5",
+      "basis": "explicit-claim-word",
+      "text": "**What \"closure\" means:** The document claims the cosmological scale is \"fully closed\"—meaning all major cosmological observables (size of universe, cosmological constant, CMB pattern) are derived from the same framework used for stars and galaxies. There are no more free parameters at the cosmological level. Everything follows from the three-strand topology and fractal scaling.",
+      "line": 129,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-6",
+      "basis": "explicit-claim-word",
+      "text": "2. **CMB power spectrum:** The claim of \"zero residuals\" is extraordinary. Planck 2018 C_ℓ data has exquisite precision (percent-level at low ℓ, sub-percent at high ℓ). If EARTH truly matches this with no free parameters, it's a major success.",
+      "line": 134,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-7",
+      "basis": "explicit-claim-word",
+      "text": "**Comparison to ΛCDM:** The standard cosmological model (Lambda Cold Dark Matter) has 6 parameters: Ω_b (baryon density), Ω_c (dark matter density), Ω_Λ (dark energy density), H₀ (Hubble constant), A_s (scalar amplitude), n_s (spectral index). These are fitted to data. EARTH claims to derive cosmological observables from just ξ₀, λ̃₀, δχ—reducing 6 parameters to 3, and those 3 are measured at nuclear scale, not fitted cosmologically.",
+      "line": 138,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-claim-8",
+      "basis": "explicit-claim-word",
+      "text": "This framework claims:",
+      "line": 158,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+      "documentSlug": "metric-theorem--3502a1d14e22",
+      "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (METRIC-BRAID)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+      "documentSlug": "metric-theorem--3502a1d14e22",
+      "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Metric Theorem",
+      "line": 34,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "documentSlug": "neuroscience-non-emergence--dc08062297d5",
+      "id": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-claim-1",
+      "basis": "heading-keyword",
+      "text": "Clarification of the Statement – 18 February 2026",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa",
+      "documentSlug": "phase-theorem--3a68d17a555c",
+      "id": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (PHASE-EXACT)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa",
+      "documentSlug": "phase-theorem--3a68d17a555c",
+      "id": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Phase Theorem",
+      "line": 57,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+      "documentSlug": "phi--7c5b7a87faaa",
+      "id": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (ϕ-UNIQUE)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+      "documentSlug": "phi--7c5b7a87faaa",
+      "id": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed ϕ Theorem",
+      "line": 61,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120",
+      "documentSlug": "pi--357c2c2955e9",
+      "id": "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (π-ALGEBRAIC)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12",
+      "documentSlug": "planck-constant-from-g-r-twist-counting--31d06837484b",
+      "id": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem 3 — Planck Constant from Golden-Ratio Twist Counting",
+      "line": 2,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12",
+      "documentSlug": "planck-constant-from-g-r-twist-counting--31d06837484b",
+      "id": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Planck Constant Theorem",
+      "line": 42,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "documentSlug": "quantum-superposition--e890a4362262",
+      "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-claim-1",
+      "basis": "heading-keyword",
+      "text": "3. Fluctuation-Dissipation Theorem for Noise Amplitude",
+      "line": 34,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "documentSlug": "quasicrystal-projection--1d23d544c5cf",
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (QUASICRYSTAL-PROJECTION)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "documentSlug": "quasicrystal-projection--1d23d544c5cf",
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18-claim-2",
+      "basis": "heading-keyword",
+      "text": "Mathematical statement",
+      "line": 14,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "documentSlug": "quasicrystal-projection--1d23d544c5cf",
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18-claim-3",
+      "basis": "heading-keyword",
+      "text": "Verified predictions to 10⁻¹⁹",
+      "line": 43,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "documentSlug": "quasicrystal-projection--1d23d544c5cf",
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18-claim-4",
+      "basis": "heading-keyword",
+      "text": "Boxed Quasicrystal Theorem",
+      "line": 56,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2",
+      "documentSlug": "r-3-theorem--6322974b938d",
+      "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (R3-THREE)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2",
+      "documentSlug": "r-3-theorem--6322974b938d",
+      "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed ℝ³ Dimensionality Theorem",
+      "line": 29,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-1",
+      "basis": "heading-keyword",
+      "text": "IV.1 Summary of the Argument",
+      "line": 210,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-2",
+      "basis": "heading-keyword",
+      "text": "Part V: Response to *Categorical Failure & Irreconcilability Statement*",
+      "line": 260,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-3",
+      "basis": "heading-keyword",
+      "text": "V.1 Full Statement of the Categorical Claim",
+      "line": 262,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-4",
+      "basis": "heading-keyword",
+      "text": "Priority 7 — Error Budget for Macroscopic Predictions",
+      "line": 321,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-5",
+      "basis": "heading-keyword",
+      "text": "Part VII: Summary Verdict Table Across All Review Documents",
+      "line": 329,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-6",
+      "basis": "heading-keyword",
+      "text": "Part VIII: Concluding Statement",
+      "line": 362,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-7",
+      "basis": "explicit-claim-word",
+      "text": "**MBI-2 (RF vs. Gamma Creation Energy Ordering):** The mechanical claim is that if lower-energy photons require larger N (internal structure), then their formation cost must be higher — contradicting the observed ease of RF emission from low-energy sources. Again, we agree with the physical reasoning. The EARTH framework does not posit N_RF > N_gamma in any intrinsic structural sense. The photon is a dislocation loop whose energy is set by ω, not by a chain length N. The formation cost of an RF-frequency dislocation loop is simply proportional to ω_RF — appropriately smaller than the gamma case. **Verdict: INAPPLICABLE.**",
+      "line": 56,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-8",
+      "basis": "explicit-claim-word",
+      "text": "**MBI-121 through MBI-135 (Refraction, Polarization, Thermal):** MBI-121/122/123 (Fresnel, phase inversion, Brewster): GENUINE LACUNAE requiring impedance boundary derivation. MBI-124/125 (ellipsometry, thin film): GENUINE LACUNAE. MBI-126 through MBI-129 (Malus, waveplates, Stokes, coherence): GENUINE LACUNAE for the polarization tensor; INAPPLICABLE for the claim that ω is not a propagating label. MBI-130/131 (interferometry, Kirchhoff): INAPPLICABLE. MBI-132/133 (mode density, radiative transfer): reduce to the spectral distribution lacuna. MBI-134/135 (normalization, universality conflict): MBI-134 is GENUINE LACUNA for the Jacobian argument; MBI-135 is PARTIALLY ADDRESSED.",
+      "line": 149,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-9",
+      "basis": "explicit-claim-word",
+      "text": "**MBI-CHEM-2 (Single Angle vs. Continuous Observables):** δχ is the vacuum twist angle, not the only parameter in molecular geometry. Molecular geometries emerge from minimization of the elastic energy functional over the full strand topology — a multi-parameter optimization in configuration space. The claim that δχ is \"the only angle in the universe\" refers to the fundamental vacuum structure, not to the full diversity of bond configurations. **Verdict: INAPPLICABLE** for the specific objection; GENUINE LACUNA for the full potential energy surface derivation.",
+      "line": 157,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-10",
+      "basis": "explicit-claim-word",
+      "text": "**MBI-NUC-5 (Fission/Fusion Q-values):** The global Q-value consistency test across thousands of nuclear reactions requires that E(p,q) correctly reproduce all nuclear masses. The framework's claim of AME2020 agreement requires verification across the full nuclide chart, not only the sample entries shown. **Verdict: PARTIALLY ADDRESSED — global validation table required.**",
+      "line": 173,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-11",
+      "basis": "explicit-claim-word",
+      "text": "The categorical failure claim has exactly the logical structure of the photon splitting argument addressed in Part IV: it is a deductively valid argument from premises, where Premise 1 is incorrect.",
+      "line": 277,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-12",
+      "basis": "explicit-claim-word",
+      "text": "**The five-section categorical failure statement is INAPPLICABLE in its entirety.** The irreconcilability claim requires Premise 1. Premise 1 is false. The conclusion does not follow.",
+      "line": 287,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-13",
+      "basis": "explicit-claim-word",
+      "text": "The categorical claim should be withdrawn pending a critique constructed against the actual published EARTH formalism.",
+      "line": 295,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-14",
+      "basis": "explicit-claim-word",
+      "text": "The fractal law predictions for planetary radii, cosmic scales, and biological structures require a propagation of uncertainty analysis from local density variations to ξ(ρ) outputs. Without this, the claimed matches cannot be assessed against alternative explanations.",
+      "line": 322,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "documentSlug": "response-to-goolsby777--c2072724021e",
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548-claim-15",
+      "basis": "explicit-claim-word",
+      "text": "The consequence is that the categorical irreconcilability claim is unfounded, and the \"falsification in principle\" conclusion does not hold.",
+      "line": 368,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "documentSlug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem BIO-1: The Universal Genetic Code Is the Energy Table of Prime Torus-Knot Mergers",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "documentSlug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem BIO-1",
+      "line": 218,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "documentSlug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem BIO-2: The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "documentSlug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem BIO-2",
+      "line": 145,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem BIO-3: DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem BIO-3",
+      "line": 165,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "documentSlug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem BIO-4: The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "documentSlug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem BIO-4",
+      "line": 177,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem BIO-5: The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem BIO-5",
+      "line": 204,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "documentSlug": "theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f",
+      "id": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem CHEM-7: Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "documentSlug": "theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f",
+      "id": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-claim-2",
+      "basis": "heading-keyword",
+      "text": "Predictions and Examples",
+      "line": 131,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "documentSlug": "theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3",
+      "id": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "documentSlug": "theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3",
+      "id": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-claim-2",
+      "basis": "heading-keyword",
+      "text": "Predictions and Examples",
+      "line": 197,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem GALAXY-1: Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem GALAXY-1",
+      "line": 274,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem GALAXY-2: Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem GALAXY-2",
+      "line": 334,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem GALAXY-3: Flat Rotation Curves and the Tully-Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem GALAXY-3",
+      "line": 403,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem GALAXY-4: Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem GALAXY-4",
+      "line": 368,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem GALAXY-5: Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem GALAXY-5",
+      "line": 443,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem NEURO-1: The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem NEURO-1",
+      "line": 216,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem NEURO-2: The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem NEURO-2",
+      "line": 269,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem NEURO-3: Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem NEURO-3",
+      "line": 217,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem NEURO-4: Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem NEURO-4",
+      "line": 276,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-claim-2",
+      "basis": "heading-keyword",
+      "text": "Predictions and Examples",
+      "line": 113,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-claim-3",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-1",
+      "line": 156,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-2: Core-Mantle Boundary = First Golden-Ratio Density Drop",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-2",
+      "line": 179,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-3: Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-3",
+      "line": 212,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "documentSlug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-4: Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "documentSlug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-4",
+      "line": 172,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-5: Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-5",
+      "line": 216,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "documentSlug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-6: Atmosphere Scale Height = Coherence Length at Surface Density",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "documentSlug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-6",
+      "line": 197,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem PLANET-7: Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem PLANET-7",
+      "line": 220,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-1: Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-1",
+      "line": 245,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-2: Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-claim-2",
+      "basis": "heading-keyword",
+      "text": "Predictions vs. 2025 Isochrone Models",
+      "line": 79,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-claim-3",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-2",
+      "line": 209,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-3: The Hertzsprung-Russell Diagram = Golden-Ratio Mass-Luminosity Spiral",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-3",
+      "line": 274,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-4: The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-4",
+      "line": 247,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-5: Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-5",
+      "line": 289,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem STAR-6: Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+      "line": 3,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-claim-2",
+      "basis": "heading-keyword",
+      "text": "Summary: Theorem STAR-6",
+      "line": 247,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1",
+      "documentSlug": "tube-theorem--772d259fb5fd",
+      "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (TUBE-CONSTANT)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1",
+      "documentSlug": "tube-theorem--772d259fb5fd",
+      "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Tube Theorem",
+      "line": 54,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d",
+      "documentSlug": "unification-theorem--7f269b923a71",
+      "id": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d-claim-1",
+      "basis": "heading-keyword",
+      "text": "Theorem (UNIFICATION-ONE)",
+      "line": 7,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d",
+      "documentSlug": "unification-theorem--7f269b923a71",
+      "id": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d-claim-2",
+      "basis": "heading-keyword",
+      "text": "Boxed Unification Theorem",
+      "line": 48,
+      "validationStatus": "unreviewed-source-claim"
+    },
+    {
+      "documentId": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "documentSlug": "readme--b33563055168",
+      "id": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5-claim-1",
+      "basis": "heading-keyword",
+      "text": "Closed Results (selected)",
+      "line": 54,
+      "validationStatus": "unreviewed-source-claim"
+    }
+  ]
+}

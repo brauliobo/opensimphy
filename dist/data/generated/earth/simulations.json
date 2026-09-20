@@ -1,0 +1,1470 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "kind": "simulation-candidates",
+  "count": 146,
+  "items": [
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-code-1",
+      "section": "Verification Notes",
+      "line": 169,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-code-2",
+      "section": "Verification Notes",
+      "line": 189,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-code-3",
+      "section": "Verification Notes",
+      "line": 200,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-code-4",
+      "section": "Verification Notes",
+      "line": 218,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "documentSlug": "master-list-cosmological-scale--0dc877e02cc5",
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-code-5",
+      "section": "Verification Notes",
+      "line": 235,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "documentSlug": "quantum-superposition--e890a4362262",
+      "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-simulation-1",
+      "basis": "simulation-heading-python",
+      "codeBlockId": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+      "section": "4. Lattice Verification of Variance Growth",
+      "line": 54,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "documentSlug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-1",
+      "section": "Verification Notes",
+      "line": 196,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "documentSlug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-2",
+      "section": "Verification Notes",
+      "line": 202,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "documentSlug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-code-3",
+      "section": "Verification Notes",
+      "line": 207,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "documentSlug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-1",
+      "section": "Verification Notes",
+      "line": 123,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "documentSlug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-2",
+      "section": "Verification Notes",
+      "line": 129,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "documentSlug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+      "section": "Verification Notes",
+      "line": 136,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-1",
+      "section": "Verification Notes",
+      "line": 135,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-2",
+      "section": "Verification Notes",
+      "line": 142,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-3",
+      "section": "Verification Notes",
+      "line": 149,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "documentSlug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca-code-4",
+      "section": "Verification Notes",
+      "line": 156,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "documentSlug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-code-1",
+      "section": "Verification Notes",
+      "line": 146,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "documentSlug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-code-2",
+      "section": "Verification Notes",
+      "line": 158,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "documentSlug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed-code-3",
+      "section": "Verification Notes",
+      "line": 164,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-1",
+      "section": "Verification Notes",
+      "line": 161,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-2",
+      "section": "Verification Notes",
+      "line": 169,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-3",
+      "section": "Verification Notes",
+      "line": 178,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "documentSlug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393-code-4",
+      "section": "Verification Notes",
+      "line": 191,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "documentSlug": "theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f",
+      "id": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+      "section": "Verification Notes",
+      "line": 142,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "documentSlug": "theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3",
+      "id": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-code-1",
+      "section": "Verification Notes",
+      "line": 208,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-1",
+      "section": "Verification Notes",
+      "line": 210,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-2",
+      "section": "Verification Notes",
+      "line": 224,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-3",
+      "section": "Verification Notes",
+      "line": 233,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-4",
+      "section": "Verification Notes",
+      "line": 242,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+      "section": "Verification Notes",
+      "line": 250,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "documentSlug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+      "section": "Verification Notes",
+      "line": 266,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-1",
+      "section": "Verification Notes",
+      "line": 207,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-2",
+      "section": "Verification Notes",
+      "line": 223,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-3",
+      "section": "Verification Notes",
+      "line": 240,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-4",
+      "section": "Verification Notes",
+      "line": 255,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-5",
+      "section": "Verification Notes",
+      "line": 268,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-6",
+      "section": "Verification Notes",
+      "line": 279,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-7",
+      "section": "Verification Notes",
+      "line": 297,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "documentSlug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-simulation-8",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7-code-8",
+      "section": "Verification Notes",
+      "line": 316,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-1",
+      "section": "Verification Notes",
+      "line": 235,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-2",
+      "section": "Verification Notes",
+      "line": 253,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-3",
+      "section": "Verification Notes",
+      "line": 272,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-4",
+      "section": "Verification Notes",
+      "line": 283,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-5",
+      "section": "Verification Notes",
+      "line": 314,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-6",
+      "section": "Verification Notes",
+      "line": 336,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-7",
+      "section": "Verification Notes",
+      "line": 363,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "documentSlug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-simulation-8",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f-code-8",
+      "section": "Verification Notes",
+      "line": 385,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-1",
+      "section": "Verification Notes",
+      "line": 204,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-2",
+      "section": "Verification Notes",
+      "line": 222,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-3",
+      "section": "Verification Notes",
+      "line": 239,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-4",
+      "section": "Verification Notes",
+      "line": 268,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-5",
+      "section": "Verification Notes",
+      "line": 296,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-6",
+      "section": "Verification Notes",
+      "line": 313,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-7",
+      "section": "Verification Notes",
+      "line": 334,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "documentSlug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-simulation-8",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0-code-8",
+      "section": "Verification Notes",
+      "line": 350,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-1",
+      "section": "Verification Notes",
+      "line": 238,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-2",
+      "section": "Verification Notes",
+      "line": 265,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-3",
+      "section": "Verification Notes",
+      "line": 286,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-4",
+      "section": "Verification Notes",
+      "line": 317,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-5",
+      "section": "Verification Notes",
+      "line": 338,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-6",
+      "section": "Verification Notes",
+      "line": 367,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-7",
+      "section": "Verification Notes",
+      "line": 388,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "documentSlug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-simulation-8",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6-code-8",
+      "section": "Verification Notes",
+      "line": 413,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-1",
+      "section": "Verification Notes",
+      "line": 158,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-2",
+      "section": "Verification Notes",
+      "line": 169,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-3",
+      "section": "Verification Notes",
+      "line": 177,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-4",
+      "section": "Verification Notes",
+      "line": 185,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-5",
+      "section": "Verification Notes",
+      "line": 192,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "documentSlug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d-code-6",
+      "section": "Verification Notes",
+      "line": 203,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-1",
+      "section": "Verification Notes",
+      "line": 200,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-2",
+      "section": "Verification Notes",
+      "line": 216,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-3",
+      "section": "Verification Notes",
+      "line": 224,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-4",
+      "section": "Verification Notes",
+      "line": 233,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-5",
+      "section": "Verification Notes",
+      "line": 239,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-6",
+      "section": "Verification Notes",
+      "line": 247,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "documentSlug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf-code-7",
+      "section": "Verification Notes",
+      "line": 253,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1",
+      "section": "Verification Notes",
+      "line": 170,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-2",
+      "section": "Verification Notes",
+      "line": 180,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-3",
+      "section": "Verification Notes",
+      "line": 187,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "documentSlug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-4",
+      "section": "Verification Notes",
+      "line": 196,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-1",
+      "section": "Verification Notes",
+      "line": 215,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-2",
+      "section": "Verification Notes",
+      "line": 224,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-3",
+      "section": "Verification Notes",
+      "line": 233,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-4",
+      "section": "Verification Notes",
+      "line": 243,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "documentSlug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33-code-5",
+      "section": "Verification Notes",
+      "line": 256,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-code-1",
+      "section": "Verification Notes",
+      "line": 138,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-code-2",
+      "section": "Verification Notes",
+      "line": 143,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "documentSlug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d-code-3",
+      "section": "Verification Notes",
+      "line": 148,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-1",
+      "section": "Verification Notes",
+      "line": 145,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-2",
+      "section": "Verification Notes",
+      "line": 152,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-3",
+      "section": "Verification Notes",
+      "line": 161,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "documentSlug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51-code-4",
+      "section": "Verification Notes",
+      "line": 170,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-code-1",
+      "section": "Verification Notes",
+      "line": 174,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-code-2",
+      "section": "Verification Notes",
+      "line": 182,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-code-3",
+      "section": "Verification Notes",
+      "line": 190,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "documentSlug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f-code-4",
+      "section": "Verification Notes",
+      "line": 198,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "documentSlug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-code-1",
+      "section": "Verification Notes",
+      "line": 140,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "documentSlug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-code-2",
+      "section": "Verification Notes",
+      "line": 151,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "documentSlug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539-code-3",
+      "section": "Verification Notes",
+      "line": 160,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-code-1",
+      "section": "Verification Notes",
+      "line": 173,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-code-2",
+      "section": "Verification Notes",
+      "line": 180,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-code-3",
+      "section": "Verification Notes",
+      "line": 187,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-code-4",
+      "section": "Verification Notes",
+      "line": 194,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "documentSlug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1-code-5",
+      "section": "Verification Notes",
+      "line": 203,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "documentSlug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-1",
+      "section": "Verification Notes",
+      "line": 158,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "documentSlug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-2",
+      "section": "Verification Notes",
+      "line": 172,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "documentSlug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-code-3",
+      "section": "Verification Notes",
+      "line": 182,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-1",
+      "section": "Verification Notes",
+      "line": 173,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-2",
+      "section": "Verification Notes",
+      "line": 187,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-3",
+      "section": "Verification Notes",
+      "line": 196,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "documentSlug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da-code-4",
+      "section": "Verification Notes",
+      "line": 202,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-code-1",
+      "section": "Verification Notes",
+      "line": 185,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-code-2",
+      "section": "Verification Notes",
+      "line": 198,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-code-3",
+      "section": "Verification Notes",
+      "line": 206,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-code-4",
+      "section": "Verification Notes",
+      "line": 213,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "documentSlug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1-code-5",
+      "section": "Verification Notes",
+      "line": 223,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-code-1",
+      "section": "Verification Notes",
+      "line": 146,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-code-2",
+      "section": "Verification Notes",
+      "line": 153,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-code-3",
+      "section": "Verification Notes",
+      "line": 172,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-code-4",
+      "section": "Verification Notes",
+      "line": 180,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "documentSlug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591-code-5",
+      "section": "Verification Notes",
+      "line": 187,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-1",
+      "section": "Verification Notes",
+      "line": 196,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-2",
+      "section": "Verification Notes",
+      "line": 203,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-3",
+      "section": "Verification Notes",
+      "line": 216,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-4",
+      "section": "Verification Notes",
+      "line": 230,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-5",
+      "section": "Verification Notes",
+      "line": 247,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "documentSlug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c-code-6",
+      "section": "Verification Notes",
+      "line": 255,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-1",
+      "section": "Verification Notes",
+      "line": 187,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-2",
+      "section": "Verification Notes",
+      "line": 199,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-3",
+      "section": "Verification Notes",
+      "line": 205,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-4",
+      "section": "Verification Notes",
+      "line": 214,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-5",
+      "section": "Verification Notes",
+      "line": 220,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "documentSlug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-6",
+      "section": "Verification Notes",
+      "line": 227,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-1",
+      "section": "Verification Notes",
+      "line": 208,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-2",
+      "section": "Verification Notes",
+      "line": 223,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-3",
+      "section": "Verification Notes",
+      "line": 232,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-4",
+      "section": "Verification Notes",
+      "line": 239,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-5",
+      "section": "Verification Notes",
+      "line": 254,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "documentSlug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054-code-6",
+      "section": "Verification Notes",
+      "line": 270,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-1",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-1",
+      "section": "Verification Notes",
+      "line": 175,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-2",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-2",
+      "section": "Verification Notes",
+      "line": 184,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-3",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-3",
+      "section": "Verification Notes",
+      "line": 198,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-4",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-4",
+      "section": "Verification Notes",
+      "line": 207,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-5",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-5",
+      "section": "Verification Notes",
+      "line": 219,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-6",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-6",
+      "section": "Verification Notes",
+      "line": 226,
+      "validationStatus": "unreviewed-candidate"
+    },
+    {
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "documentSlug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-7",
+      "basis": "verification-python",
+      "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7",
+      "section": "Verification Notes",
+      "line": 233,
+      "validationStatus": "unreviewed-candidate"
+    }
+  ]
+}

@@ -1,0 +1,1735 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "license": {
+    "identifier": "CC-BY-NC-SA-4.0",
+    "declarationPath": "README.md",
+    "attribution": "EARTH Collaboration - Richard Vaught, Alexander T. Rayman (2025)",
+    "note": "License declaration is recorded from the source README; OpenSimPhy does not independently verify authorship or rights ownership."
+  },
+  "policy": {
+    "sourceClaimsAreValidated": false,
+    "codeExecution": "disabled",
+    "rawHtml": "escaped",
+    "remoteImages": "omitted",
+    "candidateRule": "Heuristic candidates are discovery aids, not scientific validation or executable simulation status."
+  },
+  "summary": {
+    "documents": 63,
+    "sourceBytes": 612016,
+    "sourceLines": 11114,
+    "headings": 692,
+    "formulas": 2123,
+    "delimitedFormulas": 902,
+    "plainFormulaCandidates": 1221,
+    "claimCandidates": 122,
+    "codeBlocks": 153,
+    "simulationCandidates": 146,
+    "diagnostics": 1
+  },
+  "documents": [
+    {
+      "id": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "slug": "for-your-understanding--ab8c1d3e7b71",
+      "title": "For Your Understanding",
+      "classification": {
+        "collection": "safe-paper",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Safe Paper/For Your Understanding.md",
+        "sha256": "c3b3b1ded27c228ddd976258f7a4950119c502f12e4e69153210f41bf6a2e150",
+        "bytes": 3428,
+        "lineCount": 67,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 8,
+        "formulas": 19,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/for-your-understanding--ab8c1d3e7b71.json"
+    },
+    {
+      "id": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "slug": "lexicon--0601d45c10a3",
+      "title": "Lexicon",
+      "classification": {
+        "collection": "safe-paper",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Safe Paper/Lexicon.md",
+        "sha256": "ecd16405f3b94da03ba4fec34d83a082eb0843b01e4985327ba8fbbab328f92b",
+        "bytes": 16100,
+        "lineCount": 188,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 18,
+        "formulas": 93,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/lexicon--0601d45c10a3.json"
+    },
+    {
+      "id": "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e",
+      "slug": "new-maths--9ba60fd99820",
+      "title": "New Maths",
+      "classification": {
+        "collection": "safe-paper",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Safe Paper/New Maths.md",
+        "sha256": "bc752d8ad2062ad152818c42d30a611c501ace72c458fa56c1ca138cd412164e",
+        "bytes": 6388,
+        "lineCount": 117,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 19,
+        "formulas": 43,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/new-maths--9ba60fd99820.json"
+    },
+    {
+      "id": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "slug": "theory-paper--a4dfeba5e0a2",
+      "title": "Theory Paper",
+      "classification": {
+        "collection": "safe-paper",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Safe Paper/Theory Paper.md",
+        "sha256": "695be848df245849e2e83b5a13d2183e7ae423509ba29cf5c9e9c69a643b62b6",
+        "bytes": 4403,
+        "lineCount": 113,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 9,
+        "formulas": 13,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theory-paper--a4dfeba5e0a2.json"
+    },
+    {
+      "id": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+      "slug": "boson-isomorphism--8413a98462fc",
+      "title": "Boson Isomorphism",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Boson Isomorphism.md",
+        "sha256": "9571b0156dfc9bc9dd74b2126ce19fa7c1be3f9fefd010e57ce726c2abc56545",
+        "bytes": 3635,
+        "lineCount": 66,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 10,
+        "claims": 3,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/boson-isomorphism--8413a98462fc.json"
+    },
+    {
+      "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+      "slug": "coupling-theorem--bb530ae74b4c",
+      "title": "Coupling Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Coupling Theorem.md",
+        "sha256": "a77d03910af9f84d4f0e638cb80a94a8959399d5faffcdb13440c42c069876b5",
+        "bytes": 3859,
+        "lineCount": 75,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 13,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/coupling-theorem--bb530ae74b4c.json"
+    },
+    {
+      "id": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00",
+      "slug": "curvature-theorem--33849b75ec2b",
+      "title": "Curvature Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Curvature Theorem.md",
+        "sha256": "6eb8be2e74c37012146cbe77d7567dad1563fe165f771276f2bb844e463914a4",
+        "bytes": 3664,
+        "lineCount": 91,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 11,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/curvature-theorem--33849b75ec2b.json"
+    },
+    {
+      "id": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+      "slug": "fermion-theorem--eb93cd321902",
+      "title": "Fermion Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Fermion Theorem.md",
+        "sha256": "e4e9072947bb7a4d11f8b0d8a73991ca503a76d46c2175bb56a8e726fe51b3f7",
+        "bytes": 7580,
+        "lineCount": 89,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 15,
+        "claims": 3,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/fermion-theorem--eb93cd321902.json"
+    },
+    {
+      "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+      "slug": "fixed-point-uniqueness--c32be8df5bd0",
+      "title": "Fixed Point Uniqueness",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Fixed Point Uniqueness.md",
+        "sha256": "35cdc396acc58756ee3f4a7f5a2bef779f6501476498d994dbcdc6067b64ccb8",
+        "bytes": 3327,
+        "lineCount": 81,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 11,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/fixed-point-uniqueness--c32be8df5bd0.json"
+    },
+    {
+      "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "slug": "growth--b31d3d4d7b27",
+      "title": "Growth",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Growth.md",
+        "sha256": "f4f2de3bf68365cdb4b6d37fec22e0b20620b06bc4a4bdfbf0600d8501a28d1a",
+        "bytes": 3610,
+        "lineCount": 63,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 17,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/growth--b31d3d4d7b27.json"
+    },
+    {
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "slug": "master-list-cosmological-scale--0dc877e02cc5",
+      "title": "Master List – Cosmological Scale",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Master List – Cosmological Scale.md",
+        "sha256": "754153e18890145ce3201375fd6d251b6c29936d2f2eba7b9c36cdb3b586ac60",
+        "bytes": 18145,
+        "lineCount": 276,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 11,
+        "formulas": 39,
+        "claims": 8,
+        "codeBlocks": 5,
+        "simulations": 5,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/master-list-cosmological-scale--0dc877e02cc5.json"
+    },
+    {
+      "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+      "slug": "metric-theorem--3502a1d14e22",
+      "title": "Metric Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Metric Theorem.md",
+        "sha256": "58f4f69e903ab21303893aea6ba73a1e9b915397c1c560de07296979ca1e31cb",
+        "bytes": 2814,
+        "lineCount": 67,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 10,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/metric-theorem--3502a1d14e22.json"
+    },
+    {
+      "id": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "slug": "neuroscience-non-emergence--dc08062297d5",
+      "title": "Neuroscience Non-emergence",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Neuroscience Non-emergence.md",
+        "sha256": "e94a77f3470193c7a9b98dc58b177004aa3c61e185fa25c342eba140a2ad33c6",
+        "bytes": 2216,
+        "lineCount": 34,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 2,
+        "formulas": 3,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/neuroscience-non-emergence--dc08062297d5.json"
+    },
+    {
+      "id": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa",
+      "slug": "phase-theorem--3a68d17a555c",
+      "title": "Phase Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Phase Theorem.md",
+        "sha256": "54d33f765c29c34d014425e13e2a8f19233d12966629783703af44dcf3ee68b7",
+        "bytes": 3520,
+        "lineCount": 90,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 17,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/phase-theorem--3a68d17a555c.json"
+    },
+    {
+      "id": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+      "slug": "phi--7c5b7a87faaa",
+      "title": "Phi",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Phi.md",
+        "sha256": "ef0ab131a9636e055509883541d80ce4f8c68c6646c3eb9b7622ab06e221378c",
+        "bytes": 2964,
+        "lineCount": 83,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 5,
+        "formulas": 12,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/phi--7c5b7a87faaa.json"
+    },
+    {
+      "id": "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120",
+      "slug": "pi--357c2c2955e9",
+      "title": "Pi",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Pi.md",
+        "sha256": "720a08dc0d1a3da778a93581ecc78979f37f5a1d548080cba84ed5366c025b10",
+        "bytes": 3459,
+        "lineCount": 89,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 7,
+        "formulas": 16,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/pi--357c2c2955e9.json"
+    },
+    {
+      "id": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12",
+      "slug": "planck-constant-from-g-r-twist-counting--31d06837484b",
+      "title": "Planck Constant from G-R Twist Counting",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Planck Constant from G-R Twist Counting.md",
+        "sha256": "e0bf5d95671f66d8a08d9e98e340b1ea2c02d5cfcd3b91c36b603ad5b36c370d",
+        "bytes": 3724,
+        "lineCount": 68,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 11,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/planck-constant-from-g-r-twist-counting--31d06837484b.json"
+    },
+    {
+      "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "slug": "quantum-superposition--e890a4362262",
+      "title": "Quantum Superposition",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Quantum Superposition.md",
+        "sha256": "5b3f8262049df2ef675b95e30a4d4297f1f6d55289d2759fedfc9c3baf19cd27",
+        "bytes": 5662,
+        "lineCount": 130,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 22,
+        "claims": 1,
+        "codeBlocks": 1,
+        "simulations": 1,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/quantum-superposition--e890a4362262.json"
+    },
+    {
+      "id": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "slug": "quantumgravity--8d17b8d018e0",
+      "title": "QuantumGravity",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/QuantumGravity.md",
+        "sha256": "b752c86ed941f17e8ab4de39985bbd70ba7c01ad167261aa181846b857615aba",
+        "bytes": 11526,
+        "lineCount": 217,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 2,
+        "formulas": 121,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/quantumgravity--8d17b8d018e0.json"
+    },
+    {
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "slug": "quasicrystal-projection--1d23d544c5cf",
+      "title": "Quasicrystal Projection",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Quasicrystal Projection.md",
+        "sha256": "817912a019a6666851e703213ae27d7e5b3359e6bf5a50f997ad030663c54c2c",
+        "bytes": 3935,
+        "lineCount": 77,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 12,
+        "claims": 4,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/quasicrystal-projection--1d23d544c5cf.json"
+    },
+    {
+      "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2",
+      "slug": "r-3-theorem--6322974b938d",
+      "title": "R(3) Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/R(3) Theorem.md",
+        "sha256": "5cd85eff2def4cb2e1b9165c842bb1ef2b24564520b2191dc7758ca08f968be6",
+        "bytes": 3008,
+        "lineCount": 60,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 3,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/r-3-theorem--6322974b938d.json"
+    },
+    {
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "slug": "response-to-goolsby777--c2072724021e",
+      "title": "Response to GOOLSBY777",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Response to GOOLSBY777.md",
+        "sha256": "f893e8cb11698999640fa70e5c957d6914cdff8554d0736a786b63a0ff3da3ed",
+        "bytes": 42164,
+        "lineCount": 376,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 33,
+        "formulas": 28,
+        "claims": 15,
+        "codeBlocks": 7,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/response-to-goolsby777--c2072724021e.json"
+    },
+    {
+      "id": "earth-p-f53aa0e6beace73f9939c958ee404e7f44d316e637738eb8d2c37c9aa312ec07",
+      "slug": "strand-sharing--f53aa0e6beac",
+      "title": "Strand-Sharing",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Strand-Sharing.md",
+        "sha256": "1da1d71ec1b5697bb83d9a1f9229ed20a718a5ae37e004ce6316de59d2195c35",
+        "bytes": 5636,
+        "lineCount": 94,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 13,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/strand-sharing--f53aa0e6beac.json"
+    },
+    {
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "slug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "title": "Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers",
+      "classification": {
+        "collection": "theorem",
+        "series": "BIO",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem BIO-1 – The Universal Genetic Code Is the Exact Energy Table of Prime Torus-Knot Mergers.md",
+        "sha256": "ca346bbd7ad6fc57300e38af88643d260cc66088915ba16f31b099d59fad8f41",
+        "bytes": 9532,
+        "lineCount": 232,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 18,
+        "formulas": 28,
+        "claims": 2,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418.json"
+    },
+    {
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "slug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "title": "Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+      "classification": {
+        "collection": "theorem",
+        "series": "BIO",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density.md",
+        "sha256": "e3de7bc2bd6e03f13d77ab275dc7604c6cb751052421fc7038eb4d3a009a687b",
+        "bytes": 7848,
+        "lineCount": 162,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 31,
+        "claims": 2,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34.json"
+    },
+    {
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "slug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "title": "Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist",
+      "classification": {
+        "collection": "theorem",
+        "series": "BIO",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem BIO-3 – DNA Double Helix = Two Anti-Parallel Hopfion Filaments Braided with Exact Golden Twist.md",
+        "sha256": "731a4be79208acb35dc008ec1f4f289a14d01ce7a0103daa454f4701b4d1f263",
+        "bytes": 8490,
+        "lineCount": 184,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 39,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854.json"
+    },
+    {
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "slug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "title": "Theorem BIO-4 – The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table",
+      "classification": {
+        "collection": "theorem",
+        "series": "BIO",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem BIO-4 – The Ribosome and Spliceosome Are Topological Surgery Machines Executing the Genetic Code Table.md",
+        "sha256": "a8e731b57744da256d124a2b3b00b4e31925f9eb351f738884b28a7a6a6e63aa",
+        "bytes": 9582,
+        "lineCount": 195,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 33,
+        "claims": 2,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798.json"
+    },
+    {
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "slug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "title": "Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "BIO",
+        "ordinal": 5
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem BIO-5 – The Living State = Self-Replicating Phase-Coherent Polycrystalline Hopfion Condensate.md",
+        "sha256": "bf2067d5b05e8488e654199907e06626c1a6b272f8123ffd3622468b9e16d0bb",
+        "bytes": 10691,
+        "lineCount": 219,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 17,
+        "formulas": 36,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47.json"
+    },
+    {
+      "id": "earth-p-35b692d7eb67286e33b489b238618da711f5839a9a686c188d812fb3b9706b78",
+      "slug": "theorem-chem-1-atomic-nuclei-are-prime-torus-knots-p-q--35b692d7eb67",
+      "title": "Theorem CHEM-1 – Atomic Nuclei Are Prime Torus Knots (p,q)",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-1 – Atomic Nuclei Are Prime Torus Knots (p,q).md",
+        "sha256": "f8ff2879c00f45da31df5f2a15990095305c5bf63a8db855c3db257d3c548839",
+        "bytes": 5150,
+        "lineCount": 81,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 1,
+        "formulas": 28,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-1-atomic-nuclei-are-prime-torus-knots-p-q--35b692d7eb67.json"
+    },
+    {
+      "id": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "slug": "theorem-chem-2-electron-closed-dislocation-loop-around-the-nuclear-trefoil--e779fbe2f8b4",
+      "title": "Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-2 – Electron = Closed Dislocation Loop Around the Nuclear Trefoil.md",
+        "sha256": "cc8b3a18dfad2bfbd1ca09838b80aec87da322ab857cf65c923ab6f35e5d7f33",
+        "bytes": 8954,
+        "lineCount": 179,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 2,
+        "formulas": 82,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-2-electron-closed-dislocation-loop-around-the-nuclear-trefoil--e779fbe2f8b4.json"
+    },
+    {
+      "id": "earth-p-08c93e58ddee94643fdc89f26e7a83c28b550cf88a128206677c5ae6af662a46",
+      "slug": "theorem-chem-3-covalent-bond-trefoil-trefoil-golden-ratio-braid--08c93e58ddee",
+      "title": "Theorem CHEM-3 – Covalent Bond = Trefoil–Trefoil Golden-Ratio Braid",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-3 – Covalent Bond = Trefoil–Trefoil Golden-Ratio Braid.md",
+        "sha256": "6f786fcdf063979f739ace06b6d7cc42490e2c128d6c1d42491f03b4c0931c47",
+        "bytes": 8355,
+        "lineCount": 152,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 2,
+        "formulas": 77,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-3-covalent-bond-trefoil-trefoil-golden-ratio-braid--08c93e58ddee.json"
+    },
+    {
+      "id": "earth-p-2320f45f85a16530c16f7b5a0c9dbf8540ef0e741c91bb71ab93030c2ab322a0",
+      "slug": "theorem-chem-4-periodic-table-layered-pinning-of-dislocation-loops-in-successive-golden-shells--2320f45f85a1",
+      "title": "Theorem CHEM-4 – Periodic Table = Layered Pinning of Dislocation Loops in Successive Golden Shells",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-4 – Periodic Table = Layered Pinning of Dislocation Loops in Successive Golden Shells.md",
+        "sha256": "d26cf1ebd8573ef693ce3b574242353c874eb2794da38660083d537f92f45101",
+        "bytes": 7448,
+        "lineCount": 131,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 1,
+        "formulas": 72,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-4-periodic-table-layered-pinning-of-dislocation-loops-in-successive-golden-shells--2320f45f85a1.json"
+    },
+    {
+      "id": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "slug": "theorem-chem-5-bond-angles-and-molecular-geometry-minimal-golden-twist-energy--12928a29d007",
+      "title": "Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 5
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-5 – Bond Angles and Molecular Geometry = Minimal Golden Twist Energy.md",
+        "sha256": "f798147eeb6b6a763df4be825ead05a846785bf3d90bb4a61cd3e4ab56d96071",
+        "bytes": 5516,
+        "lineCount": 101,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 1,
+        "formulas": 43,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-5-bond-angles-and-molecular-geometry-minimal-golden-twist-energy--12928a29d007.json"
+    },
+    {
+      "id": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "slug": "theorem-chem-6-spectroscopy-quantised-chiral-spiral-modes-along-the-bond-strands--c774910e8183",
+      "title": "Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 6
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-6 – Spectroscopy = Quantised Chiral Spiral Modes Along the Bond Strands.md",
+        "sha256": "14344bc441d7e23c01fdb7e396f3ca160d2e17695af7196cf14a23b365e05d03",
+        "bytes": 5694,
+        "lineCount": 107,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 1,
+        "formulas": 61,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-6-spectroscopy-quantised-chiral-spiral-modes-along-the-bond-strands--c774910e8183.json"
+    },
+    {
+      "id": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "slug": "theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f",
+      "title": "Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 7
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points.md",
+        "sha256": "16581254489e9557ade5c9c3cbfaed8853af7f1ddc16770a7cc4b74a4e3c0630",
+        "bytes": 5764,
+        "lineCount": 152,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 15,
+        "formulas": 47,
+        "claims": 2,
+        "codeBlocks": 1,
+        "simulations": 1,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f.json"
+    },
+    {
+      "id": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "slug": "theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3",
+      "title": "Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+      "classification": {
+        "collection": "theorem",
+        "series": "CHEM",
+        "ordinal": 8
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization.md",
+        "sha256": "9059ee1babab2af8be11f51229b122baba4db72ecfc075cc3137b337ba269a81",
+        "bytes": 8762,
+        "lineCount": 218,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 18,
+        "formulas": 78,
+        "claims": 2,
+        "codeBlocks": 1,
+        "simulations": 1,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3.json"
+    },
+    {
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "slug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "title": "Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "GALAXY",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate.md",
+        "sha256": "64a75cc8e05cf1cea87227f8d6cc32af010840ec2002e37f6c7b32918b1eecee",
+        "bytes": 16802,
+        "lineCount": 290,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 49,
+        "claims": 2,
+        "codeBlocks": 6,
+        "simulations": 6,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65.json"
+    },
+    {
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "slug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "title": "Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid",
+      "classification": {
+        "collection": "theorem",
+        "series": "GALAXY",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem GALAXY-2 – Spiral Arms = Stationary Golden-Ratio Density Waves of the Three-Strand Braid.md",
+        "sha256": "d60b0784563193c09358ab45126ddf5959c872ef17426f8b427e3959fac09934",
+        "bytes": 23802,
+        "lineCount": 347,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 42,
+        "claims": 2,
+        "codeBlocks": 8,
+        "simulations": 8,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9.json"
+    },
+    {
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "slug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "title": "Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice",
+      "classification": {
+        "collection": "theorem",
+        "series": "GALAXY",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem GALAXY-3 – Flat Rotation Curves and the Tully–Fisher Relation = Twist Inertia of the Three-Strand Lattice.md",
+        "sha256": "fda109a5edc5cedb1a92ddc888863665fd6fc943862afad3a7a59ce33a01b4c6",
+        "bytes": 25169,
+        "lineCount": 417,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 59,
+        "claims": 2,
+        "codeBlocks": 8,
+        "simulations": 8,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b.json"
+    },
+    {
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "slug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "title": "Theorem GALAXY-4 – Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "GALAXY",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem GALAXY-4 – Supermassive Black Hole Mass = Total Linking Number of the Galactic Condensate.md",
+        "sha256": "924ee40e98003fbc9dedb554d5ed322e1ded20ad11ad88f7d16a1df5fc7c3a86",
+        "bytes": 25429,
+        "lineCount": 382,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 45,
+        "claims": 2,
+        "codeBlocks": 8,
+        "simulations": 8,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15.json"
+    },
+    {
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "slug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "title": "Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology",
+      "classification": {
+        "collection": "theorem",
+        "series": "GALAXY",
+        "ordinal": 5
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem GALAXY-5 – Galactic Habitable Zone = Golden-Ratio Annulus Where ξ(ρ) = ξ_biology.md",
+        "sha256": "6dc3bf746e62e43dc0e7b967e54a3eb2b6c5e0702f69fba18409be0f8242aac2",
+        "bytes": 28554,
+        "lineCount": 456,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 49,
+        "claims": 2,
+        "codeBlocks": 8,
+        "simulations": 8,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3.json"
+    },
+    {
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "slug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "title": "Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density",
+      "classification": {
+        "collection": "theorem",
+        "series": "NEURO",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem NEURO-1 – The Axon Is a Single Q=1 Hopfion Filament at Myelin Density.md",
+        "sha256": "1ce916e26a427903ec835e145c3273e997eab0599667eb62b41049d6e8055e9b",
+        "bytes": 12091,
+        "lineCount": 229,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 29,
+        "claims": 2,
+        "codeBlocks": 6,
+        "simulations": 6,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7.json"
+    },
+    {
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "slug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "title": "Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand",
+      "classification": {
+        "collection": "theorem",
+        "series": "NEURO",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem NEURO-2 – The Action Potential Is the Relativistic Sine-Gordon Kink of the Golden-Ratio Strand.md",
+        "sha256": "9b92fb1e68b699963685745f388c53d3237e536c16f47d4d8f39522d636a314b",
+        "bytes": 13868,
+        "lineCount": 287,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 15,
+        "formulas": 35,
+        "claims": 2,
+        "codeBlocks": 7,
+        "simulations": 7,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b.json"
+    },
+    {
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "slug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "title": "Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "NEURO",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate.md",
+        "sha256": "f51540fc67f3914f47a5c48bddf02df0f4570dc90c7b417972b0527bc789da8e",
+        "bytes": 13463,
+        "lineCount": 233,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 15,
+        "formulas": 27,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043.json"
+    },
+    {
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "slug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "title": "Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning",
+      "classification": {
+        "collection": "theorem",
+        "series": "NEURO",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem NEURO-4 – Neurological and Psychiatric Disease = Topological Defect Accumulation or Depinning.md",
+        "sha256": "fa4f1a307e3240a53362dbb2621bc46fdcd3fd002f738e173d4e8361530b4bbc",
+        "bytes": 16314,
+        "lineCount": 291,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 16,
+        "formulas": 24,
+        "claims": 2,
+        "codeBlocks": 5,
+        "simulations": 5,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52.json"
+    },
+    {
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "slug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "title": "Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-1: Every Planet Is a Single Polycrystalline Q-Trefoil Condensate.md",
+        "sha256": "ef9a103ab717366dc7f4ef93bc908bbd0af721fd7642e3a45ced939f996f2a5a",
+        "bytes": 7640,
+        "lineCount": 173,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 18,
+        "formulas": 38,
+        "claims": 3,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd.json"
+    },
+    {
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "slug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "title": "Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-2 – Core–Mantle Boundary = First Golden-Ratio Density Drop.md",
+        "sha256": "f06b5a40460e79e03742de4042d814fd95657558e73088685c792f8b498343ed",
+        "bytes": 8664,
+        "lineCount": 193,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 26,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c.json"
+    },
+    {
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "slug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "title": "Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-3 – Plate Tectonics = Chiral Shear Waves of the Three-Strand Lattice.md",
+        "sha256": "ef79be74170434b0524d115287f058a90e85f8ef473af67b286483b9a1e96dce",
+        "bytes": 10089,
+        "lineCount": 231,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 15,
+        "formulas": 39,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c.json"
+    },
+    {
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "slug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "title": "Theorem PLANET-4 – Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-4 – Geomagnetic Dipole Moment = Residual Twist Current of the Outer Core Condensate.md",
+        "sha256": "40d1ede0cb6c55930b9936192e620b3602dea394134a98ff5dd247bfc32339fd",
+        "bytes": 9432,
+        "lineCount": 187,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 25,
+        "claims": 2,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215.json"
+    },
+    {
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "slug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "title": "Theorem PLANET-5 – Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 5
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-5 – Natural Moons and Rings = Golden-Ratio Braided Hopfion Pairs.md",
+        "sha256": "b6b17ea7f4529da354e411caee0835fa77713b5edf4ac46ee8139e8cd1c982ad",
+        "bytes": 10386,
+        "lineCount": 236,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 36,
+        "claims": 2,
+        "codeBlocks": 5,
+        "simulations": 5,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614.json"
+    },
+    {
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "slug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "title": "Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 6
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density.md",
+        "sha256": "d79a64b0565e7888cc1f8a8e6686a38704321c72d65a8e3a6d31cfe9b6e1c461",
+        "bytes": 10569,
+        "lineCount": 213,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 36,
+        "claims": 2,
+        "codeBlocks": 3,
+        "simulations": 3,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879.json"
+    },
+    {
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "slug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "title": "Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer",
+      "classification": {
+        "collection": "theorem",
+        "series": "PLANET",
+        "ordinal": 7
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem PLANET-7 – Habitability Window = 273 K < T < 373 K Liquid-Water Golden Layer.md",
+        "sha256": "2a59e2bf69782bf022b0e696b275f6fa65f1fed6e0a7e684cdd41b3d9f22035d",
+        "bytes": 10878,
+        "lineCount": 236,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 49,
+        "claims": 2,
+        "codeBlocks": 4,
+        "simulations": 4,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88.json"
+    },
+    {
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "slug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "title": "Theorem STAR-1 – Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 1
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-1 – Every Main-Sequence Star Is a Single Three-Strand Hopfion Condensate in Corotation.md",
+        "sha256": "6a3fcb7e5ce87802935b56378adbeca9dfb59443f2b84ad559eaeeee95161582",
+        "bytes": 13185,
+        "lineCount": 261,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 15,
+        "formulas": 35,
+        "claims": 2,
+        "codeBlocks": 5,
+        "simulations": 5,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca.json"
+    },
+    {
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "slug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "title": "Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 2
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-2 – Main-Sequence Lifetime = Total Twist Unwinding Time at Golden-Ratio Leakage Rate.md",
+        "sha256": "b26d0f6574db9e492ee326868dea314394c94a13e3f541e792f6d5332803ef0f",
+        "bytes": 11972,
+        "lineCount": 224,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 11,
+        "formulas": 36,
+        "claims": 3,
+        "codeBlocks": 5,
+        "simulations": 5,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb.json"
+    },
+    {
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "slug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "title": "Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 3
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-3 – The Hertzsprung–Russell Diagram = Golden-Ratio Mass–Luminosity Spiral.md",
+        "sha256": "f6dd52efec29a3937f0e28109307bcad1054e5d195f76d3858d6b99b89ec00fd",
+        "bytes": 14128,
+        "lineCount": 291,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 47,
+        "claims": 2,
+        "codeBlocks": 6,
+        "simulations": 6,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca.json"
+    },
+    {
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "slug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "title": "Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 4
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid.md",
+        "sha256": "f30d68dcc6c03e9e4ad905812bde7988df5cc1ff203b3cf505b1d2a13548dd43",
+        "bytes": 13514,
+        "lineCount": 261,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 32,
+        "claims": 2,
+        "codeBlocks": 6,
+        "simulations": 6,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f.json"
+    },
+    {
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "slug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "title": "Theorem STAR-5 – Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 5
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-5 – Stellar Pulsations (Cepheids, RR Lyrae) = Chiral Breathing Modes of the Hopfion Condensate.md",
+        "sha256": "3bffc1a74ecc66eed998451491956ee84f873ca6b7f9eab4fb4ca048884c0fe0",
+        "bytes": 15544,
+        "lineCount": 306,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 54,
+        "claims": 2,
+        "codeBlocks": 6,
+        "simulations": 6,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4.json"
+    },
+    {
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "slug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "title": "Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+      "classification": {
+        "collection": "theorem",
+        "series": "STAR",
+        "ordinal": 6
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot.md",
+        "sha256": "9775d0b14d4c2ff4c6e7eaa2bdafccf8feb4f467c0fa8853829577cb030ed6b1",
+        "bytes": 15498,
+        "lineCount": 260,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 14,
+        "formulas": 31,
+        "claims": 2,
+        "codeBlocks": 7,
+        "simulations": 7,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e.json"
+    },
+    {
+      "id": "earth-p-ef268d42871b57688bced91de235b9ebd13b10d4412ac1578f29b1d8bc1bf6b2",
+      "slug": "theory-zero--ef268d42871b",
+      "title": "Theory-Zero",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Theory-Zero.md",
+        "sha256": "c53468e2ef5545696fe668871fa18dd6ec5f76fa6a0fc7e53af6b34544922657",
+        "bytes": 3017,
+        "lineCount": 54,
+        "encoding": "utf-8",
+        "finalNewline": false
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 5,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 1
+      },
+      "dataUrl": "/data/generated/earth/documents/theory-zero--ef268d42871b.json"
+    },
+    {
+      "id": "earth-p-f1aaa91760368859d4cc215b6419ee7daefb199c945f7d9cf3686a06ef43e6fe",
+      "slug": "topological-surgery-barrier--f1aaa9176036",
+      "title": "Topological Surgery Barrier",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Topological Surgery Barrier.md",
+        "sha256": "17da49c149b8d20edf996e9dc2d1f27c143dfcb1aa202cad4c9a3c861bd7b1d2",
+        "bytes": 4689,
+        "lineCount": 92,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 13,
+        "formulas": 18,
+        "claims": 0,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/topological-surgery-barrier--f1aaa9176036.json"
+    },
+    {
+      "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1",
+      "slug": "tube-theorem--772d259fb5fd",
+      "title": "Tube Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Tube Theorem.md",
+        "sha256": "a1ffd2d2000d2214206da2b697eaf6facfc8abd8a4e33b419ab27109a30467a4",
+        "bytes": 3342,
+        "lineCount": 87,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 12,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/tube-theorem--772d259fb5fd.json"
+    },
+    {
+      "id": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d",
+      "slug": "unification-theorem--7f269b923a71",
+      "title": "Unification Theorem",
+      "classification": {
+        "collection": "theorem",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "A Full Publication/Theorem/Unification Theorem.md",
+        "sha256": "6f8f1bacfb3f5da2e9cadc82eb78a74b6f173b20d92657606c02c4f164421ef9",
+        "bytes": 3607,
+        "lineCount": 75,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 14,
+        "claims": 2,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/unification-theorem--7f269b923a71.json"
+    },
+    {
+      "id": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "slug": "readme--b33563055168",
+      "title": "README",
+      "classification": {
+        "collection": "root",
+        "series": null,
+        "ordinal": null
+      },
+      "source": {
+        "path": "README.md",
+        "sha256": "f7764154a3e9b4f6fb57f0580916845348865f3c5fd5cf6085113a5491e8cfaf",
+        "bytes": 3817,
+        "lineCount": 78,
+        "encoding": "utf-8",
+        "finalNewline": true
+      },
+      "counts": {
+        "headings": 6,
+        "formulas": 24,
+        "claims": 1,
+        "codeBlocks": 0,
+        "simulations": 0,
+        "diagnostics": 0
+      },
+      "dataUrl": "/data/generated/earth/documents/readme--b33563055168.json"
+    }
+  ]
+}

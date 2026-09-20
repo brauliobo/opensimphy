@@ -1,0 +1,160 @@
+{
+  "contract": "edwin-gray-motor-fem-calibration-pack",
+  "contractVersion": 2,
+  "profileId": "fast-limited-calibration-v1",
+  "status": "unavailable-provenance-mismatch",
+  "runtimeAvailable": false,
+  "productionEligible": false,
+  "fullConvergenceClaim": false,
+  "optIn": false,
+  "defaultEnabled": false,
+  "configuration": {
+    "eventClasses": [
+      0,
+      1,
+      2
+    ],
+    "meshSizeM": 0.025,
+    "driveCurrentA": 10,
+    "solverProfile": "direct-mumps-publication-v1",
+    "resources": {
+      "memoryGiB": 24,
+      "memorySwapGiB": 24,
+      "cpus": 2,
+      "threads": 2,
+      "serial": true
+    },
+    "hardDeadlineSeconds": 1720
+  },
+  "evidence": {
+    "modelInputHash": "a6904962ae0a54e500098ec30c1aee95038404cf2a9154c5a22a70374fc69eb7",
+    "pilotModelInputHash": "b5118938c97b616747f06dc0516a736d8c266d8f8db29677ba2d3d7c57cc0a82",
+    "environmentIdentityHash": "7aa133cfdf55eb226ad87f9267df17052156d42e445c1d054fa81bc8ff756f5f",
+    "pilotReportSha256": "a263a89f78ca5b420038498ae9c44b5de322448d42d6b5222f0eedd82cea9db4",
+    "pilotSpecificationSha256": "ee85e38a8e25281e0c2ca55db7c3f393b6da2a5cd531b3577e089392acfb428e",
+    "currentSpecificationSha256": "94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7",
+    "symmetryProofSha256": "b93b3b02372eaf929dcee5420deff4413caa9b112b1efe5fa90448b1532d10af",
+    "coarseFineDrift": {
+      "observed": 0.011584935659327932,
+      "passTolerance": 0.02,
+      "status": "legacy-pilot-only"
+    }
+  },
+  "provenanceMismatch": {
+    "fields": [
+      "modelInputHash",
+      "specificationSha256",
+      "sampleIdentity"
+    ],
+    "expectedSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 0,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
+    },
+    "pilotSample": {
+      "eventIndex": 0,
+      "rotorAngleDeg": 6.6666666667,
+      "driveCurrentA": 10,
+      "meshPair": ["coarse", "fine"]
+    }
+  },
+  "classes": [
+    {
+      "eventClass": 0,
+      "eventIndex": 0,
+      "rotorAngleDeg": 0,
+      "jobInputHash": "c46d7f6ce90d3cf9baac506031c00d4fd41ca34898b9373fba2f9dcde79c392e",
+      "checkpointSha256": "6d0a1bd3f2700af15db326986a4d01ddb34d9ff736835c9676e8303f21458bc5",
+      "resultSha256": "a310cdf4586f6d31a64eac93f4adda0d670c2200b2d85f080f9d63c70910a0fb",
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2726388431809273,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2726388431809273,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005452776863618732,
+          "unit": "H"
+        }
+      },
+      "evidenceBasis": "unavailable-provenance-mismatch"
+    },
+    {
+      "eventClass": 1,
+      "eventIndex": 1,
+      "rotorAngleDeg": 13.333333333333334,
+      "jobInputHash": "9535087289cbfdb6e58f47f9bf0e4bbb6beda11ca9d6850335ae583e2855b20f",
+      "checkpointSha256": "7684e8b1c9f7cf1fd99472292842d97c4ba32a2b135dfeb3011828f4134589df",
+      "resultSha256": "cfd733a519180708d946ad9928191e5ecaab919ded1bf578fb6dd3d2baaad837",
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.3196587372190843,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.3196587372190843,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006393174744381888,
+          "unit": "H"
+        }
+      },
+      "evidenceBasis": "unvalidated-transfer-assumption"
+    },
+    {
+      "eventClass": 2,
+      "eventIndex": 2,
+      "rotorAngleDeg": 26.666666666666668,
+      "jobInputHash": "1ff4d288e19c4b926a06c4524f57eb6d4bf8b4b78bbb3bd520ba659836f4bd32",
+      "checkpointSha256": "033ddd95ed6cb9bd19d426c25ed570251ac17cfd21d0b0706b3f8e4178d968d1",
+      "resultSha256": "0dcbd20afd611be30c7052de148410b55c799d3b95b02024bc60cc5a202f4917",
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.252403372837329,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.252403372837329,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005048067456746148,
+          "unit": "H"
+        }
+      },
+      "evidenceBasis": "unvalidated-transfer-assumption"
+    }
+  ],
+  "uncertainty": {
+    "established": false,
+    "relativeBound": null,
+    "passTolerance": 0.02,
+    "reason": "The pilot pass tolerance is an acceptance criterion and its evidence does not match the calibration model, current specification, or calibration sample identity.",
+    "quantities": [
+      "L",
+      "W",
+      "W'"
+    ],
+    "classBasis": {
+      "0": "unavailable-provenance-mismatch",
+      "1": "unvalidated-transfer-assumption",
+      "2": "unvalidated-transfer-assumption"
+    }
+  },
+  "torque": {
+    "bounded": false,
+    "reason": "No torque-derivative convergence evidence is included in this limited calibration pack."
+  },
+  "limitations": [
+    "Retained scalar solver values are preserved for audit only and are unavailable to the runtime.",
+    "The pilot model hash, specification hash, and sample angle do not match the calibration evidence.",
+    "The 0.02 pilot pass tolerance is not an established uncertainty bound.",
+    "Classes 1 and 2 have only an unvalidated transfer assumption.",
+    "No full mesh, outer-domain, or torque convergence claim is made."
+  ]
+}

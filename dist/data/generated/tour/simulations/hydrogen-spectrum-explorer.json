@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "id": "hydrogen-spectrum-explorer",
+  "lessonId": "hydrogen-spectra",
+  "title": "Hydrogen-like spectrum explorer",
+  "question": "How do level choice and nuclear mass change linked transition energy, cyclic frequency, and vacuum wavelength in the stated model?",
+  "predictionPrompt": "For the selected transition, use the finite-proton reduced-mass factor below one to predict whether its wavelength is longer, shorter, or unchanged relative to the same infinite-mass state.",
+  "claimClass": "established-model",
+  "evidenceRefs": [
+    "codata-2022",
+    "bipm-si-brochure-9",
+    "openstax-university-physics-v3",
+    "opensimphy-scientific-scope"
+  ],
+  "sourceRevision": "CODATA 2022 adjustment; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+  "sourceLocator": "R_inf, electron/proton masses, exact h and c, OpenStax sections 6.4, 8.1, and 8.5, and Chapter 7 model limits",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "A listed level difference is not a claim that a transition is allowed, strong, or observed.",
+    "The proton-mass option is physically specific to hydrogen and only illustrative when atomic number exceeds one."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "hydrogen-like-rydberg-reduced-mass-1",
+    "implementationRevision": "tour-atomic-spectrum-engine-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Bounded hydrogen-like Rydberg evaluation",
+    "description": "Evaluates the reduced-mass Rydberg level difference and linked photon identities with finite deterministic arithmetic.",
+    "deterministic": true,
+    "implementationRef": "src/tour/atomicSpectrumEngine.ts"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "hydrogen-like-level-difference",
+      "label": "Hydrogen-like level-difference model",
+      "modelOrigin": "established-physics",
+      "description": "Uses a nonrelativistic one-electron point-Coulomb Rydberg relation for bounded atomic number and principal levels.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "codata-2022",
+          "openstax-university-physics-v3",
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "CODATA 2022 R_inf; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+        "sourceLocator": "Rydberg relation, OpenStax sections 6.4 and 8.1, and Chapter 7 Hamiltonian boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The engine directly evaluates the conventional result rather than solving the Hamiltonian."
+        ]
+      }
+    },
+    {
+      "id": "electron-nucleus-reduced-mass",
+      "label": "Electron-nucleus reduced-mass option",
+      "modelOrigin": "established-physics",
+      "description": "Uses either the infinite-nuclear-mass limit or the CODATA electron-proton reduced-mass factor.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "codata-2022"
+        ],
+        "sourceRevision": "CODATA 2022 electron and proton masses",
+        "sourceLocator": "mu/m_e = m_p/(m_p + m_e)",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "No isotope catalog or higher-order recoil correction is included."
+        ]
+      }
+    },
+    {
+      "id": "photon-linked-representations",
+      "label": "Linked photon representations",
+      "modelOrigin": "established-physics",
+      "description": "Maps one selected level difference to energy, cyclic frequency, and vacuum wavelength with exact International System of Units (SI) h and c.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ],
+        "sourceRevision": "SI Brochure 2026 update",
+        "sourceLocator": "Fixed h and c and E = h nu = h c/lambda",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The representations are dependent outputs, not separate observations."
+        ]
+      }
+    }
+  ],
+  "equations": [
+    "mu/m_e = 1 for infinite nuclear mass, or m_p/(m_p + m_e) for the proton model",
+    "1/lambda = R_inf (mu/m_e) Z^2 (1/n_lower^2 - 1/n_upper^2)",
+    "nu = c/lambda; E = h nu = h c/lambda"
+  ],
+  "assumptions": [
+    "The system is a one-electron point-Coulomb ion represented by the nonrelativistic Bohr/Rydberg baseline.",
+    "Atomic number is an integer from 1 through 10, upper principal level is 2 through 12, and lower level is an integer satisfying 1 <= n_lower < n_upper.",
+    "The finite nucleus option always uses the proton mass; for atomic number above one this is illustrative rather than isotope-realistic.",
+    "Wavelength is in vacuum and the visible classification uses the conventional 380-750 nm interval.",
+    "Selection rules, line strength, fine and hyperfine structure, Lamb shift, broadening, calibration, and uncertainty are omitted."
+  ],
+  "glossaryIds": [
+    "physical-quantity",
+    "quantity-value",
+    "numerical-value",
+    "quantity-kind",
+    "unit",
+    "dimension",
+    "dimensional-consistency"
+  ],
+  "controls": [
+    {
+      "id": "atomicNumber",
+      "label": "Atomic number",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "technical",
+      "description": "Sets the nuclear charge number Z for the bounded one-electron model.",
+      "default": 1,
+      "unit": "1",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "playfulPrompt": "Keep Z at one for ordinary hydrogen; higher values are hydrogen-like ions."
+    },
+    {
+      "id": "nUpper",
+      "label": "Upper principal level",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Selects integer n_upper from 2 through 12 for the downward level difference.",
+      "default": 3,
+      "unit": "1",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "playfulPrompt": "Choose where the electron starts in the model."
+    },
+    {
+      "id": "nLower",
+      "label": "Lower principal level",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Selects integer n_lower from 1 through 11; a valid state must keep it below n_upper.",
+      "default": 2,
+      "unit": "1",
+      "min": 1,
+      "max": 11,
+      "step": 1,
+      "playfulPrompt": "Choose the lower landing level and keep it below the upper level."
+    },
+    {
+      "id": "nucleusModel",
+      "label": "Nuclear-mass model",
+      "type": "select",
+      "inputRole": "preset-selection",
+      "readingDepth": "guided",
+      "description": "Selects the engine's infinite-mass limit or finite proton reduced-mass option.",
+      "default": "proton",
+      "playfulPrompt": "Let the proton move, then compare with an immovable nucleus.",
+      "options": [
+        {
+          "value": "infinite",
+          "label": "Infinite nuclear mass",
+          "description": "sets the reduced-mass factor to one"
+        },
+        {
+          "value": "proton",
+          "label": "Finite proton mass",
+          "description": "uses CODATA electron and proton masses"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "id": "balmer-alpha",
+      "label": "Balmer-alpha",
+      "description": "Hydrogen Z=1, n=3 to n=2, with the finite proton reduced-mass correction.",
+      "inspectionPrompt": "Predict whether its wavelength is slightly longer than the infinite-mass result.",
+      "inputs": {
+        "atomicNumber": 1,
+        "nUpper": 3,
+        "nLower": 2,
+        "nucleusModel": "proton"
+      }
+    },
+    {
+      "id": "lyman-alpha",
+      "label": "Lyman-alpha",
+      "description": "Hydrogen Z=1, n=2 to n=1, with the finite proton reduced-mass correction.",
+      "inspectionPrompt": "Will this line fall in the visible or ultraviolet region?",
+      "inputs": {
+        "atomicNumber": 1,
+        "nUpper": 2,
+        "nLower": 1,
+        "nucleusModel": "proton"
+      }
+    },
+    {
+      "id": "balmer-alpha-infinite",
+      "label": "Balmer-alpha, infinite nucleus",
+      "description": "The same 3 to 2 level difference with nuclear recoil omitted.",
+      "inspectionPrompt": "Compare only compatible outputs and identify the reduced-mass shift direction.",
+      "inputs": {
+        "atomicNumber": 1,
+        "nUpper": 3,
+        "nLower": 2,
+        "nucleusModel": "infinite"
+      }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "reducedMassFactor",
+      "label": "Reduced-mass factor",
+      "type": "number",
+      "unit": null,
+      "nullable": false,
+      "description": "mu/m_e, equal to one for infinite nuclear mass and below one for the proton option."
+    },
+    {
+      "id": "effectiveRydbergMInverse",
+      "label": "Effective Rydberg value",
+      "type": "number",
+      "unit": "m^-1",
+      "nullable": false,
+      "description": "R_inf multiplied by the selected reduced-mass factor."
+    },
+    {
+      "id": "energyJ",
+      "label": "Transition energy",
+      "type": "number",
+      "unit": "J",
+      "nullable": false,
+      "description": "Positive model level difference in joules."
+    },
+    {
+      "id": "energyEv",
+      "label": "Transition energy",
+      "type": "number",
+      "unit": "eV",
+      "nullable": false,
+      "description": "The same transition energy represented in electron volts."
+    },
+    {
+      "id": "frequencyHz",
+      "label": "Cyclic frequency",
+      "type": "number",
+      "unit": "Hz",
+      "nullable": false,
+      "description": "Photon cyclic frequency derived from the selected level difference."
+    },
+    {
+      "id": "vacuumWavelengthM",
+      "label": "Vacuum wavelength",
+      "type": "number",
+      "unit": "m",
+      "nullable": false,
+      "description": "Reciprocal model wavenumber in metres."
+    },
+    {
+      "id": "vacuumWavelengthNm",
+      "label": "Vacuum wavelength",
+      "type": "number",
+      "unit": "nm",
+      "nullable": false,
+      "description": "The same vacuum wavelength represented in nanometres."
+    },
+    {
+      "id": "series",
+      "label": "Spectral series",
+      "type": "string",
+      "unit": null,
+      "nullable": true,
+      "description": "Lyman, Balmer, or Paschen when n_lower is 1, 2, or 3; otherwise no named series."
+    },
+    {
+      "id": "spectralRegion",
+      "label": "Spectral region",
+      "type": "string",
+      "unit": null,
+      "nullable": false,
+      "description": "Conventional x-ray, ultraviolet, visible, or infrared classification from vacuum wavelength."
+    },
+    {
+      "id": "visible",
+      "label": "Visible interval",
+      "type": "boolean",
+      "unit": null,
+      "nullable": false,
+      "description": "True only for the conventional 380-750 nm interval."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render parallel model findings without merging lines or calculating residuals when compatibility keys differ.",
+    "compatibilityKey": "ad0957023e1656a45003c137207e8a18031e3060ce8a099a297516c3895389b7"
+  },
+  "visualization": {
+    "kind": "hydrogen-like-level-and-spectrum",
+    "description": "Shows bounded principal levels, the selected downward transition, its spectral marker, and linked model values.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "A sentence states Z, transition, nuclear-mass option, series, region, energy, cyclic frequency, vacuum wavelength, and model caveats."
+      },
+      {
+        "type": "table",
+        "description": "A table lists at most 11 lines sharing the selected lower level with transition, series, energy, cyclic frequency, vacuum wavelength, region, and visibility."
+      }
+    ],
+    "reducedMotionBehavior": "Render the selected level arrow and spectral marker immediately without animated photon or level motion."
+  },
+  "finding": {
+    "changed": "At runtime, the selected levels, atomic number, and nuclear-mass option determine one linked transition result and a bounded same-lower-level series table.",
+    "cause": "The hydrogen-like Rydberg level difference scales with Z^2 and the selected electron-nucleus reduced-mass factor.",
+    "equation": "1/lambda = R_inf (mu/m_e) Z^2 (1/n_lower^2 - 1/n_upper^2); E = h nu = h c/lambda",
+    "assumptions": [
+      "One-electron nonrelativistic point-Coulomb Bohr/Rydberg model",
+      "Integer engine bounds and n_lower below n_upper",
+      "Vacuum wavelength and conventional visible interval"
+    ],
+    "establishes": "For an evaluated valid state, the model links the selected level difference to energy, cyclic frequency, vacuum wavelength, series label, and spectral region.",
+    "doesNotEstablish": "That the transition is allowed, strong, or observed; that a line identifies a unique atom; that the model is empirically validated; or that dimensional analysis replaces a bound-state Hamiltonian.",
+    "claimClass": "established-model",
+    "evidenceRefs": [
+      "codata-2022",
+      "bipm-si-brochure-9",
+      "openstax-university-physics-v3",
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "CODATA 2022; SI Brochure 2026 update; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; Tour contract 2026-07-26",
+    "sourceLocator": "Atomic spectrum equations, inputs, outputs, OpenStax sections 6.4, 8.1, and 8.5, and Chapter 7 limits",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "Selection rules and transition strengths are not represented.",
+      "Fine structure, hyperfine structure, Lamb shift, finite size, external fields, broadening, and medium response are omitted.",
+      "No spectrum dataset, calibration, uncertainty propagation, or competing-model comparison is evaluated."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 2,
+    "maxDurationMs": 16
+  }
+}

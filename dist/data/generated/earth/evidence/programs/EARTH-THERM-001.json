@@ -1,0 +1,810 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-THERM-001",
+  "counts": {
+    "total": 48,
+    "bySourceType": {
+      "formula": 46,
+      "code-block": 1,
+      "simulation-candidate": 1
+    },
+    "byConfidence": {
+      "high": 13,
+      "medium": 35,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+    "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+    "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+    "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-1",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:21-21"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-10",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:119-119"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-11",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:123-123"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-12",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:129-129"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-13",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-14",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-15",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-16",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-17",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:17-17"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-18",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-19",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:26-26"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-20",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-21",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:28-28"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-22",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-23",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-24",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-25",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-26",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:53-53"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-27",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-28",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-29",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:73-73"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-3",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-30",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-31",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-32",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:76-76"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-33",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-34",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:80-80"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-35",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:86-86"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-36",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:87-87"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-37",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-38",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-39",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:95-95"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-4",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:49-49"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-40",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-41",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:99-99"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-42",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:105-105"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-43",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:114-114"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-44",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:115-115"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-45",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:117-117"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-46",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:134-134",
+        "near-code-block:earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-47",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:plain-line-candidate",
+        "line-span:135-135",
+        "near-code-block:earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+        "section:Verification Notes",
+        "line-gap:7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-5",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-6",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-7",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:103-103"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-8",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:107-107"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-9",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "formula-kind:display-math",
+        "line-span:111-111"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "formulaId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "section:Verification Notes",
+        "line-span:142-144",
+        "simulation-candidate:earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "codeBlockId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+        "simulationCandidateIds": [
+          "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-simulation-1",
+      "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-7",
+        "document-title:Theorem CHEM-7 –Thermodynamics and Phase Transitions = Collective Hopfion Melting Points",
+        "linked-code-block:earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1",
+        "source-document:earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "section:Verification Notes",
+        "line-in-code-span:142:142-144"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+        "simulationCandidateId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-simulation-1",
+        "codeBlockId": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb-code-1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,880 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-THERM-006",
+  "counts": {
+    "total": 53,
+    "bySourceType": {
+      "formula": 53,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 7,
+      "medium": 46,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+    "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+    "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+    "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-1",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:22-22"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-10",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:128-128"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-11",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:165-165"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-12",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:189-189"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-13",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-18",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:18-18"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-20",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-35",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:86-86"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-36",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-37",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-38",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-39",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:106-106"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-4",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-40",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:110-110"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-41",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:114-114"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-42",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:116-116"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-43",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:118-118"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-44",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:124-124"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-45",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:130-130"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-46",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:132-132"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-47",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:137-137"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-48",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:138-138"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-49",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:139-139"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-49"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-50",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:140-140"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-50"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-51",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-51"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-52",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:142-142"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-52"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-53",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:145-145"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-53"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-54",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-54"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-55",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:147-147"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-55"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-56",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:148-148"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-56"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-57",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:150-150"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-57"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-58",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:151-151"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-58"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-59",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:152-152"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-59"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-60",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-60"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-61",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-61"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-62",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:161-161"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-62"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-63",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:167-167"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-63"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-64",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:170-170"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-64"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-65",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:171-171"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-65"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-66",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-66"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-67",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:174-174"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-67"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-68",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:176-176"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-68"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-69",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:178-178"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-69"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-70",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:183-183"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-70"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-71",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:184-184"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-71"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-72",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:185-185"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-72"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-73",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:191-191"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-73"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-74",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:192-192"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-74"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-75",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:193-193"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-75"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-76",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:195-195"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-76"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-78",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:plain-line-candidate",
+        "line-span:201-201",
+        "near-code-block:earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-code-1",
+        "section:Verification Notes",
+        "line-gap:7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-78"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-8",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:100-100"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-9",
+      "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:CHEM-8",
+        "document-title:Theorem CHEM-8: Thermodynamics of Solutions and Phase Transitions = Fractal Coherence Length Renormalization",
+        "formula-kind:display-math",
+        "line-span:122-122"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+        "formulaId": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f-formula-9"
+      }
+    }
+  ]
+}

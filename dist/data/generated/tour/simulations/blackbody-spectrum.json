@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "id": "blackbody-spectrum",
+  "lessonId": "blackbody-radiation",
+  "title": "Ideal black-body spectrum",
+  "question": "How do the wavelength curve, its peak, and total emitted power per area respond to thermodynamic temperature?",
+  "predictionPrompt": "When thermodynamic temperature increases, predict whether the wavelength-form peak shifts shorter, shifts longer, or stays unchanged, and whether ideal radiant exitance follows the fourth power of the temperature ratio, follows it linearly, or stays unchanged.",
+  "claimClass": "established-model",
+  "evidenceRefs": [
+    "openstax-university-physics-v3",
+    "bipm-si-brochure-9",
+    "codata-2022"
+  ],
+  "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+  "sourceLocator": "OpenStax section 6.1; BIPM sections 2.2-2.3; CODATA radiation-constant entries",
+  "methodRelationship": "contract-validator",
+  "modelOrigin": "established-physics",
+  "resultStatus": "not-evaluated",
+  "validatesTheory": false,
+  "caveats": [
+    "The activity fixes ideal spectral emissivity at 1 and does not model a material surface.",
+    "The generated curve is neither measured spectral data nor a color-appearance prediction."
+  ],
+  "revision": {
+    "contentRevision": "2026-07-27",
+    "modelRevision": "ideal-planck-wavelength-spectrum-1",
+    "implementationRevision": "tour-blackbody-spectrum-engine-v1"
+  },
+  "numericalMethod": {
+    "kind": "direct-evaluation",
+    "name": "Bounded stable Planck wavelength evaluation",
+    "description": "Evaluates 2 to 256 positive logarithmically spaced wavelength samples using expm1 for exp(x)-1 and the limiting value zero above the finite exponential range; it rejects non-finite or negative output points.",
+    "deterministic": true,
+    "implementationRef": "tour-blackbody-spectrum-engine-v1"
+  },
+  "datasetState": {
+    "state": "not-applicable",
+    "datasetRefs": [],
+    "purposes": []
+  },
+  "modelComponents": [
+    {
+      "id": "planck-wavelength-radiance",
+      "label": "Planck wavelength spectral radiance",
+      "modelOrigin": "established-physics",
+      "description": "Calculates ideal black-body spectral radiance B_lambda for positive wavelength and thermodynamic temperature.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Section 6.1, Planck distribution",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The component is the wavelength density B_lambda with ideal emissivity one."
+        ]
+      }
+    },
+    {
+      "id": "wien-analytic-peak",
+      "label": "Wien wavelength peak",
+      "modelOrigin": "established-physics",
+      "description": "Calculates lambda_max = b/T independently of the finite plotting interval.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "OpenStax section 6.1; CODATA Wien wavelength displacement law constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The peak is for wavelength spectral radiance, not frequency spectral radiance."
+        ]
+      }
+    },
+    {
+      "id": "stefan-analytic-total",
+      "label": "Stefan-Boltzmann radiant exitance",
+      "modelOrigin": "established-physics",
+      "description": "Calculates all-wavelength ideal radiant exitance M = sigma T^4 independently of the displayed interval.",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "OpenStax section 6.1; CODATA Stefan-Boltzmann constant",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The total assumes hemispherical emission from an ideal surface with emissivity one."
+        ]
+      }
+    }
+  ],
+  "equations": [
+    "x = h c / (lambda k_B T)",
+    "B_lambda(lambda,T) = (2 h c^2 / lambda^5) / expm1(x)",
+    "lambda_max = b / T",
+    "M = sigma T^4"
+  ],
+  "assumptions": [
+    "Thermodynamic temperature is positive, uniform, and represented by the selected input.",
+    "Spectral emissivity is exactly 1 at every wavelength in the activity.",
+    "The source is in thermal equilibrium and is represented by the ideal Planck model.",
+    "The sampled wavelength interval is a display bound, not the domain used to define the analytic all-wavelength total.",
+    "No atmosphere, line spectrum, detector response, uncertainty model, or color-matching function is included.",
+    "The spectrum is modeled output and is not loaded or measured data."
+  ],
+  "glossaryIds": [
+    "black-body",
+    "emissivity",
+    "thermodynamic-temperature",
+    "spectral-radiance",
+    "radiant-exitance",
+    "wien-displacement-law",
+    "stefan-boltzmann-law"
+  ],
+  "controls": [
+    {
+      "id": "temperatureKelvin",
+      "label": "Thermodynamic temperature",
+      "type": "range",
+      "inputRole": "parameter",
+      "readingDepth": "guided",
+      "description": "Sets the uniform ideal-emitter temperature used by the Planck, Wien, and Stefan-Boltzmann calculations.",
+      "unit": "K",
+      "default": 5772,
+      "min": 100,
+      "max": 20000,
+      "step": 0.01,
+      "playfulPrompt": "Warm the ideal emitter and watch the peak move left while the total rises quickly."
+    },
+    {
+      "id": "wavelengthMinimumMetres",
+      "label": "Minimum wavelength",
+      "type": "number",
+      "inputRole": "display-option",
+      "readingDepth": "technical",
+      "description": "Sets the lower logarithmic-grid bound accepted by the engine; it must remain below the maximum wavelength.",
+      "unit": "m",
+      "default": 1e-7,
+      "min": 1e-9,
+      "max": 0.01,
+      "step": 1e-9
+    },
+    {
+      "id": "wavelengthMaximumMetres",
+      "label": "Maximum wavelength",
+      "type": "number",
+      "inputRole": "display-option",
+      "readingDepth": "technical",
+      "description": "Sets the upper logarithmic-grid bound accepted by the engine; it must remain above the minimum wavelength.",
+      "unit": "m",
+      "default": 0.0001,
+      "min": 1e-9,
+      "max": 0.01,
+      "step": 1e-9
+    },
+    {
+      "id": "sampleCount",
+      "label": "Series samples",
+      "type": "number",
+      "inputRole": "display-option",
+      "readingDepth": "technical",
+      "description": "Sets the bounded integer number of logarithmic wavelength points evaluated by the engine.",
+      "unit": "samples",
+      "default": 129,
+      "min": 2,
+      "max": 256,
+      "step": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "room",
+      "label": "Room",
+      "description": "A 293.15 K room-temperature ideal black body.",
+      "inspectionPrompt": "Find its infrared peak without interpreting the curve as a room measurement.",
+      "inputs": {
+        "temperatureKelvin": 293.15,
+        "wavelengthMinimumMetres": 1e-7,
+        "wavelengthMaximumMetres": 0.0001,
+        "sampleCount": 129
+      }
+    },
+    {
+      "id": "human-ish",
+      "label": "Human-ish",
+      "description": "A 310 K ideal black-body comparison, not a human emissivity model.",
+      "inspectionPrompt": "Compare the peak with the room preset while retaining the emissivity caveat.",
+      "inputs": {
+        "temperatureKelvin": 310,
+        "wavelengthMinimumMetres": 1e-7,
+        "wavelengthMaximumMetres": 0.0001,
+        "sampleCount": 129
+      }
+    },
+    {
+      "id": "incandescent",
+      "label": "Incandescent",
+      "description": "A representative 2700 K hot-filament ideal black-body temperature, not a material-emissivity fit.",
+      "inspectionPrompt": "Compare its longer peak wavelength and lower total exitance with the Sun-scale preset.",
+      "inputs": {
+        "temperatureKelvin": 2700,
+        "wavelengthMinimumMetres": 1e-7,
+        "wavelengthMaximumMetres": 0.0001,
+        "sampleCount": 129
+      }
+    },
+    {
+      "id": "sun-photosphere",
+      "label": "Sun photosphere",
+      "description": "Uses 5772 K as a conventional effective-temperature black-body comparison for the Sun.",
+      "inspectionPrompt": "Locate the wavelength-form peak, then identify which solar spectral features this smooth ideal curve cannot contain.",
+      "inputs": {
+        "temperatureKelvin": 5772,
+        "wavelengthMinimumMetres": 1e-7,
+        "wavelengthMaximumMetres": 0.0001,
+        "sampleCount": 129
+      }
+    },
+    {
+      "id": "hot-star",
+      "label": "Hot star",
+      "description": "A generic 10000 K hot-star ideal black-body comparison.",
+      "inspectionPrompt": "Track the shorter wavelength peak without treating the curve as a measured stellar spectrum.",
+      "inputs": {
+        "temperatureKelvin": 10000,
+        "wavelengthMinimumMetres": 1e-7,
+        "wavelengthMaximumMetres": 0.0001,
+        "sampleCount": 129
+      }
+    }
+  ],
+  "outputSchema": [
+    {
+      "id": "temperatureKelvin",
+      "label": "Model temperature",
+      "type": "number",
+      "unit": "K",
+      "nullable": false,
+      "description": "Validated temperature input used by every model component."
+    },
+    {
+      "id": "wienPeakWavelengthMetres",
+      "label": "Wien peak wavelength",
+      "type": "number",
+      "unit": "m",
+      "nullable": false,
+      "description": "Engine output b/T for the wavelength-form peak, independent of the sampled grid."
+    },
+    {
+      "id": "stefanBoltzmannExitanceWattsPerSquareMetre",
+      "label": "Ideal radiant exitance",
+      "type": "number",
+      "unit": "W/m^2",
+      "nullable": false,
+      "description": "Engine output sigma T^4 for analytic all-wavelength ideal radiant exitance."
+    }
+  ],
+  "comparison": {
+    "compatibility": "same-simulation-revision-and-output-schema",
+    "incompatibleBehavior": "Render runs separately without pointwise ratios, merged curves, or residual claims when compatibility keys differ.",
+    "compatibilityKey": "2b300b53db827cff15c17c36fbd7a01a753f0fe64f07644548a984c936844f33"
+  },
+  "visualization": {
+    "kind": "bounded-wavelength-spectrum",
+    "description": "Plots the finite Planck wavelength series, marks the analytic Wien peak when it lies in the window, and presents the Stefan-Boltzmann total separately from the sampled curve.",
+    "alternatives": [
+      {
+        "type": "text",
+        "description": "Reports temperature, fixed emissivity, wavelength interval, analytic peak, peak-window status, total exitance, and the modeled-data boundary."
+      },
+      {
+        "type": "table",
+        "description": "Lists every sampled wavelength and spectral-radiance pair, followed by analytic peak and total fields."
+      }
+    ],
+    "reducedMotionBehavior": "Render the completed bounded curve and markers immediately without animated drawing or peak movement."
+  },
+  "finding": {
+    "changed": "At runtime, changing thermodynamic temperature is specified to reshape the finite ideal spectrum, move its analytic wavelength peak, and change total radiant exitance.",
+    "cause": "Planck's exponent contains inverse temperature, Wien's wavelength peak scales as 1/T, and Stefan-Boltzmann radiant exitance scales as T^4.",
+    "equation": "B_lambda = (2 h c^2/lambda^5)/expm1(h c/(lambda k_B T)); lambda_max = b/T; M = sigma T^4",
+    "assumptions": [
+      "Uniform positive thermodynamic temperature",
+      "Ideal wavelength-independent emissivity equal to 1",
+      "Engine wavelength bounds from 10^-9 m through 10^-2 m and at most 256 samples",
+      "No measured dataset, detector response, atmosphere, or color model"
+    ],
+    "establishes": "For an evaluated run, the finite numerical outputs implied by the declared ideal model, constants, controls, bounds, and implementation revision.",
+    "doesNotEstablish": "A measured source spectrum, physical-source temperature, material emissivity, perceived color, empirical agreement, or validation of black-body theory.",
+    "claimClass": "established-model",
+    "evidenceRefs": [
+      "openstax-university-physics-v3",
+      "codata-2022",
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment; tour-content-2026-07-26",
+    "sourceLocator": "Planck, Wien, and Stefan-Boltzmann laws; blackbody-spectrum numerical and provenance contract",
+    "methodRelationship": "contract-validator",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "The analytic total includes wavelengths outside the displayed interval.",
+      "The Sun-scale and incandescent-scale presets are illustrative model inputs, not measurements."
+    ]
+  },
+  "limits": {
+    "tier": "immediate",
+    "maxOperations": 2,
+    "maxDurationMs": 16
+  }
+}

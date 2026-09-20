@@ -1,0 +1,633 @@
+{
+  "schemaVersion": 1,
+  "claimClasses": [
+    {
+      "id": "established-definition",
+      "definition": "A proposition that states an adopted scientific or metrological definition.",
+      "usageWarning": "Do not describe a definition as an observation, measurement, or empirical confirmation.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Established definition",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "established-model",
+      "definition": "A proposition supplied by a well-established model within its stated domain and assumptions.",
+      "usageWarning": "State the model domain and do not promote model output to an observed value.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Established model",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "observed-value",
+      "definition": "A proposition reporting a value obtained from empirical measurement or an identified dataset.",
+      "usageWarning": "Requires an evidence reference, measurement context, and applicable uncertainty; screen output alone is not observation.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Observed value",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "source-claim",
+      "definition": "A proposition attributed to an identified source without adoption by the Tour.",
+      "usageWarning": "Preserve the source wording and locator, and do not inherit support from a separate baseline or validator.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Source claim",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "identity",
+      "definition": "A proposition true by definitions or algebraic quantity calculus under declared conventions.",
+      "usageWarning": "An identity does not independently predict or empirically validate a physical model.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Identity",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "assumption",
+      "definition": "A proposition taken as an input condition or simplification rather than established by the current activity.",
+      "usageWarning": "Expose the assumption wherever a result depends on it.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Assumption",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "calibration",
+      "definition": "A proposition fixing or estimating a model or instrument parameter from specified reference information.",
+      "usageWarning": "A calibrated quantity cannot also serve as an independent held-out validation target.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Calibration",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "exploratory-hypothesis",
+      "definition": "A tentative proposition explored to generate questions or future tests.",
+      "usageWarning": "Do not present post-hoc pattern selection as confirmatory evidence.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Exploratory hypothesis",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "prediction",
+      "definition": "A proposition produced before comparison from a specified model and fixed inputs.",
+      "usageWarning": "Record calibration inputs and selection choices so a fitted or target-containing value is not mislabeled as a prediction.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Prediction",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    }
+  ],
+  "methodRelationships": [
+    {
+      "id": "not-applicable",
+      "definition": "No computational reproduction, comparison baseline, or contract validation method applies to the statement.",
+      "usageWarning": "Use this for definitions and exposition, not to hide an unspecified method.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Not applicable",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "literal-reproduction",
+      "definition": "The method implements an identified source expression or procedure as literally as the declared contract permits.",
+      "usageWarning": "Reproducing source output tests implementation fidelity, not the source theory's empirical validity.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Literal reproduction",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "traditional-baseline",
+      "definition": "The method implements an established comparison model independent of a source-specific proposal.",
+      "usageWarning": "Do not label baseline success as reproduction or validation of the source model.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Traditional baseline method",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "contract-validator",
+      "definition": "The method checks a declared structural, dimensional, numerical, or interface contract.",
+      "usageWarning": "Passing a validator establishes only the checked contract, not empirical agreement.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Contract validator",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    }
+  ],
+  "modelOrigins": [
+    {
+      "id": "established-physics",
+      "definition": "The model component comes from established physics or metrology within a cited scope.",
+      "usageWarning": "Still disclose approximations, domain limits, and whether the output is computed or measured.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Established physics origin",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "source-reproduction",
+      "definition": "The model component comes from the identified source corpus being reproduced or audited.",
+      "usageWarning": "Provenance identifies origin, not scientific endorsement.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Source reproduction origin",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "traditional-baseline",
+      "definition": "The model component is an established comparison baseline kept separate from the source model.",
+      "usageWarning": "Do not merge its assumptions or conclusions into those of the source model.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Traditional baseline origin",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    }
+  ],
+  "resultStatuses": [
+    {
+      "id": "not-evaluated",
+      "definition": "No result has been computed or compared for the stated inputs.",
+      "usageWarning": "All source-authored simulation, finding, lesson-conclusion, and checkpoint statements use this status; runtime may emit a computed status for an evaluated run.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Not evaluated",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "computed",
+      "definition": "A bounded computation completed and produced a result.",
+      "usageWarning": "Runtime-only for evaluated runs; completion alone is not reproduction, comparison, or validation.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Computed",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines a possible runtime state; it is not itself computed."
+        ]
+      }
+    },
+    {
+      "id": "compared",
+      "definition": "A computed result was compared with a declared compatible reference or dataset.",
+      "usageWarning": "Runtime-only for evaluated comparisons; report compatibility, uncertainty, covariance, and the actual comparison outcome separately.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Compared",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines a possible runtime state; it is not itself compared."
+        ]
+      }
+    },
+    {
+      "id": "failure",
+      "definition": "Execution or a declared contract check failed for an identified reason.",
+      "usageWarning": "Runtime-only; name failed execution separately from a validator's defined rejection of scientifically invalid input.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Failure",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines a possible runtime state; it is not itself a failure."
+        ]
+      }
+    },
+    {
+      "id": "blocked-source-model",
+      "definition": "A source model could not be evaluated because its executable contract or required inputs are unavailable.",
+      "usageWarning": "Runtime or audit outcome only; do not substitute a baseline or fabricated output for the blocked source result.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Blocked source model",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines a possible runtime or audit state; it is not itself blocked."
+        ]
+      }
+    },
+    {
+      "id": "unresolved",
+      "definition": "The available material does not support a determinate result or classification.",
+      "usageWarning": "Runtime or audit outcome only; state what evidence, contract, or decision is missing.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Unresolved",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines a possible runtime or audit state; it is not itself unresolved."
+        ]
+      }
+    }
+  ],
+  "conclusionScopes": [
+    {
+      "id": "activity",
+      "definition": "A statement about what the learner can see or do in the interface.",
+      "usageWarning": "Use only for seenInActivity; do not call interface behavior an empirical observation.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Activity scope",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "computation",
+      "definition": "A statement about a calculation performed from declared inputs and rules.",
+      "usageWarning": "Use only for computedHere; do not infer empirical agreement from deterministic output.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Computation scope",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "source",
+      "definition": "A statement about what an identified external or corpus source says or yields.",
+      "usageWarning": "Use only for reproducedFromSource; keep source reproduction separate from independent evidence.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Source scope",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "empirical-evidence",
+      "definition": "A statement about comparison with measured data or an empirical dataset.",
+      "usageWarning": "Use only for comparedWithEvidence; requires an identified dataset and a declared comparison method.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Empirical-evidence scope",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    },
+    {
+      "id": "scientific-conclusion",
+      "definition": "A bounded inference about what the combined definitions, computation, models, and evidence establish.",
+      "usageWarning": "Use only for establishes and doesNotEstablish; its strength must not exceed the weakest required support.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+        "sourceLocator": "Claim and provenance vocabulary: Scientific-conclusion scope",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This entry defines Tour usage, not a scientific result."
+        ]
+      }
+    }
+  ],
+  "validatesTheory": {
+    "definition": "Authored source attribution is always false and cannot carry validationProtocol. A separate evaluated runtime-result attribution may be true only when a complete structured validationProtocol accompanies it.",
+    "usageWarning": "Successful execution, dimensional consistency, literal reproduction, or baseline agreement does not by itself produce runtime theory validation. Current Tour source content is false throughout.",
+    "trueRequires": [
+      "id",
+      "hypothesis",
+      "calibratedInputIds",
+      "heldOutObservableIds",
+      "datasetRefs",
+      "comparisonMethod",
+      "uncertaintyTreatment",
+      "acceptanceCriteria",
+      "failureHandling"
+    ],
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": [
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Claim and provenance vocabulary: theory validation",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "This record defines a contract and is not a validation result."
+      ]
+    }
+  },
+  "conclusionBoundary": {
+    "required": [
+      "seenInActivity",
+      "computedHere",
+      "reproducedFromSource",
+      "comparedWithEvidence",
+      "establishes",
+      "doesNotEstablish"
+    ],
+    "statementRequired": [
+      "text",
+      "scope",
+      "attribution"
+    ],
+    "attributionRequired": [
+      "claimClass",
+      "evidenceRefs",
+      "sourceRevision",
+      "sourceLocator",
+      "methodRelationship",
+      "modelOrigin",
+      "resultStatus",
+      "validatesTheory",
+      "caveats"
+    ],
+    "scopeMapping": {
+      "seenInActivity": "activity",
+      "computedHere": "computation",
+      "reproducedFromSource": "source",
+      "comparedWithEvidence": "empirical-evidence",
+      "establishes": "scientific-conclusion",
+      "doesNotEstablish": "scientific-conclusion"
+    },
+    "rule": "The scope mapping is exact. Empty categories remain present, and a negative statement explains why no reproduction or comparison occurred.",
+    "attribution": {
+      "claimClass": "source-claim",
+      "evidenceRefs": [
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "Claim and provenance vocabulary: conclusion boundary",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "This record defines a content contract and is not a scientific result."
+      ]
+    }
+  }
+}

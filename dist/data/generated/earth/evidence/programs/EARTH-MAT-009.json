@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-MAT-009",
+  "counts": {
+    "total": 0,
+    "bySourceType": {
+      "formula": 0,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+    "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+    "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+    "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-jarvis-dft-3d"
+  ],
+  "disputedClaimIds": [],
+  "assignments": []
+}

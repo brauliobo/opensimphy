@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": "research/opensimphy-edwin-gray/source/media/nC740fpBs4M.en-orig.vtt",
+  "track": "en-orig",
+  "limitation": "Automatic captions with recognition errors. They record what the talk said, not measured COP or wiring.",
+  "cues": [
+    {
+      "id": "ema",
+      "start": "00:08:10",
+      "end": "00:08:25",
+      "startSeconds": 490,
+      "endSeconds": 505,
+      "text": "This motor was not made in isolation. It is the fifth generation of a whole series of motors that started construction in about 1971 and is based by an inventor named Marvin Cole."
+    },
+    {
+      "id": "colors",
+      "start": "00:12:02",
+      "end": "00:12:14",
+      "startSeconds": 722,
+      "endSeconds": 734,
+      "text": "The black motor at the end here just has one set of poles and it's got an opening on the side so you can actually see the timing and the effect of what's going on inside the motor. The purple motor"
+    }
+  ]
+}

@@ -1,0 +1,3394 @@
+{
+  "contract": "edwin-gray-browser-result",
+  "contractVersion": 1,
+  "lutContract": "motor-fem-lut-v1",
+  "caseId": "patent-3890548-illustrative",
+  "status": "complete",
+  "expectedAnglesDeg": [
+    0,
+    13.3333333333,
+    26.6666666667,
+    40,
+    53.3333333333,
+    66.6666666667,
+    80,
+    93.3333333333,
+    106.6666666667,
+    120,
+    133.3333333333,
+    146.6666666667,
+    160,
+    173.3333333333,
+    186.6666666667,
+    200,
+    213.3333333333,
+    226.6666666667,
+    240,
+    253.3333333333,
+    266.6666666667,
+    280,
+    293.3333333333,
+    306.6666666667,
+    320,
+    333.3333333333,
+    346.6666666667
+  ],
+  "entries": [
+    {
+      "entryId": "angle-0-event-0-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 0,
+        "eventIndex": 0,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 0,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-13.3333333333-event-1-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 13.3333333333,
+        "eventIndex": 1,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 0,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-26.6666666667-event-2-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 26.6666666667,
+        "eventIndex": 2,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 0,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-40-event-3-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 40,
+        "eventIndex": 3,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 40,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-53.3333333333-event-4-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 53.3333333333,
+        "eventIndex": 4,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 40,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-66.6666666667-event-5-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 66.6666666667,
+        "eventIndex": 5,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 40,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-80-event-6-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 80,
+        "eventIndex": 6,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 80,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-93.3333333333-event-7-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 93.3333333333,
+        "eventIndex": 7,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 80,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-106.6666666667-event-8-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 106.6666666667,
+        "eventIndex": 8,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 80,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-120-event-9-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 120,
+        "eventIndex": 9,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 120,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-133.3333333333-event-10-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 133.3333333333,
+        "eventIndex": 10,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 120,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-146.6666666667-event-11-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 146.6666666667,
+        "eventIndex": 11,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 120,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-160-event-12-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 160,
+        "eventIndex": 12,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 160,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-173.3333333333-event-13-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 173.3333333333,
+        "eventIndex": 13,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 160,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-186.6666666667-event-14-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 186.6666666667,
+        "eventIndex": 14,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 160,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-200-event-15-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 200,
+        "eventIndex": 15,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 200,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-213.3333333333-event-16-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 213.3333333333,
+        "eventIndex": 16,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 200,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-226.6666666667-event-17-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 226.6666666667,
+        "eventIndex": 17,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 200,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-240-event-18-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 240,
+        "eventIndex": 18,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 240,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-253.3333333333-event-19-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 253.3333333333,
+        "eventIndex": 19,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 240,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-266.6666666667-event-20-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 266.6666666667,
+        "eventIndex": 20,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 240,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-280-event-21-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 280,
+        "eventIndex": 21,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 280,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-293.3333333333-event-22-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 293.3333333333,
+        "eventIndex": 22,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 280,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-306.6666666667-event-23-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 306.6666666667,
+        "eventIndex": 23,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 280,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-320-event-24-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 320,
+        "eventIndex": 24,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2708596238589395,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005417192477178342,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "inputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 320,
+        "sourceEventIndex": 0,
+        "sourceJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-333.3333333333-event-25-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 333.3333333333,
+        "eventIndex": 25,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.317412791814331,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.006348255836287023,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "inputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 320,
+        "sourceEventIndex": 1,
+        "sourceJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+          }
+        ]
+      }
+    },
+    {
+      "entryId": "angle-346.6666666667-event-26-mesh-0.025-current-10",
+      "status": "complete",
+      "parameters": {
+        "rotorAngleDeg": 346.6666666667,
+        "eventIndex": 26,
+        "excitationContract": "edwin-gray-fem-excitation-event-map/v1",
+        "meshSizeM": 0.025,
+        "driveCurrentA": 10
+      },
+      "observables": {
+        "magneticEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "coEnergyJ": {
+          "value": 0.2509681040403732,
+          "unit": "J"
+        },
+        "inductanceH": {
+          "value": 0.005019362080807654,
+          "unit": "H"
+        }
+      },
+      "provenance": {
+        "synthetic": false,
+        "sourceFormat": "getdp-table",
+        "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91",
+        "jobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "inputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "solver": "getdp",
+        "backend": "docker",
+        "symmetryApplied": true,
+        "artifacts": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ],
+        "derivation": "symmetry-derived-from-job",
+        "rotationDeg": 320,
+        "sourceEventIndex": 2,
+        "sourceJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+        "sourceArtifactHashes": [
+          {
+            "path": "motor.msh",
+            "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+          },
+          {
+            "path": "mesh-audit.json",
+            "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+          },
+          {
+            "path": "getdp.log",
+            "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+          },
+          {
+            "path": "solver-convergence.json",
+            "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+          },
+          {
+            "path": "observables.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "coenergy.dat",
+            "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+          },
+          {
+            "path": "inductance.dat",
+            "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+          }
+        ]
+      }
+    }
+  ],
+  "compatibility": {
+    "machineContractId": "patent-3890548-illustrative",
+    "machineRevision": 1,
+    "modelRevision": 1,
+    "topologyIdentity": "us3890548a-nine-stator-three-rotor-pair-topology",
+    "turns": 100,
+    "excitation": "impressed-current-magnetostatic",
+    "modelInputHash": "f6ef1e3563ff77b7a83c7325419066e9212367f581ff9440fa40f2efc8741e91"
+  },
+  "publicationProfile": {
+    "profileId": "fast-coarse-direct-mumps-v1",
+    "solvedEventIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "independentlySolvedJobCount": 6,
+    "symmetryDerivedEntryCount": 27
+  },
+  "symmetryProof": {
+    "contract": "edwin-gray-event-map-symmetry-proof",
+    "contractVersion": 1,
+    "status": "complete",
+    "transformation": {
+      "eventOffset": 3,
+      "rotationDeg": 40,
+      "representativeEvents": [
+        0,
+        1,
+        2
+      ],
+      "validationPartners": [
+        3,
+        4,
+        5
+      ],
+      "classCount": 3,
+      "eventsPerClass": 9
+    },
+    "inputs": {
+      "eventMapSha256": "be25d49f0bec392d6e5855b6703693df48a5bce1390d341cdf49f66610092b1d",
+      "caseSha256": "0bfcf968f1285086d928ed1f0723059a5cf7d6e8f812c27e6e10d6a8751b9782",
+      "geometrySha256": "6f443a1f02f3bd37b855a329a36e703c61673ca35bb4972b1c45e198ce59cef7"
+    },
+    "checks": [
+      {
+        "id": "complete-stator-geometry-40deg-invariant",
+        "status": "passed",
+        "evidence": "nine congruent stations exhaust one revolution"
+      },
+      {
+        "id": "complete-rotor-geometry-rotates-with-angle",
+        "status": "passed",
+        "evidence": "three congruent rotor stations exhaust one revolution"
+      },
+      {
+        "id": "air-domain-z-rotation-invariant",
+        "status": "passed",
+        "evidence": "centered circular cylindrical outer domain"
+      },
+      {
+        "id": "geometry-construction-equivariant",
+        "status": "passed",
+        "evidence": "station loops use only z-axis rotations of common element boxes"
+      },
+      {
+        "id": "material-domain-rotation-invariant",
+        "status": "passed",
+        "evidence": "each complete physical domain has scalar linear permeability"
+      },
+      {
+        "id": "source-law-rotation-equivariant",
+        "status": "passed",
+        "evidence": "local-radial current potential rotates with each selected envelope"
+      },
+      {
+        "id": "complete-region-identity",
+        "status": "passed",
+        "evidence": "all 36 stator and 12 rotor coil-envelope identities are unique"
+      },
+      {
+        "id": "event-0-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-0-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-0-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-1-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-1-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-1-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-2-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-2-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-2-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-3-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-3-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-3-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-4-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-4-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-4-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-5-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-5-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-5-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-6-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-6-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-6-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-7-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-7-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-7-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-8-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-8-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-8-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-9-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-9-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-9-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-10-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-10-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-10-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-11-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-11-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-11-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-12-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-12-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-12-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-13-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-13-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-13-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-14-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-14-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-14-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-15-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-15-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-15-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-16-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-16-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-16-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-17-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-17-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-17-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-18-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-18-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-18-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-19-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-19-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-19-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-20-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-20-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-20-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-21-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-21-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-21-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-22-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-22-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-22-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      },
+      {
+        "id": "event-23-angle",
+        "status": "passed",
+        "evidence": "event index +3 advances physical rotor angle by 40 degrees"
+      },
+      {
+        "id": "event-23-stator-source-set",
+        "status": "passed",
+        "evidence": "complete selected stator set advances by one 40-degree station"
+      },
+      {
+        "id": "event-23-rotor-source-set",
+        "status": "passed",
+        "evidence": "rotor geometry and complete selected rotor set rotate together by 40 degrees"
+      }
+    ],
+    "proofSha256": "6e73200e5ea901821d39ec51810c7e006fcd63195074f6891cc60c3352d2c538"
+  },
+  "validationPairs": [
+    {
+      "representativeEvent": 0,
+      "validationEvent": 3,
+      "rotationDeg": 40,
+      "tolerance": 0.01,
+      "differences": {
+        "magneticEnergyJ": 0.00027289561307149764,
+        "coEnergyJ": 0.00027289561307149764,
+        "inductanceH": 0.0002728956131460664
+      },
+      "maximumRelativeDifference": 0.0002728956131460664,
+      "status": "passed",
+      "representativeJobInputHash": "4784b63b96aa0151498fbd997f1006fddc736b40d6342d6bacbb7481f9b3ba70",
+      "validationJobInputHash": "88ebee2cb14f827799e76e41b664d8dc60186466950fb503363821b0b8e1dda8",
+      "representativeArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "db45e99f1de12eb647f2ef0390cf1babbd03ceb99249e7fe6eafbbe0a86eba5f"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "c3c0a4e28282ac754dca2d4f96abb60cbc644e84bd90d594568fd0e546a1490c"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "ebc07c9b928cac9c727bb2e9595d80747bb2e6542329a9734bcce19e1803eb66"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "6eeffa3c8cca2c5e7511461109fcc9c7234d9d01fa54870f4c56abb3fe6897e2"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "fd6ba0745d4fc0ee5e8d17832c44557f420142e8e293893a6917ebc06c494cee"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "15e75cc618db8d1a584cd460cf9d9e716c1a1730078f88ca3e002d01ffad6d6b"
+        }
+      ],
+      "validationArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "abae0e849bffd014ed9f5080040d105890559c6388a998a4d9023ba1a8799632"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "e93b3719e35ceb7052c32cd879fb4a6550c1a1b74684889248187890df808898"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "829609a11d88e7bbf59805b65ccc919e65684780653cec26631305b787ac5429"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "1f2e5500045cfa9ba23d615273dc09f3b39d2b92597f2b8b5ecbe2dff0fa38bb"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "b6a0e3917ebf9f4192f4b66ad4b992f37e50819c77829bb62a7f1a4eff162687"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "b6a0e3917ebf9f4192f4b66ad4b992f37e50819c77829bb62a7f1a4eff162687"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "b5b500dc6bb503a6062a99959d4d6898aed134710ec766da16746be3b48de855"
+        }
+      ]
+    },
+    {
+      "representativeEvent": 1,
+      "validationEvent": 4,
+      "rotationDeg": 40,
+      "tolerance": 0.01,
+      "differences": {
+        "magneticEnergyJ": 0.00008749478046109763,
+        "coEnergyJ": 0.00008749478046109763,
+        "inductanceH": 0.0000874947805209961
+      },
+      "maximumRelativeDifference": 0.0000874947805209961,
+      "status": "passed",
+      "representativeJobInputHash": "5d3dae53b16d1bc2485b31c624e61bdfd7ab7ec0d2f8e910824f1796e3c8574b",
+      "validationJobInputHash": "27aff078b3d693c03c849cb7832104cf84e0425158a2bce7dc22cd557a49d3b4",
+      "representativeArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "9d8895df75dd886205be9575522fbc0f0102e9bb0e5306022925a25cbfa1c5ff"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "7426f7be5ed9d65a976730007b6295b852770d96e4576c362d6eb9494499b981"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "f1076e7355410e36d6147581c35ff78437b1c5ee850d11f924f0773ca0913a27"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "6b3a96c54268cae33a5af57486e5c7b3d99cbfbc1867ab79179cd869e548efdd"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "bda7f7c86ec33d516892c08f3ec5cf2c2537604759e856d40abf5252ac9f95d3"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "6ac0b3e6d2716b5132c9decf641a0b62dd470234139d8e13098a151c585ed221"
+        }
+      ],
+      "validationArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "d843c42701a52c1b3752db175583c8c21830a82a6455c7ca396fce07294cf0ca"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "fbeb53ba9bf96d7d494c8224bee1b3923e69ce514b02eeeac85f963d523aed3a"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "8a37e4d6372d9ee1a7eb0a65ed408808d7c04e53a4326941e1be8fa69135de78"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "391a3b8850abed3c2bc3b950a224c1ca6444333049ff7ca36e41e985f7c7f954"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "6b0477eafa28522be697a199cfa8bf55994a2f280d2dd4349bcc234b8968c72e"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "6b0477eafa28522be697a199cfa8bf55994a2f280d2dd4349bcc234b8968c72e"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "3699f3ec61b5c0a21a660042390b2fdd7b8ab2cdc8e8e3ee30a7e20debfa2c4d"
+        }
+      ]
+    },
+    {
+      "representativeEvent": 2,
+      "validationEvent": 5,
+      "rotationDeg": 40,
+      "tolerance": 0.01,
+      "differences": {
+        "magneticEnergyJ": 0.000054836965411192254,
+        "coEnergyJ": 0.000054836965411192254,
+        "inductanceH": 0.00005483696536869907
+      },
+      "maximumRelativeDifference": 0.000054836965411192254,
+      "status": "passed",
+      "representativeJobInputHash": "b2294682a26d1dddb7839e669a2bd460ee86d1ecabd8b1cae2e6f61884050d46",
+      "validationJobInputHash": "c785a8091aebf106d4206c81f8fb0ff55197160c671a142aa7cfeb688841839f",
+      "representativeArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "a867386bdd1527efa4dc3be41d3f24cfe841dfc091cdde81fadafc6486a0af0d"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "6dec654a698f20b35fddf275a989a2a8454cd7142c94a52768c19022632be6d4"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "cafa0352fe97f7a30e39da8ce07901ddcad6c3f207b68a9fcd542b15dbffeb51"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "2cf6d5dd7c5bec1c6cbc80070b0239a575a9e135b8629a0a379062768b575dc5"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "4ee7281d1594c8f26933d1916e736bb76fe83d3f96e2727fbedd7df9d785a4a9"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "20da0526a698c05dd0e1ce6cfd4d29dac6efa7f2318df96831f701207803101b"
+        }
+      ],
+      "validationArtifactHashes": [
+        {
+          "path": "motor.msh",
+          "sha256": "02d5541c2b35cf4cdbaea43eceaa8adbf8dae6a693f419ea899e8126ee58eb2c"
+        },
+        {
+          "path": "mesh-audit.json",
+          "sha256": "843bac7211c89838987a7e87d7a694129afc5bcf295a62b6ab710813a0422009"
+        },
+        {
+          "path": "getdp.log",
+          "sha256": "1519c28478d8c20e4648524cfbd870f9372f4a87950f8ef45086611f99db5417"
+        },
+        {
+          "path": "solver-convergence.json",
+          "sha256": "d4513d2bdcb83c4f7f020b9a15c9cf007dce4622e96002c9bfcbef71dafae124"
+        },
+        {
+          "path": "observables.dat",
+          "sha256": "46b0803afad86f58aeca34f8bb7e431a4059f70c35341320953dc97c316e19a4"
+        },
+        {
+          "path": "coenergy.dat",
+          "sha256": "46b0803afad86f58aeca34f8bb7e431a4059f70c35341320953dc97c316e19a4"
+        },
+        {
+          "path": "inductance.dat",
+          "sha256": "d94643c300e6e57381f4641d277e965c5c1228fcfcc7095502cb9506af0ad62a"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "synthetic": false,
+    "limitations": [
+      "Linear isotropic magnetostatic snapshot only",
+      "Closed-surface homogenized equivalent current-potential source; no capacitor discharge transient",
+      "Inductance is the magnetic-energy proxy 2 W / I^2",
+      "No motion, torque, saturation, hysteresis, losses, or energy-recovery model"
+    ],
+    "source": "Six independently solved coarse direct-MUMPS jobs; 27 entries expanded from exact 40-degree event classes after three validation-pair gates; convergence-report sha256:fb76cbc22eccc24e9c6f7a06ec0f0a796fd0dc7561fc4e93e683c684ac332dfd; convergence-spec-v2 sha256:94db71a94d9ae5e5915ea577025dc44858b17bf50d02d2860973658c2d38b6e7"
+  }
+}

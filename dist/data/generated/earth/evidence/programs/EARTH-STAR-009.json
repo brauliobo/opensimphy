@@ -1,0 +1,677 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-STAR-009",
+  "counts": {
+    "total": 37,
+    "bySourceType": {
+      "formula": 23,
+      "code-block": 7,
+      "simulation-candidate": 7
+    },
+    "byConfidence": {
+      "high": 22,
+      "medium": 15,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+    "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+    "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+    "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+    "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+    "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-gaia-data-release-3"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-10",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-18",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-19",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:55-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-2",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:36-36"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-20",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:63-63"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-21",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-22",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:90-90"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-23",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:95-95"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-24",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:117-117"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-25",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:119-119"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-26",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:124-124"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-27",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-28",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:136-136"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-29",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:245-245",
+        "near-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-3",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-30",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:254-254"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-31",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:plain-line-candidate",
+        "line-span:256-256"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-4",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:50-50"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-5",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-6",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:70-70"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-7",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:82-82"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-8",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:93-93"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-9",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "formula-kind:display-math",
+        "line-span:120-120"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "formulaId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-1",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:175-181",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-1",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-2",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:184-195",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-2",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-3",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:198-204",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-3",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-4",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:207-216",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-4",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-5",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:219-223",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-5",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-6",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:226-230",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-6",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "section:Verification Notes",
+        "line-span:233-237",
+        "simulation-candidate:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7",
+        "simulationCandidateIds": [
+          "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-7"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-1",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-1",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:175:175-181"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-1",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-2",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-2",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:184:184-195"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-2",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-3",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-3",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:198:198-204"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-3",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-4",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-4",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:207:207-216"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-4",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-5",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-5",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:219:219-223"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-5",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-6",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-6",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:226:226-230"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-6",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-6"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-7",
+      "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-6",
+        "document-title:Theorem STAR-6 – Core-Collapse Supernova and Neutron-Star Birth = Topological Untying of the Three-Strand Knot",
+        "linked-code-block:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7",
+        "source-document:earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "section:Verification Notes",
+        "line-in-code-span:233:233-237"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+        "simulationCandidateId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-simulation-7",
+        "codeBlockId": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da-code-7"
+      }
+    }
+  ]
+}

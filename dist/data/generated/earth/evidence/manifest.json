@@ -1,0 +1,3198 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "sourcePlan": {
+    "path": "research/earth-thad-nassim/EARTH_SIMULATION_PLAN.md",
+    "revision": "2026-07-17",
+    "sha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9"
+  },
+  "datasetRegistry": {
+    "sha256": "5e875e1f8c142facf2f56ca93be75003902e5f953dee546627e41855dc139801"
+  },
+  "summary": {
+    "programs": 130,
+    "documents": 63,
+    "assignments": 2422,
+    "canonicalProgramAssignments": 1984,
+    "classifiedAssignments": 438,
+    "datasets": 19,
+    "disputedClaims": 4,
+    "classifications": {
+      "duplicate": 432,
+      "blocked-source-fragment": 1,
+      "non-scientific-example": 5
+    }
+  },
+  "programs": [
+    {
+      "id": "EARTH-FND-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-001.json",
+      "counts": {
+        "total": 161,
+        "bySourceType": {
+          "formula": 161,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 161
+        }
+      },
+      "linkedDocuments": 13,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-002.json",
+      "counts": {
+        "total": 11,
+        "bySourceType": {
+          "formula": 11,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 6,
+          "medium": 5,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-003.json",
+      "counts": {
+        "total": 13,
+        "bySourceType": {
+          "formula": 13,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 11,
+          "medium": 2,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-004.json",
+      "counts": {
+        "total": 48,
+        "bySourceType": {
+          "formula": 48,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 1,
+          "medium": 47,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-005.json",
+      "counts": {
+        "total": 17,
+        "bySourceType": {
+          "formula": 17,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 2,
+          "medium": 15,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-006.json",
+      "counts": {
+        "total": 11,
+        "bySourceType": {
+          "formula": 11,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 3,
+          "medium": 8,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-008.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-009.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-010",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-010.json",
+      "counts": {
+        "total": 13,
+        "bySourceType": {
+          "formula": 13,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 2,
+          "medium": 11,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-011",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-011.json",
+      "counts": {
+        "total": 11,
+        "bySourceType": {
+          "formula": 11,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 2,
+          "medium": 9,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 12,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-012",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-012.json",
+      "counts": {
+        "total": 10,
+        "bySourceType": {
+          "formula": 10,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 7,
+          "medium": 3,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-013",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-013.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FND-014",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FND-014.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 11,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GEO-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GEO-001.json",
+      "counts": {
+        "total": 11,
+        "bySourceType": {
+          "formula": 11,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 2,
+          "medium": 9,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GEO-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GEO-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GEO-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GEO-003.json",
+      "counts": {
+        "total": 16,
+        "bySourceType": {
+          "formula": 16,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 8,
+          "medium": 8,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GEO-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GEO-004.json",
+      "counts": {
+        "total": 11,
+        "bySourceType": {
+          "formula": 11,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 5,
+          "medium": 6,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GEO-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GEO-005.json",
+      "counts": {
+        "total": 17,
+        "bySourceType": {
+          "formula": 17,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 17,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-001.json",
+      "counts": {
+        "total": 18,
+        "bySourceType": {
+          "formula": 18,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 18,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-005.json",
+      "counts": {
+        "total": 24,
+        "bySourceType": {
+          "formula": 22,
+          "code-block": 1,
+          "simulation-candidate": 1
+        },
+        "byConfidence": {
+          "high": 8,
+          "medium": 16,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-007.json",
+      "counts": {
+        "total": 18,
+        "bySourceType": {
+          "formula": 18,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 4,
+          "medium": 14,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-008.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-009.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-FLD-010",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-FLD-010.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NUC-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NUC-001.json",
+      "counts": {
+        "total": 23,
+        "bySourceType": {
+          "formula": 23,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 12,
+          "medium": 11,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NUC-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NUC-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NUC-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NUC-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NUC-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NUC-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NUC-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NUC-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PRT-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PRT-001.json",
+      "counts": {
+        "total": 30,
+        "bySourceType": {
+          "formula": 30,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 24,
+          "medium": 6,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PRT-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PRT-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PRT-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PRT-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PRT-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PRT-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PRT-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PRT-005.json",
+      "counts": {
+        "total": 25,
+        "bySourceType": {
+          "formula": 25,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 6,
+          "medium": 19,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-002.json",
+      "counts": {
+        "total": 23,
+        "bySourceType": {
+          "formula": 23,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 11,
+          "medium": 12,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-004.json",
+      "counts": {
+        "total": 27,
+        "bySourceType": {
+          "formula": 27,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 15,
+          "medium": 12,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-007.json",
+      "counts": {
+        "total": 43,
+        "bySourceType": {
+          "formula": 43,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 35,
+          "medium": 8,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-008.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-CHEM-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-CHEM-009.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-001.json",
+      "counts": {
+        "total": 26,
+        "bySourceType": {
+          "formula": 26,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 20,
+          "medium": 6,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-SPEC-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-SPEC-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 1,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-001.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-008.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-009.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-MAT-010",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-MAT-010.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-001.json",
+      "counts": {
+        "total": 48,
+        "bySourceType": {
+          "formula": 46,
+          "code-block": 1,
+          "simulation-candidate": 1
+        },
+        "byConfidence": {
+          "high": 13,
+          "medium": 35,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-006.json",
+      "counts": {
+        "total": 53,
+        "bySourceType": {
+          "formula": 53,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 7,
+          "medium": 46,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-008.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-009.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-THERM-010",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-THERM-010.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-001.json",
+      "counts": {
+        "total": 134,
+        "bySourceType": {
+          "formula": 124,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 134,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GRV-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GRV-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-001.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-COS-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-COS-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 4,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-001.json",
+      "counts": {
+        "total": 41,
+        "bySourceType": {
+          "formula": 35,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 12,
+          "medium": 29,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-002.json",
+      "counts": {
+        "total": 28,
+        "bySourceType": {
+          "formula": 20,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 16,
+          "medium": 12,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 2,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-005.json",
+      "counts": {
+        "total": 24,
+        "bySourceType": {
+          "formula": 18,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 14,
+          "medium": 10,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-007.json",
+      "counts": {
+        "total": 41,
+        "bySourceType": {
+          "formula": 31,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 19,
+          "medium": 22,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-008.json",
+      "counts": {
+        "total": 38,
+        "bySourceType": {
+          "formula": 32,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 11,
+          "medium": 27,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-009.json",
+      "counts": {
+        "total": 52,
+        "bySourceType": {
+          "formula": 44,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 11,
+          "medium": 41,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-010",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-010.json",
+      "counts": {
+        "total": 38,
+        "bySourceType": {
+          "formula": 30,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 19,
+          "medium": 19,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-011",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-011.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-PLAN-012",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-PLAN-012.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 7,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-001.json",
+      "counts": {
+        "total": 39,
+        "bySourceType": {
+          "formula": 29,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 21,
+          "medium": 18,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-003.json",
+      "counts": {
+        "total": 44,
+        "bySourceType": {
+          "formula": 34,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 22,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-004.json",
+      "counts": {
+        "total": 49,
+        "bySourceType": {
+          "formula": 39,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 28,
+          "medium": 21,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-005.json",
+      "counts": {
+        "total": 39,
+        "bySourceType": {
+          "formula": 27,
+          "code-block": 6,
+          "simulation-candidate": 6
+        },
+        "byConfidence": {
+          "high": 24,
+          "medium": 15,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-008.json",
+      "counts": {
+        "total": 59,
+        "bySourceType": {
+          "formula": 47,
+          "code-block": 6,
+          "simulation-candidate": 6
+        },
+        "byConfidence": {
+          "high": 19,
+          "medium": 40,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-STAR-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-STAR-009.json",
+      "counts": {
+        "total": 37,
+        "bySourceType": {
+          "formula": 23,
+          "code-block": 7,
+          "simulation-candidate": 7
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 15,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 6,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GAL-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-001.json",
+      "counts": {
+        "total": 57,
+        "bySourceType": {
+          "formula": 45,
+          "code-block": 6,
+          "simulation-candidate": 6
+        },
+        "byConfidence": {
+          "high": 26,
+          "medium": 31,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 1
+    },
+    {
+      "id": "EARTH-GAL-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-002.json",
+      "counts": {
+        "total": 54,
+        "bySourceType": {
+          "formula": 38,
+          "code-block": 8,
+          "simulation-candidate": 8
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 32,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GAL-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-003.json",
+      "counts": {
+        "total": 70,
+        "bySourceType": {
+          "formula": 54,
+          "code-block": 8,
+          "simulation-candidate": 8
+        },
+        "byConfidence": {
+          "high": 31,
+          "medium": 39,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GAL-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-004.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GAL-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-005.json",
+      "counts": {
+        "total": 56,
+        "bySourceType": {
+          "formula": 40,
+          "code-block": 8,
+          "simulation-candidate": 8
+        },
+        "byConfidence": {
+          "high": 22,
+          "medium": 34,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-GAL-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-006.json",
+      "counts": {
+        "total": 61,
+        "bySourceType": {
+          "formula": 45,
+          "code-block": 8,
+          "simulation-candidate": 8
+        },
+        "byConfidence": {
+          "high": 27,
+          "medium": 34,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 1
+    },
+    {
+      "id": "EARTH-GAL-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-GAL-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-001.json",
+      "counts": {
+        "total": 32,
+        "bySourceType": {
+          "formula": 26,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 9,
+          "medium": 23,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-002.json",
+      "counts": {
+        "total": 30,
+        "bySourceType": {
+          "formula": 24,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 10,
+          "medium": 20,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-004.json",
+      "counts": {
+        "total": 41,
+        "bySourceType": {
+          "formula": 33,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 18,
+          "medium": 23,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-006.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-007",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-007.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-008",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-008.json",
+      "counts": {
+        "total": 34,
+        "bySourceType": {
+          "formula": 28,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 9,
+          "medium": 25,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-BIO-009",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-BIO-009.json",
+      "counts": {
+        "total": 38,
+        "bySourceType": {
+          "formula": 30,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 20,
+          "medium": 18,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-001",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-001.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-002",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-002.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-004",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-004.json",
+      "counts": {
+        "total": 34,
+        "bySourceType": {
+          "formula": 26,
+          "code-block": 4,
+          "simulation-candidate": 4
+        },
+        "byConfidence": {
+          "high": 14,
+          "medium": 20,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-005.json",
+      "counts": {
+        "total": 30,
+        "bySourceType": {
+          "formula": 20,
+          "code-block": 5,
+          "simulation-candidate": 5
+        },
+        "byConfidence": {
+          "high": 20,
+          "medium": 10,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-NEURO-006",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-NEURO-006.json",
+      "counts": {
+        "total": 76,
+        "bySourceType": {
+          "formula": 50,
+          "code-block": 13,
+          "simulation-candidate": 13
+        },
+        "byConfidence": {
+          "high": 47,
+          "medium": 29,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 5,
+      "linkedDatasets": 1,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-X-003",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-X-003.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    },
+    {
+      "id": "EARTH-X-005",
+      "dataUrl": "/data/generated/earth/evidence/programs/EARTH-X-005.json",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "linkedDocuments": 3,
+      "linkedDatasets": 0,
+      "disputedClaims": 0
+    }
+  ],
+  "documents": [
+    {
+      "id": "earth-p-ab8c1d3e7b717000fa643d4f2ddda67335852b4f445dc3ca08ef4aec6da6be17",
+      "slug": "for-your-understanding--ab8c1d3e7b71",
+      "dataUrl": "/data/generated/earth/evidence/documents/for-your-understanding--ab8c1d3e7b71.json",
+      "relatedCanonicalPrograms": 1,
+      "coverageAssignments": 19,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+      "slug": "lexicon--0601d45c10a3",
+      "dataUrl": "/data/generated/earth/evidence/documents/lexicon--0601d45c10a3.json",
+      "relatedCanonicalPrograms": 26,
+      "coverageAssignments": 93,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e",
+      "slug": "new-maths--9ba60fd99820",
+      "dataUrl": "/data/generated/earth/evidence/documents/new-maths--9ba60fd99820.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 43,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+      "slug": "theory-paper--a4dfeba5e0a2",
+      "dataUrl": "/data/generated/earth/evidence/documents/theory-paper--a4dfeba5e0a2.json",
+      "relatedCanonicalPrograms": 43,
+      "coverageAssignments": 13,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-8413a98462fc4c988ac23d11cae4db779a06b5e9f69b4d069b20b3c52a6eea53",
+      "slug": "boson-isomorphism--8413a98462fc",
+      "dataUrl": "/data/generated/earth/evidence/documents/boson-isomorphism--8413a98462fc.json",
+      "relatedCanonicalPrograms": 15,
+      "coverageAssignments": 10,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+      "slug": "coupling-theorem--bb530ae74b4c",
+      "dataUrl": "/data/generated/earth/evidence/documents/coupling-theorem--bb530ae74b4c.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 13,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-33849b75ec2b7e9a39aa197b831c9ecc57892757d054b54c5b3786bbb0698d00",
+      "slug": "curvature-theorem--33849b75ec2b",
+      "dataUrl": "/data/generated/earth/evidence/documents/curvature-theorem--33849b75ec2b.json",
+      "relatedCanonicalPrograms": 1,
+      "coverageAssignments": 11,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-eb93cd321902efe497d2236a1512fec784d195003fe5650c414b4461ff2df80b",
+      "slug": "fermion-theorem--eb93cd321902",
+      "dataUrl": "/data/generated/earth/evidence/documents/fermion-theorem--eb93cd321902.json",
+      "relatedCanonicalPrograms": 20,
+      "coverageAssignments": 15,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+      "slug": "fixed-point-uniqueness--c32be8df5bd0",
+      "dataUrl": "/data/generated/earth/evidence/documents/fixed-point-uniqueness--c32be8df5bd0.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 11,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "slug": "growth--b31d3d4d7b27",
+      "dataUrl": "/data/generated/earth/evidence/documents/growth--b31d3d4d7b27.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 17,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade",
+      "slug": "master-list-cosmological-scale--0dc877e02cc5",
+      "dataUrl": "/data/generated/earth/evidence/documents/master-list-cosmological-scale--0dc877e02cc5.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 49,
+      "simulationCandidates": 5,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+      "slug": "metric-theorem--3502a1d14e22",
+      "dataUrl": "/data/generated/earth/evidence/documents/metric-theorem--3502a1d14e22.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 10,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "slug": "neuroscience-non-emergence--dc08062297d5",
+      "dataUrl": "/data/generated/earth/evidence/documents/neuroscience-non-emergence--dc08062297d5.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 3,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-3a68d17a555c5476c66255c524a6790e4d24bdc7779051c99584a3995ceee7fa",
+      "slug": "phase-theorem--3a68d17a555c",
+      "dataUrl": "/data/generated/earth/evidence/documents/phase-theorem--3a68d17a555c.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 17,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+      "slug": "phi--7c5b7a87faaa",
+      "dataUrl": "/data/generated/earth/evidence/documents/phi--7c5b7a87faaa.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 12,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120",
+      "slug": "pi--357c2c2955e9",
+      "dataUrl": "/data/generated/earth/evidence/documents/pi--357c2c2955e9.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 16,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-31d06837484b0973643a9fcf08af998fde3f3691f891fb688d7ba4279b488a12",
+      "slug": "planck-constant-from-g-r-twist-counting--31d06837484b",
+      "dataUrl": "/data/generated/earth/evidence/documents/planck-constant-from-g-r-twist-counting--31d06837484b.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 11,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+      "slug": "quantum-superposition--e890a4362262",
+      "dataUrl": "/data/generated/earth/evidence/documents/quantum-superposition--e890a4362262.json",
+      "relatedCanonicalPrograms": 10,
+      "coverageAssignments": 24,
+      "simulationCandidates": 1,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "slug": "quantumgravity--8d17b8d018e0",
+      "dataUrl": "/data/generated/earth/evidence/documents/quantumgravity--8d17b8d018e0.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 121,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-1d23d544c5cf2a9d703762fa55e7c21fcb30870897b8300dd941569ba022ba18",
+      "slug": "quasicrystal-projection--1d23d544c5cf",
+      "dataUrl": "/data/generated/earth/evidence/documents/quasicrystal-projection--1d23d544c5cf.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 12,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-6322974b938da5c03870f7c4571546fd3a7d93888a6ba24553e5e97877cb32b2",
+      "slug": "r-3-theorem--6322974b938d",
+      "dataUrl": "/data/generated/earth/evidence/documents/r-3-theorem--6322974b938d.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 3,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-c2072724021e6c22369466a8edf55a5a39fd8d70a49ffc62cf02e5c0263cb548",
+      "slug": "response-to-goolsby777--c2072724021e",
+      "dataUrl": "/data/generated/earth/evidence/documents/response-to-goolsby777--c2072724021e.json",
+      "relatedCanonicalPrograms": 20,
+      "coverageAssignments": 35,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-f53aa0e6beace73f9939c958ee404e7f44d316e637738eb8d2c37c9aa312ec07",
+      "slug": "strand-sharing--f53aa0e6beac",
+      "dataUrl": "/data/generated/earth/evidence/documents/strand-sharing--f53aa0e6beac.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 13,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+      "slug": "theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-bio-1-the-universal-genetic-code-is-the-exact-energy-table-of-prime-torus-knot-mergers--0d027b4e6418.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 34,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "slug": "theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-bio-2-the-protein-backbone-is-a-single-q-1-hopfion-ribbon-at-chemical-density--acb2b8a9eb34.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 37,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+      "slug": "theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-bio-3-dna-double-helix-two-anti-parallel-hopfion-filaments-braided-with-exact-golden-twist--02e7a3412854.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 47,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed",
+      "slug": "theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-bio-4-the-ribosome-and-spliceosome-are-topological-surgery-machines-executing-the-genetic-code-table--b9ffffe2b798.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 39,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+      "slug": "theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-bio-5-the-living-state-self-replicating-phase-coherent-polycrystalline-hopfion-condensate--5f8365bb1b47.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 44,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-35b692d7eb67286e33b489b238618da711f5839a9a686c188d812fb3b9706b78",
+      "slug": "theorem-chem-1-atomic-nuclei-are-prime-torus-knots-p-q--35b692d7eb67",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-1-atomic-nuclei-are-prime-torus-knots-p-q--35b692d7eb67.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 28,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-e779fbe2f8b4048e0dc4d1a2946e3c4b517a8ac6359da865fe7f7d3d7a0ec9f5",
+      "slug": "theorem-chem-2-electron-closed-dislocation-loop-around-the-nuclear-trefoil--e779fbe2f8b4",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-2-electron-closed-dislocation-loop-around-the-nuclear-trefoil--e779fbe2f8b4.json",
+      "relatedCanonicalPrograms": 13,
+      "coverageAssignments": 82,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-08c93e58ddee94643fdc89f26e7a83c28b550cf88a128206677c5ae6af662a46",
+      "slug": "theorem-chem-3-covalent-bond-trefoil-trefoil-golden-ratio-braid--08c93e58ddee",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-3-covalent-bond-trefoil-trefoil-golden-ratio-braid--08c93e58ddee.json",
+      "relatedCanonicalPrograms": 8,
+      "coverageAssignments": 77,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-2320f45f85a16530c16f7b5a0c9dbf8540ef0e741c91bb71ab93030c2ab322a0",
+      "slug": "theorem-chem-4-periodic-table-layered-pinning-of-dislocation-loops-in-successive-golden-shells--2320f45f85a1",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-4-periodic-table-layered-pinning-of-dislocation-loops-in-successive-golden-shells--2320f45f85a1.json",
+      "relatedCanonicalPrograms": 8,
+      "coverageAssignments": 72,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-12928a29d007091ad167da96b04bcd8d75922840db85456ec49cba8fbfdc432e",
+      "slug": "theorem-chem-5-bond-angles-and-molecular-geometry-minimal-golden-twist-energy--12928a29d007",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-5-bond-angles-and-molecular-geometry-minimal-golden-twist-energy--12928a29d007.json",
+      "relatedCanonicalPrograms": 8,
+      "coverageAssignments": 43,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-c774910e8183024ca2842f3227f3c89a158906dea0b50806bd57bec29603175b",
+      "slug": "theorem-chem-6-spectroscopy-quantised-chiral-spiral-modes-along-the-bond-strands--c774910e8183",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-6-spectroscopy-quantised-chiral-spiral-modes-along-the-bond-strands--c774910e8183.json",
+      "relatedCanonicalPrograms": 34,
+      "coverageAssignments": 61,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-385a0b59488f70f8caf21ec1439a3d159012c0c4d95a7d3adba3baaf6ce1e2bb",
+      "slug": "theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-7-thermodynamics-and-phase-transitions-collective-hopfion-melting-points--385a0b59488f.json",
+      "relatedCanonicalPrograms": 19,
+      "coverageAssignments": 49,
+      "simulationCandidates": 1,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-b2ef69a08ca33769cc8edb443dd191d32eca76fcd264982733de6ecc5936a32f",
+      "slug": "theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-chem-8-thermodynamics-of-solutions-and-phase-transitions-fractal-coherence-length-renormalization--b2ef69a08ca3.json",
+      "relatedCanonicalPrograms": 19,
+      "coverageAssignments": 80,
+      "simulationCandidates": 1,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "slug": "theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-galaxy-1-every-galaxy-is-a-single-three-strand-chiral-spiral-hopfion-condensate--c874dff31b65.json",
+      "relatedCanonicalPrograms": 7,
+      "coverageAssignments": 61,
+      "simulationCandidates": 6,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+      "slug": "theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-galaxy-2-spiral-arms-stationary-golden-ratio-density-waves-of-the-three-strand-braid--106318e433b9.json",
+      "relatedCanonicalPrograms": 7,
+      "coverageAssignments": 58,
+      "simulationCandidates": 8,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f",
+      "slug": "theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-galaxy-3-flat-rotation-curves-and-the-tully-fisher-relation-twist-inertia-of-the-three-strand-lattice--e1349d61633b.json",
+      "relatedCanonicalPrograms": 7,
+      "coverageAssignments": 75,
+      "simulationCandidates": 8,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+      "slug": "theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-galaxy-4-supermassive-black-hole-mass-total-linking-number-of-the-galactic-condensate--4fe265afcd15.json",
+      "relatedCanonicalPrograms": 7,
+      "coverageAssignments": 61,
+      "simulationCandidates": 8,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+      "slug": "theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-galaxy-5-galactic-habitable-zone-golden-ratio-annulus-where-biology--14123a4f4cc3.json",
+      "relatedCanonicalPrograms": 7,
+      "coverageAssignments": 65,
+      "simulationCandidates": 8,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+      "slug": "theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-neuro-1-the-axon-is-a-single-q-1-hopfion-filament-at-myelin-density--f822e15b65f7.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 41,
+      "simulationCandidates": 6,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+      "slug": "theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-neuro-2-the-action-potential-is-the-relativistic-sine-gordon-kink-of-the-golden-ratio-strand--6ef46223d52b.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 49,
+      "simulationCandidates": 7,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "slug": "theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-neuro-3-consciousness-is-the-7-83-hz-global-resonant-twist-mode-of-the-human-polycrystalline-condensate--fd0202aa8043.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 35,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+      "slug": "theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-neuro-4-neurological-and-psychiatric-disease-topological-defect-accumulation-or-depinning--fa30d33e3e52.json",
+      "relatedCanonicalPrograms": 6,
+      "coverageAssignments": 34,
+      "simulationCandidates": 5,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-837c570486dd2d9e14e082823c990fa2c4feddc14dbe5626d48e25b125a0be1d",
+      "slug": "theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-1-every-planet-is-a-single-polycrystalline-q-trefoil-condensate--837c570486dd.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 44,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-a325222e0b9cc535a1e158b7a1e553e3037093cb686392aa7443f331fb78ab51",
+      "slug": "theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-2-core-mantle-boundary-first-golden-ratio-density-drop--a325222e0b9c.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 34,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-7adbd71ab01c36b18304dd9a0b3dce39797f3a4fde4e9c389d22ce5f1676c20f",
+      "slug": "theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-3-plate-tectonics-chiral-shear-waves-of-the-three-strand-lattice--7adbd71ab01c.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 47,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-43f9d70b621575de9229032b6187ac31d5b743813a367586ae1d696ed5c81539",
+      "slug": "theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-4-geomagnetic-dipole-moment-residual-twist-current-of-the-outer-core-condensate--43f9d70b6215.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 31,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-757e89bfe61454eb9bb40eed6304f8a44b3f581f1bb51264b8b448c44df4c0f1",
+      "slug": "theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-5-natural-moons-and-rings-golden-ratio-braided-hopfion-pairs--757e89bfe614.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 46,
+      "simulationCandidates": 5,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "slug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 42,
+      "simulationCandidates": 3,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-f19b25ed9c8833968925babb284f47389bdb70ecb5954dfb554ee17ea81955da",
+      "slug": "theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-planet-7-habitability-window-273-k-t-373-k-liquid-water-golden-layer--f19b25ed9c88.json",
+      "relatedCanonicalPrograms": 12,
+      "coverageAssignments": 57,
+      "simulationCandidates": 4,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+      "slug": "theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-1-every-main-sequence-star-is-a-single-three-strand-hopfion-condensate-in-corotation--9b8de819e2ca.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 45,
+      "simulationCandidates": 5,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+      "slug": "theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-2-main-sequence-lifetime-total-twist-unwinding-time-at-golden-ratio-leakage-rate--44024f1a31bb.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 46,
+      "simulationCandidates": 5,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+      "slug": "theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-3-the-hertzsprung-russell-diagram-golden-ratio-mass-luminosity-spiral--2e6ee2dc7fca.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 59,
+      "simulationCandidates": 6,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "slug": "theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-4-the-11-year-solar-cycle-single-strand-flip-of-the-solar-three-strand-braid--34d2b3bf075f.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 44,
+      "simulationCandidates": 6,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+      "slug": "theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-5-stellar-pulsations-cepheids-rr-lyrae-chiral-breathing-modes-of-the-hopfion-condensate--3793905a3ad4.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 66,
+      "simulationCandidates": 6,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da",
+      "slug": "theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e",
+      "dataUrl": "/data/generated/earth/evidence/documents/theorem-star-6-core-collapse-supernova-and-neutron-star-birth-topological-untying-of-the-three-strand-knot--a51008c54a6e.json",
+      "relatedCanonicalPrograms": 9,
+      "coverageAssignments": 45,
+      "simulationCandidates": 7,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-ef268d42871b57688bced91de235b9ebd13b10d4412ac1578f29b1d8bc1bf6b2",
+      "slug": "theory-zero--ef268d42871b",
+      "dataUrl": "/data/generated/earth/evidence/documents/theory-zero--ef268d42871b.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 5,
+      "simulationCandidates": 0,
+      "diagnostics": 1
+    },
+    {
+      "id": "earth-p-f1aaa91760368859d4cc215b6419ee7daefb199c945f7d9cf3686a06ef43e6fe",
+      "slug": "topological-surgery-barrier--f1aaa9176036",
+      "dataUrl": "/data/generated/earth/evidence/documents/topological-surgery-barrier--f1aaa9176036.json",
+      "relatedCanonicalPrograms": 10,
+      "coverageAssignments": 18,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-772d259fb5fdf5d0a0b132c562d1db499c229a515edd8adf075a592f4496a1b1",
+      "slug": "tube-theorem--772d259fb5fd",
+      "dataUrl": "/data/generated/earth/evidence/documents/tube-theorem--772d259fb5fd.json",
+      "relatedCanonicalPrograms": 5,
+      "coverageAssignments": 12,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-7f269b923a71e5d69c383f8845beb83b950734068caea7f5ef20081a9eeee57d",
+      "slug": "unification-theorem--7f269b923a71",
+      "dataUrl": "/data/generated/earth/evidence/documents/unification-theorem--7f269b923a71.json",
+      "relatedCanonicalPrograms": 1,
+      "coverageAssignments": 14,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    },
+    {
+      "id": "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+      "slug": "readme--b33563055168",
+      "dataUrl": "/data/generated/earth/evidence/documents/readme--b33563055168.json",
+      "relatedCanonicalPrograms": 14,
+      "coverageAssignments": 24,
+      "simulationCandidates": 0,
+      "diagnostics": 0
+    }
+  ]
+}

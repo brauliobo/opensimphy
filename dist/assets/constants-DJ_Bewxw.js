@@ -1,0 +1,1 @@
+const A=9192631770,s=299792458,_=662607015e-42,E=_/(2*Math.PI),N=1602176634e-28,T=1380649e-29,C=602214076e15,O=683,R=125663706212e-17,t=(1+Math.sqrt(5))/2,a=.0072973525643,S=1054571817e-43,o=66743e-15;export{C as A,T as B,o as C,N as E,t as G,A as H,O as L,_ as P,E as R,s as S,R as V,a,S as b};

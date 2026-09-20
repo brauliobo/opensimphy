@@ -1,0 +1,673 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-17",
+  "total": 288,
+  "narrativeOrder": [
+    "foundations",
+    "metrology",
+    "electromagnetism",
+    "atomic",
+    "particles",
+    "magnetism",
+    "thermal",
+    "molar-matter"
+  ],
+  "topics": [
+    {
+      "id": "foundations",
+      "order": 1,
+      "title": "Fundamental anchors & natural scales",
+      "shortTitle": "Anchors & scales",
+      "eyebrow": "Define the stage",
+      "description": "The clocks, action quanta, light speed, gravity, and natural scales that anchor the rest of the catalog.",
+      "narrative": "Start with what fixes a second, carries a quantum of action, limits propagation, and sets gravitational scale.",
+      "count": 15,
+      "exactCount": 9,
+      "measuredCount": 6,
+      "categories": [
+        {
+          "id": "si-observational-anchors",
+          "title": "SI & observational anchors",
+          "description": "Defined and measured reference quantities for time, action, light, and photometry.",
+          "count": 5
+        },
+        {
+          "id": "quantum-natural-scales",
+          "title": "Quantum & natural scales",
+          "description": "Action, circulation, Planck-energy, and natural-unit forms.",
+          "count": 8
+        },
+        {
+          "id": "gravity",
+          "title": "Gravity",
+          "description": "Newtonian coupling and its dimensionless natural-unit form.",
+          "count": 2
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 1,
+          "id": "Delta_nu_Cs",
+          "name": "hyperfine transition frequency of Cs-133"
+        },
+        {
+          "recipeNumber": 8,
+          "id": "h",
+          "name": "Planck constant"
+        },
+        {
+          "recipeNumber": 50,
+          "id": "G",
+          "name": "Newtonian constant of gravitation"
+        },
+        {
+          "recipeNumber": 70,
+          "id": "K_cd",
+          "name": "luminous efficacy"
+        }
+      ]
+    },
+    {
+      "id": "metrology",
+      "order": 2,
+      "title": "Unit bridges & conventional metrology",
+      "shortTitle": "Unit bridges",
+      "eyebrow": "Translate the measures",
+      "description": "Reciprocal bridges between frequency, energy, mass, temperature, and wavenumber, plus the 1990 electrical conventions.",
+      "narrative": "Follow one physical quantity as laboratory practice expresses it in another unit language.",
+      "count": 60,
+      "exactCount": 36,
+      "measuredCount": 24,
+      "categories": [
+        {
+          "id": "frequency-bridges",
+          "title": "Frequency bridges",
+          "description": "Conversions between hertz and energy standards.",
+          "count": 10
+        },
+        {
+          "id": "energy-mass-bridges",
+          "title": "Energy & mass bridges",
+          "description": "Joule, electron-volt, kilogram, and atomic-mass translations.",
+          "count": 17
+        },
+        {
+          "id": "wavenumber-bridges",
+          "title": "Wavenumber bridges",
+          "description": "Inverse-metre forms of energy and frequency scales.",
+          "count": 12
+        },
+        {
+          "id": "temperature-bridges",
+          "title": "Temperature bridges",
+          "description": "Kelvin relationships to energy, mass, frequency, and wavenumber.",
+          "count": 14
+        },
+        {
+          "id": "conventional-1990",
+          "title": "1990 electrical conventions",
+          "description": "Historical ampere, coulomb, farad, henry, ohm, volt, and watt values.",
+          "count": 7
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 2,
+          "id": "eV⋮Hz",
+          "name": "electron volt-hertz relationship"
+        },
+        {
+          "recipeNumber": 81,
+          "id": "eV⋮kg",
+          "name": "electron volt-kilogram relationship"
+        },
+        {
+          "recipeNumber": 206,
+          "id": "K⋮J",
+          "name": "kelvin-joule relationship"
+        },
+        {
+          "recipeNumber": 26,
+          "id": "A_90",
+          "name": "conventional value of ampere-90"
+        }
+      ]
+    },
+    {
+      "id": "electromagnetism",
+      "order": 3,
+      "title": "Quantum electrical standards & vacuum electromagnetism",
+      "shortTitle": "Electrical standards",
+      "eyebrow": "Quantize charge",
+      "description": "Electrical quanta and the vacuum response constants that connect charge, conductance, impedance, and potential.",
+      "narrative": "Move from a single charge quantum to resistance standards and the electrical properties assigned to empty space.",
+      "count": 10,
+      "exactCount": 6,
+      "measuredCount": 4,
+      "categories": [
+        {
+          "id": "quantum-electrical-standards",
+          "title": "Quantum electrical standards",
+          "description": "Conductance, resistance, Josephson, charge, and electron-volt standards.",
+          "count": 6
+        },
+        {
+          "id": "vacuum-electrostatics",
+          "title": "Vacuum electrostatics & impedance",
+          "description": "Coulomb coupling, vacuum permittivity, and characteristic impedance.",
+          "count": 3
+        },
+        {
+          "id": "planck-impedance",
+          "title": "Planck electrical impedance",
+          "description": "The natural-scale electrical impedance.",
+          "count": 1
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 14,
+          "id": "G_0",
+          "name": "conductance quantum"
+        },
+        {
+          "recipeNumber": 15,
+          "id": "eV",
+          "name": "electron volt"
+        },
+        {
+          "recipeNumber": 30,
+          "id": "κ",
+          "name": "Coulomb's constant"
+        },
+        {
+          "recipeNumber": 75,
+          "id": "Z_0",
+          "name": "characteristic impedance of vacuum"
+        }
+      ]
+    },
+    {
+      "id": "atomic",
+      "order": 4,
+      "title": "Atomic structure, atomic units & materials",
+      "shortTitle": "Atoms & materials",
+      "eyebrow": "Enter the atom",
+      "description": "Spectroscopic scales, atomic mechanical and electrical units, silicon structure, radii, and scattering.",
+      "narrative": "Use the standards to measure bound states, atomic motion, field response, and a crystalline material.",
+      "count": 26,
+      "exactCount": 0,
+      "measuredCount": 26,
+      "categories": [
+        {
+          "id": "spectroscopy-bound-states",
+          "title": "Spectroscopy & bound states",
+          "description": "Rydberg and Hartree forms for atomic spectra and binding energy.",
+          "count": 5
+        },
+        {
+          "id": "materials-radii-scattering",
+          "title": "Materials, radii & scattering",
+          "description": "Silicon lattice measures, electron radius, and Thomson scattering.",
+          "count": 4
+        },
+        {
+          "id": "atomic-mechanical-units",
+          "title": "Atomic mechanical units",
+          "description": "Atomic time, velocity, momentum, length, and force.",
+          "count": 5
+        },
+        {
+          "id": "atomic-electrical-response",
+          "title": "Atomic electrical response",
+          "description": "Atomic field, potential, density, moment, polarizability, and response units.",
+          "count": 12
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 23,
+          "id": "R_∞",
+          "name": "Rydberg constant"
+        },
+        {
+          "recipeNumber": 33,
+          "id": "A_time",
+          "name": "atomic unit of time"
+        },
+        {
+          "recipeNumber": 21,
+          "id": "a",
+          "name": "lattice parameter of silicon"
+        },
+        {
+          "recipeNumber": 149,
+          "id": "σ_e",
+          "name": "Thomson cross section"
+        }
+      ]
+    },
+    {
+      "id": "particles",
+      "order": 5,
+      "title": "Particle & nuclear masses and energy scales",
+      "shortTitle": "Particles & mass",
+      "eyebrow": "Weigh the particles",
+      "description": "Lepton, nucleon, and light-nucleus masses across direct, relative, energy, momentum, and wavelength representations.",
+      "narrative": "Compare matter from the electron through light nuclei, then read each mass as energy, wavelength, or relative scale.",
+      "count": 64,
+      "exactCount": 0,
+      "measuredCount": 64,
+      "categories": [
+        {
+          "id": "direct-masses",
+          "title": "Direct masses & differences",
+          "description": "Particle masses, mass differences, and charge-to-mass quotients.",
+          "count": 14
+        },
+        {
+          "id": "mass-energy-equivalents",
+          "title": "Mass-energy equivalents",
+          "description": "Rest mass, natural energy, and mass differences represented as energy.",
+          "count": 21
+        },
+        {
+          "id": "relative-unified-masses",
+          "title": "Relative & unified masses",
+          "description": "Relative atomic masses and values in unified atomic mass units.",
+          "count": 16
+        },
+        {
+          "id": "compton-wavelengths",
+          "title": "Compton wavelengths",
+          "description": "Ordinary and reduced quantum wavelengths for massive particles.",
+          "count": 10
+        },
+        {
+          "id": "momentum-weak-scales",
+          "title": "Momentum & weak scales",
+          "description": "Natural momentum forms and the Fermi coupling scale.",
+          "count": 3
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 67,
+          "id": "m_e",
+          "name": "electron mass"
+        },
+        {
+          "recipeNumber": 53,
+          "id": "m_+",
+          "name": "proton mass"
+        },
+        {
+          "recipeNumber": 150,
+          "id": "G_F/(ℏc)^3",
+          "name": "Fermi coupling constant"
+        },
+        {
+          "recipeNumber": 248,
+          "id": "λ_-",
+          "name": "reduced Compton wavelength"
+        }
+      ]
+    },
+    {
+      "id": "magnetism",
+      "order": 6,
+      "title": "Spin, moments & magnetic response",
+      "shortTitle": "Spin & magnetism",
+      "eyebrow": "Resolve the spin",
+      "description": "Magnetons, particle moments, moment ratios, g-factors, anomalies, gyromagnetic response, shielding, permeability, and flux.",
+      "narrative": "The largest family tracks how spin and composite structure appear in magnetic measurements and ratios.",
+      "count": 81,
+      "exactCount": 1,
+      "measuredCount": 80,
+      "categories": [
+        {
+          "id": "moments-field-standards",
+          "title": "Moments & field standards",
+          "description": "Magnetons, magnetic moments, permeability, and flux standards.",
+          "count": 23
+        },
+        {
+          "id": "moment-ratios",
+          "title": "Moment ratios",
+          "description": "Particle-to-particle and moment-to-magneton comparisons.",
+          "count": 35
+        },
+        {
+          "id": "gyromagnetic-ratios",
+          "title": "Gyromagnetic ratios",
+          "description": "Spin precession response in frequency and angular-frequency forms.",
+          "count": 10
+        },
+        {
+          "id": "g-factors-anomalies",
+          "title": "g-factors & anomalies",
+          "description": "Dimensionless spin factors and departures from ideal magnetic moments.",
+          "count": 9
+        },
+        {
+          "id": "shielding-corrections",
+          "title": "Shielding corrections",
+          "description": "Helion shifts, molecular differences, and proton shielding corrections.",
+          "count": 4
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 42,
+          "id": "μ_B",
+          "name": "Bohr magneton"
+        },
+        {
+          "recipeNumber": 113,
+          "id": "a_e",
+          "name": "electron magnetic moment anomaly"
+        },
+        {
+          "recipeNumber": 125,
+          "id": "γ_e",
+          "name": "electron gyromagnetic ratio"
+        },
+        {
+          "recipeNumber": 132,
+          "id": "g_+",
+          "name": "proton g factor"
+        }
+      ]
+    },
+    {
+      "id": "thermal",
+      "order": 7,
+      "title": "Thermal physics, standard states & radiation",
+      "shortTitle": "Heat & radiation",
+      "eyebrow": "Raise the temperature",
+      "description": "Microscopic thermal energy, ideal-gas states, entropy references, black-body displacement, and radiative power.",
+      "narrative": "Connect particle-scale energy to temperature, standard gases, entropy, peak wavelength, and emitted power.",
+      "count": 17,
+      "exactCount": 15,
+      "measuredCount": 2,
+      "categories": [
+        {
+          "id": "boltzmann-forms",
+          "title": "Boltzmann forms",
+          "description": "The thermal-energy constant in its direct and alternate forms.",
+          "count": 4
+        },
+        {
+          "id": "gas-standard-states",
+          "title": "Gas & standard states",
+          "description": "Molar volumes, Loschmidt densities, and Sackur-Tetrode references.",
+          "count": 7
+        },
+        {
+          "id": "thermal-radiation",
+          "title": "Thermal radiation",
+          "description": "Radiation constants, Wien displacement laws, and Stefan-Boltzmann emission.",
+          "count": 6
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 204,
+          "id": "k_B",
+          "name": "Boltzmann constant"
+        },
+        {
+          "recipeNumber": 118,
+          "id": "R",
+          "name": "molar gas constant"
+        },
+        {
+          "recipeNumber": 257,
+          "id": "b",
+          "name": "Wien wavelength displacement law constant"
+        },
+        {
+          "recipeNumber": 278,
+          "id": "σ",
+          "name": "Stefan-Boltzmann constant"
+        }
+      ]
+    },
+    {
+      "id": "molar-matter",
+      "order": 8,
+      "title": "Amount of substance & molar matter",
+      "shortTitle": "Molar matter",
+      "eyebrow": "Scale up to matter",
+      "description": "Avogadro-scale anchors, molar electromagnetic and action constants, molar masses, and silicon molar volume.",
+      "narrative": "Finish by lifting particle constants into laboratory amounts of substance and bulk material.",
+      "count": 15,
+      "exactCount": 3,
+      "measuredCount": 12,
+      "categories": [
+        {
+          "id": "amount-anchors",
+          "title": "Amount-of-substance anchors",
+          "description": "Avogadro, Faraday, and molar Planck constants.",
+          "count": 3
+        },
+        {
+          "id": "molar-mass-series",
+          "title": "Molar-mass series",
+          "description": "Molar masses for particles, nuclei, and carbon-12.",
+          "count": 11
+        },
+        {
+          "id": "silicon-molar-volume",
+          "title": "Silicon molar volume",
+          "description": "A bulk-material bridge from lattice structure to amount of substance.",
+          "count": 1
+        }
+      ],
+      "featured": [
+        {
+          "recipeNumber": 275,
+          "id": "N_A",
+          "name": "Avogadro constant"
+        },
+        {
+          "recipeNumber": 142,
+          "id": "F",
+          "name": "Faraday constant"
+        },
+        {
+          "recipeNumber": 264,
+          "id": "M_e",
+          "name": "electron molar mass"
+        },
+        {
+          "recipeNumber": 144,
+          "id": "V_m(Si)",
+          "name": "molar volume of silicon"
+        }
+      ]
+    }
+  ],
+  "facets": {
+    "basis": [
+      {
+        "id": "exact",
+        "count": 70
+      },
+      {
+        "id": "measured",
+        "count": 218
+      }
+    ],
+    "constructor": [
+      {
+        "id": "addition",
+        "count": 2
+      },
+      {
+        "id": "inversion",
+        "count": 4
+      },
+      {
+        "id": "multiplication",
+        "count": 276
+      },
+      {
+        "id": "subtraction",
+        "count": 6
+      }
+    ],
+    "buildPass": [
+      {
+        "id": "pass-1",
+        "count": 203
+      },
+      {
+        "id": "pass-2",
+        "count": 79
+      },
+      {
+        "id": "pass-3",
+        "count": 6
+      }
+    ],
+    "sourceUnitFamily": [
+      {
+        "id": "dimensionless",
+        "count": 57
+      },
+      {
+        "id": "electrical",
+        "count": 24
+      },
+      {
+        "id": "energy-action",
+        "count": 54
+      },
+      {
+        "id": "magnetic",
+        "count": 31
+      },
+      {
+        "id": "mass",
+        "count": 37
+      },
+      {
+        "id": "molar",
+        "count": 18
+      },
+      {
+        "id": "other-declared-unit",
+        "count": 8
+      },
+      {
+        "id": "spatial",
+        "count": 28
+      },
+      {
+        "id": "thermal",
+        "count": 16
+      },
+      {
+        "id": "time-frequency",
+        "count": 15
+      }
+    ],
+    "representation": [
+      {
+        "id": "alternate-unit-form",
+        "count": 17
+      },
+      {
+        "id": "conventional-standard",
+        "count": 7
+      },
+      {
+        "id": "energy-equivalent",
+        "count": 21
+      },
+      {
+        "id": "molar-form",
+        "count": 16
+      },
+      {
+        "id": "primary-form",
+        "count": 103
+      },
+      {
+        "id": "quantum-wavelength",
+        "count": 10
+      },
+      {
+        "id": "ratio",
+        "count": 45
+      },
+      {
+        "id": "relative-mass",
+        "count": 7
+      },
+      {
+        "id": "unified-mass",
+        "count": 9
+      },
+      {
+        "id": "unit-relationship",
+        "count": 53
+      }
+    ],
+    "entities": [
+      {
+        "id": "alpha-particle",
+        "count": 6
+      },
+      {
+        "id": "carbon-12",
+        "count": 1
+      },
+      {
+        "id": "cesium-133",
+        "count": 1
+      },
+      {
+        "id": "deuteron",
+        "count": 14
+      },
+      {
+        "id": "electron",
+        "count": 36
+      },
+      {
+        "id": "helion",
+        "count": 19
+      },
+      {
+        "id": "muon",
+        "count": 14
+      },
+      {
+        "id": "neutron",
+        "count": 24
+      },
+      {
+        "id": "proton",
+        "count": 35
+      },
+      {
+        "id": "silicon",
+        "count": 3
+      },
+      {
+        "id": "tau",
+        "count": 7
+      },
+      {
+        "id": "triton",
+        "count": 11
+      },
+      {
+        "id": "vacuum",
+        "count": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "formula-anatomy",
+  "order": 3,
+  "act": 1,
+  "title": "Anatomy of a Formula Recipe",
+  "question": "Where does the expected result enter the calculation?",
+  "summary": "Trace scale factors, conversions, dimensionless terms, root corrections, dependency passes, and target-aware expression selection in formula recipes. Algebraic complexity does not establish independence when a target scale is already embedded in an input or selected factor.",
+  "status": "planned",
+  "quickStationIds": [],
+  "lessonIds": [],
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+    "sourceLocator": "Deep curriculum, Chapter 3",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "source-reproduction",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "A chapter shell defines curriculum scope; it does not report a completed formula audit."
+    ]
+  },
+  "previousChapterId": "measurement",
+  "nextChapterId": "anchors"
+}

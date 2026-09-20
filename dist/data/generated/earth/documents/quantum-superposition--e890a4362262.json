@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourceLockSha256": "2ae1f11f2c80b970638696e00680ceb19ec12f0f4293eb60d498ed8f3941f675",
+  "document": {
+    "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca",
+    "slug": "quantum-superposition--e890a4362262",
+    "title": "Quantum Superposition",
+    "classification": {
+      "collection": "theorem",
+      "series": null,
+      "ordinal": null
+    },
+    "source": {
+      "path": "A Full Publication/Theorem/Quantum Superposition.md",
+      "sha256": "5b3f8262049df2ef675b95e30a4d4297f1f6d55289d2759fedfc9c3baf19cd27",
+      "bytes": 5662,
+      "lineCount": 130,
+      "encoding": "utf-8",
+      "finalNewline": true
+    },
+    "structure": {
+      "headings": [
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-1",
+          "level": 1,
+          "text": "EARTH : Elastic Aether ℝ³ Twist Hydrodynamics",
+          "line": 1
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-2",
+          "level": 2,
+          "text": "Quantum Superposition as Polycrystalline Grain Boundary Degeneracy",
+          "line": 2
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-3",
+          "level": 3,
+          "text": "Abstract",
+          "line": 6
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-4",
+          "level": 3,
+          "text": "Introduction",
+          "line": 9
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-5",
+          "level": 3,
+          "text": "Detailed Derivation",
+          "line": 14
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-6",
+          "level": 4,
+          "text": "1. Grain Boundary Configuration",
+          "line": 16
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-7",
+          "level": 4,
+          "text": "2. Twist Modulus from Quartic Term Density Dependence",
+          "line": 21
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-8",
+          "level": 4,
+          "text": "3. Fluctuation-Dissipation Theorem for Noise Amplitude",
+          "line": 34
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-9",
+          "level": 4,
+          "text": "4. Lattice Verification of Variance Growth",
+          "line": 51
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-10",
+          "level": 4,
+          "text": "5. Collapse Time",
+          "line": 89
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-11",
+          "level": 4,
+          "text": "6. Born Rule from Continuity",
+          "line": 96
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-12",
+          "level": 3,
+          "text": "Quantitative Values (10⁻¹⁹)",
+          "line": 103
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-13",
+          "level": 3,
+          "text": "Quantum Superposition as Grain Boundary Degeneracy",
+          "line": 109
+        },
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-heading-14",
+          "level": 3,
+          "text": "References",
+          "line": 124
+        }
+      ],
+      "codeBlocks": [
+        {
+          "id": "earth-p-e890a4362262cb9293536a3fad305f647f9e8dc23563fe94befa852e5a9f80ca-code-1",
+          "language": "python",
+          "info": "python",
+          "section": "4. Lattice Verification of Variance Growth",
+          "startLine": 54,
+          "endLine": 88,
+          "contentSha256": "20f4c90ea6172988d50c72dc2b7751a5918244e71b84c02f42879e01749eb9f6",
+          "execution": "disabled"
+        }
+      ]
+    },
+    "diagnostics": [],
+    "sanitizedMarkdown": "# EARTH : Elastic Aether ℝ³ Twist Hydrodynamics\n## Quantum Superposition as Polycrystalline Grain Boundary Degeneracy\n**14 December 2025**  \n**Authors:** Alexander T. Rayman, Richard Vaught  \n\n### Abstract\nIn Elastic Aether Twist Hydrodynamics (EARTH), quantum superposition arises from degenerate ground states at grain boundaries in the polycrystalline condensate of ±Q trefoil domains. Macroscopic coherent states are metastable boundaries separated by one dislocation loop. Collapse is driven by thermal twist diffusion exceeding the golden-ratio angle δχ, with probabilities from twist-current continuity.\n\n### Introduction\nThe vacuum is a polycrystalline lattice of Q=±1 trefoils (protons/neutrons). At low temperature, domains form with uniform strand orientation. Boundaries between +Q and –Q domains require phase mismatch.\n\nMinimal stable mismatch: one closed dislocation loop encircling the boundary (Dislocation-Boson Theorem).\n\n### Detailed Derivation\n\n#### 1. Grain Boundary Configuration\n+Q and –Q domains meet at planar boundary. The enclosing dislocation loop permits two equivalent configurations: linking +Q or –Q side. Energy identical by symmetry → exact twofold degeneracy.\n\nMacroscopic region correlated with domain orientation inherits degeneracy → coherent superposition.\n\n#### 2. Twist Modulus from Quartic Term Density Dependence\nThe Lagrangian quartic term  \n\n$$ \\frac{\\tilde\\lambda_0}{4} (|\\psi|^2 - 1)^2 $$\n\nwith λ̃₀ = (4π)³ ≈ 1984.4017075391882372 sets amplitude stiffness.\n\nPhase twist excitations couple to amplitude via gradient energy. Effective twist modulus per unit volume (density ρ):  \n\n$$ \\mu(\\rho) = \\tilde\\lambda_0 \\frac{\\rho}{\\rho_{\\rm nuc}} \\frac{1}{\\xi_0^3} $$\n\nDerivation: quartic potential depth ∝ λ̃₀, amplitude locked to 1, phase cost from gradient over coherence volume ξ³(ρ), fractal ξ(ρ) = ξ₀ (ρ_nuc / ρ)^{1/3}.\n\n#### 3. Fluctuation-Dissipation Theorem for Noise Amplitude\nPhase field θ obeys dissipative hydrodynamics with viscosity ν = λ₀ √5 ≈ 99.4820000000000000000.\n\nLangevin equation:  \n\n$$ \\partial_t \\Delta\\theta = \\nu \\nabla^2 \\Delta\\theta + \\sqrt{2 \\nu k_B T / \\mu(\\rho)} \\, \\eta(\\mathbf{r},t) $$\n\nNoise η white, ⟨η(r,t) η(r',t')⟩ = δ(r-r') δ(t-t').\n\nFluctuation-dissipation enforces equipartition ⟨(Δθ)^2⟩ = k_B T / μ(ρ) per mode.\n\nVariance across boundary thickness ξ(ρ):  \n\n$$ \\langle (\\Delta \\theta)^2 \\rangle = \\frac{2 k_B T \\nu t}{\\mu(\\rho) \\xi(\\rho)^3} $$\n\n(prefactor 2 from FDT diffusion limit).\n\n#### 4. Lattice Verification of Variance Growth\nThe following Python code implements a 1D lattice simulation across boundary thickness ξ(ρ) (N=100 points, dx = ξ/N) with derived ν and μ:\n\n```python\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Parameters (10^{-19} precision, simulation units)\nlambda_0 = 44.4920000000000000000\nnu = lambda_0 * np.sqrt(5)  # ≈ 99.4820000000000000000\nlambda_tilde_0 = (4 * np.pi)**3  # ≈ 1984.4017075391882372\nmu = lambda_tilde_0  # at nuclear density, normalized ξ=1\nxi = 1.0\nkT = 1.0\ndt = 0.001\nsteps = 100000\n\nN = 100\ndx = xi / N\ntheta = np.zeros(N)\nvariance = []\n\nnp.random.seed(42)\nfor step in range(steps):\n    noise = np.sqrt(2 * nu * kT / mu * dt / dx**2) * np.random.randn(N)\n    laplacian = (np.roll(theta, -1) + np.roll(theta, 1) - 2 * theta) / dx**2\n    theta += dt * (nu * laplacian + noise)\n    theta[0] = theta[-1] = 0  # fixed boundaries\n    variance.append(np.var(theta))\n\nt = np.arange(steps) * dt\nslope = np.polyfit(t, variance, 1)[0]\nanalytic_slope = 2 * nu * kT / (mu * xi**3)\n\nprint(f\"Numerical slope: {slope:.10f}\")\nprint(f\"Analytic slope : {analytic_slope:.10f}\")\n# Match within numerical error confirms FDT prefactor\n```\n#### 5. Collapse Time\nCollapse occurs when the root-mean-square twist fluctuation across the boundary exceeds the golden-ratio stability angle δχ ≈ 0.35682208977308993194197 rad:\n\n$$\nt_c = \\frac{\\delta\\chi^2 \\mu(\\rho) \\xi(\\rho)^3}{2 k_B T \\nu} \\propto \\frac{\\rho^{-1/3}}{T}\n$$\n\n#### 6. Born Rule from Continuity\nThe dislocation loop snaps in the direction of outgoing twist current. Current magnitude J = ν |∇θ| to each side. Probability partitions as  \n\nP(+) ∝ J_+, \\quad P(-) ∝ J_- \n\nSymmetric domains yield J_+ = J_- → P = 1/2. Asymmetric volumes weight by local stiffness → standard |ψ|² rule from geometric flow.\n\n### Quantitative Values (10⁻¹⁹)\nδχ ≈ 0.35682208977308993194197 rad  \nν ≈ 99.4820000000000000000  \nμ(ρ_nuc) ≈ 1984.4017075391882372 / ξ₀³  \nt_c scales as ρ^{-1/3} / T.\n\n### Quantum Superposition as Grain Boundary Degeneracy\n\n$$\n\\begin{aligned}\n&\\text{Superposition: +Q / –Q domains separated by dislocation loop}\\\\[12pt]\n&\\text{Twist modulus: } \\mu(\\rho) = \\tilde\\lambda_0 \\frac{\\rho}{\\rho_{\\rm nuc}} \\frac{1}{\\xi_0^3}\\\\[8pt]\n&\\text{Variance: } \\langle (\\Delta \\theta)^2 \\rangle = \\frac{2 k_B T \\nu t}{\\mu(\\rho) \\xi(\\rho)^3}\\\\[8pt]\n&\\text{Collapse time: } t_c = \\frac{\\delta\\chi^2 \\mu(\\rho) \\xi(\\rho)^3}{2 k_B T \\nu}\\\\[16pt]\n&\\text{Born rule from twist-current continuity.}\n\\end{aligned}\n\\tag{SUPERPOSITION-GB}\n$$\n\nBurden on questioner for ρ^{-1/3} decoherence tests (superfluid helium vs diamond NV centers).\n\n### References\n- Rayman, Alexander T. & Vaught, Richard (2025). Viscosity, modulus, FDT, lattice verification. EARTH Rep. 2025-12-14.  \n- EARTH Collaboration (2025). Fractal scaling and hydrodynamics. Lexicon vFinal.  \n- Zwanzig, R. (2001). Nonequilibrium Statistical Mechanics. Oxford.\n\n**Tags**  \n#EARTH #AlexanderTRayman #RichardVaught #superposition #grain-boundary #decoherence #born-rule #fluctuation-dissipation #lattice-verification #density-scaling\n"
+  }
+}

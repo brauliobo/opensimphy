@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 1,
+  "id": "clocks-action-light-gravity",
+  "chapterId": "anchors",
+  "order": 1,
+  "title": "Exact anchors do not make every scale exact",
+  "question": "How do fixed International System of Units (SI) anchors, measured gravity, and derived Planck scales belong in one scale map without becoming one kind of evidence?",
+  "answerPreview": "The SI fixes selected defining values exactly, while G remains measured and Planck scales inherit its uncertainty; placing them on one normalized ruler compares magnitudes but predicts nothing new.",
+  "summary": "Separate exact definitions, practical realizations, measured G, and Planck scales derived from hbar, c, and G, then use logarithmic normalization only as a labeled coordinate comparison.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope",
+      "bipm-si-brochure-9",
+      "codata-2022",
+      "iau-2012-resolution-b2",
+      "iau-resolution-b3-2015"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment; IAU 2012 Resolution B2; IAU 2015 Resolution B3",
+    "sourceLocator": "Deep curriculum, Chapter 4; BIPM sections 2.2-2.3 and Table 8; CODATA recommended-values tables; IAU 2012 astronomical-unit definition; IAU 2015 nominal solar conversion constant",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "The lesson specifies a scale-comparison activity and contains no source-time runtime result."
+    ]
+  },
+  "estimatedMinutes": 10,
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [
+    "physical-quantities"
+  ],
+  "observationStage": {
+    "title": "Definition and measurement status ledger",
+    "question": "Which displayed values are exact SI anchors, and which value comes from measurement?",
+    "items": [
+      {
+        "id": "caesium-anchor",
+        "label": "Caesium-133 defining transition frequency",
+        "value": 9192631770,
+        "unit": "Hz",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly to define the second; a clock realizes the definition with stated practical uncertainty.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "light-anchor",
+        "label": "Speed of light in vacuum",
+        "value": 299792458,
+        "unit": "m s^-1",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly and uses it with the second to define the metre; measured paths and realizations are not automatically exact.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "action-anchor",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes h exactly as an action anchor used in defining the kilogram.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "measured-gravity",
+        "label": "Newtonian constant of gravitation",
+        "value": 6.6743e-11,
+        "unit": "m^3 kg^-1 s^-2",
+        "role": "measured-reference",
+        "explanation": "This is the CODATA 2022 adjusted measured value of G, not an exact SI defining value; its standard uncertainty is 0.00015 x 10^-11 in the same unit.",
+        "evidenceRefs": [
+          "codata-2022"
+        ]
+      },
+      {
+        "id": "derived-planck-length",
+        "label": "Planck length",
+        "value": 1.616255e-35,
+        "unit": "m",
+        "role": "derived-model-value",
+        "explanation": "This CODATA Planck length is derived from hbar, c, and measured G. It is not a fixed SI definition or a direct observation of a minimum length.",
+        "evidenceRefs": [
+          "codata-2022",
+          "bipm-si-brochure-9"
+        ]
+      }
+    ],
+    "conclusion": "Delta_nu_Cs, c, and h have exact defining numerical values in the SI. G is measured, so a scale derived using G is not promoted to exact status by also using exact constants.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "BIPM sections 2.2-2.3; CODATA recommended-values tables for G",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Measured G and the G-dependent Planck length retain distinct measured-reference and derived-model-value roles."
+      ]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "exact-anchor-measured-input",
+      "kind": "prose",
+      "title": "Read the status before reading the digits",
+      "body": [
+        "An exact defining value and a measured value can appear in the same equation without acquiring the same status.",
+        "The SI fixes the caesium transition frequency, the speed of light, and the Planck constant. Laboratories still realize the second, metre, and kilogram through physical procedures with practical uncertainty.",
+        "The gravitational constant G is measured. More displayed digits do not turn it into a fixed definition."
+      ],
+      "glossaryIds": [
+        "physical-quantity",
+        "quantity-value",
+        "numerical-value",
+        "unit"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "BIPM sections 2.2-2.3; CODATA table entry for G",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Exact definitions do not remove realization uncertainty."
+      ]
+    },
+    {
+      "id": "ruler-is-comparison",
+      "kind": "caveat",
+      "title": "A ruler organizes scales; it does not generate them",
+      "body": [
+        "The activity places positive length, time, or mass values on a base-10 logarithmic ruler using their stated SI unit.",
+        "Defined, derived, measured, conventional, and illustrative entries remain visibly distinct even when two points lie close together. Exact IAU nominal values are conversion constants, not exact measured properties of an astronomical body.",
+        "Choosing one unit as the reference changes the numerical coordinate. It does not reveal a new law or predict an unlisted scale."
+      ],
+      "glossaryIds": [
+        "quantity-value",
+        "numerical-value",
+        "unit",
+        "coordinate-system"
+      ],
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "iau-2012-resolution-b2",
+        "iau-resolution-b3-2015",
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; IAU 2012 Resolution B2; IAU 2015 Resolution B3; PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "BIPM Table 8; IAU 2012 astronomical-unit definition; IAU 2015 nominal solar conversion constant; Chapter 4 scale-ruler boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Catalog proximity has no automatic causal or theoretical meaning."
+      ]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "planck-scale-construction",
+      "kind": "derivation",
+      "title": "Planck scales are derived combinations",
+      "body": [
+        "Using hbar = h/(2 pi), the conventional Planck length, time, and mass are l_P = sqrt(hbar G/c^3), t_P = sqrt(hbar G/c^5), and m_P = sqrt(hbar c/G).",
+        "Their dimensions follow from action, gravitation, and speed. Their numerical values depend on the chosen constants and unit coordinates.",
+        "Because h and c are exact in the SI while G is measured, these SI Planck-scale values inherit uncertainty from G."
+      ],
+      "glossaryIds": [
+        "dimension",
+        "coordinate-system"
+      ],
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Fixed h and c; CODATA G and Planck-unit relationships",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Planck scales are conventional derived scales, not observations of a smallest length or time."
+      ]
+    },
+    {
+      "id": "normalization-boundary",
+      "kind": "derivation",
+      "title": "Normalization is a coordinate choice, not a prediction",
+      "body": [
+        "For a positive quantity value Q expressed in its family SI unit U, the ruler coordinate is x = log10(Q/(1 U)).",
+        "The ratio inside the logarithm is dimensionless because Q and U have the same dimension and quantity kind.",
+        "Changing U shifts x by a constant. Setting a reference scale to numerical unity is normalization; it does not explain why nature realizes that scale."
+      ],
+      "glossaryIds": [
+        "quantity-value",
+        "quantity-kind",
+        "dimension",
+        "dimensionless",
+        "coordinate-system",
+        "natural-units"
+      ],
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract",
+      "sourceLocator": "BIPM section 2.3; Chapter 4 normalization boundary",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "A logarithm of a dimensional numerical value is meaningful here only through the explicitly stated same-kind unit ratio."
+      ]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "fixed-anchor-rung",
+      "label": "Fixed SI anchors",
+      "expression": "Delta_nu_Cs = 9 192 631 770 Hz; c = 299 792 458 m s^-1; h = 6.626 070 15 x 10^-34 J s",
+      "explanation": "These numerical values are fixed exactly by the SI; practical realizations remain physical procedures with uncertainty.",
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Exact SI values are not three uncertainty-free measurements."
+      ]
+    },
+    {
+      "id": "measured-gravity-rung",
+      "label": "Measured gravitational input",
+      "expression": "G = 6.674 30(15) x 10^-11 m^3 kg^-1 s^-2",
+      "explanation": "Parentheses state the CODATA standard uncertainty in the final displayed digits; G is measured rather than fixed by the SI.",
+      "claimClass": "observed-value",
+      "evidenceRefs": [
+        "codata-2022"
+      ],
+      "sourceRevision": "CODATA 2022 adjustment",
+      "sourceLocator": "Recommended value of the Newtonian constant of gravitation",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The lesson does not reproduce the CODATA least-squares adjustment."
+      ]
+    },
+    {
+      "id": "planck-length-rung",
+      "label": "Derived Planck length",
+      "expression": "l_P = sqrt(hbar G/c^3), with hbar = h/(2 pi)",
+      "explanation": "The combination has length dimension and inherits numerical uncertainty from measured G in SI coordinates.",
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "codata-2022"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+      "sourceLocator": "Fixed h and c; CODATA G and Planck length relationship",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The formula defines a conventional derived scale; it does not establish a minimum observable length."
+      ]
+    },
+    {
+      "id": "log-ruler-rung",
+      "label": "Normalized logarithmic coordinate",
+      "expression": "x = log10(Q/(1 U))",
+      "explanation": "U is the stated SI unit for the selected quantity family, so the logarithm acts on a dimensionless same-kind ratio.",
+      "claimClass": "identity",
+      "evidenceRefs": [
+        "bipm-si-brochure-9",
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+      "sourceLocator": "BIPM quantity-value convention; physical-scale-ruler coordinate contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Changing the reference unit shifts the coordinate and creates no physical prediction."
+      ]
+    }
+  ],
+  "simulationId": "physical-scale-ruler",
+  "formulaIds": [
+    "Delta_nu_Cs",
+    "h",
+    "c",
+    "G"
+  ],
+  "programIds": [],
+  "glossaryIds": [
+    "physical-quantity",
+    "quantity-value",
+    "numerical-value",
+    "quantity-kind",
+    "unit",
+    "dimension",
+    "dimensionless",
+    "coordinate-system",
+    "natural-units"
+  ],
+  "evidenceRefs": [
+    "opensimphy-scientific-scope",
+    "bipm-si-brochure-9",
+    "codata-2022",
+    "iau-2012-resolution-b2",
+    "iau-resolution-b3-2015"
+  ],
+  "checkpoints": [
+    {
+      "id": "planck-exactness-check",
+      "kind": "classification",
+      "prompt": "The Planck length uses exact hbar and c together with measured G. What is its SI status?",
+      "choices": [
+        {
+          "id": "exact-definition",
+          "label": "An exact SI defining value"
+        },
+        {
+          "id": "derived-measured",
+          "label": "A derived value that inherits uncertainty from G"
+        },
+        {
+          "id": "direct-observation",
+          "label": "A direct observation of a minimum length"
+        }
+      ],
+      "answerId": "derived-measured",
+      "explanation": "The Planck length is derived from the stated constants, and its SI numerical uncertainty is inherited from measured G.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Fixed h and c; measured G; Planck length relationship",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This source-authored answer is ungraded and is not a learner result."
+        ]
+      }
+    },
+    {
+      "id": "normalization-check",
+      "kind": "explanation",
+      "prompt": "What follows when a selected scale is assigned coordinate zero on a normalized logarithmic ruler?",
+      "choices": [
+        {
+          "id": "new-law",
+          "label": "A new physical law has been discovered"
+        },
+        {
+          "id": "reference-choice",
+          "label": "That scale was chosen as the coordinate reference"
+        },
+        {
+          "id": "exact-measurement",
+          "label": "The scale was measured exactly"
+        }
+      ],
+      "answerId": "reference-choice",
+      "explanation": "Coordinate zero records a normalization choice. It neither predicts the reference value nor changes its evidence status.",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour content contract 2026-07-26",
+        "sourceLocator": "Quantity-value convention and normalization boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "This source-authored answer is ungraded and is not a runtime evaluation."
+        ]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The activity presents labeled length, time, or mass entries with separate defined, derived, measured, and illustrative statuses on an SI logarithmic ruler.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "bipm-si-brochure-9",
+          "codata-2022",
+          "iau-2012-resolution-b2",
+          "iau-resolution-b3-2015"
+        ],
+        "sourceRevision": "tour content contract 2026-07-26; scale-ruler catalog v1; IAU 2012 Resolution B2; IAU 2015 Resolution B3",
+        "sourceLocator": "physical-scale-ruler controls, exact and derived astronomical relationships, nominal solar conversion, and output contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The catalog contains representative pedagogical scales as well as standards and measured values."
+        ]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "When evaluated, the activity maps each positive catalog quantity value to log10(Q/(1 U)) and marks the selected entry.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; tour-scale-ruler-v1 contract",
+        "sourceLocator": "Scale ruler coordinate and projection contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source record specifies a future runtime computation and stores no evaluated output."
+        ]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "The fixed SI values and the CODATA value and uncertainty for G are transcribed as reference inputs; the CODATA adjustment itself is not reproduced.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "codata-2022"
+        ],
+        "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Defining constants and recommended G entry",
+        "methodRelationship": "literal-reproduction",
+        "modelOrigin": "source-reproduction",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Representative catalog scales are not claimed as reproduced precision reference data."
+        ]
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No empirical dataset or held-out observation is loaded for comparison; evidence references establish provenance and status only.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "codata-2022"
+        ],
+        "sourceRevision": "tour content contract 2026-07-26; CODATA 2022 adjustment",
+        "sourceLocator": "Lesson conclusion boundary and scale-ruler dataset state",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Visual proximity on the ruler is not an empirical residual."
+        ]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated catalog selection, the ruler establishes the labeled SI magnitude, status, source label, and logarithmic coordinate within one quantity family.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "identity",
+        "evidenceRefs": [
+          "bipm-si-brochure-9",
+          "codata-2022",
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-scale-ruler-v1 contract; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Scale-ruler finding contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Status labels must remain distinct when values share a plot."
+        ]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The ruler does not predict a new scale, make G exact, prove a minimum length or time, or turn normalization into physical evidence.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "bipm-si-brochure-9",
+          "codata-2022"
+        ],
+        "sourceRevision": "tour content contract 2026-07-26; BIPM SI Brochure 2026 update; CODATA 2022 adjustment",
+        "sourceLocator": "Chapter 4 scientific boundary",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A derived scale can be useful without being a prediction or observed cutoff."
+        ]
+      }
+    }
+  ],
+  "previousLessonId": "physical-quantities",
+  "nextLessonId": "photon-equivalent-scales"
+}

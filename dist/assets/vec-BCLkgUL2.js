@@ -1,0 +1,1 @@
+function a(n,u){return[n[0]-u[0],n[1]-u[1],n[2]-u[2]]}function b(n,u){return[n[0]*u,n[1]*u,n[2]*u]}function S(n,u,s){return[n[0]+s*u[0],n[1]+s*u[1],n[2]+s*u[2]]}function o(n,u){return n[0]*u[0]+n[1]*u[1]+n[2]*u[2]}function x(n,u,s){return n.map((d,c)=>d+s*(u[c]??0))}export{S as a,b,x as c,o as d,a as s};

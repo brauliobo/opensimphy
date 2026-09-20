@@ -1,0 +1,897 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+    "slug": "quantumgravity--8d17b8d018e0",
+    "title": "QuantumGravity"
+  },
+  "summary": {
+    "coverageAssignments": 121,
+    "canonicalProgramAssignments": 85,
+    "classifiedAssignments": 36,
+    "relatedCanonicalPrograms": 14,
+    "classificationCounts": {
+      "duplicate": 36,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-COS-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-COS-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-COS-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-COS-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-COS-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-COS-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-001",
+      "counts": {
+        "total": 85,
+        "bySourceType": {
+          "formula": 85,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 85,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-GRV-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-X-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-X-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-1",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:6-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-100",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:210-210"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-100"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-102",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:213-213"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-102"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-103",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:213-213"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-103"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-95"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-105",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:214-214"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-105"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-106",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:215-215"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-106"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-99"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-14",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:39-39"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-14"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-3"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-35",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:91-91"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-35"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-45",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:110-110"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-45"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-46",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:114-114"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-46"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-48",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:114-114"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-48"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-37"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-57",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:118-118"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-57"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-59",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:118-118"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-59"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-44"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-61",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:118-118"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-61"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-44"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-65",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:125-125"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-65"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-66",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:125-125"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-66"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-13"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-67",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:128-128"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-67"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-68",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:129-129"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-68"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-4"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-70",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:131-131"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-70"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-36"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-72",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:131-131"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-72"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-31"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-73",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:136-136"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-73"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-75",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:142-144"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-75"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-76",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-76"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-2"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-77",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:146-146"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-77"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-31"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-79",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:149-149"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-79"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-6"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-80",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:150-150"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-80"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-8"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-81",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:155-155"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-81"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-2"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-83",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:164-164"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-83"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-31"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-84",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:168-168"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-84"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-3"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-86",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-86"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-18"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-87",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-87"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-19"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-88",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:172-172"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-88"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-45"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-89",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:176-176"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-89"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-39"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-90",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:178-180"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-90"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-23"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-92",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:186-188"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-92"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-25"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-98",
+      "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:QuantumGravity",
+        "normalized-formula-text",
+        "formula-kind:inline-math",
+        "line-span:210-210"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549",
+        "formulaId": "earth-p-8d17b8d018e04cd8606b22dc1f76a798a4e989f94c5055164b7d4830bf7b8549-formula-98"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4-formula-37"
+    }
+  ]
+}

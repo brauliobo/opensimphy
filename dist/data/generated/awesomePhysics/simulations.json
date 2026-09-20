@@ -1,0 +1,4331 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-15",
+  "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+  "source": {
+    "catalogPath": "awesome-physics/README.md",
+    "manifestPath": "awesome-physics-repos/CLONE_MANIFEST.tsv",
+    "migrationPlanPath": "AWESOME_PHYSICS_MIGRATION_PLAN.md",
+    "acquisitionDate": "2026-08-15",
+    "evidenceRefs": [
+      "awesome-physics/README.md",
+      "awesome-physics-repos/CLONE_MANIFEST.tsv",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md"
+    ]
+  },
+  "summary": {
+    "sourceCapabilities": 76,
+    "runnable": 31,
+    "available": 31,
+    "unavailable": 41,
+    "blocked": 4,
+    "adapterCount": 31,
+    "executionKinds": {
+      "browser": 6,
+      "wasm": 12,
+      "wasm-candidate": 3,
+      "typescript": 44,
+      "artifact": 8,
+      "reference": 2,
+      "blocked": 1
+    }
+  },
+  "items": [
+    {
+      "id": "awesome-scikit-kinematics-capability",
+      "catalogItemId": "awesome-scikit-kinematics",
+      "title": "scikit-kinematics",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "3bb9e358fffd",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Quaternion, rotation, coordinate-frame, and filter lessons in a worker; do not port the GUI or SciPy stack. Resolve the README BSD-2-Clause versus `pyproject.toml` BSD-3-Clause discrepancy.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "3bb9e358fffd",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:32",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:152",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:2"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:32",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:152",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:2"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-bullet3-capability",
+      "catalogItemId": "awesome-bullet3",
+      "title": "bullet3",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Bullet3 headless scalar collision/dynamics ABI through the generic module worker",
+      "inputSchema": "bullet3-input-v1",
+      "outputSchema": "bullet3-output-v1",
+      "sourceRevision": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+      "implementationRevision": "bullet3-headless-scalar-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned bullet3 WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Headless CPU collision/dynamics proof with a JS façade; native `ExampleBrowser` is not reusable. Verify zlib and third-party notices.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 268435456,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 333983,
+        "sha256": "1f255bb36e7c7a4f14a03cccfb95f13a39fdf50a9c2b2259faa1048e0473b425",
+        "transformation": "Pinned Bullet3 CPU collision/dynamics subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:36",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:3",
+          "src/awesomePhysics/adapters/wasm/bullet3.ts",
+          "scripts/awesomePhysics/wasm/bullet3/README.md",
+          "scripts/awesomePhysics/wasm/bullet3/NOTICE-LEDGER.md",
+          "awesome-physics-repos/bullet3/LICENSE.txt",
+          "public/wasm/awesomePhysics/bullet3/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:36",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:3",
+        "src/awesomePhysics/adapters/wasm/bullet3.ts",
+        "scripts/awesomePhysics/wasm/bullet3/README.md",
+        "scripts/awesomePhysics/wasm/bullet3/NOTICE-LEDGER.md",
+        "awesome-physics-repos/bullet3/LICENSE.txt",
+        "public/wasm/awesomePhysics/bullet3/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-bullet3-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-cannon-js-capability",
+      "catalogItemId": "awesome-cannon-js",
+      "title": "cannon.js",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit Euler stepping with pairwise sphere collision impulses",
+      "inputSchema": "cannon-js-input-v1",
+      "outputSchema": "cannon-js-output-v1",
+      "sourceRevision": "569730f94a1d",
+      "implementationRevision": "cannon-js-browser-adapter-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Typed browser adapter and one owned 3D lesson, preferably worker-stepped with OpenSimPhy rendering. MIT; stale upstream API.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "569730f94a1d",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:37",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:4",
+          "src/awesomePhysics/adapters/browser/cannonJs.ts",
+          "awesome-physics-repos/cannon.js/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:37",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:4",
+        "src/awesomePhysics/adapters/browser/cannonJs.ts",
+        "awesome-physics-repos/cannon.js/LICENSE"
+      ],
+      "adapterId": "cannon-js-browser",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-matter-js-capability",
+      "catalogItemId": "awesome-matter-js",
+      "title": "matter-js",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit Euler stepping with pairwise circle collision impulses",
+      "inputSchema": "matter-js-input-v1",
+      "outputSchema": "matter-js-output-v1",
+      "sourceRevision": "acb99b6f8784",
+      "implementationRevision": "matter-js-browser-adapter-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Direct adapter for collisions, constraints, and body controls; use a worker for repeatable stepping and a custom lesson surface. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "acb99b6f8784",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation; no upstream package, source code, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:38",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:5",
+          "src/awesomePhysics/adapters/browser/matterJs.ts",
+          "awesome-physics-repos/matter-js/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:38",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:5",
+        "src/awesomePhysics/adapters/browser/matterJs.ts",
+        "awesome-physics-repos/matter-js/LICENSE"
+      ],
+      "adapterId": "matter-js-browser",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-mujoco-py-capability",
+      "catalogItemId": "awesome-mujoco-py",
+      "title": "mujoco-py",
+      "capability": "catalog-entry",
+      "execution": "reference",
+      "executionOptions": [
+        "reference"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "reference-only",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "a13903b82f1a",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: this is a reference-only source capability with no OpenSimPhy runtime adapter.",
+      "planDisposition": "Preserve as a native-engine reference; do not port the deprecated wrapper. A future MuJoCo integration must use a maintained binding and separate license review.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "a13903b82f1a",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:39",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:39",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-myphysicslab-capability",
+      "catalogItemId": "awesome-myphysicslab",
+      "title": "myphysicslab",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded classical fourth-order Runge-Kutta integration of a linear spring",
+      "inputSchema": "myphysicslab-input-v1",
+      "outputSchema": "myphysicslab-output-v1",
+      "sourceRevision": "4b0bb8e1fa3b",
+      "implementationRevision": "myphysicslab-headless-spring-adapter-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Enumerate every simulation ID, adapt the TypeScript models into lazy OpenSimPhy descriptors, and retain source attribution. Apache-2.0; custom make/esbuild toolchain.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "4b0bb8e1fa3b",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a single spring model; no upstream application, source code, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:40",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:7",
+          "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+          "awesome-physics-repos/myphysicslab/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:40",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:7",
+        "src/awesomePhysics/adapters/browser/myphysicslab.ts",
+        "awesome-physics-repos/myphysicslab/LICENSE"
+      ],
+      "adapterId": "awesome-myphysicslab-browser-v1",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-ncollide-capability",
+      "catalogItemId": "awesome-ncollide",
+      "title": "ncollide",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned ncollide2d headless distance, contact, ray, translational TOI, and CCD plane-settling ABI through the generic module worker",
+      "inputSchema": "ncollide2d-input-v1",
+      "outputSchema": "ncollide2d-output-v1",
+      "sourceRevision": "f3c3ecb3c98d1c2698574372b6b0e9d0032bc0c5",
+      "implementationRevision": "ncollide2d-headless-collision-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned ncollide2d WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Collision-only worker pilot if a lesson needs it; prefer the maintained successor ecosystem rather than preserving obsolete testbed rendering. Apache-2.0.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4096
+      },
+      "artifactProvenance": {
+        "sourceRevision": "f3c3ecb3c98d1c2698574372b6b0e9d0032bc0c5",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 113119,
+        "sha256": "57ca3a88ae50d98a93221ae161143b991f0f3e0c3c52c687348216ea2c35da6a",
+        "transformation": "Pinned ncollide2d collision-only subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:41",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:8",
+          "src/awesomePhysics/adapters/wasm/ncollide.ts",
+          "scripts/awesomePhysics/wasm/ncollide/README.md",
+          "scripts/awesomePhysics/wasm/ncollide/build-ledger.json",
+          "awesome-physics-repos/ncollide/LICENSE",
+          "scripts/awesomePhysics/wasm/ncollide/NOTICE.md",
+          "public/wasm/awesomePhysics/ncollide/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:41",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:8",
+        "src/awesomePhysics/adapters/wasm/ncollide.ts",
+        "scripts/awesomePhysics/wasm/ncollide/README.md",
+        "scripts/awesomePhysics/wasm/ncollide/build-ledger.json",
+        "awesome-physics-repos/ncollide/LICENSE",
+        "scripts/awesomePhysics/wasm/ncollide/NOTICE.md",
+        "public/wasm/awesomePhysics/ncollide/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-ncollide-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-newton-dynamics-capability",
+      "catalogItemId": "awesome-newton-dynamics",
+      "title": "newton-dynamics",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P3",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Newton 4.00 headless scalar sphere ABI through the generic module worker",
+      "inputSchema": "newton-dynamics-input-v1",
+      "outputSchema": "newton-dynamics-output-v1",
+      "sourceRevision": "a9c460c3509c935e65c5b1196b955d56627c3ffa",
+      "implementationRevision": "newton-dynamics-headless-scalar-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned Newton Dynamics WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Record the engine and demos as reference. Only attempt a CPU headless WASM proof if a specific demo is selected; do not port the sandbox wholesale. zlib and bundled notices.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 268435456,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "a9c460c3509c935e65c5b1196b955d56627c3ffa",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 362424,
+        "sha256": "a78e1d46238dbb218f48ce3818082a6db9b8ef492f02085c8df182fa611c58a9",
+        "transformation": "Pinned Newton 4.00 CPU subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:42",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:9",
+          "src/awesomePhysics/adapters/wasm/newtonDynamics.ts",
+          "scripts/awesomePhysics/wasm/newton-dynamics/README.md",
+          "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE-LEDGER.md",
+          "scripts/awesomePhysics/wasm/newton-dynamics/build-ledger.json",
+          "awesome-physics-repos/newton-dynamics/newton-4.00/sdk/LICENSE",
+          "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE.md",
+          "public/wasm/awesomePhysics/newton-dynamics/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:42",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:9",
+        "src/awesomePhysics/adapters/wasm/newtonDynamics.ts",
+        "scripts/awesomePhysics/wasm/newton-dynamics/README.md",
+        "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE-LEDGER.md",
+        "scripts/awesomePhysics/wasm/newton-dynamics/build-ledger.json",
+        "awesome-physics-repos/newton-dynamics/newton-4.00/sdk/LICENSE",
+        "scripts/awesomePhysics/wasm/newton-dynamics/NOTICE.md",
+        "public/wasm/awesomePhysics/newton-dynamics/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-newton-dynamics-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-nphysics-capability",
+      "catalogItemId": "awesome-nphysics",
+      "title": "nphysics",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned nphysics2d headless ground-and-ball stepping through the verified wasm-bindgen module companion",
+      "inputSchema": "nphysics2d-input-v1",
+      "outputSchema": "nphysics2d-output-v1",
+      "sourceRevision": "65aa85c5470a5da85e0c13652ce58400ae2e2201",
+      "implementationRevision": "nphysics2d-wasm-bindgen-module-worker-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned nphysics2d WASM pilot passed its availability, license, local integrity, companion, and module-worker gates.",
+      "planDisposition": "Compile a bounded engine subset, replace `kiss3d`/`stdweb` rendering with OpenSimPhy, and migrate representative testbed scenarios. Treat old cargo-web toolchain risk as a gate.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 134217728,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4096
+      },
+      "artifactProvenance": {
+        "sourceRevision": "65aa85c5470a5da85e0c13652ce58400ae2e2201",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 366856,
+        "sha256": "e549cc0b2af0084dd7ba6908c07357ba4b447516dd799c26763ee4b8a381b2ba",
+        "transformation": "Verified pinned nphysics2d wasm-bindgen artifact dispatched through the existing module worker; no remote runtime, package, or data fallback is used.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:43",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10",
+          "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+          "scripts/awesomePhysics/wasm/nphysics/abi/src/lib.rs",
+          "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.toml",
+          "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.lock",
+          "scripts/awesomePhysics/wasm/nphysics/build.mjs",
+          "scripts/awesomePhysics/wasm/nphysics/build-ledger.json",
+          "scripts/awesomePhysics/wasm/nphysics/README.md",
+          "awesome-physics-repos/nphysics/LICENSE",
+          "scripts/awesomePhysics/wasm/nphysics/NOTICE.md",
+          "public/wasm/awesomePhysics/nphysics/NOTICE.md",
+          "scripts/awesomePhysics/wasm-pilots.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:119"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:43",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:10",
+        "src/awesomePhysics/adapters/wasm/nphysics2d.ts",
+        "scripts/awesomePhysics/wasm/nphysics/abi/src/lib.rs",
+        "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.toml",
+        "scripts/awesomePhysics/wasm/nphysics/abi/Cargo.lock",
+        "scripts/awesomePhysics/wasm/nphysics/build.mjs",
+        "scripts/awesomePhysics/wasm/nphysics/build-ledger.json",
+        "scripts/awesomePhysics/wasm/nphysics/README.md",
+        "awesome-physics-repos/nphysics/LICENSE",
+        "scripts/awesomePhysics/wasm/nphysics/NOTICE.md",
+        "public/wasm/awesomePhysics/nphysics/NOTICE.md",
+        "scripts/awesomePhysics/wasm-pilots.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:119"
+      ],
+      "adapterId": "awesome-nphysics2d-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-physx-3-4-capability",
+      "catalogItemId": "awesome-physx-3-4",
+      "title": "PhysX",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned PhysX 3.4 headless scalar plane/sphere ABI through the generic module worker",
+      "inputSchema": "physx-3-4-input-v1",
+      "outputSchema": "physx-3-4-output-v1",
+      "sourceRevision": "5e42a5f112351a223c19c17bb331e6c55037b8eb",
+      "implementationRevision": "physx-3-4-headless-scalar-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned PhysX 3.4 WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Headless CPU sample proof only, excluding APEX/GPU/platform layers. Keep as a low-priority engine reference and retain BSD-style notices.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 268435456,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "5e42a5f112351a223c19c17bb331e6c55037b8eb",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 1833037,
+        "sha256": "1741e6d6e3030fe3ffd3d1160bc2f1d3ce5d52a503ad216788bf9a07322acdfc",
+        "transformation": "Pinned PhysX 3.4 CPU subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:44",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:11",
+          "src/awesomePhysics/adapters/wasm/physx.ts",
+          "scripts/awesomePhysics/wasm/physx/README.md",
+          "scripts/awesomePhysics/wasm/physx/NOTICE-LEDGER.md",
+          "scripts/awesomePhysics/wasm/physx/build-ledger.json",
+          "awesome-physics-repos/PhysX-3.4/README.md",
+          "scripts/awesomePhysics/wasm/physx/NOTICE.md",
+          "public/wasm/awesomePhysics/physx/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:44",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:11",
+        "src/awesomePhysics/adapters/wasm/physx.ts",
+        "scripts/awesomePhysics/wasm/physx/README.md",
+        "scripts/awesomePhysics/wasm/physx/NOTICE-LEDGER.md",
+        "scripts/awesomePhysics/wasm/physx/build-ledger.json",
+        "awesome-physics-repos/PhysX-3.4/README.md",
+        "scripts/awesomePhysics/wasm/physx/NOTICE.md",
+        "public/wasm/awesomePhysics/physx/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-physx-3-4-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-positionbaseddynamics-capability",
+      "catalogItemId": "awesome-positionbaseddynamics",
+      "title": "PositionBasedDynamics",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "PositionBasedDynamics scalar distance-constraint correction",
+      "inputSchema": "position-based-dynamics-distance-input-v1",
+      "outputSchema": "position-based-dynamics-distance-output-v1",
+      "sourceRevision": "beafc921e21553515b4f406258e5b16054a45268",
+      "implementationRevision": "position-based-dynamics-headless-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned PositionBasedDynamics WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Port a small CPU solver core with typed particle/constraint buffers; reimplement the demo controls and renderer in Vue/WebGL. MIT; do not include Python bindings.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 16908288,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 1024
+      },
+      "artifactProvenance": {
+        "sourceRevision": "beafc921e21553515b4f406258e5b16054a45268",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 1256,
+        "sha256": "3182948748996ee1f755a4092bde52cea0c8ba586d66d5c54690b8a63d8362df",
+        "transformation": "Pinned PositionBasedDynamics CPU solver translation units and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:45",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:12",
+          "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+          "scripts/awesomePhysics/wasm/position-based-dynamics/build-ledger.json",
+          "scripts/awesomePhysics/wasm/position-based-dynamics/README.md",
+          "awesome-physics-repos/PositionBasedDynamics/LICENSE",
+          "scripts/awesomePhysics/wasm/position-based-dynamics/NOTICE.md",
+          "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:45",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:12",
+        "src/awesomePhysics/adapters/wasm/positionBasedDynamics.ts",
+        "scripts/awesomePhysics/wasm/position-based-dynamics/build-ledger.json",
+        "scripts/awesomePhysics/wasm/position-based-dynamics/README.md",
+        "awesome-physics-repos/PositionBasedDynamics/LICENSE",
+        "scripts/awesomePhysics/wasm/position-based-dynamics/NOTICE.md",
+        "public/wasm/awesomePhysics/position-based-dynamics/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-positionbaseddynamics-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pydy-capability",
+      "catalogItemId": "awesome-pydy",
+      "title": "pydy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "7ca52b722599",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Generate or hand-port bounded equations into TypeScript; use source notebooks and visualizations as provenance, not as browser runtime dependencies. BSD-style.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "7ca52b722599",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:46",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:163",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:13"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:46",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:163",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:13"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pymunk-capability",
+      "catalogItemId": "awesome-pymunk",
+      "title": "pymunk",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Chipmunk/Munk2D headless ground-and-ball stepping through a verified local WASM module",
+      "inputSchema": "pymunk-input-v1",
+      "outputSchema": "pymunk-output-v1",
+      "sourceRevision": "6287ce6d9223d1d79d28b2c26f37499f45b445b8",
+      "implementationRevision": "pymunk-chipmunk-headless-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned pymunk Chipmunk WASM pilot passed its availability, license, local integrity, and module-worker gates.",
+      "planDisposition": "Compare a Pyodide worker against a small direct TypeScript adapter; use only headless physics and render independently. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 134217728,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "6287ce6d9223d1d79d28b2c26f37499f45b445b8",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 76555,
+        "sha256": "0166b68c54e17b3892ca675749afdc065806e8df5636fc55e89d8d4badb67158",
+        "transformation": "Verified pinned Munk2D/Chipmunk headless ABI compiled to a local raw WASM module; no Pyodide runtime, pygame, or remote package is used.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:47",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:14",
+          "src/awesomePhysics/adapters/wasm/pymunk.ts",
+          "scripts/awesomePhysics/wasm/pymunk/abi/pymunk_headless.c",
+          "scripts/awesomePhysics/wasm/pymunk/build.mjs",
+          "scripts/awesomePhysics/wasm/pymunk/build-ledger.json",
+          "scripts/awesomePhysics/wasm/pymunk/README.md",
+          "awesome-physics-repos/pymunk/LICENSE.txt",
+          "scripts/awesomePhysics/wasm/pymunk/NOTICE.md",
+          "public/wasm/awesomePhysics/pymunk/NOTICE.md",
+          "scripts/awesomePhysics/wasm-pilots.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:120"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:47",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:14",
+        "src/awesomePhysics/adapters/wasm/pymunk.ts",
+        "scripts/awesomePhysics/wasm/pymunk/abi/pymunk_headless.c",
+        "scripts/awesomePhysics/wasm/pymunk/build.mjs",
+        "scripts/awesomePhysics/wasm/pymunk/build-ledger.json",
+        "scripts/awesomePhysics/wasm/pymunk/README.md",
+        "awesome-physics-repos/pymunk/LICENSE.txt",
+        "scripts/awesomePhysics/wasm/pymunk/NOTICE.md",
+        "public/wasm/awesomePhysics/pymunk/NOTICE.md",
+        "scripts/awesomePhysics/wasm-pilots.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:120"
+      ],
+      "adapterId": "awesome-pymunk-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-simbody-capability",
+      "catalogItemId": "awesome-simbody",
+      "title": "simbody",
+      "capability": "catalog-entry",
+      "execution": "wasm-candidate",
+      "executionOptions": [
+        "wasm-candidate"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "944fd33fa423",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "pass",
+      "availabilityReason": "Unavailable: wasm-candidate proof-of-concept gates have not passed and Phase 0 has no adapter.",
+      "planDisposition": "Evaluate a narrow articulated-body CPU core with a C/embind worker boundary; otherwise port selected equations to TypeScript. Apache-2.0.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "944fd33fa423",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:48",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:15"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:48",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:15"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-fluid-engine-dev-capability",
+      "catalogItemId": "awesome-fluid-engine-dev",
+      "title": "fluid-engine-dev",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Jet 2D SPH serial kernel through the generic module worker",
+      "inputSchema": "fluid-engine-dev-sph2-input-v1",
+      "outputSchema": "fluid-engine-dev-sph2-output-v1",
+      "sourceRevision": "94c300ff5ad8a2f588e5e27e8e9746a424b29863",
+      "implementationRevision": "fluid-engine-dev-sph2-headless-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned fluid-engine-dev 2D SPH WASM artifact passed its availability, license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Reduced 2D SPH/FLIP lesson using a serial headless kernel and WebGL particles; full 3D engine remains reference/artifact. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 134217728,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4096
+      },
+      "artifactProvenance": {
+        "sourceRevision": "94c300ff5ad8a2f588e5e27e8e9746a424b29863",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 230684,
+        "sha256": "d8bdd5c4841ab009e0b008cacbee88660c09bf8906714c388decd548934e389e",
+        "transformation": "Pinned fluid-engine-dev 2D SPH subset and a narrow scalar C ABI compiled to a verified local standalone WebAssembly module.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:52",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:16",
+          "src/awesomePhysics/adapters/wasm/fluidEngineDev.ts",
+          "scripts/awesomePhysics/wasm/fluid-engine-dev/README.md",
+          "scripts/awesomePhysics/wasm/fluid-engine-dev/build-ledger.json",
+          "awesome-physics-repos/fluid-engine-dev/LICENSE.md",
+          "scripts/awesomePhysics/wasm/fluid-engine-dev/NOTICE.md",
+          "public/wasm/awesomePhysics/fluid-engine-dev/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:52",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:16",
+        "src/awesomePhysics/adapters/wasm/fluidEngineDev.ts",
+        "scripts/awesomePhysics/wasm/fluid-engine-dev/README.md",
+        "scripts/awesomePhysics/wasm/fluid-engine-dev/build-ledger.json",
+        "awesome-physics-repos/fluid-engine-dev/LICENSE.md",
+        "scripts/awesomePhysics/wasm/fluid-engine-dev/NOTICE.md",
+        "public/wasm/awesomePhysics/fluid-engine-dev/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-fluid-engine-dev-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-fluids-capability",
+      "catalogItemId": "awesome-fluids",
+      "title": "fluids",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "direct bounded SI evaluation of sound speed, Reynolds number, and thermal diffusivity",
+      "inputSchema": "fluids-input-v1",
+      "outputSchema": "fluids-output-v1",
+      "sourceRevision": "5fa218f9c15f",
+      "implementationRevision": "fluids-core-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Worker-backed Reynolds, friction, pump, and pressure-drop lessons. Reassess Pyodide only after a reproducible build and data-package test. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "5fa218f9c15f",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of selected scalar correlations; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:53",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17",
+          "src/awesomePhysics/adapters/typescript/fluids.ts",
+          "awesome-physics-repos/fluids/LICENSE.txt"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:53",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:17",
+        "src/awesomePhysics/adapters/typescript/fluids.ts",
+        "awesome-physics-repos/fluids/LICENSE.txt"
+      ],
+      "adapterId": "awesome-fluids-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pysph-capability",
+      "catalogItemId": "awesome-pysph",
+      "title": "pysph",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "18347a8d3d24",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Use kernels as algorithmic references for a small CPU/WebGPU SPH lesson. Do not port PySide, Cg, or OpenCL interop. License requires review.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "18347a8d3d24",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:54",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:168",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:18"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:54",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:168",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:18"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-dualsphysics-capability",
+      "catalogItemId": "awesome-dualsphysics",
+      "title": "DualSPHysics",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "ef3721a861fd",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Build a reduced CPU educational dam-break/wave case; keep full CUDA runs as precomputed artifacts or backend results. LGPL-2.1 obligations apply.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "ef3721a861fd",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:55",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:169",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:19"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:55",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:169",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:19"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-gravity-simulator-capability",
+      "catalogItemId": "awesome-gravity-simulator",
+      "title": "Gravity-Simulator",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "blocked",
+      "runnable": false,
+      "priority": "P0",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "cccc779975ad",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "blocked",
+      "availabilityReason": "Blocked: the source or license gate has not passed; no adapter or redistributed artifact is permitted.",
+      "planDisposition": "Direct migration to a typed worker, Canvas/Plotly lesson, and optional Barnes-Hut worker. Verify the missing license before redistribution.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "cccc779975ad",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:59",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:170",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:20"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:59",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:170",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:20"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-gravisim-capability",
+      "catalogItemId": "awesome-gravisim",
+      "title": "Gravisim",
+      "capability": "catalog-entry",
+      "execution": "wasm-candidate",
+      "executionOptions": [
+        "wasm-candidate",
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "6e1d6ddfcd9f",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: wasm-candidate proof-of-concept gates have not passed and Phase 0 has no adapter.",
+      "planDisposition": "Split equations from SDL types, compile the model with `wasm-bindgen`, and replace SDL input/rendering. License is unclear and must gate reuse.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "6e1d6ddfcd9f",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:60",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:171",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:21"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:60",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:171",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:21"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pycbc-capability",
+      "catalogItemId": "awesome-pycbc",
+      "title": "pycbc",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "3c13a7f23ef0",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Add a simplified chirp, PSD, FFT, or matched-filter lesson with pinned event data. Keep full inference and LALSuite workflows out of the browser. GPL-3.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "3c13a7f23ef0",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:61",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:172",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:22"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:61",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:172",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:22"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pyrocko-capability",
+      "catalogItemId": "awesome-pyrocko",
+      "title": "pyrocko",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "b5bbdee44b32",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Browser seismogram viewer, picker, and small waveform worker using static samples; keep Green's-function modeling and inversion native/backend. GPL-3.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "b5bbdee44b32",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:70",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:70",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-sw4-capability",
+      "catalogItemId": "awesome-sw4",
+      "title": "sw4",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "03cb7e8d77aa",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Reimplement a low-resolution 2D finite-difference wave lesson or display pinned SW4 outputs; do not compile MPI/Fortran full solver to WASM. GPL-2-or-later plus notices.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "03cb7e8d77aa",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:71",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:174",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:24"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:71",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:174",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:24"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-webgl-ripples-capability",
+      "catalogItemId": "awesome-webgl-ripples",
+      "title": "webgl-ripples",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded explicit second-order finite-difference wave update",
+      "inputSchema": "webgl-ripples-input-v1",
+      "outputSchema": "webgl-ripples-output-v1",
+      "sourceRevision": "88eab79c98e8",
+      "implementationRevision": "webgl-ripples-headless-adapter-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Preserve the finite-difference shader or modernize to WebGL2/WebGPU, add source attribution and lesson controls. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "88eab79c98e8",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of the finite-difference wave model; no upstream browser, shader, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:72",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:25",
+          "src/awesomePhysics/adapters/browser/webglRipples.ts",
+          "awesome-physics-repos/webgl-ripples/LICENSE.txt"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:72",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:25",
+        "src/awesomePhysics/adapters/browser/webglRipples.ts",
+        "awesome-physics-repos/webgl-ripples/LICENSE.txt"
+      ],
+      "adapterId": "awesome-webgl-ripples-browser-v1",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-python-acoustics-capability",
+      "catalogItemId": "awesome-python-acoustics",
+      "title": "python-acoustics",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "99d79206159b",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Port Doppler, decibel, octave, and Sabine calculations. Review the placeholder in the BSD license text before reuse.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "99d79206159b",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:76",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:176",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:26"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:76",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:176",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:26"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-cantera-capability",
+      "catalogItemId": "awesome-cantera",
+      "title": "cantera",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Cantera ohmech thermo, HP equilibrium, and zero-D constant-pressure reactor through a verified local standalone WebAssembly module",
+      "inputSchema": "cantera-input-v1",
+      "outputSchema": "cantera-output-v1",
+      "sourceRevision": "11a2381011cb6d42e61cc4c195e0f920864bf8d3",
+      "implementationRevision": "cantera-h2o2-zerod-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned Cantera headless WASM pilot passed its availability, BSD/government license, local integrity, companion, and module-worker gates.",
+      "planDisposition": "Start with thermo/equilibrium and zero-D reactors through the documented Pyodide build; package only selected YAML data and use worker limits. BSD-3-Clause and government notices.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 268435456,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "11a2381011cb6d42e61cc4c195e0f920864bf8d3",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 3220251,
+        "sha256": "f09ed0cdef7892938820208ca94a4940d58d2466ecf1e4b428b046ed4c2ac2e9",
+        "transformation": "Verified pinned Cantera C++ thermo/equilibrium/zero-D ABI compiled to a local standalone WASM module; no Pyodide runtime, 1-D flame, or full data directory is used.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:80",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27",
+          "src/awesomePhysics/adapters/wasm/cantera.ts",
+          "scripts/awesomePhysics/wasm/cantera/cantera_abi.cpp",
+          "scripts/awesomePhysics/wasm/cantera/cantera.js",
+          "scripts/awesomePhysics/wasm/cantera/build.mjs",
+          "scripts/awesomePhysics/wasm/cantera/build-ledger.json",
+          "scripts/awesomePhysics/wasm/cantera/README.md",
+          "awesome-physics-repos/cantera/License.txt",
+          "scripts/awesomePhysics/wasm/cantera/NOTICE.md",
+          "public/wasm/awesomePhysics/cantera/NOTICE.md",
+          "scripts/awesomePhysics/wasm-pilots.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:117"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:80",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:27",
+        "src/awesomePhysics/adapters/wasm/cantera.ts",
+        "scripts/awesomePhysics/wasm/cantera/cantera_abi.cpp",
+        "scripts/awesomePhysics/wasm/cantera/cantera.js",
+        "scripts/awesomePhysics/wasm/cantera/build.mjs",
+        "scripts/awesomePhysics/wasm/cantera/build-ledger.json",
+        "scripts/awesomePhysics/wasm/cantera/README.md",
+        "awesome-physics-repos/cantera/License.txt",
+        "scripts/awesomePhysics/wasm/cantera/NOTICE.md",
+        "public/wasm/awesomePhysics/cantera/NOTICE.md",
+        "scripts/awesomePhysics/wasm-pilots.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:117"
+      ],
+      "adapterId": "awesome-cantera-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-coolprop-capability",
+      "catalogItemId": "awesome-coolprop",
+      "title": "CoolProp",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned CoolProp F2K, PropsSI, and bounded AbstractState evaluations through a local classic worker",
+      "inputSchema": "coolprop-input-v1",
+      "outputSchema": "coolprop-output-v1",
+      "sourceRevision": "4db89c1ce8d0b0d98ba7f03594f58a845351cf6a",
+      "implementationRevision": "coolprop-classic-worker-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned CoolProp WASM pilot passed its availability, license, local integrity, and classic-worker gates.",
+      "planDisposition": "First production WASM pilot: worker-backed `PropsSI`/`AbstractState` property and phase-diagram lab. Pin the Emscripten version and MIME/cache behavior. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 134217728,
+        "maxWorkerTimeMs": 10000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "4db89c1ce8d0b0d98ba7f03594f58a845351cf6a",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 9352013,
+        "sha256": "57742e874984ad5cddb12db534ea3a9c9903e5c5c518a08e18a099827a3a9829",
+        "transformation": "Verified pinned CoolProp Emscripten artifact dispatched through a local classic worker; no remote runtime, package, or data fallback is used.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:81",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28",
+          "src/awesomePhysics/adapters/wasm/coolprop.ts",
+          "src/awesomePhysics/wasm/coolpropWorker.ts",
+          "public/wasm/awesomePhysics/coolprop/coolprop.worker.js",
+          "scripts/awesomePhysics/wasm/coolprop/README.md",
+          "awesome-physics-repos/CoolProp/LICENSE",
+          "public/wasm/awesomePhysics/coolprop/NOTICE.md",
+          "scripts/awesomePhysics/wasm-pilots.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:115"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:81",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:28",
+        "src/awesomePhysics/adapters/wasm/coolprop.ts",
+        "src/awesomePhysics/wasm/coolpropWorker.ts",
+        "public/wasm/awesomePhysics/coolprop/coolprop.worker.js",
+        "scripts/awesomePhysics/wasm/coolprop/README.md",
+        "awesome-physics-repos/CoolProp/LICENSE",
+        "public/wasm/awesomePhysics/coolprop/NOTICE.md",
+        "scripts/awesomePhysics/wasm-pilots.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:115"
+      ],
+      "adapterId": "awesome-coolprop-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-rmg-py-capability",
+      "catalogItemId": "awesome-rmg-py",
+      "title": "RMG-Py",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "d08392ed9beb",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Build a fixed mechanism/Arrhenius/NASA or small reactor lesson; keep mechanism generation and QM workflows native/backend. MIT; database licensing needs separate review.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "d08392ed9beb",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:82",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:179",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:29"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:82",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:179",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:29"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-thermo-capability",
+      "catalogItemId": "awesome-thermo",
+      "title": "thermo",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "2bb466e98439",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Select a small `Chemical`/EOS/flash surface, validate data packaging, and render phase diagrams from worker output. Reassess Pyodide only after a reproducible build. MIT; alpha metadata and broad dependency closure are risks.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "2bb466e98439",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:83",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:83",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-thermopy-capability",
+      "catalogItemId": "awesome-thermopy",
+      "title": "thermopy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "0ec59dfe00cd",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Convert reviewed XML data to static JSON and port NASA9/IAPWS formulas with explicit units. GPL-3-or-later from v0.5; license compatibility is a gate.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "0ec59dfe00cd",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:84",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:181",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:31"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:84",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:181",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:31"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-electricfieldsimulation-capability",
+      "catalogItemId": "awesome-electricfieldsimulation",
+      "title": "ElectricFieldSimulation",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "blocked",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "e1adf934c01f",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "blocked",
+      "availabilityReason": "Blocked: the source or license gate has not passed; no adapter or redistributed artifact is permitted.",
+      "planDisposition": "Reimplement normalized potential and field arrows in WebGL with draggable charges; label singularity and normalized-unit limits. No license file found, so redistribution is blocked pending permission.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "e1adf934c01f",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:88",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:187",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:32"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:88",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:187",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:32"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-empy-capability",
+      "catalogItemId": "awesome-empy",
+      "title": "EMpy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "independent bounded 2x2 characteristic-matrix multiplication for finite films",
+      "inputSchema": "empy-input-v1",
+      "outputSchema": "empy-output-v1",
+      "sourceRevision": "3ff20d88bd86",
+      "implementationRevision": "empy-thin-film-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port thin-film transfer matrices and a small modesolver to a worker; do not bundle SciPy or Matplotlib. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "3ff20d88bd86",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a thin-film transfer-matrix subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:89",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:33",
+          "src/awesomePhysics/adapters/typescript/empy.ts",
+          "awesome-physics-repos/EMpy/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:89",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:33",
+        "src/awesomePhysics/adapters/typescript/empy.ts",
+        "awesome-physics-repos/EMpy/LICENSE"
+      ],
+      "adapterId": "awesome-empy-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-gprmax-capability",
+      "catalogItemId": "awesome-gprmax",
+      "title": "gprMax",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "59f4110e8687",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement bounded 1D/2D Yee-grid pulse, reflection, material boundary, and PML lessons; full solver remains native/artifact. GPL-3+.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "59f4110e8687",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:90",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:189",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:34"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:90",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:189",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:34"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-meep-capability",
+      "catalogItemId": "awesome-meep",
+      "title": "meep",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "e7d46f2a3711",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Reimplement a small 1D/2D waveguide/PML lesson; do not port Guile, MPI, HDF5, or the full dependency graph. GPL-2.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "e7d46f2a3711",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:91",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:190",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:35"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:91",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:190",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:35"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-openems-capability",
+      "catalogItemId": "awesome-openems",
+      "title": "openEMS",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "f6c9f80b1446",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Use a reduced antenna/pulse/boundary-condition FDTD worker. Preserve full openEMS as a reference/backend. GPL-3.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "f6c9f80b1446",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:92",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:191",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:36"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:92",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:191",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:36"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-openmeeg-capability",
+      "catalogItemId": "awesome-openmeeg",
+      "title": "openmeeg",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "9b55afdef2c9",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement analytic sphere/dipole-to-sensor potentials with a small fixed sensor layout; do not port the mesh/matrix stack. CeCILL-B requires credit.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "9b55afdef2c9",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:93",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:192",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:37"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:93",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:192",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:37"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-plasmapy-capability",
+      "catalogItemId": "awesome-plasmapy",
+      "title": "PlasmaPy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "b15501f0ad6e",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Port gyro motion, Debye length, plasma frequency, drifts, and bounded particle integrators into typed workers. BSD-3-Clause with patent notice.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "b15501f0ad6e",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:94",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:193",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:38"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:94",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:193",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:38"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-radis-capability",
+      "catalogItemId": "awesome-radis",
+      "title": "radis",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "031de2dd5a42",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Ship a small licensed line list and TypeScript/WebGPU spectrum lesson; keep HITRAN/HITEMP/ExoMol data acquisition explicit. LGPL-3 and data licenses require review.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "031de2dd5a42",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:95",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:194",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:39"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:95",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:194",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:39"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scikits-scattpy-capability",
+      "catalogItemId": "awesome-scikits-scattpy",
+      "title": "scattpy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "blocked",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "c933caa10aab",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "blocked",
+      "availabilityReason": "Blocked: the source or license gate has not passed; no adapter or redistributed artifact is permitted.",
+      "planDisposition": "Implement a bounded Mie/spheroid series or angular cross-section lesson; do not port the package. No license file found.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c933caa10aab",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:96",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:195",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:40"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:96",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:195",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:40"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scikit-beam-capability",
+      "catalogItemId": "awesome-scikit-beam",
+      "title": "scikit-beam",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "closed-form spherical Bessel form factor on a uniform q grid and bounded linear lag correlation",
+      "inputSchema": "scikit-beam-input-v1",
+      "outputSchema": "scikit-beam-output-v1",
+      "sourceRevision": "dbe344435f6b",
+      "implementationRevision": "scikit-beam-sphere-form-factor-correlation-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port bounded diffraction/reciprocal-space/correlation kernels over static arrays; do not ship the Cython and scientific I/O stack. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "dbe344435f6b",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of selected diffraction and correlation instruments; no scikit-beam package, Cython, or scientific I/O is redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:97",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:196",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:41",
+          "src/awesomePhysics/adapters/typescript/scikitBeam.ts",
+          "awesome-physics-repos/scikit-beam/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:97",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:196",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:41",
+        "src/awesomePhysics/adapters/typescript/scikitBeam.ts",
+        "awesome-physics-repos/scikit-beam/LICENSE"
+      ],
+      "adapterId": "awesome-scikit-beam-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scikit-rf-capability",
+      "catalogItemId": "awesome-scikit-rf",
+      "title": "scikit-rf",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "direct complex scalar impedance-to-reflection conversion with voltage transmission",
+      "inputSchema": "scikit-rf-input-v1",
+      "outputSchema": "scikit-rf-output-v1",
+      "sourceRevision": "34652721a23b",
+      "implementationRevision": "scikit-rf-complex-conversion-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Build a pure TypeScript Touchstone parser, transmission-line calculator, Smith chart, SWR, and network cascade worker. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "34652721a23b",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a scalar RF conversion subset; no upstream Python package, NumPy/SciPy runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:98",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:42",
+          "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+          "awesome-physics-repos/scikit-rf/LICENSE.txt"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:98",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:42",
+        "src/awesomePhysics/adapters/typescript/scikitRf.ts",
+        "awesome-physics-repos/scikit-rf/LICENSE.txt"
+      ],
+      "adapterId": "awesome-scikit-rf-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scikit-spectra-capability",
+      "catalogItemId": "awesome-scikit-spectra",
+      "title": "scikit-spectra",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "c451be6d5408",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Use only as UX reference for a modern spectral viewer and peak/normalization tool. Resolve README versus `LICENSE.txt` license wording before reuse.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c451be6d5408",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:99",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:198",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:43"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:99",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:198",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:43"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scuff-em-capability",
+      "catalogItemId": "awesome-scuff-em",
+      "title": "scuff-em",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "9c6d0cb76954",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement a small analytic electrostatic sphere/dipole or tiny BEM lesson; keep full BEM as reference. GPL-2.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "9c6d0cb76954",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:100",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:199",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:44"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:100",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:199",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:44"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-spirit-capability",
+      "catalogItemId": "awesome-spirit",
+      "title": "spirit",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned Spirit Heun LLG magnetization through a verified local standalone WebAssembly module",
+      "inputSchema": "spirit-llg-heun-input-v1",
+      "outputSchema": "spirit-llg-heun-output-v1",
+      "sourceRevision": "e82250d3b14411c2c2fa292d143f13e3e111ad8c",
+      "implementationRevision": "spirit-llg-heun-headless-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned Spirit headless LLG WASM artifact passed its availability, MIT license, local integrity, and worker-boundary gates.",
+      "planDisposition": "Pilot the existing web boundary in a worker only after gating pthreads, cross-origin isolation, deployment headers, cancellation, and mobile behavior; otherwise port spin precession/skyrmion dynamics to TypeScript. Audit old Emscripten and bundled notices. MIT root license.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 16777216,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4096
+      },
+      "artifactProvenance": {
+        "sourceRevision": "e82250d3b14411c2c2fa292d143f13e3e111ad8c",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 3821,
+        "sha256": "34a942b98bfed0d3cc1d27b731662b0315f23d2df1ed904133faa1038bdcd6a4",
+        "transformation": "Bounded Heun LLG C ABI compiled to a verified local standalone WebAssembly module; Spirit ui-web, ImGui, and VFRendering are not redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:101",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45",
+          "src/awesomePhysics/adapters/wasm/spirit.ts",
+          "scripts/awesomePhysics/wasm/spirit/spirit_abi.cpp",
+          "scripts/awesomePhysics/wasm/spirit/build.mjs",
+          "scripts/awesomePhysics/wasm/spirit/build-ledger.json",
+          "scripts/awesomePhysics/wasm/spirit/README.md",
+          "awesome-physics-repos/spirit/LICENSE.txt",
+          "scripts/awesomePhysics/wasm/spirit/NOTICE.md",
+          "public/wasm/awesomePhysics/spirit/NOTICE.md",
+          "scripts/awesomePhysics/native-candidates.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:101",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:45",
+        "src/awesomePhysics/adapters/wasm/spirit.ts",
+        "scripts/awesomePhysics/wasm/spirit/spirit_abi.cpp",
+        "scripts/awesomePhysics/wasm/spirit/build.mjs",
+        "scripts/awesomePhysics/wasm/spirit/build-ledger.json",
+        "scripts/awesomePhysics/wasm/spirit/README.md",
+        "awesome-physics-repos/spirit/LICENSE.txt",
+        "scripts/awesomePhysics/wasm/spirit/NOTICE.md",
+        "public/wasm/awesomePhysics/spirit/NOTICE.md",
+        "scripts/awesomePhysics/native-candidates.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:128"
+      ],
+      "adapterId": "awesome-spirit-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-euclider-capability",
+      "catalogItemId": "awesome-euclider",
+      "title": "euclider",
+      "capability": "catalog-entry",
+      "execution": "wasm-candidate",
+      "executionOptions": [
+        "wasm-candidate"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "442da40cd17d",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: wasm-candidate proof-of-concept gates have not passed and Phase 0 has no adapter.",
+      "planDisposition": "Extract scene/universe math, compile a bounded kernel with `wasm-bindgen`, and render a small 3D lesson with WebGL2/WebGPU. MIT/Unlicense signals need review.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "442da40cd17d",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:105",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:201",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:46"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:105",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:201",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:46"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-lightpipes-capability",
+      "catalogItemId": "awesome-lightpipes",
+      "title": "lightpipes",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "cd965c9469bb",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Port Young/Fresnel diffraction with a bounded grid and worker/WebGPU FFT; validate against `Examples/Interference/Young.py`. BSD file versus MIT classifier mismatch requires review.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "cd965c9469bb",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:106",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:202",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:47"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:106",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:202",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:47"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-odak-capability",
+      "catalogItemId": "awesome-odak",
+      "title": "odak",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "8a6a64afafae",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Select small ray-triangle, color, or scalar holography kernels; do not port PyTorch/OpenCV or the full package. MPL-2.0.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "8a6a64afafae",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:107",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:203",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:48"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:107",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:203",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:48"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-opticspy-capability",
+      "catalogItemId": "awesome-opticspy",
+      "title": "opticspy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "c047d1a757c6",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Build a lens-aberration station with ray fans, glass data, PSF/MTF, and worker-generated plots. MIT; review glass database provenance.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c047d1a757c6",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:108",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:204",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:49"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:108",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:204",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:49"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-poppy-capability",
+      "catalogItemId": "awesome-poppy",
+      "title": "poppy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "analytic normalized Airy or sinc amplitude for bounded Fraunhofer aperture slices",
+      "inputSchema": "poppy-input-v1",
+      "outputSchema": "poppy-output-v1",
+      "sourceRevision": "a276feb4abf4",
+      "implementationRevision": "poppy-fraunhofer-aperture-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port bounded Fresnel/Fraunhofer propagation, apertures, and PSF masks; leave Astropy units and large coronagraph workflows out. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "a276feb4abf4",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of circular and rectangular aperture slices; no upstream Python package, Astropy/SciPy runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:109",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:50",
+          "src/awesomePhysics/adapters/typescript/poppy.ts",
+          "awesome-physics-repos/poppy/LICENSE.md"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:109",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:50",
+        "src/awesomePhysics/adapters/typescript/poppy.ts",
+        "awesome-physics-repos/poppy/LICENSE.md"
+      ],
+      "adapterId": "awesome-poppy-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pyrt-capability",
+      "catalogItemId": "awesome-pyrt",
+      "title": "pyRT",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded quadratic ray-sphere intersection using the nearest valid root",
+      "inputSchema": "pyrt-input-v1",
+      "outputSchema": "pyrt-output-v1",
+      "sourceRevision": "6fc0ccbc6fb2",
+      "implementationRevision": "pyrt-ray-sphere-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Direct TypeScript worker port with progressive Canvas output; use independent pixel/intersection fixtures. MIT, but upstream is WIP/pre-alpha.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "6fc0ccbc6fb2",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a ray-sphere kernel; no upstream Python package, renderer, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:110",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:51",
+          "src/awesomePhysics/adapters/typescript/pyRt.ts",
+          "awesome-physics-repos/pyRT/LICENSE.md"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:110",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:51",
+        "src/awesomePhysics/adapters/typescript/pyRt.ts",
+        "awesome-physics-repos/pyRT/LICENSE.md"
+      ],
+      "adapterId": "awesome-pyrt-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-rayopt-capability",
+      "catalogItemId": "awesome-rayopt",
+      "title": "rayopt",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "a51f1dbd7c11",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Port paraxial/geometric tracing and reviewed catalog JSON; defer SciPy optimization and native Cython. LGPL-3+.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "a51f1dbd7c11",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:111",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:207",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:52"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:111",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:207",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:52"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-raysect-capability",
+      "catalogItemId": "awesome-raysect",
+      "title": "raysect",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded Snell prism trace with Cauchy refractive index and a four-point 2D polyline",
+      "inputSchema": "raysect-input-v1",
+      "outputSchema": "raysect-output-v1",
+      "sourceRevision": "5ed9a21b5f6e",
+      "implementationRevision": "raysect-prism-snell-cauchy-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Reimplement a small prism/intersection/spectral lesson; do not bundle the full engine or multiprocessing. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "5ed9a21b5f6e",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a prism and intersection lesson; no raysect engine, Cython, or multiprocessing runtime is redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:112",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:208",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:53",
+          "src/awesomePhysics/adapters/typescript/raysect.ts",
+          "awesome-physics-repos/raysect/LICENSE.txt"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:112",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:208",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:53",
+        "src/awesomePhysics/adapters/typescript/raysect.ts",
+        "awesome-physics-repos/raysect/LICENSE.txt"
+      ],
+      "adapterId": "awesome-raysect-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-openrelativity-capability",
+      "catalogItemId": "awesome-openrelativity",
+      "title": "OpenRelativity",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "35b806a1224f",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Rebuild velocity addition, time-of-creation, Doppler/color, and Lorentz-contraction scenes in WebGL. Do not attempt the old Unity build. Verify MIT file and asset rights.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "35b806a1224f",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:116",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:209",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:54"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:116",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:209",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:54"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-tfg-capability",
+      "catalogItemId": "awesome-tfg",
+      "title": "TFG",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "2dc7c0b8bffa",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Port metric and low-resolution RK4 geodesics to a worker; consider Rust-WASM/WebGPU only after CPU correctness. GPL-2.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "2dc7c0b8bffa",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:117",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:210",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:55"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:117",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:210",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:55"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-artiq-capability",
+      "catalogItemId": "awesome-artiq",
+      "title": "artiq",
+      "capability": "catalog-entry",
+      "execution": "reference",
+      "executionOptions": [
+        "reference",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "reference-only",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "7d7b85f377e0",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: this is a reference-only source capability with no OpenSimPhy runtime adapter.",
+      "planDisposition": "Show attributed timing, units, and exported experiment traces; never emulate hardware or bundle gateware in the static app. LGPL-3+/GPL-3 components.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "7d7b85f377e0",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:121",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:121",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-flavio-capability",
+      "catalogItemId": "awesome-flavio",
+      "title": "flavio",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "940d118de495",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Freeze a few observable calculations and parameter tables or implement selected formulas; retain full fits and multiprocessing outside the browser. MIT.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "940d118de495",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:122",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:122",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-hepdata-capability",
+      "catalogItemId": "awesome-hepdata",
+      "title": "hepdata",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "78294e2c18cf",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Export curated YAML/JSON/CSV tables with source URL, revision, hash, and rights; do not port or call the multi-service backend. GPL-2 and dataset rights require review.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "78294e2c18cf",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:123",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:123",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-particle-clicker-capability",
+      "catalogItemId": "awesome-particle-clicker",
+      "title": "particle-clicker",
+      "capability": "catalog-entry",
+      "execution": "browser",
+      "executionOptions": [
+        "browser"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded deterministic click, upgrade, worker, and elapsed-time state transitions",
+      "inputSchema": "particle-clicker-input-v1",
+      "outputSchema": "particle-clicker-output-v1",
+      "sourceRevision": "d6762d54eced",
+      "implementationRevision": "particle-clicker-bounded-progression-adapter-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Rewrite the game route in Vue/TypeScript, preserve educational content and attribution, replace CDN and synchronous JSON dependencies. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "d6762d54eced",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation; no upstream application, source code, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:124",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:59",
+          "src/awesomePhysics/adapters/browser/particleClicker.ts",
+          "awesome-physics-repos/particle-clicker/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:124",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:59",
+        "src/awesomePhysics/adapters/browser/particleClicker.ts",
+        "awesome-physics-repos/particle-clicker/LICENSE"
+      ],
+      "adapterId": "awesome-particle-clicker-browser-v1",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-psi4-capability",
+      "catalogItemId": "awesome-psi4",
+      "title": "Psi4",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "e046c47bc468",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement a tiny H2/Hartree-Fock or orbital-energy lesson and compare against pinned Psi4 outputs; do not ship Psi4. LGPL-3.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "e046c47bc468",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:125",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:220",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:60"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:125",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:220",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:60"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pypdt-capability",
+      "catalogItemId": "awesome-pypdt",
+      "title": "pypdt",
+      "capability": "catalog-entry",
+      "execution": "blocked",
+      "executionOptions": [
+        "blocked"
+      ],
+      "availability": "blocked",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "reference-only",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": null,
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "blocked",
+      "availabilityReason": "Blocked: the source access attempt failed and no public canonical source or verified license is available.",
+      "planDisposition": "Preserve the access failure, URL, date, and observed 404/authentication behavior. Reopen only after a public canonical source and license are verified.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": null,
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: source acquisition failed; no artifact was produced",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:126",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:126",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-qmsolve-capability",
+      "catalogItemId": "awesome-qmsolve",
+      "title": "QMsolve",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "central finite-difference Crank-Nicolson stepping with a tridiagonal solve",
+      "inputSchema": "qmsolve-input-v1",
+      "outputSchema": "qmsolve-output-v1",
+      "sourceRevision": "c69277da03bb",
+      "implementationRevision": "qmsolve-typescript-finite-difference-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Extend the existing quantum-wave engine with bounded 1D/2D oscillator, double-slit, packet, and probability workers; exclude 3D/Mayavi/CUDA. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c69277da03bb",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a one-dimensional wave kernel; no upstream Python package, SciPy/CUDA runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:127",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:61",
+          "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+          "awesome-physics-repos/qmsolve/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:127",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:61",
+        "src/awesomePhysics/adapters/typescript/qmsolve.ts",
+        "awesome-physics-repos/qmsolve/LICENSE"
+      ],
+      "adapterId": "awesome-qmsolve-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-quantum-python-lectures-capability",
+      "catalogItemId": "awesome-quantum-python-lectures",
+      "title": "quantum-python-lectures",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "bounded classical RK4 harmonic-oscillator integration and isolated Lorentzian/Gaussian lineshape evaluation",
+      "inputSchema": "quantum-python-lectures-input-v1",
+      "outputSchema": "quantum-python-lectures-output-v1",
+      "sourceRevision": "4e96b144ae59",
+      "implementationRevision": "quantum-python-lectures-rk4-lineshape-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Convert selected lessons into attributed Tour chapters and worker-backed ODE, sampling, lineshape, and double-slit instruments. MIT; content is stale.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "4e96b144ae59",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of selected lecture ODE and lineshape instruments; no upstream notebooks, SciPy, QuTiP, CSV, or Jupyter runtime are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:128",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:223",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:62",
+          "src/awesomePhysics/adapters/typescript/quantumPythonLectures.ts",
+          "awesome-physics-repos/quantum-python-lectures/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:128",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:223",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:62",
+        "src/awesomePhysics/adapters/typescript/quantumPythonLectures.ts",
+        "awesome-physics-repos/quantum-python-lectures/LICENSE"
+      ],
+      "adapterId": "awesome-quantum-python-lectures-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-quantumoptics-jl-capability",
+      "catalogItemId": "awesome-quantumoptics-jl",
+      "title": "QuantumOptics.jl",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "closed-form Jaynes-Cummings vacuum Rabi oscillation on the single-excitation manifold",
+      "inputSchema": "quantumoptics-jl-input-v1",
+      "outputSchema": "quantumoptics-jl-output-v1",
+      "sourceRevision": "5becc8f98c2a",
+      "implementationRevision": "quantumoptics-jl-jaynes-cummings-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Use two-level, Bloch, Jaynes-Cummings, barrier, and master-equation examples as reference fixtures for compact TypeScript/Rust kernels. Do not embed Julia. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "5becc8f98c2a",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded TypeScript stand-in of selected QuantumOptics.jl reference examples; no Julia runtime or QuantumOptics.jl package is redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:129",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:224",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:63",
+          "src/awesomePhysics/adapters/typescript/quantumOpticsJl.ts",
+          "awesome-physics-repos/QuantumOptics.jl/LICENSE.md"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:129",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:224",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:63",
+        "src/awesomePhysics/adapters/typescript/quantumOpticsJl.ts",
+        "awesome-physics-repos/QuantumOptics.jl/LICENSE.md"
+      ],
+      "adapterId": "awesome-quantumoptics-jl-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-qutip-capability",
+      "catalogItemId": "awesome-qutip",
+      "title": "qutip",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "closed-form two-level Rabi population and bounded RK4 optical Bloch integration with radiative decay",
+      "inputSchema": "qutip-input-v1",
+      "outputSchema": "qutip-output-v1",
+      "sourceRevision": "fbfb1f8bf302",
+      "implementationRevision": "qutip-two-level-rabi-lindblad-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port dense two-level/Rabi/Lindblad/Bloch examples and use pinned QuTiP results as a test oracle; full QuTiP remains external. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "fbfb1f8bf302",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of selected two-level Rabi and Lindblad instruments; no QuTiP package, mesolve, Cython, SciPy, or example dataset is redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:130",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:225",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:64",
+          "src/awesomePhysics/adapters/typescript/qutip.ts",
+          "awesome-physics-repos/qutip/LICENSE.txt"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:130",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:225",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:64",
+        "src/awesomePhysics/adapters/typescript/qutip.ts",
+        "awesome-physics-repos/qutip/LICENSE.txt"
+      ],
+      "adapterId": "awesome-qutip-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-root-capability",
+      "catalogItemId": "awesome-root",
+      "title": "ROOT",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "c050cbde9525",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Use curated ROOT/HEPData exports or lazy JSROOT only for an advanced viewer; do not compile ROOT/Cling. ROOT LGPL-2.1+, JSROOT MIT.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c050cbde9525",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:131",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:131",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-scikit-hep-capability",
+      "catalogItemId": "awesome-scikit-hep",
+      "title": "scikit-hep",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "reference"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "c6aa34ca776c",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "pass",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Treat as an offline data-generation ecosystem. Select individual vector/histogram/data concepts only after per-package license and WASM review. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "c6aa34ca776c",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:132",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:132",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-astropy-capability",
+      "catalogItemId": "awesome-astropy",
+      "title": "astropy",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P3",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "direct bounded SI unit conversion and spherical ICRS-to-Galactic rotation",
+      "inputSchema": "astropy-input-v1",
+      "outputSchema": "astropy-output-v1",
+      "sourceRevision": "cb3c511e2e6e",
+      "implementationRevision": "astropy-units-galactic-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port bounded units/coordinates or render preconverted FITS samples. Avoid full C extensions, mmap, WCS, and remote data providers. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "cb3c511e2e6e",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of selected unit and coordinate conversions; no astropy C extensions, FITS, WCS, mmap, or remote data are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:137",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:228",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:67",
+          "src/awesomePhysics/adapters/typescript/astropy.ts",
+          "awesome-physics-repos/astropy/LICENSE.rst"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:137",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:228",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:67",
+        "src/awesomePhysics/adapters/typescript/astropy.ts",
+        "awesome-physics-repos/astropy/LICENSE.rst"
+      ],
+      "adapterId": "awesome-astropy-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-gala-capability",
+      "catalogItemId": "awesome-gala",
+      "title": "gala",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "direct pairwise Newtonian acceleration with bounded velocity-Verlet stepping",
+      "inputSchema": "gala-input-v1",
+      "outputSchema": "gala-output-v1",
+      "sourceRevision": "8bf0a1f574a4",
+      "implementationRevision": "gala-orbit-velocity-verlet-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port selected analytic potentials and integrators into a bounded worker with Plotly traces; defer GSL/EXP and broad Astropy coupling. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "8bf0a1f574a4",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation in normalized units; no upstream Python/Cython runtime, Astropy/GSL data, build output, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:138",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:68",
+          "src/awesomePhysics/adapters/typescript/gala.ts",
+          "awesome-physics-repos/gala/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:138",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:68",
+        "src/awesomePhysics/adapters/typescript/gala.ts",
+        "awesome-physics-repos/gala/LICENSE"
+      ],
+      "adapterId": "awesome-gala-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-galpy-capability",
+      "catalogItemId": "awesome-galpy",
+      "title": "galpy",
+      "capability": "catalog-entry",
+      "execution": "wasm",
+      "executionOptions": [
+        "wasm"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P0",
+      "modelOrigin": "upstream-adaptation",
+      "numericalMethod": "Pinned galpy MWPotential2014 leapfrog orbit through a verified local standalone WebAssembly module",
+      "inputSchema": "galpy-input-v1",
+      "outputSchema": "galpy-output-v1",
+      "sourceRevision": "3762e73ef84578f4a911325d283e652eb1886625",
+      "implementationRevision": "galpy-mwpotential2014-leapfrog-wasm-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: the pinned galpy MWPotential2014 WASM pilot passed its availability, license, local integrity, companion, and module-worker gates.",
+      "planDisposition": "Highest-priority scientific WASM pilot: pinned Pyodide worker for MWPotential/orbits, numeric arrays only, cancellation and startup budget. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 268435456,
+        "maxWorkerTimeMs": 15000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "3762e73ef84578f4a911325d283e652eb1886625",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": 19591,
+        "sha256": "0e053c12eaa70b3bf771697505acaa049269c481c7d1f9ac363e8f5cf08f7720",
+        "transformation": "Verified pinned galpy MWPotential2014/orbit ABI compiled to a local standalone WASM module; no Pyodide runtime, NumPy, SciPy, or remote package is used.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:139",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:69",
+          "src/awesomePhysics/adapters/wasm/galpy.ts",
+          "scripts/awesomePhysics/wasm/galpy/galpy_abi.c",
+          "scripts/awesomePhysics/wasm/galpy/galpy.js",
+          "scripts/awesomePhysics/wasm/galpy/build.mjs",
+          "scripts/awesomePhysics/wasm/galpy/build-ledger.json",
+          "scripts/awesomePhysics/wasm/galpy/README.md",
+          "awesome-physics-repos/galpy/LICENSE",
+          "scripts/awesomePhysics/wasm/galpy/NOTICE.md",
+          "public/wasm/awesomePhysics/galpy/NOTICE.md",
+          "scripts/awesomePhysics/wasm-pilots.json",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:116"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:139",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:69",
+        "src/awesomePhysics/adapters/wasm/galpy.ts",
+        "scripts/awesomePhysics/wasm/galpy/galpy_abi.c",
+        "scripts/awesomePhysics/wasm/galpy/galpy.js",
+        "scripts/awesomePhysics/wasm/galpy/build.mjs",
+        "scripts/awesomePhysics/wasm/galpy/build-ledger.json",
+        "scripts/awesomePhysics/wasm/galpy/README.md",
+        "awesome-physics-repos/galpy/LICENSE",
+        "scripts/awesomePhysics/wasm/galpy/NOTICE.md",
+        "public/wasm/awesomePhysics/galpy/NOTICE.md",
+        "scripts/awesomePhysics/wasm-pilots.json",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:116"
+      ],
+      "adapterId": "awesome-galpy-wasm",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-pynbody-capability",
+      "catalogItemId": "awesome-pynbody",
+      "title": "pynbody",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "da855f370504",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Preconvert a small licensed snapshot and port particle selection/projection to a WebGL worker. Do not ship HDF5, all readers, or remote test data. `pyproject.toml` says GPL-3+; verify missing license file.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "da855f370504",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:140",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:140",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-sunpy-capability",
+      "catalogItemId": "awesome-sunpy",
+      "title": "sunpy",
+      "capability": "catalog-entry",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "ed70935fa156",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "pass",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Ship small static solar-image samples and port bounded coordinate/image transforms; no remote provider or FITS/JP2 stack in the browser. BSD-3-Clause.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": "ed70935fa156",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:141",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:141",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-burnman-capability",
+      "catalogItemId": "awesome-burnman",
+      "title": "burnman",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "f743a077292b",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement EOS curves, mineral properties, geotherms, and 1D profiles with explicit units and model revisions. GPL-2-or-later.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "f743a077292b",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:145",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:233",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:72"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:145",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:233",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:72"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-em-capability",
+      "catalogItemId": "awesome-em",
+      "title": "em",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "reference"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "80f3c71cfa6a",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Convert simple FDEM/TDEM, skin-depth, layered-earth, and dipole examples into native lessons; preserve CC BY 4.0 and third-party exceptions.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "80f3c71cfa6a",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:146",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:234",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:73"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:146",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:234",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:73"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-simpeg-capability",
+      "catalogItemId": "awesome-simpeg",
+      "title": "simpeg",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript",
+        "artifact"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P2",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": "43b0120dd70a",
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: Phase 0 declares no implemented adapter; source presence does not imply runtime availability.",
+      "planDisposition": "Implement small 1D analytic or 2D forward models for gravity, magnetics, resistivity, or EM. Keep inversion and MUMPS/Pardiso workflows external. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "43b0120dd70a",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: no artifact redistributed in Phase 0",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:147",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:235",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:74"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:147",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:235",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:74"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-solid-state-simulations-archive-capability",
+      "catalogItemId": "awesome-solid-state-simulations-archive",
+      "title": "Solid State Simulations",
+      "capability": "archive-reference",
+      "execution": "artifact",
+      "executionOptions": [
+        "artifact",
+        "reference"
+      ],
+      "availability": "unavailable",
+      "runnable": false,
+      "priority": "P3",
+      "modelOrigin": "source-artifact",
+      "numericalMethod": null,
+      "inputSchema": null,
+      "outputSchema": null,
+      "sourceRevision": null,
+      "implementationRevision": "phase-0-no-adapters",
+      "licenseGate": "review",
+      "availabilityReason": "Unavailable: no immutable reviewed artifact has been acquired for Phase 0.",
+      "planDisposition": "Preserve the archived links as attributed reference records; do not create placeholder artifacts.",
+      "limits": {
+        "maxGridSize": 0,
+        "maxParticles": 0,
+        "maxIterations": 0,
+        "maxMemoryBytes": 0,
+        "maxWorkerTimeMs": 0,
+        "maxOutputBytes": 0
+      },
+      "artifactProvenance": {
+        "sourceRevision": null,
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "none: archive was not acquired or reconstructed",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:151",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:151",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+      ],
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    },
+    {
+      "id": "awesome-shut-up-and-calculate-capability",
+      "catalogItemId": "awesome-shut-up-and-calculate",
+      "title": "Shut up and calculate",
+      "capability": "catalog-entry",
+      "execution": "typescript",
+      "executionOptions": [
+        "typescript"
+      ],
+      "availability": "available",
+      "runnable": true,
+      "priority": "P1",
+      "modelOrigin": "educational-reimplementation",
+      "numericalMethod": "direct cosine band evaluation and bounded Fermi-Dirac occupancy on a uniform k grid",
+      "inputSchema": "shut-up-and-calculate-input-v1",
+      "outputSchema": "shut-up-and-calculate-output-v1",
+      "sourceRevision": "0896fe8ef4f4",
+      "implementationRevision": "tight-binding-1d-occupancy-typescript-v1",
+      "licenseGate": "pass",
+      "availabilityReason": "Available: bounded local kernel passed the plan license gate and requires no external package, data, or build at runtime.",
+      "planDisposition": "Port band functions, Fermi surfaces, and bounded susceptibility quadrature to a worker; use `src/tests/test_all.py` for fixtures. MIT.",
+      "limits": {
+        "maxGridSize": 256,
+        "maxParticles": 4096,
+        "maxIterations": 10000,
+        "maxMemoryBytes": 67108864,
+        "maxWorkerTimeMs": 5000,
+        "maxOutputBytes": 4194304
+      },
+      "artifactProvenance": {
+        "sourceRevision": "0896fe8ef4f4",
+        "acquisitionDate": "2026-08-15",
+        "byteSize": null,
+        "sha256": null,
+        "transformation": "Independent bounded educational reimplementation of a one-dimensional tight-binding subset; no upstream Python package, NumPy/SciPy/Numba runtime, build output, data, or assets are redistributed.",
+        "datasetLicense": null,
+        "evidenceRefs": [
+          "awesome-physics/README.md:152",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:75",
+          "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+          "awesome-physics-repos/shut-up-and-calculate/LICENSE"
+        ]
+      },
+      "evidenceRefs": [
+        "awesome-physics/README.md:152",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
+        "awesome-physics-repos/CLONE_MANIFEST.tsv:75",
+        "src/awesomePhysics/adapters/typescript/tightBinding.ts",
+        "awesome-physics-repos/shut-up-and-calculate/LICENSE"
+      ],
+      "adapterId": "awesome-shut-up-and-calculate-typescript",
+      "compatibilityRevision": "awesome-physics-compatibility-v1",
+      "modelRevision": "awesome-physics-plan-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "contentRevision": "awesome-physics-catalog-807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "outputRevision": "awesome-physics-descriptor-v1"
+    }
+  ]
+}

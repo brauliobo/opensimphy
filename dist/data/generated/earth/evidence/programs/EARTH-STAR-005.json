@@ -1,0 +1,697 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-STAR-005",
+  "counts": {
+    "total": 39,
+    "bySourceType": {
+      "formula": 27,
+      "code-block": 6,
+      "simulation-candidate": 6
+    },
+    "byConfidence": {
+      "high": 24,
+      "medium": 15,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-2e6ee2dc7fca2b301ab8b1e868676e175e76732eaecb724b837e8a67455f2d1c",
+    "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+    "earth-p-3793905a3ad48d2b50137a6790ed7e5c3363a9191eb38c251b765108ca044054",
+    "earth-p-44024f1a31bb9a5a41b4ea7b08bedb9b6783c3481597871ab160bb46795ab591",
+    "earth-p-9b8de819e2cafeb6fd687790c82197291f0183cc24c0ab808268f914c59461e1",
+    "earth-p-a51008c54a6e260a7a8bcfb4509569d92837902366e78dd2a1f67a806f0d93da"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-1",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:28-28"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-10",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:88-88"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-11",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-12",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:251-251"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-13",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-17",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-19",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:16-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-2",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-20",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-21",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-22",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-23",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:77-77"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-24",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:96-96"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-25",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:124-124"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-26",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:136-136"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-27",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:140-140"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-28",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:141-141"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-29",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:142-142"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-3",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-30",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:143-143"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-31",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:plain-line-candidate",
+        "line-span:245-245"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-4",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:48-48"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-5",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:52-52"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-6",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-7",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:68-68"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-8",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:75-75"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-9",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "formula-kind:display-math",
+        "line-span:78-78"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "formulaId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-1",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:187-196",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-1",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-2",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:199-202",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-2",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-3",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:205-211",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-3",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-4",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:214-217",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-4",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-5",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:220-224",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-5",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-6",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "section:Verification Notes",
+        "line-span:227-231",
+        "simulation-candidate:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-6",
+        "simulationCandidateIds": [
+          "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-1",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-1",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:187:187-196"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-1",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-2",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-2",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:199:199-202"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-2",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-3",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-3",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:205:205-211"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-3",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-4",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-4",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:214:214-217"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-4",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-5",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-5",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:220:220-224"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-5",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-6",
+      "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:STAR-4",
+        "document-title:Theorem STAR-4 – The 11-Year Solar Cycle = Single Strand Flip of the Solar Three-Strand Braid",
+        "linked-code-block:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-6",
+        "source-document:earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "section:Verification Notes",
+        "line-in-code-span:227:227-231"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116",
+        "simulationCandidateId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-simulation-6",
+        "codeBlockId": "earth-p-34d2b3bf075f7bf17fe826daf7683d8388ddb2e5a02a34f7085d882328888116-code-6"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1000 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-GAL-001",
+  "counts": {
+    "total": 57,
+    "bySourceType": {
+      "formula": 45,
+      "code-block": 6,
+      "simulation-candidate": 6
+    },
+    "byConfidence": {
+      "high": 26,
+      "medium": 31,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-106318e433b9716d73de6947041222d93016b386243898d40ded1d7d1cb26eb7",
+    "earth-p-14123a4f4cc3c16838eaada4010d45fddeeacc949640f31afee74632160fc3a6",
+    "earth-p-4fe265afcd159f229ba199fd48b55edefa6a95e09666f33ee261fb2c839c8cc0",
+    "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+    "earth-p-e1349d61633b5f2133b6fbd059d516c54cd9b12d591476208abab2226cba465f"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-euclid-q1-galaxy-zoo-morphology-catalogue"
+  ],
+  "disputedClaimIds": [
+    "earth-dispute-exact-1-842-galaxy-pitch-angle-catalogue"
+  ],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-10",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:83-83"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-11",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:97-97"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-12",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:101-101"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-13",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:105-105"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-14",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:279-279"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-15",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:282-282"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-19",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-2",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-20",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:16-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-21",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-22",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:36-36"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-23",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:37-37"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-24",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-25",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-26",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:65-65"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-27",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-28",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:67-67"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-29",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:81-81"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-3",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-30",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:89-89"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-31",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:115-115"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-32",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:126-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-32"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-33",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:132-132"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-33"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-34",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:136-136"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-34"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-35",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:138-138"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-35"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-36",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:140-140"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-36"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-37",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:142-142"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-37"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-38",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:152-152"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-38"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-39",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:156-156"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-39"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-4",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:44-44"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-40",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:160-160"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-40"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-41",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:162-162"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-41"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-42",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:166-166"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-42"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-43",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:168-168"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-43"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-44",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:190-190"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-44"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-45",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:259-259",
+        "near-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+        "section:Verification Notes",
+        "line-gap:3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-45"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-46",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:260-260",
+        "near-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+        "section:Verification Notes",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-46"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-47",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:272-272",
+        "near-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+        "section:Verification Notes",
+        "line-gap:2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-47"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-48",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:276-276",
+        "near-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+        "section:Verification Notes",
+        "line-gap:6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-48"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-49",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:286-286"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-49"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-5",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:54-54"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-6",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:58-58"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-7",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-8",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:71-71"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-9",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "formula-kind:display-math",
+        "line-span:79-79"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "formulaId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-1",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:210-221",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-1",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-2",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:224-230",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-2",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-3",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:233-239",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-3",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-4",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:242-247",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-4",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:250-256",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-5"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-5"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "section:Verification Notes",
+        "line-span:266-270",
+        "simulation-candidate:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-6"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+        "simulationCandidateIds": [
+          "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-6"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-1",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-1",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:210:210-221"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-1",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-2",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-2",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:224:224-230"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-2",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-3",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-3",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:233:233-239"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-3",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-4",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-4",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:242:242-247"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-4",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-4"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-5",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:250:250-256"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-5",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-5"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-6",
+      "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:GALAXY-1",
+        "document-title:Theorem GALAXY-1 – Every Galaxy Is a Single Three-Strand Chiral Spiral Hopfion Condensate",
+        "linked-code-block:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6",
+        "source-document:earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "section:Verification Notes",
+        "line-in-code-span:266:266-270"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422",
+        "simulationCandidateId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-simulation-6",
+        "codeBlockId": "earth-p-c874dff31b6541993f0bdad96376e5bdb47d9f54eab387aa953a824dc42d1422-code-6"
+      }
+    }
+  ]
+}

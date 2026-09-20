@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-FND-005",
+  "counts": {
+    "total": 17,
+    "bySourceType": {
+      "formula": 17,
+      "code-block": 0,
+      "simulation-candidate": 0
+    },
+    "byConfidence": {
+      "high": 2,
+      "medium": 15,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-0601d45c10a3a84b7c9a7e8c1735737d06fd9c091f6a13efd2ce34bc2406dcf4",
+    "earth-p-3502a1d14e227171a60593d13c5cc1e04b8eebde5cd3b01419ed8c89a9454668",
+    "earth-p-357c2c2955e991eceb56957e8d7695e96dee2d7987ea1cfb9bfcf6d2415e3120",
+    "earth-p-7c5b7a87faaa86e061be3a7c20c91ee07e7a122d371719d0b27a45c82d9d0c61",
+    "earth-p-9ba60fd9982097af0dbe98a0a6d9614a2b74f63adf0bc2920c6ff9139f332b5e",
+    "earth-p-a4dfeba5e0a27f9ff1cccc36fc0398163220ec1abb087bd43476a953fe739ab2",
+    "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+    "earth-p-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5",
+    "earth-p-bb530ae74b4c3e434e5a546e6bc84b6afef6fe6b8aef23d861d0e3fa04d0617a",
+    "earth-p-c32be8df5bd0b92b624ba5815cd9c1c2f3c5d166b7fe1a891640991cd4b803bd",
+    "earth-p-ef268d42871b57688bced91de235b9ebd13b10d4412ac1578f29b1d8bc1bf6b2"
+  ],
+  "linkedDatasetIds": [],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-1",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:display-math",
+        "line-span:10-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-10",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:28-28"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-11",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:29-29"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-12",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:30-30"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-13",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:37-37"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-14",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:38-38"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-15",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-16",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-17",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-2",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:display-math",
+        "line-span:46-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-3",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-4",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:15-15"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-5",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:16-16"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-6",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:23-23"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-7",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-8",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:26-26"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-8"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-9",
+      "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Growth",
+        "formula-kind:plain-line-candidate",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce",
+        "formulaId": "earth-p-b31d3d4d7b272ba7a4a2eaa73f7b3e59536bcec0bc96a7c44c97514c89b88bce-formula-9"
+      }
+    }
+  ]
+}

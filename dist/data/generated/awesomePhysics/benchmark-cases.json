@@ -1,0 +1,1494 @@
+{
+  "schemaVersion": 1,
+  "registryId": "awesome-benchmark-cases-v1",
+  "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+  "cases": [
+    {
+      "caseId": "awesome-scikit-kinematics-capability",
+      "title": "scikit-kinematics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikit-kinematics-capability",
+      "catalogItemId": "awesome-scikit-kinematics",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-bullet3-capability",
+      "title": "bullet3",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-bullet3-capability",
+      "catalogItemId": "awesome-bullet3",
+      "adapterId": "awesome-bullet3-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-bullet3-wasm",
+        "wasmManifestId": "bullet3",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-cannon-js-capability",
+      "title": "cannon.js",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-cannon-js-capability",
+      "catalogItemId": "awesome-cannon-js",
+      "adapterId": "cannon-js-browser",
+      "execution": "browser",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "cannon-js-browser",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-matter-js-capability",
+      "title": "matter-js",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-matter-js-capability",
+      "catalogItemId": "awesome-matter-js",
+      "adapterId": "matter-js-browser",
+      "execution": "browser",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "matter-js-browser",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-mujoco-py-capability",
+      "title": "mujoco-py",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-mujoco-py-capability",
+      "catalogItemId": "awesome-mujoco-py",
+      "adapterId": null,
+      "execution": "reference",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-myphysicslab-capability",
+      "title": "myphysicslab",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-myphysicslab-capability",
+      "catalogItemId": "awesome-myphysicslab",
+      "adapterId": "awesome-myphysicslab-browser-v1",
+      "execution": "browser",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-myphysicslab-browser-v1",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-ncollide-capability",
+      "title": "ncollide",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-ncollide-capability",
+      "catalogItemId": "awesome-ncollide",
+      "adapterId": "awesome-ncollide-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-ncollide-wasm",
+        "wasmManifestId": "ncollide",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-newton-dynamics-capability",
+      "title": "newton-dynamics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-newton-dynamics-capability",
+      "catalogItemId": "awesome-newton-dynamics",
+      "adapterId": "awesome-newton-dynamics-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-newton-dynamics-wasm",
+        "wasmManifestId": "newton-dynamics",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-nphysics-capability",
+      "title": "nphysics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-nphysics-capability",
+      "catalogItemId": "awesome-nphysics",
+      "adapterId": "awesome-nphysics2d-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-nphysics2d-wasm",
+        "wasmManifestId": "nphysics",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-physx-3-4-capability",
+      "title": "PhysX",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-physx-3-4-capability",
+      "catalogItemId": "awesome-physx-3-4",
+      "adapterId": "awesome-physx-3-4-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-physx-3-4-wasm",
+        "wasmManifestId": "physx-3-4",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-positionbaseddynamics-capability",
+      "title": "PositionBasedDynamics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-positionbaseddynamics-capability",
+      "catalogItemId": "awesome-positionbaseddynamics",
+      "adapterId": "awesome-positionbaseddynamics-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-positionbaseddynamics-wasm",
+        "wasmManifestId": "position-based-dynamics",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pydy-capability",
+      "title": "pydy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pydy-capability",
+      "catalogItemId": "awesome-pydy",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pymunk-capability",
+      "title": "pymunk",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pymunk-capability",
+      "catalogItemId": "awesome-pymunk",
+      "adapterId": "awesome-pymunk-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-pymunk-wasm",
+        "wasmManifestId": "pymunk",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-simbody-capability",
+      "title": "simbody",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-simbody-capability",
+      "catalogItemId": "awesome-simbody",
+      "adapterId": null,
+      "execution": "wasm-candidate",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-fluid-engine-dev-capability",
+      "title": "fluid-engine-dev",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-fluid-engine-dev-capability",
+      "catalogItemId": "awesome-fluid-engine-dev",
+      "adapterId": "awesome-fluid-engine-dev-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-fluid-engine-dev-wasm",
+        "wasmManifestId": "fluid-engine-dev",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-fluids-capability",
+      "title": "fluids",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-fluids-capability",
+      "catalogItemId": "awesome-fluids",
+      "adapterId": "awesome-fluids-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-fluids-typescript",
+        "wasmManifestId": "fluids",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pysph-capability",
+      "title": "pysph",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pysph-capability",
+      "catalogItemId": "awesome-pysph",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-dualsphysics-capability",
+      "title": "DualSPHysics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-dualsphysics-capability",
+      "catalogItemId": "awesome-dualsphysics",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-gravity-simulator-capability",
+      "title": "Gravity-Simulator",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-gravity-simulator-capability",
+      "catalogItemId": "awesome-gravity-simulator",
+      "adapterId": null,
+      "execution": "browser",
+      "licenseGate": "blocked",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-gravisim-capability",
+      "title": "Gravisim",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-gravisim-capability",
+      "catalogItemId": "awesome-gravisim",
+      "adapterId": null,
+      "execution": "wasm-candidate",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pycbc-capability",
+      "title": "pycbc",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pycbc-capability",
+      "catalogItemId": "awesome-pycbc",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pyrocko-capability",
+      "title": "pyrocko",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pyrocko-capability",
+      "catalogItemId": "awesome-pyrocko",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-sw4-capability",
+      "title": "sw4",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-sw4-capability",
+      "catalogItemId": "awesome-sw4",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-webgl-ripples-capability",
+      "title": "webgl-ripples",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-webgl-ripples-capability",
+      "catalogItemId": "awesome-webgl-ripples",
+      "adapterId": "awesome-webgl-ripples-browser-v1",
+      "execution": "browser",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-webgl-ripples-browser-v1",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-python-acoustics-capability",
+      "title": "python-acoustics",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-python-acoustics-capability",
+      "catalogItemId": "awesome-python-acoustics",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-cantera-capability",
+      "title": "cantera",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-cantera-capability",
+      "catalogItemId": "awesome-cantera",
+      "adapterId": "awesome-cantera-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-cantera-wasm",
+        "wasmManifestId": "cantera",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-coolprop-capability",
+      "title": "CoolProp",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-coolprop-capability",
+      "catalogItemId": "awesome-coolprop",
+      "adapterId": "awesome-coolprop-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-coolprop-wasm",
+        "wasmManifestId": "coolprop",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-rmg-py-capability",
+      "title": "RMG-Py",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-rmg-py-capability",
+      "catalogItemId": "awesome-rmg-py",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-thermo-capability",
+      "title": "thermo",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-thermo-capability",
+      "catalogItemId": "awesome-thermo",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-thermopy-capability",
+      "title": "thermopy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-thermopy-capability",
+      "catalogItemId": "awesome-thermopy",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-electricfieldsimulation-capability",
+      "title": "ElectricFieldSimulation",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-electricfieldsimulation-capability",
+      "catalogItemId": "awesome-electricfieldsimulation",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "blocked",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-empy-capability",
+      "title": "EMpy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-empy-capability",
+      "catalogItemId": "awesome-empy",
+      "adapterId": "awesome-empy-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-empy-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-gprmax-capability",
+      "title": "gprMax",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-gprmax-capability",
+      "catalogItemId": "awesome-gprmax",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-meep-capability",
+      "title": "meep",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-meep-capability",
+      "catalogItemId": "awesome-meep",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-openems-capability",
+      "title": "openEMS",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-openems-capability",
+      "catalogItemId": "awesome-openems",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-openmeeg-capability",
+      "title": "openmeeg",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-openmeeg-capability",
+      "catalogItemId": "awesome-openmeeg",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-plasmapy-capability",
+      "title": "PlasmaPy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-plasmapy-capability",
+      "catalogItemId": "awesome-plasmapy",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-radis-capability",
+      "title": "radis",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-radis-capability",
+      "catalogItemId": "awesome-radis",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scikits-scattpy-capability",
+      "title": "scattpy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikits-scattpy-capability",
+      "catalogItemId": "awesome-scikits-scattpy",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "blocked",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scikit-beam-capability",
+      "title": "scikit-beam",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikit-beam-capability",
+      "catalogItemId": "awesome-scikit-beam",
+      "adapterId": "awesome-scikit-beam-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-scikit-beam-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scikit-rf-capability",
+      "title": "scikit-rf",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikit-rf-capability",
+      "catalogItemId": "awesome-scikit-rf",
+      "adapterId": "awesome-scikit-rf-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-scikit-rf-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scikit-spectra-capability",
+      "title": "scikit-spectra",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikit-spectra-capability",
+      "catalogItemId": "awesome-scikit-spectra",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scuff-em-capability",
+      "title": "scuff-em",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scuff-em-capability",
+      "catalogItemId": "awesome-scuff-em",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-spirit-capability",
+      "title": "spirit",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-spirit-capability",
+      "catalogItemId": "awesome-spirit",
+      "adapterId": "awesome-spirit-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-spirit-wasm",
+        "wasmManifestId": "spirit-headless",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-euclider-capability",
+      "title": "euclider",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-euclider-capability",
+      "catalogItemId": "awesome-euclider",
+      "adapterId": null,
+      "execution": "wasm-candidate",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-lightpipes-capability",
+      "title": "lightpipes",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-lightpipes-capability",
+      "catalogItemId": "awesome-lightpipes",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-odak-capability",
+      "title": "odak",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-odak-capability",
+      "catalogItemId": "awesome-odak",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-opticspy-capability",
+      "title": "opticspy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-opticspy-capability",
+      "catalogItemId": "awesome-opticspy",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-poppy-capability",
+      "title": "poppy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-poppy-capability",
+      "catalogItemId": "awesome-poppy",
+      "adapterId": "awesome-poppy-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-poppy-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pyrt-capability",
+      "title": "pyRT",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pyrt-capability",
+      "catalogItemId": "awesome-pyrt",
+      "adapterId": "awesome-pyrt-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-pyrt-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-rayopt-capability",
+      "title": "rayopt",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-rayopt-capability",
+      "catalogItemId": "awesome-rayopt",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-raysect-capability",
+      "title": "raysect",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-raysect-capability",
+      "catalogItemId": "awesome-raysect",
+      "adapterId": "awesome-raysect-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-raysect-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-openrelativity-capability",
+      "title": "OpenRelativity",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-openrelativity-capability",
+      "catalogItemId": "awesome-openrelativity",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-tfg-capability",
+      "title": "TFG",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-tfg-capability",
+      "catalogItemId": "awesome-tfg",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-artiq-capability",
+      "title": "artiq",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-artiq-capability",
+      "catalogItemId": "awesome-artiq",
+      "adapterId": null,
+      "execution": "reference",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-flavio-capability",
+      "title": "flavio",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-flavio-capability",
+      "catalogItemId": "awesome-flavio",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-hepdata-capability",
+      "title": "hepdata",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-hepdata-capability",
+      "catalogItemId": "awesome-hepdata",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-particle-clicker-capability",
+      "title": "particle-clicker",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-particle-clicker-capability",
+      "catalogItemId": "awesome-particle-clicker",
+      "adapterId": "awesome-particle-clicker-browser-v1",
+      "execution": "browser",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-particle-clicker-browser-v1",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-psi4-capability",
+      "title": "Psi4",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-psi4-capability",
+      "catalogItemId": "awesome-psi4",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pypdt-capability",
+      "title": "pypdt",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pypdt-capability",
+      "catalogItemId": "awesome-pypdt",
+      "adapterId": null,
+      "execution": "blocked",
+      "licenseGate": "blocked",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-qmsolve-capability",
+      "title": "QMsolve",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-qmsolve-capability",
+      "catalogItemId": "awesome-qmsolve",
+      "adapterId": "awesome-qmsolve-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-qmsolve-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-quantum-python-lectures-capability",
+      "title": "quantum-python-lectures",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-quantum-python-lectures-capability",
+      "catalogItemId": "awesome-quantum-python-lectures",
+      "adapterId": "awesome-quantum-python-lectures-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-quantum-python-lectures-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-quantumoptics-jl-capability",
+      "title": "QuantumOptics.jl",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-quantumoptics-jl-capability",
+      "catalogItemId": "awesome-quantumoptics-jl",
+      "adapterId": "awesome-quantumoptics-jl-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-quantumoptics-jl-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-qutip-capability",
+      "title": "qutip",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-qutip-capability",
+      "catalogItemId": "awesome-qutip",
+      "adapterId": "awesome-qutip-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-qutip-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-root-capability",
+      "title": "ROOT",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-root-capability",
+      "catalogItemId": "awesome-root",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-scikit-hep-capability",
+      "title": "scikit-hep",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-scikit-hep-capability",
+      "catalogItemId": "awesome-scikit-hep",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-astropy-capability",
+      "title": "astropy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-astropy-capability",
+      "catalogItemId": "awesome-astropy",
+      "adapterId": "awesome-astropy-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-astropy-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-gala-capability",
+      "title": "gala",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-gala-capability",
+      "catalogItemId": "awesome-gala",
+      "adapterId": "awesome-gala-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-gala-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-galpy-capability",
+      "title": "galpy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-galpy-capability",
+      "catalogItemId": "awesome-galpy",
+      "adapterId": "awesome-galpy-wasm",
+      "execution": "wasm",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-galpy-wasm",
+        "wasmManifestId": "galpy",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-pynbody-capability",
+      "title": "pynbody",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-pynbody-capability",
+      "catalogItemId": "awesome-pynbody",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-sunpy-capability",
+      "title": "sunpy",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-sunpy-capability",
+      "catalogItemId": "awesome-sunpy",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-burnman-capability",
+      "title": "burnman",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-burnman-capability",
+      "catalogItemId": "awesome-burnman",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-em-capability",
+      "title": "em",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-em-capability",
+      "catalogItemId": "awesome-em",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-simpeg-capability",
+      "title": "simpeg",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-simpeg-capability",
+      "catalogItemId": "awesome-simpeg",
+      "adapterId": null,
+      "execution": "typescript",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-solid-state-simulations-archive-capability",
+      "title": "Solid State Simulations",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-solid-state-simulations-archive-capability",
+      "catalogItemId": "awesome-solid-state-simulations-archive",
+      "adapterId": null,
+      "execution": "artifact",
+      "licenseGate": "review",
+      "runtimes": [
+        "native",
+        "wasm"
+      ],
+      "runnable": false,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "awesome-shut-up-and-calculate-capability",
+      "title": "Shut up and calculate",
+      "family": "awesome-physics",
+      "descriptorId": "awesome-shut-up-and-calculate-capability",
+      "catalogItemId": "awesome-shut-up-and-calculate",
+      "adapterId": "awesome-shut-up-and-calculate-typescript",
+      "execution": "typescript",
+      "licenseGate": "pass",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "adapterFactory": "awesome-shut-up-and-calculate-typescript",
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    },
+    {
+      "caseId": "gray-motor",
+      "title": "Edwin Gray motor harness slot",
+      "family": "gray-motor",
+      "descriptorId": null,
+      "catalogItemId": null,
+      "adapterId": null,
+      "execution": "gray-motor",
+      "licenseGate": "pending",
+      "runtimes": [
+        "native"
+      ],
+      "runnable": true,
+      "mount": {
+        "grayPlugin": "gray-motor-v1",
+        "resultSchema": "awesome-benchmark-result-v1"
+      }
+    }
+  ]
+}

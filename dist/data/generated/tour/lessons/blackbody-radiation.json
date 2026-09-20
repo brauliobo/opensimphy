@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 1,
+  "id": "blackbody-radiation",
+  "chapterId": "heat-matter",
+  "order": 1,
+  "title": "Temperature reshapes an ideal black-body spectrum",
+  "question": "How does an ideal thermal emitter's wavelength spectrum change when its thermodynamic temperature changes?",
+  "answerPreview": "Planck's wavelength law sets the modeled curve, Wien's law moves its peak inversely with temperature, and the Stefan-Boltzmann law makes total emitted power per area grow as the fourth power of temperature.",
+  "summary": "Explore a bounded ideal-emissivity black-body model while keeping its computed spectrum separate from measured spectra, perceived color, and instrument data.",
+  "attribution": {
+    "claimClass": "source-claim",
+    "evidenceRefs": [
+      "opensimphy-scientific-scope",
+      "openstax-university-physics-v3",
+      "bipm-si-brochure-9",
+      "codata-2022"
+    ],
+    "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; BIPM SI Brochure, 9th edition, 2026 update; CODATA 2022 adjustment",
+    "sourceLocator": "Deep curriculum, Chapter 10; OpenStax section 6.1; BIPM sections 2.2-2.3; CODATA recommended-values tables",
+    "methodRelationship": "not-applicable",
+    "modelOrigin": "established-physics",
+    "resultStatus": "not-evaluated",
+    "validatesTheory": false,
+    "caveats": [
+      "This lesson specifies an ideal black-body calculation and does not report a measured spectrum or runtime result."
+    ]
+  },
+  "estimatedMinutes": 8,
+  "quickPath": {
+    "estimatedMinutes": 4,
+    "guidedBlockIds": [
+      "ideal-emitter-model",
+      "peak-and-total-scaling"
+    ],
+    "equationStepIds": [
+      "planck-wavelength-spectrum",
+      "wien-peak",
+      "stefan-fourth-power"
+    ],
+    "checkpointIds": [
+      "hotter-curve-check"
+    ],
+    "simulationPresetId": "sun-photosphere"
+  },
+  "depthComposition": "technical-includes-guided",
+  "prerequisites": [],
+  "observationStage": {
+    "title": "Exact anchors used by the thermal-radiation model",
+    "question": "Which inputs are fixed International System of Units (SI) defining values, and which displayed quantities will be model outputs?",
+    "items": [
+      {
+        "id": "planck-constant-anchor",
+        "label": "Planck constant",
+        "value": 6.62607015e-34,
+        "unit": "J s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly. It enters the exponent and scale of Planck's wavelength spectrum.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "light-speed-anchor",
+        "label": "Speed of light in vacuum",
+        "value": 299792458,
+        "unit": "m/s",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly. The ideal spectrum uses the vacuum speed of light rather than a material propagation speed.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      },
+      {
+        "id": "boltzmann-constant-anchor",
+        "label": "Boltzmann constant",
+        "value": 1.380649e-23,
+        "unit": "J/K",
+        "role": "fixed-definition",
+        "explanation": "The SI fixes this numerical value exactly. It connects thermodynamic temperature to the energy scale in the model exponent.",
+        "evidenceRefs": [
+          "bipm-si-brochure-9"
+        ]
+      }
+    ],
+    "conclusion": "The three displayed anchors are exact defining values. A temperature choice and the spectrum calculated from it are model inputs and outputs, not observations of a lamp, star, or color response.",
+    "attribution": {
+      "claimClass": "established-definition",
+      "evidenceRefs": [
+        "bipm-si-brochure-9"
+      ],
+      "sourceRevision": "BIPM SI Brochure, 9th edition, 2026 update",
+      "sourceLocator": "Sections 2.2-2.3 and Appendix 2",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "Exact constants do not make a modeled source temperature or a practical radiometric measurement exact."
+      ]
+    }
+  },
+  "guidedBlocks": [
+    {
+      "id": "ideal-emitter-model",
+      "kind": "definition",
+      "title": "An ideal black body absorbs and emits with emissivity one",
+      "body": [
+        "A black body is an ideal thermal emitter. In this activity its emissivity is fixed at 1 at every wavelength, so the modeled spectrum depends only on thermodynamic temperature and wavelength.",
+        "Planck's wavelength spectrum gives spectral radiance: emitted power per projected area, per solid angle, and per wavelength interval.",
+        "Real lamps, stars, filters, atmospheres, and detectors can depart from this ideal model through wavelength-dependent emissivity, absorption, geometry, and instrument response."
+      ],
+      "glossaryIds": [
+        "black-body",
+        "emissivity",
+        "thermodynamic-temperature",
+        "spectral-radiance"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "Section 6.1, black-body radiation",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The activity does not fit wavelength-dependent emissivity or detector response."
+      ]
+    },
+    {
+      "id": "peak-and-total-scaling",
+      "kind": "prose",
+      "title": "Hotter ideal emitters peak at shorter wavelengths and emit much more power",
+      "body": [
+        "Wien's displacement law states that the peak wavelength of the wavelength-form spectrum is inversely proportional to thermodynamic temperature.",
+        "The Stefan-Boltzmann law states that total radiant exitance from an ideal black-body surface is proportional to the fourth power of temperature.",
+        "Doubling temperature halves the wavelength-form peak wavelength and multiplies total emitted power per area by 16 within this ideal model."
+      ],
+      "glossaryIds": [
+        "wien-displacement-law",
+        "stefan-boltzmann-law",
+        "radiant-exitance",
+        "thermodynamic-temperature"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+      "sourceLocator": "OpenStax section 6.1; CODATA radiation-constant entries",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The wavelength-form and frequency-form spectra peak at different coordinate locations and must not be converted by simply taking reciprocals of their peak coordinates."
+      ]
+    },
+    {
+      "id": "model-not-color-data",
+      "kind": "caveat",
+      "title": "A calculated curve is not a measured color or spectrum",
+      "body": [
+        "The plotted curve is generated from an ideal equation at a selected temperature. It is not sampled from a spectrometer and is not evidence that a physical source has that temperature.",
+        "This lesson chooses 380-750 nm as its visible-band reference interval. The activity does not calculate human color appearance, camera values, atmospheric color, or a display-referred color.",
+        "Agreement with a measured source would require calibrated spectral data, uncertainty treatment, a response model, and an explicit comparison procedure."
+      ],
+      "glossaryIds": [
+        "black-body",
+        "spectral-radiance"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "opensimphy-scientific-scope",
+        "openstax-university-physics-v3"
+      ],
+      "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "Claim and provenance vocabulary; OpenStax section 6.1",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "No empirical dataset or color-matching function is loaded."
+      ]
+    }
+  ],
+  "technicalBlocks": [
+    {
+      "id": "planck-law-terms",
+      "kind": "derivation",
+      "title": "Planck's wavelength law separates a scale factor from an occupation factor",
+      "body": [
+        "For positive wavelength lambda and temperature T, define x = h c divided by lambda k_B T. The wavelength spectral radiance is 2 h c^2 divided by lambda^5 and by exp(x)-1.",
+        "The wavelength density carries a per-metre interval. Changing to a frequency density requires the appropriate Jacobian; B_lambda and B_nu are not the same ordinate with a relabeled horizontal axis.",
+        "Integrating the ideal radiance over outward directions and all positive wavelengths gives radiant exitance sigma T^4."
+      ],
+      "glossaryIds": [
+        "spectral-radiance",
+        "radiant-exitance",
+        "black-body"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+      "sourceLocator": "OpenStax section 6.1; CODATA radiation-constant entries",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "This lesson uses the wavelength density B_lambda; its maximum is not the frequency-density maximum expressed as a wavelength."
+      ]
+    },
+    {
+      "id": "bounded-stable-evaluation",
+      "kind": "derivation",
+      "title": "The numerical spectrum is finite, bounded, and overflow-safe",
+      "body": [
+        "The engine evaluates a logarithmic wavelength series only within 10^-9 m to 10^-2 m and permits at most 256 samples.",
+        "It evaluates exp(x)-1 with expm1 for small and moderate x. When x exceeds the logarithm of the largest finite floating-point value, it returns the limiting radiance zero rather than evaluating an overflowing exponential.",
+        "Every output point must be finite and non-negative. The analytic Wien peak and Stefan-Boltzmann total are calculated separately rather than inferred from a truncated sampled interval."
+      ],
+      "glossaryIds": [
+        "spectral-radiance",
+        "wien-displacement-law",
+        "stefan-boltzmann-law"
+      ],
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "opensimphy-scientific-scope"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; tour-content-2026-07-26",
+      "sourceLocator": "Planck wavelength law; blackbody-spectrum numerical-method and limits contract",
+      "methodRelationship": "contract-validator",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The sampled interval does not numerically reproduce the all-wavelength Stefan-Boltzmann integral."
+      ]
+    },
+    {
+      "id": "idealization-boundary",
+      "kind": "caveat",
+      "title": "Temperature-only scaling follows from the idealization",
+      "body": [
+        "Fixing emissivity to one removes material-specific spectral structure by assumption; it is not a fitted result.",
+        "A star's effective temperature can be associated with total flux under a radiative model, while line spectra, limb darkening, and atmospheric transfer require additional physics.",
+        "An incandescent filament has wavelength-dependent emissivity and a temperature distribution, so its measured spectrum need not equal a single ideal black-body curve."
+      ],
+      "glossaryIds": [
+        "emissivity",
+        "black-body",
+        "thermodynamic-temperature"
+      ],
+      "claimClass": "assumption",
+      "evidenceRefs": [
+        "openstax-university-physics-v3"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "Section 6.1, ideal black-body model and thermal radiation",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "No stellar-atmosphere, filament, detector, or color-appearance model is included."
+      ]
+    }
+  ],
+  "equationSteps": [
+    {
+      "id": "planck-wavelength-spectrum",
+      "label": "Planck wavelength spectrum",
+      "expression": "B_lambda(lambda,T) = (2 h c^2 / lambda^5) / (exp(h c / (lambda k_B T)) - 1)",
+      "explanation": "For lambda greater than zero and T greater than zero, this ideal-emissivity model gives spectral radiance per unit wavelength and solid angle.",
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+      "sourceLocator": "Section 6.1, black-body radiation and Planck distribution",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "The equation is a wavelength density, not a frequency density."
+      ]
+    },
+    {
+      "id": "wien-peak",
+      "label": "Wien wavelength displacement law",
+      "expression": "lambda_max T = b",
+      "explanation": "The wavelength-form peak moves inversely with thermodynamic temperature; b is the Wien wavelength displacement constant.",
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+      "sourceLocator": "OpenStax section 6.1; CODATA Wien wavelength displacement law constant",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "This peak belongs to B_lambda and differs from the peak of B_nu."
+      ]
+    },
+    {
+      "id": "stefan-fourth-power",
+      "label": "Stefan-Boltzmann total emission",
+      "expression": "M = sigma T^4",
+      "explanation": "The ideal black body's all-wavelength radiant exitance M grows as the fourth power of thermodynamic temperature.",
+      "claimClass": "established-model",
+      "evidenceRefs": [
+        "openstax-university-physics-v3",
+        "codata-2022"
+      ],
+      "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+      "sourceLocator": "OpenStax section 6.1; CODATA Stefan-Boltzmann constant",
+      "methodRelationship": "not-applicable",
+      "modelOrigin": "established-physics",
+      "resultStatus": "not-evaluated",
+      "validatesTheory": false,
+      "caveats": [
+        "M is total hemispherical power per emitting area for emissivity one."
+      ]
+    }
+  ],
+  "simulationId": "blackbody-spectrum",
+  "formulaIds": [
+    "h",
+    "c",
+    "k_B",
+    "b",
+    "σ"
+  ],
+  "programIds": [],
+  "glossaryIds": [
+    "numerical-value",
+    "unit",
+    "black-body",
+    "emissivity",
+    "thermodynamic-temperature",
+    "spectral-radiance",
+    "radiant-exitance",
+    "wien-displacement-law",
+    "stefan-boltzmann-law"
+  ],
+  "evidenceRefs": [
+    "openstax-university-physics-v3",
+    "bipm-si-brochure-9",
+    "codata-2022",
+    "opensimphy-scientific-scope"
+  ],
+  "checkpoints": [
+    {
+      "id": "hotter-curve-check",
+      "kind": "prediction",
+      "prompt": "Before changing the model from 3000 K to 6000 K, which paired change should the ideal laws produce?",
+      "choices": [
+        {
+          "id": "shorter-t4",
+          "label": "Peak shifts shorter; exitance follows the fourth power of the temperature ratio"
+        },
+        {
+          "id": "longer-linear",
+          "label": "Peak shifts longer; exitance follows the temperature ratio linearly"
+        },
+        {
+          "id": "unchanged",
+          "label": "Peak wavelength and exitance remain unchanged"
+        }
+      ],
+      "answerId": "shorter-t4",
+      "explanation": "Wien scaling gives lambda_max proportional to 1/T, while Stefan-Boltzmann scaling gives M proportional to T^4. This ungraded checkpoint anticipates a model calculation, not a measurement.",
+      "attribution": {
+        "claimClass": "prediction",
+        "evidenceRefs": [
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Section 6.1, Wien displacement and Stefan-Boltzmann laws",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source-authored answer is not a learner score or runtime result."
+        ]
+      }
+    },
+    {
+      "id": "spectrum-evidence-check",
+      "kind": "classification",
+      "prompt": "The activity draws a smooth curve from Planck's law at 5772 K. What is the curve?",
+      "choices": [
+        {
+          "id": "measurement",
+          "label": "A measured solar spectrum"
+        },
+        {
+          "id": "color",
+          "label": "A prediction of perceived display color"
+        },
+        {
+          "id": "model",
+          "label": "A modeled ideal black-body wavelength spectrum"
+        }
+      ],
+      "answerId": "model",
+      "explanation": "The curve is direct model output. No solar dataset, atmosphere, detector response, or color-matching function is included.",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Claim and provenance vocabulary; OpenStax section 6.1",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The source-authored answer is ungraded and is not an empirical comparison."
+        ]
+      }
+    }
+  ],
+  "seenInActivity": [
+    {
+      "text": "The source contract presents a finite ideal black-body wavelength curve for selected temperature, positive wavelength bounds, and sample count.",
+      "scope": "activity",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "blackbody-spectrum controls and visualization contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Displayed source content is not evidence of a runtime execution."
+        ]
+      }
+    }
+  ],
+  "computedHere": [
+    {
+      "text": "An evaluated run calculates sampled Planck spectral radiance, the analytic Wien peak wavelength, and ideal Stefan-Boltzmann radiant exitance from the selected temperature.",
+      "scope": "computation",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "Planck, Wien, and Stefan-Boltzmann equations",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The sampled wavelength interval is not used as a substitute for the analytic all-wavelength integral."
+        ]
+      }
+    }
+  ],
+  "reproducedFromSource": [
+    {
+      "text": "No external measured spectrum, color value, or source-model output is reproduced in this lesson.",
+      "scope": "source",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "blackbody-radiation lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": []
+      }
+    }
+  ],
+  "comparedWithEvidence": [
+    {
+      "text": "No empirical spectrum or photometric dataset is loaded or compared in this lesson.",
+      "scope": "empirical-evidence",
+      "attribution": {
+        "claimClass": "source-claim",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope"
+        ],
+        "sourceRevision": "tour-content-2026-07-26",
+        "sourceLocator": "blackbody-radiation lesson conclusion boundary",
+        "methodRelationship": "not-applicable",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "A smooth computed curve is not an empirical dataset."
+        ]
+      }
+    }
+  ],
+  "establishes": [
+    {
+      "text": "For an evaluated run, the selected ideal model determines a unique bounded wavelength series, Wien peak, and Stefan-Boltzmann exitance under its declared inputs.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "openstax-university-physics-v3",
+          "codata-2022"
+        ],
+        "sourceRevision": "OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27; CODATA 2022 adjustment",
+        "sourceLocator": "Planck, Wien, and Stefan-Boltzmann equations; bounded numerical contract",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "The conclusion is conditional on ideal emissivity one and the selected numerical bounds."
+        ]
+      }
+    }
+  ],
+  "doesNotEstablish": [
+    {
+      "text": "The modeled curve does not establish a source's measured temperature, spectrum, emissivity, perceived color, or agreement with black-body theory.",
+      "scope": "scientific-conclusion",
+      "attribution": {
+        "claimClass": "established-model",
+        "evidenceRefs": [
+          "opensimphy-scientific-scope",
+          "openstax-university-physics-v3"
+        ],
+        "sourceRevision": "PHYSICS_TOUR_MASTER_PLAN.md, 2026-07-26 contract; OpenStax University Physics Volume 3, 2016 web edition accessed 2026-07-27",
+        "sourceLocator": "Theory-validation boundary; ideal black-body assumptions",
+        "methodRelationship": "contract-validator",
+        "modelOrigin": "established-physics",
+        "resultStatus": "not-evaluated",
+        "validatesTheory": false,
+        "caveats": [
+          "Validation would require calibrated held-out observations and an uncertainty-aware comparison protocol."
+        ]
+      }
+    }
+  ],
+  "previousLessonId": "spin-precession",
+  "nextLessonId": "particle-to-mole"
+}

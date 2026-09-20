@@ -1,0 +1,5201 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-15",
+  "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+  "source": {
+    "catalogPath": "awesome-physics/README.md",
+    "manifestPath": "awesome-physics-repos/CLONE_MANIFEST.tsv",
+    "migrationPlanPath": "AWESOME_PHYSICS_MIGRATION_PLAN.md",
+    "acquisitionDate": "2026-08-15",
+    "evidenceRefs": [
+      "awesome-physics/README.md",
+      "awesome-physics-repos/CLONE_MANIFEST.tsv",
+      "AWESOME_PHYSICS_MIGRATION_PLAN.md"
+    ]
+  },
+  "summary": {
+    "totalEntries": 86,
+    "projectEntries": 75,
+    "archiveEntries": 1,
+    "organizationEntries": 10,
+    "clonedRepositories": 74,
+    "failedAccessEntries": 1,
+    "documentationAliases": 1
+  },
+  "items": [
+    {
+      "id": "awesome-scikit-kinematics",
+      "canonicalName": "scikit-kinematics",
+      "aliases": [],
+      "category": "Mechanics / Kinematics",
+      "catalogSection": "Mechanics",
+      "title": "scikit-kinematics",
+      "description": "Python functions for working with 3D kinematics",
+      "catalogUrl": "https://github.com/thomas-haslwanter/scikit-kinematics",
+      "upstreamUrl": "https://github.com/thomas-haslwanter/scikit-kinematics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "3bb9e358fffd",
+      "localPath": "awesome-physics-repos/scikit-kinematics",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "README BSD-2-Clause and pyproject.toml BSD-3-Clause statements need resolution.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:152",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:2"
+        ]
+      },
+      "maintenance": "unknown",
+      "maintenanceSignal": "The plan records a source-level license discrepancy; no maintenance claim is made.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:32",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:152",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:2"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:152",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:2"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:32",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:152"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scikit-kinematics",
+          "url": "https://github.com/thomas-haslwanter/scikit-kinematics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/thomas-haslwanter/scikit-kinematics"
+        }
+      ],
+      "catalogLine": 32,
+      "manifestLine": 2,
+      "planLine": 152,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-bullet3",
+      "canonicalName": "bullet3",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "bullet3",
+      "description": "real-time collision detection and multi-physics simulation for VR, games, visual effects, robotics, machine learning",
+      "catalogUrl": "https://github.com/bulletphysics/bullet3",
+      "upstreamUrl": "https://github.com/bulletphysics/bullet3",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "63c4d67e3370",
+      "localPath": "awesome-physics-repos/bullet3",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "zlib license and third-party notices require review before redistribution.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:3"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan treats bullet3 as a current native engine with a port gate.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:36",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:3"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:153",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:3"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:36",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:153"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "bullet3",
+          "url": "https://github.com/bulletphysics/bullet3"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/bulletphysics/bullet3"
+        }
+      ],
+      "catalogLine": 36,
+      "manifestLine": 3,
+      "planLine": 153,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-cannon-js",
+      "canonicalName": "cannon.js",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "cannon.js",
+      "description": "A lightweight 3D physics engine written in JavaScript",
+      "catalogUrl": "https://github.com/schteppe/cannon.js",
+      "upstreamUrl": "https://github.com/schteppe/cannon.js",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "569730f94a1d",
+      "localPath": "awesome-physics-repos/cannon.js",
+      "sourceKind": "repository",
+      "language": [
+        "HTML",
+        "JavaScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:4"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan explicitly describes the upstream API as stale.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:37",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:4"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:154",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:4"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:37",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:154"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "cannon.js",
+          "url": "https://github.com/schteppe/cannon.js"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/schteppe/cannon.js"
+        }
+      ],
+      "catalogLine": 37,
+      "manifestLine": 4,
+      "planLine": 154,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-matter-js",
+      "canonicalName": "matter-js",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "matter-js",
+      "description": "A 2D rigid body physics engine for the web",
+      "catalogUrl": "https://github.com/liabru/matter-js",
+      "upstreamUrl": "https://github.com/liabru/matter-js",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "acb99b6f8784",
+      "localPath": "awesome-physics-repos/matter-js",
+      "sourceKind": "repository",
+      "language": [
+        "JavaScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:5"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a maintained browser-native model boundary for a pilot.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:38",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:5"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:155",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:5"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:38",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:155"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "matter-js",
+          "url": "https://github.com/liabru/matter-js"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/liabru/matter-js"
+        }
+      ],
+      "catalogLine": 38,
+      "manifestLine": 5,
+      "planLine": 155,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-mujoco-py",
+      "canonicalName": "mujoco-py",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "mujoco-py",
+      "description": "A physics engine for detailed, efficient rigid body simulations with contacts",
+      "catalogUrl": "https://github.com/openai/mujoco-py",
+      "upstreamUrl": "https://github.com/openai/mujoco-py",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "a13903b82f1a",
+      "localPath": "awesome-physics-repos/mujoco-py",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "The deprecated wrapper and the maintained MuJoCo engine require a separate license review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The plan identifies mujoco-py as deprecated.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:39",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:6"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:39",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:156"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "mujoco-py",
+          "url": "https://github.com/openai/mujoco-py"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/openai/mujoco-py"
+        }
+      ],
+      "catalogLine": 39,
+      "manifestLine": 6,
+      "planLine": 156,
+      "access": {
+        "status": "cloned",
+        "note": "deprecated native Python wrapper",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-myphysicslab",
+      "canonicalName": "myphysicslab",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "myphysicslab",
+      "description": "provides JavaScript classes to build real-time interactive animated physics simulations",
+      "catalogUrl": "https://github.com/myphysicslab/myphysicslab",
+      "upstreamUrl": "https://github.com/myphysicslab/myphysicslab",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "4b0bb8e1fa3b",
+      "localPath": "awesome-physics-repos/myphysicslab",
+      "sourceKind": "repository",
+      "language": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "Apache-2.0.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:7"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an active TypeScript educational collection.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:40",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:7"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:157",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:7"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:40",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:157"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "myphysicslab",
+          "url": "https://github.com/myphysicslab/myphysicslab"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/myphysicslab/myphysicslab"
+        }
+      ],
+      "catalogLine": 40,
+      "manifestLine": 7,
+      "planLine": 157,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-ncollide",
+      "canonicalName": "ncollide",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "ncollide",
+      "description": "2 and 3-dimensional collision detection library in Rust",
+      "catalogUrl": "https://github.com/sebcrozet/ncollide",
+      "upstreamUrl": "https://github.com/sebcrozet/ncollide",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "f3c3ecb3c98d",
+      "localPath": "awesome-physics-repos/ncollide",
+      "sourceKind": "repository",
+      "language": [
+        "Rust"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "Apache-2.0.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:8"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan records old cargo-web/wasm32 evidence and prefers the successor ecosystem.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:41",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:8"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:158",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:8"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:41",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:158"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "ncollide",
+          "url": "https://github.com/sebcrozet/ncollide"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/sebcrozet/ncollide"
+        }
+      ],
+      "catalogLine": 41,
+      "manifestLine": 8,
+      "planLine": 158,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-newton-dynamics",
+      "canonicalName": "newton-dynamics",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "newton-dynamics",
+      "description": "an integrated solution for real time simulation of physics environments",
+      "catalogUrl": "https://github.com/MADEAPPS/newton-dynamics",
+      "upstreamUrl": "https://github.com/MADEAPPS/newton-dynamics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "a9c460c3509c",
+      "localPath": "awesome-physics-repos/newton-dynamics",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "zlib license and bundled notices require review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:9"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The source README marks the repository discontinued.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:42",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:9"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:9"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:42",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:159"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "newton-dynamics",
+          "url": "https://github.com/MADEAPPS/newton-dynamics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/MADEAPPS/newton-dynamics"
+        }
+      ],
+      "catalogLine": 42,
+      "manifestLine": 9,
+      "planLine": 159,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-nphysics",
+      "canonicalName": "nphysics",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "nphysics",
+      "description": "2 and 3-dimensional rigid body physics engine for Rust",
+      "catalogUrl": "https://github.com/sebcrozet/nphysics",
+      "upstreamUrl": "https://github.com/sebcrozet/nphysics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "65aa85c5470a",
+      "localPath": "awesome-physics-repos/nphysics",
+      "sourceKind": "repository",
+      "language": [
+        "Rust"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "Apache-2.0.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The plan identifies nphysics as superseded by Rapier.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:43",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:10"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:43",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:160"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "nphysics",
+          "url": "https://github.com/sebcrozet/nphysics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/sebcrozet/nphysics"
+        }
+      ],
+      "catalogLine": 43,
+      "manifestLine": 10,
+      "planLine": 160,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-physx-3-4",
+      "canonicalName": "PhysX-3.4",
+      "aliases": [
+        "PhysX"
+      ],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "PhysX",
+      "description": "a scalable multi-platform game physics solution",
+      "catalogUrl": "https://github.com/NVIDIAGameWorks/PhysX-3.4",
+      "upstreamUrl": "https://github.com/NVIDIAGameWorks/PhysX-3.4",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "5e42a5f11235",
+      "localPath": "awesome-physics-repos/PhysX-3.4",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "BSD-style notices must be retained and reviewed for the selected SDK subset.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:11"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan treats the 3.4 SDK as a low-priority legacy engine reference.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:44",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:11"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:161",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:11"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:44",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:161"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "PhysX",
+          "url": "https://github.com/NVIDIAGameWorks/PhysX-3.4"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/NVIDIAGameWorks/PhysX-3.4"
+        }
+      ],
+      "catalogLine": 44,
+      "manifestLine": 11,
+      "planLine": 161,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-positionbaseddynamics",
+      "canonicalName": "PositionBasedDynamics",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "PositionBasedDynamics",
+      "description": "A library for the physically-based simulation of rigid bodies, deformable solids and fluids",
+      "catalogUrl": "https://github.com/InteractiveComputerGraphics/PositionBasedDynamics",
+      "upstreamUrl": "https://github.com/InteractiveComputerGraphics/PositionBasedDynamics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "beafc921e215",
+      "localPath": "awesome-physics-repos/PositionBasedDynamics",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:12"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan explicitly describes the source as active.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:45",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:12"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:162",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:12"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:45",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:162"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "PositionBasedDynamics",
+          "url": "https://github.com/InteractiveComputerGraphics/PositionBasedDynamics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/InteractiveComputerGraphics/PositionBasedDynamics"
+        }
+      ],
+      "catalogLine": 45,
+      "manifestLine": 12,
+      "planLine": 162,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pydy",
+      "canonicalName": "pydy",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "pydy",
+      "description": "Multibody dynamics tool kit",
+      "catalogUrl": "https://github.com/pydy/pydy",
+      "upstreamUrl": "https://github.com/pydy/pydy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "7ca52b722599",
+      "localPath": "awesome-physics-repos/pydy",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "BSD-style license is recorded in the plan; exact source terms still need review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:163",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:13"
+        ]
+      },
+      "maintenance": "unknown",
+      "maintenanceSignal": "The plan gives no definitive maintenance status.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:46",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:163",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:13"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:163",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:13"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:46",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:163"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pydy",
+          "url": "https://github.com/pydy/pydy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/pydy/pydy"
+        }
+      ],
+      "catalogLine": 46,
+      "manifestLine": 13,
+      "planLine": 163,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pymunk",
+      "canonicalName": "pymunk",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "pymunk",
+      "description": "A easy-to-use pythonic 2d physics library",
+      "catalogUrl": "https://github.com/viblo/pymunk",
+      "upstreamUrl": "https://github.com/viblo/pymunk",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "6287ce6d9223",
+      "localPath": "awesome-physics-repos/pymunk",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:14"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current Pyodide/Emscripten evaluation path.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:47",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:14"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:14"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:47",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:164"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pymunk",
+          "url": "https://github.com/viblo/pymunk"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/viblo/pymunk"
+        }
+      ],
+      "catalogLine": 47,
+      "manifestLine": 14,
+      "planLine": 164,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-simbody",
+      "canonicalName": "simbody",
+      "aliases": [],
+      "category": "Mechanics / Rigid bodies",
+      "catalogSection": "Mechanics",
+      "title": "simbody",
+      "description": "High-performance C++ multibody dynamics/physics library for simulating articulated biomechanical and mechanical systems like vehicles, robots, and the human skeleton",
+      "catalogUrl": "https://github.com/simbody/simbody",
+      "upstreamUrl": "https://github.com/simbody/simbody",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "944fd33fa423",
+      "localPath": "awesome-physics-repos/simbody",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "C",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "Apache-2.0.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:15"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current articulated-body evaluation path.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:48",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:15"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:165",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:15"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:48",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:165"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "simbody",
+          "url": "https://github.com/simbody/simbody"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/simbody/simbody"
+        }
+      ],
+      "catalogLine": 48,
+      "manifestLine": 15,
+      "planLine": 165,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-fluid-engine-dev",
+      "canonicalName": "fluid-engine-dev",
+      "aliases": [],
+      "category": "Mechanics / Fluid mechanics",
+      "catalogSection": "Mechanics",
+      "title": "fluid-engine-dev",
+      "description": "Fluid simulation engine for computer graphics applications",
+      "catalogUrl": "https://github.com/doyubkim/fluid-engine-dev",
+      "upstreamUrl": "https://github.com/doyubkim/fluid-engine-dev",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "94c300ff5ad8",
+      "localPath": "awesome-physics-repos/fluid-engine-dev",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:16"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current native SDK with a reduced port target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:52",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:16"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:166",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:16"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:52",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:166"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "fluid-engine-dev",
+          "url": "https://github.com/doyubkim/fluid-engine-dev"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/doyubkim/fluid-engine-dev"
+        }
+      ],
+      "catalogLine": 52,
+      "manifestLine": 16,
+      "planLine": 166,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-fluids",
+      "canonicalName": "fluids",
+      "aliases": [],
+      "category": "Mechanics / Fluid mechanics",
+      "catalogSection": "Mechanics",
+      "title": "fluids",
+      "description": "Fluid dynamics component of Chemical Engineering Design Library (ChEDL)",
+      "catalogUrl": "https://github.com/CalebBell/fluids",
+      "upstreamUrl": "https://github.com/CalebBell/fluids",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "5fa218f9c15f",
+      "localPath": "awesome-physics-repos/fluids",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an active formulas library and a deferred browser build.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:53",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:17"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:53",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:167"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "fluids",
+          "url": "https://github.com/CalebBell/fluids"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/CalebBell/fluids"
+        }
+      ],
+      "catalogLine": 53,
+      "manifestLine": 17,
+      "planLine": 167,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pysph",
+      "canonicalName": "pysph",
+      "aliases": [],
+      "category": "Mechanics / Fluid mechanics",
+      "catalogSection": "Mechanics",
+      "title": "pysph",
+      "description": "SPH fluid simulation with advanced screen space fluid rendering, using pyopengl and pyopencl",
+      "catalogUrl": "https://github.com/benma/pysph",
+      "upstreamUrl": "https://github.com/benma/pysph",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "18347a8d3d24",
+      "localPath": "awesome-physics-repos/pysph",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "The plan says the license requires review before reuse.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:168",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:18"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan describes a legacy Python/OpenCL/Cg demo stack.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:54",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:168",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:18"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:168",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:18"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:54",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:168"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pysph",
+          "url": "https://github.com/benma/pysph"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/benma/pysph"
+        }
+      ],
+      "catalogLine": 54,
+      "manifestLine": 18,
+      "planLine": 168,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-dualsphysics",
+      "canonicalName": "DualSPHysics",
+      "aliases": [],
+      "category": "Mechanics / Fluid mechanics",
+      "catalogSection": "Mechanics",
+      "title": "DualSPHysics",
+      "description": "C++/CUDA/OpenMP based Smoothed Particle Hydrodynamics (SPH) solver",
+      "catalogUrl": "https://github.com/DualSPHysics/DualSPHysics",
+      "upstreamUrl": "https://github.com/DualSPHysics/DualSPHysics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "ef3721a861fd",
+      "localPath": "awesome-physics-repos/DualSPHysics",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "CUDA"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "LGPL-2.1 obligations apply to the source and any redistributed subset.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:169",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:19"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current CUDA/OpenMP solver with a reduced CPU target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:55",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:169",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:19"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:169",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:19"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:55",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:169"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "DualSPHysics",
+          "url": "https://github.com/DualSPHysics/DualSPHysics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/DualSPHysics/DualSPHysics"
+        }
+      ],
+      "catalogLine": 55,
+      "manifestLine": 19,
+      "planLine": 169,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-gravity-simulator",
+      "canonicalName": "Gravity-Simulator",
+      "aliases": [],
+      "category": "Mechanics / Gravity",
+      "catalogSection": "Mechanics",
+      "title": "Gravity-Simulator",
+      "description": "A 2D newtonian gravity simulator in JS",
+      "catalogUrl": "https://github.com/HermannBjorgvin/Gravity-Simulator",
+      "upstreamUrl": "https://github.com/HermannBjorgvin/Gravity-Simulator",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "cccc779975ad",
+      "localPath": "awesome-physics-repos/Gravity-Simulator",
+      "sourceKind": "repository",
+      "language": [
+        "JavaScript"
+      ],
+      "license": {
+        "status": "missing",
+        "text": "No source license was found; redistribution is blocked pending permission.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:170",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:20"
+        ]
+      },
+      "maintenance": "unknown",
+      "maintenanceSignal": "The plan records no verified maintenance signal.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:59",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:170",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:20"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:170",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:20"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:59",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:170"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "Gravity-Simulator",
+          "url": "https://github.com/HermannBjorgvin/Gravity-Simulator"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/HermannBjorgvin/Gravity-Simulator"
+        }
+      ],
+      "catalogLine": 59,
+      "manifestLine": 20,
+      "planLine": 170,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-gravisim",
+      "canonicalName": "Gravisim",
+      "aliases": [],
+      "category": "Mechanics / Gravity",
+      "catalogSection": "Mechanics",
+      "title": "Gravisim",
+      "description": "A universal gravity simulator written using rust_sdl2",
+      "catalogUrl": "https://github.com/bcamp1/Gravisim",
+      "upstreamUrl": "https://github.com/bcamp1/Gravisim",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "6e1d6ddfcd9f",
+      "localPath": "awesome-physics-repos/Gravisim",
+      "sourceKind": "repository",
+      "language": [
+        "Rust"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "License is unclear and must gate reuse.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:171",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:21"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan treats the SDL2 desktop project as a port candidate rather than a current browser target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:60",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:171",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:21"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:171",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:21"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:60",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:171"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "Gravisim",
+          "url": "https://github.com/bcamp1/Gravisim"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/bcamp1/Gravisim"
+        }
+      ],
+      "catalogLine": 60,
+      "manifestLine": 21,
+      "planLine": 171,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pycbc",
+      "canonicalName": "pycbc",
+      "aliases": [],
+      "category": "Mechanics / Gravity",
+      "catalogSection": "Mechanics",
+      "title": "pycbc",
+      "description": "Analyze gravitational-wave data, find signals, and study their parameters",
+      "catalogUrl": "https://github.com/ligo-cbc/pycbc",
+      "upstreamUrl": "https://github.com/ligo-cbc/pycbc",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "3c13a7f23ef0",
+      "localPath": "awesome-physics-repos/pycbc",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Cython",
+        "CUDA",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-3.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:172",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:22"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current data-analysis stack whose full workflow remains external.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:61",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:172",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:22"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:172",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:22"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:61",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:172"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pycbc",
+          "url": "https://github.com/ligo-cbc/pycbc"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/ligo-cbc/pycbc"
+        }
+      ],
+      "catalogLine": 61,
+      "manifestLine": 22,
+      "planLine": 172,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pyrocko",
+      "canonicalName": "pyrocko",
+      "aliases": [],
+      "category": "Waves / Seismology",
+      "catalogSection": "Waves and Acoustics",
+      "title": "pyrocko",
+      "description": "A seismology toolkit for Python",
+      "catalogUrl": "https://github.com/pyrocko/pyrocko",
+      "upstreamUrl": "https://github.com/pyrocko/pyrocko",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "b5bbdee44b32",
+      "localPath": "awesome-physics-repos/pyrocko",
+      "sourceKind": "repository",
+      "language": [
+        "C",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-3.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current seismology toolkit with native applications.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:70",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:23"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:70",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:173"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pyrocko",
+          "url": "https://github.com/pyrocko/pyrocko"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/pyrocko/pyrocko"
+        }
+      ],
+      "catalogLine": 70,
+      "manifestLine": 23,
+      "planLine": 173,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-sw4",
+      "canonicalName": "sw4",
+      "aliases": [],
+      "category": "Waves / Seismology",
+      "catalogSection": "Waves and Acoustics",
+      "title": "sw4",
+      "description": "3-D seismic modeling",
+      "catalogUrl": "https://github.com/geodynamics/sw4",
+      "upstreamUrl": "https://github.com/geodynamics/sw4",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "03cb7e8d77aa",
+      "localPath": "awesome-physics-repos/sw4",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "C",
+        "Fortran"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2-or-later plus notices.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:174",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:24"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current MPI seismic propagator whose full solver stays external.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:71",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:174",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:24"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:174",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:24"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:71",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:174"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "sw4",
+          "url": "https://github.com/geodynamics/sw4"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/geodynamics/sw4"
+        }
+      ],
+      "catalogLine": 71,
+      "manifestLine": 24,
+      "planLine": 174,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-webgl-ripples",
+      "canonicalName": "webgl-ripples",
+      "aliases": [],
+      "category": "Waves / Mechanical waves",
+      "catalogSection": "Waves and Acoustics",
+      "title": "webgl-ripples",
+      "description": "A physically realistic real-time simulation of (transversal) 2D waves in WebGL",
+      "catalogUrl": "https://github.com/m-ender/webgl-ripples",
+      "upstreamUrl": "https://github.com/m-ender/webgl-ripples",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "88eab79c98e8",
+      "localPath": "awesome-physics-repos/webgl-ripples",
+      "sourceKind": "repository",
+      "language": [],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:25"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan treats the existing shader as a narrow browser-native source to preserve or modernize.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:72",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:25"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:175",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:25"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:72",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:175"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "webgl-ripples",
+          "url": "https://github.com/m-ender/webgl-ripples"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/m-ender/webgl-ripples"
+        }
+      ],
+      "catalogLine": 72,
+      "manifestLine": 25,
+      "planLine": 175,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-python-acoustics",
+      "canonicalName": "python-acoustics",
+      "aliases": [],
+      "category": "Waves / Sound",
+      "catalogSection": "Waves and Acoustics",
+      "title": "python-acoustics",
+      "description": "A Python library aimed at acousticians",
+      "catalogUrl": "https://github.com/python-acoustics/python-acoustics",
+      "upstreamUrl": "https://github.com/python-acoustics/python-acoustics",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "99d79206159b",
+      "localPath": "awesome-physics-repos/python-acoustics",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "BSD license text contains a placeholder that must be reviewed.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:176",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:26"
+        ]
+      },
+      "maintenance": "unknown",
+      "maintenanceSignal": "The plan gives no definitive maintenance status.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:76",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:176",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:26"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:176",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:26"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:76",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:176"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "python-acoustics",
+          "url": "https://github.com/python-acoustics/python-acoustics"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/python-acoustics/python-acoustics"
+        }
+      ],
+      "catalogLine": 76,
+      "manifestLine": 26,
+      "planLine": 176,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-cantera",
+      "canonicalName": "cantera",
+      "aliases": [],
+      "category": "Thermodynamics",
+      "catalogSection": "Thermodynamics",
+      "title": "cantera",
+      "description": "A chemical kinetics, thermodynamics, and transport tool suite",
+      "catalogUrl": "https://github.com/Cantera/cantera",
+      "upstreamUrl": "https://github.com/Cantera/cantera",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "11a2381011cb",
+      "localPath": "awesome-physics-repos/cantera",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "BSD-3-Clause with government notices that must be retained.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a documented Pyodide wheel path.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:80",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:27"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:80",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:177"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "cantera",
+          "url": "https://github.com/Cantera/cantera"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/Cantera/cantera"
+        }
+      ],
+      "catalogLine": 80,
+      "manifestLine": 27,
+      "planLine": 177,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-coolprop",
+      "canonicalName": "CoolProp",
+      "aliases": [],
+      "category": "Thermodynamics",
+      "catalogSection": "Thermodynamics",
+      "title": "CoolProp",
+      "description": "Thermophysical properties for the masses",
+      "catalogUrl": "https://github.com/CoolProp/CoolProp",
+      "upstreamUrl": "https://github.com/CoolProp/CoolProp",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "4db89c1ce8d0",
+      "localPath": "awesome-physics-repos/CoolProp",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an existing Emscripten JavaScript/WASM interface and tests.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:81",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:28"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:81",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:178"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "CoolProp",
+          "url": "https://github.com/CoolProp/CoolProp"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/CoolProp/CoolProp"
+        }
+      ],
+      "catalogLine": 81,
+      "manifestLine": 28,
+      "planLine": 178,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-rmg-py",
+      "canonicalName": "RMG-Py",
+      "aliases": [],
+      "category": "Thermodynamics",
+      "catalogSection": "Thermodynamics",
+      "title": "RMG-Py",
+      "description": "Python version of the amazing Reaction Mechanism Generator",
+      "catalogUrl": "https://github.com/ReactionMechanismGenerator/RMG-Py",
+      "upstreamUrl": "https://github.com/ReactionMechanismGenerator/RMG-Py",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "d08392ed9beb",
+      "localPath": "awesome-physics-repos/RMG-Py",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "Fortran",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source license; database licensing needs a separate review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:179",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:29"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current mechanism-generation stack with a fixed lesson target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:82",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:179",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:29"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:179",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:29"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:82",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:179"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "RMG-Py",
+          "url": "https://github.com/ReactionMechanismGenerator/RMG-Py"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/ReactionMechanismGenerator/RMG-Py"
+        }
+      ],
+      "catalogLine": 82,
+      "manifestLine": 29,
+      "planLine": 179,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-thermo",
+      "canonicalName": "thermo",
+      "aliases": [],
+      "category": "Thermodynamics",
+      "catalogSection": "Thermodynamics",
+      "title": "thermo",
+      "description": "Thermodynamics, phase equilibria, transport properties and chemical database component of Chemical Engineering Design Library (ChEDL)",
+      "catalogUrl": "https://github.com/CalebBell/thermo",
+      "upstreamUrl": "https://github.com/CalebBell/thermo",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "2bb466e98439",
+      "localPath": "awesome-physics-repos/thermo",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source license; dependency closure and data packaging remain review gates.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an alpha/broad dependency surface and a deferred browser build.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:83",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:30"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:83",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:180"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "thermo",
+          "url": "https://github.com/CalebBell/thermo"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/CalebBell/thermo"
+        }
+      ],
+      "catalogLine": 83,
+      "manifestLine": 30,
+      "planLine": 180,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-thermopy",
+      "canonicalName": "thermopy",
+      "aliases": [],
+      "category": "Thermodynamics",
+      "catalogSection": "Thermodynamics",
+      "title": "thermopy",
+      "description": "A python library for thermodynamics",
+      "catalogUrl": "https://github.com/guillemborrell/thermopy",
+      "upstreamUrl": "https://github.com/guillemborrell/thermopy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "0ec59dfe00cd",
+      "localPath": "awesome-physics-repos/thermopy",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-3-or-later from v0.5; license compatibility is a gate.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:181",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:31"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan describes thermopy as a small legacy library.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:84",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:181",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:31"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:181",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:31"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:84",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:181"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "thermopy",
+          "url": "https://github.com/guillemborrell/thermopy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/guillemborrell/thermopy"
+        }
+      ],
+      "catalogLine": 84,
+      "manifestLine": 31,
+      "planLine": 181,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-electricfieldsimulation",
+      "canonicalName": "ElectricFieldSimulation",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "ElectricFieldSimulation",
+      "description": "An experimental example of how to use OpenGL for physical simulations",
+      "catalogUrl": "https://github.com/manucorporat/ElectricFieldSimulation",
+      "upstreamUrl": "https://github.com/manucorporat/ElectricFieldSimulation",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "e1adf934c01f",
+      "localPath": "awesome-physics-repos/ElectricFieldSimulation",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "GLSL"
+      ],
+      "license": {
+        "status": "missing",
+        "text": "No license file was found; redistribution is blocked pending permission.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:187",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:32"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan describes an old Xcode/FORZE/OpenGL example.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:88",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:187",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:32"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:187",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:32"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:88",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:187"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "ElectricFieldSimulation",
+          "url": "https://github.com/manucorporat/ElectricFieldSimulation"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/manucorporat/ElectricFieldSimulation"
+        }
+      ],
+      "catalogLine": 88,
+      "manifestLine": 32,
+      "planLine": 187,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-empy",
+      "canonicalName": "EMpy",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "EMpy",
+      "description": "A suite of algorithms widely known and used in electromagnetic problems and optics: the transfer matrix algorithm, the rigorous coupled wave analysis algorithm and more",
+      "catalogUrl": "https://github.com/lbolla/EMpy",
+      "upstreamUrl": "https://github.com/lbolla/EMpy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "3ff20d88bd86",
+      "localPath": "awesome-physics-repos/EMpy",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:33"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan gives no current browser build and limits reuse to selected algorithms.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:89",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:33"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:188",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:33"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:89",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:188"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "EMpy",
+          "url": "https://github.com/lbolla/EMpy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/lbolla/EMpy"
+        }
+      ],
+      "catalogLine": 89,
+      "manifestLine": 33,
+      "planLine": 188,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-gprmax",
+      "canonicalName": "gprMax",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "gprMax",
+      "description": "Simulates electromagnetic wave propagation using the Finite-Difference Time-Domain (FDTD) method for numerical modelling of Ground Penetrating Radar (GPR)",
+      "catalogUrl": "https://github.com/gprMax/gprMax",
+      "upstreamUrl": "https://github.com/gprMax/gprMax",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "59f4110e8687",
+      "localPath": "awesome-physics-repos/gprMax",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "CUDA",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-3+.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:189",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:34"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current CUDA-capable solver with a reduced lesson target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:90",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:189",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:34"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:189",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:34"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:90",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:189"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "gprMax",
+          "url": "https://github.com/gprMax/gprMax"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/gprMax/gprMax"
+        }
+      ],
+      "catalogLine": 90,
+      "manifestLine": 34,
+      "planLine": 189,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-meep",
+      "canonicalName": "meep",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "meep",
+      "description": "Free finite-difference time-domain (FDTD) software for electromagnetic simulations",
+      "catalogUrl": "https://github.com/stevengj/meep",
+      "upstreamUrl": "https://github.com/stevengj/meep",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "e7d46f2a3711",
+      "localPath": "awesome-physics-repos/meep",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Python",
+        "Scheme"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:190",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:35"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current FDTD solver whose full dependency graph stays external.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:91",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:190",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:35"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:190",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:35"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:91",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:190"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "meep",
+          "url": "https://github.com/stevengj/meep"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/stevengj/meep"
+        }
+      ],
+      "catalogLine": 91,
+      "manifestLine": 35,
+      "planLine": 190,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-openems",
+      "canonicalName": "openEMS",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "openEMS",
+      "description": "A free and open-source electromagnetic field solver using the EC-FDTD method",
+      "catalogUrl": "https://github.com/thliebig/openEMS",
+      "upstreamUrl": "https://github.com/thliebig/openEMS",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "f6c9f80b1446",
+      "localPath": "awesome-physics-repos/openEMS",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "C",
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-3.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:191",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:36"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current FDTD solver with a reduced worker target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:92",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:191",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:36"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:191",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:36"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:92",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:191"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "openEMS",
+          "url": "https://github.com/thliebig/openEMS"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/thliebig/openEMS"
+        }
+      ],
+      "catalogLine": 92,
+      "manifestLine": 36,
+      "planLine": 191,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-openmeeg",
+      "canonicalName": "openmeeg",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "openmeeg",
+      "description": "A C++ package for low-frequency bio-electromagnetism solving forward problems in the field of EEG and MEG",
+      "catalogUrl": "https://github.com/openmeeg/openmeeg",
+      "upstreamUrl": "https://github.com/openmeeg/openmeeg",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "9b55afdef2c9",
+      "localPath": "awesome-physics-repos/openmeeg",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "CeCILL-B requires credit and license review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:192",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:37"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current C++23 boundary-element solver.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:93",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:192",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:37"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:192",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:37"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:93",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:192"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "openmeeg",
+          "url": "https://github.com/openmeeg/openmeeg"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/openmeeg/openmeeg"
+        }
+      ],
+      "catalogLine": 93,
+      "manifestLine": 37,
+      "planLine": 192,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-plasmapy",
+      "canonicalName": "PlasmaPy",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "PlasmaPy",
+      "description": "A community developed python package for plasma physics in the very early stages of development.",
+      "catalogUrl": "https://github.com/PlasmaPy/PlasmaPy",
+      "upstreamUrl": "https://github.com/PlasmaPy/PlasmaPy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "b15501f0ad6e",
+      "localPath": "awesome-physics-repos/PlasmaPy",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "BSD-3-Clause with a patent notice.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:193",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:38"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a community plasma package in active development.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:94",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:193",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:38"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:193",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:38"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:94",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:193"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "PlasmaPy",
+          "url": "https://github.com/PlasmaPy/PlasmaPy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/PlasmaPy/PlasmaPy"
+        }
+      ],
+      "catalogLine": 94,
+      "manifestLine": 38,
+      "planLine": 193,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-radis",
+      "canonicalName": "radis",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "radis",
+      "description": "A nonequilibrium Radiative Solver for infrared molecular spectra",
+      "catalogUrl": "https://github.com/radis/radis",
+      "upstreamUrl": "https://github.com/radis/radis",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "031de2dd5a42",
+      "localPath": "awesome-physics-repos/radis",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "LGPL-3; spectral data licenses require separate review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:194",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:39"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current spectral synthesis stack with explicit data acquisition gates.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:95",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:194",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:39"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:194",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:39"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:95",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:194"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "radis",
+          "url": "https://github.com/radis/radis"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/radis/radis"
+        }
+      ],
+      "catalogLine": 95,
+      "manifestLine": 39,
+      "planLine": 194,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scikits-scattpy",
+      "canonicalName": "scikits.scattpy",
+      "aliases": [
+        "scattpy"
+      ],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "scattpy",
+      "description": "Light Scattering Methods for Python",
+      "catalogUrl": "https://github.com/ScattPy/scikits.scattpy",
+      "upstreamUrl": "https://github.com/ScattPy/scikits.scattpy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c933caa10aab",
+      "localPath": "awesome-physics-repos/scikits.scattpy",
+      "sourceKind": "repository",
+      "language": [
+        "Fortran",
+        "Python"
+      ],
+      "license": {
+        "status": "missing",
+        "text": "No license file was found.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:195",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:40"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The plan describes Python 2-era packaging and obsolete dependencies.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:96",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:195",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:40"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:195",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:40"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:96",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:195"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scattpy",
+          "url": "https://github.com/ScattPy/scikits.scattpy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/ScattPy/scikits.scattpy"
+        }
+      ],
+      "catalogLine": 96,
+      "manifestLine": 40,
+      "planLine": 195,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scikit-beam",
+      "canonicalName": "scikit-beam",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "scikit-beam",
+      "description": "Data analysis tools for X-Ray, Neutron and Electron sciences",
+      "catalogUrl": "https://github.com/scikit-beam/scikit-beam",
+      "upstreamUrl": "https://github.com/scikit-beam/scikit-beam",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "dbe344435f6b",
+      "localPath": "awesome-physics-repos/scikit-beam",
+      "sourceKind": "repository",
+      "language": [
+        "C",
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:196",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:41"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current analysis library with a bounded kernel target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:97",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:196",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:41"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:196",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:41"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:97",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:196"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scikit-beam",
+          "url": "https://github.com/scikit-beam/scikit-beam"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/scikit-beam/scikit-beam"
+        }
+      ],
+      "catalogLine": 97,
+      "manifestLine": 41,
+      "planLine": 196,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scikit-rf",
+      "canonicalName": "scikit-rf",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "scikit-rf",
+      "description": "RF and Microwave Engineering Scikit",
+      "catalogUrl": "https://github.com/scikit-rf/scikit-rf",
+      "upstreamUrl": "https://github.com/scikit-rf/scikit-rf",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "34652721a23b",
+      "localPath": "awesome-physics-repos/scikit-rf",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:42"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current RF library suitable for a pure TypeScript subset.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:98",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:42"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:197",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:42"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:98",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:197"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scikit-rf",
+          "url": "https://github.com/scikit-rf/scikit-rf"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/scikit-rf/scikit-rf"
+        }
+      ],
+      "catalogLine": 98,
+      "manifestLine": 42,
+      "planLine": 197,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scikit-spectra",
+      "canonicalName": "scikit-spectra",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "scikit-spectra",
+      "description": "A python pandas-based toolkit for explorative spectroscopy, in particular UVVis spectroscopic data",
+      "catalogUrl": "https://github.com/hugadams/scikit-spectra",
+      "upstreamUrl": "https://github.com/hugadams/scikit-spectra",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c451be6d5408",
+      "localPath": "awesome-physics-repos/scikit-spectra",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "README and LICENSE.txt license wording must be resolved.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:198",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:43"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The source is described as unmaintained Python 2-era software.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:99",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:198",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:43"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:198",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:43"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:99",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:198"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scikit-spectra",
+          "url": "https://github.com/hugadams/scikit-spectra"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/hugadams/scikit-spectra"
+        }
+      ],
+      "catalogLine": 99,
+      "manifestLine": 43,
+      "planLine": 198,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scuff-em",
+      "canonicalName": "scuff-em",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "scuff-em",
+      "description": "computational physics suite for boundary-element analysis of electromagnetic scattering, fluctuation-induced phenomena, nanophotonics, RF device engineering, electrostatics, and more",
+      "catalogUrl": "https://github.com/HomerReid/scuff-em",
+      "upstreamUrl": "https://github.com/HomerReid/scuff-em",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "9c6d0cb76954",
+      "localPath": "awesome-physics-repos/scuff-em",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Fortran"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:199",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:44"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current native BEM suite with a small analytic target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:100",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:199",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:44"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:199",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:44"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:100",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:199"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scuff-em",
+          "url": "https://github.com/HomerReid/scuff-em"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/HomerReid/scuff-em"
+        }
+      ],
+      "catalogLine": 100,
+      "manifestLine": 44,
+      "planLine": 199,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-spirit",
+      "canonicalName": "spirit",
+      "aliases": [],
+      "category": "Electromagnetism",
+      "catalogSection": "Electromagnetism",
+      "title": "spirit",
+      "description": "Optimizations and Dynamics Framework for atomistic Spin systems",
+      "catalogUrl": "https://github.com/spirit-code/spirit",
+      "upstreamUrl": "https://github.com/spirit-code/spirit",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "e82250d3b144",
+      "localPath": "awesome-physics-repos/spirit",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "C",
+        "Julia",
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT root license; bundled notices and the old web toolchain require review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an explicit Emscripten ui-web path.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:101",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:45"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:101",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:200"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "spirit",
+          "url": "https://github.com/spirit-code/spirit"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/spirit-code/spirit"
+        }
+      ],
+      "catalogLine": 101,
+      "manifestLine": 45,
+      "planLine": 200,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-euclider",
+      "canonicalName": "euclider",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "euclider",
+      "description": "A higher-dimensional \"non-euclidean\" ray tracing prototype written in Rust",
+      "catalogUrl": "https://github.com/Limeth/euclider",
+      "upstreamUrl": "https://github.com/Limeth/euclider",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "442da40cd17d",
+      "localPath": "awesome-physics-repos/euclider",
+      "sourceKind": "repository",
+      "language": [
+        "Rust"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "MIT/Unlicense signals require source-level review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:201",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:46"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan describes a nightly-Cargo prototype with native rendering dependencies.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:105",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:201",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:46"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:201",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:46"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:105",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:201"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "euclider",
+          "url": "https://github.com/Limeth/euclider"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/Limeth/euclider"
+        }
+      ],
+      "catalogLine": 105,
+      "manifestLine": 46,
+      "planLine": 201,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-lightpipes",
+      "canonicalName": "lightpipes",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "lightpipes",
+      "description": "Simulations of optical phenomena where diffraction is essential",
+      "catalogUrl": "https://github.com/opticspy/lightpipes",
+      "upstreamUrl": "https://github.com/opticspy/lightpipes",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "cd965c9469bb",
+      "localPath": "awesome-physics-repos/lightpipes",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "BSD file and MIT classifier metadata disagree and require review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:202",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:47"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current wave-optics algorithm source without a browser runtime.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:106",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:202",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:47"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:202",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:47"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:106",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:202"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "lightpipes",
+          "url": "https://github.com/opticspy/lightpipes"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/opticspy/lightpipes"
+        }
+      ],
+      "catalogLine": 106,
+      "manifestLine": 47,
+      "planLine": 202,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-odak",
+      "canonicalName": "odak",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "odak",
+      "description": "A fundamental library for scientific computing in optical sciences.",
+      "catalogUrl": "https://github.com/kunguz/odak",
+      "upstreamUrl": "https://github.com/kunguz/odak",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "8a6a64afafae",
+      "localPath": "awesome-physics-repos/odak",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MPL-2.0.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:203",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:48"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a broad current toolkit and limits the target to small kernels.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:107",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:203",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:48"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:203",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:48"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:107",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:203"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "odak",
+          "url": "https://github.com/kunguz/odak"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/kunguz/odak"
+        }
+      ],
+      "catalogLine": 107,
+      "manifestLine": 48,
+      "planLine": 203,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-opticspy",
+      "canonicalName": "opticspy",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "opticspy",
+      "description": "A python module for optics applications",
+      "catalogUrl": "https://github.com/Sterncat/opticspy",
+      "upstreamUrl": "https://github.com/Sterncat/opticspy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c047d1a757c6",
+      "localPath": "awesome-physics-repos/opticspy",
+      "sourceKind": "repository",
+      "language": [
+        "JavaScript",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source license; glass database provenance requires review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:204",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:49"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan records a future JavaScript app mention rather than a verified browser build.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:108",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:204",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:49"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:204",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:49"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:108",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:204"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "opticspy",
+          "url": "https://github.com/Sterncat/opticspy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/Sterncat/opticspy"
+        }
+      ],
+      "catalogLine": 108,
+      "manifestLine": 49,
+      "planLine": 204,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-poppy",
+      "canonicalName": "poppy",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "poppy",
+      "description": "Physical Optics Propagation in Python",
+      "catalogUrl": "https://github.com/mperrin/poppy",
+      "upstreamUrl": "https://github.com/mperrin/poppy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "a276feb4abf4",
+      "localPath": "awesome-physics-repos/poppy",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:50"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current physical-optics library with a bounded subset target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:109",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:50"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:205",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:50"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:109",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:205"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "poppy",
+          "url": "https://github.com/mperrin/poppy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/mperrin/poppy"
+        }
+      ],
+      "catalogLine": 109,
+      "manifestLine": 50,
+      "planLine": 205,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pyrt",
+      "canonicalName": "pyRT",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "pyRT",
+      "description": "a raytracer/image generator for Python",
+      "catalogUrl": "https://github.com/martinchristen/pyRT",
+      "upstreamUrl": "https://github.com/martinchristen/pyRT",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "6fc0ccbc6fb2",
+      "localPath": "awesome-physics-repos/pyRT",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:51"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The upstream project is described as WIP/pre-alpha.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:110",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:51"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:206",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:51"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:110",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:206"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pyRT",
+          "url": "https://github.com/martinchristen/pyRT"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/martinchristen/pyRT"
+        }
+      ],
+      "catalogLine": 110,
+      "manifestLine": 51,
+      "planLine": 206,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-rayopt",
+      "canonicalName": "rayopt",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "rayopt",
+      "description": "Python optics and lens design, raytracing",
+      "catalogUrl": "https://github.com/jordens/rayopt",
+      "upstreamUrl": "https://github.com/jordens/rayopt",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "a51f1dbd7c11",
+      "localPath": "awesome-physics-repos/rayopt",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "LGPL-3+.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:207",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:52"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan limits reuse to a bounded subset of a native Cython/lens stack.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:111",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:207",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:52"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:207",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:52"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:111",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:207"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "rayopt",
+          "url": "https://github.com/jordens/rayopt"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/jordens/rayopt"
+        }
+      ],
+      "catalogLine": 111,
+      "manifestLine": 52,
+      "planLine": 207,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-raysect",
+      "canonicalName": "raysect",
+      "aliases": [],
+      "category": "Optics",
+      "catalogSection": "Optics",
+      "title": "raysect",
+      "description": "A ray-tracing framework for optical/non-optical physics simulations",
+      "catalogUrl": "https://github.com/raysect/source",
+      "upstreamUrl": "https://github.com/raysect/source",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "5ed9a21b5f6e",
+      "localPath": "awesome-physics-repos/raysect",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:208",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:53"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current native ray-tracing framework with a narrow lesson target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:112",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:208",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:53"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:208",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:53"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:112",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:208"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "raysect",
+          "url": "https://github.com/raysect/source"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/raysect/source"
+        }
+      ],
+      "catalogLine": 112,
+      "manifestLine": 53,
+      "planLine": 208,
+      "access": {
+        "status": "cloned",
+        "note": "repository URL ends in source; local name is raysect",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-openrelativity",
+      "canonicalName": "OpenRelativity",
+      "aliases": [],
+      "category": "Relativity",
+      "catalogSection": "Relativity",
+      "title": "OpenRelativity",
+      "description": "An open source framework to add the effects of traveling at relativistic speeds to visualizations or games",
+      "catalogUrl": "https://github.com/MITGameLab/OpenRelativity",
+      "upstreamUrl": "https://github.com/MITGameLab/OpenRelativity",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "35b806a1224f",
+      "localPath": "awesome-physics-repos/OpenRelativity",
+      "sourceKind": "repository",
+      "language": [
+        "C#"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source file; Unity asset rights require review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:209",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:54"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The plan describes a Unity 5.3 project with legacy shaders.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:116",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:209",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:54"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:209",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:54"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:116",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:209"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "OpenRelativity",
+          "url": "https://github.com/MITGameLab/OpenRelativity"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/MITGameLab/OpenRelativity"
+        }
+      ],
+      "catalogLine": 116,
+      "manifestLine": 54,
+      "planLine": 209,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-tfg",
+      "canonicalName": "TFG",
+      "aliases": [],
+      "category": "Relativity",
+      "catalogSection": "Relativity",
+      "title": "TFG",
+      "description": "General Relativity massively parallel raytracer",
+      "catalogUrl": "https://github.com/agarciamontoro/TFG",
+      "upstreamUrl": "https://github.com/agarciamontoro/TFG",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "2dc7c0b8bffa",
+      "localPath": "awesome-physics-repos/TFG",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "CUDA",
+        "Rust"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:210",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:55"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan limits the target to a CPU correctness pass before any GPU/WASM work.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:117",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:210",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:55"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:210",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:55"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:117",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:210"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "TFG",
+          "url": "https://github.com/agarciamontoro/TFG"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/agarciamontoro/TFG"
+        }
+      ],
+      "catalogLine": 117,
+      "manifestLine": 55,
+      "planLine": 210,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-artiq",
+      "canonicalName": "artiq",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "artiq",
+      "description": "Next-generation control system for quantum information experiments",
+      "catalogUrl": "https://github.com/m-labs/artiq",
+      "upstreamUrl": "https://github.com/m-labs/artiq",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "7d7b85f377e0",
+      "localPath": "awesome-physics-repos/artiq",
+      "sourceKind": "repository",
+      "language": [
+        "Python",
+        "Rust"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "LGPL-3+/GPL-3 components; hardware and gateware remain external.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current hardware-control system but no browser simulation contract.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:121",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:56"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:121",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:216"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "artiq",
+          "url": "https://github.com/m-labs/artiq"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/m-labs/artiq"
+        }
+      ],
+      "catalogLine": 121,
+      "manifestLine": 56,
+      "planLine": 216,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-flavio",
+      "canonicalName": "flavio",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "flavio",
+      "description": "flavour phenomenology in the Standard model and beyond",
+      "catalogUrl": "https://github.com/flav-io/flavio",
+      "upstreamUrl": "https://github.com/flav-io/flavio",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "940d118de495",
+      "localPath": "awesome-physics-repos/flavio",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source license; parameter-table rights require separate review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current phenomenology library with frozen-table artifact options.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:122",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:57"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:122",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:217"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "flavio",
+          "url": "https://github.com/flav-io/flavio"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/flav-io/flavio"
+        }
+      ],
+      "catalogLine": 122,
+      "manifestLine": 57,
+      "planLine": 217,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-hepdata",
+      "canonicalName": "hepdata",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "hepdata",
+      "description": "the high energy physics data repository",
+      "catalogUrl": "https://github.com/HEPData/hepdata",
+      "upstreamUrl": "https://github.com/HEPData/hepdata",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "78294e2c18cf",
+      "localPath": "awesome-physics-repos/hepdata",
+      "sourceKind": "repository",
+      "language": [],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2 service code; dataset rights require separate review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current data service whose backend is not a static runtime target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:123",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:58"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:123",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:218"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "hepdata",
+          "url": "https://github.com/HEPData/hepdata"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/HEPData/hepdata"
+        }
+      ],
+      "catalogLine": 123,
+      "manifestLine": 58,
+      "planLine": 218,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-particle-clicker",
+      "canonicalName": "particle-clicker",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "particle-clicker",
+      "description": "An addictive incremental game that teaches players the history of high energy particle physics",
+      "catalogUrl": "https://github.com/particle-clicker/particle-clicker",
+      "upstreamUrl": "https://github.com/particle-clicker/particle-clicker",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "d6762d54eced",
+      "localPath": "awesome-physics-repos/particle-clicker",
+      "sourceKind": "repository",
+      "language": [
+        "HTML",
+        "JavaScript",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:59"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan identifies an AngularJS-era browser game to be rewritten locally.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:124",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:59"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:219",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:59"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:124",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:219"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "particle-clicker",
+          "url": "https://github.com/particle-clicker/particle-clicker"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/particle-clicker/particle-clicker"
+        }
+      ],
+      "catalogLine": 124,
+      "manifestLine": 59,
+      "planLine": 219,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-psi4",
+      "canonicalName": "psi4",
+      "aliases": [
+        "Psi4"
+      ],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "Psi4",
+      "description": "Open-source Quantum Chemistry",
+      "catalogUrl": "https://github.com/psi4/psi4",
+      "upstreamUrl": "https://github.com/psi4/psi4",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "e046c47bc468",
+      "localPath": "awesome-physics-repos/psi4",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Fortran",
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "LGPL-3.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:220",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:60"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current quantum-chemistry stack whose full runtime remains external.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:125",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:220",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:60"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:220",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:60"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:125",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:220"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "Psi4",
+          "url": "https://github.com/psi4/psi4"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/psi4/psi4"
+        }
+      ],
+      "catalogLine": 125,
+      "manifestLine": 60,
+      "planLine": 220,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-pypdt",
+      "canonicalName": "pypdt",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "pypdt",
+      "description": "Pythonic access to high energy particle data tables and ID codes",
+      "catalogUrl": "https://bitbucket.org/andybuckley/pypdt",
+      "upstreamUrl": "https://bitbucket.org/andybuckley/pypdt",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": null,
+      "localPath": null,
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "missing",
+        "text": "Source could not be retrieved, so a license could not be verified.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+        ]
+      },
+      "maintenance": "unknown",
+      "maintenanceSignal": "The access failure prevents a maintenance assessment.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:126",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:76"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:126",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:221"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pypdt",
+          "url": "https://bitbucket.org/andybuckley/pypdt"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://bitbucket.org/andybuckley/pypdt"
+        }
+      ],
+      "catalogLine": 126,
+      "manifestLine": 76,
+      "planLine": 221,
+      "access": {
+        "status": "not-cloned",
+        "note": "access attempted 2026-08-15; catalog URL returns 404 over web and prompts for unavailable authentication over Git; retain as an access failure",
+        "attemptedOn": "2026-08-15"
+      },
+      "accessFailure": {
+        "attemptedOn": "2026-08-15",
+        "observed": [
+          "404",
+          "authentication-unavailable"
+        ],
+        "note": "access attempted 2026-08-15; catalog URL returns 404 over web and prompts for unavailable authentication over Git; retain as an access failure"
+      },
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-qmsolve",
+      "canonicalName": "qmsolve",
+      "aliases": [
+        "QMsolve"
+      ],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "QMsolve",
+      "description": "A Python module for solving and visualizing the Schrödinger equation.",
+      "catalogUrl": "https://github.com/quantum-visualizations/qmsolve",
+      "upstreamUrl": "https://github.com/quantum-visualizations/qmsolve",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c69277da03bb",
+      "localPath": "awesome-physics-repos/qmsolve",
+      "sourceKind": "repository",
+      "language": [
+        "CUDA",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:61"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan uses qmsolve as a source reference for an existing bounded quantum-wave engine.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:127",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:61"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:222",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:61"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:127",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:222"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "QMsolve",
+          "url": "https://github.com/quantum-visualizations/qmsolve"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/quantum-visualizations/qmsolve"
+        }
+      ],
+      "catalogLine": 127,
+      "manifestLine": 61,
+      "planLine": 222,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-quantum-python-lectures",
+      "canonicalName": "quantum-python-lectures",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "quantum-python-lectures",
+      "description": "A series of self-study lectures on using Python for scientific computing at the graduate level in atomic physics and quantum optics.",
+      "catalogUrl": "https://github.com/tommyogden/quantum-python-lectures",
+      "upstreamUrl": "https://github.com/tommyogden/quantum-python-lectures",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "4e96b144ae59",
+      "localPath": "awesome-physics-repos/quantum-python-lectures",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:223",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:62"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan explicitly describes the notebook content as stale.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:128",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:223",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:62"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:223",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:62"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:128",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:223"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "quantum-python-lectures",
+          "url": "https://github.com/tommyogden/quantum-python-lectures"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/tommyogden/quantum-python-lectures"
+        }
+      ],
+      "catalogLine": 128,
+      "manifestLine": 62,
+      "planLine": 223,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-quantumoptics-jl",
+      "canonicalName": "QuantumOptics.jl",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "QuantumOptics.jl",
+      "description": "Library for the numerical simulation of closed as well as open quantum systems",
+      "catalogUrl": "https://github.com/qojulia/QuantumOptics.jl",
+      "upstreamUrl": "https://github.com/qojulia/QuantumOptics.jl",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "5becc8f98c2a",
+      "localPath": "awesome-physics-repos/QuantumOptics.jl",
+      "sourceKind": "repository",
+      "language": [
+        "Julia",
+        "Rust",
+        "TypeScript"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:224",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:63"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current Julia library used only for reference fixtures.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:129",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:224",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:63"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:224",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:63"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:129",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:224"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "QuantumOptics.jl",
+          "url": "https://github.com/qojulia/QuantumOptics.jl"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/qojulia/QuantumOptics.jl"
+        }
+      ],
+      "catalogLine": 129,
+      "manifestLine": 63,
+      "planLine": 224,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-qutip",
+      "canonicalName": "qutip",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "qutip",
+      "description": "Quantum Toolbox in Python",
+      "catalogUrl": "https://github.com/qutip/qutip",
+      "upstreamUrl": "https://github.com/qutip/qutip",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "fbfb1f8bf302",
+      "localPath": "awesome-physics-repos/qutip",
+      "sourceKind": "repository",
+      "language": [
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:225",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:64"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current quantum toolbox used as an external test oracle.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:130",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:225",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:64"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:225",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:64"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:130",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:225"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "qutip",
+          "url": "https://github.com/qutip/qutip"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/qutip/qutip"
+        }
+      ],
+      "catalogLine": 130,
+      "manifestLine": 64,
+      "planLine": 225,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-root",
+      "canonicalName": "root",
+      "aliases": [
+        "ROOT"
+      ],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "ROOT",
+      "description": "A data processing and analysis framework, mainly used in high-energy physics",
+      "catalogUrl": "https://github.com/root-project/root",
+      "upstreamUrl": "https://github.com/root-project/root",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c050cbde9525",
+      "localPath": "awesome-physics-repos/root",
+      "sourceKind": "repository",
+      "language": [
+        "C++"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "ROOT LGPL-2.1+ and JSROOT MIT require separate handling.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current analysis framework with a static artifact/viewer boundary.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:131",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:65"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:131",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:226"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "ROOT",
+          "url": "https://github.com/root-project/root"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/root-project/root"
+        }
+      ],
+      "catalogLine": 131,
+      "manifestLine": 65,
+      "planLine": 226,
+      "access": {
+        "status": "cloned",
+        "note": "local name is root; upstream project is ROOT",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-scikit-hep",
+      "canonicalName": "scikit-hep",
+      "aliases": [],
+      "category": "Quantum physics",
+      "catalogSection": "Quantum Physics",
+      "title": "scikit-hep",
+      "description": "Toolkit of interfaces and tools for high energy physics (HEP)",
+      "catalogUrl": "https://github.com/scikit-hep/scikit-hep",
+      "upstreamUrl": "https://github.com/scikit-hep/scikit-hep",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "c6aa34ca776c",
+      "localPath": "awesome-physics-repos/scikit-hep",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current HEP ecosystem metapackage without a simulation runtime.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:132",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:66"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:132",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:227"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "scikit-hep",
+          "url": "https://github.com/scikit-hep/scikit-hep"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/scikit-hep/scikit-hep"
+        }
+      ],
+      "catalogLine": 132,
+      "manifestLine": 66,
+      "planLine": 227,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-astropy",
+      "canonicalName": "astropy",
+      "aliases": [],
+      "category": "Astrophysics",
+      "catalogSection": "Astrophysics",
+      "title": "astropy",
+      "description": "intended to contain much of the core functionality and some common tools needed for performing astronomy and astrophysics with Python",
+      "catalogUrl": "https://github.com/astropy/astropy",
+      "upstreamUrl": "https://github.com/astropy/astropy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "cb3c511e2e6e",
+      "localPath": "awesome-physics-repos/astropy",
+      "sourceKind": "repository",
+      "language": [
+        "C",
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:228",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:67"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current astronomy core with bounded conversion targets.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:137",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:228",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:67"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:228",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:67"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:137",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:228"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "astropy",
+          "url": "https://github.com/astropy/astropy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/astropy/astropy"
+        }
+      ],
+      "catalogLine": 137,
+      "manifestLine": 67,
+      "planLine": 228,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-gala",
+      "canonicalName": "gala",
+      "aliases": [],
+      "category": "Astrophysics",
+      "catalogSection": "Astrophysics",
+      "title": "gala",
+      "description": "Galactic and gravitational dynamics in Python",
+      "catalogUrl": "https://github.com/adrn/gala",
+      "upstreamUrl": "https://github.com/adrn/gala",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "8bf0a1f574a4",
+      "localPath": "awesome-physics-repos/gala",
+      "sourceKind": "repository",
+      "language": [
+        "C++",
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:68"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current galactic-dynamics library without a verified browser build.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:138",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:68"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:229",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:68"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:138",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:229"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "gala",
+          "url": "https://github.com/adrn/gala"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/adrn/gala"
+        }
+      ],
+      "catalogLine": 138,
+      "manifestLine": 68,
+      "planLine": 229,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-galpy",
+      "canonicalName": "galpy",
+      "aliases": [],
+      "category": "Astrophysics",
+      "catalogSection": "Astrophysics",
+      "title": "galpy",
+      "description": "Galactic Dynamics in python",
+      "catalogUrl": "http://galpy.readthedocs.io/en/latest/",
+      "upstreamUrl": "https://github.com/jobovy/galpy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "3762e73ef845",
+      "localPath": "awesome-physics-repos/galpy",
+      "sourceKind": "documentation",
+      "language": [
+        "C",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:69"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current upstream Pyodide/Emscripten workflow.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:139",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:69"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:69"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:139",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:230"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "galpy",
+          "url": "http://galpy.readthedocs.io/en/latest/"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/jobovy/galpy"
+        },
+        {
+          "kind": "documentation",
+          "label": "Canonical galpy documentation",
+          "url": "https://docs.galpy.org/en/latest/"
+        },
+        {
+          "kind": "legacy-documentation",
+          "label": "Legacy catalog documentation URL",
+          "url": "http://galpy.readthedocs.io/en/latest/"
+        }
+      ],
+      "catalogLine": 139,
+      "manifestLine": 69,
+      "planLine": 230,
+      "access": {
+        "status": "cloned",
+        "note": "canonical current upstream substituted for obsolete catalog owner; catalog URL is documentation",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": {
+        "kind": "current-upstream-substitution",
+        "reason": "canonical current upstream substituted for obsolete catalog owner; catalog URL is documentation",
+        "catalogUrl": "http://galpy.readthedocs.io/en/latest/",
+        "canonicalUpstreamUrl": "https://github.com/jobovy/galpy"
+      }
+    },
+    {
+      "id": "awesome-pynbody",
+      "canonicalName": "pynbody",
+      "aliases": [],
+      "category": "Astrophysics",
+      "catalogSection": "Astrophysics",
+      "title": "pynbody",
+      "description": "framework for N-body and hydrodynamic astrophysical simulations",
+      "catalogUrl": "https://github.com/pynbody/pynbody",
+      "upstreamUrl": "https://github.com/pynbody/pynbody",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "da855f370504",
+      "localPath": "awesome-physics-repos/pynbody",
+      "sourceKind": "repository",
+      "language": [
+        "C",
+        "Cython",
+        "Python"
+      ],
+      "license": {
+        "status": "unclear",
+        "text": "pyproject.toml says GPL-3+ but the source license file is missing and must be verified.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current analysis framework with a reviewed snapshot target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:140",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:70"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:140",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:231"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "pynbody",
+          "url": "https://github.com/pynbody/pynbody"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/pynbody/pynbody"
+        }
+      ],
+      "catalogLine": 140,
+      "manifestLine": 70,
+      "planLine": 231,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-sunpy",
+      "canonicalName": "sunpy",
+      "aliases": [],
+      "category": "Astrophysics",
+      "catalogSection": "Astrophysics",
+      "title": "sunpy",
+      "description": "an open-source Python library for solar physics data analysis",
+      "catalogUrl": "https://github.com/sunpy/sunpy",
+      "upstreamUrl": "https://github.com/sunpy/sunpy",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "ed70935fa156",
+      "localPath": "awesome-physics-repos/sunpy",
+      "sourceKind": "repository",
+      "language": [
+        "C",
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "BSD-3-Clause.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current solar-data library with a static sample boundary.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:141",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:71"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:141",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:232"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "sunpy",
+          "url": "https://github.com/sunpy/sunpy"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/sunpy/sunpy"
+        }
+      ],
+      "catalogLine": 141,
+      "manifestLine": 71,
+      "planLine": 232,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-burnman",
+      "canonicalName": "burnman",
+      "aliases": [],
+      "category": "Geophysics",
+      "catalogSection": "Geophysics",
+      "title": "burnman",
+      "description": "a library for modeling mantle thermodynamics and thermoelasticity constrained by mineral physics experiments",
+      "catalogUrl": "https://github.com/geodynamics/burnman",
+      "upstreamUrl": "https://github.com/geodynamics/burnman",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "f743a077292b",
+      "localPath": "awesome-physics-repos/burnman",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "GPL-2-or-later.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:233",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:72"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current planetary thermodynamics library.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:145",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:233",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:72"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:233",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:72"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:145",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:233"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "burnman",
+          "url": "https://github.com/geodynamics/burnman"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/geodynamics/burnman"
+        }
+      ],
+      "catalogLine": 145,
+      "manifestLine": 72,
+      "planLine": 233,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-em",
+      "canonicalName": "em",
+      "aliases": [],
+      "category": "Geophysics",
+      "catalogSection": "Geophysics",
+      "title": "em",
+      "description": "Electromagnetic methods in geophysics - open educational resources",
+      "catalogUrl": "https://github.com/geoscixyz/em",
+      "upstreamUrl": "https://github.com/geoscixyz/em",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "80f3c71cfa6a",
+      "localPath": "awesome-physics-repos/em",
+      "sourceKind": "repository",
+      "language": [],
+      "license": {
+        "status": "restricted",
+        "text": "CC BY 4.0 with third-party exceptions.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:234",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:73"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies an educational resource whose content and third-party terms must be preserved.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:146",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:234",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:73"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:234",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:73"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:146",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:234"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "em",
+          "url": "https://github.com/geoscixyz/em"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/geoscixyz/em"
+        }
+      ],
+      "catalogLine": 146,
+      "manifestLine": 73,
+      "planLine": 234,
+      "access": {
+        "status": "cloned",
+        "note": "educational resource; notebooks use SimPEG",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-simpeg",
+      "canonicalName": "simpeg",
+      "aliases": [],
+      "category": "Geophysics",
+      "catalogSection": "Geophysics",
+      "title": "simpeg",
+      "description": "Simulation and Parameter Estimation in Geophysics - A python package for simulation and gradient based parameter estimation in the context of geophysical applications",
+      "catalogUrl": "https://github.com/simpeg/simpeg",
+      "upstreamUrl": "https://github.com/simpeg/simpeg",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "43b0120dd70a",
+      "localPath": "awesome-physics-repos/simpeg",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "restricted",
+        "text": "MIT source license; data dependencies require separate review.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:235",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:74"
+        ]
+      },
+      "maintenance": "active",
+      "maintenanceSignal": "The plan identifies a current geophysics package with a bounded forward-model target.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:147",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:235",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:74"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:235",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:74"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:147",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:235"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "simpeg",
+          "url": "https://github.com/simpeg/simpeg"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/simpeg/simpeg"
+        }
+      ],
+      "catalogLine": 147,
+      "manifestLine": 74,
+      "planLine": 235,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-solid-state-simulations-archive",
+      "canonicalName": "Solid State Simulations archive",
+      "aliases": [],
+      "category": "Condensed matter",
+      "catalogSection": "Condensed Matter Physics",
+      "title": "Solid State Simulations",
+      "description": "A software with many interactive plots in the area of solid state physics. The software isn't maintained anymore. The latest version can be downloaded via this link",
+      "catalogUrl": "https://web.archive.org/web/20060907125225/http://www.physics.cornell.edu/sss/simulationlist.html",
+      "upstreamUrl": "https://web.archive.org/web/20060907125225/http://www.physics.cornell.edu/sss/simulationlist.html",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": null,
+      "localPath": null,
+      "sourceKind": "archive",
+      "language": [],
+      "license": {
+        "status": "unclear",
+        "text": "Archive binaries and source rights require review before acquisition or redistribution.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ]
+      },
+      "maintenance": "archived",
+      "maintenanceSignal": "The catalog marks the Solid State Simulations software as unmaintained.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:151",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:151",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:242"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "Solid State Simulations",
+          "url": "https://web.archive.org/web/20060907125225/http://www.physics.cornell.edu/sss/simulationlist.html"
+        },
+        {
+          "kind": "archive-download",
+          "label": "this link",
+          "url": "https://web.archive.org/web/20190610115705/http://pages.physics.cornell.edu/~sethna/teaching/sss/labs/"
+        }
+      ],
+      "catalogLine": 151,
+      "manifestLine": null,
+      "planLine": 242,
+      "access": {
+        "status": "archived",
+        "note": "External archive retained as a reference; no binary or reconstructed artifact was acquired.",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    },
+    {
+      "id": "awesome-shut-up-and-calculate",
+      "canonicalName": "shut-up-and-calculate",
+      "aliases": [
+        "Shut up and calculate"
+      ],
+      "category": "Condensed matter",
+      "catalogSection": "Condensed Matter Physics",
+      "title": "Shut up and calculate",
+      "description": "Python code to calculate and visualize the properties of 2 dimensional systems (such as cuprate superconductors).",
+      "catalogUrl": "https://github.com/Sinan81/shut-up-and-calculate",
+      "upstreamUrl": "https://github.com/Sinan81/shut-up-and-calculate",
+      "catalogRevision": "807186a1235f3b35aa969718e16b04480e4e5f6a",
+      "upstreamRevision": "0896fe8ef4f4",
+      "localPath": "awesome-physics-repos/shut-up-and-calculate",
+      "sourceKind": "repository",
+      "language": [
+        "Python"
+      ],
+      "license": {
+        "status": "verified",
+        "text": "MIT.",
+        "evidenceRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:75"
+        ]
+      },
+      "maintenance": "stale",
+      "maintenanceSignal": "The plan limits reuse to a bounded lesson and source fixtures.",
+      "evidence": {
+        "sourceRefs": [
+          "awesome-physics/README.md:152",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:75"
+        ],
+        "licenseRefs": [
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:236",
+          "awesome-physics-repos/CLONE_MANIFEST.tsv:75"
+        ],
+        "maintenanceRefs": [
+          "awesome-physics/README.md:152",
+          "AWESOME_PHYSICS_MIGRATION_PLAN.md:236"
+        ]
+      },
+      "links": [
+        {
+          "kind": "catalog",
+          "label": "Shut up and calculate",
+          "url": "https://github.com/Sinan81/shut-up-and-calculate"
+        },
+        {
+          "kind": "upstream",
+          "label": "Upstream source",
+          "url": "https://github.com/Sinan81/shut-up-and-calculate"
+        }
+      ],
+      "catalogLine": 152,
+      "manifestLine": 75,
+      "planLine": 236,
+      "access": {
+        "status": "cloned",
+        "note": "shallow blob-filtered checkout",
+        "attemptedOn": null
+      },
+      "accessFailure": null,
+      "upstreamResolution": null
+    }
+  ],
+  "organizations": [
+    {
+      "id": "awesome-org-cern",
+      "title": "CERN",
+      "description": "European Organization for Nuclear Research",
+      "url": "https://github.com/CERN",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:156",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 156
+    },
+    {
+      "id": "awesome-org-iop",
+      "title": "IOP",
+      "description": "Institute of Physics",
+      "url": "https://github.com/Institute-of-Physics",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "review",
+      "notes": "The plan flags the link as resolving to an unrelated individual account.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:157",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 157
+    },
+    {
+      "id": "awesome-org-lanl",
+      "title": "LANL",
+      "description": "Los Alamos National Lab",
+      "url": "https://github.com/lanl",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:158",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 158
+    },
+    {
+      "id": "awesome-org-ligo",
+      "title": "LIGO",
+      "description": "Laser Inferometer Gravitational-Wave Experiment",
+      "url": "https://github.com/lscsoft",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "official-source-note",
+      "notes": "The plan directs LIGO software references to official GitLab sources where applicable.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:159",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 159
+    },
+    {
+      "id": "awesome-org-llnl",
+      "title": "LLNL",
+      "description": "Lawrence Livermore National Laboratory",
+      "url": "https://github.com/LLNL",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:160",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 160
+    },
+    {
+      "id": "awesome-org-mppmu",
+      "title": "MPPMU",
+      "description": "Max Planck Institute for Physics",
+      "url": "https://github.com/mppmu",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:161",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 161
+    },
+    {
+      "id": "awesome-org-nist",
+      "title": "NIST",
+      "description": "National Institute of Standards and Technology",
+      "url": "https://github.com/usnistgov",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:162",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 162
+    },
+    {
+      "id": "awesome-org-nrel",
+      "title": "NREL",
+      "description": "National Renewable Energy Laboratory",
+      "url": "https://github.com/NREL",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "moved",
+      "notes": "The plan records that the organization link moved to NatLabRockies.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:163",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 163
+    },
+    {
+      "id": "awesome-org-ornl",
+      "title": "ORNL",
+      "description": "Oak Ridge National Laboratory",
+      "url": "https://github.com/ORNL",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:164",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 164
+    },
+    {
+      "id": "awesome-org-slac",
+      "title": "SLAC",
+      "description": "Stanford Linear Accelerator Center",
+      "url": "https://github.com/SLAC",
+      "sourceKind": "organization",
+      "maintenance": "unknown",
+      "status": "listed",
+      "notes": "Organization profile only; the plan makes no build or runtime claim.",
+      "evidenceRefs": [
+        "awesome-physics/README.md:165",
+        "AWESOME_PHYSICS_MIGRATION_PLAN.md:244"
+      ],
+      "catalogLine": 165
+    }
+  ]
+}

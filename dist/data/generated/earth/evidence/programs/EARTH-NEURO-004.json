@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-NEURO-004",
+  "counts": {
+    "total": 34,
+    "bySourceType": {
+      "formula": 26,
+      "code-block": 4,
+      "simulation-candidate": 4
+    },
+    "byConfidence": {
+      "high": 14,
+      "medium": 20,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-6ef46223d52b9f95bd6a23ef55ab9918e3813155b619d03d9f322d21eb2450cf",
+    "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+    "earth-p-f822e15b65f7cfe75c228b316c3ee6624e47cf00f3d08055dd041f37a661c08d",
+    "earth-p-fa30d33e3e52809acd60835ffe2cbbe3ad3dc29651694b04299c15205620ec33",
+    "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-eeg-motor-movement-imagery-dataset"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-1",
+      "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Neuroscience Non-emergence",
+        "formula-kind:display-math",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+        "formulaId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-1"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-2",
+      "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Neuroscience Non-emergence",
+        "formula-kind:plain-line-candidate",
+        "line-span:7-7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+        "formulaId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-3",
+      "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-title:Neuroscience Non-emergence",
+        "formula-kind:plain-line-candidate",
+        "line-span:19-19"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a",
+        "formulaId": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-10",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:13-13"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-10"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-11",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:14-14"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-11"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-12",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:24-24"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-12"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-14",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:47-47"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-15",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:60-60"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-16",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:61-61"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-17",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-18",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:72-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-19",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:76-76"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-2",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:32-32"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-20",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:82-82"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-21",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:84-84"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-22",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-23",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:138-138"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-24",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:156-156"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-25",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:163-163",
+        "near-code-block:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1",
+        "section:Verification Notes",
+        "line-gap:7"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-26",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:215-215"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-3",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:35-35"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-4",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:43-43"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-5",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:55-55"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-6",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:221-221"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-6"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-7",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:display-math",
+        "line-span:225-225"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-7"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-9",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "formulaId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-formula-9"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "section:Verification Notes",
+        "line-span:170-177",
+        "simulation-candidate:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1",
+        "simulationCandidateIds": [
+          "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-2",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "section:Verification Notes",
+        "line-span:180-184",
+        "simulation-candidate:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-2",
+        "simulationCandidateIds": [
+          "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-3",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "section:Verification Notes",
+        "line-span:187-193",
+        "simulation-candidate:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-3",
+        "simulationCandidateIds": [
+          "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-4",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "section:Verification Notes",
+        "line-span:196-200",
+        "simulation-candidate:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-4",
+        "simulationCandidateIds": [
+          "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-4"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-1",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "linked-code-block:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1",
+        "source-document:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "section:Verification Notes",
+        "line-in-code-span:170:170-177"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "simulationCandidateId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-1",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-2",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "linked-code-block:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-2",
+        "source-document:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "section:Verification Notes",
+        "line-in-code-span:180:180-184"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "simulationCandidateId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-2",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-3",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "linked-code-block:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-3",
+        "source-document:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "section:Verification Notes",
+        "line-in-code-span:187:187-193"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "simulationCandidateId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-3",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-3"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-4",
+      "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:NEURO-3",
+        "document-title:Theorem NEURO-3 – Consciousness Is the 7.83 Hz Global Resonant Twist Mode of the Human Polycrystalline Condensate",
+        "linked-code-block:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-4",
+        "source-document:earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "section:Verification Notes",
+        "line-in-code-span:196:196-200"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595",
+        "simulationCandidateId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-simulation-4",
+        "codeBlockId": "earth-p-fd0202aa8043fbcb56a6d8b5952a58ad6ed8af8ba571300975ed0d8394039595-code-4"
+      }
+    }
+  ]
+}

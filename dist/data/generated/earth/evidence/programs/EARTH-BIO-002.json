@@ -1,0 +1,539 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "programId": "EARTH-BIO-002",
+  "counts": {
+    "total": 30,
+    "bySourceType": {
+      "formula": 24,
+      "code-block": 3,
+      "simulation-candidate": 3
+    },
+    "byConfidence": {
+      "high": 10,
+      "medium": 20,
+      "low": 0
+    }
+  },
+  "linkedDocumentIds": [
+    "earth-p-02e7a3412854f4d21d739ff6dc15c7badeae790c6c010f76f45c2062731067ca",
+    "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6",
+    "earth-p-5f8365bb1b47ce1e524f8fb65e4d19d95ff97c636a59ac9c9e526f8618565393",
+    "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+    "earth-p-b9ffffe2b798b151ca6597d95451b17dc8d095fceda0f6296a19a8b0689abbed"
+  ],
+  "linkedDatasetIds": [
+    "earth-dataset-protein-data-bank-archive"
+  ],
+  "disputedClaimIds": [],
+  "assignments": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-13",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:17-17"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-13"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-14",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:25-25"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-14"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-15",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:29-29"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-15"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-16",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:40-40"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-16"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-17",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:41-41"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-17"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-18",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:42-42"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-18"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-19",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:46-46"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-19"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-2",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:display-math",
+        "line-span:27-27"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-2"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-20",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:62-62"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-20"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-21",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:72-72"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-21"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-22",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:74-74"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-22"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-23",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:77-77"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-23"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-24",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:79-79"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-24"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-25",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:80-80"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-25"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-26",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:94-94"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-26"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-27",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:106-106"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-27"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-28",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:112-112"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-28"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-29",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:143-143",
+        "near-code-block:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+        "section:Verification Notes",
+        "line-gap:4"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-29"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-3",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:display-math",
+        "line-span:37-37"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-3"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-30",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:147-147",
+        "near-code-block:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+        "section:Verification Notes",
+        "line-gap:8"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-30"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-31",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:158-158"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-31"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-4",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:display-math",
+        "line-span:56-56"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-4"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-5",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:display-math",
+        "line-span:66-66"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-5"
+      }
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-7",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "medium",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "formula-kind:plain-line-candidate",
+        "line-span:3-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "formulaId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-formula-7"
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-1",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "section:Verification Notes",
+        "line-span:123-126",
+        "simulation-candidate:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-1"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-1",
+        "simulationCandidateIds": [
+          "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-1"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-2",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "section:Verification Notes",
+        "line-span:129-133",
+        "simulation-candidate:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-2"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-2",
+        "simulationCandidateIds": [
+          "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-2"
+        ]
+      }
+    },
+    {
+      "sourceType": "code-block",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "section:Verification Notes",
+        "line-span:136-139",
+        "simulation-candidate:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-3"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+        "simulationCandidateIds": [
+          "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-3"
+        ]
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-1",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "linked-code-block:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-1",
+        "source-document:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "section:Verification Notes",
+        "line-in-code-span:123:123-126"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "simulationCandidateId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-1",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-1"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-2",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "linked-code-block:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-2",
+        "source-document:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "section:Verification Notes",
+        "line-in-code-span:129:129-133"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "simulationCandidateId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-2",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-2"
+      }
+    },
+    {
+      "sourceType": "simulation-candidate",
+      "sourceId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-3",
+      "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:BIO-2",
+        "document-title:Theorem BIO-2 – The Protein Backbone Is a Single Q=1 Hopfion Ribbon at Chemical Density",
+        "linked-code-block:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3",
+        "source-document:earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "section:Verification Notes",
+        "line-in-code-span:136:136-139"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae",
+        "simulationCandidateId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-simulation-3",
+        "codeBlockId": "earth-p-acb2b8a9eb34dbe3e723564ae6b954ffc021230247dfffeb82f1a224ba3208ae-code-3"
+      }
+    }
+  ]
+}

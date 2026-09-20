@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "f054e54d2c9d3e0e6aad51b89a9ec40d68e3b8df",
+  "sourcePlanSha256": "f7cfcd3cbc7f8eb5369ba4ec00d4fa4b1a7d6cfee8f5c4ca01951eba6a87eeb9",
+  "document": {
+    "id": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+    "slug": "theorem-planet-6-atmosphere-scale-height-coherence-length-at-surface-density--a56a1f918879",
+    "title": "Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density"
+  },
+  "summary": {
+    "coverageAssignments": 42,
+    "canonicalProgramAssignments": 38,
+    "classifiedAssignments": 4,
+    "relatedCanonicalPrograms": 12,
+    "classificationCounts": {
+      "duplicate": 4,
+      "blocked-source-fragment": 0,
+      "non-scientific-example": 0
+    }
+  },
+  "canonicalPrograms": [
+    {
+      "programId": "EARTH-PLAN-001",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-002",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-003",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-004",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-005",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-006",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-007",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-008",
+      "counts": {
+        "total": 38,
+        "bySourceType": {
+          "formula": 32,
+          "code-block": 3,
+          "simulation-candidate": 3
+        },
+        "byConfidence": {
+          "high": 11,
+          "medium": 27,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-009",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-010",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-011",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    },
+    {
+      "programId": "EARTH-PLAN-012",
+      "counts": {
+        "total": 0,
+        "bySourceType": {
+          "formula": 0,
+          "code-block": 0,
+          "simulation-candidate": 0
+        },
+        "byConfidence": {
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      }
+    }
+  ],
+  "classifiedRecords": [
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-1",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:20-20"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-1"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0dc877e02cc595911a0872c47478975005252feaf5fc8eff1b06c6b885607ade-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-10",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:12-12"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-10"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-9"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-2",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "normalized-formula-text",
+        "formula-kind:display-math",
+        "line-span:24-24"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-2"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-dc08062297d588985f5e461d68d1c0c6fdc6fd6ba02b7c9e293648a3ae753a2a-formula-1"
+    },
+    {
+      "sourceType": "formula",
+      "sourceId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-9",
+      "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+      "confidence": "high",
+      "assignmentBasis": [
+        "document-series:PLANET-6",
+        "document-title:Theorem PLANET-6 – Atmosphere Scale Height = Coherence Length at Surface Density",
+        "normalized-formula-text",
+        "formula-kind:plain-line-candidate",
+        "line-span:11-11"
+      ],
+      "sourceIds": {
+        "documentId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804",
+        "formulaId": "earth-p-a56a1f9188793fbb21243728ca76860aaaa0e2f3dfbb80a0775007e4a0855804-formula-9"
+      },
+      "classification": "duplicate",
+      "duplicateOf": "earth-p-0d027b4e6418e97c22474e3b8efb73ef371fd20d4b112c526d9b29325107a1d6-formula-6"
+    }
+  ]
+}
