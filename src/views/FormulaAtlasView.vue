@@ -209,11 +209,11 @@ function commitAssigned(assign: (value: string) => void) {
 
 const onSearchInput = commitAssigned((value) => { query.value = value })
 const onCategoryChange = commitAssigned((value) => { category.value = value })
-const onBasisChange = commitAssigned((value) => { basis.value = value })
+const onBasisChange = commitAssigned((value) => { basis.value = value as BasisFilter })
 const onColumnChange = commitAssigned((value) => { column.value = value })
 const onIslandChange = commitAssigned((value) => { island.value = value })
-const onSourceCriterionChange = commitAssigned((value) => { sourceCriterion.value = value })
-const onDimensionAuditChange = commitAssigned((value) => { dimensionAudit.value = value })
+const onSourceCriterionChange = commitAssigned((value) => { sourceCriterion.value = value as SourceCriterionFilter })
+const onDimensionAuditChange = commitAssigned((value) => { dimensionAudit.value = value as DimensionAuditFilter })
 const onConstructorChange = commitAssigned((value) => { constructor.value = value })
 const onRepresentationChange = commitAssigned((value) => { representation.value = value })
 

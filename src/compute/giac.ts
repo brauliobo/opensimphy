@@ -3,7 +3,7 @@
 interface GiacModule {
   calledRun?: boolean
   onRuntimeInitialized?: () => void
-  cwrap: (name: string, returnType: string, argTypes: string[]) => (command: string) => string
+  cwrap?: (name: string, returnType: string, argTypes: string[]) => (command: string) => string
 }
 
 declare global {
@@ -74,9 +74,13 @@ async function loadGiac(): Promise<void> {
   await loadGiacBrowser()
 }
 
+function emptyGiacModule(): GiacModule {
+  return {}
+}
+
 async function loadGiacBrowser(): Promise<void> {
   const runtime = globalThis as typeof globalThis & { Module?: GiacModule }
-  const Module = runtime.Module ?? {}
+  const Module = runtime.Module ?? emptyGiacModule()
   runtime.Module = Module
   const ready = runtimeReady(Module)
   if (!document.querySelector('script[data-giac-wasm]')) {
@@ -95,15 +99,15 @@ async function loadGiacBrowser(): Promise<void> {
 }
 
 async function loadGiacFromVendorFile(): Promise<void> {
-  const { createRequire } = await import('node:module')
+  const nodeModule = await import('node:module') as unknown as { createRequire: (filename: string) => NodeRequire }
   const { existsSync, readFileSync } = await import('node:fs')
   const { join } = await import('node:path')
   const vm = await import('node:vm')
   const runtime = globalThis as typeof globalThis & { Module?: GiacModule, require?: NodeRequire }
   const path = join(process.cwd(), 'vendor/giacjs/giacwasm.js')
   if (!existsSync(path)) throw new Error('Giac WASM is missing; run npm run giac:acquire')
-  runtime.require ??= createRequire(path)
-  const Module = runtime.Module ?? {}
+  runtime.require ??= nodeModule.createRequire(path)
+  const Module = runtime.Module ?? emptyGiacModule()
   runtime.Module = Module
   const ready = runtimeReady(Module)
   vm.runInThisContext(readFileSync(path, 'utf8'), { filename: path })
@@ -125,6 +129,7 @@ function runtimeReady(Module: GiacModule): Promise<void> {
 }
 
 function bindCaseval(Module: GiacModule): void {
+  if (!Module.cwrap) throw new Error('Giac WASM module is missing cwrap')
   caseval = Module.cwrap('caseval', 'string', ['string'])
 }
 
