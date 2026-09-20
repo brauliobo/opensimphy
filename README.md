@@ -29,7 +29,7 @@ public/data/number-walls
                          preserved per-input static JSON
 data/physics_monastery  non-public recovered PDF/text source artifacts used by generation
 content/tour            attributed Tour source content and generated-artifact contracts
-src/compute              monastery dimensional engine plus a lazy mathjs CAS; KaTeX for LaTeX; Plotly only on ComputeDock hosts
+src/compute              monastery dimensional engine plus lazy Giac/Xcas WASM CAS; mathjs samples unknown plot functions; KaTeX for LaTeX; Plotly only on ComputeDock hosts
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
 src/tour                pure Tour engines, progress model, and transactional offline pack
@@ -184,9 +184,9 @@ For GitHub Pages, `npm run build:pages` uses `VITE_BASE_PATH=/opensimphy/` from 
 
 ## Compute kernel
 
-`/labs/compute` is a Wolfram-style prompt over the existing monastery dimensional engine. Named SI/Planck quantities stay in `evaluateExpression` so charge-based five-axis dimensions and dimensionless mole are unchanged. Mixed-unit input (`GeV`, `meters`, `newtons`, `× 10^n`) is rewritten onto SI-scaled compute units; recipe `UNIT_SYMBOLS` stay dimension tags of 1. mathjs 14.5.2 (Apache-2.0) is lazy-loaded only for unknown symbols, unsupported tokens, derivatives, integrals, matrices, and solves. KaTeX 0.16.22 renders LaTeX. 2D/3D figures reuse the app's Plotly host inside `ComputeDock` (Compute lab, formula detail, Core, Walls, EARTH). Tour, Gray, quantum, Clifford, hyperbolic, ONELAB, and case pages mount `ComputePrompt` without Plotly.
+`/labs/compute` is a Wolfram-style prompt over the existing monastery dimensional engine. Named SI/Planck quantities stay in `evaluateExpression` so charge-based five-axis dimensions and dimensionless mole are unchanged. Mixed-unit input (`GeV`, `meters`, `newtons`, `× 10^n`) is rewritten onto SI-scaled compute units; recipe `UNIT_SYMBOLS` stay dimension tags of 1. Giac/Xcas WASM (GPL-3.0-or-later, official `giacwasm.js`) is lazy-loaded for unknown symbols, unsupported tokens, derivatives, integrals (`int` / `evalf(int)`), matrices, solves (`solve` / `fsolve`), and simplification. mathjs 14.5.2 samples unknown functions for Plotly figures. KaTeX 0.16.22 renders LaTeX. There is no local Newton/Simpson CAS. 2D/3D figures reuse the app's Plotly host inside `ComputeDock` (Compute lab, formula detail, Core, Walls, EARTH). Tour, Gray, quantum, Clifford, hyperbolic, ONELAB, and case pages mount `ComputePrompt` without Plotly.
 
-Rejected for this surface: Pyodide/SymPy (too large for a static PWA), and Giac/Maxima WASM (GPL). No extra WASM CAS is compiled; monastery numerics and mathjs cover the browser-only CAS.
+Acquire the ~19 MB Giac glue with `npm run giac:acquire` (vendored at `vendor/giacjs/giacwasm.js`, served at `/giac/giacwasm.js`, excluded from the PWA precache). Maxima-on-WASM was not used: it needs Cross-Origin Isolation (COOP/COEP), ships an unoptimized ECL runtime, and has no small `caseval` API. Pyodide/SymPy remains too large for the static PWA.
 
 Quantity names that share a dimension are interpretations, not quantity-kind identity.
 
