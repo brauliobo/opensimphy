@@ -38,7 +38,7 @@ async function savedRuns(page: Page): Promise<Array<Record<string, unknown>>> {
   })
 }
 
-test('/labs presents seven owned labs and a separate author collection without eager domain data or workers', async ({ page }) => {
+test('/labs presents eight owned labs and a separate author collection without eager domain data or workers', async ({ page }) => {
   const requests: string[] = []
   const workers: string[] = []
   page.on('request', (request) => requests.push(new URL(request.url()).pathname))
@@ -46,9 +46,10 @@ test('/labs presents seven owned labs and a separate author collection without e
 
   await gotoReady(page, '/labs', 'completion-registry-ready')
 
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(7)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(8)
   expect(await page.locator('.lab-choice-grid a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))).toEqual([
     '/labs/quantum-wave',
+    '/labs/clifford-space',
     '/labs/edwin-gray',
     '/labs/cases',
     '/awesome-physics',

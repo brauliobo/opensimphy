@@ -27,6 +27,7 @@ const routes = {
   tourChapter: 'src/views/TourChapterView.vue',
   tourLesson: 'src/views/TourLessonView.vue',
   quantumWaveLab: 'src/views/QuantumWaveLabView.vue',
+  cliffordSpaceLab: 'src/views/CliffordSpaceLabView.vue',
   edwinGrayLab: 'src/views/EdwinGrayLabView.vue',
   fiddleArchive: 'src/views/FiddleArchiveView.vue',
   fiddleRecord: 'src/views/FiddleRecordView.vue',
@@ -47,7 +48,7 @@ const routes = {
 }
 
 const tourRoutes = ['overview', 'tourMap', 'tourChapter', 'tourLesson']
-const nonNumericalRoutes = [...tourRoutes, 'quantumWaveLab', 'evidence', 'saved', 'notFound']
+const nonNumericalRoutes = [...tourRoutes, 'quantumWaveLab', 'cliffordSpaceLab', 'evidence', 'saved', 'notFound']
 const earthRoutes = ['earthOverview', 'earthCorpus', 'earthDocument', 'earthPrograms', 'earthProgram', 'earthWorkbench', 'earthDatasets']
 const fiddleRoutes = ['fiddleArchive', 'fiddleRecord']
 

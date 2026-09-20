@@ -20,6 +20,7 @@ const routes = [
   { path: '/atlas', name: 'atlas', component: { template: '<div />' } },
   { path: '/labs', name: 'labs', component: { template: '<div />' } },
   { path: '/labs/cases', name: 'case-hub', component: { template: '<div />' } },
+  { path: '/labs/clifford-space', name: 'clifford-space', component: { template: '<div />' } },
   { path: '/labs/edwin-gray', name: 'edwin-gray', component: { template: '<div />' } },
   { path: '/awesome-physics/:id', name: 'awesome-physics-detail', component: { template: '<div />' } },
   { path: '/labs/authors/chenopdodium', name: 'fiddle-archive', component: { template: '<div />' } },
@@ -267,6 +268,7 @@ describe('responsive navigation state', () => {
   it.each([
     '/labs',
     '/labs/cases',
+    '/labs/clifford-space',
     '/labs/edwin-gray',
     '/awesome-physics',
     '/awesome-physics/awesome-matter-js',
@@ -335,6 +337,7 @@ describe('disabled ONELAB profile', () => {
         { path: '/labs', component: { template: '<div />' } },
         { path: '/labs/core', component: { template: '<div />' } },
         { path: '/labs/walls', component: { template: '<div />' } },
+        { path: '/labs/clifford-space', component: { template: '<div />' } },
       ],
     })
     await router.push('/labs')

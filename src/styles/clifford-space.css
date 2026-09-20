@@ -1,0 +1,331 @@
+.clifford-lab-view .quantum-lab-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.clifford-lab-view .quantum-lab-rail {
+  position: static;
+  padding-top: 0;
+}
+
+.clifford-lab-view .quantum-shortcut__steps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.clifford-space-instrument {
+  min-width: 0;
+}
+
+.clifford-space-viewer {
+  display: grid;
+  min-width: 0;
+  margin-top: 1.5rem;
+  grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr) minmax(15rem, 18rem);
+  border: 1px solid var(--rule-bright);
+  background: #0c0e0f;
+}
+
+.clifford-space-controls,
+.clifford-space-readout,
+.clifford-space-stage {
+  min-width: 0;
+}
+
+.clifford-space-controls,
+.clifford-space-readout {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  padding: 0.85rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: min(70vh, 820px);
+  border-right: 1px solid var(--rule);
+}
+
+.clifford-space-readout {
+  border-right: 0;
+  border-left: 1px solid var(--rule);
+}
+
+.clifford-space-stage {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: auto auto minmax(480px, 1fr);
+}
+
+.clifford-field,
+.clifford-check {
+  display: grid;
+  min-width: 0;
+  gap: 0.35rem;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.clifford-field > span:first-child,
+.clifford-radios legend,
+.clifford-space-readout .eyebrow {
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.clifford-field input,
+.clifford-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.45rem 0.55rem;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  border: 1px solid var(--rule-bright);
+  background: var(--ink-1);
+}
+
+.clifford-field input[type='range'] {
+  padding: 0;
+  accent-color: var(--amber);
+}
+
+.clifford-field output {
+  color: var(--cyan);
+}
+
+.clifford-check {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 44px;
+}
+
+.clifford-check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--amber);
+}
+
+.clifford-origin {
+  min-height: 44px;
+  padding: 0.7rem 0.8rem;
+  color: var(--ink-0);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid var(--amber);
+  background: var(--amber);
+  cursor: pointer;
+}
+
+.clifford-radios {
+  min-width: 0;
+  margin: 0;
+  padding: 0.6rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.clifford-radios legend {
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.clifford-radios label {
+  display: inline-flex;
+  min-height: 44px;
+  margin-right: 0.7rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.clifford-tabs {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.55rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.clifford-tabs button {
+  min-height: 44px;
+  min-width: 0;
+  padding: 0.55rem 0.7rem;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+  border: 1px solid var(--rule-bright);
+  background: transparent;
+  cursor: pointer;
+}
+
+.clifford-tabs button.is-selected {
+  color: var(--ink-0);
+  border-color: var(--cyan);
+  background: var(--cyan);
+}
+
+.clifford-canvas {
+  position: relative;
+  min-width: 0;
+  min-height: 480px;
+  height: min(62vh, 640px);
+  overflow: hidden;
+  background: #0c0e0f;
+}
+
+.clifford-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.clifford-space-readout h4 {
+  margin: 0;
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.clifford-all,
+.clifford-trig,
+.clifford-norm {
+  margin: 0;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.clifford-norm {
+  color: var(--cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.clifford-basis-list {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.clifford-basis-bar {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 1.4rem minmax(0, 1fr) 4.6rem;
+  gap: 0.4rem;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.clifford-basis-bar__name {
+  font-weight: 700;
+}
+
+.clifford-basis-bar__track {
+  position: relative;
+  min-width: 0;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--ink-0);
+}
+
+.clifford-basis-bar__track::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--paper-dim);
+}
+
+.clifford-basis-bar__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.clifford-basis-bar__value {
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.clifford-formulas,
+.clifford-identities {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.clifford-formulas li,
+.clifford-identities li {
+  padding: 0.15rem 0;
+}
+
+.clifford-space-label {
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+  text-shadow: 0 0 4px #0c0e0f;
+  pointer-events: none;
+}
+
+.clifford-lab-view .quantum-lab-header__copy h1 {
+  max-width: 16ch;
+}
+
+@media (max-width: 960px) {
+  .clifford-space-viewer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clifford-space-controls,
+  .clifford-space-readout {
+    max-height: none;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .clifford-space-stage {
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 320px) {
+  .clifford-space-viewer,
+  .clifford-tabs,
+  .clifford-basis-bar,
+  .clifford-canvas {
+    min-width: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .clifford-tabs button.is-selected,
+  .clifford-origin {
+    color: ButtonText;
+    background: Highlight;
+    border-color: Highlight;
+  }
+}

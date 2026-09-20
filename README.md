@@ -35,6 +35,7 @@ src/workbench           strict URL state, SHA-256, version-1 snapshots, and save
 src/workers             dedicated formula, Core, number-wall, and isolated EARTH workers
 src/components/tour     lesson grammar, instruments, and ID-based lazy simulation dispatcher
 src/quantum-wave        bounded quantum-wave teaching engine and source-map guide
+src/clifford-space      Cl(3) field, rhombic-dodecahedron honeycomb, and 3D tiling host
 src/edwin-gray          bounded Gray pulsed-motor engine and source-map guide
 src/components/quantum  reusable wave, operator, probability, tooltip, and equation instruments
 src/components          navigation, shared Workbench shell, coverage, Plotly, and canvas instruments
@@ -58,6 +59,8 @@ Plotly is dynamically imported into its own lazy chunk and Formula sweeps mount 
 `/` provides orientation, Begin/Resume controls, all eight available station links, and Guided-pack controls. `/tour` presents the 20-chapter/four-act map; `/tour/:chapter` and `/tour/:chapter/:lesson` provide chapter and lesson routes with generated titles and real section anchors. `/evidence`, `/saved`, and `/not-found` provide scope guidance, local progress/offline-pack management, and recovery. Legacy `/topics/:id` links redirect to their mapped Tour chapters.
 
 `/labs/quantum-wave` is a standalone, browser-local teaching lab built from the downloaded and transcribed reference video `3QU-_PSbKlo`. It preserves the source video, Whisper outputs, scene samples, and curated frame inventory under `../research/opensimphy-video/`, while the app ships original SVG recreations for spectral lines, standing waves, operators, Fourier sums, complex-plane rotation, Schrodinger equation assembly, double-slit probability, and hydrogen/materials applications. The page links back to the established Tour, Atlas, Workbench, and Evidence surfaces and keeps all results explicitly modelled/computed rather than validated.
+
+`/labs/clifford-space` is a browser-local geometric algebra tiling lab. It shows the unit cube, the rhombic-dodecahedron honeycomb that fills space around it, and the eight Cl(3) blades as a trigonometric field on R³. Results are modelled/computed, not validated.
 
 `/labs/edwin-gray` is a second video-derived lab. It reconstructs the Cole/Hackenberger/Gray pulsed-capacitor motors from `Motor Edwin Gray.txt` and YouTube `nC740fpBs4M` as a classical RLC dump through open-core poles, with a presenter-reported 500 rpm quench reference and a COP ledger that does not treat historical COP-300 claims as established physics. Source media belong under `../research/opensimphy-edwin-gray/`.
 

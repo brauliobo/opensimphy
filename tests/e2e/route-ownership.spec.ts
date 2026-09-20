@@ -175,6 +175,15 @@ test('/labs/quantum-wave stays browser-local and loads no registry owner', async
   await expect(page.getByRole('heading', { name: 'Why does physics need i?' })).toBeVisible()
 })
 
+test('/labs/clifford-space stays browser-local and loads no registry owner', async ({ page }) => {
+  const activity = await gotoColdRoute(page, '/labs/clifford-space')
+  await expect(page.getByTestId('clifford-space-lab-ready')).toBeVisible()
+
+  expectOwnerArtifacts(activity, [])
+  expect(workerOwners(activity)).toEqual([])
+  await expect(page.getByRole('heading', { name: 'What fills space around the unit cube?' })).toBeVisible()
+})
+
 test('/labs/edwin-gray owns exactly one Gray worker and no unrelated owner', async ({ page }) => {
   const activity = await gotoColdRoute(page, '/labs/edwin-gray')
   await expect(page.getByTestId('edwin-gray-lab-ready')).toBeVisible()
@@ -320,8 +329,9 @@ test('/labs owns only the completion report', async ({ page }) => {
 
   expectOwnerArtifacts(activity, ['/data/generated/completion.json'])
   expect(workerOwners(activity)).toEqual([])
-  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(7)
+  await expect(page.locator('.lab-choice-grid > a')).toHaveCount(8)
   await expect(page.locator('.lab-choice-grid a[href="/labs/quantum-wave"]')).toContainText('Quantum wave lab')
+  await expect(page.locator('.lab-choice-grid a[href="/labs/clifford-space"]')).toContainText('Clifford space lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/edwin-gray"]')).toContainText('Edwin Gray motor lab')
   await expect(page.locator('.lab-choice-grid a[href="/labs/earth/EARTH-PLAN-008"]')).toContainText('EARTH method workbench')
   await expect(page.locator('.lab-choice-grid a[href*="chenopdodium"]')).toHaveCount(0)

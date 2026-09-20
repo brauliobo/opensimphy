@@ -32,6 +32,11 @@ const onelabEnabled = import.meta.env.VITE_ONELAB_ENABLED === 'true'
       strong Quantum wave lab
       p Rebuild the imaginary-number story with spectra, standing waves, operators, Fourier sums, probability, and materials.
       small Open the teacher's reconstruction →
+    RouterLink(to="/labs/clifford-space")
+      span 00e / GEOMETRIC ALGEBRA
+      strong Clifford space lab
+      p Unit cube, rhombic-dodecahedron honeycomb, and the eight Cl(3) blades as a field on R³.
+      small Open the space tiling →
     RouterLink(to="/labs/edwin-gray")
       span 00b / HISTORICAL MACHINE
       strong Edwin Gray motor lab
