@@ -43,16 +43,20 @@ function unit(value: DimensionVector): EvaluationSymbol {
   return { value: complex(1), dimension: value, source: "unit" };
 }
 
-const TIME = dimension(1);
-const LENGTH = dimension(0, 1);
-const CHARGE = dimension(0, 0, 1);
-const TEMPERATURE = dimension(0, 0, 0, 1);
-const MASS = dimension(0, 0, 0, 0, 1);
-const ENERGY = addDimensions(MASS, addDimensions(scaleDimension(LENGTH, 2), scaleDimension(TIME, -2)));
-const CURRENT = subtractDimensions(CHARGE, TIME);
-const FORCE = addDimensions(MASS, subtractDimensions(LENGTH, scaleDimension(TIME, 2)));
-const VOLTAGE = subtractDimensions(ENERGY, CHARGE);
-const RESISTANCE = subtractDimensions(VOLTAGE, CURRENT);
+export const SI_TIME = dimension(1);
+export const SI_LENGTH = dimension(0, 1);
+export const SI_CHARGE = dimension(0, 0, 1);
+export const SI_TEMPERATURE = dimension(0, 0, 0, 1);
+export const SI_MASS = dimension(0, 0, 0, 0, 1);
+export const SI_ENERGY = addDimensions(SI_MASS, addDimensions(scaleDimension(SI_LENGTH, 2), scaleDimension(SI_TIME, -2)));
+export const SI_ACTION = addDimensions(SI_MASS, addDimensions(scaleDimension(SI_LENGTH, 2), scaleDimension(SI_TIME, -1)));
+export const SI_CURRENT = subtractDimensions(SI_CHARGE, SI_TIME);
+export const SI_FORCE = addDimensions(SI_MASS, subtractDimensions(SI_LENGTH, scaleDimension(SI_TIME, 2)));
+export const SI_VOLTAGE = subtractDimensions(SI_ENERGY, SI_CHARGE);
+export const SI_RESISTANCE = subtractDimensions(SI_VOLTAGE, SI_CURRENT);
+export const SI_FREQUENCY = scaleDimension(SI_TIME, -1);
+export const SI_PRESSURE = subtractDimensions(SI_FORCE, scaleDimension(SI_LENGTH, 2));
+export const SI_POWER = subtractDimensions(SI_ENERGY, SI_TIME);
 
 export const UNIT_SYMBOLS: Record<string, EvaluationSymbol> = {
   "-": unit(DIMENSIONLESS),
@@ -63,48 +67,48 @@ export const UNIT_SYMBOLS: Record<string, EvaluationSymbol> = {
   sr: unit(DIMENSIONLESS),
   cd: unit(DIMENSIONLESS),
   lm: unit(DIMENSIONLESS),
-  s: unit(TIME),
-  second: unit(TIME),
-  m: unit(LENGTH),
-  meter: unit(LENGTH),
-  fm: unit(LENGTH),
-  C: unit(CHARGE),
-  coulomb: unit(CHARGE),
-  K: unit(TEMPERATURE),
-  kelvin: unit(TEMPERATURE),
-  kg: unit(MASS),
-  kilogram: unit(MASS),
-  u: unit(MASS),
-  Hz: unit(scaleDimension(TIME, -1)),
-  MHz: unit(scaleDimension(TIME, -1)),
-  J: unit(ENERGY),
-  joule: unit(ENERGY),
-  eV: unit(ENERGY),
-  MeV: unit(ENERGY),
-  GeV: unit(ENERGY),
-  E_h: unit(ENERGY),
-  A: unit(CURRENT),
-  ampere: unit(CURRENT),
-  N: unit(FORCE),
-  noether: unit(addDimensions(MASS, subtractDimensions(LENGTH, TIME))),
-  Pa: unit(subtractDimensions(FORCE, scaleDimension(LENGTH, 2))),
-  pascal: unit(subtractDimensions(FORCE, scaleDimension(LENGTH, 2))),
-  V: unit(VOLTAGE),
-  volt: unit(VOLTAGE),
-  Ohm: unit(RESISTANCE),
-  ohm: unit(RESISTANCE),
-  Ω: unit(RESISTANCE),
-  S: unit(scaleDimension(RESISTANCE, -1)),
-  F: unit(subtractDimensions(CHARGE, VOLTAGE)),
-  farad: unit(subtractDimensions(CHARGE, VOLTAGE)),
-  H: unit(addDimensions(RESISTANCE, TIME)),
-  henry: unit(addDimensions(RESISTANCE, TIME)),
-  T: unit(subtractDimensions(FORCE, addDimensions(CURRENT, LENGTH))),
-  tesla: unit(subtractDimensions(FORCE, addDimensions(CURRENT, LENGTH))),
-  W: unit(subtractDimensions(ENERGY, TIME)),
-  watt: unit(subtractDimensions(ENERGY, TIME)),
-  Wb: unit(addDimensions(VOLTAGE, TIME)),
-  c: unit(subtractDimensions(LENGTH, TIME)),
+  s: unit(SI_TIME),
+  second: unit(SI_TIME),
+  m: unit(SI_LENGTH),
+  meter: unit(SI_LENGTH),
+  fm: unit(SI_LENGTH),
+  C: unit(SI_CHARGE),
+  coulomb: unit(SI_CHARGE),
+  K: unit(SI_TEMPERATURE),
+  kelvin: unit(SI_TEMPERATURE),
+  kg: unit(SI_MASS),
+  kilogram: unit(SI_MASS),
+  u: unit(SI_MASS),
+  Hz: unit(SI_FREQUENCY),
+  MHz: unit(SI_FREQUENCY),
+  J: unit(SI_ENERGY),
+  joule: unit(SI_ENERGY),
+  eV: unit(SI_ENERGY),
+  MeV: unit(SI_ENERGY),
+  GeV: unit(SI_ENERGY),
+  E_h: unit(SI_ENERGY),
+  A: unit(SI_CURRENT),
+  ampere: unit(SI_CURRENT),
+  N: unit(SI_FORCE),
+  noether: unit(addDimensions(SI_MASS, subtractDimensions(SI_LENGTH, SI_TIME))),
+  Pa: unit(SI_PRESSURE),
+  pascal: unit(SI_PRESSURE),
+  V: unit(SI_VOLTAGE),
+  volt: unit(SI_VOLTAGE),
+  Ohm: unit(SI_RESISTANCE),
+  ohm: unit(SI_RESISTANCE),
+  Ω: unit(SI_RESISTANCE),
+  S: unit(scaleDimension(SI_RESISTANCE, -1)),
+  F: unit(subtractDimensions(SI_CHARGE, SI_VOLTAGE)),
+  farad: unit(subtractDimensions(SI_CHARGE, SI_VOLTAGE)),
+  H: unit(addDimensions(SI_RESISTANCE, SI_TIME)),
+  henry: unit(addDimensions(SI_RESISTANCE, SI_TIME)),
+  T: unit(subtractDimensions(SI_FORCE, addDimensions(SI_CURRENT, SI_LENGTH))),
+  tesla: unit(subtractDimensions(SI_FORCE, addDimensions(SI_CURRENT, SI_LENGTH))),
+  W: unit(SI_POWER),
+  watt: unit(SI_POWER),
+  Wb: unit(addDimensions(SI_VOLTAGE, SI_TIME)),
+  c: unit(subtractDimensions(SI_LENGTH, SI_TIME)),
 };
 
 export function formatDimension(value: DimensionVector): string {

@@ -24,6 +24,7 @@ import {
   scaleDimension,
   subtractDimensions,
 } from "./dimensions.js";
+import { asciiOperatorGlyph } from "./glyphs.js";
 
 export interface EvaluatedExpression extends EvaluationSymbol {
   dependencies: string[];
@@ -120,6 +121,11 @@ export function evaluateExpression(expression: string, symbols: Readonly<Record<
       return { type: "number", text: number[0], value: Number(number[0]) };
     }
     const character = rest[0]!;
+    const asciiOperator = asciiOperatorGlyph(character);
+    if (asciiOperator) {
+      offset += 1;
+      return { type: "operator", text: asciiOperator };
+    }
     if ("+-*/^!(),".includes(character)) {
       offset += 1;
       return { type: "operator", text: character };
