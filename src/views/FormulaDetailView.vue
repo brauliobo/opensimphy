@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import ComputeDock from '../components/compute/ComputeDock.vue'
 import FailClosedGraph from '../components/FailClosedGraph.vue'
+import { formulaComputeContext } from '../compute/context'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
@@ -111,6 +113,7 @@ const recordReady = computed(() => !loading.value
   && loadError.value === ''
   && formula.value !== null
   && taxonomyRegistry.taxonomy.value !== null)
+const computeContext = computed(() => formula.value ? formulaComputeContext(formula.value) : null)
 const technical = computed(() => tourProgress.depth.value === 'technical')
 const classificationLabel = computed(() => `source-labelled ${formula.value?.classification ?? ''} reference`)
 const selectedTopic = computed(() => taxonomyRegistry.taxonomy.value?.topics.find((item) => item.id === formula.value?.topic) ?? null)
@@ -409,6 +412,8 @@ function resetComparison(): void {
         ul
           li(v-for="caveat in formula.meaning.caveats" :key="caveat") {{ caveat }}
       p.boundary-note This record reproduces a preserved source recipe. It does not independently validate the quantity, theory, evidence, covariance model, or source selection.
+
+    ComputeDock(v-if="computeContext" :context="computeContext")
 
     section.result-section(data-testid="residual-scales" aria-labelledby="residual-title")
       p.eyebrow Source reproduction values

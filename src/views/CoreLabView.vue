@@ -3,9 +3,11 @@ import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import FailClosedGraph from '../components/FailClosedGraph.vue'
 import PlotlyPanel from '../components/PlotlyPanel.vue'
+import ComputeDock from '../components/compute/ComputeDock.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
 import WorkbenchShell from '../components/workbench/WorkbenchShell.vue'
+import { labeledComputeContext } from '../compute/context'
 import { useCoreRegistry } from '../registries/coreRegistry'
 import { useSavedRunRegistry } from '../registries/savedRunRegistry'
 import type {
@@ -60,6 +62,11 @@ const registryError = computed(() => coreRegistry.error.value?.message
 const selected = computed(() => coreRegistry.coreCases.value.find(({ id }) => id === selectedId.value)
   ?? coreRegistry.coreCases.value[0]
   ?? null)
+const computeContext = computed(() => labeledComputeContext(
+  'core',
+  selected.value ? `Core case ${selected.value.id}` : 'Core lab',
+  selected.value?.title ?? 'Declared Core cases',
+))
 const families = computed(() => [...new Set(coreRegistry.coreCases.value.map(({ family }) => family))])
 const activeGraph = computed(() => {
   const record = selected.value
@@ -433,6 +440,7 @@ function snapshotInputs(snapshot: WorkbenchSnapshotV1): { case: string; projecti
 
     template(#raw)
       pre(data-testid="core-raw-output") {{ JSON.stringify(selected.output, null, 2) }}
+  ComputeDock.workbench-compute(v-if="selected" :context="computeContext")
 </template>
 
 <style scoped>

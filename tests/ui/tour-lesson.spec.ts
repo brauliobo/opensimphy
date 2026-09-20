@@ -353,6 +353,8 @@ describe('Tour lesson vertical slice', () => {
     expect(wrapper.findAll('h1')).toHaveLength(1)
     expect(wrapper.findAll('main')).toHaveLength(0)
     expect(wrapper.findAll('[data-tour-section]')).toHaveLength(6)
+    expect(wrapper.find('[data-testid="compute-prompt"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="compute-plot"]').exists()).toBe(false)
   })
 
   it('completes only from the explicit control and restores completed state after hydration', async () => {

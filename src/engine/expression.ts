@@ -97,6 +97,10 @@ function quantity(value: ComplexValue, dimension: DimensionVector, dependencies:
   return { value, dimension, dependencies };
 }
 
+function isIdentifierContinue(character: string | undefined): boolean {
+  return character !== undefined && /[\p{L}\p{M}\p{N}_∞]/u.test(character)
+}
+
 export function evaluateExpression(expression: string, symbols: Readonly<Record<string, EvaluationSymbol>>): EvaluatedExpression {
   const source = expression.trim();
   if (!source) throw new ExpressionError("Empty expression", expression, 0);
@@ -120,7 +124,7 @@ export function evaluateExpression(expression: string, symbols: Readonly<Record<
       offset += 1;
       return { type: "operator", text: character };
     }
-    const known = symbolNames.find((name) => rest.startsWith(name));
+    const known = symbolNames.find((name) => rest.startsWith(name) && !isIdentifierContinue(rest[name.length]));
     if (known) {
       offset += known.length;
       return { type: "identifier", text: known };
@@ -221,7 +225,7 @@ export function evaluateExpression(expression: string, symbols: Readonly<Record<
   }
 
   function call(name: string, argument: EvaluatedExpression): EvaluatedExpression {
-    if (!isDimensionless(argument.dimension) && name !== "Re" && name !== "Im") throw new ExpressionError(`${name} argument must be dimensionless`, source, offset);
+    if (!isDimensionless(argument.dimension) && name !== "Re" && name !== "Im" && name !== "sqrt") throw new ExpressionError(`${name} argument must be dimensionless`, source, offset);
     const dependencies = argument.dependencies;
     if (name === "Re") return quantity(complex(argument.value.re), argument.dimension, dependencies);
     if (name === "Im") return quantity(complex(argument.value.im), argument.dimension, dependencies);

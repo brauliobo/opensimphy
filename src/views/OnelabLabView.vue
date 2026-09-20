@@ -6,6 +6,8 @@ import type { MicrostripResult } from '../simulation/types'
 import { parameterChanged, parseOnelab, type OnelabParameter } from '../simulation/onelab-db'
 import { ProjectSession } from '../simulation/project-session'
 import SimulationSceneHost from '../components/SimulationSceneHost.vue'
+import ComputePrompt from '../components/compute/ComputePrompt.vue'
+import { labeledComputeContext } from '../compute/context'
 import { matchSurfaceSignatures, summarizeScene, type SimulationScene, type SurfaceMatch } from '../simulation/scene'
 import type { SceneSelection } from '../simulation/scene-host'
 import { fieldCsv, fieldPos, probeScenePoint } from '../simulation/results'
@@ -16,6 +18,11 @@ import { onelabLoopValues, onelabOutputs, type LoopHistoryPoint } from '../simul
 import { exportProjectArchive, importProjectArchive, loadPersistedProjectArchive, persistProjectArchive, projectPersistenceStatus } from '../simulation/project-archive'
 
 const client = new OnelabClient()
+const computeContext = labeledComputeContext(
+  'onelab',
+  'Browser ONELAB',
+  'Prompt evaluations are local SI/Planck calculations beside the mesh/solve workbench.',
+)
 const session = new ProjectSession()
 const sessionVersion = ref(0)
 const meshstep = new MeshstepClient()
@@ -413,6 +420,7 @@ section.onelab-lab.view
     p.eyebrow LAB / ONELAB PHASE 5
     h1 Browser ONELAB workbench
     p Parser-native Gmsh/GetDP parameters drive a reconstructible check, remesh, solve and post-process flow.
+  ComputePrompt(:context="computeContext")
   .simulation-caveat(role="note")
     strong Arbitrary STEP projects are not yet wired to solver execution.
     span STEP remains a meshStep preview. Simulation-bound selections use the separately meshed authoritative Gmsh surface.

@@ -232,6 +232,9 @@ describe('formula iteration 6 views', () => {
     expect(wrapper.text()).not.toContain('z-score')
     expect(wrapper.get('[data-testid="constructor-token-key"]').text()).toContain('External geometry')
     expect(wrapper.get('[data-testid="constructor-token-key"]').text()).toContain('Inversion-boundary scale')
+    expect(wrapper.get('[data-testid="compute-prompt"]').text()).toContain('Formula 1')
+    expect(meaning.compareDocumentPosition(wrapper.get('[data-testid="compute-prompt"]').element) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(wrapper.get('[data-testid="compute-prompt"]').element.compareDocumentPosition(residuals) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     wrapper.unmount()
   })
 

@@ -2,6 +2,8 @@
 import { computed, onMounted } from 'vue'
 import { useTourProgress } from '../registries/tourProgress'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
+import ComputePrompt from '../components/compute/ComputePrompt.vue'
+import { labeledComputeContext } from '../compute/context'
 import QuantumTooltip from '../components/quantum/QuantumTooltip.vue'
 import SpectrumInstrument from '../components/quantum/SpectrumInstrument.vue'
 import StandingWaveInstrument from '../components/quantum/StandingWaveInstrument.vue'
@@ -25,6 +27,11 @@ const progress = useTourProgress()
 if (!progress.hydrated.value) progress.hydrate()
 
 const depth = computed<ReadingDepth>(() => progress.depth.value)
+const computeContext = labeledComputeContext(
+  'quantum-wave',
+  'Quantum wave lab',
+  'Prompt evaluations are local SI/Planck calculations beside the teaching instruments.',
+)
 const instrumentComponents = {
   'spectral-lines': SpectrumInstrument,
   'standing-wave': StandingWaveInstrument,
@@ -157,6 +164,8 @@ onMounted(() => {
         p.quantum-provenance
           strong Reproducibility note.
           |  {{ openSourceReport() }} Whisper was run locally with whisper.cpp large-v3. The raw transcript remains unchanged; the research report documents repeated hallucinated spans and recognition corrections.
+
+      ComputePrompt(:context="computeContext")
 
       section.quantum-related(aria-labelledby="quantum-related-title")
         .quantum-related__heading

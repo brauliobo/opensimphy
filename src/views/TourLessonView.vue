@@ -5,6 +5,8 @@ import ConclusionBoundary from '../components/tour/ConclusionBoundary.vue'
 import EquationLadder from '../components/tour/EquationLadder.vue'
 import TourDepthControl from '../components/tour/TourDepthControl.vue'
 import TourSimulationStage from '../components/tour/TourSimulationStage.vue'
+import ComputePrompt from '../components/compute/ComputePrompt.vue'
+import { labeledComputeContext } from '../compute/context'
 import { useTourProgress } from '../registries/tourProgress'
 import { useTourRegistry } from '../registries/tourRegistry'
 import { isSafeTourAnchor } from '../tour/progress'
@@ -117,6 +119,11 @@ const stationComplete = computed(() => currentStation.value
   : false)
 const currentComplete = computed(() => isQuickPath.value ? stationComplete.value : lessonComplete.value)
 const initialPresetId = computed(() => isQuickPath.value ? lessonRecord.value?.quickPath?.simulationPresetId : undefined)
+const computeContext = computed(() => labeledComputeContext(
+  `tour:${props.lesson}`,
+  simulation.value ? `Tour simulation ${simulation.value.id}` : `Tour lesson ${props.lesson}`,
+  'This prompt evaluates SI/Planck quantities beside the lesson instrument. It does not validate the source theory.',
+))
 const fullLessonLocation = computed(() => ({
   path: route.path,
   query: Object.fromEntries(Object.entries(route.query).filter(([key]) => key !== 'path')),
@@ -503,6 +510,7 @@ onUnmounted(() => {
           :depth="progress.depth.value"
           :initial-preset-id="initialPresetId"
         )
+        ComputePrompt(:context="computeContext")
 
         .tour-checkpoints(data-testid="tour-checkpoints")
           article(v-for="checkpoint in checkpoints" :key="checkpoint.id" :data-checkpoint-id="checkpoint.id")

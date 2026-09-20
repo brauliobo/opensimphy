@@ -7,6 +7,7 @@ OpenSimPhy is a static, browser-only Vue instrument for reproducing and auditing
 The atlas covers:
 
 - 288 ordered, meaning-first Formula records recovered from the site's `288` presentation and Transform Dictionary, with source-labelled exact/measured wording and no claim that those labels are authoritative definitions or validation.
+- A browser-local Compute lab (`/labs/compute`) for SI/Planck evaluation, dimensional interpretations, numerical calculus, matrices, and 2D/3D graphs, with the same prompt embedded in monastery formula/core/wall/tour surfaces and the other laboratories.
 - 351 source number-wall inputs: 18 famous sequences, 45 mathematical constants, and 288 constants-of-nature entries.
 - Every case in the core simulation registry, including Planck complex surfaces, quartic root loci, invariant checks, companion dynamics, manifold/dilogarithm cases, transform-space, constructor transforms, and coherent/typed units.
 - Source metadata for recovered site artifacts and the contextual local PDF corpus.
@@ -28,6 +29,7 @@ public/data/number-walls
                          preserved per-input static JSON
 data/physics_monastery  non-public recovered PDF/text source artifacts used by generation
 content/tour            attributed Tour source content and generated-artifact contracts
+src/compute              SI/Planck query kernel, dimensional interpretations, numerical calculus, and mathjs CAS
 src/engine              typed numerical engines, evaluation functions, and the completionReport parser
 src/registries          independent route-owned registries and the runtime audit session ledger
 src/tour                pure Tour engines, progress model, and transactional offline pack

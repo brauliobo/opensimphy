@@ -3,9 +3,11 @@ import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryRaw } from 'vue-router'
 import { formControlValue } from '../workbench/formControl'
 import WallCanvas from '../components/WallCanvas.vue'
+import ComputeDock from '../components/compute/ComputeDock.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
 import WorkbenchShell from '../components/workbench/WorkbenchShell.vue'
+import { labeledComputeContext } from '../compute/context'
 import { isPrimeInteger } from '../math/integer'
 import { useSavedRunRegistry } from '../registries/savedRunRegistry'
 import { useWallRegistry, type WallMode, type WallResult, type WallRunOptions } from '../registries/wallRegistry'
@@ -83,6 +85,11 @@ const filtered = computed(() => {
     && (!search || `${item.title} ${item.id} ${item.description}`.toLocaleLowerCase().includes(search)))
 })
 const selected = computed(() => wallRegistry.walls.value.find((item) => item.id === selectedId.value) ?? null)
+const computeContext = computed(() => labeledComputeContext(
+  'walls',
+  selected.value ? `Number wall ${selected.value.id}` : 'Number walls',
+  selected.value?.title ?? 'Preserved number-wall inputs',
+))
 const running = computed(() => status.value === 'running')
 const stale = computed(() => Boolean(result.value) && (
   result.value?.input.id !== selectedId.value
@@ -577,6 +584,7 @@ function snapshotSummary(snapshot: WorkbenchSnapshotV1): { min: number | null; m
     template(#raw)
       pre(v-if="result") {{ JSON.stringify({ id: result.id, options: result.options, width: result.width, depth: result.depth, mode: result.mode, displayMin: result.min, displayMax: result.max, exactZeroCount: result.zeroCount, compatibilityKey: result.compatibilityKey }, null, 2) }}
       p(v-else) No matrix result has been produced.
+  ComputeDock.workbench-compute(v-if="registryReady && selected" :context="computeContext")
 </template>
 
 <style scoped>

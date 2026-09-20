@@ -8,6 +8,8 @@ import EarthStructuredValue from '../components/EarthStructuredValue.vue'
 import WorkbenchCompare from '../components/workbench/WorkbenchCompare.vue'
 import WorkbenchFinding from '../components/workbench/WorkbenchFinding.vue'
 import WorkbenchShell from '../components/workbench/WorkbenchShell.vue'
+import ComputeDock from '../components/compute/ComputeDock.vue'
+import { labeledComputeContext } from '../compute/context'
 import type { EarthDocumentRecord } from '../earth/corpus'
 import { loadEarthDatasetRegistry, type EarthDatasetRegistry } from '../earth/datasets'
 import { cardsForProgram } from '../earth/particleCampaign'
@@ -186,6 +188,11 @@ const methods = computed<WorkbenchMethod[]>(() => {
   })
 })
 const selectedMethod = computed(() => methods.value.find(({ id }) => id === selectedMethodId.value) ?? null)
+const computeContext = computed(() => labeledComputeContext(
+  'earth',
+  selectedMethod.value ? `EARTH method ${selectedMethod.value.id}` : 'EARTH workbench',
+  selectedMethod.value?.title ?? 'Bounded EARTH method execution',
+))
 const selectedInputState = computed(() => inputStates.value[selectedMethodId.value] ?? null)
 const inputFields = computed(() => buildInputFields(selectedMethod.value?.defaultInputs ?? {}))
 const running = computed(() => executionStatus.value === 'starting' || executionStatus.value === 'running')
@@ -1175,6 +1182,8 @@ onUnmounted(abortExecution)
             pre
               code {{ JSON.stringify({ dispatchedInputs: selectedCompletedRun?.dispatchedInputs, result: selectedResult }, null, 2) }}
           p(v-else) No raw result is available for this method.
+
+      ComputeDock.workbench-compute(v-if="selectedMethod" :context="computeContext")
 
     section.simulation-results-section(v-if="!isWorkbenchSurface" aria-labelledby="simulation-results-heading")
       p.eyebrow 04 / Results
