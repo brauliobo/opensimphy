@@ -12,6 +12,7 @@ const [
   DERIVATIVE,
   SOLVE,
   DETERMINANT,
+  INDEFINITE,
 ] = COMPUTE_EXAMPLE_QUERIES
 
 type ComputeSurface = {
@@ -46,8 +47,12 @@ async function openReady(page: Page, path: string, ready: string): Promise<void>
 }
 
 async function runQuery(page: Page, query: string): Promise<void> {
-  await page.getByTestId('compute-query').fill(query)
+  const field = page.getByTestId('compute-query')
+  await field.scrollIntoViewIfNeeded()
+  await field.fill(query)
+  await expect(field).toHaveValue(query)
   await page.getByTestId('compute-run').click()
+  await expect(page.locator('[data-testid="compute-formatted"], [data-testid="compute-error"]')).toBeVisible()
 }
 
 test('Compute lab evaluates Planck mass over Planck time squared into spring-constant interpretations', async ({ page }) => {
@@ -73,14 +78,17 @@ test('Compute lab hydrates a calculus query from the URL', async ({ page }) => {
   await page.goto(`${COMPUTE_LAB_PATH}?q=${encodeURIComponent(INTEGRAL)}`)
   await expect(page.getByTestId('app-ready')).toBeVisible()
   await expect(page.getByTestId('compute-lab-ready')).toBeVisible()
-  await expect(page.getByTestId('compute-formatted')).toContainText('0.333')
+  await expect(page.getByTestId('compute-formatted')).toContainText('1/3')
 })
 
 test('Compute lab examples cover integrate, differentiate, solve, det, and graphs', async ({ page }) => {
   await openReady(page, COMPUTE_LAB_PATH, 'compute-lab-ready')
 
   await page.getByRole('button', { name: INTEGRAL, exact: true }).click()
-  await expect(page.getByTestId('compute-formatted')).toContainText('0.333')
+  await expect(page.getByTestId('compute-formatted')).toContainText('1/3')
+
+  await page.getByRole('button', { name: INDEFINITE, exact: true }).click()
+  await expect(page.getByTestId('compute-formatted')).toContainText('cos')
 
   await page.getByRole('button', { name: DERIVATIVE, exact: true }).click()
   await expect(page.getByTestId('compute-formatted')).toContainText('sin')
@@ -117,12 +125,12 @@ test('Labs index leads with the compute kernel', async ({ page }) => {
 test('Tour prompt opens the same query in the Compute lab', async ({ page }) => {
   await openReady(page, '/tour/units/physical-quantities', 'tour-lesson-ready')
   await runQuery(page, INTEGRAL)
-  await expect(page.getByTestId('compute-formatted')).toContainText('0.333')
+  await expect(page.getByTestId('compute-formatted')).toContainText('1/3')
   await expect(page.getByTestId('compute-plot')).toHaveCount(0)
   await page.getByTestId('compute-open-lab').click()
   await expect(page).toHaveURL(/\/labs\/compute\?q=/)
   await expect(page.getByTestId('compute-lab-ready')).toBeVisible()
-  await expect(page.getByTestId('compute-formatted')).toContainText('0.333')
+  await expect(page.getByTestId('compute-formatted')).toContainText('1/3')
   await expect(page.getByTestId('compute-plot')).toHaveCount(0)
 })
 
