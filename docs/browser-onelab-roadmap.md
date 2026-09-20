@@ -159,7 +159,7 @@ Provide two profiles:
 
 The published GMSH-JS package is threaded even when Gmsh uses one runtime thread, so it always requires those headers. Build a serial variant if GitHub Pages compatibility is important. Netlify can provide the headers directly.
 
-Build separate real and complex GetDP/PETSc artifacts and lazy-load the model-required scalar type. Add SLEPc only when an eigenvalue model becomes an acceptance fixture.
+Build separate real and complex GetDP/PETSc artifacts and lazy-load the model-required scalar type. SLEPc is part of the default GetDP stack.
 
 ## Viewer Architecture
 
@@ -249,7 +249,7 @@ Do not mutate the only position buffer as the current exploded-view implementati
 | Meshing | 1D/2D/3D, physical groups, high order | Existing Gmsh WASM covers the core. |
 | Problem language | Existing GetDP `.pro` files | Parser and kernel compile to WASM. |
 | Solves | Real/complex, steady, transient, nonlinear | PETSc path validated for a real linear solve. |
-| Eigenproblems | Bounded P1 Laplace on the Gmsh mesh; SLEPc off in the locked WASM | Desktop `EigenSolve` `.pro` is exported for native SLEPc GetDP. |
+| Eigenproblems | GetDP `EigenSolve` through sequential SLEPc in the locked WASM | Cube Dirichlet cavity is the runtime eigen fixture. |
 | Post-processing | `.res`/`.pos`, model/list data, timesteps | GetDP generation validated; Gmsh view bindings still needed. |
 | Rendering | Surface/volume mesh, fields, deformation, sections, probes | Build on meshStep viewer concepts. |
 | Sweeps | ONELAB loops with progress and result history | Implement after repeatable in-process solves. |
@@ -312,7 +312,7 @@ The principal advantage of the alternatives is permissive or higher-level custom
 
 - Combine Gmsh/GetDP around one ONELAB server.
 - Add parameter loops, result histories, repeated solve memory audits, and optional OPFS project persistence.
-- Add SLEPc to the locked WASM only with a new content version and native reference; the browser workbench already runs bounded P1 eigenmodes.
+- Keep SLEPc sequential and pinned with PETSc; a new SLEPc revision still needs a content version and native reference.
 - Gate: representative ONELAB models execute check/compute loops without process or socket emulation.
 
 ## Immediate Next Work
