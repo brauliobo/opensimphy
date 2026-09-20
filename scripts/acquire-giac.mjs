@@ -13,7 +13,7 @@ const wasmPath = join(vendorDir, 'giacwasm.js')
 const sourceUrl = 'https://www-fourier.univ-grenoble-alpes.fr/~parisse/giacjs.tar.gz'
 const execFileAsync = promisify(execFile)
 
-export async function acquireGiac(): Promise<string> {
+export async function acquireGiac() {
   try {
     const info = await stat(wasmPath)
     if (info.size > 1_000_000) return wasmPath
