@@ -13,10 +13,10 @@
       "gmsh_sha256": "b85082145892a8e29fb9fb56c7e4ba95e081f94eb10708cd038c8701b0847c23",
       "petsc_real_config_sha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
       "petsc_complex_config_sha256": "1f00acdcbf6e9b71ae2f3f80ec747e72fc6de5577eb7db71079cace660501e25",
-      "getdp_real_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
-      "getdp_complex_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "getdp_real_config_sha256": "2546d016d94792f1e28f3c786ee0695d36b7871bd274d1375ea3a7ca48f9fe9d",
+      "getdp_complex_config_sha256": "2546d016d94792f1e28f3c786ee0695d36b7871bd274d1375ea3a7ca48f9fe9d",
       "petsc_config_sha256": "66a74b1814fd5e807325b744f3d3a8bc33d93c6fb6d560feef203dbbc9a4bdd1",
-      "getdp_config_sha256": "61455a84b6ca5c6a1dbd1fdb4db9e4af56e86618f6ead812f412228ea115cd07",
+      "getdp_config_sha256": "2546d016d94792f1e28f3c786ee0695d36b7871bd274d1375ea3a7ca48f9fe9d",
       "nodes_1": "727",
       "elements_1": "1428",
       "mesh_sha256_1": "54aad440720d0dd28f0f76ee6e162b23c92288a1ada311f2c6792ea6255af935",
@@ -46,6 +46,10 @@
       "petsc": {
         "revision": "d2a0018167bbba9fbc1f09828039a44e18cc4d99",
         "tree": "7e9e0e1716177e4cc19d23519fd22eb9b2c02472"
+      },
+      "slepc": {
+        "revision": "73993cefa11540518847bc664495c4e7c10a16a6",
+        "tree": "ebea9563a32c5b4c8c9ef6bbecf6a9e94c6171ed"
       }
     }
   },
