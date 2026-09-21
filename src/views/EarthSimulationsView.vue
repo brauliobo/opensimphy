@@ -213,7 +213,7 @@ function unavailableMethodCountFor(record: ScientificSimulationRecord): number {
   return record.executionMethods.filter(({ runnable }) => !runnable).length
 }
 
-watch(() => route.query, hydrateFromRoute, { immediate: true })
+watch([() => route.fullPath, records], hydrateFromRoute, { immediate: true })
 watch([query, domain, classification, scientificReadiness, methodRelationship, runtimeAvailability, gateAttention, page], () => {
   if (routeWrite.isApplying()) return
   const next = registryQuery()
@@ -226,6 +226,7 @@ watch([pages, bundle], () => {
 onMounted(async () => {
   try {
     bundle.value = await loadScientificSimulationBundle(controller.signal)
+    hydrateFromRoute()
   } catch (reason) {
     if (controller.signal.aborted) return
     error.value = reason instanceof Error ? reason.message : String(reason)
@@ -278,7 +279,7 @@ onBeforeUnmount(() => controller.abort())
       )
     label.field
       span Domain
-      select(v-model="domain" data-testid="simulation-domain" @change="onDomainChange")
+      select(v-model="domain" data-testid="simulation-domain" :key="domains.join('|')" @change="onDomainChange")
         option(value="all") All domains
         option(v-for="item in domains" :key="item" :value="item") {{ item }} domain
     label.field

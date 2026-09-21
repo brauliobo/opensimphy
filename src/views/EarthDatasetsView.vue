@@ -209,7 +209,7 @@ function relatedDisputes(dataset: EarthDatasetRecord): EarthDisputedClaim[] {
   )) ?? []
 }
 
-watch(() => route.query, hydrateFromRoute, { immediate: true })
+watch([() => route.fullPath, datasets], hydrateFromRoute, { immediate: true })
 watch([
   query,
   datasetId,
@@ -229,6 +229,7 @@ watch([
 onMounted(async () => {
   try {
     registry.value = await loadEarthDatasetRegistry(controller.signal)
+    hydrateFromRoute()
     try {
       simulationBundle.value = await loadScientificSimulationBundle(controller.signal)
     } catch (reason) {
@@ -282,17 +283,17 @@ onBeforeUnmount(() => controller.abort())
       input(v-model="query" data-testid="dataset-search" type="search" placeholder="dataset, owner, evidence, DOI, or program")
     label.field
       span Specific dataset
-      select(v-model="datasetId" data-testid="dataset-id")
+      select(v-model="datasetId" data-testid="dataset-id" :key="datasets.map((dataset) => dataset.datasetId).join('|')")
         option(value="all") all datasets
         option(v-for="dataset in datasets" :key="dataset.datasetId" :value="dataset.datasetId") {{ dataset.name }}
     label.field
       span Canonical program
-      select(v-model="program" data-testid="dataset-program")
+      select(v-model="program" data-testid="dataset-program" :key="programs.join('|')")
         option(value="all") all programs
         option(v-for="id in programs" :key="id" :value="id") {{ id }}
     label.field
       span Category
-      select(v-model="category" data-testid="dataset-category")
+      select(v-model="category" data-testid="dataset-category" :key="categories.join('|')")
         option(value="all") all categories
         option(v-for="item in categories" :key="item" :value="item") {{ item }}
     label.field
@@ -304,7 +305,7 @@ onBeforeUnmount(() => controller.abort())
         option(value="P2") priority P2
     label.field
       span Authentication
-      select(v-model="authentication" data-testid="dataset-authentication")
+      select(v-model="authentication" data-testid="dataset-authentication" :key="authenticationStates.join('|')")
         option(value="all") all authentication states
         option(v-for="item in authenticationStates" :key="item" :value="item") {{ authenticationLabel(item) }}
     label.field

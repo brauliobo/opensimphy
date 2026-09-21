@@ -6,7 +6,6 @@ import readmeEvidenceJson from '../../public/data/generated/earth/evidence/docum
 import type { EarthDocumentShard, EarthManifest } from '../../src/earth/corpus'
 import EarthCorpusView from '../../src/views/EarthCorpusView.vue'
 import EarthDocumentView from '../../src/views/EarthDocumentView.vue'
-import RouterViewHost from './stubs/RouterViewHost.vue'
 import { emptyVaporView } from './vaporStubs'
 
 const manifest = manifestJson as EarthManifest
@@ -35,7 +34,7 @@ describe('EARTH source reader', () => {
     vi.stubGlobal('fetch', fetchMock)
     const router = testRouter()
     await router.push('/earth/corpus?q=Universal&collection=theorem&series=BIO&evidence=simulations')
-    const wrapper = mount(RouterViewHost, { global: { plugins: [router] } })
+    const wrapper = mount(EarthCorpusView, { global: { plugins: [router] } })
     await flushPromises()
 
     expect(fetchMock).toHaveBeenCalledTimes(2)

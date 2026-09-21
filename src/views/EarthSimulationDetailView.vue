@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import EarthLocalNav from '../components/EarthLocalNav.vue'
 import EarthModelCard from '../components/EarthModelCard.vue'
@@ -883,6 +883,8 @@ watch(() => [props.id, props.surface] as const, async ([id], _previous, onCleanu
       return state ? [[method.id, state]] : []
     }))
     applyRouteWorkbenchState()
+    await nextTick()
+    applyRouteWorkbenchState()
 
     if (!isWorkbenchSurface.value && loaded.sourceRevision && isEarthSimulationId(match.id)) {
       evidenceLoading.value = true
@@ -1001,7 +1003,8 @@ onUnmounted(abortExecution)
         template(#essential-controls)
           label.simulation-method-mobile-label(for="earth-method-select") Selected execution method
           select#earth-method-select.simulation-method-mobile(
-            :value="selectedMethodId"
+            :key="methods.map((method) => method.id).join('|')"
+            v-model="selectedMethodId"
             data-testid="simulation-method-select"
             @change="selectMethodFromEvent"
           )

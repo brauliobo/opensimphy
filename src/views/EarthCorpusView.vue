@@ -82,7 +82,7 @@ function formatBytes(value: number): string {
   return `${(value / 1024).toFixed(1)} KiB`
 }
 
-watch(() => route.query, hydrateFromRoute, { immediate: true })
+watch([() => route.fullPath, seriesOptions], hydrateFromRoute, { immediate: true })
 watch([query, collection, series, evidenceFilter], () => {
   if (routeWrite.isApplying()) return
   const next = corpusQuery()
@@ -97,6 +97,7 @@ onMounted(async () => {
     })
     manifest.value = loadedManifest
     evidence.value = loadedEvidence
+    hydrateFromRoute()
   } catch (reason) {
     error.value = reason instanceof Error ? reason.message : String(reason)
   }
@@ -137,7 +138,7 @@ onMounted(async () => {
         option(value="theorem") theorems
     label.field
       span Series
-      select(v-model="series" data-testid="earth-series")
+      select(v-model="series" data-testid="earth-series" :key="seriesOptions.join('|')")
         option(value="all") all series
         option(v-for="item in seriesOptions" :key="item" :value="item") {{ item }}
     label.field
