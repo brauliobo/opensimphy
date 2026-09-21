@@ -24,6 +24,15 @@ jobs:
         run: nice npm run giac:acquire
       - name: Compile twice from isolated source trees
         run: JOBS=4 nice npm run wasm:reproducibility
+      - name: Record compiled output identities
+        run: find tools/wasm/out -type f | sort | while read -r path; do printf '%s %s ' "$(wc -c < "$path")" "$(sha256sum "$path")"; done
+      - name: Upload compiled runtime
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: wasm-out-${{ github.run_id }}
+          path: tools/wasm/out
+          if-no-files-found: error
+          retention-days: 3
       - name: Stage exact source-built runtime
         run: npm run simulation:stage -- --verify-lock && npm run simulation:verify
       - name: Independent native reference drift
