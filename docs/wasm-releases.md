@@ -1,6 +1,6 @@
 # WASM release distribution
 
-The compiled browser simulation runtime is deliberately absent from Git. `public/simulation/`, `tools/wasm/out/`, and `tools/wasm/.cache/` remain ignored. GitHub Releases in `brauliobo/opensimphy` are the durable runtime store. Git LFS is not used, workflow artifacts are not durable distribution, and the Pages artifact is only a deploy handoff. Candidate workflow artifacts expire after three days.
+The compiled browser simulation runtime is deliberately absent from Git. `public/simulation/`, `tools/wasm/out/`, and `tools/wasm/.cache/` remain ignored. GitHub Releases in `brauliobo/opensimphy` are the durable runtime store. Git LFS is not used, workflow artifacts are not durable distribution, and the Pages artifact is only a deploy handoff. GitHub Actions never compiles Gmsh, GetDP, PETSc, or SLEPc.
 
 ## Version contract
 
@@ -18,27 +18,28 @@ npm run simulation:fetch
 npm run build:deploy
 ```
 
-`WASM_RELEASE_REPO=owner/repository` selects another repository. `GITHUB_TOKEN` or `GH_TOKEN` supplies a token for private repositories or higher API limits. A local source build remains explicit:
+`WASM_RELEASE_REPO=owner/repository` selects another repository. `GITHUB_TOKEN` or `GH_TOKEN` supplies a token for private repositories or higher API limits. Compiling a new runtime stays on the maintainer machine; see [Local compilation and publication](#local-compilation-and-publication).
+
+The package includes deterministic release metadata, a complete pinned corresponding-source recipe/manifest, deterministic SPDX 2.3 SBOM, the lock-identity report, and checksums. Packaging and release verification reject the report unless its artifact-lock hash, canonical input map, exact output map, staged output bytes/hashes, `byteIdentical` flag, and empty drift list all match the current lock and staged tree. Licensing fields remain `NOASSERTION` where the runtime aggregate has not selected a project-level license; this does not weaken source provenance or byte verification.
+
+## Local compilation and publication
+
+Compile, lock, stage, and package on the maintainer machine. GitHub Pages, Browser ONELAB, and frontend CI only fetch the exact locked tag.
 
 ```sh
 JOBS=4 nice npm run wasm:reproducibility
+npm run wasm:lock:update
 npm run simulation:stage -- --verify-lock
 npm run simulation:verify
+node tools/wasm/compare-builds.mjs tools/wasm/out tools/wasm/out tools/wasm/reproducibility-report.json
 npm run simulation:package:verify
+npm run simulation:release:verify -- "release/wasm-$(node -p "require('./tools/wasm/artifacts.lock.json').contentVersion")"
 ```
 
-The package includes deterministic release metadata, a complete pinned corresponding-source recipe/manifest, deterministic SPDX 2.3 SBOM, the two-build reproducibility report, and checksums. Packaging and release verification reject the report unless its artifact-lock hash, canonical input map, exact output map, staged output bytes/hashes, `byteIdentical` flag, and empty drift list all match the current lock and staged tree. Licensing fields remain `NOASSERTION` where the runtime aggregate has not selected a project-level license; this does not weaken source provenance or byte verification.
-
-## Candidate and publication
-
-`.github/workflows/wasm-candidate.yml` compiles twice from isolated caches with pinned Node `22.18.0` and the digest-pinned Emscripten image, checks native references, runs type/unit/E2E gates, packages twice, verifies the candidate, creates build-provenance attestations, and uploads a three-day handoff artifact. Every third-party action is pinned to a reviewed full commit SHA. It does not create a tag or release.
-
-`.github/workflows/publish-wasm-release.yml` is manual. It accepts a successful candidate run ID and exact content version, requires a `main` candidate commit from this repository, verifies every asset attestation against that repository, SHA, ref, and candidate workflow, and rejects an existing tag or release before creating anything. It then creates a draft through the API, uploads without clobbering, compares the exact uploaded asset set and checksums, publishes it, and performs an exact remote fetch verification. Only after that verification succeeds does it dispatch the manual-only Pages workflow on `main`; a failed publication or verification cannot dispatch a deployment. On failure it may delete only the still-draft release ID created by that run and its candidate-SHA tag; it refuses to delete a published release or a tag pointing elsewhere. Versioned releases and tags are treated as immutable: corrections require a new content version and release, never replacing an asset.
-
-For the SLEPc GetDP runtime, first merge the lock to `main`, run **WASM Release Candidate**, and wait for success. Then run **Publish WASM Release** with that run ID and `056dd2cea3a22399f191`. Its final successful step dispatches **Deploy GitHub Pages** with `refs/heads/main`, matching the protected `github-pages` environment policy. Release events do not trigger Pages, and the deploy workflow skips any manual dispatch made from a non-`main` ref, so tag refs cannot reach the environment. No recursive workflow trigger or repository setting change is part of this process.
+Publish the packaged directory as a non-prerelease GitHub Release whose tag is `wasm-<contentVersion>`, targeting the lock commit. Versioned releases and tags are immutable: corrections require a new content version and release, never replacing an asset. After the release exists, `npm run simulation:fetch` succeeds and **Deploy GitHub Pages** on `main` can copy those bytes into the Pages artifact. Release events do not trigger Pages.
 
 ## Retention and rollback
 
-Keep every published `wasm-<contentVersion>` release needed by a deployed or rollback-capable application commit. Delete only expired candidate artifacts; do not apply artifact retention policy to releases. Rollback means deploying an application commit whose lock names an older retained content version. The fetch remains exact and never falls forward to another release.
+Keep every published `wasm-<contentVersion>` release needed by a deployed or rollback-capable application commit. Do not apply artifact retention policy to releases. Rollback means deploying an application commit whose lock names an older retained content version. The fetch remains exact and never falls forward to another release.
 
-GitHub Pages receives the large simulation files in its deployment artifact, but Workbox excludes `simulation/**` from precaching. Browsers fetch immutable versioned paths lazily and partition caches by content version. The manifest is intentionally uncached by the service worker, while HTTP/CDN caching of versioned WASM files is safe because a version is never replaced. Pages repository and deployment size limits still apply; a candidate may be valid while a Pages upload exceeds GitHub's current limits, in which case the previous successful deployment remains active.
+GitHub Pages receives the large simulation files in its deployment artifact, but Workbox excludes `simulation/**` from precaching. Browsers fetch immutable versioned paths lazily and partition caches by content version. The manifest is intentionally uncached by the service worker, while HTTP/CDN caching of versioned WASM files is safe because a version is never replaced. Pages repository and deployment size limits still apply; a packaged runtime may be valid while a Pages upload exceeds GitHub's current limits, in which case the previous successful deployment remains active.

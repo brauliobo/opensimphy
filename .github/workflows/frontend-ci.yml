@@ -28,6 +28,11 @@ jobs:
         run: nice -n 10 npm ci
       - name: Acquire Giac WASM
         run: nice -n 10 npm run giac:acquire
+      - name: Fetch exact locked WASM release
+        run: nice -n 10 npm run simulation:fetch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          WASM_RELEASE_REPO: ${{ github.repository }}
       - name: Generate deterministic data
         run: |
           nice -n 10 npm run data:generate -- --external-corpus-mode=artifact

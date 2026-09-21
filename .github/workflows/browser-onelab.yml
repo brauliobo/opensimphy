@@ -6,9 +6,9 @@ on:
     branches: [main]
 
 jobs:
-  clean-build-and-e2e:
+  fetch-and-e2e:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -19,12 +19,11 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Acquire Giac WASM
         run: nice npm run giac:acquire
-      - name: Recompile twice and prove source reproducibility
-        run: JOBS=4 nice npm run wasm:reproducibility
-      - name: Stage source-built runtime
-        run: npm run simulation:stage -- --verify-lock && npm run simulation:verify
-      - name: Independent native reference drift
-        run: JOBS=4 nice npm run wasm:reference
+      - name: Fetch exact locked WASM release
+        run: nice npm run simulation:fetch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          WASM_RELEASE_REPO: ${{ github.repository }}
       - name: No-recompile deployment build
         run: nice npm run build:deploy
       - name: Unit and type checks
