@@ -54,16 +54,16 @@ The baseline Gmsh build applies `optional-quad-predicate.patch`: in an upstream 
 ## Phase 4 Artifact Size
 
 <!-- profile-measurements:phase4:start -->
-Measured from content version `014e52545f90a9d47acb` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11:
+Measured from content version `056dd2cea3a22399f191` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11:
 
 | Browser partition | Files | Raw bytes | gzip bytes | Brotli bytes |
 | --- | ---: | ---: | ---: | ---: |
-| OCC Gmsh | 5 | 43,034,272 | 10,287,267 | 6,953,724 |
-| Real GetDP/PETSc/SLEPc | 3 | 41,397,355 | 8,687,475 | 5,516,679 |
-| Complex GetDP/PETSc/SLEPc | 2 | 42,125,722 | 9,162,948 | 5,715,590 |
-| Total module partitions | 10 | 126,557,349 | 28,137,690 | 18,185,993 |
+| OCC Gmsh | 5 | 43,034,272 | 10,271,181 | 6,950,982 |
+| Real GetDP/PETSc/SLEPc | 3 | 41,397,355 | 8,628,201 | 5,518,411 |
+| Complex GetDP/PETSc/SLEPc | 2 | 42,125,718 | 9,103,837 | 5,716,586 |
+| Total module partitions | 10 | 126,557,345 | 28,003,219 | 18,185,979 |
 
-The separate real warm-up fetches exactly 43 files (the manifest plus `shared + gmsh + separate-real`) totaling 12,551,055 Brotli bytes. Opening a complex project adds the complete `separate-complex` partition; the cumulative exact load set is 18,266,645 Brotli bytes.
+The separate real warm-up fetches exactly 43 files (the manifest plus `shared + gmsh + separate-real`) totaling 12,550,029 Brotli bytes. Opening a complex project adds the complete `separate-complex` partition; the cumulative exact load set is 18,266,615 Brotli bytes.
 <!-- profile-measurements:phase4:end -->
 
 ## Phase 5 Combined Profiles
@@ -75,14 +75,14 @@ The generated Gmsh API and the combined bridge are exported from one Emscripten 
 Loop execution calls the pinned upstream `onelabUtils::initializeLoops()` and `onelabUtils::incrementLoops()` exports. An independent native executable links Gmsh and GetDP against one singleton for each PETSc scalar profile, invokes those exact loop functions, runs GetDP at every point, and emits ordered values, outputs, call counts, and pointer identities. `phase5-reference.json` is derived directly from that trace; JavaScript neither enumerates nor reorders loop coordinates. The real fixture covers levels `3 -> 2 -> 1` in native order and the complex fixture covers a level-1 loop. Point ordinals are replayed through those native calls after worker recreation, so cancellation retains completed history and resumes the first uncommitted point without a JavaScript loop implementation. The browser gate performs eight real and two complex loop computes, verifies progress and full output histories against the pinned native Phase 5 reference, and checks the native call counters.
 
 <!-- profile-measurements:phase5:start -->
-Measured from content version `014e52545f90a9d47acb` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11. Every cumulative load set includes the fetched `manifest.json` exactly once:
+Measured from content version `056dd2cea3a22399f191` on 2026-08-13 with per-file gzip level 9 and Brotli quality 11. Every cumulative load set includes the fetched `manifest.json` exactly once:
 
 | Browser load set | Files | Raw bytes | gzip bytes | Brotli bytes |
 | --- | ---: | ---: | ---: | ---: |
-| Combined real | 40 | 84,797,669 | 18,941,936 | 12,450,994 |
-| Combined real + complex | 45 | 169,962,379 | 38,264,965 | 24,998,102 |
-| Separate real | 43 | 84,776,718 | 19,071,248 | 12,551,055 |
-| Separate real + complex | 45 | 126,902,440 | 28,234,196 | 18,266,645 |
+| Combined real | 40 | 84,797,669 | 18,874,997 | 12,443,052 |
+| Combined real + complex | 45 | 169,962,379 | 38,125,449 | 24,993,431 |
+| Separate real | 43 | 84,776,718 | 18,997,180 | 12,550,029 |
+| Separate real + complex | 45 | 126,902,436 | 28,101,017 | 18,266,615 |
 <!-- profile-measurements:phase5:end -->
 
 The manifest separates `shared` fixtures/catalog data, standalone `gmsh`, separate scalar solvers, and combined scalar modules; declarations, linker maps, symbol inventories, and object dumps remain reproducible build outputs but are not staged for browsers. Combined warm-up loads `shared + combined-real`; separate warm-up loads `shared + gmsh + separate-real`. Complex partitions stay lazy. `npm run wasm:measure` deterministically rewrites `profile-measurements.json` and both generated tables from the exact staged path sets; `node tools/wasm/measure-profiles.mjs --check` fully recompresses them, while the focused test verifies the current manifest fingerprint, partition/load-set identities, totals, and documentation blocks. Startup timing is measured independently in the production browser; unavailable offline measurements remain `null`, never inferred from transfer size. Runtime audits report per-module startup and memory, aggregate bytes across all unique resident `wasmMemory.buffer` objects, project MEMFS files/bytes, cached partition bytes, repeat-run aggregate WASM growth, model entities, views, and history points/bytes. Production E2E requires the expected aggregate step-up when the complex module becomes resident and stability over repeated alternating runs and cancellation/recreation.
