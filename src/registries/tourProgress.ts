@@ -36,6 +36,7 @@ export class TourProgressPersistenceError extends Error {
 const state = shallowRef<TourProgress>(createTourProgress())
 const persistenceError = shallowRef<TourProgressPersistenceError | null>(null)
 const hydrated = shallowRef(false)
+const dependencyGeneration = shallowRef(0)
 let testDependencies: TourProgressTestDependencies = {}
 
 export function createTourProgressStorageKey(baseUrl: string): string {
@@ -43,6 +44,7 @@ export function createTourProgressStorageKey(baseUrl: string): string {
 }
 
 function storageKey(): string {
+  dependencyGeneration.value
   return createTourProgressStorageKey(testDependencies.baseUrl ?? import.meta.env.BASE_URL)
 }
 
@@ -168,10 +170,12 @@ export function useTourProgress() {
 
 export function setTourProgressDependenciesForTests(dependencies: TourProgressTestDependencies): void {
   testDependencies = { ...dependencies }
+  dependencyGeneration.value += 1
 }
 
 export function setTourProgressStorageForTests(value: TourProgressStorage | null): void {
   testDependencies = { ...testDependencies, storage: value }
+  dependencyGeneration.value += 1
 }
 
 export function resetTourProgressForTests(): void {
@@ -179,4 +183,5 @@ export function resetTourProgressForTests(): void {
   persistenceError.value = null
   hydrated.value = false
   testDependencies = {}
+  dependencyGeneration.value += 1
 }
